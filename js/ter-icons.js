@@ -137,29 +137,59 @@ const TER_ICONS = {
       <circle cx="40" cy="40" r="32" fill="none" stroke="#334155" stroke-width="2"/>
     </svg>`,
 
-  /* ── Séq. 03 — Coureur (réutilisé Seconde) ── */
+  /* ── Séq. 03 — Coureur (SVG autonome) ── */
   runner: `
-    <div class="runner-icon">
-      <div class="runner-clouds">
-        <div class="runner-cloud"></div><div class="runner-cloud"></div>
-        <div class="runner-cloud"></div><div class="runner-cloud"></div>
-        <div class="runner-cloud"></div><div class="runner-cloud"></div>
-      </div>
-      <div class="runner-hills">
-        <div class="runner-hill"></div><div class="runner-hill"></div>
-        <div class="runner-hill"></div><div class="runner-hill"></div>
-        <div class="runner-hill"></div><div class="runner-hill"></div>
-      </div>
-      <div class="runner-ground"></div>
-      <svg class="runner-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#0f766e">
-        <circle cx="58" cy="16" r="9"/>
-        <path class="runner-arm-back"  d="M48,36 L40,30 L36,42 L44,48 Z"/>
-        <path d="M44,32 Q56,28 64,38 L58,52 L46,50 Z"/>
-        <path class="runner-arm-front" d="M58,40 L70,36 L74,46 L62,52 Z"/>
-        <path class="runner-leg-back"  d="M50,50 L40,50 L34,72 L42,74 L52,54 Z"/>
-        <path class="runner-leg-front" d="M56,50 L66,50 L72,72 L64,74 L54,54 Z"/>
-      </svg>
-    </div>`,
+    <style>
+      @keyframes run-arm-f { 0%,100%{transform:rotate(-30deg);} 50%{transform:rotate(30deg);} }
+      @keyframes run-arm-b { 0%,100%{transform:rotate(30deg);}  50%{transform:rotate(-30deg);} }
+      @keyframes run-leg-f { 0%,100%{transform:rotate(-35deg);} 50%{transform:rotate(35deg);} }
+      @keyframes run-leg-b { 0%,100%{transform:rotate(35deg);}  50%{transform:rotate(-35deg);} }
+      @keyframes run-body  { 0%,100%{transform:translateY(0);}  50%{transform:translateY(-2px);} }
+      @keyframes run-cloud { 0%{transform:translateX(40px);opacity:0;} 20%{opacity:0.7;} 80%{opacity:0.5;} 100%{transform:translateX(-10px);opacity:0;} }
+      .run-body-g  { animation: run-body  0.4s ease-in-out infinite; transform-origin:50px 45px; }
+      .run-arm-f   { animation: run-arm-f 0.4s ease-in-out infinite; transform-origin:50px 38px; }
+      .run-arm-b   { animation: run-arm-b 0.4s ease-in-out infinite; transform-origin:50px 38px; }
+      .run-leg-f   { animation: run-leg-f 0.4s ease-in-out infinite; transform-origin:50px 52px; }
+      .run-leg-b   { animation: run-leg-b 0.4s ease-in-out infinite; transform-origin:50px 52px; }
+      .run-cl1     { animation: run-cloud 2s linear infinite; }
+      .run-cl2     { animation: run-cloud 2s linear 0.7s infinite; }
+      .run-cl3     { animation: run-cloud 2s linear 1.4s infinite; }
+      @media(prefers-reduced-motion:reduce){
+        .run-body-g,.run-arm-f,.run-arm-b,.run-leg-f,.run-leg-b{animation:none;}
+        .run-cl1,.run-cl2,.run-cl3{animation:none;opacity:0.4;}
+      }
+    </style>
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
+      <!-- Sol -->
+      <line x1="4" y1="70" x2="76" y2="70" stroke="#cbd5e1" stroke-width="2"/>
+      <!-- Nuages qui passent -->
+      <g class="run-cl1"><ellipse cx="20" cy="18" rx="12" ry="5" fill="#e2e8f0" opacity="0.7"/></g>
+      <g class="run-cl2"><ellipse cx="50" cy="12" rx="9"  ry="4" fill="#e2e8f0" opacity="0.6"/></g>
+      <g class="run-cl3"><ellipse cx="35" cy="22" rx="7"  ry="3" fill="#e2e8f0" opacity="0.5"/></g>
+      <!-- Corps du coureur -->
+      <g class="run-body-g">
+        <!-- Tête -->
+        <circle cx="50" cy="30" r="7" fill="#0f766e"/>
+        <!-- Torse -->
+        <rect x="45" y="37" width="10" height="14" rx="3" fill="#0f766e"/>
+        <!-- Bras arrière -->
+        <g class="run-arm-b">
+          <rect x="43" y="38" width="5" height="12" rx="2" fill="#0f766e" transform="rotate(-20,43,38)"/>
+        </g>
+        <!-- Bras avant -->
+        <g class="run-arm-f">
+          <rect x="52" y="38" width="5" height="12" rx="2" fill="#0f766e" transform="rotate(20,52,38)"/>
+        </g>
+        <!-- Jambe arrière -->
+        <g class="run-leg-b">
+          <rect x="44" y="50" width="5" height="14" rx="2" fill="#134e4a" transform="rotate(20,44,50)"/>
+        </g>
+        <!-- Jambe avant -->
+        <g class="run-leg-f">
+          <rect x="51" y="50" width="5" height="14" rx="2" fill="#134e4a" transform="rotate(-20,51,50)"/>
+        </g>
+      </g>
+    </svg>`,
 
   /* ── Séq. 04 — Planète en orbite ── */
   planet: `
