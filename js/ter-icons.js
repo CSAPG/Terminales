@@ -137,57 +137,42 @@ const TER_ICONS = {
       <circle cx="40" cy="40" r="32" fill="none" stroke="#334155" stroke-width="2"/>
     </svg>`,
 
-  /* ── Séq. 03 — Coureur (SVG autonome) ── */
+  /* ── Séq. 03 — Coureur (SVG autonome, transform classique) ── */
   runner: `
-    <style>
-      @keyframes run-arm-f { 0%,100%{transform:rotate(-30deg);} 50%{transform:rotate(30deg);} }
-      @keyframes run-arm-b { 0%,100%{transform:rotate(30deg);}  50%{transform:rotate(-30deg);} }
-      @keyframes run-leg-f { 0%,100%{transform:rotate(-35deg);} 50%{transform:rotate(35deg);} }
-      @keyframes run-leg-b { 0%,100%{transform:rotate(35deg);}  50%{transform:rotate(-35deg);} }
-      @keyframes run-body  { 0%,100%{transform:translateY(0);}  50%{transform:translateY(-2px);} }
-      @keyframes run-cloud { 0%{transform:translateX(40px);opacity:0;} 20%{opacity:0.7;} 80%{opacity:0.5;} 100%{transform:translateX(-10px);opacity:0;} }
-      .run-body-g  { animation: run-body  0.4s ease-in-out infinite; transform-origin:50px 45px; }
-      .run-arm-f   { animation: run-arm-f 0.4s ease-in-out infinite; transform-origin:50px 38px; }
-      .run-arm-b   { animation: run-arm-b 0.4s ease-in-out infinite; transform-origin:50px 38px; }
-      .run-leg-f   { animation: run-leg-f 0.4s ease-in-out infinite; transform-origin:50px 52px; }
-      .run-leg-b   { animation: run-leg-b 0.4s ease-in-out infinite; transform-origin:50px 52px; }
-      .run-cl1     { animation: run-cloud 2s linear infinite; }
-      .run-cl2     { animation: run-cloud 2s linear 0.7s infinite; }
-      .run-cl3     { animation: run-cloud 2s linear 1.4s infinite; }
-      @media(prefers-reduced-motion:reduce){
-        .run-body-g,.run-arm-f,.run-arm-b,.run-leg-f,.run-leg-b{animation:none;}
-        .run-cl1,.run-cl2,.run-cl3{animation:none;opacity:0.4;}
-      }
-    </style>
     <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
-      <!-- Sol -->
+      <defs>
+        <style>
+          @keyframes ra-arm-f{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(30deg)}}
+          @keyframes ra-arm-b{0%,100%{transform:rotate(30deg)}50%{transform:rotate(-30deg)}}
+          @keyframes ra-leg-f{0%,100%{transform:rotate(-35deg)}50%{transform:rotate(35deg)}}
+          @keyframes ra-leg-b{0%,100%{transform:rotate(35deg)}50%{transform:rotate(-35deg)}}
+          @keyframes ra-body{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+          @keyframes ra-cloud{0%{transform:translateX(30px);opacity:0}20%{opacity:0.6}80%{opacity:0.4}100%{transform:translateX(-10px);opacity:0}}
+          .ra-bg{animation:ra-body 0.4s ease-in-out infinite}
+          .ra-af{animation:ra-arm-f 0.4s ease-in-out infinite;transform-origin:50px 39px}
+          .ra-ab{animation:ra-arm-b 0.4s ease-in-out infinite;transform-origin:50px 39px}
+          .ra-lf{animation:ra-leg-f 0.4s ease-in-out infinite;transform-origin:50px 53px}
+          .ra-lb{animation:ra-leg-b 0.4s ease-in-out infinite;transform-origin:50px 53px}
+          .ra-c1{animation:ra-cloud 2s linear infinite}
+          .ra-c2{animation:ra-cloud 2s linear 0.65s infinite}
+          .ra-c3{animation:ra-cloud 2s linear 1.3s infinite}
+          @media(prefers-reduced-motion:reduce){
+            .ra-bg,.ra-af,.ra-ab,.ra-lf,.ra-lb{animation:none}
+            .ra-c1,.ra-c2,.ra-c3{animation:none;opacity:0.4}
+          }
+        </style>
+      </defs>
       <line x1="4" y1="70" x2="76" y2="70" stroke="#cbd5e1" stroke-width="2"/>
-      <!-- Nuages qui passent -->
-      <g class="run-cl1"><ellipse cx="20" cy="18" rx="12" ry="5" fill="#e2e8f0" opacity="0.7"/></g>
-      <g class="run-cl2"><ellipse cx="50" cy="12" rx="9"  ry="4" fill="#e2e8f0" opacity="0.6"/></g>
-      <g class="run-cl3"><ellipse cx="35" cy="22" rx="7"  ry="3" fill="#e2e8f0" opacity="0.5"/></g>
-      <!-- Corps du coureur -->
-      <g class="run-body-g">
-        <!-- Tête -->
+      <ellipse class="ra-c1" cx="18" cy="18" rx="11" ry="4" fill="#e2e8f0"/>
+      <ellipse class="ra-c2" cx="48" cy="12" rx="8"  ry="3" fill="#e2e8f0"/>
+      <ellipse class="ra-c3" cx="34" cy="22" rx="7"  ry="3" fill="#e2e8f0"/>
+      <g class="ra-bg">
         <circle cx="50" cy="30" r="7" fill="#0f766e"/>
-        <!-- Torse -->
-        <rect x="45" y="37" width="10" height="14" rx="3" fill="#0f766e"/>
-        <!-- Bras arrière -->
-        <g class="run-arm-b">
-          <rect x="43" y="38" width="5" height="12" rx="2" fill="#0f766e" transform="rotate(-20,43,38)"/>
-        </g>
-        <!-- Bras avant -->
-        <g class="run-arm-f">
-          <rect x="52" y="38" width="5" height="12" rx="2" fill="#0f766e" transform="rotate(20,52,38)"/>
-        </g>
-        <!-- Jambe arrière -->
-        <g class="run-leg-b">
-          <rect x="44" y="50" width="5" height="14" rx="2" fill="#134e4a" transform="rotate(20,44,50)"/>
-        </g>
-        <!-- Jambe avant -->
-        <g class="run-leg-f">
-          <rect x="51" y="50" width="5" height="14" rx="2" fill="#134e4a" transform="rotate(-20,51,50)"/>
-        </g>
+        <rect x="46" y="37" width="9" height="14" rx="3" fill="#0f766e"/>
+        <g class="ra-ab"><rect x="41" y="38" width="4" height="11" rx="2" fill="#0f766e"/></g>
+        <g class="ra-af"><rect x="55" y="38" width="4" height="11" rx="2" fill="#0f766e"/></g>
+        <g class="ra-lb"><rect x="44" y="51" width="4.5" height="13" rx="2" fill="#134e4a"/></g>
+        <g class="ra-lf"><rect x="52" y="51" width="4.5" height="13" rx="2" fill="#134e4a"/></g>
       </g>
     </svg>`,
 
