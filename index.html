@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminale Spécialité Physique-Chimie — Mme Poirault-Gauvin</title>
+  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3/dist/tailwind.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/ter-index.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       OVERLAY AUTH
+  ══════════════════════════════════════ -->
+  <div id="auth-overlay">
+    <div style="text-align:center;margin-bottom:28px;position:relative;z-index:2;">
+      <div style="font-size:2.5rem;margin-bottom:8px;">⚗️</div>
+      <h1 style="color:#fff;font-size:1.6rem;font-weight:700;margin:0 0 6px;">Terminales — Mme Poirault-Gauvin</h1>
+      <p style="color:#99f6e4;font-size:1rem;margin:0;">Physique-Chimie · Enseignement de spécialité</p>
+    </div>
+    <div id="auth-card">
+      <p style="color:#1e293b;margin:0 0 20px;font-size:0.95rem;">Entrez le code d'accès :</p>
+      <input id="auth-input" type="password" placeholder="••••••"
+        style="width:100%;box-sizing:border-box;padding:14px 18px;font-size:1.2rem;border-radius:10px;border:2px solid #e2e8f0;color:#0f172a;text-align:center;outline:none;letter-spacing:0.3em;margin-bottom:16px;"
+        onkeydown="if(event.key==='Enter') verifierCode()"
+        oninput="document.getElementById('auth-error').style.display='none'">
+      <button onclick="verifierCode()"
+        style="width:100%;padding:14px;background:#0f766e;color:white;font-size:1rem;font-weight:700;border:none;border-radius:10px;cursor:pointer;"
+        onmouseover="this.style.background='#0d9488'" onmouseout="this.style.background='#0f766e'">
+        Accéder au site →
+      </button>
+      <p id="auth-error" style="color:#f87171;margin:12px 0 0;font-size:0.9rem;display:none;">Code incorrect, réessayez.</p>
+    </div>
+    <p style="color:#5eead4;font-size:0.8rem;margin-top:20px;position:relative;z-index:2;">© 2026 Mme Poirault-Gauvin</p>
+  </div>
+
+  <script>
+    const CODE_ACCES = "2027";
+    function verifierCode() {
+      const input = document.getElementById('auth-input').value.trim();
+      if (input === CODE_ACCES) {
+        document.getElementById('auth-overlay').style.display = 'none';
+        sessionStorage.setItem('auth', 'ok');
+      } else {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        const inp = document.getElementById('auth-input');
+        inp.style.borderColor = '#f87171';
+        setTimeout(() => inp.style.borderColor = '#e2e8f0', 1000);
+      }
+    }
+    if (sessionStorage.getItem('auth') === 'ok') {
+      document.getElementById('auth-overlay').style.display = 'none';
+    }
+  </script>
+
+
+  <!-- ══════════════════════════════════════
+       HERO (avec canvas galaxie)
+  ══════════════════════════════════════ -->
+  <header class="ter-hero">
+    <canvas id="galaxy-canvas"></canvas>
+    <div class="ter-hero-overlay"></div>
+    <div class="ter-hero-content">
+      <div class="ter-hero-title">Terminale — Enseignement de spécialité Physique-Chimie</div>
+      <div class="ter-hero-sub">Cours · Animations · Flashcards · Quiz · Escape games</div>
+      <div class="ter-hero-badge">Mme Poirault-Gauvin</div>
+    </div>
+  </header>
+
+
+  <!-- ══════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════ -->
+  <nav class="ter-nav">
+    <button id="btn-retour" class="ter-nav-btn-back" style="display:none;" onclick="afficherAccueil()">
+      ← Retour à l'accueil
+    </button>
+
+    <!-- Menu Ressources -->
+    <div id="res-wrapper" style="position:relative;display:inline-block;">
+      <button class="ter-res-btn" onclick="toggleRessourcesMenu()">
+        📚 Ressources ▾
+      </button>
+      <ul id="res-dropdown" class="ter-res-dropdown">
+        <li>
+          <a href="https://labolycee.org/menu-geographique-0" target="_blank">
+            <span style="font-size:1.2rem;">📝</span> Annales (Labolycée)
+          </a>
+        </li>
+        <li>
+          <a href="https://ecebac.fr/listaca.php?aca=0" target="_blank">
+            <span style="font-size:1.2rem;">🔬</span> ECE 2026
+          </a>
+        </li>
+        <li>
+          <a href="https://www.education.gouv.fr/reussir-au-lycee/baccalaureat-comment-se-passe-le-grand-oral-100028" target="_blank">
+            <span style="font-size:1.2rem;">🎤</span> Comment se préparer au Grand Oral
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════
+       CONTENU PRINCIPAL
+  ══════════════════════════════════════ -->
+  <main class="ter-content">
+
+    <!-- ── Bloc bienvenue ── -->
+    <div id="bloc-bienvenue" class="ter-welcome">
+      <h2>👋 Bienvenue !</h2>
+      <p>Ce site regroupe animations interactives, cours, quiz et ressources pour les élèves de
+         <strong>Terminale spécialité Physique-Chimie</strong>.<br>
+         De nombreuses ressources ont été créées par mes élèves — leurs prénoms sont indiqués.<br>
+         Cliquez sur une séquence pour accéder aux ressources.</p>
+
+      <!-- Grille des pastilles (injectée par JS) -->
+      <div class="ter-seq-grid" id="ter-seq-grid"></div>
+    </div>
+
+    <!-- ── Panneaux séquences (contenu injecté par ter-panels.js) ── -->
+    <div id="terminale-seq-0"  class="ter-panel"></div>
+    <div id="terminale-seq-1"  class="ter-panel"></div>
+    <div id="terminale-seq-2"  class="ter-panel"></div>
+    <div id="terminale-seq-3"  class="ter-panel"></div>
+    <div id="terminale-seq-4"  class="ter-panel"></div>
+    <div id="terminale-seq-5"  class="ter-panel"></div>
+    <div id="terminale-seq-6"  class="ter-panel"></div>
+    <div id="terminale-seq-7"  class="ter-panel"></div>
+    <div id="terminale-seq-8"  class="ter-panel"></div>
+    <div id="terminale-seq-9"  class="ter-panel"></div>
+    <div id="terminale-seq-10" class="ter-panel"></div>
+    <div id="terminale-seq-11" class="ter-panel"></div>
+    <div id="terminale-seq-12" class="ter-panel"></div>
+    <div id="terminale-seq-13" class="ter-panel"></div>
+    <div id="terminale-seq-14" class="ter-panel"></div>
+    <div id="terminale-seq-15" class="ter-panel"></div>
+
+  </main>
+
+  <footer>© 2026 Mme Poirault-Gauvin · Terminale Spécialité Physique-Chimie</footer>
+
+
+  <!-- ══════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════ -->
+
+  <!-- Galaxie dans le header -->
+  <script src="js/galaxy.js"></script>
+
+  <!-- Icônes + panneaux (ordre important) -->
+  <script src="js/ter-icons.js"></script>
+  <script src="js/ter-panels.js"></script>
+
+  <!-- Navigation -->
+  <script src="js/navigation.js"></script>
+
+  <!-- Génération de la grille de pastilles -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Emojis/icônes thématiques pour les titres courts des cartes
+      const CARD_DATA = [
+        { id:0,  num:'00', titre:'Les incontournables',                 icone:'bulb'         },
+        { id:1,  num:'01', titre:'Évolution d\'un système chimique',    icone:'pile'         },
+        { id:2,  num:'02', titre:'Acide Base',                          icone:'ph'           },
+        { id:3,  num:'03', titre:'Mécanique newtonienne',               icone:'runner'       },
+        { id:4,  num:'04', titre:'Lois de Kepler',                      icone:'planet'       },
+        { id:5,  num:'05', titre:'Contrôle de qualité',                 icone:'burette'      },
+        { id:6,  num:'06', titre:'Diffraction et interférences',        icone:'interference' },
+        { id:7,  num:'07', titre:'Atténuations & Effet Doppler',        icone:'doppler'      },
+        { id:8,  num:'08', titre:'Lunette astronomique',                icone:'lens'         },
+        { id:9,  num:'09', titre:'Énergie — Conversions',               icone:'motor'        },
+        { id:10, num:'10', titre:'Systèmes capacitifs RC',              icone:'touchscreen'  },
+        { id:11, num:'11', titre:'Cinétique chimique',                  icone:'kinetics'     },
+        { id:12, num:'12', titre:'Stratégie de synthèse',               icone:'reflux',      iconSuffix:'card12' },
+        { id:13, num:'13', titre:'Mouvement d\'un fluide',              icone:'fluid'        },
+        { id:14, num:'14', titre:'Transformation nucléaire',            icone:'nuclear',     iconSuffix:'card14' },
+        { id:15, num:'15', titre:'La lumière — flux de photons',        icone:'photon'       },
+      ];
+
+      const grid = document.getElementById('ter-seq-grid');
+      grid.innerHTML = CARD_DATA.map(seq => `
+        <a class="ter-seq-card" onclick="showTerminaleSeq(${seq.id}); return false;" href="#">
+          <div class="ter-seq-icon">${getIconTer(seq.icone, seq.iconSuffix || 'card-' + seq.id)}</div>
+          <div class="ter-seq-badge">Séq. ${seq.num}</div>
+          <div class="ter-seq-title">${seq.titre}</div>
+        </a>`).join('');
+    });
+  </script>
+
+</body>
+</html>
