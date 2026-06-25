@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — Acide éthanoïque et ammoniac</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f7f8fa; color: #1a1a1a; }
+
+.exo-wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+.info-box {
+  background: #e8f0fb; border-left: 3px solid #2563eb;
+  border-radius: 8px; padding: 0.75rem 1rem;
+  font-size: 13.5px; margin-bottom: 1.5rem; line-height: 1.6;
+}
+.info-box strong { color: #1e40af; }
+
+.section-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 0.75rem; }
+.step-badge {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; flex-shrink: 0; margin-top: 1px;
+}
+.step-badge.active { background: #dbeafe; color: #1d4ed8; }
+.step-badge.done   { background: #dcfce7; color: #166534; }
+.step-badge.locked { background: #f1f5f9; color: #94a3b8; }
+.step-title { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+.step-sub   { font-size: 12.5px; color: #64748b; margin-top: 2px; line-height: 1.4; }
+
+.card {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+}
+.card.locked { opacity: 0.4; pointer-events: none; }
+
+/* Q1 */
+.mol-section { margin-bottom: 1.25rem; }
+.mol-section-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #374151; }
+.mol-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mol-opt {
+  border: 2px solid #e2e8f0; border-radius: 8px;
+  padding: 8px 6px 6px; cursor: pointer; text-align: center;
+  transition: border-color 0.15s, background 0.15s; background: #fff;
+}
+.mol-opt:hover { border-color: #93c5fd; background: #f0f7ff; }
+.mol-opt.selected { border-color: #2563eb; background: #eff6ff; }
+.mol-opt.correct  { border-color: #16a34a; background: #f0fdf4; pointer-events: none; }
+.mol-opt.wrong    { border-color: #dc2626; background: #fef2f2; pointer-events: none; }
+.mol-opt img { width: 100%; height: 80px; object-fit: contain; display: block; }
+.mol-opt-label { font-size: 11.5px; color: #6b7280; margin-top: 4px; }
+
+.lewis-link { font-size: 12px; color: #64748b; margin-bottom: 12px; }
+.lewis-link a { color: #2563eb; }
+
+/* boutons */
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 14px; border-radius: 7px; font-size: 13px; font-weight: 500;
+  cursor: pointer; border: 1px solid #cbd5e1; background: #fff; color: #1a1a1a;
+  transition: background 0.12s;
+}
+.btn:hover { background: #f1f5f9; }
+.btn.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
+.btn.primary:hover { background: #1d4ed8; }
+
+.feedback {
+  font-size: 13px; margin-top: 10px; padding: 7px 11px;
+  border-radius: 7px; line-height: 1.5;
+}
+.feedback.ok  { background: #dcfce7; color: #166534; }
+.feedback.err { background: #fee2e2; color: #991b1b; }
+
+/* Q2 drag & drop */
+.tokens-pool {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  background: #f8fafc; border: 1px dashed #cbd5e1;
+  border-radius: 8px; padding: 10px; min-height: 48px; margin-bottom: 12px;
+}
+.drag-token {
+  padding: 5px 12px; background: #fff;
+  border: 1px solid #cbd5e1; border-radius: 6px;
+  font-size: 13.5px; cursor: grab; user-select: none;
+  font-family: 'Inter', sans-serif;
+}
+.drag-token:active { cursor: grabbing; opacity: 0.6; }
+.drag-token.placed { background: #eff6ff; border-color: #2563eb; color: #1d4ed8; }
+
+.eq-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+.drop-slot {
+  width: 110px; min-height: 38px; border: 2px dashed #cbd5e1;
+  border-radius: 7px; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: #94a3b8; transition: background 0.1s, border-color 0.1s;
+}
+.drop-slot.over   { background: #eff6ff; border-color: #2563eb; }
+.drop-slot.filled { border-color: #2563eb; border-style: solid; }
+.op-sym { font-size: 18px; color: #6b7280; padding: 0 2px; }
+
+/* Q3 canvas */
+.canvas-wrap { position: relative; width: 100%; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background: #fff; }
+#mechCanvas { display: block; width: 100%; cursor: crosshair; }
+.tool-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; align-items: center; }
+.tool-btn {
+  padding: 5px 11px; font-size: 12px; border-radius: 6px;
+  border: 1px solid #cbd5e1; background: #fff; cursor: pointer; color: #374151;
+  transition: background 0.1s;
+}
+.tool-btn:hover { background: #f1f5f9; }
+.tool-btn.active { background: #eff6ff; border-color: #2563eb; color: #1d4ed8; }
+.hint-txt { font-size: 12px; color: #64748b; margin-bottom: 8px; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="exo-wrap">
+
+  <div class="info-box">
+    <strong>Contexte :</strong> L'acide éthanoïque (CH₃COOH) réagit avec l'ammoniac (NH₃).<br>
+    Couples acide/base mis en jeu : <strong>CH₃COOH / CH₃COO⁻</strong> &nbsp;|&nbsp; <strong>NH₄⁺ / NH₃</strong><br>
+    <span style="color:#374151">Rappel : la représentation de Lewis d'une molécule fait apparaître tous les électrons de valence sous forme de <strong>doublets liants</strong> (traits) et de <strong>doublets non liants</strong> (tirets à côté des atomes).</span>
+  </div>
+
+  <!-- ===================== Q1 ===================== -->
+  <div class="section-header">
+    <div class="step-badge active" id="badge1">1</div>
+    <div>
+      <div class="step-title">Identifier les représentations de Lewis</div>
+      <div class="step-sub">Pour chacune des 4 espèces chimiques, sélectionne la représentation de Lewis correcte.</div>
+    </div>
+  </div>
+
+  <div class="card" id="card1">
+    <div class="lewis-link">
+      Besoin d'aide ? Constructeur en ligne :
+      <a href="https://lewis.web-labosims.org/" target="_blank">lewis.web-labosims.org ↗</a>
+    </div>
+
+    <div id="q1-panels"></div>
+
+    <div id="q1-feedback"></div>
+    <div class="btn-row">
+      <button class="btn primary" onclick="checkQ1()">✓ Vérifier</button>
+      <button class="btn" onclick="resetQ1()">↺ Réinitialiser</button>
+    </div>
+  </div>
+
+  <!-- ===================== Q2 ===================== -->
+  <div class="section-header">
+    <div class="step-badge locked" id="badge2">2</div>
+    <div>
+      <div class="step-title">Écrire l'équation bilan</div>
+      <div class="step-sub">Glisse les espèces chimiques dans les emplacements pour écrire l'équation de la réaction.</div>
+    </div>
+  </div>
+
+  <div class="card locked" id="card2">
+    <div class="tokens-pool" id="pool"></div>
+    <div class="eq-row">
+      <div class="drop-slot" id="slot0" data-idx="0"></div>
+      <span class="op-sym">+</span>
+      <div class="drop-slot" id="slot1" data-idx="1"></div>
+      <span class="op-sym">⟶</span>
+      <div class="drop-slot" id="slot2" data-idx="2"></div>
+      <span class="op-sym">+</span>
+      <div class="drop-slot" id="slot3" data-idx="3"></div>
+    </div>
+    <div id="q2-feedback"></div>
+    <div class="btn-row">
+      <button class="btn primary" onclick="checkQ2()">✓ Vérifier</button>
+      <button class="btn" onclick="resetQ2()">↺ Réinitialiser</button>
+    </div>
+  </div>
+
+  <!-- ===================== Q3 ===================== -->
+  <div class="section-header">
+    <div class="step-badge locked" id="badge3">3</div>
+    <div>
+      <div class="step-title">Mécanisme réactionnel — flèches courbes</div>
+      <div class="step-sub">Place les flèches courbes pour représenter le transfert de proton entre les espèces.</div>
+    </div>
+  </div>
+
+  <div class="card locked" id="card3">
+    <div class="tool-row">
+      <span style="font-size:12px;color:#64748b;">Mode :</span>
+      <button class="tool-btn active" id="btn-add"  onclick="setMode('add')">+ Ajouter une flèche</button>
+      <button class="tool-btn"        id="btn-move" onclick="setMode('move')">✥ Déplacer</button>
+      <button class="tool-btn"        id="btn-del"  onclick="setMode('delete')">✕ Supprimer</button>
+    </div>
+    <div class="hint-txt" id="mech-hint">Clique sur l'origine de la flèche (un doublet), puis sur la destination.</div>
+    <div class="canvas-wrap">
+      <canvas id="mechCanvas"></canvas>
+    </div>
+    <div id="q3-feedback"></div>
+    <div class="btn-row">
+      <button class="btn primary" onclick="checkQ3()">✓ Vérifier le mécanisme</button>
+      <button class="btn" onclick="showCorrection()">👁 Voir le corrigé</button>
+      <button class="btn" onclick="resetQ3()">↺ Effacer</button>
+    </div>
+  </div>
+
+</div><!-- end exo-wrap -->
+
+<script>
+/* =========================================================
+   Q1 — Représentations de Lewis
+   ========================================================= */
+const Q1_DATA = [
+  {
+    name: "Acide éthanoïque — CH₃COOH",
+    options: [
+      { file: "images/acide-ethanoique.png",         correct: true  },
+      { file: "images/acide-ethanoique-false2.png",  correct: false },
+      { file: "images/acide-ethanoique-sansdnl.png", correct: false },
+    ]
+  },
+  {
+    name: "Ammoniac — NH₃",
+    options: [
+      { file: "images/ammoniac-false1.png", correct: false },
+      { file: "images/ammoniac.png",        correct: true  },
+      { file: "images/ammoniac-false2.png", correct: false },
+    ]
+  },
+  {
+    name: "Ion ammonium — NH₄⁺",
+    options: [
+      { file: "images/ion-ammonium.png",    correct: true  },
+      { file: "images/ammonium-false1.png", correct: false },
+      { file: "images/ammonium-false2.png", correct: false },
+    ]
+  },
+  {
+    name: "Ion éthanoate — CH₃COO⁻",
+    options: [
+      { file: "images/ion-ethanoate-false.png",   correct: false },
+      { file: "images/ion-ethanoate-sansdnl.png", correct: false },
+      { file: "images/ion-ethanoate.png",         correct: true  },
+    ]
+  }
+];
+
+const q1Sel = {};
+
+function buildQ1() {
+  const container = document.getElementById('q1-panels');
+  Q1_DATA.forEach((mol, mi) => {
+    const sec = document.createElement('div');
+    sec.className = 'mol-section';
+    sec.innerHTML = `<div class="mol-section-title">${mol.name}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'mol-options';
+    mol.options.forEach((opt, oi) => {
+      const card = document.createElement('div');
+      card.className = 'mol-opt';
+      card.dataset.mol = mi;
+      card.dataset.opt = oi;
+      card.innerHTML = `<img src="${opt.file}" alt="Proposition ${String.fromCharCode(65+oi)}">
+                        <div class="mol-opt-label">Proposition ${String.fromCharCode(65+oi)}</div>`;
+      card.onclick = () => {
+        document.querySelectorAll(`[data-mol="${mi}"]`).forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        q1Sel[mi] = oi;
+      };
+      grid.appendChild(card);
+    });
+    sec.appendChild(grid);
+    container.appendChild(sec);
+  });
+}
+
+function checkQ1() {
+  let allCorrect = true, allSelected = true;
+  Q1_DATA.forEach((mol, mi) => {
+    if (q1Sel[mi] === undefined) { allSelected = false; return; }
+    document.querySelectorAll(`[data-mol="${mi}"]`).forEach((c, ci) => {
+      c.classList.remove('selected', 'correct', 'wrong');
+      if (mol.options[ci].correct) c.classList.add('correct');
+      else if (ci === q1Sel[mi])   { c.classList.add('wrong'); allCorrect = false; }
+    });
+  });
+  const fb = document.getElementById('q1-feedback');
+  if (!allSelected) {
+    fb.innerHTML = `<div class="feedback err">Sélectionne une représentation pour chaque espèce.</div>`; return;
+  }
+  if (allCorrect) {
+    fb.innerHTML = `<div class="feedback ok">✓ Toutes les représentations sont correctes ! La question 2 est déverrouillée.</div>`;
+    document.getElementById('badge1').className = 'step-badge done';
+    unlockQ2();
+  } else {
+    fb.innerHTML = `<div class="feedback err">Certaines réponses sont incorrectes. Les représentations correctes sont encadrées en vert.</div>`;
+  }
+}
+
+function resetQ1() {
+  Object.keys(q1Sel).forEach(k => delete q1Sel[k]);
+  document.querySelectorAll('.mol-opt').forEach(c => c.classList.remove('selected','correct','wrong'));
+  document.getElementById('q1-feedback').innerHTML = '';
+}
+
+/* =========================================================
+   Q2 — Drag & drop équation bilan
+   ========================================================= */
+const SPECIES = ["CH₃COOH", "NH₃", "NH₄⁺", "CH₃COO⁻"];
+const CORRECT_ORDER = [0, 1, 2, 3];
+const slotContent = [null, null, null, null];
+let dragIdx = null;
+
+function unlockQ2() {
+  document.getElementById('card2').classList.remove('locked');
+  document.getElementById('badge2').className = 'step-badge active';
+  buildQ2();
+}
+
+function buildQ2() {
+  const pool = document.getElementById('pool');
+  pool.innerHTML = '';
+  slotContent.fill(null);
+  document.querySelectorAll('.drop-slot').forEach(s => { s.innerHTML = ''; s.classList.remove('filled','over'); });
+
+  [0,1,2,3].sort(() => Math.random() - 0.5).forEach(idx => {
+    const tok = makeTok(idx);
+    pool.appendChild(tok);
+  });
+
+  document.querySelectorAll('.drop-slot').forEach(slot => {
+    slot.addEventListener('dragover', e => { e.preventDefault(); slot.classList.add('over'); });
+    slot.addEventListener('dragleave', () => slot.classList.remove('over'));
+    slot.addEventListener('drop', e => {
+      e.preventDefault(); slot.classList.remove('over');
+      const si = parseInt(slot.dataset.idx);
+      if (slotContent[si] !== null) {
+        const prev = document.getElementById(`tok-${slotContent[si]}`);
+        if (prev) prev.style.display = '';
+        slotContent[si] = null; slot.innerHTML = ''; slot.classList.remove('filled');
+      }
+      if (dragIdx !== null) {
+        const tok = document.getElementById(`tok-${dragIdx}`);
+        if (tok) tok.style.display = 'none';
+        slot.classList.add('filled');
+        slot.innerHTML = `<span class="drag-token placed" style="cursor:default">${SPECIES[dragIdx]}</span>`;
+        slotContent[si] = dragIdx;
+        dragIdx = null;
+      }
+    });
+  });
+}
+
+function makeTok(idx) {
+  const tok = document.createElement('div');
+  tok.className = 'drag-token';
+  tok.draggable = true;
+  tok.id = `tok-${idx}`;
+  tok.textContent = SPECIES[idx];
+  tok.addEventListener('dragstart', () => { dragIdx = idx; setTimeout(()=> tok.style.opacity='0.4', 0); });
+  tok.addEventListener('dragend',   () => { tok.style.opacity='1'; });
+  return tok;
+}
+
+function checkQ2() {
+  const fb = document.getElementById('q2-feedback');
+  if (slotContent.some(x => x === null)) {
+    fb.innerHTML = `<div class="feedback err">Place une espèce dans chaque emplacement.</div>`; return;
+  }
+  /* Réactifs : slots 0 et 1 doivent contenir {0,1} dans n'importe quel ordre
+     Produits  : slots 2 et 3 doivent contenir {2,3} dans n'importe quel ordre */
+  const reactifs = new Set([slotContent[0], slotContent[1]]);
+  const produits  = new Set([slotContent[2], slotContent[3]]);
+  const okR = reactifs.has(0) && reactifs.has(1);
+  const okP = produits.has(2) && produits.has(3);
+  if (okR && okP) {
+    fb.innerHTML = `<div class="feedback ok">✓ Correct ! Les réactifs (CH₃COOH et NH₃) sont bien à gauche et les produits (NH₄⁺ et CH₃COO⁻) à droite. La question 3 est déverrouillée.</div>`;
+    document.getElementById('badge2').className = 'step-badge done';
+    unlockQ3();
+  } else if (!okR && okP) {
+    fb.innerHTML = `<div class="feedback err">Les produits sont corrects, mais vérifie les réactifs : CH₃COOH et NH₃ doivent être à gauche de la flèche.</div>`;
+  } else if (okR && !okP) {
+    fb.innerHTML = `<div class="feedback err">Les réactifs sont corrects, mais vérifie les produits : NH₄⁺ et CH₃COO⁻ doivent être à droite de la flèche.</div>`;
+  } else {
+    fb.innerHTML = `<div class="feedback err">Les réactifs (CH₃COOH et NH₃) se placent à gauche de la flèche, les produits (NH₄⁺ et CH₃COO⁻) à droite.</div>`;
+  }
+}
+
+function resetQ2() {
+  /* Remettre les tokens cachés dans le pool avant de reconstruire */
+  const pool = document.getElementById('pool');
+  slotContent.forEach((idx, si) => {
+    if (idx !== null) {
+      const tok = document.getElementById(`tok-${idx}`);
+      if (tok) { tok.style.display = ''; tok.style.opacity = '1'; pool.appendChild(tok); }
+    }
+  });
+  slotContent.fill(null);
+  document.querySelectorAll('.drop-slot').forEach(s => { s.innerHTML = ''; s.classList.remove('filled'); });
+  document.getElementById('q2-feedback').innerHTML = '';
+}
+
+/* =========================================================
+   Q3 — Mécanisme flèches courbes
+   ========================================================= */
+let mode = 'add';
+let pendingStart = null;
+const arrows = [];
+let draggingIdx = null, dragOX = 0, dragOY = 0;
+
+const IMG_W = 1196, IMG_H = 192;
+
+/* Coordonnées sur l'image originale (1196×192) des points de snap */
+const SNAP_POINTS = [
+  { x: 370, y: 108, label: "doublet O–H (acide éthanoïque)" },
+  { x: 620, y:  72, label: "doublet non liant de N (NH₃)"   },
+];
+const SNAP_RADIUS_IMG = 60;
+
+let canvasW = 680, canvasH = 0;
+let bgImage = null;
+let scale = 1;
+
+function unlockQ3() {
+  document.getElementById('card3').classList.remove('locked');
+  document.getElementById('badge3').className = 'step-badge active';
+  initCanvas();
+}
+
+function initCanvas() {
+  const canvas = document.getElementById('mechCanvas');
+  canvasW = canvas.parentElement.clientWidth || 680;
+  scale   = canvasW / IMG_W;
+  canvasH = Math.round(IMG_H * scale);
+  canvas.width  = canvasW;
+  canvas.height = canvasH;
+
+  bgImage = new Image();
+  bgImage.src = 'images/equationbilan-sans-fleches.png';
+  bgImage.onload = () => draw();
+
+  canvas.addEventListener('click',     onCanvasClick);
+  canvas.addEventListener('mousedown', onMouseDown);
+  canvas.addEventListener('mousemove', onMouseMove);
+  canvas.addEventListener('mouseup',   onMouseUp);
+  canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+  canvas.addEventListener('touchmove',  onTouchMove,  { passive: false });
+  canvas.addEventListener('touchend',   onTouchEnd);
+}
+
+function imgToCanvas(x, y) { return { x: x * scale, y: y * scale }; }
+function canvasToImg(x, y) { return { x: x / scale, y: y / scale }; }
+
+function snapToPoint(cx, cy) {
+  const ip = canvasToImg(cx, cy);
+  let best = null, bestD = SNAP_RADIUS_IMG;
+  SNAP_POINTS.forEach(sp => {
+    const d = Math.hypot(ip.x - sp.x, ip.y - sp.y);
+    if (d < bestD) { bestD = d; best = sp; }
+  });
+  if (best) return imgToCanvas(best.x, best.y);
+  return { x: cx, y: cy };
+}
+
+function findNearArrow(cx, cy) {
+  let best = null, bestD = 20;
+  arrows.forEach((a, i) => {
+    const mx = (a.sx + a.ex) / 2, my = Math.min(a.sy, a.ey) - 28;
+    [[a.sx,a.sy],[mx,my],[a.ex,a.ey]].forEach(([px,py]) => {
+      const d = Math.hypot(cx-px, cy-py);
+      if (d < bestD) { bestD = d; best = i; }
+    });
+  });
+  return best;
+}
+
+function draw() {
+  const canvas = document.getElementById('mechCanvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvasW, canvasH);
+  if (bgImage && bgImage.complete) ctx.drawImage(bgImage, 0, 0, canvasW, canvasH);
+
+  if (pendingStart) {
+    ctx.beginPath();
+    ctx.arc(pendingStart.x, pendingStart.y, 6, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(220,80,30,0.25)';
+    ctx.fill();
+    ctx.strokeStyle = '#D85A30'; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+
+  arrows.forEach((a, i) => drawCurvedArrow(ctx, a.sx, a.sy, a.ex, a.ey, '#2563eb'));
+}
+
+function drawCurvedArrow(ctx, x1, y1, x2, y2, color) {
+  const mx = (x1+x2)/2;
+  const my = (y1+y2)/2 - Math.max(22, Math.hypot(x2-x1,y2-y1)*0.35);
+  ctx.strokeStyle = color; ctx.lineWidth = 2.2; ctx.lineJoin = 'round';
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.quadraticCurveTo(mx,my,x2,y2); ctx.stroke();
+  const dx = x2-mx, dy = y2-my, len = Math.hypot(dx,dy);
+  const ux = dx/len, uy = dy/len, hs = 10;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - hs*ux + hs*0.4*(-uy), y2 - hs*uy + hs*0.4*ux);
+  ctx.lineTo(x2 - hs*ux - hs*0.4*(-uy), y2 - hs*uy - hs*0.4*ux);
+  ctx.closePath(); ctx.fill();
+}
+
+function getPos(e) {
+  const r = document.getElementById('mechCanvas').getBoundingClientRect();
+  const scaleX = canvasW / r.width;
+  return { x: (e.clientX - r.left)*scaleX, y: (e.clientY - r.top)*scaleX };
+}
+
+function setMode(m) {
+  mode = m; pendingStart = null; draw();
+  ['add','move','delete'].forEach(n =>
+    document.getElementById('btn-'+n).className = 'tool-btn' + (n===m?' active':''));
+  const hints = {
+    add:    'Clique sur l\'origine de la flèche (un doublet non liant), puis sur la destination.',
+    move:   'Clique sur une flèche puis glisse-la pour la repositionner.',
+    delete: 'Clique sur une flèche pour la supprimer.'
+  };
+  document.getElementById('mech-hint').textContent = hints[m];
+}
+
+function onCanvasClick(e) {
+  const p = getPos(e);
+  if (mode === 'delete') {
+    const idx = findNearArrow(p.x, p.y);
+    if (idx !== null) { arrows.splice(idx, 1); draw(); } return;
+  }
+  if (mode !== 'add') return;
+  if (!pendingStart) {
+    const sp = snapToPoint(p.x, p.y);
+    pendingStart = sp; draw();
+  } else {
+    arrows.push({ sx: pendingStart.x, sy: pendingStart.y, ex: p.x, ey: p.y });
+    pendingStart = null; draw();
+  }
+}
+
+function onMouseDown(e) {
+  if (mode !== 'move') return;
+  const p = getPos(e);
+  draggingIdx = findNearArrow(p.x, p.y);
+  if (draggingIdx !== null) { dragOX = p.x; dragOY = p.y; }
+}
+function onMouseMove(e) {
+  if (draggingIdx === null) return;
+  const p = getPos(e);
+  const dx = p.x-dragOX, dy = p.y-dragOY;
+  arrows[draggingIdx].sx += dx; arrows[draggingIdx].sy += dy;
+  arrows[draggingIdx].ex += dx; arrows[draggingIdx].ey += dy;
+  dragOX = p.x; dragOY = p.y; draw();
+}
+function onMouseUp() { draggingIdx = null; }
+
+function onTouchStart(e) {
+  e.preventDefault();
+  const t = e.touches[0];
+  if (mode === 'move') {
+    const p = getPos(t);
+    draggingIdx = findNearArrow(p.x, p.y);
+    if (draggingIdx !== null) { dragOX = p.x; dragOY = p.y; }
+  }
+}
+function onTouchMove(e) {
+  e.preventDefault();
+  if (draggingIdx === null) return;
+  const p = getPos(e.touches[0]);
+  const dx = p.x-dragOX, dy = p.y-dragOY;
+  arrows[draggingIdx].sx += dx; arrows[draggingIdx].sy += dy;
+  arrows[draggingIdx].ex += dx; arrows[draggingIdx].ey += dy;
+  dragOX = p.x; dragOY = p.y; draw();
+}
+function onTouchEnd(e) {
+  if (mode === 'add' && e.changedTouches.length) {
+    const fakeEv = { clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY };
+    onCanvasClick(fakeEv);
+  }
+  draggingIdx = null;
+}
+
+/* Corrigé : flèche 1 doublet O–H → H, flèche 2 doublet N → H reçu */
+const CORRECT_ARROWS_IMG = [
+  { sx: 370, sy: 108, ex: 448, ey:  95 },
+  { sx: 620, sy:  72, ex: 474, ey:  88 },
+];
+
+function checkQ3() {
+  const fb = document.getElementById('q3-feedback');
+  if (arrows.length < 2) {
+    fb.innerHTML = `<div class="feedback err">Il faut tracer au moins 2 flèches courbes pour représenter le mécanisme.</div>`; return;
+  }
+  fb.innerHTML = `<div class="feedback ok">✓ Flèches tracées ! Vérifie que la flèche 1 part du doublet O–H de l'acide vers le H transféré, et que la flèche 2 part du doublet de N de NH₃ vers ce même H. Clique sur "Voir le corrigé" pour comparer.</div>`;
+  document.getElementById('badge3').className = 'step-badge done';
+}
+
+function showCorrection() {
+  arrows.length = 0;
+  CORRECT_ARROWS_IMG.forEach(a => arrows.push({
+    sx: a.sx*scale, sy: a.sy*scale,
+    ex: a.ex*scale, ey: a.ey*scale
+  }));
+  draw();
+  document.getElementById('q3-feedback').innerHTML =
+    `<div class="feedback ok">Corrigé : flèche 1 — doublet non liant de O vers le H de la liaison O–H (transfert du proton) ; flèche 2 — doublet non liant de N vers le H transféré (formation de la liaison N–H).</div>`;
+}
+
+function resetQ3() {
+  arrows.length = 0; pendingStart = null; draggingIdx = null;
+  draw(); document.getElementById('q3-feedback').innerHTML = '';
+}
+
+/* =========================================================
+   Init
+   ========================================================= */
+buildQ1();
+</script>
+</body>
+</html>
