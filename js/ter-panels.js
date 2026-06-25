@@ -93,10 +93,17 @@ const TER_SEQUENCES = [
     icone: 'ph',
     headerBg: 'seq02/image2.jpg',
     tabs: [
-      { id:'Animations',        label:'Animations',        desactive:true,  items:[] },
+      {
+        id:'Cours', label:'Cours', actif: true,
+        items: [
+          { type:'link', icon:'🎓', label:'Cours interactif — Acides et bases',
+            sub:'Théorie de Brønsted-Lowry · pH · pKa · Réactions acido-basiques',
+            href:'seq02/seq02-cours_interactif.html' },
+        ]
+      },
       { id:'Fiche de révision', label:'Fiche de révision', desactive:true,  items:[] },
       {
-        id:'flashcards', label:'Flashcards et Quiz', actif: true,
+        id:'flashcards', label:'Flashcards et Quiz',
         items: [
           { type:'link', icon:'🃏✅', label:'Flashcards et Quiz',
             sub:'Réalisés par Aly et Nessim',
