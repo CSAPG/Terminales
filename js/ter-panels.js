@@ -72,6 +72,16 @@ const TER_SEQUENCES = [
             href:'seq01/seq01_Quiz.html' },
         ]
       },
+      {
+        id: 'Jeu', label: '🎮 Jeu',
+        items: [
+          { type:'link', icon:'🔐', label:'Escape game — L\'Héritage de Volta',
+            sub:'Séquence 01 — Évolution d\'un système chimique',
+            href:'seq01/seq01-escape-volta.html',
+            imgSrc:'seq01/imajeu/pile-volta.jpeg',
+            cta:'Jouer →' },
+        ]
+      },
     ]
   },
 
@@ -530,11 +540,14 @@ function renderTerItem(item) {
         <img src="${c.src}" alt="${c.label}" style="width:100%;display:block;">
       </div>`).join('');
   }
-  // Lien standard
+  // Lien standard (avec image optionnelle à la place de l'icône)
   const cta = item.cta || '→';
+  const iconHtml = item.imgSrc
+    ? `<img src="${item.imgSrc}" alt="" style="width:56px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0;">`
+    : `<div class="ter-res-icon">${item.icon}</div>`;
   return `
     <a href="${item.href}" target="_blank" class="ter-resource-link">
-      <div class="ter-res-icon">${item.icon}</div>
+      ${iconHtml}
       <div style="text-align:left;flex:1;">
         <p class="ter-res-label">${item.label}</p>
         ${item.sub ? `<p class="ter-res-sub">${item.sub}</p>` : ''}
