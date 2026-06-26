@@ -52,19 +52,28 @@ addGalaxy(W * 0.87, H * 0.5, maxR, 500);
   let t = 0;
   function draw() {
     ctx.clearRect(0, 0, W, H);
-
-    ctx.fillStyle = 'rgba(240,245,255,0.08)';
+    ctx.fillStyle = 'rgba(240,245,255,0.03)';
     ctx.fillRect(0, 0, W, H);
  
     for (const [gx, gy] of [[W * 0.13, H * 0.5], [W * 0.87, H * 0.5]]) {
   const grd = ctx.createRadialGradient(gx, gy, 0, gx, gy, Math.min(W, H) * 0.22);
-  grd.addColorStop(0, 'rgba(255,240,180,0.30)');
-  grd.addColorStop(0.5, 'rgba(200,180,255,0.15)');
-  grd.addColorStop(1, 'rgba(0,0,0,0)');
-  ctx.fillStyle = grd;
-  ctx.fillRect(0, 0, W, H);
+grd.addColorStop(0, 'rgba(255,240,180,0.12)');
+grd.addColorStop(0.5, 'rgba(200,180,255,0.06)');
+grd.addColorStop(1, 'rgba(0,0,0,0)');
+ctx.fillStyle = grd;
+ctx.beginPath();
+ctx.arc(gx, gy, Math.min(W, H) * 0.22, 0, Math.PI * 2);
+ctx.fill();
 }
-
+ for (const d of dust) {
+      const g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r);
+      g.addColorStop(0, `hsla(${d.hue},60%,70%,${d.alpha})`);
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
     for (const s of stars) {
       const twinkle = 0.7 + 0.3 * Math.sin(t * s.speed * 60 + s.twinkle);
       const alpha = s.brightness * twinkle;
