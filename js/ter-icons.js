@@ -5,26 +5,46 @@
 
 const TER_ICONS = {
 
-  /* ── Séq. 00 — Ampoule Eureka (identique Seconde) ── */
+/* ── Séq. 00 — Ampoule "Les incontournables" ── */
   bulb: `
-    <div class="bulb-icon">
-      <div class="bulb-glow"></div>
-      <svg class="bulb-svg" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-        <g class="bulb-rays">
-          <line x1="30" y1="2"  x2="30" y2="8"  />
-          <line x1="6"  y1="10" x2="13" y2="16" />
-          <line x1="54" y1="10" x2="47" y2="16" />
-          <line x1="0"  y1="32" x2="8"  y2="32" />
-          <line x1="60" y1="32" x2="52" y2="32" />
-        </g>
-        <ellipse class="bulb-glass" cx="30" cy="32" rx="19" ry="25"/>
-        <text class="bulb-filament-text" x="30" y="35">eureka</text>
-        <rect class="bulb-base-cap"  x="24" y="54" width="12" height="6"/>
-        <rect class="bulb-base-ring" x="23" y="60" width="14" height="4"/>
-        <rect class="bulb-base-ring" x="23" y="65" width="14" height="4"/>
-        <rect class="bulb-base-tip"  x="24" y="70" width="12" height="6" rx="2"/>
-      </svg>
-    </div>`,
+    <style>
+      @keyframes bl-halo1 { 0%,100%{opacity:0.15;} 50%{opacity:0.38;} }
+      @keyframes bl-halo2 { 0%,100%{opacity:0.08;} 50%{opacity:0.22;} }
+      @keyframes bl-ray-a { 0%,100%{opacity:1;stroke-width:2.5;} 35%{opacity:0.30;stroke-width:1;} }
+      @keyframes bl-ray-b { 0%,100%{opacity:0.45;stroke-width:1.5;} 45%{opacity:1;stroke-width:2.5;} }
+      @keyframes bl-fil   { 0%,100%{stroke:#f59e0b;opacity:1;} 45%{stroke:#fde68a;opacity:0.55;} }
+      @keyframes bl-glass { 0%,100%{fill:#fef9c3;} 50%{fill:#fde68a;} }
+      .bl-h1{animation:bl-halo1 2.4s ease-in-out infinite;}
+      .bl-h2{animation:bl-halo2 2.4s ease-in-out 0.4s infinite;}
+      .bl-ra{animation:bl-ray-a 2.4s ease-in-out infinite;}
+      .bl-rb{animation:bl-ray-b 2.4s ease-in-out 0.7s infinite;}
+      .bl-f {animation:bl-fil   2.4s ease-in-out infinite;}
+      .bl-g {animation:bl-glass 2.4s ease-in-out infinite;}
+      @media(prefers-reduced-motion:reduce){
+        .bl-h1,.bl-h2,.bl-ra,.bl-rb,.bl-f,.bl-g{animation:none;}
+      }
+    </style>
+    <svg viewBox="0 0 80 105" xmlns="http://www.w3.org/2000/svg" width="66" height="88">
+      <circle class="bl-h2" cx="40" cy="40" r="36" fill="#fde68a"/>
+      <circle class="bl-h1" cx="40" cy="40" r="26" fill="#fef08a"/>
+      <line class="bl-ra" x1="40" y1="2"  x2="40" y2="11" stroke="#f59e0b" stroke-linecap="round"/>
+      <line class="bl-ra" x1="17" y1="9"  x2="23" y2="17" stroke="#f59e0b" stroke-linecap="round"/>
+      <line class="bl-ra" x1="63" y1="9"  x2="57" y2="17" stroke="#f59e0b" stroke-linecap="round"/>
+      <line class="bl-ra" x1="5"  y1="30" x2="13" y2="33" stroke="#f59e0b" stroke-linecap="round"/>
+      <line class="bl-ra" x1="75" y1="30" x2="67" y2="33" stroke="#f59e0b" stroke-linecap="round"/>
+      <line class="bl-rb" x1="10" y1="16" x2="16" y2="23" stroke="#fbbf24" stroke-linecap="round"/>
+      <line class="bl-rb" x1="70" y1="16" x2="64" y2="23" stroke="#fbbf24" stroke-linecap="round"/>
+      <line class="bl-rb" x1="4"  y1="46" x2="12" y2="46" stroke="#fbbf24" stroke-linecap="round"/>
+      <line class="bl-rb" x1="76" y1="46" x2="68" y2="46" stroke="#fbbf24" stroke-linecap="round"/>
+      <ellipse class="bl-g" cx="40" cy="42" rx="22" ry="25"/>
+      <ellipse cx="40" cy="42" rx="22" ry="25" fill="none" stroke="#d97706" stroke-width="1.8"/>
+      <path class="bl-f" d="M28,48 Q31,40 34,48 Q37,40 40,48 Q43,40 46,48 Q49,40 52,48"
+            fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+      <rect x="30" y="65" width="20" height="5"  rx="1.5" fill="#b45309" stroke="#92400e" stroke-width="1"/>
+      <rect x="28" y="70" width="24" height="4"  rx="1"   fill="#92400e"/>
+      <rect x="28" y="74" width="24" height="4"  rx="1"   fill="#78350f"/>
+      <rect x="30" y="78" width="20" height="6"  rx="2"   fill="#92400e"/>
+    </svg>`,
 
   /* ── Séq. 01 — Pile électrochimique ── */
   pile: `
