@@ -55,15 +55,7 @@ addGalaxy(W * 0.87, H * 0.5, maxR, 500);
 
     ctx.fillStyle = 'rgba(240,245,255,0.08)';
     ctx.fillRect(0, 0, W, H);
-
-    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.22);
-    grd.addColorStop(0, 'rgba(255,240,180,0.30)');
-    grd.addColorStop(0.5, 'rgba(200,180,255,0.15)');
-    grd.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, W, H);
-
-    for (const d of dust) {
+ 
     for (const [gx, gy] of [[W * 0.13, H * 0.5], [W * 0.87, H * 0.5]]) {
   const grd = ctx.createRadialGradient(gx, gy, 0, gx, gy, Math.min(W, H) * 0.22);
   grd.addColorStop(0, 'rgba(255,240,180,0.30)');
@@ -72,7 +64,6 @@ addGalaxy(W * 0.87, H * 0.5, maxR, 500);
   ctx.fillStyle = grd;
   ctx.fillRect(0, 0, W, H);
 }
-    }
 
     for (const s of stars) {
       const twinkle = 0.7 + 0.3 * Math.sin(t * s.speed * 60 + s.twinkle);
