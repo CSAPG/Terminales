@@ -479,6 +479,9 @@ const TER_SEQUENCES = [
     icone: 'nuclear', iconSuffix: 'seq14',
     headerBg: 'seq14/image14.png',
     tabs: [
+            { type:'link', icon:'📖', label:'cours interactif',
+        sub:'Désintégration . Loi de décroissance . Activité',
+        href:'seq14/cours-interactif-radioactivite.html' }, 
       {
         id:'Fiche de révision', label:'Fiche de révision', actif: true,
         items: [
