@@ -6,60 +6,48 @@
   let W, H, stars = [], dust = [], cx, cy;
 
   function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+W = canvas.width  = canvas.offsetWidth;
+H = canvas.height = canvas.offsetHeight;
     cx = W / 2;
     cy = H * 0.7;
   }
 
   function rand(min, max) { return min + Math.random() * (max - min); }
-
-  function initGalaxy() {
-    stars = [];
-    dust  = [];
-
-    const arms = 2;
-    for (let a = 0; a < arms; a++) {
-      const armOffset = (a / arms) * Math.PI * 2;
-      for (let i = 0; i < 1200; i++) {
-        const t = i / 1200;
-        const r = t * Math.min(W, H) * 0.55;
-        const angle = t * Math.PI * 1.8 + armOffset + rand(-0.4, 0.4);
-        const spread = rand(-1, 1) * r * 0.38;
-        const sx = cx + Math.cos(angle) * r + Math.cos(angle + Math.PI / 2) * spread;
-        const sy = cy + Math.sin(angle) * r * 0.52 + Math.sin(angle + Math.PI / 2) * spread * 0.52;
-        const brightness = rand(0.35, 0.90);
-        const size = rand(0.6, 2.8) * (1 - t * 0.3);
-        const hue = rand(180, 260);
-        stars.push({ x: sx, y: sy, r: size, brightness, hue, twinkle: rand(0, Math.PI * 2), speed: rand(0.005, 0.02) });
-      }
-    }
-
-    for (let i = 0; i < 400; i++) {
-      const r = rand(0, Math.min(W, H) * 0.12);
-      const angle = rand(0, Math.PI * 2);
-      const sx = cx + Math.cos(angle) * r;
-      const sy = cy + Math.sin(angle) * r * 0.42;
-      const brightness = rand(0.5, 0.95);
-      stars.push({ x: sx, y: sy, r: rand(0.8, 2.8), brightness, hue: rand(40, 80), twinkle: rand(0, Math.PI * 2), speed: rand(0.01, 0.03) });
-    }
-
-    for (let i = 0; i < 200; i++) {
-      const t = rand(0, 1);
-      const arm = Math.floor(rand(0, arms));
-      const armOffset = (arm / arms) * Math.PI * 2;
-      const r = t * Math.min(W, H) * 0.4;
-      const angle = t * Math.PI * 1.8 + armOffset + rand(-0.6, 0.6);
-      const spread = rand(-1, 1) * r * 0.45;
-      dust.push({
-        x: cx + Math.cos(angle) * r + Math.cos(angle + Math.PI / 2) * spread,
-        y: cy + Math.sin(angle) * r * 0.42 + Math.sin(angle + Math.PI / 2) * spread * 0.42,
-        r: rand(15, 60),
-        alpha: rand(0.04, 0.14),
-        hue: rand(200, 280)
-      });
+function addGalaxy(cx, cy, maxR, count) {
+  const arms = 2;
+  for (let a = 0; a < arms; a++) {
+    const armOffset = (a / arms) * Math.PI * 2;
+    for (let i = 0; i < count; i++) {
+      const t = i / count;
+      const r = t * maxR;
+      const angle = t * Math.PI * 1.8 + armOffset + rand(-0.4, 0.4);
+      const spread = rand(-1, 1) * r * 0.38;
+      const sx = cx + Math.cos(angle) * r + Math.cos(angle + Math.PI / 2) * spread;
+      const sy = cy + Math.sin(angle) * r * 0.52 + Math.sin(angle + Math.PI / 2) * spread * 0.52;
+      stars.push({ x: sx, y: sy, r: rand(0.6, 2.8) * (1 - t * 0.3), brightness: rand(0.35, 0.90), hue: rand(180, 260), twinkle: rand(0, Math.PI * 2), speed: rand(0.005, 0.02) });
     }
   }
+  for (let i = 0; i < Math.round(count * 0.15); i++) {
+    const r = rand(0, maxR * 0.12);
+    const angle = rand(0, Math.PI * 2);
+    stars.push({ x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r * 0.42, r: rand(0.8, 2.8), brightness: rand(0.5, 0.95), hue: rand(40, 80), twinkle: rand(0, Math.PI * 2), speed: rand(0.01, 0.03) });
+  }
+  for (let i = 0; i < Math.round(count * 0.08); i++) {
+    const t = rand(0, 1);
+    const arm = Math.floor(rand(0, arms));
+    const armOffset = (arm / arms) * Math.PI * 2;
+    const r = t * maxR * 0.9;
+    const angle = t * Math.PI * 1.8 + armOffset + rand(-0.6, 0.6);
+    const spread = rand(-1, 1) * r * 0.45;
+    dust.push({ x: cx + Math.cos(angle) * r + Math.cos(angle + Math.PI / 2) * spread, y: cy + Math.sin(angle) * r * 0.42 + Math.sin(angle + Math.PI / 2) * spread * 0.42, r: rand(15, 60), alpha: rand(0.04, 0.14), hue: rand(200, 280) });
+  }
+}
+  function initGalaxy() {
+stars = [];
+dust  = [];
+const maxR = Math.min(W, H) * 0.48;
+addGalaxy(W * 0.13, H * 0.5, maxR, 500);
+addGalaxy(W * 0.87, H * 0.5, maxR, 500);
 
   let t = 0;
   function draw() {
