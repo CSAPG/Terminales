@@ -6,8 +6,8 @@
   let W, H, stars = [], dust = [], cx, cy;
 
   function resize() {
-W = canvas.width  = canvas.offsetWidth;
-H = canvas.height = canvas.offsetHeight;
+W = canvas.width  = window.innerWidth;
+H = canvas.height = window.innerHeight
     cx = W / 2;
     cy = H * 0.7;
   }
