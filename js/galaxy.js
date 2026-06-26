@@ -48,7 +48,7 @@ dust  = [];
 const maxR = Math.min(W, H) * 0.48;
 addGalaxy(W * 0.13, H * 0.5, maxR, 500);
 addGalaxy(W * 0.87, H * 0.5, maxR, 500);
-
+  }
   let t = 0;
   function draw() {
     ctx.clearRect(0, 0, W, H);
