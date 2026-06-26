@@ -507,17 +507,21 @@ const TER_SEQUENCES = [
     icone: 'photon',
     headerBg: 'seq15/image15.png',
     tabs: [
-      { id:'Fiche de révision', label:'Fiche de révision', desactive:true, items:[] },
-      {
-        id:'Flashcards', label:'Flashcards', actif: true,
+      { id:'cours interactif', label:'cours interactif', actif:true,
+       items:[
+           { type:'link', icon:'💡', label:'Cours interactif — Effet photoélectrique',
+          sub:'Du photon au courant électrique',
+          href:'seq15/cours_interactif-effet_photoelectrique.html' },  //
+               ]
+      },
+      { id:'Flashcards', label:'Flashcards', actif: true,
         items: [
           { type:'link', icon:'🃏', label:'Flashcards',
             sub:'Réalisées par Valence et Loïc',
             href:'seq15/seq15_Flashcards.pdf' },
         ]
       },
-      {
-        id:'Quiz', label:'Quiz',
+      {id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
             sub:'Séquence 15 — La lumière : un flux de photons',
