@@ -101,7 +101,6 @@ const TER_SEQUENCES = [
             href:'seq02/seq02-cours_interactif.html' },
         ]
       },
-      { id:'Fiche de révision', label:'Fiche de révision', desactive:true,  items:[] },
       {
         id:'flashcards', label:'Flashcards et Quiz',
         items: [
