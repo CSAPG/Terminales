@@ -486,9 +486,7 @@ const TER_SEQUENCES = [
         href:'seq14/cours-interactif-radioactivite.html' }, 
       ]
        },
-        ]
-      },
-      {
+       {
         id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
