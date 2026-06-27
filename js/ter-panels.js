@@ -36,13 +36,19 @@ const TER_SEQUENCES = [
     {
       id: 'fiches-revision', label: 'Fiches de révision',
       items: [
-        { type:'link', icon:'📖', label:'Fiche de révision — Les grandeurs en chimie', href:'seq00/Fiche1-calcul-grandeurs-en-chimie.pdf' },
+        { type:'link', icon:'📖', label:'Fiche de révision — Les grandeurs en chimie', href:'seq00/fiche1/Fiche1-calcul-grandeurs-en-chimie.pdf' },
         { type:'link', icon:'📖', label:"Fiche de révision — Ecriture d'un résultat numérique et incertitudes", href:'seq00/fiche2/Fiche2-mesure-et-incertitudes.pdf' },
         { type:'link', icon:'📖', label:'Fiche de révision — Analyse dimensionnelle', href:'seq00/Fiche3-analyse-dimensionnelle.pdf' },
         { type:'link', icon:'📖', label:'Fiche de révision — Les logarithmes', href:'seq00/Fiche4-logarithme.pdf' },
         { type:'link', icon:'📖', label:'Fiche de révision — Nomenclature', href:'seq00/Fiche5-Nomenclature.pdf' },
         { type:'link', icon:'📖', label:'Fiche de révision — Equations différentielles', href:'seq00/Fiche6-equadiff.pdf' },
         { type:'link', icon:'📖', label:'Fiche de révision — Les bases en électricité', href:'seq00/Fiche7-electricite.pdf' },
+      ]
+    },
+     {
+      id: 'fiches-interactives', label: 'Fiches de révision interactives', actif: true,
+      items: [
+        { type:'link', icon:'🎓', label:'Fiche de révision — Calcul de quelques grandeurs en chimie', href:'seq00/fiche1/fiche1-grandeurs-chimie.html' },
       ]
     },
     {
