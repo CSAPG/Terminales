@@ -1544,6 +1544,83 @@
         <div class="qcm-feedback"></div>
       </div>
     </div>
+
+    <!-- Exercice 2 : écart absolu vs relatif + Q -->
+    <div class="exo-card">
+      <h3>Exercice 2 – Concentration d'une solution de NaCl</h3>
+      <div class="exo-enonce">
+        Lors d'un TP, on mesure la concentration d'une solution de NaCl par conductimétrie.<br>
+        On obtient : <strong>C<sub>mes</sub> = (5,2 ± 0,3) mmol·L<sup>−1</sup></strong><br>
+        La valeur attendue (étiquette du flacon) est : <strong>C<sub>ref</sub> = 5,0 mmol·L<sup>−1</sup></strong>
+        <div class="remarque-box" style="margin-top:10px;">
+          <strong>Rappel :</strong> L'<strong>écart absolu</strong> = |C<sub>mes</sub> − C<sub>ref</sub>| (même unité que la grandeur)<br>
+          L'<strong>écart relatif</strong> ε<sub>r</sub> = écart absolu / C<sub>ref</sub> × 100 % (sans unité, en %)<br>
+          Le <strong>quotient Q</strong> = |C<sub>mes</sub> − C<sub>ref</sub>| / u(C) (utilise l'incertitude — sans unité)
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">1. Quel est l'écart absolu |C<sub>mes</sub> − C<sub>ref</sub>| ?</div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">0,04 mmol·L<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="B">0,2 mmol·L<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="C">0,3 mmol·L<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="D">2,0 mmol·L<sup>−1</sup></button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">2. Quel est l'écart relatif ε<sub>r</sub> ?</div>
+        <div class="qcm-choices" data-correct="C" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">ε<sub>r</sub> = 0,4 %</button>
+          <button class="qcm-btn" data-val="B">ε<sub>r</sub> = 3,8 %</button>
+          <button class="qcm-btn" data-val="C">ε<sub>r</sub> = 4,0 %</button>
+          <button class="qcm-btn" data-val="D">ε<sub>r</sub> = 6,0 %</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">3. Quel est le quotient Q = |C<sub>mes</sub> − C<sub>ref</sub>| / u(C) ?</div>
+        <div class="qcm-choices" data-correct="A" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">Q ≈ 0,67</button>
+          <button class="qcm-btn" data-val="B">Q ≈ 1,5</button>
+          <button class="qcm-btn" data-val="C">Q ≈ 2,75</button>
+          <button class="qcm-btn" data-val="D">Q ≈ 0,04</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">4. Quelle conclusion tirer sur la validité de la mesure ?</div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;flex-wrap:wrap;">
+          <button class="qcm-btn" data-val="A">La mesure est invalide car ε<sub>r</sub> = 4 % est trop grand.</button>
+          <button class="qcm-btn" data-val="B">La mesure est conforme : Q &lt; 1 et ε<sub>r</sub> &lt; 10 %, le résultat est compatible avec la valeur de référence.</button>
+          <button class="qcm-btn" data-val="C">On ne peut pas conclure sans connaître l'incertitude de la valeur de référence.</button>
+          <button class="qcm-btn" data-val="D">La mesure est non conforme car C<sub>mes</sub> ≠ C<sub>ref</sub>.</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="num-btn-row">
+        <button class="btn-corriger" onclick="showCorr('comp4-corr')">Voir la correction complète</button>
+      </div>
+      <div class="num-correction-inline" id="comp4-corr">
+        <div class="calc-step"><strong>Q1 — Écart absolu :</strong> |5,2 − 5,0| = <strong>0,2 mmol·L<sup>−1</sup></strong> (même unité que la grandeur)</div>
+        <div class="calc-step"><strong>Q2 — Écart relatif :</strong> ε<sub>r</sub> = 0,2 / 5,0 × 100 = <strong>4,0 %</strong> (sans unité — ne tient pas compte de l'incertitude)</div>
+        <div class="calc-step"><strong>Q3 — Quotient Q :</strong> Q = 0,2 / 0,3 ≈ <strong>0,67</strong> (utilise u(C) = 0,3 mmol·L<sup>−1</sup>)</div>
+        <div class="calc-step"><strong>Q4 — Conclusion :</strong> Q = 0,67 &lt; 1 → mesure <span class="bold-vert">conforme</span> ✅ &nbsp;|&nbsp; ε<sub>r</sub> = 4 % &lt; 10 % → mesure <span class="bold-vert">satisfaisante</span> ✅<br>
+        ⚠️ Attention : l'écart absolu (0,2) semble grand par rapport à C<sub>ref</sub> mais <strong>il reste dans l'intervalle d'incertitude</strong> [4,9 ; 5,5]. La valeur de référence 5,0 est bien incluse → le résultat est <strong>compatible</strong>.
+        </div>
+        <div class="calc-step" style="background:var(--bleu-clair);border-left-color:var(--bleu);">
+          <strong>Différence clé :</strong><br>
+          • L'<strong>écart absolu</strong> dit combien on s'éloigne en unités réelles — mais ne dit pas si c'est grave.<br>
+          • L'<strong>écart relatif</strong> ε<sub>r</sub> ramène l'écart à la valeur de référence — utile quand on n'a pas u(C).<br>
+          • Le <strong>quotient Q</strong> compare l'écart à l'incertitude — c'est le critère le plus rigoureux : il tient compte de la précision de la mesure.
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="footer-note">Fiche 2 – C. Poirault-Gauvin & M. François · Terminale Spé PC</div>
