@@ -328,7 +328,7 @@
     </div>
     <div class="header-titles">
       <h1>Fiche 1 – Les Incontournables<br>Grandeurs en Chimie</h1>
-      <p>Terminale Spécialité PC — <span>M. François &amp; Mme Poirault-Gauvin</span></p>
+      <p>Terminale Spécialité PC — <span>© Mme Poirault-Gauvin &amp; M. François</span></p>
     </div>
   </div>
   <!-- Onglets -->
@@ -351,150 +351,21 @@
 <div class="main">
 
 <!-- ════════════════════════════════════════════════
-     ONGLET 1 — SCHÉMA ARBORESCENT DRAG & DROP
+     ONGLET 1 — SCHÉMA GENIALLY
      ════════════════════════════════════════════════ -->
 <div class="tab-content active" id="tab-0">
 
   <div class="def-card">
-    <p>Glisse chaque formule dans la bonne case du schéma. Complète toutes les cases, puis clique sur <strong>Vérifier</strong>.</p>
+    <p>Complète le schéma interactif ci-dessous en cliquant sur les cases à remplir.</p>
   </div>
 
-  <!-- BANQUE DE FORMULES -->
-  <div class="dnd-zone">
-    <div class="dnd-bank-label">👆 Clique sur une formule pour la sélectionner (elle devient orange), puis clique sur la case correspondante dans le schéma :</div>
-    <div class="dnd-bank" id="bank">
-      <!-- Les chips sont créées par JS -->
-    </div>
-
-    <!-- SCHÉMA ARBORESCENT -->
-    <div class="arbre-container">
-      <div class="arbre-title">Calculer la quantité de matière n d'un corps pur A dans différentes situations</div>
-
-      <!-- LIGNE 1 : 4 états -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:8px;">
-        <div class="arbre-case etat" style="background:#2D5F8A;">🧱 A est <strong>solide</strong></div>
-        <div class="arbre-case etat" style="background:#5B8FB9;">💧 A est <strong>liquide pur</strong></div>
-        <div class="arbre-case etat" style="background:#3A8A6E;">🧪 A est <strong>dissous</strong> en solution</div>
-        <div class="arbre-case etat" style="background:#7B4FA6;">💨 A est <strong>gazeux</strong></div>
-      </div>
-
-      <!-- CONNECTEURS -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:4px;">
-        <div style="text-align:center;"><div style="width:2px;height:18px;background:#2D5F8A;margin:0 auto;"></div></div>
-        <div style="text-align:center;"><div style="width:2px;height:18px;background:#5B8FB9;margin:0 auto;"></div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div style="text-align:center;"><div style="width:2px;height:18px;background:#3A8A6E;margin:0 auto;"></div></div>
-          <div style="text-align:center;"><div style="width:2px;height:18px;background:#3A8A6E;margin:0 auto;"></div></div>
-        </div>
-        <div style="text-align:center;"><div style="width:2px;height:18px;background:#7B4FA6;margin:0 auto;"></div></div>
-      </div>
-
-      <!-- LIGNE 2 : mesures -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:8px;">
-        <div class="arbre-case" style="border-color:#2D5F8A;">Je mesure sa <strong>masse m<sub>A</sub></strong> (en g)</div>
-        <div class="arbre-case" style="border-color:#5B8FB9;">Je mesure le <strong>volume V<sub>A</sub></strong> (en L)</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div class="arbre-case" style="border-color:#3A8A6E;font-size:0.78rem;">Je connais la <strong>concentration massique C<sub>m</sub></strong> (g.L⁻¹)</div>
-          <div class="arbre-case" style="border-color:#3A8A6E;font-size:0.78rem;">Je connais la <strong>concentration molaire c</strong> (mol.L⁻¹)</div>
-        </div>
-        <div class="arbre-case" style="border-color:#7B4FA6;">Je connais le <strong>volume V</strong> (en L)</div>
-      </div>
-
-      <!-- CONNECTEURS -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:4px;">
-        <div style="text-align:center;"><div style="width:2px;height:16px;background:#2D5F8A;margin:0 auto;"></div></div>
-        <div style="text-align:center;"><div style="width:2px;height:16px;background:#5B8FB9;margin:0 auto;"></div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div style="text-align:center;"><div style="width:2px;height:16px;background:#3A8A6E;margin:0 auto;"></div></div>
-          <div style="text-align:center;"><div style="width:2px;height:16px;background:#3A8A6E;margin:0 auto;"></div></div>
-        </div>
-        <div style="text-align:center;"><div style="width:2px;height:16px;background:#7B4FA6;margin:0 auto;"></div></div>
-      </div>
-
-      <!-- LIGNE 3 : calcul intermédiaire masse solution -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:4px;">
-        <div></div>
-        <div class="arbre-case" style="border-color:#5B8FB9;font-size:0.80rem;">
-          À partir de la <strong>masse volumique ρ<sub>A</sub></strong> (g.L⁻¹), je calcule m<sub>A</sub> :<br>
-          <div class="dnd-target" id="t-mA-liquide" data-answer="mA = ρA × VA" onclick="onClickTarget('t-mA-liquide')">déposer ici</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div class="arbre-case" style="border-color:#3A8A6E;font-size:0.80rem;">
-            Je calcule m<sub>A</sub> :<br>
-            <div class="dnd-target" id="t-mA-Cm" data-answer="mA = Cm × Vs" onclick="onClickTarget('t-mA-Cm')">déposer ici</div>
-          </div>
-          <div></div>
-        </div>
-        <div></div>
-      </div>
-
-      <!-- CONNECTEURS vers formule finale -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:4px;">
-        <div style="text-align:center;"><div style="width:2px;height:14px;background:#2D5F8A;margin:0 auto;"></div></div>
-        <div style="text-align:center;"><div style="width:2px;height:14px;background:#5B8FB9;margin:0 auto;"></div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div style="text-align:center;"><div style="width:2px;height:14px;background:#3A8A6E;margin:0 auto;"></div></div>
-          <div style="text-align:center;"><div style="width:2px;height:14px;background:#3A8A6E;margin:0 auto;"></div></div>
-        </div>
-        <div style="text-align:center;"><div style="width:2px;height:14px;background:#7B4FA6;margin:0 auto;"></div></div>
-      </div>
-
-      <!-- LIGNE 4 : note sur M pour solide/liquide -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:4px;">
-        <div class="arbre-case" style="border-color:#2D5F8A; font-size:0.78rem;">Je calcule la <strong>masse molaire M<sub>A</sub></strong> (g.mol⁻¹) à partir du tableau périodique</div>
-        <div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div></div>
-          <div class="arbre-case" style="border-color:#3A8A6E; font-size:0.78rem;">Je connais le <strong>volume molaire Vm</strong> (L.mol⁻¹) dans les conditions de l'expérience</div>
-        </div>
-        <div class="arbre-case" style="border-color:#7B4FA6; font-size:0.78rem;">Je connais le <strong>volume molaire Vm</strong> (L.mol⁻¹) dans les conditions de l'expérience</div>
-      </div>
-
-      <!-- CONNECTEURS -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:4px;">
-        <div style="text-align:center;"><div style="width:2px;height:14px;background:#2D5F8A;margin:0 auto;"></div></div>
-        <div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div></div>
-          <div style="text-align:center;"><div style="width:2px;height:14px;background:#3A8A6E;margin:0 auto;"></div></div>
-        </div>
-        <div style="text-align:center;"><div style="width:2px;height:14px;background:#7B4FA6;margin:0 auto;"></div></div>
-      </div>
-
-      <!-- LIGNE 5 : FORMULES FINALES nA -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px;">
-        <div style="background:var(--bleu-clair); border:2px solid var(--bleu); border-radius:10px; padding:12px; text-align:center;">
-          <div style="font-family:'Outfit',sans-serif;font-size:0.80rem;font-weight:700;color:var(--bleu);margin-bottom:6px;">Quantité de matière :</div>
-          <div class="dnd-target" id="t-nA-solide" data-answer="nA = mA / MA" onclick="onClickTarget('t-nA-solide')">n<sub>A</sub> = ?</div>
-        </div>
-        <div style="background:#EEF5FB; border:2px solid #5B8FB9; border-radius:10px; padding:12px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:6px;">
-          <div style="font-family:'Outfit',sans-serif;font-size:0.80rem;font-weight:700;color:#5B8FB9;">Quantité de matière :</div>
-          <div class="dnd-target" id="t-nA-liquide-rho" data-answer="nA = (ρA × VA) / MA" onclick="onClickTarget('t-nA-liquide-rho')">n<sub>A</sub> = ?</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div style="background:var(--vert-clair); border:2px solid var(--vert); border-radius:10px; padding:10px; text-align:center;">
-            <div style="font-family:'Outfit',sans-serif;font-size:0.76rem;font-weight:700;color:var(--vert);margin-bottom:4px;">Quantité :</div>
-            <div class="dnd-target" id="t-nA-Cm" data-answer="nA = (Cm × Vs) / MA" onclick="onClickTarget('t-nA-Cm')">n<sub>A</sub> = ?</div>
-          </div>
-          <div style="background:var(--vert-clair); border:2px solid var(--vert); border-radius:10px; padding:10px; text-align:center;">
-            <div style="font-family:'Outfit',sans-serif;font-size:0.76rem;font-weight:700;color:var(--vert);margin-bottom:4px;">Quantité :</div>
-            <div class="dnd-target" id="t-nA-c" data-answer="nA = c × Vs" onclick="onClickTarget('t-nA-c')">n<sub>A</sub> = ?</div>
-          </div>
-        </div>
-        <div style="background:var(--violet-clair); border:2px solid var(--violet); border-radius:10px; padding:12px; text-align:center;">
-          <div style="font-family:'Outfit',sans-serif;font-size:0.80rem;font-weight:700;color:var(--violet);margin-bottom:6px;">Quantité de matière :</div>
-          <div class="dnd-target" id="t-nA-gaz" data-answer="nA = V / Vm" onclick="onClickTarget('t-nA-gaz')">n<sub>A</sub> = ?</div>
-        </div>
-      </div>
-
-    </div><!-- fin arbre-container -->
-
-    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px;">
-      <button class="btn-check" onclick="verifyDnd()">✔ Vérifier</button>
-      <button class="btn-reveal" onclick="revealDnd()">💡 Révéler les réponses</button>
-      <button class="btn-reset-small" onclick="resetDnd()">↺ Recommencer</button>
-      <span id="dnd-feedback" class="check-feedback" style="margin-left:8px;"></span>
-    </div>
+  <div style="position:relative; width:100%; padding-top:56.25%; border-radius:12px; overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.12); margin-bottom:20px;">
+    <iframe
+      src="https://view.genially.com/6a33e90e7ab37ee9ee84c3bf"
+      style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
   </div>
 
   <!-- TABLEAU RÉCAPITULATIF -->
