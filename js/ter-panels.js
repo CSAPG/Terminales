@@ -41,7 +41,9 @@ const TER_SEQUENCES = [
     {
       id: 'fiches-interactives', label: 'Révision interactive', cardIcon: '🎓',
       items: [
-        { type:'link', icon:'🎓', label:'Fiche de révision — Calcul de quelques grandeurs en chimie', href:'seq00/fiche1/fiche1-grandeurs-chimie.html' },
+        { type:'link', icon:'🎓', label:'Fiche de révision 1 — Calcul de quelques grandeurs en chimie', href:'seq00/fiche1/fiche1-grandeurs-chimie.html' },
+        { type:'link', icon:'🎓', label:'Fiche de révision 2 — Mesures & Incertitudes', href:'seq00/fiche2/fiche02-mesure-incertitude.html' },
+
       ]
     },
     {
