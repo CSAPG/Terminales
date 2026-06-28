@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche 2 – Mesure & Incertitudes – Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #2D5F8A;
+    --bleu-clair: #E8F1F8;
+    --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
+    --orange: #E8783A;
+    --orange-clair: #FDF0E8;
+    --vert: #3A8A6E;
+    --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --gris-fond: #F5F7FA;
+    --gris-bord: #DDE3EC;
+    --texte: #1A2A3A;
+    --texte-leger: #5A6B7A;
+    --blanc: #FFFFFF;
+    --rouge: #C0392B;
+    --rouge-clair: #FDEDEC;
+    --violet: #7B4FA6;
+    --violet-clair: #F3EDF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #F0F4F8;
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blanc);
+    border: 1px solid #E3E8EE;
+    border-bottom: 3px solid var(--bleu);
+    border-radius: 14px;
+    padding: 18px 24px 14px;
+    max-width: 1250px;
+    margin: 0 auto 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+  }
+  .header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .header-left { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; flex-shrink: 0; margin-top: 2px; }
+  .header-badge { background: var(--bleu); color: white; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+  button.cap-toggle { background: var(--bleu); color: #fff; border: none; padding: 5px 12px; border-radius: 999px; font-family: 'Nunito', sans-serif; font-size: 0.74rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  button.cap-toggle:hover { background: #1e4466; }
+  .cap-panel { display: none; margin: 0 0 14px; background: #fff; border: 1px solid #B8D4EC; border-radius: 12px; padding: 16px 20px; text-align: left; font-size: 0.88rem; color: var(--texte); }
+  .cap-panel.open { display: block; }
+  .cap-panel ul { margin: 0; padding-left: 1.3rem; }
+  .cap-panel li { margin-bottom: 5px; line-height: 1.6; }
+
+  .header-titles h1 { font-family: 'Outfit', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--bleu); line-height: 1.2; }
+  .header-titles p { font-size: 0.82rem; color: var(--texte-leger); margin-top: 2px; }
+  .header-titles p span { color: var(--orange); font-weight: 700; }
+
+  /* ── ICÔNE RÈGLE ANIMÉE ── */
+  .ruler-tick { animation: tickPulse 2s ease-in-out infinite; }
+  .ruler-tick:nth-child(2) { animation-delay: 0.3s; }
+  .ruler-tick:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes tickPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+  .ruler-arrow { animation: arrowBounce 1.8s ease-in-out infinite; }
+  @keyframes arrowBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+
+  /* ── ONGLETS ── */
+  .tabs-nav { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px 12px; border: 2px solid #fed7aa; background: transparent; font-family: 'Nunito', sans-serif; font-size: 1.0rem; font-weight: 800; color: var(--texte-leger); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; position: relative; bottom: -3px; border-radius: 6px 6px 0 0; }
+  .tab-btn:hover { color: #ea580c; border-color: #ea580c; }
+  .tab-btn.active { color: #ea580c; border-color: #9a3412; border-bottom-color: transparent; background: #fff7ed; border-radius: 6px 6px 0 0; }
+  .tab-num { width: 22px; height: 22px; border-radius: 50%; background: #fed7aa; color: #c2410c; border: 2px solid #c2410c; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+  .tab-btn.active .tab-num { background: #ea580c; color: white; border-color: #9a3412; }
+
+  /* ── SOUS-ONGLETS ── */
+  .sub-nav { display:flex; gap:0; overflow-x:auto; scrollbar-width:none; margin:16px 0 0; border-bottom:3px solid var(--bleu-clair); }
+  .sub-nav::-webkit-scrollbar { display:none; }
+  .sub-btn { display:flex; align-items:center; gap:8px; padding:10px 20px 12px; border: 2px solid #bfdbfe; background:#eff6ff; font-family:'Nunito',sans-serif; font-size:1.0rem; font-weight:800; color:#1e40af; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.2s; white-space:nowrap; position:relative; bottom:-3px; border-radius:6px 6px 0 0; }
+  .sub-btn:hover { background:#dbeafe; border-color:#93c5fd; }
+  .sub-btn.active { background:#93c5fd; border-color:#1d4ed8; border-bottom-color:transparent; color:#1e3a8a; border-radius:6px 6px 0 0; }
+  .sub-content { display:none; }
+  .sub-content.active { display:block; animation:fadeIn 0.25s ease; }
+
+  /* ── CONTENU ── */
+  .main { max-width: 1250px; margin: 0 auto; padding: 10px 20px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BLOCS COURS ── */
+  .def-card { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-left: 4px solid var(--bleu); border-radius: 0 12px 12px 0; padding: 16px 22px; margin-bottom: 16px; position: relative; }
+  .def-card::before { content: 'COURS'; position: absolute; top: 12px; right: 14px; font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: var(--bleu-moyen); opacity: 0.6; }
+  .def-card h3 { font-family: 'Outfit', sans-serif; font-size: 0.98rem; font-weight: 700; color: var(--bleu); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+  .def-card ul { padding-left: 18px; }
+  .def-card ul li { margin-bottom: 5px; }
+
+  /* ── BLOCS ACTIVITÉ ── */
+  .activite-card { background: var(--bleu-activite); border: 1.5px solid var(--bleu-activite-bord); border-left: 4px solid var(--bleu-moyen); border-radius: 0 12px 12px 0; padding: 16px 22px; margin-bottom: 16px; position: relative; }
+  .activite-card::before { content: 'ACTIVITÉ'; position: absolute; top: 12px; right: 14px; font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: var(--bleu-moyen); opacity: 0.8; }
+  .activite-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.0rem; font-weight: 700; color: var(--bleu); margin-bottom: 8px; }
+  .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  /* ── BLOCS EXERCICE ── */
+  .exo-card { background: var(--vert-exo); border: 1.5px solid var(--vert-exo-bord); border-left: 4px solid var(--vert); border-radius: 0 12px 12px 0; padding: 16px 22px; margin-bottom: 16px; position: relative; }
+  .exo-card::before { content: 'EXERCICE'; position: absolute; top: 12px; right: 14px; font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: var(--vert); opacity: 0.7; }
+  .exo-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.0rem; font-weight: 700; color: var(--vert); margin-bottom: 10px; }
+
+  .section-title { font-family: 'Outfit', sans-serif; font-size: 1.18rem; font-weight: 800; color: var(--bleu); margin: 28px 0 14px; display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--bleu-clair); }
+  .section-title .icon { font-size: 1.3rem; }
+
+  .intro-box { background: #FFFBF7; border-left: 4px solid var(--orange); border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.93rem; line-height: 1.65; color: var(--texte); font-style: italic; }
+
+  .formule-box { background: var(--orange-clair); border: 2px solid var(--orange); border-radius: 10px; padding: 14px 20px; margin: 14px 0; text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--texte); }
+  .formule-box .legend { font-size: 0.80rem; font-weight: 500; color: var(--texte-leger); margin-top: 6px; text-align: left; }
+
+  .exemple-box { background: var(--vert-clair); border-left: 4px solid var(--vert); border-radius: 0 8px 8px 0; padding: 11px 16px; margin: 10px 0; font-size: 0.88rem; color: var(--texte); }
+  .exemple-box strong { color: var(--vert); }
+
+  .remarque-box { background: var(--violet-clair); border-left: 4px solid var(--violet); border-radius: 0 8px 8px 0; padding: 11px 16px; margin: 10px 0; font-size: 0.88rem; color: var(--texte); }
+  .remarque-box strong { color: var(--violet); }
+
+  .attention-box { background: var(--rouge-clair); border-left: 4px solid var(--rouge); border-radius: 0 8px 8px 0; padding: 11px 16px; margin: 10px 0; font-size: 0.88rem; color: var(--texte); }
+  .attention-box strong { color: var(--rouge); }
+
+  /* ── PROPRIÉTÉ BOX ── */
+  .propriete-box { background: #FFF8E1; border: 2px solid #F9A825; border-radius: 10px; padding: 14px 18px; margin: 14px 0; }
+  .propriete-box .prop-label { font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; color: #E65100; text-transform: uppercase; margin-bottom: 6px; }
+  .propriete-box p { font-size: 0.90rem; line-height: 1.65; }
+
+  /* ── TABLEAU ── */
+  .tableau { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 14px 0; background: var(--blanc); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+  .tableau th { background: var(--bleu); color: white; padding: 10px 14px; text-align: center; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.03em; }
+  .tableau td { padding: 9px 14px; border-bottom: 1px solid var(--gris-bord); text-align: center; vertical-align: middle; }
+  .tableau tr:last-child td { border-bottom: none; }
+  .tableau tr:nth-child(even) td { background: var(--gris-fond); }
+  .tableau td:first-child { font-weight: 600; color: var(--bleu); text-align: left; }
+
+  /* ── EXERCICE INTERACTIF ── */
+  .exo-enonce { background: var(--blanc); border-radius: 8px; padding: 12px 16px; font-size: 0.90rem; line-height: 1.65; margin-bottom: 12px; border: 1px solid var(--vert-exo-bord); }
+  .question-block { margin-bottom: 14px; }
+  .question-label { font-size: 0.88rem; font-weight: 700; color: var(--texte); margin-bottom: 7px; padding-left: 8px; border-left: 3px solid var(--vert); line-height: 1.5; }
+  .dq-select { padding: 7px 14px; border: 1.5px solid var(--gris-bord); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; background: var(--blanc); color: var(--texte); cursor: pointer; transition: border-color 0.2s; min-width: 200px; }
+  .dq-select:focus { outline: none; border-color: var(--bleu); }
+  .dq-select.correct { border-color: var(--vert); background: var(--blanc); color: var(--vert); font-weight: 700; }
+  .dq-select.wrong { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
+  .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
+  .dq-feedback.wrong { color: var(--rouge); }
+  .dq-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 8px 0; }
+
+  /* ── BOUTONS ── */
+  .btn-verif { padding: 7px 16px; background: var(--bleu); color: white; border: none; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+  .btn-verif:hover { background: #1E4A72; }
+  .btn-corriger { padding: 7px 16px; background: var(--vert); color: white; border: none; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+  .btn-corriger:hover { background: #2A6B52; }
+  .btn-reset { padding: 7px 16px; background: var(--gris-fond); color: var(--texte-leger); border: 1.5px solid var(--gris-bord); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+  .num-btn-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+
+  .num-input { width: 140px; padding: 7px 11px; border: 1.5px solid var(--gris-bord); border-radius: 7px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; background: var(--gris-fond); transition: border-color 0.2s; }
+  .num-input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); }
+  .num-input.correct { border-color: var(--vert); background: var(--blanc); }
+  .num-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
+  .num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
+  .num-feedback.ok { color: var(--vert); }
+  .num-feedback.ko { color: var(--rouge); }
+  .num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
+  .num-field-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+
+  .num-correction-inline { display: none; background: var(--blanc); border: 1.5px solid var(--vert); border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 0.86rem; line-height: 1.7; color: var(--texte); }
+  .num-correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
+  .num-correction-inline .calc-step { background: var(--vert-clair); border-radius: 6px; padding: 7px 11px; margin: 6px 0; font-family: 'Outfit', sans-serif; font-size: 0.88rem; border-left: 3px solid var(--vert); }
+
+  /* ── QCM BOUTONS ── */
+  .qcm-grid { display: grid; gap: 10px; margin: 14px 0; }
+  .qcm-item { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .qcm-item .substance { font-size: 0.93rem; font-weight: 600; flex: 1; }
+  .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qcm-btn { padding: 5px 14px; border: 1.5px solid var(--gris-bord); border-radius: 20px; background: var(--gris-fond); font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--texte); }
+  .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
+  .qcm-btn.correct { background: var(--blanc); color: var(--vert); border-color: var(--vert); font-weight: 700; }
+  .qcm-btn.wrong { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; }
+  .qcm-feedback.wrong { color: var(--rouge); }
+
+  /* ── ACCORDÉON ── */
+  .accord-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 12px 16px; background: var(--gris-fond); border: 1.5px solid var(--gris-bord); border-radius: 8px; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.90rem; font-weight: 700; color: var(--texte); transition: background 0.2s; margin: 10px 0; }
+  .accord-btn:hover { background: var(--bleu-clair); }
+  .accord-body { display: none; padding: 14px; background: var(--blanc); border: 1.5px solid var(--gris-bord); border-top: none; border-radius: 0 0 8px 8px; font-size: 0.88rem; line-height: 1.7; margin-top: -10px; margin-bottom: 10px; }
+  .accord-body.open { display: block; animation: fadeIn 0.2s; }
+
+  /* ── BILAN GRID ── */
+  .bilan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  @media (max-width: 560px) { .bilan-grid { grid-template-columns: 1fr; } }
+  .bilan-card { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-radius: 12px; padding: 16px; }
+  .bilan-card h4 { font-family: 'Outfit', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--bleu); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1.5px solid var(--gris-bord); }
+  .ke-list { list-style: none; padding: 0; }
+  .ke-list li { padding: 6px 10px 6px 28px; position: relative; font-size: 0.84rem; border-bottom: 1px solid var(--gris-bord); line-height: 1.5; }
+  .ke-list li:last-child { border-bottom: none; }
+  .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
+
+  /* ── TABLEAU MULTIPLES ── */
+  .multiples-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin: 12px 0; background: var(--blanc); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+  .multiples-table th { background: var(--bleu); color: white; padding: 8px 6px; text-align: center; font-family: 'Outfit', sans-serif; font-size: 0.70rem; font-weight: 700; }
+  .multiples-table td { padding: 7px 6px; border: 1px solid var(--gris-bord); text-align: center; }
+  .multiples-table .prefixe { background: var(--bleu-clair); font-weight: 700; color: var(--bleu); }
+  .multiples-table .sym { color: var(--orange); font-weight: 700; }
+
+  /* ── CIBLE ERREURS ── */
+  .cibles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; }
+  @media (max-width: 560px) { .cibles-grid { grid-template-columns: 1fr; } }
+  .cible-card { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-radius: 14px; padding: 16px; text-align: center; }
+  .cible-card h4 { font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 700; margin-bottom: 10px; }
+  .cible-card p { font-size: 0.78rem; color: var(--texte-leger); margin-top: 10px; line-height: 1.5; }
+  .cible-card .verdict { font-size: 0.82rem; font-weight: 700; margin-top: 6px; }
+
+  /* ── CODE PYTHON ── */
+  .code-block { background: #1E2A3A; color: #E8F0FE; border-radius: 10px; padding: 16px 18px; margin: 14px 0; font-family: 'Courier New', monospace; font-size: 0.82rem; line-height: 1.7; overflow-x: auto; position: relative; white-space: pre-wrap; }
+  .code-block .line-num { color: #5A7A9A; user-select: none; margin-right: 14px; display: inline-block; width: 20px; text-align: right; }
+  .code-kw { color: #569CD6; }
+  .code-fn { color: #DCDCAA; }
+  .code-str { color: #CE9178; }
+  .code-cmt { color: #6A9955; font-style: italic; }
+  .code-num { color: #B5CEA8; }
+  .code-var { color: #9CDCFE; }
+  .code-label { position: absolute; top: 8px; right: 12px; font-family: 'Outfit', sans-serif; font-size: 0.68rem; color: #5A7A9A; letter-spacing: 0.08em; font-style: normal; }
+
+  /* ── INCERTITUDE TYPE B TABLE ── */
+  .typeB-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 14px 0; }
+  @media (max-width: 680px) { .typeB-grid { grid-template-columns: 1fr; } }
+  .typeB-card { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-radius: 12px; padding: 14px 16px; text-align: center; }
+  .typeB-card h4 { font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--bleu); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1.5px solid var(--gris-bord); min-height: 42px; display: flex; align-items: center; justify-content: center; }
+  .typeB-card .formule-small { font-size: 0.95rem; font-weight: 700; color: var(--texte); background: var(--orange-clair); border-radius: 8px; padding: 8px 12px; margin: 8px 0; }
+  .typeB-card .exemple-small { font-size: 0.76rem; color: var(--texte-leger); line-height: 1.5; margin-top: 8px; }
+
+  /* ── COMPARAISON PIPETTES ── */
+  .pipette-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  @media (max-width: 560px) { .pipette-compare { grid-template-columns: 1fr; } }
+  .pipette-card { border-radius: 12px; padding: 14px; border: 2px solid; }
+  .pipette-card.graduee { border-color: var(--orange); background: var(--orange-clair); }
+  .pipette-card.jaugee { border-color: var(--vert); background: var(--vert-clair); }
+  .pipette-card h4 { font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 700; margin-bottom: 8px; }
+  .pipette-card.graduee h4 { color: var(--orange); }
+  .pipette-card.jaugee h4 { color: var(--vert); }
+  .pipette-card p { font-size: 0.83rem; line-height: 1.6; }
+  .pipette-card .result { font-family: 'Outfit', sans-serif; font-size: 0.90rem; font-weight: 700; margin: 10px 0 0; padding: 6px 10px; border-radius: 7px; background: rgba(255,255,255,0.7); }
+
+  /* ── FOOTER ── */
+  .footer-note { text-align: center; font-size: 0.78rem; color: var(--texte-leger); padding: 20px; border-top: 1px solid var(--gris-bord); margin-top: 30px; }
+
+  sup { font-size: 0.65em; }
+  sub { font-size: 0.65em; }
+  .math { font-family: 'Outfit', sans-serif; font-style: italic; }
+  .bold-vert { color: var(--vert); font-weight: 700; }
+  .bold-bleu { color: var(--bleu); font-weight: 700; }
+  .bold-rouge { color: var(--rouge); font-weight: 700; }
+  .bold-orange { color: var(--orange); font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .header { padding: 12px 16px 10px; }
+    .header-titles h1 { font-size: 1.05rem; }
+    .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
+    .main { padding: 18px 12px 50px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-top">
+    <div class="header-left">
+      <div class="header-badge">T<sup>ale</sup> Spé – Fiche 02</div>
+      <button class="cap-toggle" id="capToggle">📋 Capacités exigibles</button>
+    </div>
+    <div class="header-titles">
+      <h1>Mesure & Incertitudes</h1>
+      <p>Thème : <span>Écriture d'un résultat numérique – Chiffres significatifs – Incertitudes</span> · © C. Poirault-Gauvin & M. François</p>
+    </div>
+    <!-- Icône règle graduée animée -->
+    <div title="Mesure et précision" style="flex-shrink:0;">
+      <svg viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg" width="68" height="48">
+        <!-- Règle -->
+        <rect x="4" y="20" width="72" height="18" rx="3" fill="#2D5F8A" opacity="0.15" stroke="#2D5F8A" stroke-width="1.5"/>
+        <!-- Graduations -->
+        <g stroke="#2D5F8A" stroke-width="1.5" class="ruler-tick">
+          <line x1="14" y1="20" x2="14" y2="28"/>
+          <line x1="24" y1="20" x2="24" y2="26"/>
+          <line x1="34" y1="20" x2="34" y2="28"/>
+          <line x1="44" y1="20" x2="44" y2="26"/>
+          <line x1="54" y1="20" x2="54" y2="28"/>
+          <line x1="64" y1="20" x2="64" y2="26"/>
+        </g>
+        <!-- Flèche de mesure -->
+        <g class="ruler-arrow">
+          <line x1="34" y1="10" x2="34" y2="19" stroke="#E8783A" stroke-width="2"/>
+          <polygon points="30,10 38,10 34,4" fill="#E8783A"/>
+        </g>
+        <!-- Valeur mesurée -->
+        <text x="34" y="44" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9" font-weight="700" fill="#E8783A">x ± u(x)</text>
+      </svg>
+    </div>
+  </div>
+
+  <div id="capPanel" class="cap-panel">
+    <ul>
+      <li>Écrire avec un nombre adapté de <strong>chiffres significatifs</strong> le résultat d'une mesure.</li>
+      <li><strong>Exploiter</strong> une série de mesures indépendantes : histogramme, moyenne et écart-type.</li>
+      <li>Définir qualitativement une <strong>incertitude-type</strong>.</li>
+      <li>Évaluer une incertitude-type par <strong>approche statistique (type A)</strong> et par <strong>autre approche (type B)</strong>.</li>
+      <li>Évaluer l'incertitude-type d'une <strong>grandeur composée</strong> à l'aide d'une formule fournie.</li>
+      <li><strong>Comparer</strong> un résultat à une valeur de référence via le quotient |m<sub>mes</sub> − m<sub>ref</sub>| / u(m).</li>
+      <li>Capacité numérique : tracer un <strong>histogramme sous Python</strong> ; simuler des incertitudes composées.</li>
+    </ul>
+  </div>
+
+  <!-- ONGLETS PRINCIPAUX -->
+  <nav class="tabs-nav" id="tabsNav">
+    <button class="tab-btn active" data-tab="tab-1"><span class="tab-num">I</span> Chiffres significatifs</button>
+    <button class="tab-btn" data-tab="tab-2"><span class="tab-num">II</span> Erreurs &amp; Histogramme</button>
+    <button class="tab-btn" data-tab="tab-3"><span class="tab-num">III</span> Incertitudes</button>
+    <button class="tab-btn" data-tab="tab-4"><span class="tab-num">IV</span> Python 🐍</button>
+    <button class="tab-btn" data-tab="tab-5"><span class="tab-num">✓</span> Bilan &amp; Ressources</button>
+  </nav>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════════════════════════════════════════════
+     ONGLET I – CHIFFRES SIGNIFICATIFS
+══════════════════════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-1">
+  <div class="intro-box">
+    La quantité de chiffres présents dans une valeur mesurée ou calculée n'est pas à déterminer au hasard. Toute mesure expérimentale n'a de sens que si elle est accompagnée d'une <strong>précision adaptée</strong>.
+  </div>
+
+  <div class="section-title"><span class="icon">🔢</span> Définition des chiffres significatifs</div>
+
+  <div class="def-card">
+    <h3>Chiffres significatifs (C.S.)</h3>
+    <p>Tous les chiffres d'un nombre sont significatifs, <strong>sauf les zéros placés à gauche du premier chiffre non nul</strong>. En revanche, <strong>les zéros écrits à la fin d'un nombre sont significatifs</strong>.</p>
+  </div>
+
+  <div class="exemple-box">
+    <strong>Exemples :</strong>
+    <ul style="padding-left:18px;margin-top:6px;line-height:2;">
+      <li><strong>0,105</strong> → 3 C.S. &nbsp;|&nbsp; <strong>1,05 × 10<sup>−1</sup></strong> → 3 C.S. &nbsp;|&nbsp; <strong>0,1050</strong> → <span class="bold-vert">4 C.S.</span> (le zéro final compte !)</li>
+      <li><strong>5800 cm</strong> → 2 C.S. ambigus ; en écriture scientifique : <strong>5,800 × 10<sup>3</sup> cm</strong> → 4 C.S.</li>
+    </ul>
+  </div>
+
+  <div class="section-title"><span class="icon">✏️</span> Écriture scientifique</div>
+
+  <div class="def-card">
+    <h3>Notation a × 10<sup style="text-transform:none;">n</sup></h3>
+    <p>Dans cette écriture, <em>a</em> est un nombre décimal compris entre <strong>1 et 9</strong>, et <em>n</em> est un entier relatif. Le chiffre avant la virgule est unique et non nul.<br>
+    <strong>Exemples :</strong> 8,314 × 10<sup>2</sup> &nbsp;|&nbsp; 1,20 × 10<sup>−5</sup> &nbsp;|&nbsp; 4e−3 = 4 × 10<sup>−3</sup> = 0,004</p>
+  </div>
+
+  <div class="section-title"><span class="icon">📐</span> Tableau des préfixes</div>
+
+  <table class="multiples-table">
+    <tr>
+      <th>Rapport</th>
+      <th>10<sup>−15</sup></th><th>10<sup>−12</sup></th><th>10<sup>−9</sup></th><th>10<sup>−6</sup></th><th>10<sup>−3</sup></th><th>10<sup>−2</sup></th><th>10<sup>−1</sup></th><th>10<sup>0</sup></th><th>10<sup>3</sup></th><th>10<sup>6</sup></th><th>10<sup>9</sup></th>
+    </tr>
+    <tr>
+      <td class="prefixe">Nom</td>
+      <td>femto</td><td>pico</td><td>nano</td><td>micro</td><td>milli</td><td>centi</td><td>déci</td><td>—</td><td>kilo</td><td>méga</td><td>giga</td>
+    </tr>
+    <tr>
+      <td class="prefixe">Symbole</td>
+      <td class="sym">f</td><td class="sym">p</td><td class="sym">n</td><td class="sym">µ</td><td class="sym">m</td><td class="sym">c</td><td class="sym">d</td><td>—</td><td class="sym">k</td><td class="sym">M</td><td class="sym">G</td>
+    </tr>
+  </table>
+
+  <div class="section-title"><span class="icon">⚙️</span> Règles d'écriture des opérations</div>
+
+  <div class="def-card">
+    <h3>Multiplication / Division</h3>
+    <p>Le résultat comporte le même nombre de C.S. que le facteur qui en a <strong>le moins</strong>.</p>
+    <div class="exemple-box" style="margin-top:8px;"><strong>Exemple :</strong> 8,4 × 10<sup>−3</sup> × 2,55 = <span class="bold-vert">2,1 × 10<sup>−2</sup></span> (2 C.S., car 8,4 en a 2)</div>
+  </div>
+
+  <div class="def-card">
+    <h3>Addition / Soustraction</h3>
+    <p>Le résultat comporte le même <strong>nombre de décimales</strong> que le terme qui en a le moins.</p>
+    <div class="exemple-box" style="margin-top:8px;"><strong>Exemple :</strong> 8,4 + 2,55 = <span class="bold-vert">11,0</span> (1 décimale, comme 8,4)</div>
+  </div>
+
+  <div class="attention-box"><strong>⚠️ Attention :</strong> lors de calculs en plusieurs étapes, les résultats intermédiaires ne doivent pas être arrondis — gardez-les en mémoire de la calculatrice.</div>
+
+  <!-- ═══ EXERCICE INTERACTIF : C.S. ═══ -->
+  <div class="section-title"><span class="icon">✏️</span> C'est à vous – Chiffres significatifs</div>
+
+  <div class="exo-card">
+    <h3>Exercice 1 – Combien de chiffres significatifs ?</h3>
+    <div class="exo-enonce">Pour chaque nombre, sélectionnez le bon nombre de chiffres significatifs.</div>
+    <div class="qcm-grid" id="cs-qcm">
+      <div class="qcm-item">
+        <span class="substance">0,00820</span>
+        <div class="qcm-choices" data-correct="3">
+          <button class="qcm-btn" data-val="2">2</button><button class="qcm-btn" data-val="3">3</button><button class="qcm-btn" data-val="4">4</button><button class="qcm-btn" data-val="5">5</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="qcm-item">
+        <span class="substance">3,050 × 10<sup>4</sup></span>
+        <div class="qcm-choices" data-correct="4">
+          <button class="qcm-btn" data-val="2">2</button><button class="qcm-btn" data-val="3">3</button><button class="qcm-btn" data-val="4">4</button><button class="qcm-btn" data-val="5">5</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="qcm-item">
+        <span class="substance">0,105</span>
+        <div class="qcm-choices" data-correct="3">
+          <button class="qcm-btn" data-val="1">1</button><button class="qcm-btn" data-val="2">2</button><button class="qcm-btn" data-val="3">3</button><button class="qcm-btn" data-val="4">4</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="qcm-item">
+        <span class="substance">1,0500</span>
+        <div class="qcm-choices" data-correct="5">
+          <button class="qcm-btn" data-val="2">2</button><button class="qcm-btn" data-val="3">3</button><button class="qcm-btn" data-val="4">4</button><button class="qcm-btn" data-val="5">5</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EXERCICE CONVERSIONS QCM ═══ -->
+  <div class="exo-card">
+    <h3>Exercice 2 – Conversions en écriture scientifique</h3>
+    <div class="exo-enonce">Choisissez la conversion correcte en mètres en écriture scientifique avec le bon nombre de C.S.</div>
+
+    <div class="question-block">
+      <div class="question-label">2510 µm = ? m</div>
+      <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">2,510 × 10<sup>−3</sup> m</button>
+        <button class="qcm-btn" data-val="B">2,51 × 10<sup>−3</sup> m</button>
+        <button class="qcm-btn" data-val="C">2,51 × 10<sup>−6</sup> m</button>
+        <button class="qcm-btn" data-val="D">25,1 × 10<sup>−4</sup> m</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">0,00091 mm = ? m</div>
+      <div class="qcm-choices" data-correct="C" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">9,1 × 10<sup>−7</sup> m</button>
+        <button class="qcm-btn" data-val="B">0,91 × 10<sup>−9</sup> m</button>
+        <button class="qcm-btn" data-val="C">9,1 × 10<sup>−10</sup> m</button>
+        <button class="qcm-btn" data-val="D">9,10 × 10<sup>−10</sup> m</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">687 Gm = ? m</div>
+      <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">6,87 × 10<sup>9</sup> m</button>
+        <button class="qcm-btn" data-val="B">6,87 × 10<sup>11</sup> m</button>
+        <button class="qcm-btn" data-val="C">6,870 × 10<sup>11</sup> m</button>
+        <button class="qcm-btn" data-val="D">6,87 × 10<sup>12</sup> m</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">38 900 km = ? m</div>
+      <div class="qcm-choices" data-correct="A" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">3,89 × 10<sup>7</sup> m</button>
+        <button class="qcm-btn" data-val="B">3,890 × 10<sup>7</sup> m</button>
+        <button class="qcm-btn" data-val="C">3,89 × 10<sup>4</sup> m</button>
+        <button class="qcm-btn" data-val="D">38,9 × 10<sup>6</sup> m</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="num-btn-row"><button class="btn-corriger" onclick="showCorr('conv2-corr')">Voir les corrections</button></div>
+    <div class="num-correction-inline" id="conv2-corr">
+      <div class="calc-step">2510 µm = 2510 × 10<sup>−6</sup> m = <strong>2,51 × 10<sup>−3</sup> m</strong> — 3 C.S. (zéro final de 2510 ambigu)</div>
+      <div class="calc-step">0,00091 mm = 9,1 × 10<sup>−4</sup> × 10<sup>−3</sup> m = <strong>9,1 × 10<sup>−10</sup> m</strong> — 2 C.S.</div>
+      <div class="calc-step">687 Gm = 687 × 10<sup>9</sup> m = <strong>6,87 × 10<sup>11</sup> m</strong> — 3 C.S.</div>
+      <div class="calc-step">38 900 km = 38 900 × 10<sup>3</sup> m = <strong>3,89 × 10<sup>7</sup> m</strong> — 3 C.S.</div>
+    </div>
+  </div>
+
+  <!-- ═══ EXERCICE OPÉRATIONS QCM ═══ -->
+  <div class="exo-card">
+    <h3>Exercice 3 – Résultat d'opérations avec le bon nombre de C.S.</h3>
+    <div class="exo-enonce">Choisissez le résultat correctement arrondi.</div>
+
+    <div class="question-block">
+      <div class="question-label">8,4 × 10<sup>−3</sup> × 2,55 = ?</div>
+      <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">2,142 × 10<sup>−2</sup></button>
+        <button class="qcm-btn" data-val="B">2,1 × 10<sup>−2</sup></button>
+        <button class="qcm-btn" data-val="C">2,14 × 10<sup>−2</sup></button>
+        <button class="qcm-btn" data-val="D">8,4 × 10<sup>−3</sup></button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">12,56 + 3,1 = ?</div>
+      <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">15,66</button>
+        <button class="qcm-btn" data-val="B">15,7</button>
+        <button class="qcm-btn" data-val="C">15,660</button>
+        <button class="qcm-btn" data-val="D">16</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">6,674 × 10<sup>−11</sup> / 1,5 × 10<sup>3</sup> = ?</div>
+      <div class="qcm-choices" data-correct="A" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">4,4 × 10<sup>−14</sup></button>
+        <button class="qcm-btn" data-val="B">4,45 × 10<sup>−14</sup></button>
+        <button class="qcm-btn" data-val="C">4,449 × 10<sup>−14</sup></button>
+        <button class="qcm-btn" data-val="D">4,4 × 10<sup>−15</sup></button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="num-btn-row"><button class="btn-corriger" onclick="showCorr('ops-corr')">Voir les corrections</button></div>
+    <div class="num-correction-inline" id="ops-corr">
+      <div class="calc-step">8,4 (2 C.S.) × 2,55 (3 C.S.) → <strong>2 C.S.</strong> → <strong>2,1 × 10<sup>−2</sup></strong></div>
+      <div class="calc-step">12,56 (2 déc.) + 3,1 (1 déc.) → <strong>1 décimale</strong> → <strong>15,7</strong></div>
+      <div class="calc-step">6,674×10<sup>−11</sup> / 1,5×10<sup>3</sup> : 1,5 (2 C.S.) → <strong>2 C.S.</strong> → <strong>4,4 × 10<sup>−14</sup></strong></div>
+    </div>
+  </div>
+
+  <!-- ═══ EXERCICE GRAVITATION – QCM NIVEAU BAC ═══ -->
+  <div class="exo-card">
+    <h3>Exercice 4 ⭐ Niveau BAC – Force de gravitation (Météosat)</h3>
+    <div class="exo-enonce">
+      Données : G = 6,67 × 10<sup>−11</sup> N·m²·kg<sup>−2</sup> &nbsp;|&nbsp; M<sub>T</sub> = 5,97 × 10<sup>24</sup> kg &nbsp;|&nbsp; R<sub>T</sub> = 6,37 × 10<sup>3</sup> km &nbsp;|&nbsp; Altitude : 35 800 km &nbsp;|&nbsp; m = 400 kg<br>
+      <span style="font-family:'Outfit',sans-serif;font-weight:700;">F = G × M<sub>T</sub> × m / d²</span>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">1. Quelle est la distance d entre le centre de la Terre et Météosat ?</div>
+      <div class="qcm-choices" data-correct="C" style="margin:8px 0;flex-wrap:wrap;">
+        <button class="qcm-btn" data-val="A">3,58 × 10<sup>7</sup> m</button>
+        <button class="qcm-btn" data-val="B">6,37 × 10<sup>6</sup> m</button>
+        <button class="qcm-btn" data-val="C">4,22 × 10<sup>7</sup> m</button>
+        <button class="qcm-btn" data-val="D">4,217 × 10<sup>7</sup> m</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">2. Quelle est la valeur de F correctement arrondie ?</div>
+      <div class="qcm-choices" data-correct="B" style="margin:8px 0;flex-wrap:wrap;">
+        <button class="qcm-btn" data-val="A">1,4 × 10<sup>2</sup> N</button>
+        <button class="qcm-btn" data-val="B">1,42 × 10<sup>2</sup> N</button>
+        <button class="qcm-btn" data-val="C">1,419 × 10<sup>2</sup> N</button>
+        <button class="qcm-btn" data-val="D">142,1 N</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">3. Pourquoi le résultat de F est-il exprimé avec 3 chiffres significatifs ?</div>
+      <div class="qcm-choices" data-correct="B" style="margin:8px 0;flex-wrap:wrap;">
+        <button class="qcm-btn" data-val="A">Car G est donné avec 3 C.S.</button>
+        <button class="qcm-btn" data-val="B">Car c'est la donnée qui a le moins de C.S. dans le calcul (m = 400 kg a 1 C.S., mais par convention on prend 3).</button>
+        <button class="qcm-btn" data-val="C">Car M<sub>T</sub> a 3 C.S. et c'est la valeur la moins précise.</button>
+        <button class="qcm-btn" data-val="D">Par choix arbitraire.</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="num-btn-row"><button class="btn-corriger" onclick="showCorr('grav-corr')">Voir la correction complète</button></div>
+    <div class="num-correction-inline" id="grav-corr">
+      <div class="calc-step"><strong>Q1 :</strong> d = R<sub>T</sub> + altitude = 6 370 + 35 800 = 42 170 km = <strong>4,22 × 10<sup>7</sup> m</strong> (3 C.S.)</div>
+      <div class="calc-step"><strong>Q2 :</strong> F = 6,67×10<sup>−11</sup> × 5,97×10<sup>24</sup> × 400 / (4,22×10<sup>7</sup>)² ≈ <strong>1,42 × 10² N</strong></div>
+      <div class="calc-step"><strong>Q3 :</strong> G (3 C.S.), M<sub>T</sub> (3 C.S.), d (3 C.S.) → résultat à <strong>3 C.S.</strong>. La masse m = 400 kg est ambiguë (1 à 3 C.S.) mais le contexte impose 3 C.S. comme facteur limitant.</div>
+    </div>
+  </div>
+
+  <!-- ═══ EXERCICE NIVEAU BAC – OPTIQUE ═══ -->
+  <div class="exo-card">
+    <h3>Exercice 5 ⭐⭐ Niveau BAC – Loi de Snell-Descartes</h3>
+    <div class="exo-enonce">
+      La loi de Snell-Descartes donne : n<sub>1</sub> × sin(θ<sub>1</sub>) = n<sub>2</sub> × sin(θ<sub>2</sub>)<br>
+      On mesure : n<sub>1</sub> = 1,000 (air), θ<sub>1</sub> = 30,0°, θ<sub>2</sub> = 19,2°<br>
+      On cherche n<sub>2</sub> = n<sub>1</sub> × sin(θ<sub>1</sub>) / sin(θ<sub>2</sub>)
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">1. Combien de C.S. possède sin(30,0°) = 0,5000 ?</div>
+      <div class="qcm-choices" data-correct="C" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">1</button>
+        <button class="qcm-btn" data-val="B">3</button>
+        <button class="qcm-btn" data-val="C">4</button>
+        <button class="qcm-btn" data-val="D">2</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">2. Combien de C.S. possède sin(19,2°) = 0,3289 ?</div>
+      <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="A">2</button>
+        <button class="qcm-btn" data-val="B">4</button>
+        <button class="qcm-btn" data-val="C">3</button>
+        <button class="qcm-btn" data-val="D">1</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">3. Quelle est la valeur de n<sub>2</sub> correctement exprimée ?</div>
+      <div class="qcm-choices" data-correct="B" style="margin:8px 0;flex-wrap:wrap;">
+        <button class="qcm-btn" data-val="A">n<sub>2</sub> = 1,5204</button>
+        <button class="qcm-btn" data-val="B">n<sub>2</sub> = 1,520</button>
+        <button class="qcm-btn" data-val="C">n<sub>2</sub> = 1,52</button>
+        <button class="qcm-btn" data-val="D">n<sub>2</sub> = 1,5</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">4. Le verre crown a un indice de réfraction de référence n<sub>ref</sub> = 1,523. L'écart relatif avec n<sub>2</sub> est-il acceptable (&lt; 10 %) ?</div>
+      <div class="qcm-choices" data-correct="A" style="margin:8px 0;flex-wrap:wrap;">
+        <button class="qcm-btn" data-val="A">Oui, ε<sub>r</sub> ≈ 0,2 % — mesure satisfaisante</button>
+        <button class="qcm-btn" data-val="B">Non, ε<sub>r</sub> &gt; 10 % — mesure non satisfaisante</button>
+        <button class="qcm-btn" data-val="C">On ne peut pas conclure sans incertitude</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="num-btn-row"><button class="btn-corriger" onclick="showCorr('snell-corr')">Voir la correction</button></div>
+    <div class="num-correction-inline" id="snell-corr">
+      <div class="calc-step"><strong>Q1 :</strong> sin(30,0°) = 0,5000 → 4 C.S. (les zéros après la virgule sont significatifs)</div>
+      <div class="calc-step"><strong>Q2 :</strong> sin(19,2°) = 0,3289 → 4 C.S.</div>
+      <div class="calc-step"><strong>Q3 :</strong> n<sub>2</sub> = 1,000 × 0,5000 / 0,3289 = 1,5204... Les facteurs ont 4 C.S. → résultat à <strong>4 C.S.</strong> → <strong>n<sub>2</sub> = 1,520</strong></div>
+      <div class="calc-step"><strong>Q4 :</strong> ε<sub>r</sub> = |1,523 − 1,520| / 1,523 × 100 = 0,003 / 1,523 × 100 ≈ <strong>0,20 %</strong> &lt; 10 % → mesure satisfaisante ✅</div>
+    </div>
+  </div>
+
+  <div class="footer-note">Fiche 2 – C. Poirault-Gauvin & M. François · Terminale Spé PC</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ONGLET II – ERREURS & HISTOGRAMME
+══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-2">
+  <div class="intro-box">
+    Toute mesure expérimentale est entachée d'une erreur résultant d'un <strong>manque de justesse</strong> ou de <strong>fidélité</strong>. Comprendre la nature de ces erreurs est indispensable pour évaluer la qualité d'une mesure.
+  </div>
+
+  <div class="propriete-box">
+    <div class="prop-label">Propriété fondamentale</div>
+    <p>Il n'existe pas de mesure exacte : toute mesure est entachée d'erreurs et ne conduit qu'à une valeur plus ou moins proche de la valeur « vraie » de la grandeur à mesurer.</p>
+  </div>
+
+  <div class="section-title"><span class="icon">⚠️</span> A – Les deux types d'erreurs</div>
+
+  <table class="tableau">
+    <tr>
+      <th>Type d'erreur</th>
+      <th>Causes</th>
+      <th>Se traduit par…</th>
+      <th>Affecte…</th>
+    </tr>
+    <tr>
+      <td><span class="bold-orange">Erreurs aléatoires</span></td>
+      <td>Fluctuations de la grandeur ou de la méthode de mesure</td>
+      <td>Un étalement des mesures autour de la valeur vraie</td>
+      <td><strong>La fidélité</strong></td>
+    </tr>
+    <tr>
+      <td><span class="bold-rouge">Erreurs systématiques</span></td>
+      <td>Mauvais réglage de l'instrument ou mauvaise manipulation</td>
+      <td>Des mesures réparties autour d'une autre valeur que la valeur vraie</td>
+      <td><strong>La justesse</strong></td>
+    </tr>
+  </table>
+
+  <!-- CIBLES SVG -->
+  <div class="section-title"><span class="icon">📌</span> Illustration avec une cible</div>
+  <div class="cibles-grid">
+    <div class="cible-card">
+      <h4 style="color:var(--vert);">✅ Mesures satisfaisantes</h4>
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <circle cx="60" cy="60" r="55" fill="#E8F5F0" stroke="#3A8A6E" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="38" fill="#C8E8DC" stroke="#3A8A6E" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="22" fill="#A8D8C4" stroke="#3A8A6E" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="8" fill="#3A8A6E" stroke="white" stroke-width="1.5"/>
+        <line x1="60" y1="5" x2="60" y2="115" stroke="#3A8A6E" stroke-width="0.5" opacity="0.4"/>
+        <line x1="5" y1="60" x2="115" y2="60" stroke="#3A8A6E" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="57" cy="58" r="3" fill="#C0392B"/><circle cx="62" cy="61" r="3" fill="#C0392B"/>
+        <circle cx="59" cy="63" r="3" fill="#C0392B"/><circle cx="64" cy="57" r="3" fill="#C0392B"/>
+        <circle cx="56" cy="62" r="3" fill="#C0392B"/>
+      </svg>
+      <p><span class="bold-vert">Bonne justesse</span> – mesures autour de la valeur vraie<br><span class="bold-vert">Bonne fidélité</span> – écart faible entre mesures</p>
+    </div>
+    <div class="cible-card">
+      <h4 style="color:var(--rouge);">Erreurs systématiques</h4>
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <circle cx="60" cy="60" r="55" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="38" fill="#FAD4D0" stroke="#C0392B" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="22" fill="#F5A9A2" stroke="#C0392B" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="8" fill="#C0392B" stroke="white" stroke-width="1.5"/>
+        <line x1="60" y1="5" x2="60" y2="115" stroke="#C0392B" stroke-width="0.5" opacity="0.4"/>
+        <line x1="5" y1="60" x2="115" y2="60" stroke="#C0392B" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="88" cy="28" r="3" fill="#C0392B"/><circle cx="92" cy="32" r="3" fill="#C0392B"/>
+        <circle cx="85" cy="33" r="3" fill="#C0392B"/><circle cx="90" cy="26" r="3" fill="#C0392B"/>
+        <circle cx="87" cy="30" r="3" fill="#C0392B"/>
+      </svg>
+      <p><span class="bold-rouge">Manque de justesse</span> – décalage par rapport à la valeur vraie<br><span class="bold-vert">Bonne fidélité</span> – mesures groupées</p>
+    </div>
+    <div class="cible-card">
+      <h4 style="color:var(--orange);">Erreurs aléatoires</h4>
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <circle cx="60" cy="60" r="55" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="38" fill="#FAD9C4" stroke="#E8783A" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="22" fill="#F5C0A0" stroke="#E8783A" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="8" fill="#E8783A" stroke="white" stroke-width="1.5"/>
+        <line x1="60" y1="5" x2="60" y2="115" stroke="#E8783A" stroke-width="0.5" opacity="0.4"/>
+        <line x1="5" y1="60" x2="115" y2="60" stroke="#E8783A" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="40" cy="35" r="3" fill="#C0392B"/><circle cx="78" cy="72" r="3" fill="#C0392B"/>
+        <circle cx="55" cy="80" r="3" fill="#C0392B"/><circle cx="80" cy="45" r="3" fill="#C0392B"/>
+        <circle cx="45" cy="68" r="3" fill="#C0392B"/>
+      </svg>
+      <p><span class="bold-vert">Bonne justesse</span> – centrées sur la valeur vraie<br><span class="bold-rouge">Manque de fidélité</span> – grande dispersion</p>
+    </div>
+    <div class="cible-card">
+      <h4 style="color:#7B4FA6;">Erreurs systématiques + aléatoires</h4>
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <circle cx="60" cy="60" r="55" fill="#F3EDF9" stroke="#7B4FA6" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="38" fill="#E0D0F0" stroke="#7B4FA6" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="22" fill="#C8B0E0" stroke="#7B4FA6" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="8" fill="#7B4FA6" stroke="white" stroke-width="1.5"/>
+        <line x1="60" y1="5" x2="60" y2="115" stroke="#7B4FA6" stroke-width="0.5" opacity="0.4"/>
+        <line x1="5" y1="60" x2="115" y2="60" stroke="#7B4FA6" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="28" cy="30" r="3" fill="#C0392B"/><circle cx="100" cy="88" r="3" fill="#C0392B"/>
+        <circle cx="35" cy="90" r="3" fill="#C0392B"/><circle cx="95" cy="32" r="3" fill="#C0392B"/>
+        <circle cx="80" cy="105" r="3" fill="#C0392B"/>
+      </svg>
+      <p><span class="bold-rouge">Manque de justesse</span> – décalage<br><span class="bold-rouge">Manque de fidélité</span> – grande dispersion</p>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="icon">📊</span> B – L'histogramme</div>
+
+  <div class="def-card">
+    <h3>Définition</h3>
+    <p>Lors d'une série de mesures, l'<strong>histogramme</strong> est la représentation de la <strong>fréquence</strong> de chaque valeur mesurée. Il illustre la <strong>dispersion</strong> des mesures et permet de visualiser l'<strong>écart-type σ</strong>.</p>
+  </div>
+
+  <!-- Comparaison pipettes -->
+  <div class="section-title"><span class="icon">🧪</span> Comparaison pipette graduée vs jaugée</div>
+
+  <div class="pipette-compare">
+    <div class="pipette-card graduee">
+      <h4>🔶 Pipette graduée</h4>
+      <p><strong>Une mesure (type B) :</strong><br>V = (25,0 ± 0,3) mL<br><br>
+      <strong>Plusieurs mesures (type A) :</strong><br>Distribution étalée — σ élevé</p>
+      <div class="result">V = 24,86 ± 0,25 mL</div>
+    </div>
+    <div class="pipette-card jaugee">
+      <h4>🟢 Pipette jaugée</h4>
+      <p><strong>Une mesure (type B) :</strong><br>V = (25,00 ± 0,04) mL<br><br>
+      <strong>Plusieurs mesures (type A) :</strong><br>Distribution resserrée — σ faible</p>
+      <div class="result">V = 24,94 ± 0,04 mL</div>
+    </div>
+  </div>
+
+  <div class="remarque-box"><strong>💡 Conclusion :</strong> Si les valeurs moyennes sont proches, l'écart-type de la pipette graduée est plus grand : elle est moins précise. L'incertitude est aussi plus élevée.</div>
+
+  <!-- Histogramme interactif -->
+  <div class="section-title"><span class="icon">📈</span> Histogramme interactif – Comparaison des verreries</div>
+  <div class="activite-card">
+    <h3>Visualisation – Volumes mesurés pour 50 mL (n = 32 mesures)</h3>
+
+    <!-- Sélecteur verrerie -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+      <button class="hist-sel-btn active" data-verre="becher" onclick="selectVerre('becher',this)"
+        style="padding:8px 18px;border-radius:20px;border:2px solid #E8783A;background:#E8783A;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;">
+        🧪 Bécher
+      </button>
+      <button class="hist-sel-btn" data-verre="eprouvette" onclick="selectVerre('eprouvette',this)"
+        style="padding:8px 18px;border-radius:20px;border:2px solid #2D5F8A;background:#fff;color:#2D5F8A;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;">
+        🧫 Éprouvette graduée
+      </button>
+      <button class="hist-sel-btn" data-verre="fiole" onclick="selectVerre('fiole',this)"
+        style="padding:8px 18px;border-radius:20px;border:2px solid #3A8A6E;background:#fff;color:#3A8A6E;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;">
+        ⚗️ Fiole jaugée
+      </button>
+    </div>
+
+    <!-- Canvas histogramme -->
+    <div style="position:relative;">
+      <canvas id="histCanvas" width="640" height="280"
+        style="width:100%;border-radius:10px;border:1px solid #DDE3EC;background:#fff;cursor:crosshair;">
+      </canvas>
+      <!-- Tooltip -->
+      <div id="histTooltip" style="display:none;position:absolute;background:#1A2A3A;color:#fff;
+        padding:7px 12px;border-radius:8px;font-family:'Nunito',sans-serif;font-size:0.80rem;
+        pointer-events:none;white-space:nowrap;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.25);">
+      </div>
+    </div>
+
+    <!-- Résultat écrit -->
+    <div id="hist-result" style="margin-top:14px;background:#F0FAF6;border:1.5px solid #B2DDD0;
+      border-radius:10px;padding:12px 18px;font-family:'Outfit',sans-serif;">
+    </div>
+
+    <script>
+    (function(){
+      const DATA = {
+        becher: {
+          label: 'Bécher',
+          color: '#E8783A',
+          colorLight: '#FDF0E8',
+          values: [47,46.6,48.1,49.9,43.9,49.5,45.5,48.6,44.4,49.8,51.1,41,45.2,48.7,46.1,46.4,49,50,46.4,47.4,46.7,45.8,49.7,45.8,45.9,41.9,45.6,46.8,42.6,42.9,49.1,48.7],
+          moy: 46.75, sigma: 2.54, u: 0.449, n: 32,
+          bins: [[40.5,41],[41,41.5],[41.5,42],[42,42.5],[42.5,43],[43,43.5],[43.5,44],[44,44.5],[44.5,45],[45,45.5],[45.5,46],[46,46.5],[46.5,47],[47,47.5],[47.5,48],[48,48.5],[48.5,49],[49,49.5],[49.5,50],[50,50.5],[50.5,51],[51,51.5]],
+          freqs: [0,1,0,1,0,2,0,1,1,0,2,4,3,4,1,0,1,4,2,4,0,0,1,1]
+        },
+        eprouvette: {
+          label: 'Éprouvette graduée',
+          color: '#2D5F8A',
+          colorLight: '#E8F1F8',
+          values: [48.2,48.6,50.7,48.1,49.2,49.3,49.3,49.2,48.6,49.3,50.1,48.1,49.7,48.8,49.1,49.7,48,48,48.7,48.6,44.3,45.6,49.2,48.9,48.9,50.1,48.5,48.5,49.4,49.1,48.8,48.1],
+          moy: 48.71, sigma: 1.19, u: 0.211, n: 32,
+          bins: [[43.5,44],[44,44.5],[44.5,45],[45,45.5],[45.5,46],[46,46.5],[46.5,47],[47,47.5],[47.5,48],[48,48.5],[48.5,49],[49,49.5],[49.5,50],[50,50.5],[50.5,51],[51,51.5]],
+          freqs: [0,1,0,0,1,0,0,0,2,6,8,9,2,2,1,0]
+        },
+        fiole: {
+          label: 'Fiole jaugée',
+          color: '#3A8A6E',
+          colorLight: '#E8F5F0',
+          values: [50,49.8,48,49.7,49.3,49.6,49.3,49.4,49.8,49.8,52.6,49.5,49.7,49.8,49,49.4,49,50,49.6,49.7,48.7,47.4,49.5,49.3,51,49,49.9,49.7,49.5,49.6,49.7,49.4],
+          moy: 49.55, sigma: 0.83, u: 0.146, n: 32,
+          bins: [[47,47.5],[47.5,48],[48,48.5],[48.5,49],[49,49.5],[49.5,50],[50,50.5],[50.5,51],[51,51.5],[52,52.5],[52.5,53]],
+          freqs: [1,0,1,0,4,9,15,0,1,0,1]
+        }
+      };
+
+      let current = 'becher';
+      const canvas = document.getElementById('histCanvas');
+      const ctx = canvas.getContext('2d');
+      const tooltip = document.getElementById('histTooltip');
+      const result = document.getElementById('hist-result');
+
+      // Ajustement DPI
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = 640 * dpr;
+      canvas.height = 280 * dpr;
+      ctx.scale(dpr, dpr);
+      canvas.style.width = '100%';
+      canvas.style.height = '280px';
+
+      const PAD = {left:52, right:20, top:30, bottom:42};
+      const W = 640, H = 280;
+      const plotW = W - PAD.left - PAD.right;
+      const plotH = H - PAD.top - PAD.bottom;
+
+      function fmt(val) {
+        return val.toFixed(3).replace('.', ',');
+      }
+      function fmtU(val) {
+        // arrondi par excès, 1 ou 2 CS
+        const s = val.toString();
+        // trouver 1er CS
+        let str = val.toFixed(4);
+        for (let i=0; i<str.length; i++) {
+          if (str[i] !== '0' && str[i] !== '.' && str[i] !== ',') {
+            const cs1 = parseInt(str[i]);
+            if (cs1 >= 5) {
+              // 1 CS → arrondi par excès
+              return parseFloat(val.toPrecision(1));
+            } else {
+              // 2 CS → arrondi par excès
+              return parseFloat(val.toPrecision(2));
+            }
+          }
+        }
+        return val;
+      }
+
+      function draw(key) {
+        const d = DATA[key];
+        ctx.clearRect(0, 0, W, H);
+
+        const maxF = Math.max(...d.freqs);
+        const nBins = d.bins.length;
+        const binMin = d.bins[0][0];
+        const binMax = d.bins[nBins-1][1];
+        const range = binMax - binMin;
+        const binW = range / nBins;
+
+        // Grille
+        ctx.strokeStyle = '#DDE3EC';
+        ctx.lineWidth = 0.8;
+        ctx.setLineDash([4,4]);
+        const ySteps = 5;
+        for (let i=0; i<=ySteps; i++) {
+          const yy = PAD.top + plotH - (i/ySteps)*plotH;
+          ctx.beginPath(); ctx.moveTo(PAD.left, yy); ctx.lineTo(W-PAD.right, yy); ctx.stroke();
+          ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito,sans-serif'; ctx.textAlign = 'right';
+          ctx.fillText(Math.round(i/ySteps*maxF), PAD.left-5, yy+4);
+        }
+        ctx.setLineDash([]);
+
+        // Axes
+        ctx.strokeStyle = '#1A2A3A'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(PAD.left, PAD.top); ctx.lineTo(PAD.left, PAD.top+plotH); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(PAD.left, PAD.top+plotH); ctx.lineTo(W-PAD.right, PAD.top+plotH); ctx.stroke();
+
+        // Barres
+        d.bins.forEach(([lo, hi], i) => {
+          const f = d.freqs[i] || 0;
+          const xPos = PAD.left + ((lo - binMin)/range)*plotW;
+          const bw = (binW/range)*plotW * 0.85;
+          const bh = (f/maxF)*plotH;
+          const yPos = PAD.top + plotH - bh;
+          ctx.fillStyle = d.color;
+          ctx.globalAlpha = 0.82;
+          ctx.beginPath();
+          ctx.roundRect(xPos + ((binW/range)*plotW - bw)/2, yPos, bw, bh, [3,3,0,0]);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          // label fréquence au-dessus si > 0
+          if (f > 0) {
+            ctx.fillStyle = d.color; ctx.font = 'bold 9px Nunito,sans-serif'; ctx.textAlign = 'center';
+            ctx.fillText(f, xPos + (binW/range)*plotW/2, yPos - 3);
+          }
+        });
+
+        // Ligne moyenne
+        const moyX = PAD.left + ((d.moy - binMin)/range)*plotW;
+        ctx.strokeStyle = '#C0392B'; ctx.lineWidth = 2; ctx.setLineDash([6,3]);
+        ctx.beginPath(); ctx.moveTo(moyX, PAD.top); ctx.lineTo(moyX, PAD.top+plotH); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#C0392B'; ctx.font = 'bold 10px Outfit,sans-serif'; ctx.textAlign = 'left';
+        ctx.fillText('V̄ = '+d.moy.toFixed(2).replace('.',',')+' mL', moyX+4, PAD.top+16);
+
+        // Labels X
+        ctx.fillStyle = '#5A6B7A'; ctx.font = '9px Nunito,sans-serif'; ctx.textAlign = 'center';
+        d.bins.forEach(([lo,hi], i) => {
+          if (i % 2 === 0 || nBins <= 8) {
+            const xPos = PAD.left + ((lo+hi)/2 - binMin)/range*plotW;
+            ctx.fillText(lo.toFixed(1).replace('.',','), xPos, PAD.top+plotH+13);
+          }
+        });
+        // dernier label
+        const lastX = PAD.left + plotW;
+        ctx.fillText(d.bins[nBins-1][1].toFixed(1).replace('.',','), lastX, PAD.top+plotH+13);
+
+        // Label axe X
+        ctx.fillStyle = '#1A2A3A'; ctx.font = 'bold 10px Nunito,sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('Volume (mL)', W/2, H-4);
+
+        // Label axe Y
+        ctx.save(); ctx.translate(13, H/2); ctx.rotate(-Math.PI/2);
+        ctx.fillText('Fréquence', 0, 0); ctx.restore();
+
+        // Titre
+        ctx.fillStyle = '#2D5F8A'; ctx.font = 'bold 11px Outfit,sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(d.label + ' — cible : 50,0 mL', W/2, 16);
+
+        // Résultat
+        const U = fmtU(d.u);
+        // Déterminer décimales de U
+        const uStr = U.toString().replace(',','.');
+        const dotIdx = uStr.indexOf('.');
+        const dec = dotIdx >= 0 ? uStr.length - dotIdx - 1 : 0;
+        const moyRound = d.moy.toFixed(dec).replace('.',',');
+        const uDisp = U.toString().replace('.',',');
+        result.innerHTML = `
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div>
+              <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;color:#5A6B7A;text-transform:uppercase;">Résultat</span><br>
+              <span style="font-size:1.1rem;font-weight:800;color:#1A2A3A;">V = (${moyRound} ± ${uDisp}) mL</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <span style="background:#E8F1F8;border:1px solid #B8D4EC;border-radius:20px;padding:4px 12px;font-size:0.78rem;font-weight:700;color:#2D5F8A;">V̄ = ${d.moy.toFixed(2).replace('.',',')} mL</span>
+              <span style="background:#FDF0E8;border:1px solid #F5C4A0;border-radius:20px;padding:4px 12px;font-size:0.78rem;font-weight:700;color:#E8783A;">σ = ${d.sigma.toFixed(2).replace('.',',')} mL</span>
+              <span style="background:#E8F5F0;border:1px solid #B2DDD0;border-radius:20px;padding:4px 12px;font-size:0.78rem;font-weight:700;color:#3A8A6E;">u(V) = ${uDisp} mL</span>
+              <span style="background:#F5F7FA;border:1px solid #DDE3EC;border-radius:20px;padding:4px 12px;font-size:0.78rem;font-weight:700;color:#5A6B7A;">n = ${d.n}</span>
+            </div>
+          </div>`;
+      }
+
+      // Tooltip au survol
+      canvas.addEventListener('mousemove', function(e){
+        const rect = canvas.getBoundingClientRect();
+        const mx = (e.clientX - rect.left) * (640 / rect.width);
+        const d = DATA[current];
+        const nBins = d.bins.length;
+        const binMin = d.bins[0][0];
+        const binMax = d.bins[nBins-1][1];
+        const range = binMax - binMin;
+        const binW = range / nBins;
+
+        let found = false;
+        d.bins.forEach(([lo,hi],i) => {
+          const xStart = PAD.left + ((lo-binMin)/range)*plotW;
+          const xEnd = PAD.left + ((hi-binMin)/range)*plotW;
+          if (mx >= xStart && mx <= xEnd) {
+            const f = d.freqs[i] || 0;
+            tooltip.style.display = 'block';
+            tooltip.innerHTML = `<strong>] ${lo.toFixed(1).replace('.',',')} ; ${hi.toFixed(1).replace('.',',')} ] mL</strong><br>${f} mesure${f>1?'s':''}`;
+            const tx = e.clientX - rect.left + 12;
+            const ty = e.clientY - rect.top - 36;
+            tooltip.style.left = tx + 'px';
+            tooltip.style.top = ty + 'px';
+            found = true;
+          }
+        });
+        if (!found) tooltip.style.display = 'none';
+      });
+      canvas.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+
+      window.selectVerre = function(key, btn) {
+        current = key;
+        document.querySelectorAll('.hist-sel-btn').forEach(b => {
+          const k = b.dataset.verre;
+          const col = k==='becher'?'#E8783A': k==='eprouvette'?'#2D5F8A':'#3A8A6E';
+          b.style.background = (b===btn) ? col : '#fff';
+          b.style.color = (b===btn) ? '#fff' : col;
+        });
+        draw(key);
+      };
+
+      draw('becher');
+    })();
+    </script>
+  </div>
+
+  <div class="section-title"><span class="icon">🔧</span> Amélioration de la qualité de mesure</div>
+  <div class="def-card">
+    <h3>Comment améliorer une mesure ?</h3>
+    <ul>
+      <li>Choisir un matériel avec une tolérance suffisamment faible</li>
+      <li>Augmenter le nombre de mesures indépendantes</li>
+      <li>Garder les résultats intermédiaires en mémoire (ne pas arrondir)</li>
+      <li>Pour réduire l'<strong>erreur aléatoire</strong> : répéter la mesure et prendre la moyenne</li>
+      <li>Pour réduire l'<strong>erreur systématique</strong> : vérifier chaque étape et éliminer les biais</li>
+    </ul>
+  </div>
+
+  <!-- QCM type erreur -->
+  <div class="exo-card">
+    <h3>QCM – Identifier le type d'erreur</h3>
+    <div class="qcm-grid" id="err-qcm">
+      <div class="qcm-item">
+        <span class="substance">Une balance mal étalonnée donne systématiquement des masses de 5 g trop élevées.</span>
+        <div class="qcm-choices" data-correct="Systématique">
+          <button class="qcm-btn" data-val="Aléatoire">Aléatoire</button>
+          <button class="qcm-btn" data-val="Systématique">Systématique</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="qcm-item">
+        <span class="substance">Des mesures de température varient de façon imprévisible d'une mesure à l'autre autour de la valeur vraie.</span>
+        <div class="qcm-choices" data-correct="Aléatoire">
+          <button class="qcm-btn" data-val="Aléatoire">Aléatoire</button>
+          <button class="qcm-btn" data-val="Systématique">Systématique</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="qcm-item">
+        <span class="substance">Sur la cible : les impacts sont groupés mais décalés par rapport au centre.</span>
+        <div class="qcm-choices" data-correct="Systématique">
+          <button class="qcm-btn" data-val="Aléatoire">Aléatoire</button>
+          <button class="qcm-btn" data-val="Systématique">Systématique</button>
+          <button class="qcm-btn" data-val="Les deux">Les deux</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="qcm-item">
+        <span class="substance">Des mesures dispersées ET décalées par rapport à la valeur vraie.</span>
+        <div class="qcm-choices" data-correct="Les deux">
+          <button class="qcm-btn" data-val="Aléatoire">Aléatoire</button>
+          <button class="qcm-btn" data-val="Systématique">Systématique</button>
+          <button class="qcm-btn" data-val="Les deux">Les deux</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">Fiche 2 – C. Poirault-Gauvin & M. François · Terminale Spé PC</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ONGLET III – INCERTITUDES
+══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-3">
+  <div class="intro-box">
+    <strong>Mesurer une grandeur</strong>, c'est rechercher une valeur et lui associer une incertitude afin d'évaluer la qualité de la mesure.
+  </div>
+
+  <!-- SOUS-ONGLETS -->
+  <nav class="sub-nav" id="sub-nav-3">
+    <button class="sub-btn active" data-sub="sub3-1">B – Convention d'écriture</button>
+    <button class="sub-btn" data-sub="sub3-2">C – Type A (statistique)</button>
+    <button class="sub-btn" data-sub="sub3-3">D – Type B (unique)</button>
+    <button class="sub-btn" data-sub="sub3-4">E – Incertitudes composées</button>
+    <button class="sub-btn" data-sub="sub3-5">F – Comparaison valeur ref.</button>
+  </nav>
+
+  <!-- SUB 1 : Convention d'écriture -->
+  <div class="sub-content active" id="sub3-1">
+    <div class="section-title"><span class="icon">✏️</span> Convention d'écriture du résultat</div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>📘 Qu'est-ce que l'incertitude de mesure U(G) ?</span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="def-card" style="margin:0;">
+        <h3>Notation G = x ± U(G)</h3>
+        <p>L'incertitude de mesure U(G) correspond à l'intervalle contenant <strong>très probablement la valeur vraie</strong> de la grandeur G mesurée. Elle a la <strong>même unité</strong> que la grandeur.</p>
+      </div>
+      <div class="formule-box" style="margin-top:10px;">
+        G = x ± U(G)
+        <div class="legend">x = valeur mesurée &nbsp;|&nbsp; U(G) = incertitude élargie (même unité que G)</div>
+      </div>
+    </div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>📘 Règles d'arrondi de l'incertitude</span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="def-card" style="margin:0;">
+        <h3>Règles d'arrondi de l'incertitude</h3>
+        <ul>
+          <li><strong>Règle 1 :</strong> Le résultat doit comporter autant de décimales que son incertitude.</li>
+          <li><strong>Règle 2 :</strong> Une incertitude ne doit pas être donnée avec plus de <strong>2 chiffres significatifs</strong>. Tout arrondi se fait <em>par excès</em>.</li>
+          <li>Si le 1<sup>er</sup> C.S. de l'incertitude est entre <strong>5 et 9</strong> → 1 C.S. dans l'incertitude.</li>
+          <li>Si le 1<sup>er</sup> C.S. est <strong>&lt; 5</strong> → 2 C.S. dans l'incertitude.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Exercice convention -->
+    <div class="exo-card">
+      <h3>Écrire correctement les résultats</h3>
+      <div class="exo-enonce">Pour chaque mesure, sélectionnez le résultat correctement écrit.</div>
+
+      <div class="question-block">
+        <div class="question-label">v = 425,564 m·s<sup>−1</sup> avec u(v) = 0,78 m·s<sup>−1</sup></div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;flex-wrap:wrap;">
+          <button class="qcm-btn" data-val="A">v = 425,564 ± 0,78 m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="B">v = 425,6 ± 0,8 m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="C">v = 426 ± 1 m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="D">v = 425,56 ± 0,78 m·s<sup>−1</sup></button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">m = 0,12812 kg avec u(m) = 0,00234 kg</div>
+        <div class="qcm-choices" data-correct="C" style="margin:8px 0;flex-wrap:wrap;">
+          <button class="qcm-btn" data-val="A">m = 0,12812 ± 0,00234 kg</button>
+          <button class="qcm-btn" data-val="B">m = 0,128 ± 0,002 kg</button>
+          <button class="qcm-btn" data-val="C">m = 0,1281 ± 0,0024 kg</button>
+          <button class="qcm-btn" data-val="D">m = 0,13 ± 0,003 kg</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="num-btn-row"><button class="btn-corriger" onclick="showCorr('conv-ecrit-corr')">Voir l'explication</button></div>
+      <div class="num-correction-inline" id="conv-ecrit-corr">
+        <div class="calc-step"><strong>v :</strong> u = 0,78 → 1er CS = 7 (≥ 5) → 1 CS → u = <strong>0,8</strong> m·s⁻¹ → résultat à 1 décimale : <strong>v = 425,6 ± 0,8 m·s⁻¹</strong></div>
+        <div class="calc-step"><strong>m :</strong> u = 0,00234 kg → 1er CS = 2 (&lt; 5) → 2 CS → u = <strong>0,0024</strong> kg → résultat à 4 décimales : <strong>m = 0,1281 ± 0,0024 kg</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB 2 : Type A -->
+  <div class="sub-content" id="sub3-2">
+    <div class="section-title"><span class="icon">📊</span> Incertitude de type A – Mesures multiples</div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>📘 Principe statistique – Type A</span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="def-card" style="margin:0;">
+        <h3>Principe statistique</h3>
+        <p>Lorsqu'on réalise des mesurages répétés d'une même grandeur M dans les mêmes conditions expérimentales :</p>
+        <ul style="margin-top:8px;">
+          <li>La <strong>valeur mesurée</strong> m est la <strong>moyenne</strong> des valeurs (après élimination des valeurs aberrantes)</li>
+          <li>L'<strong>incertitude-type u(M)</strong> est liée à l'écart-type σ<sub>n−1</sub> (noté S<sub>x</sub> sur la TI 83)</li>
+        </ul>
+      </div>
+      <div class="formule-box" style="margin-top:10px;">
+        u(M) = σ<sub>n−1</sub> / √n
+        <div class="legend">σ<sub>n−1</sub> = écart-type de la série &nbsp;|&nbsp; n = nombre de mesures &nbsp;|&nbsp; u(M) = incertitude-type de répétabilité</div>
+      </div>
+      <div class="attention-box" style="margin-top:10px;"><strong>⚠️ Calculatrice TI 83 Premium :</strong> utiliser S<sub>x</sub> (écart-type n−1), PAS σ<sub>x</sub> !</div>
+    </div>
+
+    <!-- Exercice type A – durée de chute -->
+    <div class="exo-card">
+      <h3>Application – Durée de chute d'un objet</h3>
+      <div class="exo-enonce">
+        On mesure la durée de chute Δt d'un objet lâché d'une hauteur constante. Voici les résultats en secondes (après suppression de la valeur aberrante 2,92 s) :<br>
+        <strong>2,46 — 2,51 — 2,48 — 2,51 — 2,47 — 2,52 — 2,49 — 2,50 — 2,48 — 2,51 — 2,53</strong>
+        <div class="attention-box" style="margin-top:8px;"><strong>La valeur 2,92 s est aberrante</strong> et doit être exclue du calcul.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Nombre de mesures retenues n = ?</div>
+        <div class="qcm-choices" data-correct="11" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="10">10</button>
+          <button class="qcm-btn" data-val="11">11</button>
+          <button class="qcm-btn" data-val="12">12</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Valeur moyenne Δt̄ (en s)</div>
+        <div class="qcm-choices" data-correct="C" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">2,49 s</button>
+          <button class="qcm-btn" data-val="B">2,500 s</button>
+          <button class="qcm-btn" data-val="C">2,496 s</button>
+          <button class="qcm-btn" data-val="D">2,51 s</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Écart-type σ<sub>n−1</sub> (calculatrice : S<sub>x</sub>, en s)</div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">0,0021 s</button>
+          <button class="qcm-btn" data-val="B">0,0201 s</button>
+          <button class="qcm-btn" data-val="C">0,201 s</button>
+          <button class="qcm-btn" data-val="D">0,0061 s</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Incertitude-type u(Δt) = σ<sub>n−1</sub> / √n (en s)</div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">0,0201 s</button>
+          <button class="qcm-btn" data-val="B">0,00606 s</button>
+          <button class="qcm-btn" data-val="C">0,0606 s</button>
+          <button class="qcm-btn" data-val="D">0,00183 s</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Résultat final correctement écrit Δt = ? ± ? s</div>
+        <div class="qcm-choices" data-correct="C" style="margin:8px 0;flex-wrap:wrap;">
+          <button class="qcm-btn" data-val="A">Δt = 2,496 ± 0,006 s</button>
+          <button class="qcm-btn" data-val="B">Δt = 2,50 ± 0,01 s</button>
+          <button class="qcm-btn" data-val="C">Δt = 2,496 ± 0,007 s</button>
+          <button class="qcm-btn" data-val="D">Δt = 2,5 ± 0,007 s</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="num-btn-row">
+        <button class="btn-corriger" onclick="showCorr('typeA-corr')">Voir la correction complète</button>
+      </div>
+      <div class="num-correction-inline" id="typeA-corr">
+        <div class="calc-step">n = 11 mesures (2,92 exclue)</div>
+        <div class="calc-step">Δt̄ = (2,46 + 2,51 + 2,48 + 2,51 + 2,47 + 2,52 + 2,49 + 2,50 + 2,48 + 2,51 + 2,53) / 11 ≈ <strong>2,496 s</strong></div>
+        <div class="calc-step">σ<sub>n−1</sub> ≈ 0,0201 s (calculatrice : S<sub>x</sub>)</div>
+        <div class="calc-step">u(Δt) = 0,0201 / √11 ≈ 0,0061 s → arrondi par excès : <strong>0,007 s</strong> (1er CS = 6 ≥ 5)</div>
+        <div class="calc-step"><strong>Δt = (2,496 ± 0,007) s</strong></div>
+      </div>
+    </div>
+
+  <!-- TP VERRERIE → renvoi Excel -->
+  <div class="activite-card">
+    <h3>🧪 TP – Quelle verrerie choisir pour mesurer 50 mL ?</h3>
+    <p style="margin-bottom:14px;">Ce TP se réalise directement dans le <strong>fichier Excel dédié</strong>. Il contient les 32 mesures relevées au bécher et à l'éprouvette graduée, ainsi que les tableaux à compléter pour calculer :</p>
+    <ul style="padding-left:18px;line-height:2;font-size:0.92rem;">
+      <li>les valeurs minimale et maximale de chaque série</li>
+      <li>la <strong>moyenne</strong>, la <strong>médiane</strong> et l'<strong>écart-type</strong></li>
+      <li>l'<strong>incertitude-type</strong> u(V) = σ / √n</li>
+      <li>le tableau de <strong>fréquences</strong> pour tracer l'histogramme</li>
+    </ul>
+    <div style="margin-top:16px;">
+      <a href="https://www.pearltrees.com/private/id105239613/item803819831?paccess=47d4ff45f6e.2fe95137.f3a9ac260058cf9951e4958713562a19" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div style="display:inline-flex;align-items:center;gap:10px;background:#3A8A6E;color:#fff;padding:10px 20px;border-radius:10px;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.92rem;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='#2A6B52'" onmouseout="this.style.background='#3A8A6E'">
+          <span style="font-size:1.2rem;">📊</span> Ouvrir le fichier Excel – Incertitudes à calculer
+        </div>
+      </a>
+    </div>
+    <div class="remarque-box" style="margin-top:14px;">
+      <strong>ℹ️ Rappel :</strong> Dans Excel, utilise les fonctions <code>MOYENNE()</code>, <code>ECARTYPE()</code> (équivalent de σ<sub>n−1</sub>) et <code>NB()</code> pour obtenir n. L'incertitude-type se calcule ensuite avec <code>=ECARTYPE(…)/RACINE(NB(…))</code>.
+    </div>
+  </div>
+  </div>
+
+  <!-- SUB 3 : Type B -->
+  <div class="sub-content" id="sub3-3">
+    <div class="section-title"><span class="icon">🔧</span> Incertitude de type B – Mesure unique</div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>📘 Principe – Type B</span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="def-card" style="margin:0;">
+        <h3>Principe</h3>
+        <p>Lorsqu'on effectue une <strong>mesure unique</strong>, l'incertitude est estimée à partir des caractéristiques de l'instrument ou du protocole. Les formules <em>seront données</em> dans tous les cas.</p>
+      </div>
+    </div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>📘 Les 3 cas de figure et leurs formules</span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="typeB-grid">
+        <div class="typeB-card">
+          <h4>Appareil avec précision p%</h4>
+          <div class="formule-small">u = p% × mesure / √3</div>
+          <div class="exemple-small">
+            <strong>Exemple :</strong> Résistance R = 10 Ω ± 5%<br>
+            u(R) = 5% × 10 / √3 = <span class="bold-vert">0,29 Ω</span>
+          </div>
+        </div>
+        <div class="typeB-card">
+          <h4>Double lecture sur graduation (règle, oscilloscope…)</h4>
+          <div class="formule-small">u = 1 graduation / √6</div>
+          <div class="exemple-small">
+            <strong>Exemple :</strong> Règle graduée au mm<br>
+            u(l) = 1 / √6 ≈ <span class="bold-vert">0,41 mm</span> ≈ 0,5 mm
+          </div>
+        </div>
+        <div class="typeB-card">
+          <h4>Tolérance constructeur ± t</h4>
+          <div class="formule-small">u = tolérance / √3</div>
+          <div class="exemple-small">
+            <strong>Exemple :</strong> Burette graduée ± 0,05 mL<br>
+            u(V) = 0,05 / √3 ≈ <span class="bold-vert">0,03 mL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exercice type B -->
+    <div class="exo-card">
+      <h3>Calculer une incertitude de type B</h3>
+
+      <div class="question-block">
+        <div class="question-label">Une pipette jaugée porte la mention ± 0,05 mL. Quelle est u(V) ?</div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">u(V) = 0,05 mL</button>
+          <button class="qcm-btn" data-val="B">u(V) = 0,029 mL</button>
+          <button class="qcm-btn" data-val="C">u(V) = 0,025 mL</button>
+          <button class="qcm-btn" data-val="D">u(V) = 0,041 mL</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Un thermomètre gradué au degré. Quelle est u(T) ?</div>
+        <div class="qcm-choices" data-correct="C" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">u(T) = 1,00 °C</button>
+          <button class="qcm-btn" data-val="B">u(T) = 0,50 °C</button>
+          <button class="qcm-btn" data-val="C">u(T) = 0,41 °C</button>
+          <button class="qcm-btn" data-val="D">u(T) = 0,29 °C</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+
+      <div class="num-btn-row">
+        <button class="btn-corriger" onclick="showCorr('typeB-corr')">Voir la correction</button>
+      </div>
+      <div class="num-correction-inline" id="typeB-corr">
+        <div class="calc-step">Pipette jaugée ± 0,05 mL → u(V) = 0,05 / √3 ≈ 0,029 mL → résultat : <strong>V = (V̄ ± 0,03) mL</strong></div>
+        <div class="calc-step">Thermomètre 1 graduation = 1°C → u(T) = 1 / √6 ≈ 0,41°C → résultat : <strong>T = (T̄ ± 0,5) °C</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB 4 : Incertitudes composées -->
+  <div class="sub-content" id="sub3-4">
+    <div class="section-title"><span class="icon">🔗</span> Incertitudes composées</div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>📘 Principe – Incertitudes composées</span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="def-card" style="margin:0 0 10px;">
+        <h3>Lorsque plusieurs sources d'incertitude se cumulent</h3>
+        <p>Quand une grandeur est calculée à partir de plusieurs autres grandeurs, l'incertitude totale est calculée à partir des incertitudes de chacune. <strong>Les formules seront données.</strong></p>
+      </div>
+      <table class="tableau" style="margin:0;">
+        <tr>
+          <th>Cas de figure</th>
+          <th>Formule d'incertitude composée</th>
+        </tr>
+        <tr>
+          <td>U<sub>A</sub> et U<sub>B</sub> se cumulent</td>
+          <td>U = √(U<sub>A</sub>² + U<sub>B</sub>²)</td>
+        </tr>
+        <tr>
+          <td>Addition / soustraction y = x<sub>1</sub> ± x<sub>2</sub></td>
+          <td>U(y) = √[U(x<sub>1</sub>)² + U(x<sub>2</sub>)²]</td>
+        </tr>
+        <tr>
+          <td>Produit / quotient y = x<sub>1</sub> × x<sub>2</sub> ou x<sub>1</sub>/x<sub>2</sub></td>
+          <td>U(y)/y = √[(U(x<sub>1</sub>)/x<sub>1</sub>)² + (U(x<sub>2</sub>)/x<sub>2</sub>)²]</td>
+        </tr>
+        <tr>
+          <td>Puissances y = x<sub>1</sub><sup>p1</sup> × x<sub>2</sub><sup>p2</sup></td>
+          <td>U(y)/y = √[(p1·U(x<sub>1</sub>)/x<sub>1</sub>)² + (p2·U(x<sub>2</sub>)/x<sub>2</sub>)²]</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Exercice composé -->
+    <div class="exo-card">
+      <h3>Exercice 1 – Vitesse v = D/Δt</h3>
+      <div class="exo-enonce">D = (2,000 ± 0,006) m &nbsp;|&nbsp; Δt = (20,23 ± 0,02) s</div>
+      <div class="question-block">
+        <div class="question-label">Quelle est la valeur de v = D/Δt ?</div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">v = 0,09900 m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="B">v = 0,09887 m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="C">v = 0,0989 m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="D">v = 0,1013 m·s<sup>−1</sup></button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">Quelle est la valeur de U(v) ?</div>
+        <div class="qcm-choices" data-correct="C" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">U(v) = 3,0 × 10<sup>−3</sup> m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="B">U(v) = 9,9 × 10<sup>−4</sup> m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="C">U(v) = 3,1 × 10<sup>−4</sup> m·s<sup>−1</sup></button>
+          <button class="qcm-btn" data-val="D">U(v) = 6,0 × 10<sup>−5</sup> m·s<sup>−1</sup></button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="num-btn-row">
+        <button class="btn-corriger" onclick="showCorr('comp1-corr')">Voir la correction</button>
+      </div>
+      <div class="num-correction-inline" id="comp1-corr">
+        <div class="calc-step">v = 2,000 / 20,23 = 0,09887 m·s<sup>−1</sup></div>
+        <div class="calc-step">U(v)/v = √[(0,006/2,000)² + (0,02/20,23)²] = √[(0,003)² + (0,000989)²] = √(9×10⁻⁶ + 9,78×10⁻⁷) ≈ 3,16×10⁻³</div>
+        <div class="calc-step">U(v) = 0,09887 × 3,16×10⁻³ ≈ <strong>3,1×10⁻⁴ m·s⁻¹</strong></div>
+        <div class="calc-step"><strong>v = (0,0989 ± 0,0004) m·s⁻¹</strong></div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice 2 – Distance d = d<sub>1</sub> + d<sub>2</sub></h3>
+      <div class="exo-enonce">d<sub>1</sub> = (2,000 ± 0,006) m &nbsp;|&nbsp; d<sub>2</sub> = (53,3 ± 0,7) cm = (0,533 ± 0,007) m</div>
+      <div class="question-block">
+        <div class="question-label">Quelle est la valeur de d = d<sub>1</sub> + d<sub>2</sub> ?</div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">d = 2,530 m</button>
+          <button class="qcm-btn" data-val="B">d = 2,533 m</button>
+          <button class="qcm-btn" data-val="C">d = 2,54 m</button>
+          <button class="qcm-btn" data-val="D">d = 2,5330 m</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">Quelle est la valeur de U(d) ?</div>
+        <div class="qcm-choices" data-correct="C" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">U(d) = 0,013 m</button>
+          <button class="qcm-btn" data-val="B">U(d) = 0,006 m</button>
+          <button class="qcm-btn" data-val="C">U(d) = 0,0092 m</button>
+          <button class="qcm-btn" data-val="D">U(d) = 0,0070 m</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+      <div class="num-btn-row">
+        <button class="btn-corriger" onclick="showCorr('comp2-corr')">Voir la correction</button>
+      </div>
+      <div class="num-correction-inline" id="comp2-corr">
+        <div class="calc-step">d = 2,000 + 0,533 = <strong>2,533 m</strong></div>
+        <div class="calc-step">U(d) = √[(0,006)² + (0,007)²] = √(0,000036 + 0,000049) = √(0,000085) ≈ <strong>0,0092 m</strong> → arrondi : 0,010 m</div>
+        <div class="calc-step"><strong>d = (2,533 ± 0,010) m</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB 5 : Comparaison valeur de référence -->
+  <div class="sub-content" id="sub3-5">
+    <div class="section-title"><span class="icon">📐</span> Comparaison à une valeur de référence</div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>📘 Avec incertitude connue – Quotient Q</span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="def-card" style="margin:0 0 10px;">
+        <h3>1. Avec incertitude connue – Quotient de validation</h3>
+        <p>On compare m<sub>mes</sub> à m<sub>ref</sub> en calculant :</p>
+      </div>
+      <div class="formule-box" style="margin:0 0 10px;">
+        Q = |m<sub>mes</sub> − m<sub>ref</sub>| / u(m)
+        <div class="legend">
+          Si Q ≤ 1 → mesure conforme à la référence ✅<br>
+          Si Q &gt; 1 → mesure non conforme, chercher pourquoi ❌
+        </div>
+      </div>
+      <div class="exemple-box">
+        <strong>Exemple Eau de Javel :</strong> C<sub>réf</sub> = 1,56 mol·L<sup>−1</sup> &nbsp;|&nbsp; c = (1,34 ± 0,08) mol·L<sup>−1</sup><br>
+        Q = |1,34 − 1,56| / 0,08 = 0,22 / 0,08 = <strong>2,75 &gt; 1</strong> → mesure <span class="bold-rouge">non conforme</span> : l'eau de Javel s'est dégradée depuis l'ouverture.
+      </div>
+    </div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>📘 Sans incertitude – Écart relatif ε<sub>r</sub></span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="formule-box" style="margin:0 0 10px;">
+        ε<sub>r</sub> = |x<sub>attendue</sub> − x<sub>obtenue</sub>| / x<sub>attendue</sub> × 100 %
+        <div class="legend">Si ε<sub>r</sub> ≤ 10% → mesure satisfaisante au lycée</div>
+      </div>
+    </div>
+
+    <!-- Exercice comparaison -->
+    <div class="exo-card">
+      <h3>Exercice – Comparaison</h3>
+      <div class="question-block">
+        <div class="question-label">On mesure une masse m<sub>mes</sub> = 106 g, valeur attendue m<sub>ref</sub> = 110 g. Quelle est la valeur de ε<sub>r</sub> ?</div>
+        <div class="qcm-choices" data-correct="B" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="A">ε<sub>r</sub> = 3,8 %</button>
+          <button class="qcm-btn" data-val="B">ε<sub>r</sub> = 3,6 %</button>
+          <button class="qcm-btn" data-val="C">ε<sub>r</sub> = 4,0 %</button>
+          <button class="qcm-btn" data-val="D">ε<sub>r</sub> = 3,3 %</button>
+        </div>
+        <div class="qcm-feedback"></div>
+        <div class="num-btn-row">
+          <button class="btn-corriger" onclick="showCorr('comp3-corr')">Voir</button>
+        </div>
+        <div class="num-correction-inline" id="comp3-corr">
+          <div class="calc-step">ε<sub>r</sub> = |110 − 106| / 110 × 100 = 4 / 110 × 100 ≈ <strong>3,6 %</strong></div>
+          <div class="calc-step">ε<sub>r</sub> = 3,6 % &lt; 10 % → mesure <span class="bold-vert">satisfaisante</span> ✅</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Eau de Javel : C<sub>réf</sub> = 1,56 mol·L<sup>−1</sup>, c = (1,34 ± 0,08) mol·L<sup>−1</sup>. Le quotient Q est-il ≤ 1 ?</div>
+        <div class="qcm-choices" data-correct="Non" style="margin:8px 0;">
+          <button class="qcm-btn" data-val="Oui">Oui, conforme</button>
+          <button class="qcm-btn" data-val="Non">Non, non conforme</button>
+        </div>
+        <div class="qcm-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">Fiche 2 – C. Poirault-Gauvin & M. François · Terminale Spé PC</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ONGLET IV – PYTHON
+══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-4">
+  <div class="intro-box">
+    Python permet de tracer des <strong>histogrammes</strong> et de réaliser des calculs statistiques (moyenne, écart-type, incertitude-type) sur une série de mesures. On utilise les bibliothèques <code>numpy</code> et <code>matplotlib</code>.
+  </div>
+
+  <!-- ═══ PROGRAMME COMPLET ═══ -->
+  <div class="section-title"><span class="icon">🐍</span> Programme complet – Volume à l'éprouvette</div>
+  <div class="code-block">
+    <span class="code-label">PYTHON</span>
+<span class="line-num"> 1</span><span class="code-kw">import</span> numpy <span class="code-kw">as</span> <span class="code-var">np</span>
+<span class="line-num"> 2</span><span class="code-kw">import</span> matplotlib.pyplot <span class="code-kw">as</span> <span class="code-var">plt</span>
+<span class="line-num"> 3</span>
+<span class="line-num"> 4</span><span class="code-var">Veprouvette</span> = [<span class="code-num">49.61</span>, <span class="code-num">49.55</span>, <span class="code-num">50.91</span>, <span class="code-num">50.87</span>, <span class="code-num">48.03</span>, <span class="code-num">50.29</span>,
+<span class="line-num"> 5</span>               <span class="code-num">48.58</span>, <span class="code-num">48.06</span>, <span class="code-num">50.06</span>, <span class="code-num">50.72</span>, <span class="code-num">48.95</span>, <span class="code-num">49.40</span>,
+<span class="line-num"> 6</span>               <span class="code-num">49.21</span>, <span class="code-num">49.31</span>, <span class="code-num">49.78</span>, <span class="code-num">48.77</span>]
+<span class="line-num"> 7</span>
+<span class="line-num"> 8</span>plt.<span class="code-fn">figure</span>(figsize=(<span class="code-num">12</span>, <span class="code-num">10</span>))
+<span class="line-num"> 9</span>plt.<span class="code-fn">hist</span>(<span class="code-var">Veprouvette</span>, bins=<span class="code-num">20</span>, range=(<span class="code-num">45</span>, <span class="code-num">55</span>), align=<span class="code-str">"mid"</span>,
+<span class="line-num">10</span>         rwidth=<span class="code-num">0.9</span>, color=<span class="code-str">"b"</span>, edgecolor=<span class="code-str">"red"</span>, label=<span class="code-str">"éprouvette"</span>)
+<span class="line-num">11</span>plt.<span class="code-fn">title</span>(<span class="code-str">"Volume d'eau contenu par une éprouvette graduée pour 50 mL"</span>)
+<span class="line-num">12</span>plt.<span class="code-fn">xlabel</span>(<span class="code-str">"Volume (mL)"</span>)
+<span class="line-num">13</span>plt.<span class="code-fn">ylabel</span>(<span class="code-str">"Fréquence"</span>)
+<span class="line-num">14</span>plt.<span class="code-fn">legend</span>()
+<span class="line-num">15</span>plt.<span class="code-fn">show</span>()
+<span class="line-num">16</span>
+<span class="line-num">17</span><span class="code-var">Vmoy</span> = np.<span class="code-fn">mean</span>(<span class="code-var">Veprouvette</span>)
+<span class="line-num">18</span><span class="code-var">ecarttype</span> = np.<span class="code-fn">std</span>(<span class="code-var">Veprouvette</span>)
+<span class="line-num">19</span><span class="code-var">effectif</span> = <span class="code-fn">len</span>(<span class="code-var">Veprouvette</span>)
+<span class="line-num">20</span><span class="code-var">incertitudetype</span> = <span class="code-var">ecarttype</span> / np.<span class="code-fn">sqrt</span>(<span class="code-var">effectif</span>)
+<span class="line-num">21</span>
+<span class="line-num">22</span><span class="code-fn">print</span>(<span class="code-str">"Le volume moyen :"</span>, <span class="code-var">Vmoy</span>, <span class="code-str">"mL"</span>)
+<span class="line-num">23</span><span class="code-fn">print</span>(<span class="code-str">"L'écart-type vaut :"</span>, <span class="code-var">ecarttype</span>, <span class="code-str">"mL"</span>)
+<span class="line-num">24</span><span class="code-fn">print</span>(<span class="code-str">"Le nombre de mesures vaut :"</span>, <span class="code-var">effectif</span>)
+<span class="line-num">25</span><span class="code-fn">print</span>(<span class="code-str">"L'incertitude-type de répétabilité vaut :"</span>, <span class="code-var">incertitudetype</span>, <span class="code-str">"mL"</span>)
+  </div>
+
+  <!-- ═══ EXPLICATIONS LIGNE PAR LIGNE ═══ -->
+  <div class="section-title"><span class="icon">📖</span> Explication ligne par ligne</div>
+
+  <button class="accord-btn" onclick="toggleAccord(this)"><span>📦 Lignes 1–2 : Import des bibliothèques</span><span>▾</span></button>
+  <div class="accord-body">
+    <p><code style="background:#1E2A3A;color:#9CDCFE;padding:2px 6px;border-radius:4px;">import numpy as np</code> → bibliothèque de calcul scientifique. Fournit <code>np.mean()</code>, <code>np.std()</code>, <code>np.sqrt()</code>.<br><br>
+    <code style="background:#1E2A3A;color:#9CDCFE;padding:2px 6px;border-radius:4px;">import matplotlib.pyplot as plt</code> → bibliothèque graphique. Fournit toutes les fonctions de tracé : <code>plt.hist()</code>, <code>plt.title()</code>, etc.</p>
+  </div>
+
+  <button class="accord-btn" onclick="toggleAccord(this)"><span>📋 Lignes 4–6 : Création de la liste de données</span><span>▾</span></button>
+  <div class="accord-body">
+    <p><code>Veprouvette = [49.61, 49.55, ...]</code> crée une <strong>liste Python</strong> contenant les 16 valeurs.<br><br>
+    ⚠️ En Python, la <strong>virgule décimale</strong> est remplacée par un <strong>point</strong>. La liste peut tenir sur plusieurs lignes.</p>
+  </div>
+
+  <button class="accord-btn" onclick="toggleAccord(this)"><span>📐 Ligne 8 : Création de la fenêtre graphique</span><span>▾</span></button>
+  <div class="accord-body">
+    <p><code>plt.figure(figsize=(12, 10))</code> crée une fenêtre de 12 × 10 pouces. Le paramètre <code>figsize</code> contrôle la taille de l'image.</p>
+  </div>
+
+  <button class="accord-btn" onclick="toggleAccord(this)"><span>📊 Lignes 9–10 : Tracé de l'histogramme plt.hist()</span><span>▾</span></button>
+  <div class="accord-body">
+    <table class="tableau">
+      <tr><th>Paramètre</th><th>Valeur</th><th>Rôle</th></tr>
+      <tr><td>x</td><td>Veprouvette</td><td>Les données à représenter</td></tr>
+      <tr><td>bins</td><td>20</td><td>Nombre de barres</td></tr>
+      <tr><td>range</td><td>(45, 55)</td><td>Étendue de l'axe x</td></tr>
+      <tr><td>align</td><td>"mid"</td><td>Centrage sur le milieu de l'intervalle</td></tr>
+      <tr><td>rwidth</td><td>0.9</td><td>Largeur relative des barres (0 à 1)</td></tr>
+      <tr><td>color</td><td>"b"</td><td>Couleur de remplissage (bleu)</td></tr>
+      <tr><td>edgecolor</td><td>"red"</td><td>Couleur du contour</td></tr>
+      <tr><td>label</td><td>"éprouvette"</td><td>Légende (nécessite plt.legend())</td></tr>
+    </table>
+  </div>
+
+  <button class="accord-btn" onclick="toggleAccord(this)"><span>🏷️ Lignes 11–15 : Titres, axes et affichage</span><span>▾</span></button>
+  <div class="accord-body">
+    <ul>
+      <li><code>plt.title()</code> → titre du graphique</li>
+      <li><code>plt.xlabel()</code> → légende axe x</li>
+      <li><code>plt.ylabel()</code> → légende axe y</li>
+      <li><code>plt.legend()</code> → affiche la légende (obligatoire si <code>label</code> utilisé)</li>
+      <li><code>plt.show()</code> → affiche la fenêtre graphique</li>
+    </ul>
+  </div>
+
+  <button class="accord-btn" onclick="toggleAccord(this)"><span>📈 Lignes 17–20 : Calculs statistiques</span><span>▾</span></button>
+  <div class="accord-body">
+    <ul>
+      <li><code>np.mean(Veprouvette)</code> → <strong>moyenne</strong></li>
+      <li><code>np.std(Veprouvette)</code> → <strong>écart-type</strong> σ<sub>n</sub> ⚠️ différent de σ<sub>n−1</sub> de la calculatrice !</li>
+      <li><code>len(Veprouvette)</code> → <strong>effectif n</strong></li>
+      <li><code>ecarttype / np.sqrt(effectif)</code> → <strong>incertitude-type</strong> u(V) = σ / √n</li>
+    </ul>
+    <div class="attention-box" style="margin-top:8px;"><strong>⚠️ Important :</strong> <code>np.std()</code> calcule σ<sub>n</sub> (division par n), la TI83 donne S<sub>x</sub> = σ<sub>n−1</sub> (division par n−1). Pour les grands n la différence est négligeable.</div>
+  </div>
+
+  <button class="accord-btn" onclick="toggleAccord(this)"><span>🖨️ Lignes 22–25 : Affichage des résultats</span><span>▾</span></button>
+  <div class="accord-body">
+    <p><code>print("texte :", valeur, "unité")</code> affiche les résultats dans la console Python.</p>
+    <div class="exemple-box" style="font-family:monospace;font-size:0.83rem;line-height:2;">
+      Le volume moyen : 49.506... mL<br>
+      L'écart-type vaut : 0.881... mL<br>
+      Le nombre de mesures vaut : 16<br>
+      L'incertitude-type de répétabilité vaut : 0.220... mL
+    </div>
+  </div>
+
+  <!-- ═══ À VOUS ═══ -->
+  <div class="section-title"><span class="icon">✏️</span> À vous – Programme Python pour la durée de chute</div>
+  <div class="exo-card">
+    <h3>Adapter le programme pour la durée de chute</h3>
+    <div class="exo-enonce">Données : Durée = [2.46, 2.51, 2.48, 2.51, 2.47, 2.52, 2.49, 2.50, 2.48, 2.51, 2.53]<br>
+    Histogramme en <strong>vert</strong> entouré de <strong>noir</strong>, bins=10, range=(2.45, 2.55)</div>
+
+    <div class="question-block">
+      <div class="question-label">Quelle couleur passer à <code>color=</code> ?</div>
+      <div class="qcm-choices" data-correct="g" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="v">"v"</button>
+        <button class="qcm-btn" data-val="g">"g"</button>
+        <button class="qcm-btn" data-val="green">"green"</button>
+        <button class="qcm-btn" data-val="vert">"vert"</button>
+      </div>
+      <div class="qcm-feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">Quel nom donner à la variable de la liste ?</div>
+      <div class="qcm-choices" data-correct="Durée" style="margin:8px 0;">
+        <button class="qcm-btn" data-val="Durée">Durée</button>
+        <button class="qcm-btn" data-val="duree">duree</button>
+        <button class="qcm-btn" data-val="dt">dt</button>
+      </div>
+      <div class="qcm-feedback"></div>
+      <div class="remarque-box" style="margin-top:8px;"><strong>ℹ️ Note :</strong> Tous les choix fonctionnent en Python mais le nom doit être cohérent dans tout le programme.</div>
+    </div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)"><span>👁️ Voir le programme complet adapté</span><span>▾</span></button>
+    <div class="accord-body">
+      <div class="code-block" style="margin:0;">
+        <span class="code-label">PYTHON</span>
+<span class="line-num"> 1</span><span class="code-kw">import</span> numpy <span class="code-kw">as</span> <span class="code-var">np</span>
+<span class="line-num"> 2</span><span class="code-kw">import</span> matplotlib.pyplot <span class="code-kw">as</span> <span class="code-var">plt</span>
+<span class="line-num"> 3</span>
+<span class="line-num"> 4</span><span class="code-var">Durée</span> = [<span class="code-num">2.46</span>, <span class="code-num">2.51</span>, <span class="code-num">2.48</span>, <span class="code-num">2.51</span>, <span class="code-num">2.47</span>, <span class="code-num">2.52</span>,
+<span class="line-num"> 5</span>          <span class="code-num">2.49</span>, <span class="code-num">2.50</span>, <span class="code-num">2.48</span>, <span class="code-num">2.51</span>, <span class="code-num">2.53</span>]
+<span class="line-num"> 6</span>
+<span class="line-num"> 7</span>plt.<span class="code-fn">figure</span>(figsize=(<span class="code-num">12</span>, <span class="code-num">10</span>))
+<span class="line-num"> 8</span>plt.<span class="code-fn">hist</span>(<span class="code-var">Durée</span>, bins=<span class="code-num">10</span>, range=(<span class="code-num">2.45</span>, <span class="code-num">2.55</span>), align=<span class="code-str">"mid"</span>,
+<span class="line-num"> 9</span>         rwidth=<span class="code-num">0.9</span>, color=<span class="code-str">"g"</span>, edgecolor=<span class="code-str">"black"</span>, label=<span class="code-str">"durée"</span>)
+<span class="line-num">10</span>plt.<span class="code-fn">title</span>(<span class="code-str">"Durée de chute d'un objet lâché d'une hauteur constante"</span>)
+<span class="line-num">11</span>plt.<span class="code-fn">xlabel</span>(<span class="code-str">"Durée de chute (s)"</span>)
+<span class="line-num">12</span>plt.<span class="code-fn">ylabel</span>(<span class="code-str">"Fréquence"</span>)
+<span class="line-num">13</span>plt.<span class="code-fn">legend</span>()
+<span class="line-num">14</span>plt.<span class="code-fn">show</span>()
+<span class="line-num">15</span>
+<span class="line-num">16</span><span class="code-var">Dt</span> = np.<span class="code-fn">mean</span>(<span class="code-var">Durée</span>)
+<span class="line-num">17</span><span class="code-var">ecarttype</span> = np.<span class="code-fn">std</span>(<span class="code-var">Durée</span>)
+<span class="line-num">18</span><span class="code-var">effectif</span> = <span class="code-fn">len</span>(<span class="code-var">Durée</span>)
+<span class="line-num">19</span><span class="code-var">incertitudetype</span> = <span class="code-var">ecarttype</span> / np.<span class="code-fn">sqrt</span>(<span class="code-var">effectif</span>)
+<span class="line-num">20</span>
+<span class="line-num">21</span><span class="code-fn">print</span>(<span class="code-str">"La durée moyenne :"</span>, <span class="code-var">Dt</span>, <span class="code-str">"s"</span>)
+<span class="line-num">22</span><span class="code-fn">print</span>(<span class="code-str">"L'écart-type vaut :"</span>, <span class="code-var">ecarttype</span>, <span class="code-str">"s"</span>)
+<span class="line-num">23</span><span class="code-fn">print</span>(<span class="code-str">"Le nombre de mesures vaut :"</span>, <span class="code-var">effectif</span>)
+<span class="line-num">24</span><span class="code-fn">print</span>(<span class="code-str">"L'incertitude-type vaut :"</span>, <span class="code-var">incertitudetype</span>, <span class="code-str">"s"</span>)
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ATELIER INTERACTIF ═══ -->
+  <div class="section-title" style="margin-top:32px;"><span class="icon">🎮</span> Atelier interactif – Maîtriser plt.hist()</div>
+
+  <style>
+    .atelier2-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+    @media(max-width:820px){ .atelier2-wrap{ grid-template-columns:1fr; } }
+    .atelier2-code { background:#1E2A3A; border-radius:12px; padding:16px 18px; font-family:'Courier New',monospace; font-size:0.81rem; line-height:2; color:#E8F0FE; overflow-x:auto; }
+    .atelier2-canvas-wrap { background:#fff; border:1.5px solid #DDE3EC; border-radius:12px; padding:10px; display:flex; flex-direction:column; }
+    #atelier2Canvas { width:100%; border-radius:8px; display:block; }
+    .etape2-nav { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+    .etape2-btn { padding:6px 14px; border:2px solid #DDE3EC; background:#F5F7FA; border-radius:20px; font-family:'Nunito',sans-serif; font-size:0.80rem; font-weight:700; color:#5A6B7A; cursor:pointer; transition:all 0.2s; }
+    .etape2-btn:hover { border-color:#2D5F8A; color:#2D5F8A; }
+    .etape2-btn.active { background:#2D5F8A; color:#fff; border-color:#2D5F8A; }
+    .etape2-objectif { background:#EEF5FB; border-left:4px solid #2D5F8A; border-radius:0 8px 8px 0; padding:10px 14px; font-size:0.87rem; line-height:1.6; color:#1A2A3A; margin-bottom:12px; }
+    .editable-param { background:rgba(232,120,58,0.22); border-radius:3px; padding:0 3px; border-bottom:2px dashed #E8783A; cursor:text; color:#FFB86C; font-weight:700; outline:none; min-width:20px; display:inline-block; }
+    .editable-param:focus { background:rgba(232,120,58,0.40); }
+    .canvas-stats { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .canvas-stat2 { background:#EEF5FB; border-radius:20px; padding:3px 10px; font-size:0.75rem; font-weight:700; color:#2D5F8A; font-family:'Outfit',sans-serif; border:1px solid #B8D4EC; }
+    .locked-param { opacity:0.45; }
+  </style>
+
+  <div class="etape2-nav" id="etape2Nav">
+    <button class="etape2-btn active" onclick="setEtape2(0)">① bins</button>
+    <button class="etape2-btn" onclick="setEtape2(1)">② color</button>
+    <button class="etape2-btn" onclick="setEtape2(2)">③ edgecolor</button>
+    <button class="etape2-btn" onclick="setEtape2(3)">④ rwidth</button>
+    <button class="etape2-btn" onclick="setEtape2(4)">⑤ range</button>
+    <button class="etape2-btn" onclick="setEtape2(5)">⑥ libre</button>
+  </div>
+
+  <div class="etape2-objectif" id="etape2Obj"></div>
+
+  <div class="atelier2-wrap">
+    <div class="atelier2-code" id="atelier2Code"></div>
+    <div class="atelier2-canvas-wrap">
+      <canvas id="atelier2Canvas" height="300"></canvas>
+      <div class="canvas-stats" id="atelier2Stats"></div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  var DATA2 = [48.2,48.6,50.7,48.1,49.2,49.3,49.3,49.2,
+               48.6,49.3,50.1,48.1,49.7,48.8,49.1,49.7,
+               48.0,48.0,48.7,48.6,44.3,45.6,49.2,48.9,
+               48.9,50.1,48.5,48.5,49.4,49.1,48.8,48.1];
+
+  var COLOR_MAP = {
+    steelblue:'#4682B4', darkorange:'#E8783A', seagreen:'#3A8A6E',
+    crimson:'#C0392B', mediumpurple:'#7B4FA6', gold:'#F9A825',
+    royalblue:'#2D5F8A', slategray:'#5A6B7A',
+    blue:'#2196F3', red:'#E53935', green:'#43A047', orange:'#FB8C00',
+    black:'#1A2A3A', white:'#FFFFFF', none:null,
+    b:'#2196F3', g:'#43A047', r:'#E53935', k:'#1A2A3A'
+  };
+
+  var ETAPES2 = [
+    {
+      title: "① <code>bins</code> — Le nombre de barres",
+      desc: "Le paramètre <strong>bins</strong> contrôle le nombre de barres. Trop peu : on perd le détail. Trop : du bruit. <strong>Modifie la valeur directement dans le code</strong> et observe.",
+      mission: "Essaie <code>bins=5</code>, puis <code>bins=20</code>. Quelle valeur te semble la plus lisible ?",
+      editable: ['bins'],
+      defaults: {bins:'10', color:'steelblue', edgecolor:'none', rwidth:'0.9', rmin:'45', rmax:'55'}
+    },
+    {
+      title: "② <code>color</code> — La couleur de remplissage",
+      desc: "Le paramètre <strong>color=</strong> définit la couleur des barres. On utilise des noms anglais : <code>\"blue\"</code>, <code>\"red\"</code>, <code>\"steelblue\"</code>, <code>\"seagreen\"</code>...",
+      mission: "Remplace <code>\"steelblue\"</code> par <code>\"seagreen\"</code> puis par <code>\"crimson\"</code>.",
+      editable: ['color'],
+      defaults: {bins:'10', color:'steelblue', edgecolor:'none', rwidth:'0.9', rmin:'45', rmax:'55'}
+    },
+    {
+      title: "③ <code>edgecolor</code> — Le contour des barres",
+      desc: "<strong>edgecolor=</strong> trace une bordure autour de chaque barre. Avec <code>\"none\"</code> : pas de bordure.",
+      mission: "Mets <code>\"black\"</code> comme contour. Observe comment les barres se distinguent mieux.",
+      editable: ['edgecolor'],
+      defaults: {bins:'10', color:'steelblue', edgecolor:'none', rwidth:'0.9', rmin:'45', rmax:'55'}
+    },
+    {
+      title: "④ <code>rwidth</code> — Largeur des barres",
+      desc: "<strong>rwidth</strong> (relative width) : à <code>1.0</code> les barres se touchent, à <code>0.7</code> il y a un espace visible.",
+      mission: "Mets <code>rwidth=0.7</code> avec <code>edgecolor=\"black\"</code>. Que remarques-tu ?",
+      editable: ['rwidth'],
+      defaults: {bins:'10', color:'steelblue', edgecolor:'black', rwidth:'0.9', rmin:'45', rmax:'55'}
+    },
+    {
+      title: "⑤ <code>range</code> — Bornes de l'axe x",
+      desc: "<strong>range=(min, max)</strong> fixe les bornes de l'axe des abscisses. Réduire la plage zoome sur les données.",
+      mission: "Mets <code>range=(43, 53)</code>. La valeur isolée à 44,3 mL est-elle visible ?",
+      editable: ['rmin','rmax'],
+      defaults: {bins:'10', color:'steelblue', edgecolor:'none', rwidth:'0.9', rmin:'45', rmax:'55'}
+    },
+    {
+      title: "⑥ Mode libre — Ton histogramme de TP",
+      desc: "Tous les paramètres sont modifiables ! Crée l'histogramme le plus lisible pour un compte-rendu.",
+      mission: "Objectif : <code>bins=16</code>, <code>color=\"royalblue\"</code>, <code>edgecolor=\"white\"</code>, <code>rwidth=0.85</code>, <code>range=(43,52)</code>.",
+      editable: ['bins','color','edgecolor','rwidth','rmin','rmax'],
+      defaults: {bins:'10', color:'steelblue', edgecolor:'none', rwidth:'0.9', rmin:'45', rmax:'55'}
+    }
+  ];
+
+  var curEtape = 0;
+  var params = {bins:'10', color:'steelblue', edgecolor:'none', rwidth:'0.9', rmin:'45', rmax:'55'};
+
+  var canvas2 = document.getElementById('atelier2Canvas');
+  var ctx2 = canvas2.getContext('2d');
+
+  function renderCode() {
+    var e = ETAPES2[curEtape];
+    var p = params;
+
+    function codeLine(content) {
+      return '<span style="display:block;white-space:pre;">' + content + '</span>';
+    }
+    function kw(t){ return '<span class="code-kw">'+t+'</span>'; }
+    function fn(t){ return '<span class="code-fn">'+t+'</span>'; }
+    function vr(t){ return '<span class="code-var">'+t+'</span>'; }
+    function nm(t){ return '<span class="code-num">'+t+'</span>'; }
+    function st(t){ return '<span class="code-str">"'+t+'"</span>'; }
+    function param(key, val, isStr) {
+      var editable = e.editable.indexOf(key) >= 0;
+      var display = isStr ? '"'+val+'"' : val;
+      var col = isStr ? 'code-str' : 'code-num';
+      if (editable) {
+        return '<span class="editable-param" contenteditable="true" data-key="'+key+'" data-isstr="'+isStr+'">'+display+'</span>';
+      } else {
+        return '<span class="'+col+' locked-param">'+display+'</span>';
+      }
+    }
+
+    var html =
+      codeLine(kw('import')+' numpy '+kw('as')+' '+vr('np')) +
+      codeLine(kw('import')+' matplotlib.pyplot '+kw('as')+' '+vr('plt')) +
+      codeLine('') +
+      codeLine(vr('Veprouvette')+' = ['+nm('48.2')+', '+nm('48.6')+', '+nm('50.7')+', ...]') +
+      codeLine('') +
+      codeLine('plt.'+fn('figure')+'(figsize=('+nm('10')+', '+nm('7')+'))') +
+      codeLine('plt.'+fn('hist')+'('+vr('Veprouvette')+',') +
+      codeLine('         bins='+param('bins', p.bins, false)+',') +
+      codeLine('         range=('+param('rmin', p.rmin, false)+', '+param('rmax', p.rmax, false)+'),') +
+      codeLine('         align='+st('mid')+',') +
+      codeLine('         rwidth='+param('rwidth', p.rwidth, false)+',') +
+      codeLine('         color='+param('color', p.color, true)+',') +
+      codeLine('         edgecolor='+param('edgecolor', p.edgecolor, true)+',') +
+      codeLine('         label='+st('eprouvette')+')') +
+      codeLine('plt.'+fn('title')+'('+st('Volume mesure a l\'eprouvette')+')') +
+      codeLine('plt.'+fn('xlabel')+'('+st('Volume (mL)')+')') +
+      codeLine('plt.'+fn('ylabel')+'('+st('Frequence')+')') +
+      codeLine('plt.'+fn('legend')+'()') +
+      codeLine('plt.'+fn('show')+'()');
+
+    document.getElementById('atelier2Code').innerHTML = html;
+
+    document.querySelectorAll('#atelier2Code .editable-param').forEach(function(el) {
+      el.addEventListener('input', function() {
+        var key = this.dataset.key;
+        var isStr = this.dataset.isstr === 'true';
+        var val = this.textContent.replace(/"/g,'').trim();
+        params[key] = val;
+        drawAtelier2();
+      });
+      el.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); this.blur(); }
+      });
+    });
+  }
+
+  // Vérifie si une couleur CSS est valide
+  function isValidColor(c) {
+    if (!c || c === 'none') return true;
+    var s = new Option().style;
+    s.color = c;
+    return s.color !== '';
+  }
+
+  function drawAtelier2() {
+    var W = canvas2.parentElement.offsetWidth - 20 || 380;
+    var H = 300;
+    var dpr = window.devicePixelRatio || 1;
+    canvas2.width = W * dpr;
+    canvas2.height = H * dpr;
+    canvas2.style.width = W + 'px';
+    canvas2.style.height = H + 'px';
+    ctx2.scale(dpr, dpr);
+
+    var PAD = {top:28, right:14, bottom:40, left:36};
+    ctx2.clearRect(0,0,W,H);
+    ctx2.fillStyle = '#fff'; ctx2.fillRect(0,0,W,H);
+    var plotW = W - PAD.left - PAD.right;
+    var plotH = H - PAD.top  - PAD.bottom;
+
+    // ── Validation des paramètres ──
+    var errors = [];
+
+    var binsRaw = parseInt(params.bins);
+    var bins = isNaN(binsRaw) || binsRaw < 1 ? null : Math.min(200, binsRaw);
+    if (bins === null) errors.push('bins doit être un entier ≥ 1 (ex: bins=10)');
+
+    var rmin = parseFloat(params.rmin);
+    var rmax = parseFloat(params.rmax);
+    if (isNaN(rmin) || isNaN(rmax)) errors.push('range doit contenir deux nombres (ex: 45, 55)');
+    else if (rmax <= rmin) errors.push('range : min doit être < max');
+
+    var rwRaw = parseFloat(params.rwidth);
+    var rw = isNaN(rwRaw) ? null : Math.max(0.05, Math.min(1.0, rwRaw));
+    if (rw === null) errors.push('rwidth doit être un nombre entre 0 et 1 (ex: 0.9)');
+    if (!isNaN(rwRaw) && (rwRaw < 0 || rwRaw > 1)) errors.push('rwidth hors limites — ramené à [0.05 ; 1.0]');
+
+    var cKey = (params.color || 'steelblue').trim();
+    var fillC = COLOR_MAP[cKey] !== undefined ? COLOR_MAP[cKey] : (isValidColor(cKey) ? cKey : null);
+    if (fillC === null) errors.push('color="' + cKey + '" : couleur inconnue (ex: "steelblue", "red", "green")');
+
+    var eKey = (params.edgecolor || 'none').trim();
+    var edgeC;
+    if (eKey === 'none') { edgeC = null; }
+    else { edgeC = COLOR_MAP[eKey] !== undefined ? COLOR_MAP[eKey] : (isValidColor(eKey) ? eKey : null); }
+    if (edgeC === null && eKey !== 'none') errors.push('edgecolor="' + eKey + '" : couleur inconnue (ex: "black", "white", "none")');
+
+    // Mettre à jour le style des params éditables
+    document.querySelectorAll('#atelier2Code .editable-param').forEach(function(el) {
+      var key = el.dataset.key;
+      var val = el.textContent.replace(/"/g,'').trim();
+      var invalid = false;
+      if (key==='bins' && bins===null) invalid=true;
+      if (key==='rmin' && isNaN(rmin)) invalid=true;
+      if (key==='rmax' && isNaN(rmax)) invalid=true;
+      if ((key==='rmin'||key==='rmax') && !isNaN(rmin)&&!isNaN(rmax)&&rmax<=rmin) invalid=true;
+      if (key==='rwidth' && rw===null) invalid=true;
+      if (key==='color' && fillC===null) invalid=true;
+      if (key==='edgecolor' && edgeC===null && eKey!=='none') invalid=true;
+      el.style.background = invalid ? 'rgba(192,57,43,0.28)' : 'rgba(58,138,110,0.22)';
+      el.style.borderBottomColor = invalid ? '#C0392B' : '#3A8A6E';
+      el.style.color = invalid ? '#FF8080' : '#7FFFD4';
+    });
+
+    // Si erreurs bloquantes : afficher dans le canvas
+    if (errors.length > 0) {
+      ctx2.fillStyle='#FFF8E1'; ctx2.fillRect(0,0,W,H);
+      ctx2.fillStyle='#E65100'; ctx2.font='bold 11px Outfit,sans-serif'; ctx2.textAlign='center';
+      ctx2.fillText('⚠️ Erreur dans le code Python :', W/2, 40);
+      ctx2.fillStyle='#C0392B'; ctx2.font='10px Nunito,sans-serif';
+      errors.forEach(function(msg, i){ ctx2.fillText(msg, W/2, 70 + i*22); });
+      ctx2.fillStyle='#5A6B7A'; ctx2.font='9px Nunito,sans-serif';
+      ctx2.fillText('Corrige le paramètre surligné en rouge dans le code.', W/2, 70+errors.length*22+18);
+      return;
+    }
+
+    if (bins === null || isNaN(rmin) || isNaN(rmax) || rmax <= rmin) return;
+
+    var step = (rmax - rmin) / bins;
+    var counts = [];
+    for(var i=0;i<bins;i++) counts.push(0);
+    DATA2.forEach(function(v){
+      if(v < rmin || v >= rmax) return;
+      var idx = Math.min(bins-1, Math.floor((v-rmin)/step));
+      counts[idx]++;
+    });
+    var maxC = Math.max.apply(null, counts.concat([1]));
+    var barW = plotW / bins;
+
+    // grille
+    ctx2.strokeStyle='#EEF1F5'; ctx2.lineWidth=0.8;
+    for(var g=1;g<=4;g++){
+      var gy = PAD.top + plotH - (g/4)*plotH;
+      ctx2.beginPath(); ctx2.moveTo(PAD.left,gy); ctx2.lineTo(W-PAD.right,gy); ctx2.stroke();
+      ctx2.fillStyle='#8899AA'; ctx2.font='9px Nunito,sans-serif'; ctx2.textAlign='right';
+      ctx2.fillText(Math.round(maxC*g/4), PAD.left-3, gy+3);
+    }
+    ctx2.fillStyle='#8899AA'; ctx2.textAlign='right';
+    ctx2.fillText('0', PAD.left-3, PAD.top+plotH+3);
+
+    // barres
+    counts.forEach(function(cnt,i){
+      var bh = (cnt/maxC)*plotH;
+      var bx = PAD.left + i*barW + barW*(1-rw)/2;
+      var bw2 = barW*rw;
+      var by = PAD.top + plotH - bh;
+      if(bh > 0){
+        if(fillC){ ctx2.fillStyle=fillC; ctx2.fillRect(bx,by,bw2,bh); }
+        if(edgeC){ ctx2.strokeStyle=edgeC; ctx2.lineWidth=1.5; ctx2.strokeRect(bx,by,bw2,bh); }
+        if(cnt>0){ ctx2.fillStyle='#1A2A3A'; ctx2.font='bold 9px Nunito,sans-serif'; ctx2.textAlign='center'; ctx2.fillText(cnt,bx+bw2/2,by-3); }
+      }
+    });
+
+    // axes
+    ctx2.strokeStyle='#CDD5DE'; ctx2.lineWidth=1.5;
+    ctx2.beginPath(); ctx2.moveTo(PAD.left,PAD.top); ctx2.lineTo(PAD.left,PAD.top+plotH); ctx2.lineTo(W-PAD.right,PAD.top+plotH); ctx2.stroke();
+
+    // labels X
+    ctx2.fillStyle='#5A6B7A'; ctx2.font='8.5px Nunito,sans-serif'; ctx2.textAlign='center';
+    var lStep = Math.max(1, Math.ceil(bins/8));
+    for(var li=0;li<=bins;li+=lStep){
+      var lx = PAD.left + li*barW;
+      var lv = rmin + li*step;
+      ctx2.fillText(lv%1===0?lv:lv.toFixed(1), lx, PAD.top+plotH+13);
+    }
+
+    // label axes
+    ctx2.fillStyle='#5A6B7A'; ctx2.font='9px Nunito,sans-serif'; ctx2.textAlign='center';
+    ctx2.fillText('Volume (mL)', W/2, H-4);
+    ctx2.save(); ctx2.translate(11,H/2); ctx2.rotate(-Math.PI/2); ctx2.fillText('Frequence',0,0); ctx2.restore();
+
+    // titre
+    ctx2.fillStyle='#2D5F8A'; ctx2.font='bold 10px Outfit,sans-serif'; ctx2.textAlign='center';
+    ctx2.fillText("Eprouvette — cible 50 mL", W/2, 16);
+
+    // moyenne
+    var moy = DATA2.reduce(function(a,b){return a+b;},0)/DATA2.length;
+    if(moy>=rmin && moy<=rmax){
+      var mx = PAD.left + ((moy-rmin)/(rmax-rmin))*plotW;
+      ctx2.strokeStyle='#C0392B'; ctx2.lineWidth=2; ctx2.setLineDash([5,4]);
+      ctx2.beginPath(); ctx2.moveTo(mx,PAD.top); ctx2.lineTo(mx,PAD.top+plotH); ctx2.stroke();
+      ctx2.setLineDash([]);
+      ctx2.fillStyle='#C0392B'; ctx2.font='bold 9px Outfit,sans-serif'; ctx2.textAlign='left';
+      ctx2.fillText('V='+moy.toFixed(2)+' mL', mx+3, PAD.top+14);
+    }
+
+    // stats
+    var sigma = Math.sqrt(DATA2.reduce(function(s,v){return s+(v-moy)*(v-moy);},0)/DATA2.length);
+    var u = sigma/Math.sqrt(DATA2.length);
+    document.getElementById('atelier2Stats').innerHTML =
+      '<span class="canvas-stat2">n = '+DATA2.length+'</span>' +
+      '<span class="canvas-stat2">V&#772; = '+moy.toFixed(2)+' mL</span>' +
+      '<span class="canvas-stat2">&sigma; = '+sigma.toFixed(2)+' mL</span>' +
+      '<span class="canvas-stat2">u(V) = '+u.toFixed(3)+' mL</span>';
+  }
+
+  window.setEtape2 = function(i) {
+    curEtape = i;
+    document.querySelectorAll('.etape2-btn').forEach(function(b,j){ b.classList.toggle('active', j===i); });
+    var e = ETAPES2[i];
+    // Restaurer les valeurs par défaut de l'étape
+    Object.keys(e.defaults).forEach(function(k){ params[k] = e.defaults[k]; });
+    document.getElementById('etape2Obj').innerHTML =
+      '<strong>'+e.title+'</strong> — '+e.desc+
+      '<br><span style="color:#E8783A;font-weight:700;">📝 Mission : '+e.mission+'</span>';
+    renderCode();
+    drawAtelier2();
+  };
+
+  window.addEventListener('resize', function(){ renderCode(); drawAtelier2(); });
+  setEtape2(0);
+})();
+</script>
+
+  <div class="footer-note">Fiche 2 – C. Poirault-Gauvin & M. François · Terminale Spé PC</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ONGLET V – BILAN & RESSOURCES
+══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-5">
+
+  <div class="section-title"><span class="icon">📋</span> Bilan de la fiche</div>
+
+  <div class="intro-box">
+    Récapitulatif des notions essentielles et des capacités exigibles du B.O. – Fiche 2 – Mesure &amp; Incertitudes.
+  </div>
+
+  <div class="bilan-grid">
+    <div class="bilan-card">
+      <h4>Chiffres significatifs</h4>
+      <ul class="ke-list">
+        <li>Zéros à gauche du 1er CS ≠ significatifs</li>
+        <li>Zéros à la fin d'un nombre = significatifs</li>
+        <li>×÷ : même nombre de CS que le facteur le moins précis</li>
+        <li>+− : même nombre de décimales que le terme le moins précis</li>
+        <li>Résultats intermédiaires : ne pas arrondir</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Erreurs &amp; Histogramme</h4>
+      <ul class="ke-list">
+        <li>Erreurs aléatoires → fidélité → étalement autour de la valeur vraie</li>
+        <li>Erreurs systématiques → justesse → décalage de la valeur vraie</li>
+        <li>Histogramme = fréquence des mesures → visualise l'écart-type σ</li>
+        <li>Plus σ est grand, moins l'instrument est précis</li>
+        <li>Répéter les mesures réduit l'erreur aléatoire</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Incertitude Type A (mesures multiples)</h4>
+      <ul class="ke-list">
+        <li>Valeur mesurée = moyenne (après suppression aberrantes)</li>
+        <li>u(M) = σ<sub>n−1</sub> / √n</li>
+        <li>TI 83 : utiliser S<sub>x</sub>, pas σ<sub>x</sub> !</li>
+        <li>Résultat : G = x̄ ± u(M) (même nb de décimales)</li>
+        <li>u : arrondi par excès, max 2 CS</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Incertitude Type B (mesure unique)</h4>
+      <ul class="ke-list">
+        <li>Précision p% → u = p% × mesure / √3</li>
+        <li>Double lecture (règle) → u = 1 graduation / √6</li>
+        <li>Tolérance ± t → u = t / √3</li>
+        <li>Formules données dans l'énoncé</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Incertitudes composées</h4>
+      <ul class="ke-list">
+        <li>Cumul U<sub>A</sub> + U<sub>B</sub> : U = √(U<sub>A</sub>² + U<sub>B</sub>²)</li>
+        <li>Addition y = x<sub>1</sub> ± x<sub>2</sub> : U(y) = √[U(x<sub>1</sub>)² + U(x<sub>2</sub>)²]</li>
+        <li>Produit/quotient : U(y)/y = √[(U(x<sub>1</sub>)/x<sub>1</sub>)² + (U(x<sub>2</sub>)/x<sub>2</sub>)²]</li>
+        <li>Formules toujours fournies dans l'énoncé</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Comparaison à une valeur de référence</h4>
+      <ul class="ke-list">
+        <li>Avec u : Q = |m<sub>mes</sub> − m<sub>ref</sub>| / u(m)</li>
+        <li>Q ≤ 1 → conforme ✅ &nbsp;|&nbsp; Q &gt; 1 → non conforme ❌</li>
+        <li>Sans u : ε<sub>r</sub> = |x<sub>att</sub> − x<sub>obt</sub>| / x<sub>att</sub> × 100 %</li>
+        <li>ε<sub>r</sub> ≤ 10 % → satisfaisant au lycée</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Ressources numériques -->
+  <div class="section-title" style="margin-top:32px;"><span class="icon">🔗</span> Ressources numériques</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://youtu.be/iUNu9YcjHk4" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo – Incertitude type A avec la TI 83</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Calculatrice TI 83 Premium · Approche statistique</p>
+      </div>
+    </a>
+
+    <a href="http://jeanmarie.biansan.free.fr/logiciel.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">🛠️ Logiciel GUM MC 2020 (gratuit)</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Calcul complet des incertitudes adapté au nouveau programme</p>
+      </div>
+    </a>
+
+    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">🐍 Documentation plt.hist() – Matplotlib</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Tous les paramètres de la fonction histogramme</p>
+      </div>
+    </a>
+
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.std.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--violet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(123,79,166,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--violet);">🐍 Documentation np.std() – NumPy</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Calcul de l'écart-type sous Python</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105239613/item803818746?paccess=47d4fd939e3.2fe94cfa.cbf0e54c4efac75e16cb6e132ce6d4d0" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📊 Fichier Excel – Incertitudes à calculer</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Feuille de calcul interactive pour l'évaluation des incertitudes</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105239613/item803818652?paccess=47d4fd98504.2fe94c9c.26b442ad706466509908df40e23dd218" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">🐍 Script Python – Incertitudes (1)</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Programme Python pour le calcul et la simulation des incertitudes</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105239613/item803818654?paccess=47d4fd9bab9.2fe94c9e.6d2edc918324dbf331f2919c8e0aa772" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">🐍 Script Python – Incertitudes (2)</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Programme Python pour le calcul et la simulation des incertitudes</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105239613/item803818653?paccess=47d4fd9f666.2fe94c9d.f766b21f6c9b9b95dbb0465b2eb8a93a" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">🐍 Script Python – Incertitudes (3)</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Programme Python pour le calcul et la simulation des incertitudes</p>
+      </div>
+    </a>
+
+  </div><!-- /grid ressources -->
+
+  <div class="footer-note">Fiche 2 – C. Poirault-Gauvin & M. François · Terminale Spé PC · Tous droits réservés</div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ── ONGLETS PRINCIPAUX ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── SOUS-ONGLETS ──
+document.querySelectorAll('.sub-nav').forEach(nav => {
+  nav.querySelectorAll('.sub-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      nav.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+      // Trouver le parent tab-content
+      const parent = nav.closest('.tab-content');
+      parent.querySelectorAll('.sub-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.sub).classList.add('active');
+    });
+  });
+});
+
+// ── CAPACITÉS TOGGLE ──
+document.getElementById('capToggle').addEventListener('click', () => {
+  document.getElementById('capPanel').classList.toggle('open');
+});
+
+// ── QCM BOUTONS ──
+document.querySelectorAll('.qcm-choices').forEach(group => {
+  const correct = group.dataset.correct;
+  const fb = group.parentElement.querySelector('.qcm-feedback');
+  group.querySelectorAll('.qcm-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.qcm-btn').forEach(b => b.classList.remove('correct','wrong'));
+      if (btn.dataset.val === correct) {
+        btn.classList.add('correct');
+        if (fb) { fb.textContent = '✓ Correct !'; fb.className = 'qcm-feedback'; }
+      } else {
+        btn.classList.add('wrong');
+        if (fb) { fb.textContent = '✗ Incorrect, réessayez.'; fb.className = 'qcm-feedback wrong'; }
+      }
+    });
+  });
+});
+
+// ── VÉRIFICATION NUMÉRIQUE ──
+function checkNum(id, expected, tolerance, fbId) {
+  const inp = document.getElementById(id);
+  const fb = document.getElementById(fbId);
+  const val = parseFloat(inp.value.replace(',', '.'));
+  if (isNaN(val)) { fb.textContent = '⚠️ Entrez une valeur numérique.'; fb.className = 'num-feedback ko'; return; }
+  if (Math.abs(val - expected) <= tolerance) {
+    inp.classList.add('correct'); inp.classList.remove('wrong');
+    fb.textContent = '✓ Correct !'; fb.className = 'num-feedback ok';
+  } else {
+    inp.classList.add('wrong'); inp.classList.remove('correct');
+    fb.textContent = `✗ Incorrect (valeur attendue ≈ ${expected}). Réessayez.`; fb.className = 'num-feedback ko';
+  }
+}
+
+// ── VÉRIFICATION CONVERSION (a × 10^n) ──
+function checkConv(aId, nId, expA, expN, fbId) {
+  const a = parseFloat(document.getElementById(aId).value.replace(',', '.'));
+  const n = parseInt(document.getElementById(nId).value);
+  const fb = document.getElementById(fbId);
+  if (isNaN(a) || isNaN(n)) { fb.textContent = '⚠️ Entrez a et n.'; fb.className = 'num-feedback ko'; return; }
+  const valUser = a * Math.pow(10, n);
+  const valExpected = expA * Math.pow(10, expN);
+  if (Math.abs(valUser - valExpected) / valExpected < 0.005) {
+    fb.innerHTML = `✓ Correct ! ${a} × 10<sup>${n}</sup>`; fb.className = 'num-feedback ok';
+    const corrId = fbId.replace('-fb', '-corr');
+    if (document.getElementById(corrId)) document.getElementById(corrId).classList.add('visible');
+  } else {
+    fb.innerHTML = `✗ Incorrect. Valeur attendue : ${expA} × 10<sup>${expN}</sup>`; fb.className = 'num-feedback ko';
+  }
+}
+
+// ── ACCORDÉON ──
+function toggleAccord(btn) {
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+  btn.querySelector('span:last-child').textContent = body.classList.contains('open') ? '▴' : '▾';
+}
+
+// ── AFFICHER CORRECTION ──
+function showCorr(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('visible');
+}
+</script>
+</body>
+</html>
