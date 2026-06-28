@@ -23,18 +23,11 @@ const TER_SEQUENCES = [
   titre: 'Les incontournables',
   sous_titre: 'Rappels de notions mathématiques utiles en physique-chimie',
   icone: 'bulb',
+  usePillGrid: true,   // ← grille de cartes au lieu d'onglets
   tabs: [
     {
-      id: 'fiches-methodes', label: 'Fiches méthodes', actif: true,
-      items: [
-        { type:'link', icon:'📄', label:"Fiche méthode — Préparation d'une solution par dilution", sub:"d'un liquide pur ou d'une solution", href:'seq00/Fiche-methode1_dilution.pdf' },
-        { type:'link', icon:'📄', label:'Fiche méthode — Tracer des courbes en Python avec Pyplot', href:'seq00/Fiche-methode2-python_methode_tracer_une_courbe.pdf' },
-        { type:'link', icon:'📄', label:"Fiche méthode — Tutoriel d'utilisation de Python", href:'seq00/Fiche-methode3-python.pdf' },
-        { type:'link', icon:'📄', label:'Fiche méthode — Comment activier le mode examen de ma calculatrice', href:'seq00/Fiche-methode4-calculatrices-mode-examen.pdf' },
-      ]
-    },
-    {
-      id: 'fiches-revision', label: 'Fiches de révision',
+      id: 'fiches-revision', label: 'Fiches de révision', cardIcon: '📖',
+      actif: true,
       items: [
         { type:'link', icon:'📖', label:'Fiche de révision — Les grandeurs en chimie', href:'seq00/fiche1/Fiche1-calcul-grandeurs-en-chimie.pdf' },
         { type:'link', icon:'📖', label:"Fiche de révision — Ecriture d'un résultat numérique et incertitudes", href:'seq00/fiche2/Fiche2-mesure-et-incertitudes.pdf' },
@@ -45,14 +38,23 @@ const TER_SEQUENCES = [
         { type:'link', icon:'📖', label:'Fiche de révision — Les bases en électricité', href:'seq00/Fiche7-electricite.pdf' },
       ]
     },
-     {
-      id: 'fiches-interactives', label: 'Fiches de révision interactives', actif: true,
+    {
+      id: 'fiches-interactives', label: 'Révision interactive', cardIcon: '🎓',
       items: [
         { type:'link', icon:'🎓', label:'Fiche de révision — Calcul de quelques grandeurs en chimie', href:'seq00/fiche1/fiche1-grandeurs-chimie.html' },
       ]
     },
     {
-      id: 'notices', label: 'Notices',
+      id: 'fiches-methodes', label: 'Fiches méthodes', cardIcon: '📄',
+      items: [
+        { type:'link', icon:'📄', label:"Fiche méthode — Préparation d'une solution par dilution", sub:"d'un liquide pur ou d'une solution", href:'seq00/Fiche-methode1_dilution.pdf' },
+        { type:'link', icon:'📄', label:'Fiche méthode — Tracer des courbes en Python avec Pyplot', href:'seq00/Fiche-methode2-python_methode_tracer_une_courbe.pdf' },
+        { type:'link', icon:'📄', label:"Fiche méthode — Tutoriel d'utilisation de Python", href:'seq00/Fiche-methode3-python.pdf' },
+        { type:'link', icon:'📄', label:'Fiche méthode — Comment activer le mode examen de ma calculatrice', href:'seq00/Fiche-methode4-calculatrices-mode-examen.pdf' },
+      ]
+    },
+    {
+      id: 'notices', label: 'Notices', cardIcon: '📋',
       items: [
         { type:'link', icon:'📋', label:"Notice — Notice simplifiée pour l'étalonnage du pH-mètre portable", sub:'Modèle pH208-LUTRON', href:'seq00/Notice1_etalonnage-du-pH-metre.pdf' },
         { type:'link', icon:'📋', label:'Notice — Notice SpectroVio II', href:'seq00/Notice2-spectovio 2.pdf' },
@@ -66,11 +68,10 @@ const TER_SEQUENCES = [
       ]
     },
     {
-      id: 'supplements', label: 'Suppléments',
+      id: 'supplements', label: 'Suppléments', cardIcon: '⭐',
       items: [
         { type:'link', icon:'⭐', label:"Supplément — Vidéo sur le Calcul d'incertitude type A", sub:'Calculatrice TI83Plus', href:'https://www.pearltrees.com/private/id105223373/item803710056?paccess=47d466e44ea.2fe7a468.943419f27ff8475d514c3d9d85a628bbf' },
         { type:'link', icon:'⭐', label:"Supplément — Connais-tu la verrerie ?", sub:'Jeu-Associe un nom à chaque verrerie du laboratoire de chimie', href:'https://learningapps.org/view736796' },
-
       ]
     },
   ]
@@ -634,6 +635,49 @@ function renderTerTab(seq, tab, index) {
   return { btn, panel };
 }
 
+/* ── Rendu grille de cartes (mode usePillGrid) ── */
+function renderTerPillGrid(seq) {
+  const seqId = seq.id;
+
+  // Grille de cartes — même style que ter-seq-card de l'accueil
+  const cardsHtml = seq.tabs.map((tab, i) => {
+    const isActif = tab.actif || (!seq.tabs.some(t => t.actif) && i === 0);
+    return `
+      <a class="ter-seq-card ter-subcard ${isActif ? 'ter-subcard-active' : ''}"
+         id="t${seqId}-card-${tab.id}"
+         onclick="showSeq00Tab('${tab.id}'); return false;" href="#">
+        <div class="ter-seq-icon" style="font-size:2.2rem;line-height:1;">${tab.cardIcon}</div>
+        <div class="ter-seq-title" style="margin-top:8px;">${tab.label}</div>
+      </a>`;
+  }).join('');
+
+  // Panneaux de contenu
+  const panelsHtml = seq.tabs.map((tab, i) => {
+    const isActif = tab.actif || (!seq.tabs.some(t => t.actif) && i === 0);
+    return `
+      <div id="t${seqId}-content-${tab.id}" class="seq00-content-panel ${isActif ? 'active' : ''}">
+        <button class="ter-back-btn" onclick="showSeq00Grid()">← Retour aux catégories</button>
+        <h3 style="color:#1e3a5f;font-size:1.15rem;font-weight:700;margin:0 0 16px 0;">
+          ${tab.cardIcon} ${tab.label}
+        </h3>
+        <p style="color:#4b5563;margin-bottom:20px;">Clique sur la ressource pour l'ouvrir :</p>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;max-width:900px;margin:0 auto;">
+          ${tab.items.map(renderTerItem).join('')}
+        </div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div id="seq00-grid-view">
+      <div class="ter-seq-grid" style="margin-top:24px;">
+        ${cardsHtml}
+      </div>
+    </div>
+    <div id="seq00-detail-view" style="display:none;margin-top:24px;">
+      ${panelsHtml}
+    </div>`;
+}
+
 function renderTerPanel(seq) {
   const el = document.getElementById('terminale-seq-' + seq.id);
   if (!el) return;
@@ -644,9 +688,21 @@ function renderTerPanel(seq) {
 
   const iconHtml = getIconTer(seq.icone, seq.iconSuffix || ('p' + seq.id));
 
-  const rendered = seq.tabs.map((tab, i) => renderTerTab(seq, tab, i));
-  const btnHtml   = rendered.map(r => r.btn).join('');
-  const panelHtml = rendered.map(r => r.panel).join('');
+  let bodyHtml;
+  if (seq.usePillGrid) {
+    bodyHtml = renderTerPillGrid(seq);
+  } else {
+    const rendered = seq.tabs.map((tab, i) => renderTerTab(seq, tab, i));
+    const btnHtml   = rendered.map(r => r.btn).join('');
+    const panelHtml = rendered.map(r => r.panel).join('');
+    bodyHtml = `
+      <nav style="border-bottom:2px solid #e5e7eb;margin-bottom:0;">
+        <ul style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;list-style:none;padding:0;margin:0;">
+          ${btnHtml}
+        </ul>
+      </nav>
+      ${panelHtml}`;
+  }
 
   el.innerHTML = `
     <div class="seq-bg" style="${bgStyle}">
@@ -659,17 +715,77 @@ function renderTerPanel(seq) {
             <p class="ter-panel-sub">${seq.sous_titre}</p>
           </div>
         </div>
-        <nav style="border-bottom:2px solid #e5e7eb;margin-bottom:0;">
-          <ul style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;list-style:none;padding:0;margin:0;">
-            ${btnHtml}
-          </ul>
-        </nav>
+        ${seq.usePillGrid ? '' : ''}
       </div>
-      ${panelHtml}
+      ${bodyHtml}
     </div>`;
+}
+
+/* ── Fonctions de navigation pour la séq. 00 ── */
+function showSeq00Tab(tabId) {
+  // Cacher la grille, montrer le détail
+  document.getElementById('seq00-grid-view').style.display = 'none';
+  document.getElementById('seq00-detail-view').style.display = 'block';
+
+  // Activer le bon panneau
+  document.querySelectorAll('.seq00-content-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('t0-content-' + tabId);
+  if (panel) panel.classList.add('active');
+
+  // Mettre en surbrillance la carte active
+  document.querySelectorAll('.ter-subcard').forEach(c => c.classList.remove('ter-subcard-active'));
+  const card = document.getElementById('t0-card-' + tabId);
+  if (card) card.classList.add('ter-subcard-active');
+}
+
+function showSeq00Grid() {
+  document.getElementById('seq00-grid-view').style.display = 'block';
+  document.getElementById('seq00-detail-view').style.display = 'none';
 }
 
 /* Point d'entrée */
 document.addEventListener('DOMContentLoaded', () => {
   TER_SEQUENCES.forEach(renderTerPanel);
+
+  // Styles pour le mode grille séq. 00
+  const style = document.createElement('style');
+  style.textContent = `
+    .ter-subcard {
+      cursor: pointer;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    }
+    .ter-subcard:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(30,58,95,0.15);
+    }
+    .ter-subcard-active {
+      border: 2px solid #1e3a5f !important;
+      box-shadow: 0 4px 16px rgba(30,58,95,0.18) !important;
+    }
+    .seq00-content-panel {
+      display: none;
+    }
+    .seq00-content-panel.active {
+      display: block;
+    }
+    .ter-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1e3a5f;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background 0.15s;
+    }
+    .ter-back-btn:hover {
+      background: #e2e8f0;
+    }
+  `;
+  document.head.appendChild(style);
 });
