@@ -170,16 +170,20 @@ const TER_SEQUENCES = [
     sous_titre: 'Lois de Newton · Forces · Énergie · Cinématique',
     icone: 'runner',
     headerBg: 'seq03/image3.jpg',
-    tabs: [
-      {
-        id:'Fiche de révision', label:'Fiche de révision', actif: true,
-        items: [
-          { type:'image', label:'Fiche de révision — Bases de la mécanique newtonienne',
-            src:'seq03/seq03_Fiche de révision.png',
-            alt:'Fiche de révision mécanique newtonienne' },
-        ]
-      },
-      {
+ tabs: [
+  {
+    id:'Cours', label:'Cours', actif: true,
+    items: [
+      { type:'link', icon:'📖', label:'Cours interactif',
+        sub:'Séquence 3 — Bases de la mécanique newtonienne',
+        href:'seq03/seq03-cours_interactif.html',
+        desactive: true },
+      { type:'link', icon:'📖', label:'Fiche de révision — Bases de la mécanique newtonienne',
+           sub:'réalisée par Jade, Jibril et Damien',
+        href:'seq03/seq03_Fiche de révision.png' },
+    ]
+  },
+  {
         id:'flashcards', label:'Flashcards',
         items: [
           { type:'image-group', cards: [
@@ -187,6 +191,7 @@ const TER_SEQUENCES = [
             { label:'Cartes #6 → #8 · Types de mouvement',         src:'seq03/Flashcards 6-8.jpg' },
             { label:'Cartes #11 → #15 · Lois de Newton · Énergie', src:'seq03/Flashcards 11-15.jpg' },
             { label:'Cartes #16 → #20 · Énergie · Chute libre',    src:'seq03/Flashcards 16-20.jpg' },
+             sub:'réalisée par Jade, Jibril et Damien',
           ]}
         ]
       },
@@ -194,7 +199,7 @@ const TER_SEQUENCES = [
         id:'quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'Séquence 3 — Bases de la mécanique newtonienne',
+            sub:'réalisée par Jade, Jibril et Damien',
             href:'seq03/seq03_Quiz.html' },
         ]
       },
