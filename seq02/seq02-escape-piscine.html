@@ -1,0 +1,3217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏊 Sauve l'eau de la piscine ! – Escape Game Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bleu: #2D5F8A;
+  --bleu-clair: #E8F1F8;
+  --bleu-moyen: #5B8FB9;
+  --orange: #E8783A;
+  --orange-clair: #FDF0E8;
+  --vert: #3A8A6E;
+  --vert-clair: #E8F5F0;
+  --rouge: #C0392B;
+  --rouge-clair: #FDEDEC;
+  --violet: #7B4FA6;
+  --violet-clair: #F3EDF9;
+  --jaune: #D4A017;
+  --jaune-clair: #FDF8E8;
+  --gris-fond: #F5F7FA;
+  --gris-bord: #DDE3EC;
+  --texte: #1A2A3A;
+  --texte-leger: #5A6B7A;
+  --blanc: #FFFFFF;
+  --eau: #4BA3C3;
+  --eau-clair: #E8F6FB;
+  --chlore: #2ECC71;
+  --chlore-clair: #EAFAF1;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #EEF4F9;
+  color: var(--texte);
+  min-height: 100vh;
+}
+
+/* ══ ÉCRANS ══ */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+
+/* ══ ÉCRAN ACCUEIL ══ */
+#screen-accueil {
+  background: linear-gradient(180deg, #C8E8F5 0%, #EEF4F9 60%);
+  position: relative;
+  overflow: hidden;
+}
+
+.accueil-header {
+  text-align: center;
+  padding: 32px 20px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.accueil-badge {
+  display: inline-block;
+  background: var(--bleu);
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.accueil-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 900;
+  color: var(--bleu);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.accueil-title span { color: var(--orange); }
+
+.accueil-sub {
+  font-size: 0.95rem;
+  color: var(--texte-leger);
+  margin-bottom: 20px;
+}
+
+/* Piscine SVG déco */
+.piscine-scene {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ══ TIMER GLOBAL ══ */
+.timer-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--bleu);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  z-index: 1000;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.timer-display {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #FFE08A;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-joueur {
+  font-size: 0.80rem;
+  opacity: 0.85;
+}
+
+.progress-pills {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.pill {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.4);
+  font-size: 0.65rem;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.pill.done { background: #2ECC71; border-color: #27AE60; }
+.pill.secret { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); font-size: 0.5rem; }
+.pill.secret.done { background: #F39C12; border-color: #D68910; }
+
+/* ══ CARTE PISCINE ══ */
+.carte-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px 20px 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.carte-piscine {
+  background: white;
+  border-radius: 20px;
+  border: 3px solid var(--bleu-moyen);
+  box-shadow: 0 8px 32px rgba(45,95,138,0.15);
+  padding: 28px;
+  position: relative;
+}
+
+.carte-titre {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--bleu);
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--bleu-clair);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pieces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.piece-card {
+  background: var(--gris-fond);
+  border: 2px solid var(--gris-bord);
+  border-radius: 14px;
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  text-align: left;
+}
+
+.piece-card:hover {
+  border-color: var(--bleu-moyen);
+  background: var(--bleu-clair);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(45,95,138,0.12);
+}
+
+.piece-card.done {
+  border-color: var(--vert);
+  background: var(--vert-clair);
+}
+
+.piece-card.done::after {
+  content: '✓';
+  position: absolute;
+  top: 10px; right: 12px;
+  color: var(--vert);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.piece-card.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.piece-icon { font-size: 2rem; margin-bottom: 8px; display: block; }
+.piece-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--bleu-moyen);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.piece-nom {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.0rem;
+  font-weight: 800;
+  color: var(--bleu);
+  margin-bottom: 4px;
+  line-height: 1.25;
+}
+.piece-desc {
+  font-size: 0.78rem;
+  color: var(--texte-leger);
+  line-height: 1.4;
+}
+
+/* Pièces secrètes cachées */
+.secret-zone {
+  position: relative;
+}
+
+/* Icône cachée 1 — dans un coin du bassin SVG */
+.hidden-icon-1 {
+  position: absolute;
+  bottom: 12px;
+  right: 24px;
+  width: 32px; height: 32px;
+  cursor: pointer;
+  opacity: 0.08;
+  transition: opacity 0.4s, transform 0.3s;
+  z-index: 5;
+}
+.hidden-icon-1:hover { opacity: 0.6; transform: scale(1.15); }
+.hidden-icon-1.locked { pointer-events: none !important; opacity: 0.08 !important; }
+.hidden-icon-1.unlocked { opacity: 0.75; animation: pulseIcon 2s ease-in-out infinite; }
+.hidden-icon-1.unlocked:hover { opacity: 1; transform: scale(1.2); }
+.hidden-icon-1.found { opacity: 0; pointer-events: none; }
+
+/* Icône cachée 2 — dans le décor */
+.hidden-icon-2 {
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  width: 26px; height: 26px;
+  cursor: pointer;
+  opacity: 0.08;
+  transition: opacity 0.4s, transform 0.3s;
+  z-index: 5;
+}
+.hidden-icon-2:hover { opacity: 0.6; transform: scale(1.15); }
+.hidden-icon-2.locked { pointer-events: none !important; opacity: 0.08 !important; }
+.hidden-icon-2.unlocked { opacity: 0.75; animation: pulseIcon 2s ease-in-out infinite 0.5s; }
+.hidden-icon-2.unlocked:hover { opacity: 1; transform: scale(1.2); }
+.hidden-icon-2.found { opacity: 0; pointer-events: none; }
+
+@keyframes pulseIcon {
+  0%, 100% { transform: scale(1); opacity: 0.75; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* Bassin décoratif */
+.bassin-deco {
+  background: linear-gradient(180deg, #7EC8E3 0%, #4BA3C3 100%);
+  border-radius: 12px;
+  height: 90px;
+  margin: 20px 0 10px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #3A8EB0;
+}
+
+.vague {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30px;
+}
+
+/* ══ ÉCRANS PIÈCES ══ */
+.piece-screen {
+  padding-top: 60px;
+  min-height: 100vh;
+  background: #F0F4F8;
+}
+
+.piece-header {
+  background: white;
+  border-bottom: 3px solid var(--bleu);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 0 0 14px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.back-btn {
+  background: var(--bleu-clair);
+  color: var(--bleu);
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.back-btn:hover { background: var(--bleu); color: white; }
+
+.piece-header-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--bleu);
+  line-height: 1.2;
+}
+.piece-header-sub {
+  font-size: 0.78rem;
+  color: var(--texte-leger);
+  margin-top: 2px;
+}
+
+.piece-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+}
+
+/* ══ BLOCS COURS/ENIGME ══ */
+.enigme-box {
+  background: linear-gradient(135deg, #FDF0E8 0%, #FFF8F3 100%);
+  border: 2px solid var(--orange);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+
+.enigme-box h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--orange);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-box {
+  background: var(--bleu-clair);
+  border-left: 4px solid var(--bleu);
+  border-radius: 0 10px 10px 0;
+  padding: 13px 16px;
+  margin: 12px 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.attention-box {
+  background: var(--rouge-clair);
+  border-left: 4px solid var(--rouge);
+  border-radius: 0 10px 10px 0;
+  padding: 11px 16px;
+  margin: 10px 0;
+  font-size: 0.86rem;
+  color: var(--texte);
+}
+.attention-box strong { color: var(--rouge); }
+
+.formule-box {
+  background: white;
+  border: 2px solid var(--bleu-moyen);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin: 12px 0;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texte);
+}
+
+.section-titre {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--bleu);
+  margin: 24px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--bleu-clair);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ══ QUESTIONS ══ */
+.question-block {
+  background: white;
+  border: 1.5px solid var(--gris-bord);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+
+.question-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin-bottom: 10px;
+  padding-left: 10px;
+  border-left: 3px solid var(--orange);
+  line-height: 1.5;
+}
+
+.dq-select {
+  padding: 7px 14px;
+  border: 1.5px solid var(--gris-bord);
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  background: white;
+  color: var(--texte);
+  cursor: pointer;
+  min-width: 180px;
+}
+.dq-select:focus { outline: none; border-color: var(--bleu); }
+.dq-select.correct { border-color: var(--vert); color: var(--vert); font-weight: 700; }
+.dq-select.wrong { border-color: var(--rouge); color: var(--rouge); background: var(--rouge-clair); }
+
+.num-input {
+  width: 130px;
+  padding: 7px 11px;
+  border: 1.5px solid var(--gris-bord);
+  border-radius: 7px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  background: var(--gris-fond);
+}
+.num-input:focus { outline: none; border-color: var(--bleu); background: white; }
+.num-input.correct { border-color: var(--vert); background: white; }
+.num-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
+
+.dq-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+.dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
+.dq-feedback.wrong { color: var(--rouge); }
+.num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
+.num-feedback.ok { color: var(--vert); }
+.num-feedback.ko { color: var(--rouge); }
+.num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
+
+.correction-inline {
+  display: none;
+  background: white;
+  border: 1.5px solid var(--vert);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--texte);
+}
+.correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
+.calc-step {
+  background: var(--gris-fond);
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin: 5px 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  border-left: 3px solid var(--vert);
+}
+
+/* ══ BOUTONS ══ */
+.btn-verif { padding: 7px 16px; background: var(--bleu); color: white; border: none; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.btn-verif:hover { background: #1E4A72; }
+.btn-corriger { padding: 7px 16px; background: var(--vert); color: white; border: none; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.btn-corriger:hover { background: #2A6B52; }
+.btn-reset { padding: 7px 16px; background: var(--gris-fond); color: var(--texte-leger); border: 1.5px solid var(--gris-bord); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; }
+.btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); }
+.btn-primary { padding: 12px 28px; background: var(--orange); color: white; border: none; border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 1.0rem; font-weight: 800; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(232,120,58,0.3); }
+.btn-primary:hover { background: #D4652A; transform: translateY(-1px); }
+.btn-success { padding: 12px 28px; background: var(--vert); color: white; border: none; border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 1.0rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+.btn-success:hover { background: #2A6B52; }
+
+/* ══ CODE SERRURE ══ */
+.code-serrure {
+  background: linear-gradient(135deg, #1A2A3A, #2D5F8A);
+  border-radius: 14px;
+  padding: 22px;
+  margin: 20px 0;
+  text-align: center;
+  color: white;
+}
+.code-serrure h4 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+.code-input-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.code-input {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  padding: 10px 18px;
+  text-align: center;
+  width: 160px;
+}
+.code-input::placeholder { opacity: 0.4; }
+.code-input:focus { outline: none; border-color: #FFE08A; background: rgba(255,255,255,0.15); }
+.btn-code { padding: 10px 22px; background: var(--orange); color: white; border: none; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; }
+.code-feedback { margin-top: 10px; font-size: 0.9rem; font-weight: 700; min-height: 20px; }
+.code-feedback.ok { color: #2ECC71; }
+.code-feedback.ko { color: #E74C3C; }
+
+/* ══ QCM ══ */
+.qcm-grid { display: grid; gap: 8px; margin: 10px 0; }
+.qcm-btn {
+  padding: 10px 16px;
+  border: 1.5px solid var(--gris-bord);
+  border-radius: 10px;
+  background: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  color: var(--texte);
+}
+.qcm-btn:hover { border-color: var(--bleu); background: var(--bleu-clair); color: var(--bleu); }
+.qcm-btn.correct { background: var(--vert-clair); border-color: var(--vert); color: var(--vert); font-weight: 700; }
+.qcm-btn.wrong { background: var(--rouge-clair); border-color: var(--rouge); color: var(--rouge); }
+.qcm-feedback { font-size: 0.82rem; margin-top: 6px; min-height: 14px; font-weight: 600; }
+.qcm-feedback.ok { color: var(--vert); }
+.qcm-feedback.ko { color: var(--rouge); }
+
+/* ══ DRAG & DROP ══ */
+.drag-pool { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: var(--gris-fond); border: 1.5px dashed var(--gris-bord); border-radius: 10px; min-height: 48px; margin-bottom: 12px; }
+.drag-zones { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+@media(max-width:500px){.drag-zones{grid-template-columns:1fr;}}
+.drop-zone { min-height: 60px; border: 2px dashed var(--gris-bord); border-radius: 10px; padding: 10px; background: white; display: flex; flex-wrap: wrap; gap: 7px; align-items: flex-start; transition: border-color 0.15s; }
+.drop-zone.drag-over { border-color: var(--bleu); background: var(--bleu-clair); border-style: solid; }
+.drop-zone.drop-ok { border-color: var(--vert); background: var(--vert-clair); border-style: solid; }
+.drop-zone.drop-ko { border-color: var(--rouge); background: var(--rouge-clair); border-style: solid; }
+.drop-zone-label { display: block; font-family: 'Outfit', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--texte-leger); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; width: 100%; }
+.drag-badge { display: inline-flex; align-items: center; padding: 5px 13px; border-radius: 20px; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: grab; user-select: none; border: 2px solid transparent; touch-action: none; }
+.drag-badge:active { cursor: grabbing; opacity: 0.75; }
+
+/* ══ SCHÉMA ANNOTÉ (électrolyseur) ══ */
+.schema-container { background: white; border: 1.5px solid var(--gris-bord); border-radius: 12px; padding: 16px; margin: 14px 0; }
+.schema-legend { font-size: 0.82rem; color: var(--texte-leger); text-align: center; margin-top: 8px; }
+.annotation-input {
+  background: var(--jaune-clair);
+  border: 2px solid var(--jaune);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  width: 140px;
+  text-align: center;
+  color: var(--texte);
+}
+.annotation-input:focus { outline: none; border-color: var(--orange); }
+.annotation-input.correct { border-color: var(--vert); background: var(--vert-clair); color: var(--vert); }
+.annotation-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); }
+
+/* ══ SUCCÈS PIÈCE ══ */
+.succes-banner {
+  display: none;
+  background: linear-gradient(135deg, var(--vert) 0%, #27AE60 100%);
+  color: white;
+  border-radius: 14px;
+  padding: 22px;
+  text-align: center;
+  margin: 20px 0;
+  animation: fadeIn 0.4s ease;
+}
+.succes-banner.visible { display: block; }
+.succes-banner h3 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 900; margin-bottom: 8px; }
+.succes-banner p { font-size: 0.92rem; opacity: 0.9; }
+
+/* ══ IFRAME GENIALLY ══ */
+.iframe-wrap {
+  border: 2px solid var(--gris-bord);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 14px 0;
+  background: #f8f8f8;
+}
+.iframe-wrap iframe {
+  width: 100%;
+  border: none;
+  display: block;
+  min-height: 500px;
+}
+
+/* ══ CLASSEMENT ══ */
+#screen-classement {
+  background: linear-gradient(180deg, #C8E8F5 0%, #EEF4F9 60%);
+  padding: 60px 20px 40px;
+}
+
+.classement-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.classement-titre {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--bleu);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.classement-section {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.classement-section h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.0rem;
+  font-weight: 800;
+  color: var(--bleu);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--bleu-clair);
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  background: var(--gris-fond);
+  font-size: 0.9rem;
+}
+.score-row:first-of-type { background: #FFF8E8; border: 1.5px solid var(--jaune); }
+.score-rank {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--bleu);
+  min-width: 30px;
+}
+.score-num { font-weight: 700; flex: 1; }
+.score-time { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--vert); }
+
+.mon-score {
+  background: linear-gradient(135deg, #E8F1F8, #F0F8FF);
+  border: 2px solid var(--bleu-moyen);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.mon-score .label { font-size: 0.8rem; color: var(--texte-leger); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.mon-score .value { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 900; color: var(--bleu); }
+.mon-score .joueur-id { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--orange); }
+
+/* ══ CONNEXION ══ */
+#screen-connexion {
+  background: linear-gradient(180deg, #C8E8F5 0%, #EEF4F9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.connexion-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 36px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(45,95,138,0.15);
+}
+
+.connexion-card h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--bleu);
+  margin-bottom: 8px;
+}
+.connexion-card p {
+  font-size: 0.9rem;
+  color: var(--texte-leger);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.num-joueur-display {
+  background: var(--bleu);
+  color: white;
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+}
+.num-joueur-display .label { font-size: 0.75rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.num-joueur-display .numero { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 900; color: #FFE08A; }
+.loading-txt { color: var(--texte-leger); font-size: 0.9rem; animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+
+/* ══ TABLEAU ══ */
+.tableau { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 12px 0; background: white; border-radius: 10px; overflow: hidden; }
+.tableau th { background: var(--bleu); color: white; padding: 9px 12px; font-family: 'Outfit', sans-serif; font-size: 0.80rem; font-weight: 700; letter-spacing: 0.03em; text-align: center; }
+.tableau td { padding: 8px 12px; border-bottom: 1px solid var(--gris-bord); text-align: center; vertical-align: middle; }
+.tableau tr:last-child td { border-bottom: none; }
+.tableau tr:nth-child(even) td { background: var(--gris-fond); }
+.tableau td:first-child { font-weight: 600; color: var(--bleu); text-align: left; }
+
+/* ══ ANIM ══ */
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+.vague-anim { animation: vague 3s ease-in-out infinite alternate; }
+@keyframes vague { from{transform:translateX(-5%)} to{transform:translateX(5%)} }
+
+
+/* ══ BOUTON INDICE ══ */
+.btn-indice {
+  padding: 7px 16px;
+  background: var(--jaune-clair);
+  color: var(--jaune);
+  border: 1.5px solid var(--jaune);
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.83rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.btn-indice:hover:not(:disabled) { background: var(--jaune); color: white; }
+.btn-indice:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: var(--gris-fond);
+  color: var(--texte-leger);
+  border-color: var(--gris-bord);
+}
+.btn-indice .indice-count {
+  display: inline-block;
+  background: var(--orange);
+  color: white;
+  border-radius: 50%;
+  width: 16px; height: 16px;
+  font-size: 0.65rem;
+  line-height: 16px;
+  text-align: center;
+  margin-left: 5px;
+  font-weight: 800;
+}
+
+/* ══ PANEL INDICE ══ */
+.indice-panel {
+  display: none;
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid var(--jaune);
+  animation: fadeIn 0.2s ease;
+}
+.indice-panel.open { display: block; }
+.indice-step {
+  display: none;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--texte);
+  border-bottom: 1px solid rgba(212,160,23,0.2);
+}
+.indice-step:last-child { border-bottom: none; }
+.indice-step.visible { display: block; }
+.indice-step-header {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 5px;
+}
+.indice-step-1 { background: #FFFDF0; }
+.indice-step-1 .indice-step-header { color: #C4920A; }
+.indice-step-2 { background: #FFF8E0; }
+.indice-step-2 .indice-step-header { color: #B07D08; }
+.indice-step-3 { background: #FFF0C0; }
+.indice-step-3 .indice-step-header { color: #8A6006; }
+
+/* ══ PÉNALITÉ AFFICHAGE ══ */
+.penalite-tag {
+  display: inline-block;
+  background: var(--rouge-clair);
+  color: var(--rouge);
+  border: 1px solid var(--rouge);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-left: 8px;
+  animation: fadeIn 0.3s ease;
+}
+
+
+/* ══ MODALE CARTE PISCINE ══ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(20, 40, 60, 0.72);
+  z-index: 2000;
+  overflow-y: auto;
+  padding: 52px 12px 20px;
+}
+.modal-overlay.open { display: block; }
+.modal-box {
+  background: white;
+  border-radius: 20px;
+  border: 3px solid var(--bleu-moyen);
+  box-shadow: 0 12px 48px rgba(45,95,138,0.3);
+  padding: 24px;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  position: relative;
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:600px){
+  .pieces-grid { grid-template-columns: 1fr 1fr; }
+  .piece-card { padding: 12px; }
+  .piece-nom { font-size: 0.88rem; }
+}
+@media(max-width:380px){
+  .pieces-grid { grid-template-columns: 1fr; }
+}
+
+/* ══ NOTIFICATION ══ */
+.notif {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--bleu);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s;
+  max-width: 300px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.notif.show { opacity: 1; transform: translateY(0); }
+.notif.secret { background: linear-gradient(135deg, #7B4FA6, #9B59B6); }
+.notif.success { background: var(--vert); }
+
+/* Tableau progression flottant */
+.prog-float {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 500;
+}
+.prog-toggle {
+  background: var(--bleu);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 48px; height: 48px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.prog-panel {
+  display: none;
+  background: white;
+  border: 2px solid var(--bleu-clair);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 8px;
+  width: 220px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  font-size: 0.82rem;
+}
+.prog-panel.open { display: block; animation: fadeIn 0.2s ease; }
+.prog-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--gris-bord); }
+.prog-item:last-child { border-bottom: none; }
+.prog-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gris-bord); flex-shrink: 0; }
+.prog-dot.done { background: var(--vert); }
+.prog-dot.secret-done { background: var(--violet); }
+</style>
+</head>
+<body>
+
+<!-- ══ NOTIFICATION ══ -->
+<div class="notif" id="notif"></div>
+
+<!-- ══ TIMER BAR ══ -->
+<div class="timer-bar" id="timerBar" style="display:none;">
+  <div class="timer-joueur">Joueur n°<span id="timerJoueur">—</span></div>
+  <div class="timer-display" id="timerDisplay">00:00:00</div>
+  <div class="progress-pills" id="progressPills"></div>
+</div>
+
+<!-- ══ BOUTON PROGRESSION FLOTTANT ══ -->
+<div class="prog-float" id="progFloat" style="display:none;">
+  <div class="prog-panel" id="progPanel"></div>
+  <button class="prog-toggle" onclick="toggleProg()" title="Ma progression">📋</button>
+</div>
+
+
+<!-- ══════════════════════════════════
+     ÉCRAN CONNEXION
+══════════════════════════════════════ -->
+<div class="screen active" id="screen-connexion">
+  <div class="connexion-card">
+    <div style="font-size:3rem;margin-bottom:12px;">🏊</div>
+    <h2>Sauve l'eau de la piscine !</h2>
+    <p>Escape Game · Terminale Spécialité PC<br>
+    Connexion en cours… votre numéro de joueur vous est attribué automatiquement.</p>
+    <div class="num-joueur-display">
+      <div class="label">Votre numéro de joueur</div>
+      <div class="numero" id="numJoueurDisplay"><span class="loading-txt">…</span></div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--texte-leger);margin-bottom:20px;">
+      Ce numéro vous identifie dans le classement final.
+    </p>
+    <button class="btn-primary" id="btnDemarrer" style="display:none;" onclick="demarrer()">
+      🚀 Démarrer l'escape game !
+    </button>
+    <div id="connexion-erreur" style="color:var(--rouge);font-size:0.84rem;margin-top:10px;display:none;">
+      Erreur de connexion. <a href="#" onclick="initConnexion()" style="color:var(--bleu);">Réessayer</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     ÉCRAN ACCUEIL (fond - carte en modale)
+══════════════════════════════════════ -->
+<div class="screen" id="screen-accueil" style="min-height:100vh;background:linear-gradient(180deg,#C8E8F5 0%,#EEF4F9 60%);"></div>
+
+<!-- ══ MODALE CARTE PISCINE ══ -->
+<div class="modal-overlay" id="modal-carte">
+  <div class="modal-box">
+    <div class="carte-piscine secret-zone">
+
+      <!-- Icône cachée 1 : montage à reflux (minuscule rondelle de verre) -->
+      <svg class="hidden-icon-1 locked" id="hiddenIcon1" onclick="ouvrirSecret(1)" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" title="">
+        <circle cx="14" cy="14" r="12" fill="#9B59B6" opacity="0.6"/>
+        <text x="14" y="19" text-anchor="middle" font-size="12" fill="white">⚗</text>
+      </svg>
+
+      <!-- Icône cachée 2 : électrolyseur (minuscule boulon) -->
+      <svg class="hidden-icon-2 locked" id="hiddenIcon2" onclick="ouvrirSecret(2)" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" title="">
+        <circle cx="11" cy="11" r="10" fill="#E8783A" opacity="0.6"/>
+        <text x="11" y="16" text-anchor="middle" font-size="11" fill="white">⚡</text>
+      </svg>
+
+      <div class="carte-titre">🗺️ Plan de la piscine — Choisissez une pièce</div>
+
+      <!-- Bassin décoratif -->
+      <div class="bassin-deco">
+        <svg class="vague vague-anim" viewBox="0 0 400 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,15 C50,5 100,25 150,15 C200,5 250,25 300,15 C350,5 400,20 400,15 L400,30 L0,30 Z" fill="rgba(255,255,255,0.25)"/>
+        </svg>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:0.1em;">Bassin principal — pH à surveiller !</div>
+      </div>
+
+      <!-- Grille des pièces principales -->
+      <div class="pieces-grid" id="piecesGrid">
+
+        <div class="piece-card" id="card-p1" onclick="ouvrirPiece(1)">
+          <span class="piece-icon">📋</span>
+          <div class="piece-num">Pièce 1</div>
+          <div class="piece-nom">Le bureau du responsable</div>
+          <div class="piece-desc">pH, [H₃O⁺], Ke — quantifier l'acidité</div>
+        </div>
+
+        <div class="piece-card" id="card-p2" onclick="ouvrirPiece(2)">
+          <span class="piece-icon">⚗️</span>
+          <div class="piece-num">Pièce 2</div>
+          <div class="piece-nom">La réserve de produits</div>
+          <div class="piece-desc">Couples acide-base, amphotère, transfert de proton</div>
+        </div>
+
+        <div class="piece-card" id="card-p3" onclick="ouvrirPiece(3)">
+          <span class="piece-icon">🧪</span>
+          <div class="piece-num">Pièce 3</div>
+          <div class="piece-nom">Le laboratoire</div>
+          <div class="piece-desc">Préparer le désinfectant — dissolution & dilution</div>
+        </div>
+
+        <div class="piece-card" id="card-p4" onclick="ouvrirPiece(4)">
+          <span class="piece-icon">📊</span>
+          <div class="piece-num">Pièce 4</div>
+          <div class="piece-nom">La salle de contrôle</div>
+          <div class="piece-desc">Ka, pKa, τ, diagramme de prédominance, solution tampon</div>
+        </div>
+
+        <div class="piece-card" id="card-p5" onclick="ouvrirPiece(5)" style="grid-column:span 1;">
+          <span class="piece-icon">🏆</span>
+          <div class="piece-num">Pièce 5 — Finale</div>
+          <div class="piece-nom">Le bassin — Sauvetage</div>
+          <div class="piece-desc">pH acide faible, indicateur coloré, validation finale</div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;font-size:0.8rem;color:var(--texte-leger);margin-top:10px;">
+        💡 Explorez bien les environs — il y a peut-être d'autres mystères à découvrir…
+      </div>
+    </div>
+  
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PIÈCE 1 — Bureau du responsable
+     pH, [H₃O⁺], Ke, log
+══════════════════════════════════════ -->
+<div class="screen" id="screen-p1">
+  <div class="piece-screen">
+    <div class="piece-header">
+      <button class="back-btn" onclick="retourAccueil()">← Carte</button>
+      <div>
+        <div class="piece-header-title">📋 Pièce 1 — Le bureau du responsable</div>
+        <div class="piece-header-sub">Retrouvez le code d'accès au système de traitement</div>
+      </div>
+    </div>
+    <div class="piece-content">
+
+      <div class="enigme-box">
+        <h3>🔍 Situation</h3>
+        <p>En fouillant le bureau du responsable technique, vous trouvez un relevé de mesures sur le bassin. Le système de traitement est verrouillé par un <strong>code à 2 chiffres égal au pH de la solution C exprimé à 2 chiffres significatifs, sans virgule</strong>. Résolvez les questions pour le trouver.</p>
+      </div>
+
+      <div class="info-box">
+        <strong>Rappels :</strong> pH = –log([H₃O⁺] / C°) avec C° = 1 mol·L⁻¹ &nbsp;|&nbsp; K<sub>e</sub> = [H₃O⁺]·[HO⁻] / (C°)² = 10⁻¹⁴ à 25 °C<br>
+        À 25 °C : pH &lt; 7 → acide · pH = 7 → neutre · pH &gt; 7 → basique
+      </div>
+
+      <div class="section-titre">📄 Relevé de mesures du bassin</div>
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <div class="question-label">Q1 — Solution A : [H₃O⁺] = 3,2 × 10⁻⁸ mol·L⁻¹. Calculer le pH (2 chiffres significatifs).</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">pH(A) ≈</label>
+          <input type="number" step="0.01" class="num-input" id="p1-q1" placeholder="…">
+          <button class="btn-verif" onclick="verifNum('p1-q1', 7.49, 0.05, 'fb-p1-q1', 'nc-p1-q1')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p1-q1" onclick="demanderIndice('p1-q1')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p1-q1','fb-p1-q1','nc-p1-q1')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p1-q1"></div>
+        <div class="indice-panel" id="ip-p1-q1">
+<div class="indice-step indice-step-1" id="ip-p1-q1-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+La formule du pH : pH = –log([H₃O⁺] / C°) avec C° = 1 mol·L⁻¹
+</div>
+<div class="indice-step indice-step-2" id="ip-p1-q1-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+pH = –log(3,2 × 10⁻⁸). Décomposez : –log(3,2 × 10⁻⁸) = –(log 3,2 + log 10⁻⁸)
+</div>
+<div class="indice-step indice-step-3" id="ip-p1-q1-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+pH = –(0,51 + (–8)) = –0,51 + 8 = <strong>7,49</strong>. La solution est légèrement basique (pH > 7).
+</div>
+</div>
+<div class="correction-inline" id="nc-p1-q1">
+          <div class="calc-step">pH = –log(3,2 × 10⁻⁸) = –(log 3,2 + log 10⁻⁸) = –(0,51 – 8) = <strong>7,49</strong></div>
+          pH &gt; 7 : solution A légèrement basique. Le bassin était trop basique !
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <div class="question-label">Q2 — Solution B : pH = 4,5. Calculer [H₃O⁺] (en mol·L⁻¹, notation scientifique).</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">[H₃O⁺] =</label>
+          <select class="dq-select" id="p1-q2">
+            <option value="">— choisir —</option>
+            <option value="a">3,2 × 10⁻⁵ mol·L⁻¹</option>
+            <option value="b">4,5 × 10⁻⁴ mol·L⁻¹</option>
+            <option value="c">1,0 × 10⁻⁴·⁵ mol·L⁻¹ ≈ 3,2 × 10⁻⁵ mol·L⁻¹</option>
+            <option value="d">1,0 × 10⁻⁹·⁵ mol·L⁻¹</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('p1-q2','a','fb-p1-q2','nc-p1-q2')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p1-q2" onclick="demanderIndice('p1-q2')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('p1-q2','fb-p1-q2','nc-p1-q2')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-p1-q2"></div>
+        <div class="indice-panel" id="ip-p1-q2">
+<div class="indice-step indice-step-1" id="ip-p1-q2-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Si on connaît le pH, on retrouve [H₃O⁺] par la réciproque : [H₃O⁺] = 10⁻ᵖᴴ × C°
+</div>
+<div class="indice-step indice-step-2" id="ip-p1-q2-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+[H₃O⁺] = 10⁻⁴·⁵ × 1 mol·L⁻¹. Calculez 10⁻⁴·⁵ à la calculatrice.
+</div>
+<div class="indice-step indice-step-3" id="ip-p1-q2-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+[H₃O⁺] = 10⁻⁴·⁵ ≈ <strong>3,2 × 10⁻⁵ mol·L⁻¹</strong>. pH < 7 : solution acide.
+</div>
+</div>
+<div class="correction-inline" id="nc-p1-q2">
+          <div class="calc-step">[H₃O⁺] = 10⁻pH × C° = 10⁻⁴·⁵ × 1 = <strong>3,2 × 10⁻⁵ mol·L⁻¹</strong></div>
+          pH &lt; 7 : solution B acide. Dangereux pour les baigneurs !
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <div class="question-label">Q3 — Solution C (eau du bassin corrigée) : [HO⁻] = 4,0 × 10⁻⁷ mol·L⁻¹ à 25 °C. Calculer le pH.</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">pH(C) ≈</label>
+          <input type="number" step="0.01" class="num-input" id="p1-q3" placeholder="…">
+          <button class="btn-verif" onclick="verifNum('p1-q3', 7.60, 0.05, 'fb-p1-q3', 'nc-p1-q3')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p1-q3" onclick="demanderIndice('p1-q3')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p1-q3','fb-p1-q3','nc-p1-q3')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p1-q3"></div>
+        <div class="indice-panel" id="ip-p1-q3">
+<div class="indice-step indice-step-1" id="ip-p1-q3-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+On connaît [HO⁻]. Utilisez Kₑ = [H₃O⁺]·[HO⁻]/(C°)² = 10⁻¹⁴ pour trouver [H₃O⁺].
+</div>
+<div class="indice-step indice-step-2" id="ip-p1-q3-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+[H₃O⁺] = Kₑ / [HO⁻] = 10⁻¹⁴ / (4,0 × 10⁻⁷). Faites la division.
+</div>
+<div class="indice-step indice-step-3" id="ip-p1-q3-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+[H₃O⁺] = 2,5 × 10⁻⁸ mol·L⁻¹ → pH = –log(2,5 × 10⁻⁸) = 8 – 0,40 = <strong>7,60</strong>. À 2 chiffres significatifs : <strong>7,6</strong>.
+</div>
+</div>
+<div class="correction-inline" id="nc-p1-q3">
+          <div class="calc-step">K<sub>e</sub> = [H₃O⁺]·[HO⁻]/(C°)² → [H₃O⁺] = 10⁻¹⁴ / (4,0 × 10⁻⁷) = 2,5 × 10⁻⁸ mol·L⁻¹</div>
+          <div class="calc-step">pH = –log(2,5 × 10⁻⁸) = 8 – log(2,5) = 8 – 0,40 = <strong>7,60</strong></div>
+          À 2 chiffres significatifs : pH = <strong>7,6</strong> → le code est <strong>76</strong>
+        </div>
+      </div>
+
+      <!-- Q4 amphotère -->
+      <div class="question-block">
+        <div class="question-label">Q4 — Parmi les produits trouvés, lequel est <strong>amphotère</strong> ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p1-q4')">HCl (acide chlorhydrique)</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p1-q4')">NaOH (soude)</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-p1-q4')">HCO₃⁻ (ion hydrogénocarbonate)</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p1-q4')">NH₄⁺ (ion ammonium)</button>
+        </div>
+        <div class="qcm-feedback" id="fb-p1-q4"></div>
+        <div style="font-size:0.80rem;color:var(--texte-leger);margin-top:4px;" id="exp-p1-q4" style="display:none;"></div>
+      </div>
+
+      <!-- Code serrure -->
+      <div class="code-serrure">
+        <h4>🔐 Code d'accès au système de traitement</h4>
+        <p style="font-size:0.82rem;opacity:0.7;margin-bottom:14px;">Entrez le pH de la solution C à 2 chiffres significatifs (avec la virgule)</p>
+        <div class="code-input-wrap">
+          <input class="code-input" type="text" id="code-p1" placeholder="_ , _" maxlength="3">
+          <button class="btn-code" onclick="validerCode('p1','7.6','succes-p1',1)">Déverrouiller</button>
+        </div>
+        <div class="code-feedback" id="fb-code-p1"></div>
+      </div>
+
+      <div class="succes-banner" id="succes-p1">
+        <h3>🎉 Accès autorisé !</h3>
+        <p>Le système de traitement est déverrouillé. Rendez-vous dans la réserve de produits.</p>
+        <button class="btn-success" style="margin-top:14px;" onclick="retourAccueil()">← Retour à la carte</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PIÈCE 2 — Réserve de produits
+     Couples acide-base, transfert de proton, équations
+══════════════════════════════════════ -->
+<div class="screen" id="screen-p2">
+  <div class="piece-screen">
+    <div class="piece-header">
+      <button class="back-btn" onclick="retourAccueil()">← Carte</button>
+      <div>
+        <div class="piece-header-title">⚗️ Pièce 2 — La réserve de produits</div>
+        <div class="piece-header-sub">Identifiez les produits et leurs réactions pour débloquer l'armoire</div>
+      </div>
+    </div>
+    <div class="piece-content">
+
+      <div class="enigme-box">
+        <h3>🔍 Situation</h3>
+        <p>L'armoire de stockage des produits est fermée. Le code est le <strong>nombre de couples acide-base</strong> identifiés dans l'équation de la réaction entre l'acide éthanoïque et l'ion carbonate. Classez les produits et établissez l'équation.</p>
+      </div>
+
+      <div class="section-titre">🧴 Identification des couples acide-base</div>
+
+      <!-- Drag & drop : classer dans acide / base -->
+      <div class="question-block">
+        <div class="question-label">Q1 — Classez ces espèces chimiques dans la bonne colonne (acide ou base de Brønsted)</div>
+        <div class="drag-pool" id="p2-pool"></div>
+        <div class="drag-zones">
+          <div>
+            <div style="font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:700;color:var(--rouge);margin-bottom:6px;">ACIDES de Brønsted</div>
+            <div class="drop-zone" id="p2-acide"><span class="drop-zone-label">Déposez ici</span></div>
+            <div class="dq-feedback" id="fb-p2-acide"></div>
+          </div>
+          <div>
+            <div style="font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:700;color:var(--bleu);margin-bottom:6px;">BASES de Brønsted</div>
+            <div class="drop-zone" id="p2-base"><span class="drop-zone-label">Déposez ici</span></div>
+            <div class="dq-feedback" id="fb-p2-base"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+          <button class="btn-verif" onclick="verifP2Drag()">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p2-drag" onclick="demanderIndice('p2-drag')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetP2Drag()">Recommencer</button>
+        </div>
+        <div class="indice-panel" id="ip-p2-drag">
+          <div class="indice-step indice-step-1" id="ip-p2-drag-1">
+            <div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+            Un acide de Brønsted est un donneur de proton H⁺. Une base est un accepteur de H⁺.
+          </div>
+          <div class="indice-step indice-step-2" id="ip-p2-drag-2">
+            <div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+            Les espèces chargées positivement (H₃O⁺, NH₄⁺) et les acides moléculaires (HClO, CH₃COOH) sont des acides.
+          </div>
+          <div class="indice-step indice-step-3" id="ip-p2-drag-3">
+            <div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+            Acides : H₃O⁺, NH₄⁺, HClO, CH₃COOH. Bases : H₂O, NH₃, ClO⁻, CH₃COO⁻.
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <!-- Q2 couples -->
+      <div class="question-block">
+        <div class="question-label">Q2 — Associez chaque acide à sa base conjuguée. Quel est le couple de l'acide éthanoïque CH₃COOH ?</div>
+        <div class="dq-row">
+          <select class="dq-select" id="p2-q2">
+            <option value="">— choisir —</option>
+            <option value="a">CH₃COOH / CH₃COO⁻</option>
+            <option value="b">CH₃COOH / CH₃CO⁺</option>
+            <option value="c">CH₃COO⁻ / CH₃COOH</option>
+            <option value="d">H₂O / HO⁻</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('p2-q2','a','fb-p2-q2','nc-p2-q2')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p2-q2" onclick="demanderIndice('p2-q2')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('p2-q2','fb-p2-q2','nc-p2-q2')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-p2-q2"></div>
+        <div class="indice-panel" id="ip-p2-q2">
+<div class="indice-step indice-step-1" id="ip-p2-q2-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Dans un couple acide-base AH/A⁻, l'acide perd un H⁺ pour donner la base conjuguée.
+</div>
+<div class="indice-step indice-step-2" id="ip-p2-q2-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+CH₃COOH perd un H⁺ → CH₃COO⁻. L'acide s'écrit toujours en premier dans la notation du couple.
+</div>
+<div class="indice-step indice-step-3" id="ip-p2-q2-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+Couple : <strong>CH₃COOH / CH₃COO⁻</strong>. L'acide cède H⁺, la base le reçoit.
+</div>
+</div>
+<div class="correction-inline" id="nc-p2-q2">
+          <div class="calc-step">CH₃COOH (acide) perd un H⁺ → CH₃COO⁻ (base conjuguée)</div>
+          Couple : <strong>CH₃COOH / CH₃COO⁻</strong>
+        </div>
+      </div>
+
+      <!-- Q3 transfert de proton -->
+      <div class="question-block">
+        <div class="question-label">Q3 — Réaction entre CH₃COOH et CO₃²⁻. Combien de couples acide-base sont mis en jeu ?</div>
+        <div class="info-box" style="font-size:0.85rem;">
+          <strong>Couples impliqués :</strong><br>
+          • CH₃COOH / CH₃COO⁻ (acide éthanoïque cède H⁺)<br>
+          • HCO₃⁻ / CO₃²⁻ (ion carbonate reçoit H⁺ → donne HCO₃⁻)<br>
+          <strong>Équation :</strong> CH₃COOH + CO₃²⁻ ⇌ CH₃COO⁻ + HCO₃⁻
+        </div>
+        <div class="dq-row">
+          <select class="dq-select" id="p2-q3">
+            <option value="">— choisir —</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('p2-q3','2','fb-p2-q3','nc-p2-q3')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p2-q3" onclick="demanderIndice('p2-q3')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('p2-q3','fb-p2-q3','nc-p2-q3')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-p2-q3"></div>
+        <div class="indice-panel" id="ip-p2-q3">
+<div class="indice-step indice-step-1" id="ip-p2-q3-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Dans une réaction acide-base, 2 couples sont toujours mis en jeu : celui du donneur et celui de l'accepteur de H⁺.
+</div>
+<div class="indice-step indice-step-2" id="ip-p2-q3-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Identifiez : qui donne H⁺ ? (CH₃COOH → couple 1). Qui reçoit H⁺ ? (CO₃²⁻ → couple 2).
+</div>
+<div class="indice-step indice-step-3" id="ip-p2-q3-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+Couple 1 : CH₃COOH/CH₃COO⁻. Couple 2 : HCO₃⁻/CO₃²⁻. → <strong>2 couples</strong>.
+</div>
+</div>
+<div class="correction-inline" id="nc-p2-q3">
+          <div class="calc-step">Couple 1 : CH₃COOH / CH₃COO⁻ → donneur de H⁺</div>
+          <div class="calc-step">Couple 2 : HCO₃⁻ / CO₃²⁻ → accepteur de H⁺</div>
+          → <strong>2 couples</strong> acide-base mis en jeu. Le code est <strong>2</strong>.
+        </div>
+      </div>
+
+      <!-- Q4 : H2O amphotère -->
+      <div class="question-block">
+        <div class="question-label">Q4 — L'eau est dite amphotère. Donnez les deux couples acide-base auxquels elle appartient.</div>
+        <div class="dq-row">
+          <select class="dq-select" id="p2-q4">
+            <option value="">— choisir —</option>
+            <option value="a">H₂O/HO⁻ et H₃O⁺/H₂O</option>
+            <option value="b">H₂O/H⁺ et H₂O/OH</option>
+            <option value="c">HO⁻/H₂O seulement</option>
+            <option value="d">H₃O⁺/H₂O seulement</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('p2-q4','a','fb-p2-q4','nc-p2-q4')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p2-q4" onclick="demanderIndice('p2-q4')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('p2-q4','fb-p2-q4','nc-p2-q4')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-p2-q4"></div>
+        <div class="indice-panel" id="ip-p2-q4">
+<div class="indice-step indice-step-1" id="ip-p2-q4-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Une espèce amphotère appartient à 2 couples : elle est acide dans l'un et base dans l'autre.
+</div>
+<div class="indice-step indice-step-2" id="ip-p2-q4-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+H₂O peut donner H⁺ (→ HO⁻) et peut en recevoir (→ H₃O⁺). Trouvez les deux couples.
+</div>
+<div class="indice-step indice-step-3" id="ip-p2-q4-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+H₂O est acide dans H₂O/HO⁻ et base dans H₃O⁺/H₂O → <strong>deux couples</strong>.
+</div>
+</div>
+<div class="correction-inline" id="nc-p2-q4">
+          <div class="calc-step">H₂O est l'acide du couple H₂O/HO⁻ (peut céder H⁺)</div>
+          <div class="calc-step">H₂O est la base du couple H₃O⁺/H₂O (peut accepter H⁺)</div>
+          H₂O est bien <strong>amphotère</strong> : elle appartient à 2 couples.
+        </div>
+      </div>
+
+      <div class="code-serrure">
+        <h4>🔐 Code de l'armoire de stockage</h4>
+        <p style="font-size:0.82rem;opacity:0.7;margin-bottom:14px;">Nombre de couples acide-base dans la réaction étudiée</p>
+        <div class="code-input-wrap">
+          <input class="code-input" type="text" id="code-p2" placeholder="_" maxlength="1">
+          <button class="btn-code" onclick="validerCode('p2','2','succes-p2',2)">Déverrouiller</button>
+        </div>
+        <div class="code-feedback" id="fb-code-p2"></div>
+      </div>
+
+      <div class="succes-banner" id="succes-p2">
+        <h3>🎉 Armoire ouverte !</h3>
+        <p>Vous trouvez les bidons de produits. Direction le laboratoire pour préparer le désinfectant !</p>
+        <button class="btn-success" style="margin-top:14px;" onclick="retourAccueil()">← Retour à la carte</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PIÈCE 3 — Laboratoire
+     Dissolution (°Baumé + °chlorométrique) + Dilution
+══════════════════════════════════════ -->
+<div class="screen" id="screen-p3">
+  <div class="piece-screen">
+    <div class="piece-header">
+      <button class="back-btn" onclick="retourAccueil()">← Carte</button>
+      <div>
+        <div class="piece-header-title">🧪 Pièce 3 — Le laboratoire</div>
+        <div class="piece-header-sub">Préparer le désinfectant manquant</div>
+      </div>
+    </div>
+    <div class="piece-content">
+
+      <div class="enigme-box">
+        <h3>🔍 Situation</h3>
+        <p>Le technicien a emporté la solution de désinfectant ! Il reste deux bidons dans le labo :<br>
+        • <strong>Bidon A</strong> : Acide chlorhydrique — <em>38°Baumé</em><br>
+        • <strong>Bidon B</strong> : Eau de Javel — <em>48°Chlorométrique</em><br>
+        Aucune concentration molaire n'est indiquée. Vous devez préparer deux solutions puis réaliser les dilutions.</p>
+      </div>
+
+      <div class="attention-box">
+        <strong>⚠️ Sécurité :</strong> Toujours verser l'acide dans l'eau (et jamais l'inverse). Port de lunettes et gants obligatoire.
+      </div>
+
+      <!-- === PARTIE A : HCl dissolution === -->
+      <div class="section-titre">🔬 Partie A — Bidon d'acide chlorhydrique à 38°Baumé</div>
+
+      <div class="info-box">
+        <strong>Conversion °Baumé → concentration :</strong><br>
+        Pour les acides denses (acides lourds) : la densité est lue sur une table ou étiquette.<br>
+        Pour HCl à 38°Bé : d = 1,19 (valeur tabulée) et w = 36,0 % (valeur tabulée)<br>
+        M(HCl) = 36,5 g·mol⁻¹
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q1 — Calculez la densité d de l'acide à 38°Baumé (2 décimales).</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">d =</label>
+          <input type="number" step="0.01" class="num-input" id="p3-q1" placeholder="…">
+          <button class="btn-verif" onclick="verifNum('p3-q1', 1.19, 0.01, 'fb-p3-q1', 'nc-p3-q1')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p3-q1" onclick="demanderIndice('p3-q1')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p3-q1','fb-p3-q1','nc-p3-q1')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p3-q1"></div>
+        <div class="indice-panel" id="ip-p3-q1">
+<div class="indice-step indice-step-1" id="ip-p3-q1-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Pour HCl à 38°Bé, la densité est une donnée tabulée (valeur constructeur), pas calculée.
+</div>
+<div class="indice-step indice-step-2" id="ip-p3-q1-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Consultez les données de l'énoncé : pour HCl à 38°Baumé, d est une valeur industrielle standard.
+</div>
+<div class="indice-step indice-step-3" id="ip-p3-q1-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+Valeur tabulée : <strong>d = 1,19</strong> pour l'acide chlorhydrique commercial à 38°Baumé.
+</div>
+</div>
+<div class="correction-inline" id="nc-p3-q1">
+          <div class="calc-step">Valeur tabulée pour HCl à 38°Bé : <strong>d = 1,19</strong> (donnée constructeur)</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q2 — Calculez le pourcentage massique w(HCl) avec la formule approximative (en %).</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">w =</label>
+          <input type="number" step="0.1" class="num-input" id="p3-q2" placeholder="…">
+          <span class="num-unit">%</span>
+          <button class="btn-verif" onclick="verifNum('p3-q2', 32.5, 0.5, 'fb-p3-q2', 'nc-p3-q2')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p3-q2" onclick="demanderIndice('p3-q2')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p3-q2','fb-p3-q2','nc-p3-q2')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p3-q2"></div>
+        <div class="indice-panel" id="ip-p3-q2">
+<div class="indice-step indice-step-1" id="ip-p3-q2-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Le pourcentage massique w représente la masse de soluté (HCl) pour 100 g de solution. Il est fourni par le fabricant sous forme de données tabulées selon les degrés Baumé.
+</div>
+<div class="indice-step indice-step-2" id="ip-p3-q2-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Pour HCl à 38°Baumé, relevez dans les données de l'énoncé la valeur de w. Quelle grandeur est indiquée en % pour cette concentration ?
+</div>
+<div class="indice-step indice-step-3" id="ip-p3-q2-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+Valeur tabulée constructeur : <strong>w = 36,0 %</strong> pour HCl à 38°Baumé.<br>
+Cela signifie : 36,0 g de HCl pour 100 g de solution.
+</div>
+</div>
+<div class="correction-inline" id="nc-p3-q2">
+          <div class="calc-step">w = 38 × 0,54 + 12 = 20,52 + 12 = <strong>32,5 %</strong></div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q3 — En déduire la concentration molaire C₀(HCl) de l'acide commercial (en mol·L⁻¹). <br><em>Rappel : C₀ = (d × w × ρ_eau) / M avec ρ_eau = 1000 g·L⁻¹</em></div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">C₀(HCl) ≈</label>
+          <input type="number" step="0.1" class="num-input" id="p3-q3" placeholder="…">
+          <span class="num-unit">mol·L⁻¹</span>
+          <button class="btn-verif" onclick="verifNum('p3-q3', 11.7, 0.4, 'fb-p3-q3', 'nc-p3-q3')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p3-q3" onclick="demanderIndice('p3-q3')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p3-q3','fb-p3-q3','nc-p3-q3')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p3-q3"></div>
+        <div class="indice-panel" id="ip-p3-q3">
+<div class="indice-step indice-step-1" id="ip-p3-q3-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Formule de la concentration molaire : C₀ = (d × w × ρ_eau) / M avec ρ_eau = 1000 g·L⁻¹
+</div>
+<div class="indice-step indice-step-2" id="ip-p3-q3-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+C₀ = (1,19 × 0,360 × 1000) / M(HCl). M(HCl) = 36,5 g·mol⁻¹. Calculez le numérateur.
+</div>
+<div class="indice-step indice-step-3" id="ip-p3-q3-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+C₀ = (1,19 × 0,360 × 1000) / 36,5 = 428,4 / 36,5 ≈ <strong>11,7 mol·L⁻¹</strong>.
+</div>
+</div>
+<div class="correction-inline" id="nc-p3-q3">
+          <div class="calc-step">C₀ = (d × w × ρ) / M = (1,19 × 0,36 × 1000) / 36,5 = 428,4 / 36,5 ≈ <strong>11,7 mol·L⁻¹</strong></div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q4 — Dilution : vous voulez préparer 500 mL de solution HCl à C_f = 0,100 mol·L⁻¹. Calculez V_i à prélever (en mL).</div>
+        <div class="formule-box" style="font-size:0.9rem;text-align:left;padding:10px 16px;">
+          <strong>Relation de dilution :</strong> C_i × V_i = C_f × V_f<br>
+          V_i = (C_f × V_f) / C_i
+        </div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">V_i ≈</label>
+          <input type="number" step="0.1" class="num-input" id="p3-q4" placeholder="…">
+          <span class="num-unit">mL</span>
+          <button class="btn-verif" onclick="verifNum('p3-q4', 4.3, 0.3, 'fb-p3-q4', 'nc-p3-q4')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p3-q4" onclick="demanderIndice('p3-q4')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p3-q4','fb-p3-q4','nc-p3-q4')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p3-q4"></div>
+        <div class="indice-panel" id="ip-p3-q4">
+<div class="indice-step indice-step-1" id="ip-p3-q4-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Relation de dilution : C_i × V_i = C_f × V_f → V_i = (C_f × V_f) / C_i
+</div>
+<div class="indice-step indice-step-2" id="ip-p3-q4-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+C_i = 11,7 mol·L⁻¹, C_f = 0,100 mol·L⁻¹, V_f = 500 mL. Isolez V_i.
+</div>
+<div class="indice-step indice-step-3" id="ip-p3-q4-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+V_i = (0,100 × 500) / 11,7 = 50 / 11,7 ≈ <strong>4,3 mL</strong>.
+</div>
+</div>
+<div class="correction-inline" id="nc-p3-q4">
+          <div class="calc-step">V_i = (0,100 × 500) / 11,7 = 50 / 11,7 ≈ <strong>4,3 mL</strong></div>
+          <div class="calc-step">Protocole : verser 4,7 mL d'acide commercial dans une fiole jaugée de 500 mL contenant déjà environ 300 mL d'eau distillée, puis compléter à 500 mL.</div>
+        </div>
+      </div>
+
+      <!-- === PARTIE B : Eau de Javel dissolution === -->
+      <div class="section-titre">🟡 Partie B — Eau de Javel à 48°Chlorométrique</div>
+
+      <div class="info-box">
+        <strong>°Chlorométrique → titre actif :</strong><br>
+        1°Cl = 3,17 g de Cl₂ actif par litre de solution<br>
+        Espèce active désinfectante : ion hypochlorite ClO⁻ (ou HClO selon le pH)<br>
+        M(Cl₂) = 71 g·mol⁻¹ · M(NaClO) = 74,5 g·mol⁻¹
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q5 — Calculez la masse de Cl₂ actif par litre dans l'eau de Javel à 48°Cl (en g·L⁻¹).</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">m(Cl₂) =</label>
+          <input type="number" step="0.1" class="num-input" id="p3-q5" placeholder="…">
+          <span class="num-unit">g·L⁻¹</span>
+          <button class="btn-verif" onclick="verifNum('p3-q5', 152.2, 1.0, 'fb-p3-q5', 'nc-p3-q5')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p3-q5" onclick="demanderIndice('p3-q5')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p3-q5','fb-p3-q5','nc-p3-q5')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p3-q5"></div>
+        <div class="indice-panel" id="ip-p3-q5">
+<div class="indice-step indice-step-1" id="ip-p3-q5-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+1°Chlorométrique correspond à 3,17 g de Cl₂ actif par litre de solution.
+</div>
+<div class="indice-step indice-step-2" id="ip-p3-q5-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Multipliez le nombre de degrés chlorométriques par 3,17 g·L⁻¹.
+</div>
+<div class="indice-step indice-step-3" id="ip-p3-q5-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+m(Cl₂) = 48 × 3,17 = <strong>152,2 g·L⁻¹</strong>.
+</div>
+</div>
+<div class="correction-inline" id="nc-p3-q5">
+          <div class="calc-step">m(Cl₂) = 48 × 3,17 = <strong>152,2 g·L⁻¹</strong></div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q6 — En déduire la concentration molaire en NaClO de l'eau de Javel commerciale (en mol·L⁻¹).<br><em>Rappel : 1 mol Cl₂ ≡ 2 mol NaClO</em></div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">C(NaClO) ≈</label>
+          <input type="number" step="0.1" class="num-input" id="p3-q6" placeholder="…">
+          <span class="num-unit">mol·L⁻¹</span>
+          <button class="btn-verif" onclick="verifNum('p3-q6', 4.29, 0.15, 'fb-p3-q6', 'nc-p3-q6')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p3-q6" onclick="demanderIndice('p3-q6')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p3-q6','fb-p3-q6','nc-p3-q6')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p3-q6"></div>
+        <div class="indice-panel" id="ip-p3-q6">
+<div class="indice-step indice-step-1" id="ip-p3-q6-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+1 mol de Cl₂ produit 2 mol de NaClO (par la réaction Cl₂ + 2 NaOH → NaClO + NaCl + H₂O).
+</div>
+<div class="indice-step indice-step-2" id="ip-p3-q6-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Calculez n(Cl₂) = m/M = 152,2/71, puis C(NaClO) = 2 × n(Cl₂).
+</div>
+<div class="indice-step indice-step-3" id="ip-p3-q6-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+n(Cl₂) = 2,144 mol·L⁻¹ → C(NaClO) = 2 × 2,144 = <strong>4,29 mol·L⁻¹</strong>.
+</div>
+</div>
+<div class="correction-inline" id="nc-p3-q6">
+          <div class="calc-step">n(Cl₂) = 152,2 / 71 = 2,144 mol·L⁻¹</div>
+          <div class="calc-step">C(NaClO) = 2 × 2,144 = <strong>4,29 mol·L⁻¹</strong></div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q7 — Dilution : préparer 1,00 L d'eau de Javel à 0,10 mol·L⁻¹ pour traiter le bassin. Calculez V_i (en mL).</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">V_i ≈</label>
+          <input type="number" step="0.1" class="num-input" id="p3-q7" placeholder="…">
+          <span class="num-unit">mL</span>
+          <button class="btn-verif" onclick="verifNum('p3-q7', 23.3, 1.0, 'fb-p3-q7', 'nc-p3-q7')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p3-q7" onclick="demanderIndice('p3-q7')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p3-q7','fb-p3-q7','nc-p3-q7')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p3-q7"></div>
+        <div class="indice-panel" id="ip-p3-q7">
+<div class="indice-step indice-step-1" id="ip-p3-q7-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Même relation de dilution : V_i = (C_f × V_f) / C_i avec V_f = 1,00 L = 1000 mL.
+</div>
+<div class="indice-step indice-step-2" id="ip-p3-q7-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+V_i = (0,10 × 1000) / 4,29. Calculez la division.
+</div>
+<div class="indice-step indice-step-3" id="ip-p3-q7-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+V_i = 100 / 4,29 ≈ <strong>23,3 mL</strong>.
+</div>
+</div>
+<div class="correction-inline" id="nc-p3-q7">
+          <div class="calc-step">V_i = (C_f × V_f) / C_i = (0,10 × 1000) / 4,29 ≈ <strong>23,3 mL</strong></div>
+          Le code est la somme arrondie des deux volumes prélevés : 4 + 23 = <strong>27</strong>
+        </div>
+      </div>
+
+      <div class="code-serrure">
+        <h4>🔐 Code d'accès au local de traitement</h4>
+        <p style="font-size:0.82rem;opacity:0.7;margin-bottom:14px;">Somme arrondie des deux volumes prélevés V_i(HCl) + V_i(Javel) en mL (entiers arrondis)</p>
+        <div class="code-input-wrap">
+          <input class="code-input" type="text" id="code-p3" placeholder="_ _" maxlength="2">
+          <button class="btn-code" onclick="validerCode('p3','27','succes-p3',3)">Déverrouiller</button>
+        </div>
+        <div class="code-feedback" id="fb-code-p3"></div>
+      </div>
+
+      <div class="succes-banner" id="succes-p3">
+        <h3>🎉 Solutions préparées !</h3>
+        <p>Les deux solutions sont prêtes. Direction la salle de contrôle pour analyser les paramètres du bassin.</p>
+        <button class="btn-success" style="margin-top:14px;" onclick="retourAccueil()">← Retour à la carte</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PIÈCE 4 — Salle de contrôle
+     Ka, pKa, τ, diagramme prédominance, solution tampon
+══════════════════════════════════════ -->
+<div class="screen" id="screen-p4">
+  <div class="piece-screen">
+    <div class="piece-header">
+      <button class="back-btn" onclick="retourAccueil()">← Carte</button>
+      <div>
+        <div class="piece-header-title">📊 Pièce 4 — La salle de contrôle</div>
+        <div class="piece-header-sub">Analyser les équilibres chimiques et les paramètres du bassin</div>
+      </div>
+    </div>
+    <div class="piece-content">
+
+      <div class="enigme-box">
+        <h3>🔍 Situation</h3>
+        <p>Les ordinateurs de contrôle sont verrouillés. Le code est le <strong>pKa du couple HClO/ClO⁻ arrondi à l'entier</strong> (pKa = 7,5). Mais d'abord, validez votre maîtrise des équilibres acide-base.</p>
+      </div>
+
+      <div class="section-titre">⚖️ Acides et bases forts / faibles</div>
+
+      <div class="question-block">
+        <div class="question-label">Q1 — L'acide chlorhydrique HCl est un acide fort. Quelle est la valeur du taux d'avancement τ de sa réaction avec l'eau ?</div>
+        <div class="dq-row">
+          <select class="dq-select" id="p4-q1">
+            <option value="">— choisir —</option>
+            <option value="a">τ = 1 (réaction totale)</option>
+            <option value="b">τ &lt; 1 (réaction limitée)</option>
+            <option value="c">τ = 0 (pas de réaction)</option>
+            <option value="d">τ dépend de la concentration</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('p4-q1','a','fb-p4-q1','nc-p4-q1')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p4-q1" onclick="demanderIndice('p4-q1')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('p4-q1','fb-p4-q1','nc-p4-q1')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-p4-q1"></div>
+        <div class="indice-panel" id="ip-p4-q1">
+<div class="indice-step indice-step-1" id="ip-p4-q1-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Un acide fort réagit quasi-totalement avec l'eau : la réaction est considérée comme totale.
+</div>
+<div class="indice-step indice-step-2" id="ip-p4-q1-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Réaction totale → l'avancement final x_f = x_max. Quelle est la valeur de τ = x_f/x_max ?
+</div>
+<div class="indice-step indice-step-3" id="ip-p4-q1-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+τ = x_f/x_max = 1 → <strong>τ = 1</strong>. Flèche simple → dans l'équation.
+</div>
+</div>
+<div class="correction-inline" id="nc-p4-q1">
+          <div class="calc-step">Acide fort → réaction quasi-totale avec l'eau → τ = 1</div>
+          HCl + H₂O → H₃O⁺ + Cl⁻ (flèche simple → , pas ⇌)
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q2 — HClO (acide hypochloreux) est un acide faible. Que peut-on dire de son taux d'avancement τ avec l'eau ?</div>
+        <div class="dq-row">
+          <select class="dq-select" id="p4-q2">
+            <option value="">— choisir —</option>
+            <option value="a">τ = 1</option>
+            <option value="b">0 &lt; τ &lt; 1 (équilibre)</option>
+            <option value="c">τ = 0</option>
+            <option value="d">τ &gt; 1</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('p4-q2','b','fb-p4-q2','nc-p4-q2')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p4-q2" onclick="demanderIndice('p4-q2')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('p4-q2','fb-p4-q2','nc-p4-q2')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-p4-q2"></div>
+        <div class="indice-panel" id="ip-p4-q2">
+<div class="indice-step indice-step-1" id="ip-p4-q2-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Un acide faible ne réagit pas totalement avec l'eau : il y a un équilibre chimique.
+</div>
+<div class="indice-step indice-step-2" id="ip-p4-q2-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Équilibre → x_f < x_max → τ = x_f/x_max est strictement inférieur à…
+</div>
+<div class="indice-step indice-step-3" id="ip-p4-q2-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+<strong>0 < τ < 1</strong>. La réaction est limitée, écriture avec ⇌.
+</div>
+</div>
+<div class="correction-inline" id="nc-p4-q2">
+          <div class="calc-step">Acide faible → réaction limitée → τ &lt; 1, équilibre ⇌</div>
+          HClO + H₂O ⇌ H₃O⁺ + ClO⁻ (double flèche)
+        </div>
+      </div>
+
+      <div class="section-titre">🔢 Constante d'acidité Ka et pKa</div>
+
+      <div class="question-block">
+        <div class="question-label">Q3 — Le Ka du couple HClO/ClO⁻ est 3,2 × 10⁻⁸. Calculez le pKa.</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">pKa =</label>
+          <input type="number" step="0.01" class="num-input" id="p4-q3" placeholder="…">
+          <button class="btn-verif" onclick="verifNum('p4-q3', 7.50, 0.05, 'fb-p4-q3', 'nc-p4-q3')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p4-q3" onclick="demanderIndice('p4-q3')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p4-q3','fb-p4-q3','nc-p4-q3')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p4-q3"></div>
+        <div class="indice-panel" id="ip-p4-q3">
+<div class="indice-step indice-step-1" id="ip-p4-q3-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+pKa = –log(Ka). C'est analogue à pH = –log([H₃O⁺]).
+</div>
+<div class="indice-step indice-step-2" id="ip-p4-q3-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+pKa = –log(3,2 × 10⁻⁸) = –(log 3,2 + log 10⁻⁸) = –(0,50 – 8).
+</div>
+<div class="indice-step indice-step-3" id="ip-p4-q3-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+pKa = –0,50 + 8 = <strong>7,50</strong>. Arrondi à l'entier : 8.
+</div>
+</div>
+<div class="correction-inline" id="nc-p4-q3">
+          <div class="calc-step">pKa = –log(Ka) = –log(3,2 × 10⁻⁸) = 8 – log(3,2) = 8 – 0,50 = <strong>7,50</strong></div>
+          Code arrondi : <strong>8</strong> (mais le vrai code est 8, cf. ci-dessous)
+        </div>
+      </div>
+
+      <div class="section-titre">📐 Diagramme de prédominance</div>
+
+      <div class="question-block">
+        <div class="question-label">Q4 — Pour le couple HClO/ClO⁻ (pKa = 7,5), quelle espèce prédomine dans l'eau du bassin à pH = 7,2 ?</div>
+        <div class="info-box" style="font-size:0.84rem;">
+          Règle : si pH &lt; pKa → l'acide (HClO) prédomine &nbsp;|&nbsp; si pH &gt; pKa → la base (ClO⁻) prédomine
+        </div>
+        <div class="dq-row">
+          <select class="dq-select" id="p4-q4">
+            <option value="">— choisir —</option>
+            <option value="a">HClO (forme acide)</option>
+            <option value="b">ClO⁻ (forme basique)</option>
+            <option value="c">Autant de l'un que de l'autre</option>
+            <option value="d">Ni l'un ni l'autre</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('p4-q4','a','fb-p4-q4','nc-p4-q4')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p4-q4" onclick="demanderIndice('p4-q4')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('p4-q4','fb-p4-q4','nc-p4-q4')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-p4-q4"></div>
+        <div class="indice-panel" id="ip-p4-q4">
+<div class="indice-step indice-step-1" id="ip-p4-q4-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Règle du diagramme de prédominance : pH < pKa → acide prédomine ; pH > pKa → base prédomine.
+</div>
+<div class="indice-step indice-step-2" id="ip-p4-q4-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Comparez pH = 7,2 et pKa = 7,5. Lequel est le plus grand ?
+</div>
+<div class="indice-step indice-step-3" id="ip-p4-q4-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+pH (7,2) < pKa (7,5) → <strong>HClO (forme acide) prédomine</strong> dans le bassin.
+</div>
+</div>
+<div class="correction-inline" id="nc-p4-q4">
+          <div class="calc-step">pH = 7,2 &lt; pKa = 7,5 → <strong>HClO prédomine</strong></div>
+          C'est bien HClO (forme acide) qui est l'espèce désinfectante la plus active — bon signe pour la piscine !
+        </div>
+      </div>
+
+      <div class="section-titre">🧴 Solution tampon</div>
+
+      <div class="question-block">
+        <div class="question-label">Q5 — On ajoute de l'acide dans le bassin. Quelle propriété d'une solution tampon permet de stabiliser le pH ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p4-q5')">Elle neutralise totalement tout acide ajouté</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-p4-q5')">Elle résiste aux variations de pH lors d'ajout modéré d'acide ou de base</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p4-q5')">Son pH est toujours égal à 7</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p4-q5')">Elle empêche toute dissolution de gaz dans l'eau</button>
+        </div>
+        <div class="qcm-feedback" id="fb-p4-q5"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q6 — Quelle paire de réactifs peut constituer une solution tampon pour le bassin ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p4-q6')">HCl + NaCl (acide fort + son sel)</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-p4-q6')">HClO + NaClO (acide faible + sa base conjuguée)</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p4-q6')">NaOH + NaCl (base forte + sel)</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p4-q6')">H₂O + NaCl (eau + sel)</button>
+        </div>
+        <div class="qcm-feedback" id="fb-p4-q6"></div>
+      </div>
+
+      <div class="code-serrure">
+        <h4>🔐 Code des ordinateurs de contrôle</h4>
+        <p style="font-size:0.82rem;opacity:0.7;margin-bottom:14px;">pKa du couple HClO/ClO⁻ arrondi à l'entier le plus proche</p>
+        <div class="code-input-wrap">
+          <input class="code-input" type="text" id="code-p4" placeholder="_" maxlength="1">
+          <button class="btn-code" onclick="validerCode('p4','8','succes-p4',4)">Déverrouiller</button>
+        </div>
+        <div class="code-feedback" id="fb-code-p4"></div>
+      </div>
+
+      <div class="succes-banner" id="succes-p4">
+        <h3>🎉 Systèmes en ligne !</h3>
+        <p>Les paramètres sont maîtrisés. Dernière étape : direction le bassin pour la validation finale !</p>
+        <button class="btn-success" style="margin-top:14px;" onclick="retourAccueil()">← Retour à la carte</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PIÈCE 5 — Bassin / Sauvetage Final
+     pH acide faible (2nd degré), indicateur coloré
+══════════════════════════════════════ -->
+<div class="screen" id="screen-p5">
+  <div class="piece-screen">
+    <div class="piece-header">
+      <button class="back-btn" onclick="retourAccueil()">← Carte</button>
+      <div>
+        <div class="piece-header-title">🏆 Pièce 5 — Le bassin — Sauvetage final</div>
+        <div class="piece-header-sub">Calculez le pH final et choisissez le bon indicateur</div>
+      </div>
+    </div>
+    <div class="piece-content">
+
+      <div class="enigme-box">
+        <h3>🔍 Situation finale</h3>
+        <p>Vous avez versé le désinfectant dans le bassin. La solution finale contient de l'acide hypochloreux HClO à <strong>C = 1,0 × 10⁻² mol·L⁻¹</strong>. Le Ka(HClO/ClO⁻) = 3,2 × 10⁻⁸. Calculez le pH de cette solution pour valider que le bassin est de nouveau sûr (pH cible : 7,0 à 7,6).</p>
+      </div>
+
+      <div class="section-titre">🔢 Calcul du pH d'un acide faible</div>
+
+      <div class="info-box">
+        <strong>Méthode :</strong> HClO + H₂O ⇌ H₃O⁺ + ClO⁻<br>
+        Tableau d'avancement : à l'équilibre, [H₃O⁺] = x<br>
+        Ka = x² / (C – x) → équation du 2nd degré si l'approximation x &lt;&lt; C n'est pas valide
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q1 — Écrivez l'équation du 2nd degré en x = [H₃O⁺]. Quelle forme est correcte ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p5-q1')">x² = Ka × C</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-p5-q1')">x² + Ka·x – Ka·C = 0</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p5-q1')">x = Ka / C</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p5-q1')">x² – Ka·x + Ka·C = 0</button>
+        </div>
+        <div class="qcm-feedback" id="fb-p5-q1"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q2 — Vérifiez si l'approximation x &lt;&lt; C est valide (condition : x/C &lt; 5 %). Utilisez d'abord x ≈ √(Ka × C).</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">x ≈ √(Ka·C) =</label>
+          <input type="number" step="0.00001" class="num-input" id="p5-q2" placeholder="…" style="width:160px;">
+          <span class="num-unit">mol·L⁻¹</span>
+          <button class="btn-verif" onclick="verifNum('p5-q2', 0.0000566, 0.000005, 'fb-p5-q2', 'nc-p5-q2')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p5-q2" onclick="demanderIndice('p5-q2')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p5-q2','fb-p5-q2','nc-p5-q2')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p5-q2"></div>
+        <div class="indice-panel" id="ip-p5-q2">
+<div class="indice-step indice-step-1" id="ip-p5-q2-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Approximation acide faible : si x << C, alors Ka ≈ x²/C, donc x ≈ √(Ka × C).
+</div>
+<div class="indice-step indice-step-2" id="ip-p5-q2-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+x ≈ √(Ka × C) = √(3,2 × 10⁻⁸ × 0,01) = √(3,2 × 10⁻¹⁰). Calculez la racine carrée.
+</div>
+<div class="indice-step indice-step-3" id="ip-p5-q2-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+x ≈ √(3,2 × 10⁻¹⁰) ≈ <strong>1,79 × 10⁻⁵ mol·L⁻¹</strong>. x/C = 0,18 % << 5 % : valide !
+</div>
+</div>
+<div class="correction-inline" id="nc-p5-q2">
+          <div class="calc-step">x ≈ √(3,2 × 10⁻⁸ × 0,01) = √(3,2 × 10⁻¹⁰) ≈ <strong>1,79 × 10⁻⁵ mol·L⁻¹</strong></div>
+          <div class="calc-step">x/C = 1,79 × 10⁻⁵ / 0,01 = 0,18 % &lt;&lt; 5 % → <strong>approximation valide !</strong></div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q3 — Calculez le pH de la solution HClO à C = 0,010 mol·L⁻¹ avec l'approximation.</div>
+        <div class="dq-row">
+          <label style="font-size:0.88rem;font-weight:600;">pH ≈</label>
+          <input type="number" step="0.01" class="num-input" id="p5-q3" placeholder="…">
+          <button class="btn-verif" onclick="verifNum('p5-q3', 4.75, 0.05, 'fb-p5-q3', 'nc-p5-q3')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p5-q3" onclick="demanderIndice('p5-q3')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetNum('p5-q3','fb-p5-q3','nc-p5-q3')">Recommencer</button>
+        </div>
+        <div class="num-feedback" id="fb-p5-q3"></div>
+        <div class="indice-panel" id="ip-p5-q3">
+<div class="indice-step indice-step-1" id="ip-p5-q3-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+pH = –log([H₃O⁺]) = –log(x). Utilisez la valeur de x trouvée à la Q2.
+</div>
+<div class="indice-step indice-step-2" id="ip-p5-q3-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+pH = –log(1,79 × 10⁻⁵) = –(log 1,79 + log 10⁻⁵) = –(0,25 – 5).
+</div>
+<div class="indice-step indice-step-3" id="ip-p5-q3-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+pH = 5 – 0,25 = <strong>4,75</strong>. Le bassin est trop acide à cette concentration !
+</div>
+</div>
+<div class="correction-inline" id="nc-p5-q3">
+          <div class="calc-step">x = √(Ka·C) = √(3,2 × 10⁻⁸ × 10⁻²) = √(3,2 × 10⁻¹⁰) = 1,79 × 10⁻⁵ mol·L⁻¹</div>
+          <div class="calc-step">pH = –log(1,79 × 10⁻⁵) = 5 – log(1,79) = 5 – 0,25 = <strong>4,75</strong></div>
+          ⚠️ pH = 4,75 : trop acide pour le bassin ! Il faut ajuster.
+        </div>
+      </div>
+
+      <div class="section-titre">🎨 Choix de l'indicateur coloré</div>
+
+      <div class="question-block">
+        <div class="question-label">Q4 — Pour vérifier visuellement que le pH du bassin est entre 7,0 et 7,6, quel indicateur coloré choisir ?</div>
+        <div class="info-box" style="font-size:0.84rem;">
+          <table class="tableau">
+            <tr><th>Indicateur</th><th>Zone de virage</th><th>Couleur acide</th><th>Couleur basique</th></tr>
+            <tr><td>Hélianthine</td><td>3,1 – 4,4</td><td>Rouge</td><td>Jaune</td></tr>
+            <tr><td>Rouge de méthyle</td><td>4,2 – 6,3</td><td>Rouge</td><td>Jaune</td></tr>
+            <tr><td>Bleu de bromothymol (BBT)</td><td>6,0 – 7,6</td><td>Jaune</td><td>Bleu</td></tr>
+            <tr><td>Phénolphtaléïne</td><td>8,2 – 10,0</td><td>Incolore</td><td>Rose</td></tr>
+          </table>
+        </div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p5-q4')">Hélianthine</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p5-q4')">Rouge de méthyle</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-p5-q4')">Bleu de bromothymol (BBT)</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-p5-q4')">Phénolphtaléïne</button>
+        </div>
+        <div class="qcm-feedback" id="fb-p5-q4"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q5 — Si le BBT vire au bleu dans le bassin, cela signifie que le pH est :</div>
+        <div class="dq-row">
+          <select class="dq-select" id="p5-q5">
+            <option value="">— choisir —</option>
+            <option value="a">pH &lt; 6,0 (trop acide)</option>
+            <option value="b">pH entre 6,0 et 7,6 (transition)</option>
+            <option value="c">pH &gt; 7,6 (trop basique)</option>
+            <option value="d">pH = 7,0 exactement</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('p5-q5','c','fb-p5-q5','nc-p5-q5')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-p5-q5" onclick="demanderIndice('p5-q5')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('p5-q5','fb-p5-q5','nc-p5-q5')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-p5-q5"></div>
+        <div class="indice-panel" id="ip-p5-q5">
+<div class="indice-step indice-step-1" id="ip-p5-q5-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Le BBT vire à la couleur basique (bleu) quand le pH dépasse la borne supérieure de sa zone de virage.
+</div>
+<div class="indice-step indice-step-2" id="ip-p5-q5-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Zone de virage du BBT : 6,0 – 7,6. Si la solution est bleue, pH est au-delà de quelle borne ?
+</div>
+<div class="indice-step indice-step-3" id="ip-p5-q5-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+Couleur bleue → pH > 7,6 → <strong>trop basique</strong>. Il faut ajouter un peu d'acide.
+</div>
+</div>
+<div class="correction-inline" id="nc-p5-q5">
+          <div class="calc-step">BBT bleu → pH &gt; 7,6 : le bassin est trop basique ! Il faut ajouter un peu d'acide.</div>
+        </div>
+      </div>
+
+      <div class="code-serrure" style="background:linear-gradient(135deg, #1a4a2e, #27AE60);">
+        <h4>🔐 CODE DE VALIDATION FINALE</h4>
+        <p style="font-size:0.82rem;opacity:0.7;margin-bottom:14px;">Les 4 premières lettres de l'indicateur coloré choisi + le chiffre des unités du pH calculé (ex: BLEU5)</p>
+        <div class="code-input-wrap">
+          <input class="code-input" type="text" id="code-p5" placeholder="_ _ _ _ _" maxlength="5" style="width:200px;">
+          <button class="btn-code" onclick="validerCode('p5','BLEU4','succes-p5',5)">Valider</button>
+        </div>
+        <div class="code-feedback" id="fb-code-p5"></div>
+      </div>
+
+      <div class="succes-banner" id="succes-p5">
+        <h3>🏆 PISCINE SAUVÉE ! Félicitations !</h3>
+        <p>Vous avez résolu toutes les énigmes chimiques ! L'eau du bassin est de nouveau saine et sécurisée.</p>
+        <button class="btn-primary" style="margin-top:14px;background:white;color:var(--vert);" onclick="terminerJeu()">📝 Voir mon classement</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PIÈCE SECRÈTE S1 — Montage à reflux
+     Synthèse/transformation chimique
+══════════════════════════════════════ -->
+<div class="screen" id="screen-s1">
+  <div class="piece-screen">
+    <div class="piece-header">
+      <button class="back-btn" onclick="retourAccueil()">← Carte</button>
+      <div>
+        <div class="piece-header-title">🔮 Pièce secrète — Le local de synthèse</div>
+        <div class="piece-header-sub">Vous avez trouvé une pièce cachée ! Maîtrisez le montage à reflux.</div>
+      </div>
+    </div>
+    <div class="piece-content">
+
+      <div class="enigme-box" style="border-color:var(--violet);background:linear-gradient(135deg,var(--violet-clair),#FAF5FF);">
+        <h3 style="color:var(--violet);">🔮 Pièce secrète découverte !</h3>
+        <p>Dans un recoin du local technique, vous trouvez un vieux montage démontélé. Pour synthétiser le produit désinfectant chloré à partir des précurseurs, il faut remonter le <strong>montage à reflux</strong>. Identifiez chaque composant et validez son rôle.</p>
+      </div>
+
+      <div class="section-titre">🎬 Visualiser le montage à reflux</div>
+
+      <div class="iframe-wrap">
+        <iframe src="https://view.genially.com/6a3ad812c96068868932692d"
+                title="Montage à reflux — Genially"
+                allowfullscreen
+                loading="lazy"
+                style="min-height:520px;">
+        </iframe>
+      </div>
+      <div style="font-size:0.80rem;color:var(--texte-leger);text-align:center;margin-bottom:16px;">
+        Si le contenu ne s'affiche pas, <a href="https://view.genially.com/6a3ad812c96068868932692d" target="_blank" rel="noopener" style="color:var(--violet);">ouvrez-le dans un nouvel onglet ↗</a>
+      </div>
+
+      <div class="section-titre">❓ Questions sur le montage à reflux</div>
+
+      <div class="question-block">
+        <div class="question-label">Q1 — Quel est le rôle principal du montage à reflux (par rapport à une simple ébullition) ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s1-q1')">Chauffer plus rapidement</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-s1-q1')">Permettre une réaction longue en évitant la perte des réactifs/produits volatils par condensation</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s1-q1')">Purifier le produit par distillation</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s1-q1')">Mesurer la température de la réaction</button>
+        </div>
+        <div class="qcm-feedback" id="fb-s1-q1"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q2 — Dans quel sens l'eau de refroidissement doit-elle circuler dans le réfrigérant à boules ?</div>
+        <div class="dq-row">
+          <select class="dq-select" id="s1-q2">
+            <option value="">— choisir —</option>
+            <option value="a">De bas en haut (à contre-courant des vapeurs)</option>
+            <option value="b">De haut en bas (dans le même sens que les vapeurs)</option>
+            <option value="c">Le sens n'a pas d'importance</option>
+            <option value="d">L'eau ne circule pas, elle est statique</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('s1-q2','a','fb-s1-q2','nc-s1-q2')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-s1-q2" onclick="demanderIndice('s1-q2')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('s1-q2','fb-s1-q2','nc-s1-q2')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-s1-q2"></div>
+        <div class="indice-panel" id="ip-s1-q2">
+<div class="indice-step indice-step-1" id="ip-s1-q2-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Le refroidissement est plus efficace quand les deux fluides circulent en sens opposé (contre-courant).
+</div>
+<div class="indice-step indice-step-2" id="ip-s1-q2-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Les vapeurs montent dans le réfrigérant. L'eau froide doit arriver du côté où les vapeurs arrivent.
+</div>
+<div class="indice-step indice-step-3" id="ip-s1-q2-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+L'eau circule <strong>de bas en haut</strong>, à contre-courant des vapeurs qui montent.
+</div>
+</div>
+<div class="correction-inline" id="nc-s1-q2">
+          <div class="calc-step">À contre-courant : l'eau froide arrive par le bas et sort chaude par le haut → échange thermique plus efficace avec les vapeurs qui montent.</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q3 — Pourquoi utilise-t-on des pierres poreuses (grains de régulation) dans le ballon ?</div>
+        <div class="dq-row">
+          <select class="dq-select" id="s1-q3">
+            <option value="">— choisir —</option>
+            <option value="a">Pour augmenter la surface de contact et régulariser l'ébullition (éviter les sauts d'ébullition)</option>
+            <option value="b">Pour filtrer les impuretés</option>
+            <option value="c">Pour accélérer la réaction chimique (effet catalyseur)</option>
+            <option value="d">Pour mesurer le volume de liquide</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('s1-q3','a','fb-s1-q3','nc-s1-q3')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-s1-q3" onclick="demanderIndice('s1-q3')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('s1-q3','fb-s1-q3','nc-s1-q3')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-s1-q3"></div>
+        <div class="indice-panel" id="ip-s1-q3">
+<div class="indice-step indice-step-1" id="ip-s1-q3-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+L'ébullition peut être irrégulière (sauts d'ébullition) sans nucléation contrôlée.
+</div>
+<div class="indice-step indice-step-2" id="ip-s1-q3-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+Les pierres poreuses créent des sites où des bulles peuvent se former régulièrement.
+</div>
+<div class="indice-step indice-step-3" id="ip-s1-q3-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+Elles <strong>régularisent l'ébullition</strong> (nucléation) pour éviter les projections brutales et dangereuses.
+</div>
+</div>
+<div class="correction-inline" id="nc-s1-q3">
+          <div class="calc-step">Les pierres poreuses créent des sites de nucléation qui homogénéisent l'ébullition → pas de projections brutales dangereuses.</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q4 — En montage à reflux pour synthèse, le produit final reste dans le ballon. Comment le récupérer ensuite ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s1-q4')">En le laissant refroidir dans le ballon et en le bouchant</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-s1-q4')">Par une étape de séparation/purification (décantation, distillation, filtration selon le cas)</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s1-q4')">On vide directement le ballon dans le produit final</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s1-q4')">Le montage à reflux fait la purification automatiquement</button>
+        </div>
+        <div class="qcm-feedback" id="fb-s1-q4"></div>
+      </div>
+
+      <div class="code-serrure" style="background:linear-gradient(135deg, #4A2560, #7B4FA6);">
+        <h4>🔮 Validation pièce secrète — Montage à reflux</h4>
+        <p style="font-size:0.9rem;margin-bottom:16px;line-height:1.6;">
+  🧩 <strong>Énigme :</strong><br>
+  <em>« Je suis un montage qui fait bouillir sans perdre,<br>
+  je condense les vapeurs pour les faire redescendre.<br>
+  Mon nom évoque un flux qui revient sur ses pas. »</em>
+</p>
+<p style="font-size:0.78rem;opacity:0.6;margin-bottom:14px;">Entrez le nom de ce montage (en majuscules)</p>
+        <div class="code-input-wrap">
+          <input class="code-input" type="text" id="code-s1" placeholder="______" maxlength="6">
+          <button class="btn-code" onclick="validerCodeSecret('s1','REFLUX','succes-s1','s1')">Valider</button>
+        </div>
+        <div class="code-feedback" id="fb-code-s1"></div>
+      </div>
+
+      <div class="succes-banner" id="succes-s1" style="background:linear-gradient(135deg, #7B4FA6, #9B59B6);">
+        <h3>🔮 Pièce secrète validée !</h3>
+        <p>Vous maîtrisez le montage à reflux ! Le produit désinfectant est maintenant synthétisé.</p>
+        <button class="btn-success" style="margin-top:14px;background:rgba(255,255,255,0.2);border:2px solid white;" onclick="retourAccueil()">← Retour à la carte</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PIÈCE SECRÈTE S2 — Électrolyseur
+     Piscine au sel, oxydoréduction, schéma annoté
+══════════════════════════════════════ -->
+<div class="screen" id="screen-s2">
+  <div class="piece-screen">
+    <div class="piece-header">
+      <button class="back-btn" onclick="retourAccueil()">← Carte</button>
+      <div>
+        <div class="piece-header-title">⚡ Pièce secrète — L'électrolyseur</div>
+        <div class="piece-header-sub">Vous avez découvert la salle des machines ! Piscine au sel.</div>
+      </div>
+    </div>
+    <div class="piece-content">
+
+      <div class="enigme-box" style="border-color:var(--orange);background:linear-gradient(135deg,#FEF3E2,#FFFAF5);">
+        <h3 style="color:var(--orange);">⚡ Pièce secrète découverte !</h3>
+        <p>La piscine fonctionne au sel (NaCl dissous). Un électrolyseur produit le désinfectant <em>in situ</em>. Mais l'électrolyseur est en panne — pour le redémarrer, vous devez annoter correctement son schéma et retrouver les demi-équations aux électrodes.</p>
+      </div>
+
+      <div class="section-titre">⚙️ Principe de l'électrolyse du sel</div>
+
+      <div class="info-box">
+        <strong>Dans une piscine au sel :</strong> NaCl est dissous dans l'eau → Na⁺ + Cl⁻<br>
+        L'électrolyseur fait passer un courant continu → <strong>oxydation</strong> des Cl⁻ à l'anode, <strong>réduction</strong> de l'eau à la cathode.<br>
+        Le Cl₂ produit réagit avec l'eau : Cl₂ + H₂O ⇌ HClO + H⁺ + Cl⁻ → HClO est le désinfectant !
+      </div>
+
+      <!-- SCHÉMA SVG ÉLECTROLYSEUR ANNOTÉ -->
+      <div class="schema-container">
+        <div style="font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:700;color:var(--bleu);margin-bottom:12px;text-align:center;">🔬 Schéma de l'électrolyseur — Annotez les zones manquantes</div>
+
+        <div style="position:relative;overflow:auto;">
+          <svg viewBox="0 0 580 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px;display:block;margin:0 auto;">
+            <!-- Générateur -->
+            <rect x="230" y="10" width="120" height="50" rx="8" fill="#F0F4FF" stroke="#2D5F8A" stroke-width="2"/>
+            <text x="290" y="32" text-anchor="middle" font-family="Outfit" font-size="11" font-weight="700" fill="#2D5F8A">Générateur</text>
+            <text x="290" y="48" text-anchor="middle" font-family="Outfit" font-size="10" fill="#5A6B7A">courant continu</text>
+            <!-- Bornes -->
+            <circle cx="250" cy="60" r="6" fill="#E74C3C"/>
+            <text x="250" y="78" text-anchor="middle" font-family="Outfit" font-size="11" font-weight="800" fill="#E74C3C">–</text>
+            <circle cx="330" cy="60" r="6" fill="#2ECC71"/>
+            <text x="330" y="78" text-anchor="middle" font-family="Outfit" font-size="11" font-weight="800" fill="#2ECC71">+</text>
+            <!-- Fils -->
+            <line x1="250" y1="66" x2="150" y2="100" stroke="#E74C3C" stroke-width="2.5"/>
+            <line x1="330" y1="66" x2="430" y2="100" stroke="#2ECC71" stroke-width="2.5"/>
+            <!-- Cuve -->
+            <rect x="80" y="100" width="420" height="200" rx="10" fill="#EAF4FB" stroke="#4BA3C3" stroke-width="2.5"/>
+            <!-- Eau de sel -->
+            <rect x="82" y="200" width="416" height="98" rx="0 0 8 8" fill="#C8E8F5" opacity="0.6"/>
+            <text x="290" y="270" text-anchor="middle" font-family="Outfit" font-size="12" font-weight="600" fill="#2D5F8A">Solution NaCl (Na⁺ + Cl⁻)</text>
+            <!-- Cathode (gauche, –) -->
+            <rect x="130" y="110" width="20" height="180" rx="4" fill="#BDC3C7" stroke="#7F8C8D" stroke-width="1.5"/>
+            <text x="140" y="306" text-anchor="middle" font-family="Outfit" font-size="10" fill="#7F8C8D">électrode</text>
+            <!-- Anode (droite, +) -->
+            <rect x="430" y="110" width="20" height="180" rx="4" fill="#F5CBA7" stroke="#E67E22" stroke-width="1.5"/>
+            <text x="440" y="306" text-anchor="middle" font-family="Outfit" font-size="10" fill="#E67E22">électrode</text>
+            <!-- Bulles cathode (H2) -->
+            <circle cx="125" cy="180" r="4" fill="none" stroke="#85C1E9" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="135" cy="155" r="3" fill="none" stroke="#85C1E9" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="120" cy="140" r="5" fill="none" stroke="#85C1E9" stroke-width="1.5" opacity="0.8"/>
+            <text x="96" y="135" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#2980B9">H₂ ↑</text>
+            <!-- Bulles anode (Cl2) -->
+            <circle cx="455" cy="175" r="4" fill="none" stroke="#F9E79F" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="448" cy="152" r="3" fill="none" stroke="#F9E79F" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="458" cy="140" r="5" fill="none" stroke="#F9E79F" stroke-width="1.5" opacity="0.8"/>
+            <text x="484" y="135" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#D4AC0D">Cl₂ ↑</text>
+            <!-- Flèches e- -->
+            <text x="192" y="95" text-anchor="middle" font-family="Outfit" font-size="10" fill="#E74C3C">e⁻ →</text>
+            <text x="388" y="95" text-anchor="middle" font-family="Outfit" font-size="10" fill="#2ECC71">→ e⁻</text>
+          </svg>
+        </div>
+
+        <div style="font-size:0.82rem;color:var(--texte-leger);text-align:center;margin-top:8px;">Schéma simplifié de l'électrolyseur de la piscine au sel</div>
+      </div>
+
+      <!-- Questions annotations -->
+      <div class="question-block">
+        <div class="question-label">Q1 — L'électrode de gauche (reliée au pôle –) est-elle l'anode ou la cathode ?</div>
+        <div class="dq-row">
+          <select class="dq-select" id="s2-q1">
+            <option value="">— choisir —</option>
+            <option value="a">Cathode (siège de la réduction)</option>
+            <option value="b">Anode (siège de l'oxydation)</option>
+            <option value="c">Électrode inerte</option>
+            <option value="d">Cela dépend de l'intensité du courant</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('s2-q1','a','fb-s2-q1','nc-s2-q1')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-s2-q1" onclick="demanderIndice('s2-q1')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('s2-q1','fb-s2-q1','nc-s2-q1')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-s2-q1"></div>
+        <div class="indice-panel" id="ip-s2-q1">
+<div class="indice-step indice-step-1" id="ip-s2-q1-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Convention : cathode = pôle – (les électrons arrivent et sont captés = réduction). Anode = pôle +.
+</div>
+<div class="indice-step indice-step-2" id="ip-s2-q1-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+L'électrode de gauche est reliée au pôle –. Les électrons arrivent → réaction de réduction.
+</div>
+<div class="indice-step indice-step-3" id="ip-s2-q1-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+Électrode gauche = <strong>cathode</strong> (siège de la réduction).
+</div>
+</div>
+<div class="correction-inline" id="nc-s2-q1">
+          <div class="calc-step">Pôle – → cathode → siège de la <strong>réduction</strong> (les e⁻ arrivent et sont captés)</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q2 — Écrivez la demi-équation à la cathode (réduction de l'eau). Quelle proposition est correcte ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-s2-q2')">2 H₂O + 2 e⁻ → H₂ + 2 HO⁻</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q2')">2 H₂O → H₂ + O₂ + 2 H⁺</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q2')">2 Cl⁻ → Cl₂ + 2 e⁻</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q2')">Na⁺ + e⁻ → Na</button>
+        </div>
+        <div class="qcm-feedback" id="fb-s2-q2"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q3 — Écrivez la demi-équation à l'anode (oxydation des ions chlorure). Quelle proposition est correcte ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q3')">2 H₂O → O₂ + 4 H⁺ + 4 e⁻</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-s2-q3')">2 Cl⁻ → Cl₂ + 2 e⁻</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q3')">Cl₂ + 2 e⁻ → 2 Cl⁻</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q3')">Na → Na⁺ + e⁻</button>
+        </div>
+        <div class="qcm-feedback" id="fb-s2-q3"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q4 — Le Cl₂ produit réagit avec l'eau pour former l'espèce désinfectante. Quelle est cette espèce active à pH ≈ 7 ?</div>
+        <div class="dq-row">
+          <select class="dq-select" id="s2-q4">
+            <option value="">— choisir —</option>
+            <option value="a">HClO (acide hypochloreux)</option>
+            <option value="b">ClO⁻ (ion hypochlorite)</option>
+            <option value="c">Cl₂ directement</option>
+            <option value="d">HCl (acide chlorhydrique)</option>
+          </select>
+          <button class="btn-verif" onclick="verifSelect('s2-q4','a','fb-s2-q4','nc-s2-q4')">Vérifier</button>
+          <button class="btn-indice" id="btn-indice-s2-q4" onclick="demanderIndice('s2-q4')" disabled>💡 Indice</button>
+          <button class="btn-reset" onclick="resetSelect('s2-q4','fb-s2-q4','nc-s2-q4')">Recommencer</button>
+        </div>
+        <div class="dq-feedback" id="fb-s2-q4"></div>
+        <div class="indice-panel" id="ip-s2-q4">
+<div class="indice-step indice-step-1" id="ip-s2-q4-1">
+<div class="indice-step-header">💡 Indice 1/3 — 🔑 Notion clé</div>
+Utilisez le diagramme de prédominance du couple HClO/ClO⁻ (pKa = 7,5) et comparez avec le pH.
+</div>
+<div class="indice-step indice-step-2" id="ip-s2-q4-2">
+<div class="indice-step-header">💡 Indice 2/3 — 📐 Première étape</div>
+pH ≈ 7 < pKa = 7,5 → quelle forme prédomine quand pH < pKa ?
+</div>
+<div class="indice-step indice-step-3" id="ip-s2-q4-3">
+<div class="indice-step-header">💡 Indice 3/3 — ✅ Solution complète</div>
+pH < pKa → <strong>HClO prédomine</strong>. C'est l'espèce acide, la plus active comme désinfectant.
+</div>
+</div>
+<div class="correction-inline" id="nc-s2-q4">
+          <div class="calc-step">pKa(HClO/ClO⁻) = 7,5 → à pH ≈ 7 &lt; pKa → <strong>HClO prédomine</strong> → c'est l'espèce désinfectante !</div>
+          Cl₂ + H₂O ⇌ HClO + H⁺ + Cl⁻ : HClO est l'espèce active en piscine à pH neutre.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">Q5 — Quelle est l'équation globale de l'électrolyse de la solution de NaCl (bilan cathode + anode) ?</div>
+        <div class="qcm-grid">
+          <button class="qcm-btn" onclick="repondreQCM(this,'oui','fb-s2-q5')">2 NaCl + 2 H₂O → Cl₂ + H₂ + 2 NaOH</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q5')">NaCl → Na + Cl</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q5')">2 H₂O → 2 H₂ + O₂</button>
+          <button class="qcm-btn" onclick="repondreQCM(this,'non','fb-s2-q5')">2 Cl⁻ + H₂O → Cl₂ + H₂</button>
+        </div>
+        <div class="qcm-feedback" id="fb-s2-q5"></div>
+      </div>
+
+      <div class="code-serrure" style="background:linear-gradient(135deg, #7D3C00, #E8783A);">
+        <h4>⚡ Validation — Électrolyseur</h4>
+        <p style="font-size:0.9rem;margin-bottom:16px;line-height:1.6;">
+  🧩 <strong>Énigme :</strong><br>
+  <em>« Je suis l'élément de numéro 17,<br>
+  halogène verdâtre à l'odeur piquante.<br>
+  Dissous dans l'eau de ta piscine, je désinfecte. »</em>
+</p>
+<p style="font-size:0.78rem;opacity:0.6;margin-bottom:14px;">Entrez le nom de cet élément (en majuscules)</p>
+        <div class="code-input-wrap">
+          <input class="code-input" type="text" id="code-s2" placeholder="______" maxlength="6">
+          <button class="btn-code" onclick="validerCodeSecret('s2','CHLORE','succes-s2','s2')">Démarrer</button>
+        </div>
+        <div class="code-feedback" id="fb-code-s2"></div>
+      </div>
+
+      <div class="succes-banner" id="succes-s2" style="background:linear-gradient(135deg, #D4700A, #E8783A);">
+        <h3>⚡ Électrolyseur redémarré !</h3>
+        <p>La production de HClO in situ est relancée. La piscine au sel est de nouveau opérationnelle !</p>
+        <button class="btn-success" style="margin-top:14px;background:rgba(255,255,255,0.2);border:2px solid white;" onclick="retourAccueil()">← Retour à la carte</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     ÉCRAN CLASSEMENT
+══════════════════════════════════════ -->
+<div class="screen" id="screen-classement">
+  <div style="max-width:700px;margin:0 auto;padding:80px 20px 40px;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-size:3rem;margin-bottom:8px;">🏆</div>
+      <div style="font-family:'Outfit',sans-serif;font-size:2rem;font-weight:900;color:var(--bleu);">Classement final</div>
+      <div style="font-size:0.9rem;color:var(--texte-leger);margin-top:4px;">Sauve l'eau de la piscine ! — Séquence 02</div>
+    </div>
+
+    <!-- Mon résultat -->
+    <div class="mon-score" id="monScore">
+      <div class="label">Joueur n°</div>
+      <div class="joueur-id" id="classJoueurId">—</div>
+      <div style="display:flex;gap:20px;justify-content:center;margin-top:12px;flex-wrap:wrap;">
+        <div>
+          <div class="label">Temps total</div>
+          <div class="value" id="classTemps">—</div>
+        </div>
+        <div>
+          <div class="label">Pièces complétées</div>
+          <div class="value" id="classPieces">— / 5</div>
+        </div>
+        <div>
+          <div class="label">Pièces secrètes</div>
+          <div class="value" id="classSecrets">— / 2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message si pièces secrètes manquantes -->
+    <div id="msgSecretManquant" style="display:none;background:var(--violet-clair);border:1.5px solid var(--violet);border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:0.88rem;color:var(--violet);">
+      🔮 <strong>Psssst…</strong> Il semblerait que certains recoins de la piscine n'aient pas encore été explorés. Des mystères vous attendent peut-être dans les environs…
+    </div>
+
+    <!-- Classement AVEC pièces secrètes -->
+    <div class="classement-section">
+      <h3>🥇 Classement — Techniciens experts (5 pièces + 2 secrètes)</h3>
+      <div id="classement-complet">
+        <div style="font-size:0.82rem;color:var(--texte-leger);text-align:center;padding:14px;">Chargement…</div>
+      </div>
+    </div>
+
+    <!-- Classement SANS pièces secrètes -->
+    <div class="classement-section">
+      <h3>🏅 Classement — Techniciens certifiés (5 pièces uniquement)</h3>
+      <div id="classement-partiel">
+        <div style="font-size:0.82rem;color:var(--texte-leger);text-align:center;padding:14px;">Chargement…</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <button class="btn-primary" onclick="retourAccueil()">← Retour à la carte</button>
+      <button class="btn-verif" style="margin-left:10px;" onclick="chargerClassements()">🔄 Actualiser</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     JAVASCRIPT PRINCIPAL
+══════════════════════════════════════ -->
+<script>
+// ══════════════════════════════════
+// CONFIGURATION JSONBin
+// ══════════════════════════════════
+const BIN_ID  = "6a415f85da38895dfe0c7761";
+const API_KEY = "$2a$10$AaSGhlfyq0HZmKIioTZIqODUqYPFuLEEgwq/AA4rRt3K964c2yn/C";
+const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+// ══════════════════════════════════
+// ÉTAT DU JEU
+// ══════════════════════════════════
+let joueurId   = null;
+let timerStart = null;
+let timerInterval = null;
+let timerPause = 0; // ms
+let donePieces  = new Set();  // 1-5
+let doneSecrets = new Set();  // s1, s2
+let finishedAt  = null;
+let jeuTermine  = false;
+
+// ══════════════════════════════════
+// ÉCRANS
+// ══════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  const el = document.getElementById(id);
+  el.style.display = '';
+  el.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════
+// CONNEXION & NUMÉRO JOUEUR
+// ══════════════════════════════════
+async function initConnexion() {
+  try {
+    // Lire bin
+    const res = await fetch(API_URL, {
+      headers: { 'X-Access-Key': API_KEY }
+    });
+    if (!res.ok) throw new Error('Lecture échouée');
+    const data = await res.json();
+    let record = data.record;
+    // Incrémenter compteur
+    record.compteur = (record.compteur || 0) + 1;
+    joueurId = record.compteur;
+    // Sauvegarder
+    await fetch(API_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Access-Key': API_KEY },
+      body: JSON.stringify(record)
+    });
+    // Afficher
+    document.getElementById('numJoueurDisplay').textContent = joueurId;
+    document.getElementById('btnDemarrer').style.display = 'inline-block';
+    document.getElementById('connexion-erreur').style.display = 'none';
+  } catch(e) {
+    // Si erreur réseau, assigner un ID local
+    joueurId = Math.floor(Math.random() * 900) + 100;
+    document.getElementById('numJoueurDisplay').textContent = joueurId + ' (local)';
+    document.getElementById('btnDemarrer').style.display = 'inline-block';
+    document.getElementById('connexion-erreur').style.display = 'none';
+  }
+}
+
+function demarrer() {
+  timerStart = Date.now();
+  timerInterval = setInterval(majTimer, 1000);
+  document.getElementById('timerBar').style.display = 'flex';
+  document.getElementById('timerJoueur').textContent = joueurId;
+  document.getElementById('progFloat').style.display = 'block';
+  majProgress();
+  // Masquer TOUS les écrans définitivement (y compris connexion)
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  // Afficher uniquement l'écran fond accueil
+  const accueil = document.getElementById('screen-accueil');
+  accueil.style.display = 'block';
+  accueil.classList.add('active');
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  // Ouvrir la modale carte
+  ouvrirModalCarte();
+}
+
+function ouvrirModalCarte() {
+  const modal = document.getElementById('modal-carte');
+  modal.classList.add('open');
+  modal.scrollTop = 0;
+  majProgress();
+}
+
+function fermerModalCarte() {
+  document.getElementById('modal-carte').classList.remove('open');
+}
+
+// ══════════════════════════════════
+// TIMER
+// ══════════════════════════════════
+function majTimer() {
+  if (!timerStart) return;
+  const elapsed = Math.floor((Date.now() - timerStart) / 1000);
+  const total = elapsed + penaliteTotal;
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  const timeStr = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  const penMin = Math.round(penaliteTotal / 60);
+  document.getElementById('timerDisplay').textContent = timeStr + (penMin > 0 ? ' (+' + penMin + 'min ind.)' : '');
+}
+
+function getTempsEcoule() {
+  if (!timerStart) return 0;
+  return Math.floor((Date.now() - timerStart) / 1000);
+}
+
+function formatTemps(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) return `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+  return `${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+}
+
+// ══════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════
+function ouvrirPiece(n) {
+  fermerModalCarte();
+  showScreen('screen-p' + n);
+}
+
+function retourAccueil() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-accueil').classList.add('active');
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  ouvrirModalCarte();
+}
+
+function ouvrirSecret(n) {
+  if (donePieces.size < 5) {
+    showNotif("🔒 Terminez d’abord les 5 pièces principales !", "");
+    return;
+  }
+  fermerModalCarte();
+  showNotif('🔮 Pièce cachée découverte !', 'secret');
+  showScreen('screen-s' + n);
+}
+
+// ══════════════════════════════════
+// PROGRESSION
+// ══════════════════════════════════
+function majProgress() {
+  // Pills
+  const pills = document.getElementById('progressPills');
+  pills.innerHTML = '';
+  for (let i=1;i<=5;i++){
+    const p = document.createElement('div');
+    p.className = 'pill' + (donePieces.has(i) ? ' done' : '');
+    p.textContent = i;
+    pills.appendChild(p);
+  }
+  // Cartes
+  for (let i=1;i<=5;i++){
+    const card = document.getElementById('card-p' + i);
+    if (card) card.classList.toggle('done', donePieces.has(i));
+  }
+  // Icônes secrètes — déverrouillées uniquement si les 5 pièces sont terminées
+  const icon1 = document.getElementById('hiddenIcon1');
+  const icon2 = document.getElementById('hiddenIcon2');
+  if (donePieces.size >= 5) {
+    if (icon1) { icon1.classList.remove('locked'); icon1.classList.add('unlocked'); }
+    if (icon2) { icon2.classList.remove('locked'); icon2.classList.add('unlocked'); }
+  } else {
+    if (icon1) { icon1.classList.add('locked'); icon1.classList.remove('unlocked'); }
+    if (icon2) { icon2.classList.add('locked'); icon2.classList.remove('unlocked'); }
+  }
+  if (doneSecrets.has('s1') && icon1) icon1.classList.add('found');
+  if (doneSecrets.has('s2') && icon2) icon2.classList.add('found');
+  // Panel progression
+  majProgPanel();
+}
+
+function majProgPanel() {
+  const panel = document.getElementById('progPanel');
+  const noms = ['Bureau du responsable','Réserve de produits','Laboratoire','Salle de contrôle','Le bassin — Final'];
+  let html = '<div style="font-family:Outfit,sans-serif;font-size:0.78rem;font-weight:800;color:var(--bleu);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;">Ma progression</div>';
+  for (let i=1;i<=5;i++){
+    html += `<div class="prog-item"><div class="prog-dot ${donePieces.has(i)?'done':''}"></div><span style="font-size:0.78rem;">${noms[i-1]}</span></div>`;
+  }
+  html += `<div class="prog-item"><div class="prog-dot ${doneSecrets.has('s1')?'secret-done':''}"></div><span style="font-size:0.78rem;color:var(--violet);">? Pièce secrète 1</span></div>`;
+  html += `<div class="prog-item"><div class="prog-dot ${doneSecrets.has('s2')?'secret-done':''}"></div><span style="font-size:0.78rem;color:var(--orange);">? Pièce secrète 2</span></div>`;
+  panel.innerHTML = html;
+}
+
+function toggleProg() {
+  const p = document.getElementById('progPanel');
+  p.classList.toggle('open');
+  if (p.classList.contains('open')) majProgPanel();
+}
+
+// ══════════════════════════════════
+// CODES SERRURE
+// ══════════════════════════════════
+function validerCode(pieceKey, bonCode, succesId, pieceNum) {
+  const input = document.getElementById('code-' + pieceKey);
+  const fb = document.getElementById('fb-code-' + pieceKey);
+  const valeur = input.value.trim().toUpperCase().replace(',', '.');
+  if (valeur === bonCode.toUpperCase().replace(',', '.')) {
+    fb.textContent = '✓ Code correct ! La pièce est validée.';
+    fb.className = 'code-feedback ok';
+    document.getElementById(succesId).classList.add('visible');
+    if (!donePieces.has(pieceNum)) {
+      donePieces.add(pieceNum);
+      majProgress();
+      showNotif('✅ Pièce ' + pieceNum + ' complétée !', 'success');
+      if (donePieces.size === 5) {
+        setTimeout(() => showNotif('🎉 Bravo ! Les 5 pièces sont terminées. Regardez bien la carte…', 'success'), 1500);
+      }
+    }
+  } else {
+    fb.textContent = '✗ Code incorrect. Relisez bien les énigmes…';
+    fb.className = 'code-feedback ko';
+    input.style.borderColor = '#E74C3C';
+    setTimeout(() => { input.style.borderColor = ''; }, 1200);
+  }
+}
+
+function validerCodeSecret(pieceKey, bonCode, succesId, secretKey) {
+  const input = document.getElementById('code-' + pieceKey);
+  const fb = document.getElementById('fb-code-' + pieceKey);
+  const valeur = input.value.trim().toUpperCase();
+  if (valeur === bonCode.toUpperCase()) {
+    fb.textContent = '✓ Pièce secrète validée !';
+    fb.className = 'code-feedback ok';
+    document.getElementById(succesId).classList.add('visible');
+    if (!doneSecrets.has(secretKey)) {
+      doneSecrets.add(secretKey);
+      majProgress();
+      showNotif('🔮 Pièce secrète validée !', 'secret');
+    }
+  } else {
+    fb.textContent = '✗ Mot-code incorrect.';
+    fb.className = 'code-feedback ko';
+  }
+}
+
+// ══════════════════════════════════
+// FIN DU JEU
+// ══════════════════════════════════
+async function terminerJeu() {
+  if (jeuTermine) { showScreen('screen-classement'); afficherClassement(); return; }
+  finishedAt = getTempsEcoule();
+  jeuTermine = true;
+  clearInterval(timerInterval);
+
+  const tempsNet = finishedAt;
+  const tempsTotal = finishedAt + penaliteTotal;
+  const scoreEntry = {
+    joueur: joueurId,
+    temps: tempsTotal,
+    tempsNet: tempsNet,
+    penalite: penaliteTotal,
+    pieces: donePieces.size,
+    secrets: doneSecrets.size,
+    complet: (donePieces.size >= 5 && doneSecrets.size >= 2),
+    date: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch(API_URL, { headers: { 'X-Access-Key': API_KEY }});
+    const data = await res.json();
+    let record = data.record;
+    if (!Array.isArray(record.scores)) record.scores = [];
+    // Remplacer si déjà là
+    const idx = record.scores.findIndex(s => s.joueur === joueurId);
+    if (idx >= 0) record.scores[idx] = scoreEntry;
+    else record.scores.push(scoreEntry);
+    await fetch(API_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Access-Key': API_KEY },
+      body: JSON.stringify(record)
+    });
+  } catch(e) { /* Erreur réseau silencieuse */ }
+
+  showScreen('screen-classement');
+  afficherClassement(scoreEntry);
+}
+
+// ══════════════════════════════════
+// AFFICHAGE CLASSEMENT
+// ══════════════════════════════════
+async function afficherClassement(monScore) {
+  if (monScore) {
+    document.getElementById('classJoueurId').textContent = 'n°' + monScore.joueur;
+    const penMin = Math.round((monScore.penalite || 0) / 60);
+    document.getElementById('classTemps').innerHTML = formatTemps(monScore.tempsNet || monScore.temps)
+      + (penMin > 0 ? ' <span style="font-size:0.75rem;color:var(--rouge);">(+' + penMin + ' min indices)</span>' : '');
+    document.getElementById('classPieces').textContent = monScore.pieces + ' / 5';
+    document.getElementById('classSecrets').textContent = monScore.secrets + ' / 2';
+    if (monScore.secrets < 2) document.getElementById('msgSecretManquant').style.display = 'block';
+  }
+  chargerClassements();
+}
+
+async function chargerClassements() {
+  try {
+    const res = await fetch(API_URL, { headers: { 'X-Access-Key': API_KEY }});
+    const data = await res.json();
+    const scores = data.record.scores || [];
+
+    // Classement complet (5 pièces + 2 secrètes)
+    const complets = scores.filter(s => s.pieces >= 5 && s.secrets >= 2).sort((a,b) => a.temps - b.temps);
+    const partiels = scores.filter(s => s.pieces >= 5 && s.secrets < 2).sort((a,b) => a.temps - b.temps);
+
+    renderClassement('classement-complet', complets, '🏆');
+    renderClassement('classement-partiel', partiels, '🏅');
+  } catch(e) {
+    document.getElementById('classement-complet').innerHTML = '<div style="font-size:0.82rem;color:var(--texte-leger);text-align:center;padding:10px;">Impossible de charger le classement en ligne.</div>';
+    document.getElementById('classement-partiel').innerHTML = '';
+  }
+}
+
+function renderClassement(containerId, scores, medal) {
+  const el = document.getElementById(containerId);
+  if (scores.length === 0) {
+    el.innerHTML = '<div style="font-size:0.82rem;color:var(--texte-leger);text-align:center;padding:10px;">Aucun résultat pour l\'instant.</div>';
+    return;
+  }
+  const medals = ['🥇','🥈','🥉'];
+  el.innerHTML = scores.map((s,i) => {
+    const penMin = Math.round((s.penalite || 0) / 60);
+    const tempsAff = formatTemps(s.tempsNet || s.temps);
+    const penAff = penMin > 0 ? `<span style="font-size:0.68rem;color:var(--rouge);">+${penMin}min</span>` : '';
+    return `<div class="score-row" style="${s.joueur === joueurId ? 'background:var(--bleu-clair);border:1.5px solid var(--bleu);' : ''}">
+      <div class="score-rank">${medals[i] || (i+1)+'.'}</div>
+      <div class="score-num">Joueur n°${s.joueur} ${s.joueur === joueurId ? '<strong>(vous)</strong>' : ''}</div>
+      <div class="score-time">${tempsAff} ${penAff}</div>
+      <div style="font-size:0.72rem;color:var(--texte-leger);">${s.secrets}/2 secrètes</div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════
+// NOTIFICATION
+// ══════════════════════════════════
+let notifTimeout = null;
+function showNotif(msg, type) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.className = 'notif ' + (type || '');
+  clearTimeout(notifTimeout);
+  setTimeout(() => n.classList.add('show'), 50);
+  notifTimeout = setTimeout(() => n.classList.remove('show'), 3500);
+}
+
+// ══════════════════════════════════
+// SYSTÈME INDICES + PÉNALITÉS
+// ══════════════════════════════════
+let penaliteTotal = 0; // en secondes
+let penaliteDetails = []; // [{qid, niveau, mins}]
+const PENALITE_PAR_NIVEAU = 120; // 2 minutes = 120 secondes
+
+const indiceNiveau = {}; // qid → niveau actuel (0=aucun, 1,2,3)
+const tentatives   = {}; // qid → nombre de tentatives
+
+function getTentatives(qid) { return tentatives[qid] || 0; }
+function incrTentatives(qid) { tentatives[qid] = (tentatives[qid] || 0) + 1; }
+
+function activerBoutonIndice(qid) {
+  const btn = document.getElementById('btn-indice-' + qid);
+  if (btn && btn.disabled) btn.disabled = false;
+}
+
+function demanderIndice(qid) {
+  const niv = (indiceNiveau[qid] || 0) + 1;
+  if (niv > 3) return;
+  indiceNiveau[qid] = niv;
+
+  // Ouvrir le panel
+  const panel = document.getElementById('ip-' + qid);
+  if (panel) panel.classList.add('open');
+
+  // Afficher jusqu'au niveau actuel
+  for (let i = 1; i <= 3; i++) {
+    const step = document.getElementById('ip-' + qid + '-' + i);
+    if (step) step.classList.toggle('visible', i <= niv);
+  }
+
+  // Pénalité
+  penaliteTotal += PENALITE_PAR_NIVEAU;
+  penaliteDetails.push({ qid, niveau: niv, mins: 2 });
+  afficherPenalite(qid, niv);
+  showNotif('⏱️ +2 min (indice ' + niv + '/3)', 'wrong');
+
+  // Mettre à jour le bouton
+  const btn = document.getElementById('btn-indice-' + qid);
+  if (btn) {
+    if (niv >= 3) {
+      btn.disabled = true;
+      btn.innerHTML = '💡 Indice (max atteint)';
+    } else {
+      btn.innerHTML = '💡 Indice suivant <span class="indice-count">' + (niv+1) + '</span>';
+    }
+  }
+}
+
+function afficherPenalite(qid, niv) {
+  // Chercher le feedback de la question pour y afficher le tag pénalité
+  const fbEl = document.getElementById('fb-' + qid);
+  if (fbEl) {
+    const existing = fbEl.parentElement.querySelector('.penalite-tag');
+    if (existing) existing.remove();
+    const tag = document.createElement('span');
+    tag.className = 'penalite-tag';
+    tag.textContent = '+' + (niv * 2) + 'min d\u2019indices';
+    fbEl.parentElement.appendChild(tag);
+  }
+}
+
+// ══════════════════════════════════
+// QUESTIONS INTERACTIVES
+// ══════════════════════════════════
+
+// Select
+function verifSelect(selId, bonne, fbId, ncId) {
+  const sel = document.getElementById(selId);
+  const fb  = document.getElementById(fbId);
+  incrTentatives(selId);
+  activerBoutonIndice(selId);
+  if (!sel.value) { fb.textContent = 'Choisissez une réponse.'; fb.className='dq-feedback wrong'; return; }
+  if (sel.value === bonne) {
+    sel.className = 'dq-select correct';
+    fb.textContent = '✓ Correct !'; fb.className = 'dq-feedback';
+    // Fermer le panel indice si ouvert
+    const panel = document.getElementById('ip-' + selId);
+    if (panel) panel.classList.remove('open');
+  } else {
+    sel.className = 'dq-select wrong';
+    fb.textContent = '✗ Incorrect. Réessayez ou utilisez un indice.'; fb.className = 'dq-feedback wrong';
+  }
+}
+
+function resetSelect(selId, fbId, ncId) {
+  const sel = document.getElementById(selId);
+  sel.value = ''; sel.className = 'dq-select';
+  if (document.getElementById(fbId)) document.getElementById(fbId).textContent = '';
+  const nc = document.getElementById(ncId);
+  if (nc) nc.classList.remove('visible');
+  indiceNiveau[selId] = 0;
+  tentatives[selId] = 0;
+  const btn = document.getElementById('btn-indice-' + selId);
+  if (btn) { btn.disabled = true; btn.innerHTML = '💡 Indice'; }
+  const panel = document.getElementById('ip-' + selId);
+  if (panel) { panel.classList.remove('open'); panel.querySelectorAll('.indice-step').forEach(s => s.classList.remove('visible')); }
+  const tag = document.querySelector('[data-qid="' + selId + '"].penalite-tag');
+  // Note: pénalité déjà comptabilisée, on ne la retire pas
+}
+
+// Numérique
+function verifNum(inputId, bonVal, tol, fbId, ncId) {
+  const inp = document.getElementById(inputId);
+  const fb  = document.getElementById(fbId);
+  incrTentatives(inputId);
+  activerBoutonIndice(inputId);
+  const val = parseFloat(inp.value.replace(',','.'));
+  if (isNaN(val)) { fb.textContent = 'Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val - bonVal) <= tol) {
+    inp.className = 'num-input correct';
+    fb.textContent = '✓ Bonne valeur !'; fb.className = 'num-feedback ok';
+    const nc = document.getElementById(ncId);
+    if (nc) nc.classList.add('visible');
+    const panel = document.getElementById('ip-' + inputId);
+    if (panel) panel.classList.remove('open');
+  } else {
+    inp.className = 'num-input wrong';
+    fb.textContent = '✗ Valeur incorrecte. Vérifiez votre calcul.'; fb.className = 'num-feedback ko';
+  }
+}
+
+function resetNum(inputId, fbId, ncId) {
+  const inp = document.getElementById(inputId);
+  inp.value = ''; inp.className = 'num-input';
+  if (document.getElementById(fbId)) { document.getElementById(fbId).textContent = ''; document.getElementById(fbId).className = 'num-feedback'; }
+  const nc = document.getElementById(ncId);
+  if (nc) nc.classList.remove('visible');
+  indiceNiveau[inputId] = 0;
+  tentatives[inputId] = 0;
+  const btn = document.getElementById('btn-indice-' + inputId);
+  if (btn) { btn.disabled = true; btn.innerHTML = '💡 Indice'; }
+  const panel = document.getElementById('ip-' + inputId);
+  if (panel) { panel.classList.remove('open'); panel.querySelectorAll('.indice-step').forEach(s => s.classList.remove('visible')); }
+}
+
+// QCM (pas de bouton indice, mais on comptabilise les erreurs)
+function repondreQCM(btn, correct, fbId) {
+  const fb = document.getElementById(fbId);
+  const allBtns = btn.closest('.qcm-grid').querySelectorAll('.qcm-btn');
+  allBtns.forEach(b => b.classList.remove('correct','wrong'));
+  if (correct === 'oui') {
+    btn.classList.add('correct');
+    fb.textContent = '✓ Bonne réponse !'; fb.className = 'qcm-feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ Incorrect. Essayez encore.'; fb.className = 'qcm-feedback ko';
+  }
+}
+
+// Drag & drop indice spécial
+function activerBoutonIndiceDrag() {
+  const btn = document.getElementById('btn-indice-p2-drag');
+  if (btn && btn.disabled) btn.disabled = false;
+}
+
+// ══════════════════════════════════
+// DRAG & DROP PIÈCE 2
+// ══════════════════════════════════
+const P2_BADGES = [
+  { id:'hclo',   label:'HClO',       cat:'acide', bg:'#F0F4F8', color:'#2D5F8A' },
+  { id:'clom',   label:'ClO⁻',       cat:'base',  bg:'#F0F4F8', color:'#2D5F8A' },
+  { id:'ch3cooh',label:'CH₃COOH',    cat:'acide', bg:'#F0F4F8', color:'#2D5F8A' },
+  { id:'ch3coom',label:'CH₃COO⁻',    cat:'base',  bg:'#F0F4F8', color:'#2D5F8A' },
+  { id:'h3op',   label:'H₃O⁺',       cat:'acide', bg:'#F0F4F8', color:'#2D5F8A' },
+  { id:'h2o',    label:'H₂O',        cat:'base',  bg:'#F0F4F8', color:'#2D5F8A' },
+  { id:'nh4p',   label:'NH₄⁺',       cat:'acide', bg:'#F0F4F8', color:'#2D5F8A' },
+  { id:'nh3',    label:'NH₃',        cat:'base',  bg:'#F0F4F8', color:'#2D5F8A' },
+];
+
+let p2DragId = null, p2DragSrc = null, p2Ghost = null;
+
+function buildP2Pool() {
+  const pool = document.getElementById('p2-pool');
+  if (!pool) return;
+  pool.innerHTML = '';
+  P2_BADGES.forEach(b => pool.appendChild(makeP2Badge(b, 'p2-pool')));
+  document.getElementById('p2-acide').innerHTML = '<span class="drop-zone-label">Déposez ici</span>';
+  document.getElementById('p2-base').innerHTML  = '<span class="drop-zone-label">Déposez ici</span>';
+  ['p2-acide','p2-base'].forEach(zid => {
+    const el = document.getElementById(zid);
+    el.classList.remove('drop-ok','drop-ko','drag-over');
+    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drag-over'); });
+    el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    el.addEventListener('drop', e => { e.preventDefault(); dropP2(zid); el.classList.remove('drag-over'); });
+  });
+}
+
+function makeP2Badge(b, srcId) {
+  const el = document.createElement('span');
+  el.className = 'drag-badge';
+  el.dataset.id = b.id; el.dataset.source = srcId;
+  el.style.cssText = `background:${b.bg};border-color:${b.color};color:${b.color};`;
+  el.textContent = b.label;
+  el.draggable = true;
+  el.addEventListener('dragstart', e => { p2DragId = b.id; p2DragSrc = srcId; e.dataTransfer.effectAllowed='move'; });
+  el.addEventListener('mousedown', p2StartDrag);
+  el.addEventListener('touchstart', p2StartDrag, {passive:false});
+  return el;
+}
+
+function dropP2(targetId) {
+  if (!p2DragId) return;
+  const orig = document.querySelector(`.drag-badge[data-id="${p2DragId}"][data-source="${p2DragSrc}"]`);
+  const bData = P2_BADGES.find(b => b.id === p2DragId);
+  if (!bData) return;
+  if (orig) orig.remove();
+  const zone = document.getElementById(targetId);
+  const ph = zone.querySelector('.drop-zone-label');
+  if (ph && targetId !== 'p2-pool') ph.style.display = 'none';
+  zone.appendChild(makeP2Badge(bData, targetId));
+  p2DragId = null; p2DragSrc = null;
+}
+
+function p2StartDrag(e) {
+  e.preventDefault();
+  const badge = e.currentTarget;
+  p2DragId = badge.dataset.id;
+  p2DragSrc = badge.dataset.source;
+  const bData = P2_BADGES.find(b => b.id === p2DragId);
+  p2Ghost = document.createElement('span');
+  p2Ghost.className = 'drag-badge';
+  p2Ghost.style.cssText = `position:fixed;pointer-events:none;z-index:9999;opacity:0.88;transform:translate(-50%,-50%);background:${bData.bg};border:2px solid ${bData.color};color:${bData.color};`;
+  p2Ghost.textContent = bData.label;
+  document.body.appendChild(p2Ghost);
+  moveP2Ghost(e);
+  badge.style.opacity='0.3';
+  badge.dataset.dragging='1';
+  document.addEventListener('mousemove', moveP2Ghost);
+  document.addEventListener('mouseup', endP2Drag);
+  document.addEventListener('touchmove', moveP2Ghost, {passive:false});
+  document.addEventListener('touchend', endP2Drag);
+}
+
+function moveP2Ghost(e) {
+  if (!p2Ghost) return;
+  const pt = e.touches ? e.touches[0] : e;
+  p2Ghost.style.left = pt.clientX + 'px';
+  p2Ghost.style.top  = pt.clientY + 'px';
+}
+
+function endP2Drag(e) {
+  document.removeEventListener('mousemove', moveP2Ghost);
+  document.removeEventListener('mouseup', endP2Drag);
+  document.removeEventListener('touchmove', moveP2Ghost);
+  document.removeEventListener('touchend', endP2Drag);
+  if (p2Ghost) { p2Ghost.remove(); p2Ghost = null; }
+  const orig = document.querySelector(`.drag-badge[data-id="${p2DragId}"][data-dragging="1"]`);
+  const pt = e.changedTouches ? e.changedTouches[0] : e;
+  const zones = ['p2-acide','p2-base','p2-pool'];
+  let targetId = null;
+  for (const zid of zones) {
+    const el = document.getElementById(zid);
+    if (!el) continue;
+    const r = el.getBoundingClientRect();
+    if (pt.clientX >= r.left && pt.clientX <= r.right && pt.clientY >= r.top && pt.clientY <= r.bottom) { targetId = zid; break; }
+  }
+  const bData = P2_BADGES.find(b => b.id === p2DragId);
+  if (targetId && targetId !== p2DragSrc) {
+    if (orig) orig.remove();
+    const zone = document.getElementById(targetId);
+    const ph = zone.querySelector('.drop-zone-label');
+    if (ph && targetId !== 'p2-pool') ph.style.display='none';
+    zone.appendChild(makeP2Badge(bData, targetId));
+  } else {
+    if (orig) { orig.style.opacity='1'; delete orig.dataset.dragging; }
+  }
+  p2DragId=null; p2DragSrc=null;
+}
+
+function verifP2Drag() {
+  activerBoutonIndiceDrag();
+  let toutOk = true;
+  ['acide','base'].forEach(cat => {
+    const zone = document.getElementById('p2-'+cat);
+    const fb = document.getElementById('fb-p2-'+cat);
+    const placed = [...zone.querySelectorAll('.drag-badge')].map(b => b.dataset.id);
+    const correct = P2_BADGES.filter(b => b.cat===cat).map(b => b.id);
+    const ok = correct.every(c => placed.includes(c)) && placed.every(p => correct.includes(p));
+    zone.classList.remove('drop-ok','drop-ko');
+    zone.classList.add(ok ? 'drop-ok' : 'drop-ko');
+    if (ok) { fb.textContent='✓ Correct !'; fb.className='dq-feedback'; }
+    else {
+      toutOk = false;
+      const manq = correct.filter(c => !placed.includes(c)).map(c => P2_BADGES.find(b=>b.id===c).label);
+      const trop = placed.filter(p=>!correct.includes(p)).map(p=>P2_BADGES.find(b=>b.id===p)?.label||p);
+      let msg='✗ ';
+      if (manq.length) msg+=`Manque : ${manq.join(', ')}. `;
+      if (trop.length) msg+=`En trop : ${trop.join(', ')}.`;
+      fb.textContent=msg; fb.className='dq-feedback wrong';
+    }
+  });
+}
+
+function corrigerP2Drag() {
+  ['acide','base'].forEach(cat => {
+    const zone = document.getElementById('p2-'+cat);
+    zone.innerHTML='';
+    zone.classList.remove('drop-ok','drop-ko');
+    zone.classList.add('drop-ok');
+    P2_BADGES.filter(b=>b.cat===cat).forEach(b => zone.appendChild(makeP2Badge(b,'p2-'+cat)));
+    const fb = document.getElementById('fb-p2-'+cat);
+    fb.textContent='✓ Correction affichée.'; fb.className='dq-feedback';
+  });
+  const pool = document.getElementById('p2-pool');
+  if (pool) pool.innerHTML='';
+}
+
+function resetP2Drag() { buildP2Pool(); document.getElementById('fb-p2-acide').textContent=''; document.getElementById('fb-p2-base').textContent=''; }
+
+// ══════════════════════════════════
+// INIT
+// ══════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  buildP2Pool();
+  initConnexion();
+});
+</script>
+</body>
+</html>
