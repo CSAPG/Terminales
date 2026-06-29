@@ -186,12 +186,11 @@ const TER_SEQUENCES = [
   {
         id:'flashcards', label:'Flashcards',
         items: [
-          { type:'image-group', cards: [
+          { type:'image-group',sub:'réalisée par Jade, Jibril et Damien', cards: [
             { label:'Cartes #1 → #5 · Forces · Cinématique',       src:'seq03/Flashcards 1-5.jpg' },
             { label:'Cartes #6 → #8 · Types de mouvement',         src:'seq03/Flashcards 6-8.jpg' },
             { label:'Cartes #11 → #15 · Lois de Newton · Énergie', src:'seq03/Flashcards 11-15.jpg' },
             { label:'Cartes #16 → #20 · Énergie · Chute libre',    src:'seq03/Flashcards 16-20.jpg' },
-             sub:'réalisée par Jade, Jibril et Damien',
           ]}
         ]
       },
