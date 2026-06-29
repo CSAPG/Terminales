@@ -150,6 +150,16 @@ const TER_SEQUENCES = [
             href:'seq02/seq02_Flashcard et quiz.html' },
         ]
       },
+      {
+        id: 'Jeu', label: '🎮 Jeu',
+        items: [
+          { type:'link', icon:'🔐', label:'Escape game — Sauve l\'eau de la piscine,
+            sub:'Séquence 02 — Acides et bases',
+            href:'seq02/seq02-escape-piscine.html',
+            imgSrc:'seq02/images/piscine.png',
+            cta:'Jouer →' },
+        ]
+      },
     ]
   },
 
