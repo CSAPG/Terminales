@@ -403,10 +403,10 @@ const TER_SEQUENCES = [
         items: [
           { type:'link', icon:'⚡', label:'Système capacitif — circuit RC série',
             sub:'Terminale spécialité · Physique-Chimie',
-            href:'seq10/animations/Systeme capacitif - circuit rc serie.html' },
+            href:'seq10/systeme-capacitif-circuit-rc-serie.html' },
           { type:'link', icon:'🔋', label:'CapaPhysique',
             sub:'Réalisé par Houssine, Lenny et Yohann',
-            href:'seq10/animations/CapaPhysique.html' },
+            href:'seq10/capaphysique.html' },
         ]
       },
       { id:'Fiche de révision', label:'Fiche de révision', desactive:true, items:[] },
