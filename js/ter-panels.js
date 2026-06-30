@@ -350,7 +350,7 @@ const TER_SEQUENCES = [
         items: [
           { type:'link', icon:'🔭', label:'Lunette astronomique — formation d\'image',
             sub:'Terminale spécialité · Optique',
-            href:'seq08/animations/lunette_interactive/lunette_interactive.html' },
+            href:'seq08/lunette_interactive.html' },
         ]
       },
       { id:'Fiche de révision', label:'Fiche de révision', desactive:true, items:[] },
