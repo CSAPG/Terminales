@@ -502,7 +502,7 @@ const TER_SEQUENCES = [
         items: [
           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Yugo, Noa et Baptiste',
-            href:'seq13/seq13_fiche de révision.html' },
+            href:'seq13/seq13-fiche-de-revision.html' },
         ]
       },
       {
