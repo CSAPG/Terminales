@@ -157,45 +157,52 @@ const TER_ICONS = {
       <circle cx="40" cy="40" r="32" fill="none" stroke="#334155" stroke-width="2"/>
     </svg>`,
 
-  /* ── Séq. 03 — Coureur (SVG autonome, transform classique) ── */
-  runner: `
+  /* ── Séq. 03 — Pendule de Newton (billes métal, choc élastique) ── */
+  newton: `
     <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
       <defs>
+        <radialGradient id="pn-metal" cx="35%" cy="30%" r="75%">
+          <stop offset="0%"  stop-color="#f8fafc"/>
+          <stop offset="35%" stop-color="#cbd5e1"/>
+          <stop offset="70%" stop-color="#64748b"/>
+          <stop offset="100%" stop-color="#334155"/>
+        </radialGradient>
         <style>
-          @keyframes ra-arm-f{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(30deg)}}
-          @keyframes ra-arm-b{0%,100%{transform:rotate(30deg)}50%{transform:rotate(-30deg)}}
-          @keyframes ra-leg-f{0%,100%{transform:rotate(-35deg)}50%{transform:rotate(35deg)}}
-          @keyframes ra-leg-b{0%,100%{transform:rotate(35deg)}50%{transform:rotate(-35deg)}}
-          @keyframes ra-body{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-          @keyframes ra-cloud{0%{transform:translateX(30px);opacity:0}20%{opacity:0.6}80%{opacity:0.4}100%{transform:translateX(-10px);opacity:0}}
-          .ra-bg{animation:ra-body 0.4s ease-in-out infinite}
-          .ra-af{animation:ra-arm-f 0.4s ease-in-out infinite;transform-origin:50px 39px}
-          .ra-ab{animation:ra-arm-b 0.4s ease-in-out infinite;transform-origin:50px 39px}
-          .ra-lf{animation:ra-leg-f 0.4s ease-in-out infinite;transform-origin:50px 53px}
-          .ra-lb{animation:ra-leg-b 0.4s ease-in-out infinite;transform-origin:50px 53px}
-          .ra-c1{animation:ra-cloud 2s linear infinite}
-          .ra-c2{animation:ra-cloud 2s linear 0.65s infinite}
-          .ra-c3{animation:ra-cloud 2s linear 1.3s infinite}
-          @media(prefers-reduced-motion:reduce){
-            .ra-bg,.ra-af,.ra-ab,.ra-lf,.ra-lb{animation:none}
-            .ra-c1,.ra-c2,.ra-c3{animation:none;opacity:0.4}
-          }
+          @keyframes pn-swing-left  {0%{transform:rotate(0deg)}25%{transform:rotate(-32deg)}50%{transform:rotate(0deg)}100%{transform:rotate(0deg)}}
+          @keyframes pn-swing-right {0%{transform:rotate(0deg)}50%{transform:rotate(0deg)}75%{transform:rotate(32deg)}100%{transform:rotate(0deg)}}
+          .pn-l{animation:pn-swing-left  1.6s ease-in-out infinite;transform-origin:14px 12px}
+          .pn-r{animation:pn-swing-right 1.6s ease-in-out infinite;transform-origin:66px 12px}
+          @media(prefers-reduced-motion:reduce){.pn-l,.pn-r{animation:none}}
         </style>
       </defs>
-      <line x1="4" y1="70" x2="76" y2="70" stroke="#cbd5e1" stroke-width="2"/>
-      <ellipse class="ra-c1" cx="18" cy="18" rx="11" ry="4" fill="#e2e8f0"/>
-      <ellipse class="ra-c2" cx="48" cy="12" rx="8"  ry="3" fill="#e2e8f0"/>
-      <ellipse class="ra-c3" cx="34" cy="22" rx="7"  ry="3" fill="#e2e8f0"/>
-      <g class="ra-bg">
-        <circle cx="50" cy="30" r="7" fill="#0f766e"/>
-        <rect x="46" y="37" width="9" height="14" rx="3" fill="#0f766e"/>
-        <g class="ra-ab"><rect x="41" y="38" width="4" height="11" rx="2" fill="#0f766e"/></g>
-        <g class="ra-af"><rect x="55" y="38" width="4" height="11" rx="2" fill="#0f766e"/></g>
-        <g class="ra-lb"><rect x="44" y="51" width="4.5" height="13" rx="2" fill="#134e4a"/></g>
-        <g class="ra-lf"><rect x="52" y="51" width="4.5" height="13" rx="2" fill="#134e4a"/></g>
+
+      <!-- Cadre support -->
+      <line x1="6"  y1="12" x2="74" y2="12" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="6"  y1="6"  x2="6"  y2="14" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="74" y1="6"  x2="74" y2="14" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Bille 1 (mobile, gauche) -->
+      <g class="pn-l">
+        <line x1="14" y1="12" x2="14" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="14" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
+
+      <!-- Billes fixes du milieu -->
+      <line x1="30" y1="12" x2="30" y2="46" stroke="#94a3b8" stroke-width="1"/>
+      <circle cx="30" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+
+      <line x1="40" y1="12" x2="40" y2="46" stroke="#94a3b8" stroke-width="1"/>
+      <circle cx="40" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+
+      <line x1="50" y1="12" x2="50" y2="46" stroke="#94a3b8" stroke-width="1"/>
+      <circle cx="50" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+
+      <!-- Bille 5 (mobile, droite) -->
+      <g class="pn-r">
+        <line x1="66" y1="12" x2="66" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="66" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
       </g>
     </svg>`,
-
   /* ── Séq. 04 — Planète en orbite ── */
   planet: `
     <style>
