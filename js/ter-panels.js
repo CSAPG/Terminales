@@ -410,8 +410,7 @@ const TER_SEQUENCES = [
         ]
       },
       { id:'Fiche de révision', label:'Fiche de révision', desactive:true, items:[] },
-      { id:'Flashcards',        label:'Flashcards',        desactive:true, items:[] },
-      { id:'Quiz',              label:'Quiz',              desactive:true, items:[] },
+
     ]
   },
 
