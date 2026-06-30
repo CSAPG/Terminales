@@ -157,9 +157,9 @@ const TER_ICONS = {
       <circle cx="40" cy="40" r="32" fill="none" stroke="#334155" stroke-width="2"/>
     </svg>`,
 
-/* ── Séq. 03 — Pendule de Newton (billes métal, choc élastique) ── */
+  /* ── Séq. 03 — Pendule de Newton (billes métal, choc élastique) ── */
   newton: `
-    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
+    <svg viewBox="-20 0 120 80" xmlns="http://www.w3.org/2000/svg" width="105" height="70">
       <defs>
         <radialGradient id="pn-metal" cx="35%" cy="30%" r="75%">
           <stop offset="0%"  stop-color="#f8fafc"/>
@@ -191,6 +191,72 @@ const TER_ICONS = {
             53%, 72%  { transform: rotate(0deg); }
             74%       { transform: rotate(-3deg); }
             76%       { transform: rotate(2deg);  }
+            78%, 100% { transform: rotate(0deg); }
+          }
+          .pn-l{animation:pn-swing-left  2s cubic-bezier(.45,0,.55,1) infinite;transform-origin:14px 12px}
+          .pn-r{animation:pn-swing-right 2s cubic-bezier(.45,0,.55,1) infinite;transform-origin:66px 12px}
+          .pn-mid{animation:pn-jiggle 2s cubic-bezier(.45,0,.55,1) infinite}
+          @media(prefers-reduced-motion:reduce){.pn-l,.pn-r,.pn-mid{animation:none}}
+        </style>
+      </defs>
+
+      <!-- Cadre support -->
+      <line x1="6"  y1="12" x2="74" y2="12" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="6"  y1="6"  x2="6"  y2="14" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="74" y1="6"  x2="74" y2="14" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Bille 1 (mobile, gauche) -->
+      <g class="pn-l">
+        <line x1="14" y1="12" x2="14" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="14" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
+
+      <!-- Billes fixes du milieu (léger frémissement au moment du choc) -->
+      <g class="pn-mid" style="transform-origin:30px 12px">
+        <line x1="30" y1="12" x2="30" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="30" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
+
+      <g class="pn-mid" style="transform-origin:40px 12px">
+        <line x1="40" y1="12" x2="40" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="40" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
+
+      <g class="pn-mid" style="transform-origin:50px 12px">
+        <line x1="50" y1="12" x2="50" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="50" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
+
+      <!-- Bille 5 (mobile, droite) -->
+      <g class="pn-r">
+        <line x1="66" y1="12" x2="66" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="66" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
+    </svg>`,
+
+  /* ── Séq. 04 — Planète en orbite ── */
+  planet: `
+    <style>
+      @keyframes ter-orbit { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+      @keyframes ter-planet-glow { 0%,100%{opacity:0.6;} 50%{opacity:1;} }
+      .ter-orbit-ring { animation: ter-orbit 4s linear infinite; transform-origin: 40px 40px; }
+      .ter-star-glow  { animation: ter-planet-glow 2s ease-in-out infinite; }
+      @media(prefers-reduced-motion:reduce){.ter-orbit-ring,.ter-star-glow{animation:none;}}
+    </style>
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
+      <!-- Étoile centrale -->
+      <circle cx="40" cy="40" r="13" fill="#fbbf24"/>
+      <circle cx="40" cy="40" r="16" fill="none" stroke="#fde68a" stroke-width="1" opacity="0.5" class="ter-star-glow"/>
+      <!-- Orbite elliptique -->
+      <ellipse cx="40" cy="40" rx="30" ry="14" fill="none" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- Planète en orbite -->
+      <g class="ter-orbit-ring">
+        <circle cx="70" cy="40" r="6" fill="#3b82f6"/>
+        <circle cx="70" cy="40" r="4" fill="#60a5fa"/>
+        <!-- Anneau de la planète -->
+        <ellipse cx="70" cy="40" rx="9" ry="3" fill="none" stroke="#93c5fd" stroke-width="1.2" opacity="0.7"/>
+      </g>
+    </svg>`,
 
   /* ── Séq. 05 — Burette de titrage (contrôle qualité) ── */
   burette: `
