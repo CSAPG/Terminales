@@ -331,7 +331,7 @@ const TER_SEQUENCES = [
         items: [
           { type:'link', icon:'📖', label:'Fiche de révision — Flashcards — Quiz',
             sub:'Réalisés par Lucas et Ruben',
-            href:'seq07/seq07-Fiche de révision-Flashcards-Quiz.html' },
+            href:'seq07/fiche-de-revision-flashcards-quiz.html' },
         ]
       },
     ]
