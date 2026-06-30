@@ -428,7 +428,7 @@ const TER_SEQUENCES = [
         items: [
           { type:'link', icon:'⚗️', label:'Cinétique chimique',
             sub:'Réalisée par Mme Poirault-Gauvin',
-            href:'seq11/animations/cinetique chimique.html' },
+            href:'seq11/cinetique-chimique.html' },
         ]
       },
       { id:'Fiche de révision', label:'Fiche de révision', desactive:true, items:[] },
