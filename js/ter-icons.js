@@ -168,11 +168,35 @@ const TER_ICONS = {
           <stop offset="100%" stop-color="#334155"/>
         </radialGradient>
         <style>
-          @keyframes pn-swing-left  {0%{transform:rotate(0deg)}25%{transform:rotate(-32deg)}50%{transform:rotate(0deg)}100%{transform:rotate(0deg)}}
-          @keyframes pn-swing-right {0%{transform:rotate(0deg)}50%{transform:rotate(0deg)}75%{transform:rotate(32deg)}100%{transform:rotate(0deg)}}
-          .pn-l{animation:pn-swing-left  1.6s ease-in-out infinite;transform-origin:14px 12px}
-          .pn-r{animation:pn-swing-right 1.6s ease-in-out infinite;transform-origin:66px 12px}
-          @media(prefers-reduced-motion:reduce){.pn-l,.pn-r{animation:none}}
+          @keyframes pn-swing-left {
+            0%   { transform: rotate(-32deg); }
+            25%  { transform: rotate(0deg);   }
+            75%  { transform: rotate(0deg);   }
+            100% { transform: rotate(-32deg); }
+          }
+          @keyframes pn-swing-right {
+            0%   { transform: rotate(0deg);  }
+            25%  { transform: rotate(0deg);  }
+            50%  { transform: rotate(32deg); }
+            75%  { transform: rotate(0deg);  }
+            100% { transform: rotate(0deg);  }
+          }
+          @keyframes pn-jiggle {
+            0%, 22%   { transform: rotate(0deg); }
+            24%       { transform: rotate(-3deg); }
+            26%       { transform: rotate(2deg);  }
+            28%, 47%  { transform: rotate(0deg); }
+            49%       { transform: rotate(2deg);  }
+            51%       { transform: rotate(-3deg); }
+            53%, 72%  { transform: rotate(0deg); }
+            74%       { transform: rotate(-3deg); }
+            76%       { transform: rotate(2deg);  }
+            78%, 100% { transform: rotate(0deg); }
+          }
+          .pn-l{animation:pn-swing-left  2s cubic-bezier(.45,0,.55,1) infinite;transform-origin:14px 12px}
+          .pn-r{animation:pn-swing-right 2s cubic-bezier(.45,0,.55,1) infinite;transform-origin:66px 12px}
+          .pn-mid{animation:pn-jiggle 2s cubic-bezier(.45,0,.55,1) infinite}
+          @media(prefers-reduced-motion:reduce){.pn-l,.pn-r,.pn-mid{animation:none}}
         </style>
       </defs>
 
@@ -187,15 +211,21 @@ const TER_ICONS = {
         <circle cx="14" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
       </g>
 
-      <!-- Billes fixes du milieu -->
-      <line x1="30" y1="12" x2="30" y2="46" stroke="#94a3b8" stroke-width="1"/>
-      <circle cx="30" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      <!-- Billes fixes du milieu (léger frémissement au moment du choc) -->
+      <g class="pn-mid" style="transform-origin:30px 12px">
+        <line x1="30" y1="12" x2="30" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="30" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
 
-      <line x1="40" y1="12" x2="40" y2="46" stroke="#94a3b8" stroke-width="1"/>
-      <circle cx="40" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      <g class="pn-mid" style="transform-origin:40px 12px">
+        <line x1="40" y1="12" x2="40" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="40" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
 
-      <line x1="50" y1="12" x2="50" y2="46" stroke="#94a3b8" stroke-width="1"/>
-      <circle cx="50" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      <g class="pn-mid" style="transform-origin:50px 12px">
+        <line x1="50" y1="12" x2="50" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        <circle cx="50" cy="50" r="8" fill="url(#pn-metal)" stroke="#1e293b" stroke-width="0.6"/>
+      </g>
 
       <!-- Bille 5 (mobile, droite) -->
       <g class="pn-r">
