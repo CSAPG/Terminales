@@ -174,9 +174,9 @@ const TER_SEQUENCES = [
   {
     id:'Cours', label:'Cours', actif: true,
     items: [
-  // { type:'link', icon:'📖', label:'Cours interactif',
-  //   sub:'Séquence 3 — Bases de la mécanique newtonienne',
-  //   href:'seq03/seq03-cours_interactif.html' },
+  { type:'link', icon:'📖', label:'Cours interactif',
+   sub:'Séquence 3 — Bases de la mécanique newtonienne',
+     href:'seq03/seq03-cours_interactif.html' },
       { type:'link', icon:'📖', label:'Fiche de révision — Bases de la mécanique newtonienne',
            sub:'réalisée par Jade, Jibril et Damien',
         href:'seq03/seq03_Fiche de révision.png' },
