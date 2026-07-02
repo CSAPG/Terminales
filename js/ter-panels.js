@@ -225,8 +225,14 @@ const TER_SEQUENCES = [
         ]
       },
       {
-        id:'Fiche de révision', label:'Fiche de révision',
+        id:'Fiche de révision', label:'Cours',
         items: [
+         { type:'link', icon:'📖', label:'Fiche de cours',
+            sub:'Fichier pdf',
+            href:'seq04/seq04_lois-de-kepler.pdf' },
+         { type:'link', icon:'🎓', label:'Cours interactif',
+            sub:'Réalisée par Mme Poirault-Gauvin',
+            href:'seq04/seq04-cours_interactif.html' },
           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Lou et Lou',
             href:'seq04/seq04_Fiche de révision.pdf' },
