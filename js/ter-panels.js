@@ -90,7 +90,7 @@ const TER_SEQUENCES = [
         id: 'Cours', label: 'Cours', actif: true,
         items: [
           { type:'link', icon:'📖', label:'Cours interactif',
-            sub:'Séquence 1 — Évolution d\'un système chimique',
+            sub:'Séquence 1 — Évolution d\'un système chimique par Mme Poirault-Gauvin',
             href:'seq01/seq01-cours_interactif.html' },
           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Yousra et Victor',
@@ -420,7 +420,7 @@ const TER_SEQUENCES = [
             href:'seq10/capaphysique.html' },
         ]
       },
-      { id:'Fiche de révision', label:'Fiche de révision', desactive:true, items:[] },
+ 
 
     ]
   },
@@ -567,7 +567,6 @@ const TER_SEQUENCES = [
             href:'seq14/seq14_Quiz.pdf' },
         ]
       },
-      { id:'Flashcards', label:'Flashcards', desactive:true, items:[] },
     ]
   },
 
