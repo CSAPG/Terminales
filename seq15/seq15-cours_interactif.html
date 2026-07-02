@@ -1551,6 +1551,40 @@ const SLIDES = [
         </div>
       </div>
     `}
+  },
+
+  /* ── 11 ── Ressources complémentaires : QCM Hatier + vidéos ── */
+  { label:'Ressources', icon:'🔗',
+    render(){return `
+      <div class="slide-title"><span class="num">11</span>Ressources complémentaires</div>
+
+      <div class="info-box bleu">
+        Retrouvez ci-dessous des ressources externes pour vous auto-évaluer et revoir les notions clés en vidéo.
+      </div>
+
+      <!-- ── QCM Hatier ── -->
+      <div class="exam-card">
+        <span class="exam-tag">Auto-évaluation</span>
+        <h4>QCM Hatier</h4>
+        <div class="exam-meta">Deux questionnaires à choix multiples pour tester vos connaissances.</div>
+        <div class="exam-links">
+          <a class="exam-link-btn" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/18_QCM_prerequis/index.html" target="_blank" rel="noopener">📝 QCM prérequis</a>
+          <a class="exam-link-btn" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_18/index.html" target="_blank" rel="noopener">📝 QCM de maîtrise des notions</a>
+        </div>
+      </div>
+
+      <!-- ── Vidéos ── -->
+      <div class="exam-card">
+        <span class="exam-tag">Vidéos</span>
+        <h4>Trois vidéos pour revoir les notions clés</h4>
+        <div class="exam-meta">Les liens ouvrent la vidéo dans un nouvel onglet.</div>
+        <div class="exam-links" style="flex-direction:column;align-items:flex-start;gap:.6rem">
+          <a class="exam-link-btn" href="https://www.pearltrees.com/private/id105373209/item804880850?paccess=47d635c5bdc.2ff981d2.3931306e8a42d23940452657d8ca47ac" target="_blank" rel="noopener">🎬 Effet photoélectrique — Paul Olivier</a>
+          <a class="exam-link-btn" href="https://www.pearltrees.com/private/id105373209/item804881291?paccess=47d635cfefe.2ff9838b.dad5b4e2fed642d19eb14f191031a970" target="_blank" rel="noopener">🎬 Bilan sur l'interaction lumière-matière — Hatier</a>
+          <a class="exam-link-btn" href="https://www.pearltrees.com/private/id105373209/item804881292?paccess=47d635db821.2ff9838c.e7a8c231aef226e80b9d04b765585c65" target="_blank" rel="noopener">🎬 Bilan énergétique de l'effet photoélectrique — Hachette</a>
+        </div>
+      </div>
+    `}
   }
 ];
 
@@ -3436,7 +3470,7 @@ function showMatExplain(){
 const NAV_GROUPS = [
   { num:'1', label:'Effet photoélectrique',              slides:[0,1,2] },
   { num:'2', label:'Semi-conducteurs & jonction PN',      slides:[3,4,5,6] },
-  { num:'✓', label:'Bilan, Quiz & Exercice',              slides:[7,8,9] },
+  { num:'✓', label:'Bilan, Quiz & Ressources',            slides:[7,8,9,10] },
 ];
 
 function groupIndexOf(slideIdx){
