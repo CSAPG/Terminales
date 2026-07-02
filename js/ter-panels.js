@@ -541,7 +541,7 @@ const TER_SEQUENCES = [
        {
           id:'Cours interactif', label:'Cours interactif', actif: true,
         items: [
-            { type:'link', icon:'📖', label:'cours interactif',
+            { type:'link', icon:'🎓', label:'cours interactif',
         sub:'Désintégration . Loi de décroissance . Activité',
         href:'seq14/cours-interactif-radioactivite.html' }, 
       ]
@@ -566,11 +566,14 @@ const TER_SEQUENCES = [
     icone: 'photon',
     headerBg: 'seq15/image15.png',
     tabs: [
-      { id:'cours interactif', label:'cours interactif', actif:true,
+      { id:'Cours', label:'Cours', actif:true,
        items:[
-           { type:'link', icon:'💡', label:'Cours interactif — Effet photoélectrique',
+            { type:'link', icon:'📖', label:'Cours',
+          sub:'Fiche de cours en pdf',
+          href:'seq15/Séquence 15-La lumière un flux de photons.pdf' }
+           { type:'link', icon:'💡', label:'Cours interactif',
           sub:'Du photon au courant électrique',
-          href:'seq15/cours_interactif-effet_photoelectrique.html' },  //
+          href:'seq15/seq15-cours_interactif.html' },
                ]
       },
       { id:'Flashcards', label:'Flashcards', actif: true,
