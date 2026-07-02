@@ -568,7 +568,7 @@ const TER_SEQUENCES = [
     tabs: [
       { id:'Cours', label:'Cours', actif:true,
        items:[
-            { type:'link', icon:'📖', label:'Cours',
+            { type:'link', icon:'📖', label:'Cours-La lumière, un flux de photons',
           sub:'Fiche de cours en pdf',
           href:'seq15/Séquence 15-La lumière un flux de photons.pdf' },
            { type:'link', icon:'💡', label:'Cours interactif',
