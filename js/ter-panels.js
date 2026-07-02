@@ -504,9 +504,15 @@ const TER_SEQUENCES = [
     headerBg: 'seq13/image13.jpg',
     tabs: [
       {
-        id:'Fiche de révision', label:'Fiche de révision', actif: true,
+        id:'Fiche de révision', label:'Cours', actif: true,
         items: [
-          { type:'link', icon:'📖', label:'Fiche de révision',
+          { type:'link', icon:'📖', label:'Cours - Mécanique des fluides',
+            sub:'Fiche de cours en pdf',
+            href:'seq13/Séquence 13-Fiche de cours-mécanique des fluides.pdf' },
+          { type:'link', icon:'🎓', label:'Cours interactif,
+            sub:'Réalisée par Mme Poirault-Gauvin',
+            href:'seq13/seq13-cours_interactif.html' },
+           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Yugo, Noa et Baptiste',
             href:'seq13/seq13-fiche-de-revision.html' },
         ]
