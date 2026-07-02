@@ -320,7 +320,7 @@ const TER_SEQUENCES = [
         id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'Réalisé par Alexandre et Emilien',',
+            sub:'Réalisé par Alexandre et Emilien',
             href:'seq06/seq6_Quiz.html' },
         ]
       },
@@ -364,6 +364,7 @@ const TER_SEQUENCES = [
             sub:'réalisé par Mme Poirault-Gauvin',
             href:'seq08/lunette_interactive.html' },
         ]
+      },
     ]
   },
 
@@ -385,7 +386,7 @@ const TER_SEQUENCES = [
             sub:'Réalisée par David, Ambre, Morgane et Salma',
             href:'seq09/seq09_Fiche de révision partie B.html' },
         ]
- 
+      },
       {
         id:'Quiz', label:'Quiz',
         items: [
@@ -527,7 +528,7 @@ const TER_SEQUENCES = [
         id:'Flashcards', label:'Flashcards',
         items: [
           { type:'link', icon:'🃏', label:'Flashcards',
-            sub:'Séquence 13 — Mouvement d\'un fluide par Yugo, Noa et Baptiste'',
+            sub:'Séquence 13 — Mouvement d\'un fluide par Yugo, Noa et Baptiste',
             href:'seq13/seq13_Flashcards.html' },
         ]
       },
@@ -535,7 +536,7 @@ const TER_SEQUENCES = [
         id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'Séquence 13 — Mouvement d\'un fluide par Yugo, Noa et Baptiste'',
+            sub:'Séquence 13 — Mouvement d\'un fluide par Yugo, Noa et Baptiste',
             href:'seq13/seq13_Quiz.pdf' },
         ]
       },
