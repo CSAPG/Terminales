@@ -577,7 +577,7 @@ const TER_SEQUENCES = [
             { type:'link', icon:'📖', label:'Fiche de révision',
           sub:'Réalisée par Valence et Loic',
           href:'seq15/seq15_Fiche de révision_Valence et Loic.pdf' },
-               ]
+       ]
       },
       { id:'Flashcards', label:'Flashcards',
         items: [
