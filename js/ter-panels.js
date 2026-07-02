@@ -508,7 +508,7 @@ const TER_SEQUENCES = [
         items: [
           { type:'link', icon:'📖', label:'Cours - Mécanique des fluides',
             sub:'Fiche de cours en pdf',
-            href:'seq15/Séquence 15-La lumière un flux de photons.pdf' },
+            href:'seq13/Séquence 13-Fiche de cours-mécanique des fluides.pdf' },
           { type:'link', icon:'🎓', label:'Cours interactif',
             sub:'Réalisée par Mme Poirault-Gauvin',
             href:'seq13/seq13-cours_interactif.html' },
