@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séquence 04 – Lois de Kepler – Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #2D5F8A;
+    --bleu-clair: #E8F1F8;
+    --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
+    --orange: #E8783A;
+    --orange-clair: #FDF0E8;
+    --vert: #3A8A6E;
+    --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --gris-fond: #F5F7FA;
+    --gris-bord: #DDE3EC;
+    --texte: #1A2A3A;
+    --texte-leger: #5A6B7A;
+    --blanc: #FFFFFF;
+    --rouge: #C0392B;
+    --rouge-clair: #FDEDEC;
+    --violet: #7B4FA6;
+    --violet-clair: #F3EDF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #DDE6F0;
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blanc);
+    border-bottom: 3px solid var(--bleu);
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+  }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 18px 32px 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .header-badge {
+    background: var(--bleu);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  button.cap-toggle {
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button.cap-toggle:hover { background: #1e4466; }
+  .cap-panel {
+    display: none;
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid #B8D4EC;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .cap-panel.open { display: block; }
+  .cap-panel ul { margin: 0; padding-left: 1.3rem; }
+  .cap-panel li { margin-bottom: 5px; line-height: 1.6; }
+  .cap-panel .cap-cat { font-weight: 700; color: var(--bleu); margin-top: 8px; }
+  .cap-panel .cap-cat:first-child { margin-top: 0; }
+
+  .header-titles h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--bleu);
+    line-height: 1.2;
+  }
+  .header-titles p {
+    font-size: 0.82rem;
+    color: var(--texte-leger);
+    margin-top: 2px;
+  }
+  .header-titles p span { color: var(--orange); font-weight: 700; }
+
+  /* ── ICÔNE PLANÈTE EN ORBITE ── */
+  .mobile-icon-wrap {
+    flex-shrink: 0;
+    width: 84px;
+    height: 56px;
+    position: relative;
+    margin-top: -2px;
+  }
+  .mobile-icon-wrap svg { width: 100%; height: 100%; }
+
+  /* ── ONGLETS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px 10px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: var(--texte-leger);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -3px;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+    background: var(--orange-clair);
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gris-bord);
+    color: var(--texte-leger);
+    font-size: 0.70rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .tab-num { background: var(--bleu); color: white; }
+
+  /* ── SOUS-ONGLETS ── */
+  .sub-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 18px 0 0;
+    margin-bottom: 22px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    background: #b8cfe0;
+    color: #2D5F8A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub-tab-btn:hover { background: #2D5F8A; color: white; }
+  .sub-tab-btn.active { background: #1e4466; color: white; }
+  .sub-tab-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    transition: all 0.2s;
+  }
+  .sub-tab-btn:not(.active) .sub-tab-num {
+    background: rgba(45,95,138,0.2);
+  }
+
+  .sub-tab-content { display: none; }
+  .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+  /* ── CONTENU ── */
+  .main { max-width: 900px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BLOCS COURS ── */
+  .def-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .def-card::before {
+    content: 'COURS';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.6;
+  }
+  .def-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+  .def-card ul { padding-left: 18px; }
+  .def-card ul li { margin-bottom: 5px; }
+
+  /* ── BLOCS ACTIVITÉ ── */
+  .activite-card {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-left: 4px solid var(--bleu-moyen);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .activite-card::before {
+    content: 'ACTIVITÉ';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.8;
+  }
+  .activite-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+  }
+  .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  /* ── BLOCS EXERCICE ── */
+  .exo-card {
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert-exo-bord);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .exo-card::before {
+    content: 'EXERCICE';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--vert);
+    opacity: 0.7;
+  }
+  .exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--vert);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu-clair);
+  }
+  .section-title .icon { font-size: 1.3rem; }
+
+  .intro-box {
+    background: #FFFBF7;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--texte);
+    font-style: italic;
+  }
+
+  .formule-box {
+    background: var(--orange-clair);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  .formule-box .legend {
+    font-size: 0.80rem;
+    font-weight: 500;
+    color: var(--texte-leger);
+    margin-top: 6px;
+    text-align: left;
+  }
+
+  .exemple-box {
+    background: var(--vert-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .exemple-box strong { color: var(--vert); }
+
+  .remarque-box {
+    background: var(--violet-clair);
+    border-left: 4px solid var(--violet);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .remarque-box strong { color: var(--violet); }
+
+  .attention-box {
+    background: var(--rouge-clair);
+    border-left: 4px solid var(--rouge);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .attention-box strong { color: var(--rouge); }
+
+  .methode-box {
+    background: var(--bleu-activite);
+    border: 1.5px dashed var(--bleu-moyen);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .methode-box ol { padding-left: 20px; }
+  .methode-box li { margin-bottom: 6px; }
+  .methode-box .methode-titre {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+  }
+
+  /* ── TABLEAU GÉNÉRIQUE ── */
+  .tableau-avancement {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 14px 0;
+    background: var(--blanc);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .tableau-avancement th {
+    background: var(--bleu);
+    color: white;
+    padding: 10px 14px;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .tableau-avancement td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--gris-bord);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .tableau-avancement tr:last-child td { border-bottom: none; }
+  .tableau-avancement tr:nth-child(even) td { background: var(--gris-fond); }
+  .tableau-avancement td:first-child { font-weight: 600; color: var(--bleu); text-align: left; }
+
+  /* ── CRITÈRE / CARTES 3 COLONNES ── */
+  .critere-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .critere-grid { grid-template-columns: 1fr; } }
+  .critere-item {
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .critere-left  { background: #FEF9F0; border: 2px solid var(--orange); color: var(--texte); }
+  .critere-mid   { background: var(--vert-exo); border: 2px solid var(--vert); color: var(--texte); }
+  .critere-right { background: var(--bleu-activite); border: 2px solid var(--bleu-moyen); color: var(--texte); }
+  .critere-item .critere-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .critere-left .critere-label  { color: var(--orange); }
+  .critere-mid .critere-label   { color: var(--vert); }
+  .critere-right .critere-label { color: var(--bleu); }
+
+  /* ── EXERCICE INTERACTIF ── */
+  .exo-enonce {
+    background: var(--blanc);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.90rem;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    border: 1px solid var(--vert-exo-bord);
+  }
+  .question-block { margin-bottom: 14px; }
+  .question-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 7px;
+    padding-left: 8px;
+    border-left: 3px solid var(--vert);
+    line-height: 1.5;
+  }
+  .btn-correction {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 9px 20px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-correction:hover { background: #2A6B52; transform: translateY(-1px); }
+  .correction {
+    display: none;
+    background: #F0FAF6;
+    border: 1.5px solid var(--vert);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .correction.visible { display: block; animation: fadeIn 0.2s ease; }
+  .correction strong { color: var(--vert); }
+  .correction .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 7px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── EXERCICE NUMÉRIQUE INLINE ── */
+  .num-field-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .num-field-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--texte); }
+  .num-input {
+    width: 110px;
+    padding: 7px 11px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--gris-fond);
+    transition: border-color 0.2s;
+  }
+  .num-input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); }
+  .num-input.correct { border-color: var(--vert); background: var(--vert-exo); }
+  .num-input.wrong   { border-color: var(--rouge); background: var(--rouge-clair); }
+  .num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
+  .num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
+  .num-feedback.ok   { color: var(--vert); }
+  .num-feedback.ko   { color: var(--rouge); }
+  .btn-verif {
+    padding: 7px 16px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-verif:hover { background: #1E4A72; }
+
+  .bilan-exo-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid #2D5F8A;
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+  }
+  .bilan-exo-card .bilan-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #2D5F8A;
+    background: var(--bleu-clair);
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .bilan-exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 6px;
+  }
+  .bilan-exo-card .bilan-theme {
+    font-size: 0.87rem;
+    color: var(--texte-leger);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-sujet, .btn-correction {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: filter 0.15s;
+  }
+  .btn-sujet { background: var(--bleu); color: white; }
+  .btn-correction { background: var(--vert); color: white; }
+  .btn-sujet:hover, .btn-correction:hover { filter: brightness(0.9); }
+  .btn-corriger {
+    padding: 7px 16px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-corriger:hover { background: #2A6B52; }
+  .btn-reset {
+    padding: 7px 16px;
+    background: var(--gris-fond);
+    color: var(--texte-leger);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+  .num-btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .num-correction-inline {
+    display: none;
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: var(--texte);
+  }
+  .num-correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
+  .num-correction-inline .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 7px 11px;
+    margin: 6px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── QCM ── */
+  .qcm-grid { display: grid; gap: 10px; margin: 14px 0; }
+  .qcm-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .qcm-item .substance { font-size: 0.93rem; font-weight: 600; flex: 1; }
+  .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qcm-btn {
+    padding: 5px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    background: var(--gris-fond);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--texte);
+  }
+  .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
+  .qcm-btn.correct { background: var(--vert); color: white; border-color: var(--vert); }
+  .qcm-btn.wrong   { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; width: 100%; }
+  .qcm-feedback.wrong { color: var(--rouge); }
+
+  .dq-select {
+    padding: 7px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--blanc);
+    color: var(--texte);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 160px;
+  }
+  .dq-select:focus { outline: none; border-color: var(--bleu); }
+  .dq-select.correct { border-color: var(--vert); background: var(--vert-exo); color: var(--vert); font-weight: 700; }
+  .dq-select.wrong   { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
+  .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
+  .dq-feedback.wrong { color: var(--rouge); }
+
+  /* ── ACCORDÉON ── */
+  .accord-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: var(--texte);
+    transition: background 0.2s;
+    margin: 10px 0;
+  }
+  .accord-btn:hover { background: var(--bleu-clair); }
+  .accord-body {
+    display: none;
+    padding: 14px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  .accord-body.open { display: block; animation: fadeIn 0.2s; }
+
+  /* ── BILAN GRID ── */
+  .bilan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .bilan-grid { grid-template-columns: 1fr; } }
+  .bilan-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .bilan-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--gris-bord);
+  }
+  .bilan-card ul { padding-left: 16px; }
+  .bilan-card ul li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.5; }
+  .ke-list { list-style: none; padding: 0; }
+  .ke-list li {
+    padding: 6px 10px 6px 28px;
+    position: relative;
+    font-size: 0.84rem;
+    border-bottom: 1px solid var(--gris-bord);
+    line-height: 1.5;
+  }
+  .ke-list li:last-child { border-bottom: none; }
+  .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
+
+  /* ── CANVAS ANIMATION ── */
+  .anim-canvas-wrap {
+    background: #F8FAFC;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 14px 16px 10px;
+    margin: 14px 0;
+  }
+  .anim-canvas-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--texte-leger);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .anim-canvas-wrap canvas { display: block; margin: 0 auto; border-radius: 8px; border: 1px solid var(--gris-bord); background: #fff; max-width: 100%; }
+  .anim-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .etape-msg-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+  .anim-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--blanc);
+    color: var(--texte);
+    transition: all 0.15s;
+  }
+  .anim-btn:hover  { border-color: var(--bleu); color: var(--bleu); background: var(--bleu-clair); }
+  .anim-btn.active { background: var(--bleu); color: white; border-color: var(--bleu); }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; flex-wrap: wrap; }
+  .slider-row label { font-size: 0.84rem; font-weight: 700; color: var(--texte); min-width: 150px; }
+  .slider-row input[type=range] { flex: 1; min-width: 140px; accent-color: var(--bleu); }
+  .slider-row .slider-val { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--bleu); min-width: 70px; text-align: right; font-size: 0.86rem; }
+
+  .legende-vect { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; font-size: 0.78rem; font-weight: 700; }
+  .legende-vect span { display: inline-flex; align-items: center; gap: 5px; }
+  .legende-vect .swatch { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+
+  /* ── FIGURES ILLUSTRATIVES (images du cours) ── */
+  .fig-box {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .fig-box img { max-width: 100%; height: auto; border-radius: 6px; }
+  .fig-box .fig-caption {
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .fig-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+  .fig-row .fig-box { flex: 1; min-width: 200px; margin: 0; }
+
+  /* ── CALCULATRICE 3E LOI ── */
+  .calc-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin: 10px 0; }
+  @media (max-width: 560px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-field { display: flex; flex-direction: column; gap: 4px; }
+  .calc-field label { font-size: 0.80rem; font-weight: 700; color: var(--bleu); }
+  .calc-result {
+    margin-top: 10px;
+    background: white;
+    border: 1.5px solid var(--bleu-moyen);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: var(--bleu);
+    font-size: 0.95rem;
+    min-height: 20px;
+  }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    padding: 20px;
+    border-top: 1px solid var(--gris-bord);
+    margin-top: 30px;
+  }
+
+  sup { font-size: 0.65em; }
+  sub { font-size: 0.65em; }
+  .math { font-family: 'Outfit', sans-serif; font-style: italic; }
+  .vec { text-decoration: overline; }
+
+  /* ── NOTATION VECTORIELLE FIABLE (flèche SVG) ── */
+  .vecsym {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.45em;
+  }
+  .vecsym svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.55em;
+    overflow: visible;
+  }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 12px 16px 0; }
+    .header-titles h1 { font-size: 1.05rem; }
+    .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
+    .main { padding: 18px 12px 50px; }
+    .mobile-icon-wrap { width: 42px; height: 42px; }
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+    <div class="header-left">
+      <div class="header-badge">T<sup>ale</sup> Spé – Séq. 04</div>
+      <button class="cap-toggle" id="capToggle">📋 Capacités exigibles</button>
+    </div>
+    <div class="header-titles">
+      <h1>Lois de Kepler</h1>
+      <p>Thème : <span>Mouvement dans un champ de gravitation, satellites, planètes</span> · © C. Poirault-Gauvin</p>
+    </div>
+    <!-- Icône planète en orbite (adaptée de ter-icons.js) -->
+    <div class="mobile-icon-wrap" title="Planète en orbite autour d'une étoile">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
+        <defs>
+          <style>
+            @keyframes k-orbit { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+            @keyframes k-glow  { 0%,100%{opacity:0.6;} 50%{opacity:1;} }
+            .k-orbit-ring { animation: k-orbit 4s linear infinite; transform-origin: 40px 40px; }
+            .k-star-glow  { animation: k-glow 2s ease-in-out infinite; }
+            @media(prefers-reduced-motion:reduce){.k-orbit-ring,.k-star-glow{animation:none;}}
+          </style>
+        </defs>
+        <!-- Étoile centrale -->
+        <circle cx="40" cy="40" r="13" fill="#fbbf24"/>
+        <circle cx="40" cy="40" r="16" fill="none" stroke="#fde68a" stroke-width="1" opacity="0.5" class="k-star-glow"/>
+        <!-- Orbite elliptique -->
+        <ellipse cx="40" cy="40" rx="30" ry="14" fill="none" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+        <!-- Planète en orbite -->
+        <g class="k-orbit-ring">
+          <circle cx="70" cy="40" r="6" fill="#3b82f6"/>
+          <circle cx="70" cy="40" r="4" fill="#60a5fa"/>
+          <ellipse cx="70" cy="40" rx="9" ry="3" fill="none" stroke="#93c5fd" stroke-width="1.2" opacity="0.7"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cap-panel" id="capPanel">
+    <div class="cap-cat">Capacités exigibles</div>
+    <ul>
+      <li>Citer et exploiter les expressions des coordonnées des vecteurs vitesse et accélération dans le repère de Frenet, dans le cas d'un mouvement circulaire.</li>
+      <li>Déterminer les caractéristiques des vecteurs vitesse et accélération du centre de masse d'un système en mouvement circulaire dans un champ de gravitation newtonien.</li>
+      <li>Établir et exploiter la troisième loi de Kepler dans le cas du mouvement circulaire.</li>
+    </ul>
+  </div>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">P</span> Prérequis (P1, P2)
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">A</span> Satellites en orbite
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">K</span> Lois de Kepler (K1–K4)
+    </button>
+    <button class="tab-btn" onclick="switchTab(3)">
+      <span class="tab-num">✓</span> Bilan &amp; Ressources
+    </button>
+  </nav>
+  </div><!-- /header-inner -->
+</div>
+
+<div class="main">
+<!-- ══════════════ ONGLET PRÉREQUIS ══════════════ -->
+<div class="tab-content active" id="tab-0">
+
+  <div class="sub-tabs-nav" id="sub-nav-P">
+    <button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+      <span class="sub-tab-num">1</span> Force de gravitation
+    </button>
+    <button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+      <span class="sub-tab-num">2</span> Repère de Frenet
+    </button>
+  </div>
+
+  <div class="intro-box">
+    En mécanique céleste, les systèmes étudiés (planètes, satellites, astéroïdes) ne sont soumis qu'à la force gravitationnelle exercée par l'astre autour duquel ils gravitent. Avant d'étudier le mouvement des satellites, il est indispensable de revoir la loi d'attraction universelle et le repère de Frenet, adapté à la description des mouvements circulaires.
+  </div>
+
+  <!-- ───────── P1 : FORCE DE GRAVITATION ───────── -->
+  <div class="sub-tab-content active" id="sub-P-0">
+
+    <div class="def-card">
+      <h3>Satellite et orbite</h3>
+      <p>Un <strong>satellite</strong> est un corps en orbite autour d'un autre. Une <strong>orbite</strong> est l'ensemble des positions occupées dans l'espace par un astre ou un satellite lorsqu'il est en mouvement autour d'un astre de masse plus grande que la sienne.</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Loi d'attraction universelle</h3>
+      <p>Deux corps A et B, de masses respectives m<sub>A</sub> et m<sub>B</sub>, séparés d'une distance d, exercent l'un sur l'autre une force d'attraction gravitationnelle :</p>
+      <div class="fig-box">
+        <img src="images-cours/loi-grav-1.png" alt="Formule et schéma de la loi d'attraction universelle : F(A/B) = -F(B/A) = -G × (mA×mB/d²) × u(AB), avec les vecteurs forces et le vecteur unitaire u(AB) entre A et B">
+        <div class="fig-caption">Les forces <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>A/B</sub> et <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>B/A</sub> forment un couple action-réaction (3<sup>e</sup> loi de Newton) : même direction, même norme, sens opposés.</div>
+      </div>
+      <div class="legend" style="font-size:0.80rem;font-weight:500;color:var(--texte-leger);margin:6px 0 0;">avec G = 6,67×10⁻¹¹ N·m²·kg⁻² la constante de gravitation universelle, et <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>AB</sub> le vecteur unitaire dirigé de A vers B.</div>
+      <div class="remarque-box"><strong>Remarque :</strong> cette loi reste valable pour des corps à répartition sphérique de masse, ou suffisamment éloignés l'un de l'autre — c'est le cas du Soleil, des planètes et de leurs satellites, ainsi que des étoiles.</div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🔭 Simulation PhET — Gravité et orbites</h3>
+      <p>Ouvre la simulation <a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_fr.html" target="_blank" style="color:var(--bleu);font-weight:700;">Gravity and Orbits (PhET Colorado, en français)</a> et explore le mode « À l'échelle » avec le système Soleil-Terre.</p>
+      <ul style="margin-top:8px;">
+        <li>Active l'affichage des <strong>vecteurs force</strong> et <strong>vitesse</strong> : vérifie qu'ils illustrent bien le couple action-réaction <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>A/B</sub> = − <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>B/A</sub>.</li>
+        <li>Fais varier la masse du Soleil : observe comment évoluent la force gravitationnelle et la trajectoire de la Terre.</li>
+        <li>Éloigne la Terre du Soleil (augmente d) : comment évolue la norme de la force ? Est-ce cohérent avec la loi en 1/d² ?</li>
+        <li>Teste ensuite le système « Soleil, Terre, Lune » : que remarques-tu sur la trajectoire de la Lune, entraînée à la fois par la Terre et le Soleil ?</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /sub-P-0 -->
+
+  <!-- ───────── P2 : REPÈRE DE FRENET ───────── -->
+  <div class="sub-tab-content" id="sub-P-1">
+
+    <div class="def-card">
+      <h3>Le repère de Frenet</h3>
+      <p>Le repère de Frenet, noté (M ; <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>t</sub> ; <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>), a pour origine mobile le point M(t) et utilise deux vecteurs unitaires partant de ce point :</p>
+      <ul>
+        <li>le vecteur tangentiel <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>t</sub>, tangent à la trajectoire et orienté dans le sens du mouvement ;</li>
+        <li>le vecteur normal <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>, perpendiculaire à <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>t</sub> et orienté vers l'intérieur de la courbure.</li>
+      </ul>
+    </div>
+
+    <div class="activite-card">
+      <h3>🧭 Animation interactive — Repère de Frenet sur une trajectoire circulaire</h3>
+      <p>Fais varier le <strong>rayon R</strong> et la <strong>vitesse v</strong> du point M à l'aide des curseurs, et observe comment évoluent les vecteurs <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>t</sub>, <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>, <span class="vecsym">v<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span> et <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> (le mouvement est ici circulaire uniforme : v = constante).</p>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Repère de Frenet (M(t) ; u_t(t) ; u_n(t))</div>
+        <canvas id="frenetCanvas" width="360" height="280"></canvas>
+        <div class="slider-row">
+          <label for="frenetR">Rayon R</label>
+          <input type="range" id="frenetR" min="40" max="110" step="1" value="75">
+          <span class="slider-val" id="frenetRVal">75 px</span>
+        </div>
+        <div class="slider-row">
+          <label for="frenetV">Vitesse v</label>
+          <input type="range" id="frenetV" min="10" max="100" step="1" value="45">
+          <span class="slider-val" id="frenetVVal">45</span>
+        </div>
+        <div class="anim-controls">
+          <button class="anim-btn active" id="frenetPlayBtn" onclick="toggleFrenetAnim()">⏸ Pause</button>
+        </div>
+        <div class="legende-vect">
+          <span><span class="swatch" style="background:#3A8A6E;"></span> u_t (direction du mouvement)</span>
+          <span><span class="swatch" style="background:#C0392B;"></span> u_n (vers le centre O)</span>
+        </div>
+        <div class="etape-msg-box" id="frenetResultBox">v(t) = v · u_t(t) &nbsp;|&nbsp; a(t) = (v²/R) · u_n(t)</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Vecteurs vitesse et accélération dans le repère de Frenet</h3>
+      <p>Dans le repère de Frenet (M ; <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>t</sub> ; <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>), en notant v(t) la valeur de la vitesse du point M au cours du temps, les coordonnées des vecteurs vitesse <span class="vecsym">v<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span>(t) et accélération <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span>(t) sont :</p>
+      <div class="fig-box">
+        <img src="images-cours/coordonnees-vect-v-et-a.png" alt="Coordonnées des vecteurs vitesse et accélération dans le repère de Frenet : v(t) a pour coordonnées vt(t)=v(t) et vn(t)=0, donc v(t)=v(t)ut(t) ; a(t) a pour coordonnées at(t)=dv/dt et an(t)=(v(t))²/R, donc a(t)=(dv/dt)ut(t)+(v(t))²/R un(t)">
+      </div>
+      <div class="remarque-box">
+        <strong>Cas particulier — mouvement circulaire uniforme :</strong> si v = constante, alors dv/dt = 0, donc
+        <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = <span class="math">v²/R</span> · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>. L'accélération est alors <strong>constante en norme</strong>, colinéaire et de même sens que <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub> : elle est dirigée vers le centre de la trajectoire, on parle d'accélération <strong>centripète</strong>. Une accélération centripète est caractéristique des mouvements circulaires uniformes.
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-P-1 -->
+
+</div>
+<!-- /tab-0 -->
+
+<!-- ══════════════ ONGLET A — SATELLITES EN ORBITE ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <div class="intro-box">
+    On étudie ici le cas d'un satellite S de masse m en <strong>orbite circulaire</strong> autour d'un astre de centre O et de masse M, dans un référentiel considéré comme galiléen. On montre que ce mouvement est nécessairement <strong>uniforme</strong>, et on établit les expressions de la vitesse et de la période de révolution du satellite.
+  </div>
+
+    <div class="methode-box">
+      <div class="methode-titre">📐 Méthode — Établir la vitesse d'un satellite en orbite circulaire</div>
+      <ol>
+        <li>Choisir le <strong>système</strong> {satellite S, masse m} et le <strong>référentiel</strong> d'étude (galiléen).</li>
+        <li>Identifier la <strong>seule force extérieure</strong> : la force de gravitation exercée par l'astre.</li>
+        <li>Appliquer la <strong>2<sup>e</sup> loi de Newton</strong> (PFD).</li>
+        <li>Utiliser l'expression de l'accélération dans le <strong>repère de Frenet</strong> pour un mouvement circulaire.</li>
+        <li>Identifier terme à terme pour en déduire v, puis T.</li>
+      </ol>
+    </div>
+
+    <div class="def-card">
+      <h3>Mise en équation</h3>
+      <p>Système : satellite S de masse m &nbsp;|&nbsp; Référentiel : astrocentrique, supposé galiléen &nbsp;|&nbsp; Le satellite n'est soumis qu'à la force de gravitation exercée par l'astre de centre O et de masse M.</p>
+      <p style="margin-top:8px;">D'après la 2<sup>e</sup> loi de Newton :</p>
+      <div class="formule-box" style="font-size:0.98rem;">
+        <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>O/S</sub> = G <span class="math">mM/r²</span> · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub> = m · <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span>
+      </div>
+      <p>Le vecteur <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> est colinéaire et de même sens que <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub> (dirigé vers O) : l'accélération est <strong>centripète</strong>, ce qui est cohérent avec un mouvement circulaire uniforme. Or, dans le repère de Frenet, une accélération centripète s'écrit <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = <span class="math">v²/r</span> · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>, donc :</p>
+      <div class="formule-box">
+        G <span class="math">M/r²</span> = <span class="math">v²/r</span> &nbsp;⟹&nbsp; <span style="color:var(--bleu);">v = √(GM/r)</span>
+      </div>
+      <div class="remarque-box"><strong>Conséquence :</strong> comme v ne dépend que de r (et non de la masse m du satellite), le mouvement est bien <strong>circulaire uniforme</strong> — cela justifie a posteriori l'hypothèse de départ.</div>
+    </div>
+
+    <div class="def-card">
+      <h3>Période de révolution</h3>
+      <p>Le satellite parcourt son orbite circulaire de périmètre 2πr à la vitesse constante v ; la période T est la durée d'un tour complet :</p>
+      <div class="formule-box" style="font-size:0.95rem;">
+        T = <span class="math">2πr / v</span> = 2π√(r³/GM)
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 260 170" width="260" xmlns="http://www.w3.org/2000/svg" style="border:1px solid #DDE3EC;border-radius:8px;background:#F8FAFE;">
+          <circle cx="130" cy="90" r="18" fill="#5B8FB9"/>
+          <text x="130" y="95" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Outfit">O</text>
+          <circle cx="130" cy="90" r="60" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="3,3"/>
+          <circle cx="190" cy="90" r="6" fill="#E8783A"/>
+          <text x="198" y="80" font-size="11" fill="#E8783A" font-weight="700" font-family="Outfit">S</text>
+          <line x1="130" y1="90" x2="185" y2="90" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="155" y="82" font-size="11" fill="#5A6B7A">r</text>
+          <line x1="190" y1="90" x2="190" y2="50" stroke="#3A8A6E" stroke-width="2.2" marker-end="url(#arrVa)"/>
+          <text x="196" y="55" font-size="11" fill="#3A8A6E" font-weight="700">v</text>
+          <line x1="190" y1="90" x2="150" y2="90" stroke="#C0392B" stroke-width="2.2" marker-end="url(#arrVa2)"/>
+          <text x="163" y="105" font-size="11" fill="#C0392B" font-weight="700">a</text>
+          <defs>
+            <marker id="arrVa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#3A8A6E"/></marker>
+            <marker id="arrVa2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#C0392B"/></marker>
+          </defs>
+        </svg>
+        <div class="fig-caption">Satellite S en orbite circulaire uniforme autour d'un astre de centre O : <span class="vecsym" style="color:#3A8A6E;">v<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span> tangent à la trajectoire, <span class="vecsym" style="color:#C0392B;">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> centripète.</div>
+      </div>
+      <div class="exemple-box"><strong>Cas des satellites terrestres :</strong> avec r = R<sub>T</sub> + h (R<sub>T</sub> rayon terrestre, h altitude), on obtient T = 2π√((R<sub>T</sub>+h)³/GM<sub>T</sub>).</div>
+    </div>
+
+    <!-- Simulateur interactif -->
+    <div class="activite-card">
+      <h3>🛰️ Simulateur — Satellite en orbite circulaire autour de la Terre</h3>
+      <p>Fais varier l'altitude du satellite et observe l'évolution des vecteurs vitesse et accélération, ainsi que de la période de révolution.</p>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Orbite circulaire — Terre (M<sub>T</sub> = 5,97×10²⁴ kg, R<sub>T</sub> = 6 371 km)</div>
+        <canvas id="satCanvas" width="360" height="300"></canvas>
+        <div class="slider-row">
+          <label for="satAlt">Altitude h</label>
+          <input type="range" id="satAlt" min="200" max="36000" step="100" value="400">
+          <span class="slider-val" id="satAltVal">400 km</span>
+        </div>
+        <div class="anim-controls">
+          <button class="anim-btn active" id="satPlayBtn" onclick="toggleSatAnim()">⏸ Pause</button>
+        </div>
+        <div class="legende-vect">
+          <span><span class="swatch" style="background:#3A8A6E;"></span> vecteur vitesse v (tangent)</span>
+          <span><span class="swatch" style="background:#C0392B;"></span> vecteur accélération a (centripète, vers O)</span>
+        </div>
+        <div class="etape-msg-box" id="satResultBox">v = … km/s &nbsp;|&nbsp; a = … m/s² &nbsp;|&nbsp; T = … min</div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — La Station spatiale internationale (ISS)</h3>
+      <div class="exo-enonce">
+        L'ISS évolue en orbite quasi circulaire autour de la Terre, à l'altitude h = 400 km. Données : G = 6,67×10⁻¹¹ N·m².kg⁻² ; M<sub>T</sub> = 5,97×10²⁴ kg ; R<sub>T</sub> = 6 371 km.
+      </div>
+      <div class="question-block">
+        <div class="question-label">1) Calculer la vitesse v de l'ISS sur son orbite.</div>
+        <div class="num-field-wrap">
+          <label>v =</label>
+          <input type="text" class="num-input" id="iss-v" placeholder="valeur">
+          <span class="num-unit">km/s (2 chiffres significatifs)</span>
+          <button class="btn-verif" onclick="checkNum('iss-v', 7.7, 0.1)">Vérifier</button>
+          <span class="num-feedback" id="iss-v-fb"></span>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) En déduire la période de révolution T de l'ISS, en minutes. Combien de fois l'ISS fait-elle le tour de la Terre en 24 h ?</div>
+        <div class="num-field-wrap">
+          <label>T ≈</label>
+          <input type="text" class="num-input" id="iss-t" placeholder="valeur">
+          <span class="num-unit">min</span>
+          <button class="btn-verif" onclick="checkNum('iss-t', 92.5, 2)">Vérifier</button>
+          <span class="num-feedback" id="iss-t-fb"></span>
+        </div>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">r = R<sub>T</sub> + h = 6 371 + 400 = 6 771 km = 6,771×10⁶ m</div>
+        <div class="calc-step">v = √(G·M<sub>T</sub>/r) = √(6,67×10⁻¹¹ × 5,97×10²⁴ / 6,771×10⁶) ≈ 7,67×10³ m/s ≈ <strong>7,7 km/s</strong></div>
+        <div class="calc-step">T = 2π·r/v = 2π × 6,771×10⁶ / 7,67×10³ ≈ 5 546 s ≈ <strong>92,4 min</strong> (environ 1 h 32 min)</div>
+        <div class="calc-step">En 24 h = 1 440 min, l'ISS effectue 1 440/92,4 ≈ <strong>15,6 tours</strong> de la Terre, soit un peu plus de 15 orbites complètes par jour.</div>
+      </div>
+    </div>
+
+  <!-- ───────── APPLICATIONS ───────── -->
+
+    <div class="def-card">
+      <h3>Satellite géostationnaire</h3>
+      <p>Un satellite est dit <strong>géostationnaire</strong> lorsqu'il paraît immobile pour un observateur terrestre : il est fixe dans le référentiel terrestre. Sa période de révolution est donc égale à la période de rotation de la Terre sur elle-même, soit <strong>T = 23 h 56 min ≈ 86 164 s</strong> (jour sidéral), et son orbite est nécessairement <strong>circulaire, équatoriale</strong>.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — Altitude d'un satellite géostationnaire</h3>
+      <div class="exo-enonce">
+        Données : G = 6,67×10⁻¹¹ N·m².kg⁻² ; M<sub>T</sub> = 5,97×10²⁴ kg ; R<sub>T</sub> = 6 371 km ; T = 86 164 s.
+      </div>
+      <div class="question-block">
+        <div class="question-label">1) Montrer que le rayon de l'orbite géostationnaire est donné par r = (GM<sub>T</sub>T² / 4π²)<sup>1/3</sup>, puis calculer sa valeur.</div>
+        <div class="num-field-wrap">
+          <label>r =</label>
+          <input type="text" class="num-input" id="geo-r" placeholder="valeur">
+          <span class="num-unit">×10⁷ m (2 chiffres significatifs)</span>
+          <button class="btn-verif" onclick="checkNum('geo-r', 4.2, 0.15)">Vérifier</button>
+          <span class="num-feedback" id="geo-r-fb"></span>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) En déduire l'altitude h du satellite au-dessus du sol.</div>
+        <div class="num-field-wrap">
+          <label>h ≈</label>
+          <input type="text" class="num-input" id="geo-h" placeholder="valeur">
+          <span class="num-unit">×10⁴ km</span>
+          <button class="btn-verif" onclick="checkNum('geo-h', 3.6, 0.3)">Vérifier</button>
+          <span class="num-feedback" id="geo-h-fb"></span>
+        </div>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">Le mouvement circulaire est uniforme, donc T = 2π√(r³/GM<sub>T</sub>) ⟹ T² = 4π²r³/GM<sub>T</sub></div>
+        <div class="calc-step">r³ = GM<sub>T</sub>T² / 4π² &nbsp;⟹&nbsp; r = (GM<sub>T</sub>T² / 4π²)<sup>1/3</sup></div>
+        <div class="calc-step">r = (6,67×10⁻¹¹ × 5,97×10²⁴ × 86164² / 4π²)<sup>1/3</sup> ≈ <strong>4,2×10⁷ m</strong></div>
+        <div class="calc-step">h = r − R<sub>T</sub> = 4,2×10⁷ − 6,37×10⁶ ≈ <strong>3,6×10⁴ km</strong> (soit environ 36 000 km)</div>
+      </div>
+    </div>
+
+</div>
+<!-- /tab-1 -->
+
+<!-- ══════════════ ONGLET K — LOIS DE KEPLER ══════════════ -->
+<div class="tab-content" id="tab-2">
+
+  <div class="sub-tabs-nav" id="sub-nav-K">
+    <button class="sub-tab-btn active" data-sub="K1" onclick="switchSubTab('K',0)">
+      <span class="sub-tab-num">1</span> Loi des orbites
+    </button>
+    <button class="sub-tab-btn" data-sub="K2" onclick="switchSubTab('K',1)">
+      <span class="sub-tab-num">2</span> Loi des aires
+    </button>
+    <button class="sub-tab-btn" data-sub="K3" onclick="switchSubTab('K',2)">
+      <span class="sub-tab-num">3</span> Loi des périodes
+    </button>
+    <button class="sub-tab-btn" data-sub="K4" onclick="switchSubTab('K',3)">
+      <span class="sub-tab-num">4</span> Exercices bilan &amp; annales
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Dans le cas général, la trajectoire d'une planète ou d'un satellite n'est pas circulaire mais <strong>elliptique</strong>. Le mouvement d'un satellite ou d'une planète est alors décrit par les <strong>3 lois de Kepler</strong> (1571–1630), énoncées à partir des observations de Tycho Brahe sur la planète Mars.
+  </div>
+
+  <!-- ───────── K1 : LOI DES ORBITES ───────── -->
+  <div class="sub-tab-content active" id="sub-K-0">
+
+    <div class="def-card">
+      <h3>Première loi de Kepler — loi des orbites</h3>
+      <div class="formule-box" style="font-size:0.95rem;">
+        Dans le référentiel héliocentrique, l'orbite de chaque planète est une <strong>ellipse</strong> dont le Soleil occupe l'un des foyers.
+      </div>
+      <p style="margin-top:10px;">La distance Soleil–planète n'est pas constante. La position la plus proche du Soleil est le <strong>périhélie</strong> (ou périgée pour un satellite terrestre), la position la plus éloignée est l'<strong>aphélie</strong> (ou apogée).</p>
+
+      <div class="fig-box">
+        <svg viewBox="0 0 340 180" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:420px;">
+          <defs>
+            <marker id="arr2a-l" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="8,0 1,3 8,6" fill="#5A6B7A"/></marker>
+            <marker id="arr2a-r" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#5A6B7A"/></marker>
+          </defs>
+          <ellipse cx="170" cy="85" rx="140" ry="60" fill="none" stroke="#2D5F8A" stroke-width="2"/>
+          <circle cx="115" cy="85" r="8" fill="#fbbf24"/>
+          <text x="115" y="65" text-anchor="middle" font-size="11" fill="#5A6B7A" font-family="Outfit">Soleil (F)</text>
+          <circle cx="225" cy="85" r="2.5" fill="#94a3b8"/>
+          <text x="225" y="65" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Outfit">F'</text>
+          <circle cx="30" cy="85" r="5" fill="#C0392B"/>
+          <text x="30" y="105" text-anchor="middle" font-size="10.5" fill="#C0392B" font-weight="700">périhélie</text>
+          <circle cx="310" cy="85" r="5" fill="#3A8A6E"/>
+          <text x="310" y="105" text-anchor="middle" font-size="10.5" fill="#3A8A6E" font-weight="700">aphélie</text>
+          <!-- lignes de rappel pointillées reliant les extrémités de l'ellipse à la cote -->
+          <line x1="30" y1="90" x2="30" y2="155" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2"/>
+          <line x1="310" y1="90" x2="310" y2="155" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2"/>
+          <!-- cote à double flèche du grand axe -->
+          <line x1="30" y1="155" x2="310" y2="155" stroke="#5A6B7A" stroke-width="1.4" marker-start="url(#arr2a-l)" marker-end="url(#arr2a-r)"/>
+          <rect x="148" y="163" width="44" height="14" fill="#F8FAFE"/>
+          <text x="170" y="174" text-anchor="middle" font-size="11" fill="#5A6B7A" font-weight="700">2a</text>
+        </svg>
+        <div class="fig-caption">Ellipse : F et F' sont les deux foyers ; a = demi-grand axe, e = c/a est l'excentricité (0 &lt; e &lt; 1). Le <strong>cercle</strong> est un cas particulier d'ellipse dont les deux foyers sont confondus en son centre, avec a = rayon.</div>
+      </div>
+
+      <div class="remarque-box"><strong>Rappel géométrique :</strong> une ellipse est l'ensemble des points M du plan tels que FM + F'M = 2a (somme des distances aux deux foyers constante). Plus l'excentricité e est petite, plus l'ellipse se rapproche d'un cercle.</div>
+      <div class="remarque-box"><strong>Généralisation :</strong> les trois lois de Kepler sont aussi valables pour le mouvement d'un satellite naturel ou artificiel autour d'une planète : cette dernière joue alors le rôle du Soleil, et on utilise le référentiel <strong>géocentrique</strong> (ou plus généralement <em>astrocentrique</em>).</div>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — L'orbite très excentrique de la comète de Halley</h3>
+      <div class="exo-enonce">
+        La comète de Halley est visible depuis la Terre tous les 76 ans environ. Son orbite elliptique autour du Soleil a pour <strong>périhélie</strong> q = 0,586 UA et pour <strong>aphélie</strong> Q = 35,1 UA (1 UA = distance Terre-Soleil).
+      </div>
+      <div class="question-block">
+        <div class="question-label">1) Sachant que 2a = q + Q (le grand axe est la somme des distances au périhélie et à l'aphélie), calculer le demi-grand axe a de l'orbite.</div>
+        <div class="num-field-wrap">
+          <label>a =</label>
+          <input type="text" class="num-input" id="halley-a" placeholder="valeur">
+          <span class="num-unit">UA</span>
+          <button class="btn-verif" onclick="checkNum('halley-a', 17.8, 0.2)">Vérifier</button>
+          <span class="num-feedback" id="halley-a-fb"></span>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) La distance focale c vérifie 2c = Q − q. Calculer c, puis en déduire l'excentricité e = c/a de l'orbite.</div>
+        <div class="num-field-wrap">
+          <label>e ≈</label>
+          <input type="text" class="num-input" id="halley-e" placeholder="valeur">
+          <span class="num-unit">(entre 0 et 1)</span>
+          <button class="btn-verif" onclick="checkNum('halley-e', 0.967, 0.02)">Vérifier</button>
+          <span class="num-feedback" id="halley-e-fb"></span>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">3) Commenter la valeur de e obtenue : que peut-on dire de la forme de cette orbite comparée à celle de la Terre (e<sub>Terre</sub> ≈ 0,017) ?</div>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">a = (q + Q)/2 = (0,586 + 35,1)/2 ≈ <strong>17,8 UA</strong></div>
+        <div class="calc-step">c = (Q − q)/2 = (35,1 − 0,586)/2 ≈ 17,3 UA</div>
+        <div class="calc-step">e = c/a = 17,3/17,8 ≈ <strong>0,97</strong></div>
+        <div class="calc-step">Avec e ≈ 0,97 (très proche de 1), l'orbite de la comète de Halley est une ellipse <strong>extrêmement allongée</strong> — bien plus excentrique que celle de la Terre (e ≈ 0,017, quasi circulaire). Cela explique que la comète passe l'essentiel de son temps très loin du Soleil (jusqu'à 35 UA, au-delà de Neptune) et ne s'en approche que brièvement (0,586 UA, à l'intérieur de l'orbite de Vénus), avec — d'après la loi des aires — une vitesse bien plus grande au périhélie qu'à l'aphélie.</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-K-0 -->
+
+  <!-- ───────── K2 : LOI DES AIRES ───────── -->
+  <div class="sub-tab-content" id="sub-K-1">
+
+    <div class="def-card">
+      <h3>Deuxième loi de Kepler — loi des aires</h3>
+      <div class="formule-box" style="font-size:0.95rem;">
+        Le segment de droite reliant le Soleil à la planète (rayon vecteur) balaie des <strong>aires égales</strong> pendant des <strong>durées égales</strong>.
+      </div>
+      <p style="margin-top:10px;">Conséquence directe : la <strong>vitesse d'une planète n'est pas constante</strong> sur son orbite elliptique. Elle est maximale au périhélie (proche du Soleil) et minimale à l'aphélie (loin du Soleil). <strong>Seule une trajectoire circulaire</strong> permet d'obtenir une vitesse constante (mouvement uniforme).</p>
+    </div>
+
+    <div class="activite-card">
+      <h3>🪐 Animation — Balayage des aires égales</h3>
+      <p>La planète P parcourt son orbite elliptique autour du Soleil S. Deux arcs sont mis en évidence, balayés pendant la <strong>même durée Δt</strong> : l'un proche du périhélie (rouge), l'autre proche de l'aphélie (vert). Lance l'animation : observe que la planète parcourt l'arc rouge <strong>rapidement</strong> et l'arc vert <strong>lentement</strong>, alors que les deux aires balayées 𝒜₁ et 𝒜₂ sont rigoureusement égales.</p>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Loi des aires — 𝒜₁ = 𝒜₂ pour une même durée Δt</div>
+        <div class="slider-row" style="justify-content:center;">
+          <label for="areaBody">Corps du Système solaire</label>
+          <select id="areaBody" class="dq-select" style="min-width:200px;">
+            <option value="mercure">Mercure (e ≈ 0,206)</option>
+            <option value="venus">Vénus (e ≈ 0,007)</option>
+            <option value="terre">Terre (e ≈ 0,017)</option>
+            <option value="mars">Mars (e ≈ 0,093)</option>
+            <option value="jupiter">Jupiter (e ≈ 0,049)</option>
+            <option value="saturne">Saturne (e ≈ 0,057)</option>
+            <option value="uranus">Uranus (e ≈ 0,046)</option>
+            <option value="neptune">Neptune (e ≈ 0,010)</option>
+            <option value="halley" selected>Comète de Halley (e ≈ 0,967)</option>
+          </select>
+        </div>
+        <canvas id="areaCanvas" width="380" height="260"></canvas>
+        <div class="anim-controls">
+          <button class="anim-btn active" id="areaPlayBtn" onclick="toggleAreaAnim()">⏸ Pause</button>
+          <button class="anim-btn" onclick="resetAreaAnim()">↺ Recommencer</button>
+        </div>
+        <div class="legende-vect">
+          <span><span class="swatch" style="background:#C0392B;"></span> 𝒜₁ : de P(t₁) à P(t₁+Δt), près du périhélie</span>
+          <span><span class="swatch" style="background:#3A8A6E;"></span> 𝒜₂ : de P(t₂) à P(t₂+Δt), près de l'aphélie</span>
+        </div>
+        <div class="etape-msg-box" id="areaMsgBox" style="justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;color:var(--orange);background:var(--orange-clair);">𝒜₁ = 𝒜₂</div>
+        <div class="etape-msg-box" id="areaDataBox" style="justify-content:center;text-align:center;flex-direction:column;gap:4px;"></div>
+        <div class="remarque-box" style="margin-top:10px;font-size:0.80rem;"><strong>Remarque :</strong> le calcul de la vitesse instantanée v en un point quelconque d'une ellipse (équation dite « vis-viva ») n'est pas une capacité exigible en Terminale — seul le cas circulaire uniforme (v = √(GM/r), vu en A1) est au programme. La valeur affichée ici est donnée à titre de <strong>culture scientifique</strong>, pour illustrer concrètement la loi des aires.</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Justification à partir de la loi des aires</h3>
+      <p>Pendant une même durée Δt, la planète parcourt un arc de longueur L₁ près du périhélie, et un arc de longueur L₂ près de l'aphélie, avec L₁ &gt; L₂ (car l'aire balayée est la même mais le rayon vecteur est plus court au périhélie). Comme v = L/Δt :</p>
+      <div class="formule-box" style="font-size:1rem;">
+        L₁/Δt &gt; L₂/Δt &nbsp;⟹&nbsp; v<sub>périhélie</sub> &gt; v<sub>aphélie</sub>
+      </div>
+      <p>Le mouvement de la planète n'est donc pas uniforme : c'est une conséquence directe de la 2<sup>e</sup> loi de Kepler.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — Satellite sur une orbite très excentrique</h3>
+      <div class="exo-enonce">
+        Un satellite artificiel est placé sur une orbite elliptique très excentrique autour de la Terre. Il passe successivement au <strong>périgée</strong> (point le plus proche, altitude h₁ = 250 km) puis à l'<strong>apogée</strong> (point le plus éloigné, altitude h₂ = 36 000 km). Au périgée et à l'apogée, le vecteur vitesse est perpendiculaire au rayon vecteur Terre-satellite. Donnée : R<sub>T</sub> = 6 371 km. Au périgée, la vitesse mesurée est v₁ = 9,5 km/s.
+      </div>
+      <div class="question-block">
+        <div class="question-label">1) D'après la loi des aires, comparer qualitativement la vitesse du satellite au périgée et à l'apogée.</div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) Au périgée et à l'apogée, le vecteur vitesse étant perpendiculaire au rayon vecteur, la vitesse aréolaire s'écrit simplement dA/dt = ½·r·v. En déduire, à partir de la loi des aires, la relation entre r₁, v₁, r₂ et v₂, puis calculer v₂ (vitesse à l'apogée).</div>
+        <div class="num-field-wrap">
+          <label>v₂ ≈</label>
+          <input type="text" class="num-input" id="excentr-v2" placeholder="valeur">
+          <span class="num-unit">km/s</span>
+          <button class="btn-verif" onclick="checkNum('excentr-v2', 1.5, 0.15)">Vérifier</button>
+          <span class="num-feedback" id="excentr-v2-fb"></span>
+        </div>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">1) Le périgée est plus proche de la Terre que l'apogée : d'après la loi des aires, pour balayer la même aire en la même durée, le satellite doit se déplacer <strong>plus vite au périgée qu'à l'apogée</strong>.</div>
+        <div class="calc-step">2) Au périgée et à l'apogée, <span class="vecsym">v<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span> ⊥ rayon vecteur, donc dA/dt = ½·r·v. Comme dA/dt est constante (loi des aires), on a : r₁·v₁ = r₂·v₂</div>
+        <div class="calc-step">r₁ = R<sub>T</sub> + h₁ = 6 371 + 250 = 6 621 km &nbsp;&nbsp; r₂ = R<sub>T</sub> + h₂ = 6 371 + 36 000 = 42 371 km</div>
+        <div class="calc-step">v₂ = v₁ × r₁/r₂ = 9,5 × 6 621/42 371 ≈ <strong>1,5 km/s</strong></div>
+        <div class="calc-step">Le satellite est donc environ 6 fois plus lent à l'apogée qu'au périgée, en cohérence avec la réponse qualitative de la question 1.</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-K-1 -->
+
+  <!-- ───────── K3 : LOI DES PÉRIODES ───────── -->
+  <div class="sub-tab-content" id="sub-K-2">
+
+    <div class="def-card">
+      <h3>Troisième loi de Kepler — loi des périodes</h3>
+      <div class="formule-box" style="font-size:0.95rem;">
+        Le quotient du carré de la période de révolution T d'une planète par le cube du demi-grand axe a de son orbite est le même pour toutes les planètes du système solaire :
+      </div>
+      <div class="formule-box">
+        <span class="math">T²/a³</span> = constante <span class="legend">(constante indépendante de la planète, ne dépend que de l'astre attracteur central)</span>
+      </div>
+      <p>Pour deux planètes 1 et 2 en orbite autour du même astre : <span class="math">T₁²/a₁³ = T₂²/a₂³</span>. Si la trajectoire est circulaire, alors a = r (rayon de l'orbite) et on a <span class="math">T²/r³</span> = constante.</p>
+
+      <div class="fig-box">
+        <svg viewBox="0 0 320 220" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:380px;">
+          <defs>
+            <marker id="arr3a-l" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="8,0 1,3 8,6" fill="#5B8FB9"/></marker>
+            <marker id="arr3a-r" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#5B8FB9"/></marker>
+            <marker id="arr3b-l" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="8,0 1,3 8,6" fill="#3A8A6E"/></marker>
+            <marker id="arr3b-r" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#3A8A6E"/></marker>
+          </defs>
+          <circle cx="160" cy="110" r="90" fill="none" stroke="#3A8A6E" stroke-width="1.6" stroke-dasharray="4,3"/>
+          <circle cx="160" cy="110" r="55" fill="none" stroke="#5B8FB9" stroke-width="1.6" stroke-dasharray="4,3"/>
+          <circle cx="160" cy="110" r="6" fill="#fbbf24"/>
+          <text x="160" y="96" text-anchor="middle" font-size="10.5" fill="#5A6B7A" font-family="Outfit">S</text>
+          <circle cx="215" cy="110" r="5" fill="#5B8FB9"/>
+          <text x="218" y="95" font-size="11" fill="#5B8FB9" font-weight="700" font-family="Outfit">1</text>
+          <text x="222" y="112" font-size="10" fill="#5B8FB9" font-family="Outfit">Période T₁</text>
+          <circle cx="250" cy="110" r="5" fill="#3A8A6E"/>
+          <text x="253" y="95" font-size="11" fill="#3A8A6E" font-weight="700" font-family="Outfit">2</text>
+          <text x="257" y="127" font-size="10" fill="#3A8A6E" font-family="Outfit">Période T₂</text>
+          <line x1="105" y1="175" x2="215" y2="175" stroke="#5B8FB9" stroke-width="1.3" marker-start="url(#arr3a-l)" marker-end="url(#arr3a-r)"/>
+          <text x="160" y="190" text-anchor="middle" font-size="10.5" fill="#5B8FB9" font-weight="700">2a₁</text>
+          <line x1="70" y1="200" x2="250" y2="200" stroke="#3A8A6E" stroke-width="1.3" marker-start="url(#arr3b-l)" marker-end="url(#arr3b-r)"/>
+          <text x="160" y="214" text-anchor="middle" font-size="10.5" fill="#3A8A6E" font-weight="700">2a₂</text>
+        </svg>
+        <div class="fig-caption">Deux planètes (ou satellites) 1 et 2 en orbite circulaire autour du même astre S, de rayons a₁ &lt; a₂ : la plus proche (1) a la période T₁ la plus courte. La 3<sup>e</sup> loi de Kepler relie ces deux orbites par T₁²/a₁³ = T₂²/a₂³.</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Preuve graphique de la 3<sup>e</sup> loi</h3>
+      <p>Si l'on trace le carré de la période T² en fonction du cube du demi-grand axe a³ pour plusieurs planètes du Système solaire, les points obtenus sont <strong>alignés sur une droite passant par l'origine</strong> : c'est la signature graphique d'une proportionnalité, T² = k×a³.</p>
+      <div class="fig-box">
+        <svg viewBox="0 0 300 250" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:360px;">
+          <defs>
+            <marker id="arrAxisX" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><polygon points="0,0 8,3.5 0,7" fill="#5A6B7A"/></marker>
+            <marker id="arrAxisY" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><polygon points="0,0 8,3.5 0,7" fill="#5A6B7A"/></marker>
+          </defs>
+          <!-- axes avec flèches -->
+          <line x1="40" y1="220" x2="284" y2="220" stroke="#5A6B7A" stroke-width="1.3" marker-end="url(#arrAxisX)"/>
+          <line x1="40" y1="220" x2="40" y2="16" stroke="#5A6B7A" stroke-width="1.3" marker-end="url(#arrAxisY)"/>
+          <text x="290" y="224" font-size="10" fill="#5A6B7A" text-anchor="end">a³ (UA³)</text>
+          <text x="18" y="24" font-size="10" fill="#5A6B7A">T² (an²)</text>
+          <!-- droite de proportionnalité (k=1 dans ces unités, Soleil) -->
+          <line x1="40" y1="220" x2="280" y2="20" stroke="#E8783A" stroke-width="1.6" stroke-dasharray="5,3"/>
+          <!-- points planètes -->
+          <circle cx="43.5" cy="217" r="3.5" fill="#2D5F8A"/>
+          <text x="48" y="213" font-size="9" fill="#2D5F8A">Mercure</text>
+          <circle cx="62" cy="201" r="3.5" fill="#2D5F8A"/>
+          <text x="67" y="197" font-size="9" fill="#2D5F8A">Vénus</text>
+          <circle cx="100" cy="170" r="3.5" fill="#2D5F8A"/>
+          <text x="105" y="166" font-size="9" fill="#2D5F8A">Terre</text>
+          <circle cx="250" cy="43" r="3.5" fill="#2D5F8A"/>
+          <text x="220" y="35" font-size="9" fill="#2D5F8A">Mars</text>
+          <!-- indication de prolongement -->
+          <text x="255" y="15" font-size="8.5" fill="#94a3b8" text-anchor="end" font-style="italic">Jupiter, Saturne… (hors cadre)</text>
+        </svg>
+        <div class="fig-caption">T² en fonction de a³ pour les planètes telluriques (Mercure, Vénus, Terre, Mars) : les points sont alignés sur une droite passant par l'origine, qui se prolonge pour les planètes géantes. C'est la même démarche que dans l'annale « Mars vue sous l'œil de Kepler » (onglet K4).</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Expression de la constante</h3>
+      <p>On a établi en A1 (cas circulaire) : T = 2π√(r³/GM), soit T² = 4π²r³/GM, d'où :</p>
+      <div class="formule-box" style="background:#FEF3E8;">
+        <span class="math">T²/r³</span> = <span class="math">4π²/GM</span>
+      </div>
+      <div class="remarque-box"><strong>Démonstration générale (cas elliptique) :</strong> en appliquant la 2<sup>e</sup> loi de Newton et la loi des aires sur une orbite elliptique de demi-grand axe a, on démontre — hors programme en Terminale — que la même relation <span class="math">T²/a³ = 4π²/GM</span> reste valable, M étant la masse de l'astre attracteur (au foyer de l'ellipse).</div>
+    </div>
+
+    <div class="calc-box">
+      <h3 style="font-family:'Outfit',sans-serif;color:var(--bleu);font-size:1rem;margin-bottom:8px;">🧮 Calculatrice — Loi des périodes</h3>
+      <p style="font-size:0.86rem;color:var(--texte-leger);margin-bottom:6px;">Connaissant (a₁, T₁) pour une planète de référence, calcule T₂ pour une autre planète de demi-grand axe a₂ (même astre central).</p>
+      <div class="calc-grid">
+        <div class="calc-field"><label>a₁ (×10¹¹ m)</label><input type="text" class="num-input" id="k3-a1" value="1,50" style="width:100%;"></div>
+        <div class="calc-field"><label>T₁ (jours)</label><input type="text" class="num-input" id="k3-t1" value="365" style="width:100%;"></div>
+        <div class="calc-field"><label>a₂ (×10¹¹ m)</label><input type="text" class="num-input" id="k3-a2" value="2,28" style="width:100%;"></div>
+        <div class="calc-field"><label>T₂ (jours) — à calculer</label><input type="text" class="num-input" id="k3-t2" placeholder="?" disabled style="width:100%;background:#eef2f7;"></div>
+      </div>
+      <div class="num-btn-row">
+        <button class="btn-verif" onclick="calcKepler3()">Calculer T₂</button>
+        <button class="btn-reset" onclick="resetKepler3()">↺ Valeurs par défaut (Terre / Mars)</button>
+      </div>
+      <div class="calc-result" id="k3-result">T₂ = (2π/a₁^1,5) × a₂^1,5 × T₁ / a₁^1,5 — remplis les champs puis clique sur « Calculer »</div>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ QCM — Loi des périodes</h3>
+      <div class="qcm-grid" id="k3-qcm">
+        <div class="qcm-item">
+          <div class="substance">Si le demi-grand axe d'une planète double (a → 2a), sa période T est multipliée par…</div>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmK3(this,false)">2</button>
+            <button class="qcm-btn" onclick="checkQcmK3(this,false)">4</button>
+            <button class="qcm-btn" onclick="checkQcmK3(this,true)">2√2 ≈ 2,83</button>
+          </div>
+        </div>
+      </div>
+      <div class="qcm-feedback" id="k3-qcm-fb"></div>
+    </div>
+
+  </div>
+  <!-- /sub-K-2 -->
+
+  <!-- ───────── K4 : EXERCICES BILAN & ANNALES ───────── -->
+  <div class="sub-tab-content" id="sub-K-3">
+
+    <div class="intro-box">
+      Deux sujets de baccalauréat pour s'entraîner et réinvestir l'ensemble de la séquence : 2<sup>e</sup> loi de Newton, champ de gravitation et 3<sup>e</sup> loi de Kepler. Corrections dépliables, d'après <a href="https://labolycee.org" target="_blank" style="color:var(--bleu);">labolycee.org</a>.
+    </div>
+
+    <!-- ══ ANNALE 1 : TRACTEUR GRAVITATIONNEL (Polynésie 2022) ══ -->
+    <div class="bilan-exo-card">
+      <span class="bilan-tag">BAC 2022 · POLYNÉSIE J1 · EXERCICE (5 points)</span>
+      <h3>Un tracteur gravitationnel pour dévier un astéroïde</h3>
+      <div class="bilan-theme">Mots-clés : 2<sup>e</sup> loi de Newton, champ de gravitation, 3<sup>e</sup> loi de Kepler. Pour dévier un astéroïde qui pourrait entrer en collision avec la Terre, on utilise l'attraction gravitationnelle mutuelle entre l'astéroïde A et un engin spatial E de masse m, maintenu à distance constante d.</div>
+      <div class="bilan-links">
+        <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-04/2022-Polynesie-J1-ExoA-Sujet-TracteurGravitationnel-5pts.pdf" target="_blank">📄 Sujet</a>
+        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2023-01/2022-Polynesie-J1-ExoA-Correction-TracteurGravitationnel-5pts_0.pdf" target="_blank">✅ Corrigé officiel</a>
+      </div>
+
+      <div class="exo-enonce">
+        <strong>Données :</strong> masse d'Apophis M = 4×10¹⁰ kg · masse de l'engin spatial m = 5×10³ kg · distance d = 240 m · G = 6,67408×10⁻¹¹ N·m².kg⁻² · rayon de l'orbite R = 1,37961×10¹¹ m · masse du Soleil M<sub>S</sub> = 1,98892×10³⁰ kg · période sans tracteur T = 323,442 jours.
+      </div>
+
+
+      <div class="question-block">
+        <div class="question-label">1–3) Représenter <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>E/A</sub>, tracer <span class="vecsym">Δv<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="26,5 21,1.5 21,8.5" fill="currentColor"/></svg></span> = <span class="vecsym">v<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span><sub>f</sub> − <span class="vecsym">v<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span><sub>i</sub>, et en déduire la direction dans laquelle placer l'engin E pour dévier A.</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <p><span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>E/A</sub> est dirigée de A vers E (attraction). D'après la 2<sup>e</sup> loi de Newton appliquée à l'astéroïde de masse M : Σ<span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = M<span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> ≈ M·<span class="vecsym">Δv<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="26,5 21,1.5 21,8.5" fill="currentColor"/></svg></span>/Δt.</p>
+          <p style="margin-top:6px;">Comme <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>E/A</sub> est l'unique force responsable de la variation de vitesse, elle a <strong>la même direction et le même sens</strong> que <span class="vecsym">Δv<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="26,5 21,1.5 21,8.5" fill="currentColor"/></svg></span>. Les astronomes doivent donc placer l'engin E <strong>dans la direction de <span class="vecsym">Δv<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="26,5 21,1.5 21,8.5" fill="currentColor"/></svg></span></strong> souhaitée.</p>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">4–6) Calculer F<sub>E/A</sub>, montrer que Δt = ΔV·d²/(G·m), puis vérifier que Δt ≈ 4 jours pour ΔV = 2×10⁻⁶ m·s⁻¹.</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <div class="calc-step">F<sub>E/A</sub> = G·M·m/d² = 6,67408×10⁻¹¹ × (4×10¹⁰ × 5×10³)/240² ≈ <strong>0,2 N</strong></div>
+          <div class="calc-step">2<sup>e</sup> loi de Newton : F<sub>E/A</sub> = M·ΔV/Δt = G·M·m/d² ⟹ G·m/d² = ΔV/Δt ⟹ Δt = ΔV·d²/(G·m)</div>
+          <div class="calc-step">Δt = (2×10⁻⁶ × 240²)/(6,67408×10⁻¹¹ × 5×10³) ≈ 3×10⁵ s = 96 h ≈ <strong>4 jours</strong></div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">7) Établir la 3<sup>e</sup> loi de Kepler pour Apophis (mouvement circulaire uniforme, référentiel héliocentrique).</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <p>Système : astéroïde Apophis (masse M) · Référentiel héliocentrique, galiléen · seule force : <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>S/A</sub> = G·M<sub>S</sub>M/R² · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>.</p>
+          <div class="calc-step">PFD : <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = G·M<sub>S</sub>/R² · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>, et en repère de Frenet (mvt circ. unif.) : <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = v²/R · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub></div>
+          <div class="calc-step">Donc v² = G·M<sub>S</sub>·R/R² = G·M<sub>S</sub>/R. Or v = 2πR/T ⟹ v² = 4π²R²/T²</div>
+          <div class="calc-step">En égalisant : 4π²R²/T² = G·M<sub>S</sub>/R ⟹ (2π)²R³ = G·M<sub>S</sub>·T² ⟹ <strong>T²/R³ = 4π²/(G·M<sub>S</sub>)</strong> — 3<sup>e</sup> loi de Kepler</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">8–9) Le tracteur augmente T de 15 min. Déterminer T', puis le nouveau rayon R' et l'augmentation ΔR du rayon de l'orbite.</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <div class="calc-step">T = 323,442 j = 2,79454×10⁷ s ; T' = T + 900 s = <strong>2,79463×10⁷ s</strong></div>
+          <div class="calc-step">D'après la 3<sup>e</sup> loi de Kepler : T²/R³ = T'²/R'³ ⟹ R'³ = T'²R³/T²</div>
+          <div class="calc-step">R'³ = (2,79463×10⁷)² × (1,37961×10¹¹)³ / (2,79454×10⁷)² ⟹ R' ≈ <strong>1,37964×10¹¹ m</strong></div>
+          <div class="calc-step">ΔR = R' − R ≈ 137 964×10⁶ − 137 961×10⁶ = <strong>3×10⁶ m</strong> (soit 3 000 km d'augmentation du rayon de l'orbite)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ANNALE 2 : MARS SOUS L'OEIL DE KEPLER (Métropole 2023) — Partie 1 uniquement ══ -->
+    <div class="bilan-exo-card">
+      <span class="bilan-tag">BAC 2023 · MÉTROPOLE SEPT. J2 · EXERCICE (extrait — Partie 1)</span>
+      <h3>Mars vue sous l'œil de Kepler</h3>
+      <div class="bilan-theme">Johannes Kepler, assistant de Tycho Brahe, a établi ses trois lois à partir de l'étude de la trajectoire de Mars. On vérifie ici la 3<sup>e</sup> loi de Kepler à l'aide d'un programme Python, puis on détermine le demi-grand axe de l'orbite de Mars. <em>(La partie 2 de ce sujet, sur la lunette astronomique, relève du programme d'optique et n'est pas reprise ici.)</em></div>
+      <div class="bilan-links">
+        <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-02/2023-09-Metropole-J2-Exo3-Sujet-Kepler-Lunette-6pts.pdf" target="_blank">📄 Sujet complet</a>
+        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2026-02/2023-09-Metropole-J2-Exo3-Correction-Kepler-Lunette-6pts.pdf" target="_blank">✅ Corrigé officiel</a>
+      </div>
+
+      <div class="exo-enonce">
+        <strong>Données :</strong> 1 unité astronomique (au) = 1,496×10¹¹ m · période de révolution de Mars T<sub>Mars</sub> = 687 jours · tableau des couples (T, a) des autres planètes du système solaire, avec 1 an = 365×24×3600 s.
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">1) Énoncer les deux premières lois de Kepler. Justifier, à l'aide de la 2<sup>e</sup> loi, que le mouvement de Mars n'est pas uniforme.</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <p><strong>1<sup>ère</sup> loi (orbites) :</strong> dans le référentiel héliocentrique, l'orbite de chaque planète est une ellipse dont le Soleil occupe l'un des foyers.</p>
+          <p style="margin-top:6px;"><strong>2<sup>e</sup> loi (aires) :</strong> le rayon vecteur Soleil–planète balaie des aires égales pendant des durées égales.</p>
+          <p style="margin-top:6px;">Pendant une même durée Δt, Mars parcourt des arcs d'ellipse de longueurs L₁ et L₂ avec L₁ &gt; L₂ (aire balayée identique mais rayon vecteur différent). Donc v₁ = L₁/Δt &gt; v₂ = L₂/Δt : la vitesse de Mars n'est pas constante, son mouvement n'est donc <strong>pas uniforme</strong>.</p>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">2–3) Compléter la ligne « an = … » du programme Python (1 an en secondes). Commenter les lignes « acube = am**3 » et « Tcarre = Ts**2 ».</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <div class="calc-step">1 an = 365 j = 365×24 h = 365×24×3600 s &nbsp;⟹&nbsp; ligne 8 : <code>an = 365*24*3600</code></div>
+          <div class="calc-step">Ligne 16 <code>acube = am**3</code> : calcule le cube du demi-grand axe, exprimé en m³ (car am = a·au est en mètres)</div>
+          <div class="calc-step">Ligne 17 <code>Tcarre = Ts**2</code> : calcule le carré de la période de révolution, exprimé en s² (car Ts = T·an est en secondes)</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">4) La figure obtenue (T² en fonction de a³) est une droite passant par l'origine. Commenter au regard des lois de Kepler.</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <p>La courbe T² = f(a³) est une droite passant par l'origine, donc T² est <strong>proportionnel</strong> à a³ : T² = k×a³ avec k la pente de la droite. La <strong>3<sup>e</sup> loi de Kepler est ainsi vérifiée</strong> expérimentalement pour les planètes du système solaire.</p>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">5) Déterminer le demi-grand axe a<sub>Mars</sub> de l'orbite de Mars (avec k = 3,0×10⁻¹⁹ s²·m⁻³) et justifier qu'il s'agit de la 4<sup>e</sup> planète du système solaire.</div>
+        <div class="num-field-wrap">
+          <label>a<sub>Mars</sub> ≈</label>
+          <input type="text" class="num-input" id="mars-a" placeholder="valeur">
+          <span class="num-unit">×10¹¹ m</span>
+          <button class="btn-verif" onclick="checkNum('mars-a', 2.3, 0.15)">Vérifier</button>
+          <span class="num-feedback" id="mars-a-fb"></span>
+        </div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <div class="calc-step">D'après la 3<sup>e</sup> loi de Kepler : T²<sub>Mars</sub> = k × a³<sub>Mars</sub> ⟹ a<sub>Mars</sub> = (T²<sub>Mars</sub>/k)<sup>1/3</sup></div>
+          <div class="calc-step">T<sub>Mars</sub> = 687×24×3600 s ⟹ a<sub>Mars</sub> = ((687×24×3600)²/3,0×10⁻¹⁹)<sup>1/3</sup> ≈ <strong>2,3×10¹¹ m</strong></div>
+          <div class="calc-step">Cette valeur est cohérente : elle est comprise entre a<sub>Terre</sub> = 1,5×10¹¹ m et a<sub>Jupiter</sub> = 7,8×10¹¹ m. Mars est donc bien la <strong>4<sup>e</sup> planète</strong> du système solaire en partant du Soleil (après Mercure, Vénus, la Terre).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ EXERCICE ORIGINAL : PROXIMA B — LES 3 LOIS DE KEPLER + PYTHON ══ -->
+    <div class="bilan-exo-card">
+      <span class="bilan-tag">EXERCICE ORIGINAL · SYNTHÈSE · PYTHON</span>
+      <h3>🪐 Proxima b, l'exoplanète la plus proche du Système solaire</h3>
+      <div class="bilan-theme">Découverte en 2016, Proxima b est une exoplanète en orbite autour de Proxima Centauri, l'étoile la plus proche du Soleil (4,2 années-lumière). Elle évolue dans la « zone habitable » de son étoile. Cet exercice mobilise successivement les <strong>trois lois de Kepler</strong>, puis un script <strong>Python</strong> à compléter.</div>
+
+      <div class="exo-enonce">
+        <strong>Données :</strong> masse de Proxima Centauri M* ≈ 0,122 M<sub>☉</sub> = 2,43×10²⁹ kg · demi-grand axe de l'orbite de Proxima b : a ≈ 0,0485 UA = 7,26×10⁹ m · excentricité de l'orbite : e ≈ 0,02 · période de révolution mesurée : T<sub>mesurée</sub> ≈ 11,2 jours · G = 6,674×10⁻¹¹ N·m².kg⁻² · 1 UA = 1,496×10¹¹ m.
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">1) [Loi des orbites] L'excentricité de l'orbite de Proxima b vaut e ≈ 0,02. Que peut-on dire de la forme de cette orbite ? Rappeler la valeur de e pour un cercle parfait.</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <p>Pour un cercle, e = 0 exactement (les deux foyers sont confondus au centre). Ici e ≈ 0,02 est très proche de 0 : l'orbite de Proxima b est une ellipse <strong>très peu excentrique</strong>, quasiment confondue avec un cercle. On peut donc, en très bonne approximation, assimiler son mouvement à un <strong>mouvement circulaire</strong> pour la suite de l'exercice.</p>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">2) [Loi des aires] On suppose maintenant, à titre de comparaison, une exoplanète fictive sur une orbite très excentrique (e = 0,9) autour de la même étoile. Comment sa vitesse varierait-elle au cours d'une révolution ? Justifier à l'aide de la loi des aires, sans calcul.</div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <p>D'après la loi des aires, le segment étoile-planète balaie des aires égales en durées égales. Pour une orbite très excentrique, la distance à l'étoile varie fortement entre le périastre (point le plus proche) et l'apoastre (point le plus éloigné). Pour balayer la même aire en un temps donné, la planète doit donc parcourir un arc <strong>beaucoup plus long</strong> près du périastre qu'en un temps égal près de l'apoastre : sa vitesse serait <strong>très grande</strong> au périastre et <strong>très faible</strong> à l'apoastre — contrairement à Proxima b (orbite quasi circulaire), dont la vitesse reste quasiment constante.</p>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">3) [Loi des périodes] En assimilant l'orbite de Proxima b à un cercle de rayon a, calculer la période de révolution T attendue par la 3<sup>e</sup> loi de Kepler, en secondes puis en jours. Comparer à la valeur mesurée T<sub>mesurée</sub> ≈ 11,2 jours.</div>
+        <div class="num-field-wrap">
+          <label>T =</label>
+          <input type="text" class="num-input" id="proxima-t" placeholder="valeur">
+          <span class="num-unit">jours (1 chiffre après la virgule)</span>
+          <button class="btn-verif" onclick="checkNum('proxima-t', 11.2, 0.3)">Vérifier</button>
+          <span class="num-feedback" id="proxima-t-fb"></span>
+        </div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
+        <div class="accord-body">
+          <div class="calc-step">D'après la 3<sup>e</sup> loi de Kepler (cas circulaire) : T² = 4π²a³/(G·M*)</div>
+          <div class="calc-step">a³ = (7,26×10⁹)³ ≈ 3,83×10²⁹ m³</div>
+          <div class="calc-step">T² = 4π² × 3,83×10²⁹ / (6,674×10⁻¹¹ × 2,43×10²⁹) ≈ 9,3×10¹¹ s²</div>
+          <div class="calc-step">T = √(9,3×10¹¹) ≈ 9,65×10⁵ s = 9,65×10⁵/86400 ≈ <strong>11,2 jours</strong></div>
+          <div class="calc-step">La valeur calculée (≈ 11,2 j) est en excellent accord avec la valeur mesurée par les astronomes (11,2 j) : cela confirme que la 3<sup>e</sup> loi de Kepler s'applique bien à ce système extrasolaire, et pas seulement au système solaire.</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">4) [Python] Compléter le script ci-dessous, qui doit calculer la période T (en jours) à partir de a, G et M*, puis afficher l'écart relatif avec la valeur mesurée.</div>
+        <div class="exo-enonce" style="background:#F8FAFC;">
+          <pre style="font-family:'Courier New',monospace;font-size:0.82rem;line-height:1.7;white-space:pre-wrap;margin:0;color:#1A2A3A;">import numpy as np
+
+G = 6.674e-11          # constante de gravitation, en N.m^2.kg^-2
+M_etoile = 2.43e29      # masse de Proxima Centauri, en kg
+a = 7.26e9              # demi-grand axe de l'orbite, en m
+T_mesuree = 11.2        # période mesurée, en jours
+
+# 1) Calcul de la période T (en secondes) à partir de la 3e loi de Kepler
+T_s = ___________________________          # à compléter : T^2 = 4*pi^2*a^3/(G*M_etoile)
+
+# 2) Conversion de T_s en jours
+T_jours = ___________________________      # à compléter
+
+# 3) Écart relatif entre la valeur calculée et la valeur mesurée (en %)
+ecart = ___________________________        # à compléter : |T_jours - T_mesuree| / T_mesuree * 100
+
+print("Période calculée :", round(T_jours, 2), "jours")
+print("Écart relatif avec la mesure :", round(ecart, 2), "%")</pre>
+        </div>
+        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir le script complété <span>▾</span></button>
+        <div class="accord-body">
+          <pre style="font-family:'Courier New',monospace;font-size:0.82rem;line-height:1.7;white-space:pre-wrap;margin:0;color:#1A2A3A;background:#F0FAF6;padding:10px;border-radius:6px;">import numpy as np
+
+G = 6.674e-11
+M_etoile = 2.43e29
+a = 7.26e9
+T_mesuree = 11.2
+
+# 1) Calcul de la période T (en secondes)
+T_s = np.sqrt(4 * np.pi**2 * a**3 / (G * M_etoile))
+
+# 2) Conversion en jours
+T_jours = T_s / (24 * 3600)
+
+# 3) Écart relatif (en %)
+ecart = abs(T_jours - T_mesuree) / T_mesuree * 100
+
+print("Période calculée :", round(T_jours, 2), "jours")
+print("Écart relatif avec la mesure :", round(ecart, 2), "%")
+
+# Résultat attendu : Période calculée ≈ 11.17 jours ; écart relatif < 1 %</pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-K-3 -->
+
+</div>
+<!-- /tab-2 -->
+
+<!-- ══════════════ ONGLET BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-3">
+
+  <div class="sub-tabs-nav" id="sub-nav-R">
+    <button class="sub-tab-btn active" data-sub="R1" onclick="switchSubTab('R',0)">
+      <span class="sub-tab-num">1</span> Bilan et points clés
+    </button>
+    <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
+      <span class="sub-tab-num">2</span> Ressources
+    </button>
+  </div>
+
+  <!-- ───────── R1 : BILAN ET POINTS CLÉS ───────── -->
+  <div class="sub-tab-content active" id="sub-R-0">
+
+  <div class="section-title"><span class="icon">📌</span> Bilan sur les lois de Kepler</div>
+
+  <div class="bilan-grid">
+    <div class="bilan-card">
+      <h4>Accélération d'un satellite</h4>
+      <p style="font-size:0.86rem;line-height:1.6;">Force exercée par l'astre (masse M, centre O) sur le satellite (masse m, centre P) : <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = m<span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> avec <span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = −G·M/r² · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span>.</p>
+      <p style="font-size:0.86rem;line-height:1.6;margin-top:6px;">2<sup>e</sup> loi de Newton : m<span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> ⟹ <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = <span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> : l'accélération ne dépend pas de la masse du satellite.</p>
+    </div>
+    <div class="bilan-card">
+      <h4>Satellite en mouvement circulaire de rayon r</h4>
+      <p style="font-size:0.86rem;line-height:1.6;">Dans le repère de Frenet : <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = dv/dt · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>t</sub> + v²/r · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub></p>
+      <ul style="margin-top:6px;">
+        <li>le mouvement est <strong>uniforme</strong> ;</li>
+        <li>la vitesse est v = √(GM/r) ;</li>
+        <li>la période vérifie T²/r³ = 4π²/GM.</li>
+      </ul>
+      <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:6px;">Un satellite géostationnaire est fixe dans le référentiel terrestre.</p>
+    </div>
+  </div>
+
+  <div class="bilan-grid" style="margin-top:4px;">
+    <div class="bilan-card">
+      <h4>Loi des orbites (1<sup>ère</sup> loi)</h4>
+      <p style="font-size:0.86rem;line-height:1.6;">Dans le référentiel héliocentrique, l'orbite d'une planète est une <strong>ellipse</strong> dont le Soleil occupe l'un des foyers. a = demi-grand axe de l'ellipse.</p>
+    </div>
+    <div class="bilan-card">
+      <h4>Loi des aires (2<sup>e</sup> loi)</h4>
+      <p style="font-size:0.86rem;line-height:1.6;">Le segment Soleil–planète balaie des <strong>aires égales</strong> en des <strong>durées égales</strong>. Conséquence : la vitesse n'est pas constante (max au périhélie, min à l'aphélie).</p>
+    </div>
+  </div>
+
+  <div class="bilan-card" style="margin-top:14px;">
+    <h4>Loi des périodes (3<sup>e</sup> loi)</h4>
+    <div class="formule-box" style="margin:8px 0;">T²/a³ = T'²/a'³ &nbsp;(même astre attracteur central)</div>
+    <p style="font-size:0.84rem;color:var(--texte-leger);">Les trois lois de Kepler sont aussi valables pour le mouvement d'un satellite naturel ou artificiel autour d'une planète ; cette dernière joue alors le rôle du Soleil.</p>
+  </div>
+
+  <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> Points-clés à retenir</div>
+  <div class="bilan-card">
+    <ul class="ke-list">
+      <li>La force de gravitation universelle varie en 1/d² et est responsable des mouvements des astres.</li>
+      <li>Pour un satellite en orbite <strong>circulaire</strong>, le mouvement est nécessairement <strong>uniforme</strong> et l'accélération est <strong>centripète</strong>.</li>
+      <li>v = √(GM/r) et T = 2π√(r³/GM) pour une orbite circulaire.</li>
+      <li>1<sup>ère</sup> loi de Kepler : orbites elliptiques, Soleil à un foyer.</li>
+      <li>2<sup>e</sup> loi de Kepler : loi des aires ⟹ vitesse non constante sur une ellipse.</li>
+      <li>3<sup>e</sup> loi de Kepler : T²/a³ = constante, ne dépend que de la masse de l'astre central.</li>
+    </ul>
+  </div>
+
+  </div>
+  <!-- /sub-R-0 -->
+
+  <!-- ───────── R2 : RESSOURCES ───────── -->
+  <div class="sub-tab-content" id="sub-R-1">
+
+    <div class="section-title"><span class="icon">🎬</span> Vidéos bilan</div>
+    <div class="bilan-card">
+      <ul style="padding-left:18px;font-size:0.88rem;line-height:1.9;">
+        <li><a href="https://www.pearltrees.com/private/id105370152/item804860917?paccess=47d630b2e72.2ff933f5.b5e16379dc0f88c76b92d0f24c4bcd2d" target="_blank" style="color:var(--bleu);">Mouvement dans un champ de gravitation – Lois de Kepler</a> — Paul Olivier (Pearltrees)</li>
+        <li><a href="https://www.pearltrees.com/private/id105370152/item804868473?paccess=47d6330dc4d.2ff95179.773ffe3d1aadcc60372fed56a9b16b27" target="_blank" style="color:var(--bleu);">Physique-Chimie Tle - Schéma bilan : mécanique céleste et satellites</a> (Pearltrees)</li>
+        <li><a href="https://www.pearltrees.com/private/id105370152/item804862609?paccess=47d63110549.2ff93a91.a3a61071a381912c399c29217db9865a" target="_blank" style="color:var(--bleu);">Cours 5 – Mouvement dans un champ de gravitation</a> — Stella (Pearltrees)</li>
+        <li><a href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/physique-chimie/lois-kepler.aspx" target="_blank" style="color:var(--bleu);">Les lois de Kepler</a> — CEA</li>
+      </ul>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> QCM</div>
+    <div class="bilan-card">
+      <ul style="padding-left:18px;font-size:0.88rem;line-height:1.9;">
+        <li><a href="https://www.hatier-clic.fr/pct372" target="_blank" style="color:var(--bleu);">QCM Prérequis</a> — Hatier-clic (pct372)</li>
+        <li><a href="https://www.hatier-clic.fr/pct385" target="_blank" style="color:var(--bleu);">QCM Bilan</a> — Hatier-clic (pct385)</li>
+        <li><a href="https://www.cea.fr/multimedia/Pages/animations/physique-chimie/quiz-lois-Kepler.aspx" target="_blank" style="color:var(--bleu);">Quiz sur les lois de Kepler</a> — CEA</li>
+      </ul>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🔗</span> Autres ressources</div>
+    <div class="bilan-card">
+      <ul style="padding-left:18px;font-size:0.88rem;line-height:1.9;">
+        <li><a href="http://www.jf-noblet.fr/kepler2/" target="_blank" style="color:var(--bleu);">Animations sur les 3 lois de Kepler</a> — jf-noblet.fr</li>
+        <li><a href="https://labolycee.org/mission-rosetta" target="_blank" style="color:var(--bleu);">Mission Rosetta</a> — labolycee.org</li>
+        <li><a href="https://javalab.org/en/keplers_law_en/" target="_blank" style="color:var(--bleu);">Simulation interactive des lois de Kepler</a> — Javalab</li>
+        <li><a href="https://phet.colorado.edu/sims/html/keplers-laws/latest/keplers-laws_all.html?locale=fr" target="_blank" style="color:var(--bleu);">Simulation « Kepler's Laws »</a> — PhET Colorado (en français)</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /sub-R-1 -->
+
+</div>
+<!-- /tab-3 -->
+
+</div><!-- /main -->
+
+<div class="footer-note">Séquence 04 – Lois de Kepler · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin</div>
+
+<script>
+/* ════════ NAVIGATION ONGLETS ════════ */
+function switchTab(i) {
+  document.querySelectorAll('.tab-content').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('.tabs-nav .tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+function switchSubTab(group, i) {
+  document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+document.getElementById('capToggle').addEventListener('click', () => {
+  document.getElementById('capPanel').classList.toggle('open');
+});
+function toggleAccord(btn) {
+  btn.nextElementSibling.classList.toggle('open');
+}
+function toggleCorrection(btn) {
+  var c = btn.nextElementSibling;
+  c.classList.toggle('visible');
+  btn.textContent = c.classList.contains('visible') ? '🙈 Masquer la correction' : '✅ Voir la correction';
+}
+
+/* ════════ VÉRIFICATION NUMÉRIQUE ════════ */
+function checkNum(id, expected, tol) {
+  var input = document.getElementById(id);
+  var fb = document.getElementById(id + '-fb');
+  var raw = input.value.replace(',', '.').trim();
+  var val = parseFloat(raw);
+  if (isNaN(val)) {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = 'Entre un nombre'; fb.className = 'num-feedback ko';
+    return;
+  }
+  if (Math.abs(val - expected) <= tol) {
+    input.classList.remove('wrong'); input.classList.add('correct');
+    fb.textContent = '✓ Correct'; fb.className = 'num-feedback ok';
+  } else {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = '✗ Réessaie'; fb.className = 'num-feedback ko';
+  }
+}
+
+/* ════════ QCM K3 ════════ */
+function checkQcmK3(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  var fb = document.getElementById('k3-qcm-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = '✓ Exact : T² ∝ a³, donc si a → 2a, T → T×2^1,5 = T×2√2 ≈ 2,83T.';
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ Attention, la loi porte sur T² et a³ (pas une simple proportionnalité T ∝ a).';
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+/* ════════ CALCULATRICE — 3E LOI DE KEPLER ════════ */
+function parseFR(str) { return parseFloat(String(str).replace(',', '.')); }
+function calcKepler3() {
+  var a1 = parseFR(document.getElementById('k3-a1').value);
+  var t1 = parseFR(document.getElementById('k3-t1').value);
+  var a2 = parseFR(document.getElementById('k3-a2').value);
+  var resBox = document.getElementById('k3-result');
+  var t2field = document.getElementById('k3-t2');
+  if (isNaN(a1) || isNaN(t1) || isNaN(a2) || a1 <= 0 || t1 <= 0 || a2 <= 0) {
+    resBox.textContent = 'Merci de remplir des valeurs numériques positives (utilise la virgule).';
+    return;
+  }
+  // T2^2 / a2^3 = T1^2 / a1^3  =>  T2 = T1 * (a2/a1)^1.5
+  var t2 = t1 * Math.pow(a2 / a1, 1.5);
+  t2field.value = t2.toFixed(1).replace('.', ',');
+  resBox.innerHTML = 'D\'après la loi des périodes : T₁²/a₁³ = T₂²/a₂³ &nbsp;⟹&nbsp; T₂ = T₁ × (a₂/a₁)<sup>3/2</sup> = <strong>' + t2.toFixed(1).replace('.', ',') + ' jours</strong> (soit ' + (t2/365).toFixed(2).replace('.', ',') + ' an(s))';
+}
+function resetKepler3() {
+  document.getElementById('k3-a1').value = '1,50';
+  document.getElementById('k3-t1').value = '365';
+  document.getElementById('k3-a2').value = '2,28';
+  document.getElementById('k3-t2').value = '';
+  document.getElementById('k3-result').textContent = 'T₂ = (2π/a₁^1,5) × a₂^1,5 × T₁ / a₁^1,5 — remplis les champs puis clique sur « Calculer »';
+}
+
+/* ════════ SIMULATEUR — SATELLITE EN ORBITE CIRCULAIRE ════════ */
+(function() {
+  var canvas = document.getElementById('satCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var G = 6.674e-11, MT = 5.97e24, RT = 6371; // km
+  var cx = 180, cy = 150;
+  var scale; // px per km, computed from altitude
+  var angle = 0;
+  var playing = true;
+  var altSlider = document.getElementById('satAlt');
+  var altVal = document.getElementById('satAltVal');
+  var resultBox = document.getElementById('satResultBox');
+  var playBtn = document.getElementById('satPlayBtn');
+  var omega = 0; // rad/s (scaled for animation, not real time)
+
+  /* Étiquette vectorielle sur canvas : lettre surmontée d'une flèche (convention .vecsym) */
+  function drawVecLabelSat(label, x, y, color, fontSize) {
+    fontSize = fontSize || 12;
+    ctx.save();
+    ctx.font = 'italic bold ' + fontSize + 'px Outfit, Arial, sans-serif';
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(label, x, y);
+    var w = ctx.measureText(label).width;
+    var cxL = x + w / 2;
+    var arrY = y - fontSize - 1;
+    var hw = Math.max(w * 0.75, 7) / 2;
+    var x0 = cxL - hw, x1 = cxL + hw;
+    var hd = 3;
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1.2; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x0, arrY); ctx.lineTo(x1 - hd, arrY); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x1, arrY);
+    ctx.lineTo(x1 - hd, arrY - hd);
+    ctx.lineTo(x1 - hd, arrY + hd);
+    ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+
+  function computeAndDraw() {
+    var h = parseFloat(altSlider.value); // km
+    altVal.textContent = h + ' km';
+    var r = (RT + h); // km
+    var rm = r * 1000; // m
+    var v = Math.sqrt(G * MT / rm); // m/s
+    var aCentripete = (v*v) / rm; // m/s²
+    var T = 2 * Math.PI * Math.sqrt(Math.pow(rm,3) / (G * MT)); // s
+    resultBox.innerHTML = 'v = <strong>' + (v/1000).toFixed(2) + ' km/s</strong> &nbsp;|&nbsp; a = <strong>' + aCentripete.toFixed(2) + ' m/s²</strong> &nbsp;|&nbsp; T = <strong>' + (T/60).toFixed(1) + ' min</strong> (' + (T/3600).toFixed(2) + ' h)';
+    // vitesse angulaire d'animation : plus l'orbite est haute, plus la rotation visuelle est lente (cohérent qualitativement)
+    omega = 0.03 * Math.pow(300 / r, 0.5);
+
+    var maxR = 120; // px, rayon max affiché
+    scale = maxR / (RT + 36000);
+    var rTerre = RT * scale;
+    var rOrbit = r * scale;
+    if (rOrbit < rTerre + 14) rOrbit = rTerre + 14;
+
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    // Terre
+    var grad = ctx.createRadialGradient(cx-8, cy-8, 4, cx, cy, rTerre);
+    grad.addColorStop(0, '#7ec8f2'); grad.addColorStop(1, '#2D5F8A');
+    ctx.beginPath(); ctx.arc(cx, cy, rTerre, 0, 2*Math.PI); ctx.fillStyle = grad; ctx.fill();
+    // orbite
+    ctx.beginPath(); ctx.arc(cx, cy, rOrbit, 0, 2*Math.PI);
+    ctx.strokeStyle = '#B8D4EC'; ctx.lineWidth = 1.3; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
+    // satellite
+    var sx = cx + rOrbit * Math.cos(angle);
+    var sy = cy + rOrbit * Math.sin(angle);
+
+    // vecteur accélération (centripète, dirigé vers le centre de la Terre) — tracé avant le satellite pour rester lisible
+    var nx = -Math.cos(angle), ny = -Math.sin(angle);
+    var aLen = 26;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + nx*aLen, sy + ny*aLen);
+    ctx.strokeStyle = '#C0392B'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.beginPath();
+    var ahx = sx + nx*aLen, ahy = sy + ny*aLen;
+    ctx.moveTo(ahx,ahy);
+    ctx.lineTo(ahx - nx*6 - ny*3.5, ahy - ny*6 + nx*3.5);
+    ctx.lineTo(ahx - nx*6 + ny*3.5, ahy - ny*6 - nx*3.5);
+    ctx.closePath(); ctx.fillStyle = '#C0392B'; ctx.fill();
+    drawVecLabelSat('a', ahx - nx*4 + 6, ahy - ny*4, '#C0392B', 12);
+
+    ctx.beginPath(); ctx.arc(sx, sy, 6, 0, 2*Math.PI); ctx.fillStyle = '#E8783A'; ctx.fill();
+    ctx.strokeStyle = '#B85A22'; ctx.lineWidth = 1; ctx.stroke();
+    // vecteur vitesse (tangent)
+    var tx = -Math.sin(angle), ty = Math.cos(angle);
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + tx*22, sy + ty*22);
+    ctx.strokeStyle = '#3A8A6E'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.beginPath();
+    var hx = sx + tx*22, hy = sy + ty*22;
+    ctx.moveTo(hx,hy);
+    ctx.lineTo(hx - tx*6 - ty*3.5, hy - ty*6 + tx*3.5);
+    ctx.lineTo(hx - tx*6 + ty*3.5, hy - ty*6 - tx*3.5);
+    ctx.closePath(); ctx.fillStyle = '#3A8A6E'; ctx.fill();
+    drawVecLabelSat('v', hx + tx*4 + 6, hy + ty*4, '#3A8A6E', 12);
+  }
+
+  function step() {
+    if (playing) { angle += omega; if (angle > 2*Math.PI) angle -= 2*Math.PI; computeAndDraw(); }
+    requestAnimationFrame(step);
+  }
+  altSlider.addEventListener('input', computeAndDraw);
+  window.toggleSatAnim = function() {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Lecture';
+    playBtn.classList.toggle('active', playing);
+  };
+  computeAndDraw();
+  requestAnimationFrame(step);
+})();
+
+/* ════════ ANIMATION — LOI DES AIRES (K2), 2 secteurs fixes A1 (périhélie) / A2 (aphélie) + corps réels ════════ */
+(function() {
+  var canvas = document.getElementById('areaCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var cx = 190, cy = 130;
+  var aPx = 145;               // demi-grand axe en pixels (fixe à l'écran, seule la FORME e change avec le corps choisi)
+
+  var G = 6.674e-11, Msoleil = 1.989e30;
+  var UA = 1.496e11; // m
+  var bodies = {
+    mercure: { label: 'Mercure', a: 0.387, e: 0.206 },
+    venus:   { label: 'Vénus',   a: 0.723, e: 0.007 },
+    terre:   { label: 'Terre',   a: 1.000, e: 0.017 },
+    mars:    { label: 'Mars',    a: 1.524, e: 0.093 },
+    jupiter: { label: 'Jupiter', a: 5.203, e: 0.049 },
+    saturne: { label: 'Saturne', a: 9.537, e: 0.057 },
+    uranus:  { label: 'Uranus',  a: 19.19, e: 0.046 },
+    neptune: { label: 'Neptune', a: 30.07, e: 0.010 },
+    halley:  { label: 'la comète de Halley', a: 17.8, e: 0.967 }
+  };
+
+  var bodySelect = document.getElementById('areaBody');
+  var dataBox = document.getElementById('areaDataBox');
+  var playBtn = document.getElementById('areaPlayBtn');
+
+  var e, b, c, focusX, focusY, aReal, h1, h2, totalArea;
+  var playing = true;
+  var theta = 0.35;
+  var period = 16.0; // durée d'un tour complet en secondes d'animation (lent, lisible)
+
+  function rOf(th) { return aPx * (1 - e*e) / (1 + e * Math.cos(th)); }
+  function orbitPoint(th) {
+    var r = rOf(th);
+    return { x: focusX - r * Math.cos(th), y: focusY + r * Math.sin(th) };
+  }
+  function halfWidthForArea(theta0, targetArea) {
+    var STEPS = 4000, dth = 0.0006;
+    var half = targetArea / 2;
+    var acc = 0, h = 0;
+    for (var i = 0; i < STEPS; i++) {
+      var th = theta0 + i*dth;
+      var r = rOf(th);
+      acc += 0.5 * r * r * dth;
+      if (acc >= half) { h = i*dth; break; }
+      h = i*dth;
+    }
+    return h;
+  }
+
+  function rebuild() {
+    var key = bodySelect.value;
+    var body = bodies[key];
+    e = body.e;
+    aReal = body.a; // UA
+    b = aPx * Math.sqrt(1 - e*e);
+    c = aPx * e;
+    focusX = cx - c; focusY = cy;
+    totalArea = Math.PI * aPx * b;
+    var targetArea = 0.10 * totalArea;
+    h1 = halfWidthForArea(0, targetArea);
+    h2 = halfWidthForArea(Math.PI, targetArea);
+    theta = 0.35;
+    drawFrame();
+  }
+
+  function drawSector(theta0, halfWidth, color, label, labelR) {
+    var thA = theta0 - halfWidth, thB = theta0 + halfWidth;
+    ctx.beginPath();
+    ctx.moveTo(focusX, focusY);
+    var steps = 26;
+    for (var i = 0; i <= steps; i++) {
+      var th = thA + (thB - thA) * (i/steps);
+      var p = orbitPoint(th);
+      ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = color; ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1;
+    ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.stroke();
+    var pm = orbitPoint(theta0);
+    var lx = focusX + (pm.x - focusX) * labelR;
+    var ly = focusY + (pm.y - focusY) * labelR;
+    ctx.fillStyle = color;
+    ctx.font = 'bold 13px Outfit, Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, lx, ly);
+    ctx.textAlign = 'left';
+  }
+
+  function drawBoundaryPoints(theta0, halfWidth, labelStart, labelEnd, color) {
+    var pA = orbitPoint(theta0 - halfWidth);
+    var pB = orbitPoint(theta0 + halfWidth);
+    [[pA, labelStart], [pB, labelEnd]].forEach(function(item) {
+      var p = item[0];
+      ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, 2*Math.PI); ctx.fillStyle = color; ctx.fill();
+      ctx.fillStyle = '#1A2A3A';
+      ctx.font = '10px Outfit, Arial, sans-serif';
+      ctx.textAlign = (p.x > cx) ? 'left' : 'right';
+      ctx.fillText(item[1], p.x + (p.x > cx ? 6 : -6), p.y + (p.y > cy ? 12 : -6));
+      ctx.textAlign = 'left';
+    });
+  }
+
+  function drawStatic() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, aPx, b, 0, 0, 2*Math.PI);
+    ctx.strokeStyle = '#2D5F8A'; ctx.lineWidth = 1.6; ctx.stroke();
+    drawSector(0, h1, '#C0392B', 'A1', 0.62);
+    drawSector(Math.PI, h2, '#3A8A6E', 'A2', 0.72);
+    drawBoundaryPoints(0, h1, 'P(t1)', 'P(t1+Δt)', '#C0392B');
+    drawBoundaryPoints(Math.PI, h2, 'P(t2+Δt)', 'P(t2)', '#3A8A6E');
+    ctx.beginPath(); ctx.arc(focusX, focusY, 9, 0, 2*Math.PI); ctx.fillStyle = '#fbbf24'; ctx.fill();
+    ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = '#5A6B7A'; ctx.font = 'bold 11px Outfit, Arial, sans-serif';
+    ctx.fillText('S', focusX - 4, focusY + 22);
+  }
+
+  function drawPlanet() {
+    var p = orbitPoint(theta);
+    ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, 2*Math.PI); ctx.fillStyle = '#1A2A3A'; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.3; ctx.stroke();
+  }
+
+  function updateDataBox() {
+    var body = bodies[bodySelect.value];
+    var rUA = aReal * (1 - e*e) / (1 + e * Math.cos(theta)); // distance réelle S-P, en UA
+    var rM = rUA * UA; // en m
+    var aM = aReal * UA;
+    var v = Math.sqrt(G * Msoleil * (2/rM - 1/aM)); // vis-viva, en m/s
+    var remark;
+    if (e < 0.03) remark = 'Orbite quasi circulaire : la distance et la vitesse varient à peine sur un tour.';
+    else if (e < 0.15) remark = 'Orbite peu excentrique : la vitesse varie mais reste d\'un ordre de grandeur comparable sur tout le tour.';
+    else remark = 'Orbite très excentrique : la distance et la vitesse varient fortement entre périhélie et aphélie.';
+    dataBox.innerHTML = '<strong>' + body.label + '</strong> (e ≈ ' + e.toFixed(3).replace('.', ',') + ')<br>' +
+      'Distance SP = <strong>' + rUA.toFixed(3).replace('.', ',') + ' UA</strong> (' + (rM/1e9).toFixed(1).replace('.', ',') + ' millions de km) &nbsp;|&nbsp; ' +
+      'v ≈ <strong>' + (v/1000).toFixed(1).replace('.', ',') + ' km/s</strong><br>' +
+      '<span style="font-weight:400;font-size:0.78rem;color:var(--texte-leger);">' + remark + '</span>';
+  }
+
+  function drawFrame() {
+    drawStatic();
+    drawPlanet();
+    updateDataBox();
+  }
+
+  var lastTs = null;
+  function tick(ts) {
+    if (lastTs === null) lastTs = ts;
+    var dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    if (playing) {
+      var r = rOf(theta);
+      var arealConst = totalArea / period;
+      var dtheta = (2 * arealConst / (r*r)) * dt;
+      theta += dtheta;
+      if (theta > 2*Math.PI) theta -= 2*Math.PI;
+      drawFrame();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  bodySelect.addEventListener('change', rebuild);
+  window.toggleAreaAnim = function() {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Lecture';
+    playBtn.classList.toggle('active', playing);
+  };
+  window.resetAreaAnim = function() {
+    theta = 0.35;
+    drawFrame();
+  };
+
+  rebuild();
+  requestAnimationFrame(tick);
+})();
+/* ════════ ANIMATION — REPÈRE DE FRENET (P2), curseurs rayon & vitesse ════════ */
+(function() {
+  var canvas = document.getElementById('frenetCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var cx = 180, cy = 150;
+  var Rslider = document.getElementById('frenetR');
+  var Vslider = document.getElementById('frenetV');
+  var RVal = document.getElementById('frenetRVal');
+  var VVal = document.getElementById('frenetVVal');
+  var resultBox = document.getElementById('frenetResultBox');
+  var playBtn = document.getElementById('frenetPlayBtn');
+  var angle = -Math.PI/2;
+  var playing = true;
+
+  function drawArrowLocal(x0, y0, x1, y1, color, width) {
+    width = width || 2.4;
+    var dx = x1-x0, dy = y1-y0;
+    var len = Math.hypot(dx,dy);
+    if (len < 1) return;
+    var headLen = Math.min(Math.max(len*0.22, 7), 14);
+    var ang = Math.atan2(dy,dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = width; ctx.lineCap='round';
+    var shaftLen = Math.max(len - headLen*0.6, 0);
+    var xs = x0 + shaftLen*Math.cos(ang), ys = y0 + shaftLen*Math.sin(ang);
+    ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(xs,ys); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x1-headLen*Math.cos(ang-Math.PI/7), y1-headLen*Math.sin(ang-Math.PI/7));
+    ctx.lineTo(x1-headLen*Math.cos(ang+Math.PI/7), y1-headLen*Math.sin(ang+Math.PI/7));
+    ctx.closePath(); ctx.fill();
+  }
+
+  /* Étiquette vectorielle sur canvas : lettre (+ indice) surmontée d'une flèche, comme .vecsym dans le reste du cours */
+  function drawVecLabel(label, x, y, color, fontSize) {
+    fontSize = fontSize || 12;
+    ctx.save();
+    ctx.font = 'italic bold ' + fontSize + 'px Outfit, Arial, sans-serif';
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(label, x, y);
+    var w = ctx.measureText(label).width;
+    var cxL = x + w / 2;
+    var arrY = y - fontSize - 1;
+    var hw = Math.max(w * 0.75, 7) / 2;
+    var x0 = cxL - hw, x1 = cxL + hw;
+    var hd = 3;
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1.2; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x0, arrY); ctx.lineTo(x1 - hd, arrY); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x1, arrY);
+    ctx.lineTo(x1 - hd, arrY - hd);
+    ctx.lineTo(x1 - hd, arrY + hd);
+    ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+
+  function draw() {
+    var R = parseFloat(Rslider.value);
+    var v = parseFloat(Vslider.value);
+    RVal.textContent = R + ' px';
+    VVal.textContent = v;
+
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    // cercle trajectoire
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI);
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.3; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
+    // centre O
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, 2*Math.PI); ctx.fillStyle = '#5A6B7A'; ctx.fill();
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '12px Outfit, sans-serif'; ctx.fillText('O', cx-16, cy+4);
+
+    var mx = cx + R*Math.cos(angle), my = cy + R*Math.sin(angle);
+    // segment OM
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(mx,my); ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1; ctx.stroke();
+
+    // point M
+    ctx.beginPath(); ctx.arc(mx, my, 5, 0, 2*Math.PI); ctx.fillStyle = '#1A2A3A'; ctx.fill();
+    ctx.fillStyle = '#1A2A3A'; ctx.font = 'bold 12px Outfit, sans-serif'; ctx.fillText('M', mx+8, my-6);
+
+    // u_t (tangent, sens du mouvement) : dérivée de la position par rapport à angle croissant
+    var tx = -Math.sin(angle), ty = Math.cos(angle);
+    // u_n (vers le centre O)
+    var nx = -Math.cos(angle), ny = -Math.sin(angle);
+
+    var uLen = 34;
+    drawArrowLocal(mx, my, mx+tx*uLen, my+ty*uLen, '#3A8A6E', 2.4);
+    drawVecLabel('ut', mx+tx*uLen+6, my+ty*uLen, '#3A8A6E');
+
+    drawArrowLocal(mx, my, mx+nx*uLen, my+ny*uLen, '#C0392B', 2.4);
+    drawVecLabel('un', mx+nx*uLen+6, my+ny*uLen, '#C0392B');
+
+    // avancer l'angle (mouvement circulaire uniforme : vitesse angulaire = v/R), animation ralentie
+    if (playing) {
+      var omega = (v/R) * 0.012; // facteur d'échelle réduit pour une rotation plus lente et lisible
+      angle += omega;
+      if (angle > Math.PI*3) angle -= 2*Math.PI;
+    }
+
+    var aN = (v*v/R);
+    resultBox.innerHTML = 'v(t) = ' + v + ' · <span style="color:#3A8A6E;font-weight:700;">u_t(t)</span> &nbsp;|&nbsp; a(t) = ' + aN.toFixed(1) + ' · <span style="color:#C0392B;font-weight:700;">u_n(t)</span> &nbsp;(a_n = v²/R, mouvement uniforme donc a_t = 0)';
+  }
+
+  function loop() { draw(); requestAnimationFrame(loop); }
+  Rslider.addEventListener('input', draw);
+  Vslider.addEventListener('input', draw);
+  window.toggleFrenetAnim = function() {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Lecture';
+    playBtn.classList.toggle('active', playing);
+  };
+  requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>
