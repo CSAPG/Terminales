@@ -579,7 +579,7 @@ const TER_SEQUENCES = [
           href:'seq15/seq15_Fiche de révision_Valence et Loic.pdf' },
                ]
       },
-      { id:'Flashcards', label:'Flashcards', actif: true,
+      { id:'Flashcards', label:'Flashcards',
         items: [
           { type:'link', icon:'🃏', label:'Flashcards',
             sub:'Réalisées par Valence et Loïc',
