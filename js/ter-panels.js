@@ -178,7 +178,7 @@ const TER_SEQUENCES = [
         sub:'Fiche de cours complète — Bases de la mécanique newtonienne',
         href:'seq03/Seq3_Bases de la mécanique newtonienne.pdf' },
   { type:'link', icon:'📖', label:'Cours interactif',
-   sub:'Séquence 3 — Bases de la mécanique newtonienne',
+   sub:'Réalisé par mme Poirault-Gauvin',
      href:'seq03/seq03-cours_interactif.html' },
       { type:'link', icon:'📖', label:'Fiche de révision — Bases de la mécanique newtonienne',
            sub:'réalisée par Jade, Jibril et Damien',
@@ -188,7 +188,7 @@ const TER_SEQUENCES = [
   {
         id:'flashcards', label:'Flashcards',
         items: [
-          { type:'image-group',sub:'réalisée par Jade, Jibril et Damien', cards: [
+          { type:'image-group',sub:'réalisées par Jade, Jibril et Damien', cards: [
             { label:'Cartes #1 → #5 · Forces · Cinématique',       src:'seq03/Flashcards 1-5.jpg' },
             { label:'Cartes #6 → #8 · Types de mouvement',         src:'seq03/Flashcards 6-8.jpg' },
             { label:'Cartes #11 → #15 · Lois de Newton · Énergie', src:'seq03/Flashcards 11-15.jpg' },
@@ -200,7 +200,7 @@ const TER_SEQUENCES = [
         id:'quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'réalisée par Jade, Jibril et Damien',
+            sub:'réalisé par Jade, Jibril et Damien',
             href:'seq03/seq03_Quiz.html' },
         ]
       },
@@ -228,10 +228,10 @@ const TER_SEQUENCES = [
         id:'Fiche de révision', label:'Cours',
         items: [
          { type:'link', icon:'📖', label:'Fiche de cours',
-            sub:'Fichier pdf',
+            sub:'Fichier en pdf',
             href:'seq04/Seq4_lois-de-kepler.pdf' },
          { type:'link', icon:'🎓', label:'Cours interactif',
-            sub:'Réalisée par Mme Poirault-Gauvin',
+            sub:'Réalisé par Mme Poirault-Gauvin',
             href:'seq04/seq04-cours_interactif.html' },
           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Lou et Lou',
@@ -250,7 +250,7 @@ const TER_SEQUENCES = [
         id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'Séquence 4 — Lois de Kepler',
+            sub:'Réalisé par Lou et Lou',
             href:'seq04/seq04_Quiz.html' },
         ]
       },
@@ -266,7 +266,7 @@ const TER_SEQUENCES = [
     headerBg: 'seq05/image5.jpg',
     tabs: [
       {
-        id:'Fiche de révision', label:'Fiche de révision', actif: true,
+        id:'Cours', label:'Cours', actif: true,
         items: [
           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Jules et Léandro',
@@ -285,7 +285,7 @@ const TER_SEQUENCES = [
         id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'Séquence 5 — Contrôle de qualité',
+            sub:'Réalisé par Jules et Léandro',
             href:'seq05/seq05_Quiz.html' },
         ]
       },
@@ -301,7 +301,7 @@ const TER_SEQUENCES = [
     headerBg: 'seq06/image6.jpg',
     tabs: [
       {
-        id:'Fiche de révision', label:'Fiche de révision', actif: true,
+        id:'Cours', label:'Cours', actif: true,
         items: [
           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Alexandre et Emilien',
@@ -320,7 +320,7 @@ const TER_SEQUENCES = [
         id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'Séquence 6 — Diffraction et interférences',
+            sub:'Réalisé par Alexandre et Emilien',',
             href:'seq06/seq6_Quiz.html' },
         ]
       },
@@ -355,14 +355,15 @@ const TER_SEQUENCES = [
     headerBg: 'seq08/image8.jpg',
     tabs: [
       {
-        id:'Animations', label:'Animations', actif: true,
+        id:'Cours', label:'Cours', actif: true,
         items: [
-          { type:'link', icon:'🔭', label:'Lunette astronomique — formation d\'image',
-            sub:'Terminale spécialité · Optique',
+            { type:'link', icon:'📖', label:'cours',
+            sub:'Fiche de cours en pdf',
+            href:'seq08/Seq8_Lunette astronomique.pdf' }, 
+           { type:'link', icon:'🔭', label:'Lunette astronomique — formation d\'image',
+            sub:'réalisé par Mme Poirault-Gauvin',
             href:'seq08/lunette_interactive.html' },
         ]
-      },
-      { id:'Fiche de révision', label:'Fiche de révision', desactive:true, items:[] },
     ]
   },
 
@@ -384,8 +385,7 @@ const TER_SEQUENCES = [
             sub:'Réalisée par David, Ambre, Morgane et Salma',
             href:'seq09/seq09_Fiche de révision partie B.html' },
         ]
-      },
-      { id:'Flashcards', label:'Flashcards', desactive:true, items:[] },
+ 
       {
         id:'Quiz', label:'Quiz',
         items: [
@@ -406,10 +406,13 @@ const TER_SEQUENCES = [
     headerBg: 'seq10/image10.jpg',
     tabs: [
       {
-        id:'Animations', label:'Animations', actif: true,
+        id:'Cours', label:'Cours', actif: true,
         items: [
-          { type:'link', icon:'⚡', label:'Système capacitif — circuit RC série',
-            sub:'Terminale spécialité · Physique-Chimie',
+            { type:'link', icon:'📖', label:'Cours . Système capacitif — circuit RC série',
+            sub:'Fiche de cours en pdf',
+            href:'seq10/Séquence 10-cours-Systemes-electriques-capacitifs.pdf' },
+           { type:'link', icon:'⚡', label:'Cours interactif . Système capacitif — circuit RC série',
+            sub:'Réalisé par Mme Poirault-Gauvin',
             href:'seq10/systeme-capacitif-circuit-rc-serie.html' },
           { type:'link', icon:'🔋', label:'CapaPhysique',
             sub:'Réalisé par Houssine, Lenny et Yohann',
@@ -436,7 +439,7 @@ const TER_SEQUENCES = [
             sub:'Fiche de cours en pdf',
             href:'seq11/Seq11_Cinetique_cours.pdf' },
       { type:'link', icon:'🎓', label:'Cours interactif',
-            sub:'Réalisée par Mme Poirault-Gauvin',
+            sub:'Réalisé par Mme Poirault-Gauvin',
             href:'seq11/cinetique-chimique.html' },
         ]
       },
@@ -480,10 +483,10 @@ const TER_SEQUENCES = [
         id:'Flashcards', label:'Flashcards',
         items: [
           { type:'link', icon:'🃏', label:'Flashcards — Feuille 1/3',
-            sub:'Étapes, Rendement',
+            sub:'Étapes, Rendement, par Thomas et Gabriel',
             href:'seq12/seq12_Flashcards.pdf' },
           { type:'link', icon:'🃏', label:'Flashcards — Feuilles 2/3 & 3/3',
-            sub:'Vitesse, Mécanismes, Réactions, Chimie verte',
+            sub:'Vitesse, Mécanismes, Réactions, Chimie verte, par Thomas et Gabriel',
             href:'seq12/seq12_Flashcard2.pdf' },
         ]
       },
@@ -491,7 +494,7 @@ const TER_SEQUENCES = [
         id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'Séquence 12 — Stratégie de synthèse',
+            sub:'Séquence 12 — Stratégie de synthèse,par Thomas et Gabriel',
             href:'seq12/seq12_Quiz.pdf' },
         ]
       },
@@ -524,7 +527,7 @@ const TER_SEQUENCES = [
         id:'Flashcards', label:'Flashcards',
         items: [
           { type:'link', icon:'🃏', label:'Flashcards',
-            sub:'Séquence 13 — Mouvement d\'un fluide',
+            sub:'Séquence 13 — Mouvement d\'un fluide par Yugo, Noa et Baptiste'',
             href:'seq13/seq13_Flashcards.html' },
         ]
       },
@@ -532,7 +535,7 @@ const TER_SEQUENCES = [
         id:'Quiz', label:'Quiz',
         items: [
           { type:'link', icon:'✅', label:'Quiz',
-            sub:'Séquence 13 — Mouvement d\'un fluide',
+            sub:'Séquence 13 — Mouvement d\'un fluide par Yugo, Noa et Baptiste'',
             href:'seq13/seq13_Quiz.pdf' },
         ]
       },
@@ -551,7 +554,7 @@ const TER_SEQUENCES = [
           id:'Cours interactif', label:'Cours interactif', actif: true,
         items: [
             { type:'link', icon:'🎓', label:'cours interactif',
-        sub:'Désintégration . Loi de décroissance . Activité',
+        sub:'Désintégration . Loi de décroissance . Activité . Par Mme Poirault-Gauvin',
         href:'seq14/seq14-cours-interactif-radioactivite.html' }, 
       ]
        },
