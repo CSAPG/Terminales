@@ -229,7 +229,7 @@ const TER_SEQUENCES = [
         items: [
          { type:'link', icon:'📖', label:'Fiche de cours',
             sub:'Fichier pdf',
-            href:'seq04/seq04_lois-de-kepler.pdf' },
+            href:'seq04/Seq4_lois-de-kepler.pdf' },
          { type:'link', icon:'🎓', label:'Cours interactif',
             sub:'Réalisée par Mme Poirault-Gauvin',
             href:'seq04/seq04-cours_interactif.html' },
