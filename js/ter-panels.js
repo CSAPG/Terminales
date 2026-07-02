@@ -549,7 +549,7 @@ const TER_SEQUENCES = [
         items: [
             { type:'link', icon:'🎓', label:'cours interactif',
         sub:'Désintégration . Loi de décroissance . Activité',
-        href:'seq14/cours-interactif-radioactivite.html' }, 
+        href:'seq14/seq14-cours-interactif-radioactivite.html' }, 
       ]
        },
        {
