@@ -430,14 +430,17 @@ const TER_SEQUENCES = [
     headerBg: 'seq11/image11.jpg',
     tabs: [
       {
-        id:'Animations', label:'Animations', actif: true,
+        id:'Cours', label:'Cours', actif: true,
         items: [
-          { type:'link', icon:'⚗️', label:'Cinétique chimique',
+      { type:'link', icon:'📖', label:'Cours - Cinétique chimique',
+            sub:'Fiche de cours en pdf',
+            href:'seq11/Seq11_Cinetique_ cours.pdf' },
+      { type:'link', icon:'🎓', label:'Cours interactif',
             sub:'Réalisée par Mme Poirault-Gauvin',
             href:'seq11/cinetique-chimique.html' },
         ]
       },
-      { id:'Fiche de révision', label:'Fiche de révision', desactive:true, items:[] },
+      
       {
         id:'Flashcards', label:'Flashcards',
         items: [
