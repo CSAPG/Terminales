@@ -1,0 +1,2666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séquence 13 – Écoulement d'un fluide – Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #2D5F8A;
+    --bleu-clair: #E8F1F8;
+    --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
+    --orange: #E8783A;
+    --orange-clair: #FDF0E8;
+    --vert: #3A8A6E;
+    --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --gris-fond: #F5F7FA;
+    --gris-bord: #DDE3EC;
+    --texte: #1A2A3A;
+    --texte-leger: #5A6B7A;
+    --blanc: #FFFFFF;
+    --rouge: #C0392B;
+    --rouge-clair: #FDEDEC;
+    --violet: #7B4FA6;
+    --violet-clair: #F3EDF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #DDE6F0;
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blanc);
+    border-bottom: 3px solid var(--bleu);
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+  }
+  .header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 18px 32px 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .header-badge {
+    background: var(--bleu);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  button.cap-toggle {
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button.cap-toggle:hover { background: #1e4466; }
+  .cap-panel {
+    display: none;
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid #B8D4EC;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .cap-panel.open { display: block; }
+  .cap-panel ul { margin: 0; padding-left: 1.3rem; }
+  .cap-panel li { margin-bottom: 5px; line-height: 1.6; }
+  .cap-panel .cap-cat { font-weight: 700; color: var(--bleu); margin-top: 8px; }
+  .cap-panel .cap-cat:first-child { margin-top: 0; }
+
+  .header-titles h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--bleu);
+    line-height: 1.2;
+  }
+  .header-titles p {
+    font-size: 0.82rem;
+    color: var(--texte-leger);
+    margin-top: 2px;
+  }
+  .header-titles p span { color: var(--orange); font-weight: 700; }
+
+  /* ── ICÔNE PENDULE DE NEWTON ── */
+  .mobile-icon-wrap {
+    flex-shrink: 0;
+    width: 84px;
+    height: 56px;
+    position: relative;
+    margin-top: -2px;
+  }
+  .mobile-icon-wrap svg { width: 100%; height: 100%; }
+
+  /* ── ONGLETS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px 10px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: var(--texte-leger);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -3px;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+    background: var(--orange-clair);
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gris-bord);
+    color: var(--texte-leger);
+    font-size: 0.70rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .tab-num { background: var(--bleu); color: white; }
+
+  /* ── SOUS-ONGLETS ── */
+  .sub-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 18px 0 0;
+    margin-bottom: 22px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    background: #b8cfe0;
+    color: #2D5F8A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub-tab-btn:hover { background: #2D5F8A; color: white; }
+  .sub-tab-btn.active { background: #1e4466; color: white; }
+  .sub-tab-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    transition: all 0.2s;
+  }
+  .sub-tab-btn:not(.active) .sub-tab-num {
+    background: rgba(45,95,138,0.2);
+  }
+
+  .sub-tab-content { display: none; }
+  .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+  /* ── CONTENU ── */
+  .main { max-width: 1000px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BLOCS COURS ── */
+  .def-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .def-card::before {
+    content: 'COURS';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.6;
+  }
+  .def-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+  .def-card ul { padding-left: 18px; }
+  .def-card ul li { margin-bottom: 5px; }
+
+  /* ── BLOCS ACTIVITÉ ── */
+  .activite-card {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-left: 4px solid var(--bleu-moyen);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .activite-card::before {
+    content: 'ACTIVITÉ';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.8;
+  }
+  .activite-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+  }
+  .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  /* ── BLOCS EXERCICE ── */
+  .exo-card {
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert-exo-bord);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .exo-card::before {
+    content: 'EXERCICE';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--vert);
+    opacity: 0.7;
+  }
+  .exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--vert);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu-clair);
+  }
+  .section-title .icon { font-size: 1.3rem; }
+
+  .intro-box {
+    background: #FFFBF7;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--texte);
+    font-style: italic;
+  }
+
+  .formule-box {
+    background: var(--orange-clair);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  .formule-box .legend {
+    font-size: 0.80rem;
+    font-weight: 500;
+    color: var(--texte-leger);
+    margin-top: 6px;
+    text-align: left;
+  }
+
+  .exemple-box {
+    background: var(--vert-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .exemple-box strong { color: var(--vert); }
+
+  .remarque-box {
+    background: var(--violet-clair);
+    border-left: 4px solid var(--violet);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .remarque-box strong { color: var(--violet); }
+
+  .attention-box {
+    background: var(--rouge-clair);
+    border-left: 4px solid var(--rouge);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .attention-box strong { color: var(--rouge); }
+
+  .methode-box {
+    background: var(--bleu-activite);
+    border: 1.5px dashed var(--bleu-moyen);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .methode-box ol { padding-left: 20px; }
+  .methode-box li { margin-bottom: 6px; }
+  .methode-box .methode-titre {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+  }
+
+  /* ── TABLEAU GÉNÉRIQUE ── */
+  .tableau-avancement {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 14px 0;
+    background: var(--blanc);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .tableau-avancement th {
+    background: var(--bleu);
+    color: white;
+    padding: 10px 14px;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .tableau-avancement td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--gris-bord);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .tableau-avancement tr:last-child td { border-bottom: none; }
+  .tableau-avancement tr:nth-child(even) td { background: var(--gris-fond); }
+  .tableau-avancement td:first-child { font-weight: 600; color: var(--bleu); text-align: left; }
+
+  /* ── CRITÈRE / CARTES 3 COLONNES ── */
+  .critere-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .critere-grid { grid-template-columns: 1fr; } }
+  .critere-item {
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .critere-left  { background: #FEF9F0; border: 2px solid var(--orange); color: var(--texte); }
+  .critere-mid   { background: var(--vert-exo); border: 2px solid var(--vert); color: var(--texte); }
+  .critere-right { background: var(--bleu-activite); border: 2px solid var(--bleu-moyen); color: var(--texte); }
+  .critere-item .critere-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .critere-left .critere-label  { color: var(--orange); }
+  .critere-mid .critere-label   { color: var(--vert); }
+  .critere-right .critere-label { color: var(--bleu); }
+
+  /* ── EXERCICE INTERACTIF ── */
+  .exo-enonce {
+    background: var(--blanc);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.90rem;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    border: 1px solid var(--vert-exo-bord);
+  }
+  .question-block { margin-bottom: 14px; }
+  .question-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 7px;
+    padding-left: 8px;
+    border-left: 3px solid var(--vert);
+    line-height: 1.5;
+  }
+  .btn-correction {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 9px 20px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-correction:hover { background: #2A6B52; transform: translateY(-1px); }
+  .correction {
+    display: none;
+    background: #F0FAF6;
+    border: 1.5px solid var(--vert);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .correction.visible { display: block; animation: fadeIn 0.2s ease; }
+  .correction strong { color: var(--vert); }
+  .correction .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 7px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── EXERCICE NUMÉRIQUE INLINE ── */
+  .num-field-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .num-field-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--texte); }
+  .num-input {
+    width: 110px;
+    padding: 7px 11px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--gris-fond);
+    transition: border-color 0.2s;
+  }
+  .num-input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); }
+  .num-input.correct { border-color: var(--vert); background: var(--vert-exo); }
+  .num-input.wrong   { border-color: var(--rouge); background: var(--rouge-clair); }
+  .num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
+  .num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
+  .num-feedback.ok   { color: var(--vert); }
+  .num-feedback.ko   { color: var(--rouge); }
+  .btn-verif {
+    padding: 7px 16px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-verif:hover { background: #1E4A72; }
+
+  .bilan-exo-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid #2D5F8A;
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+  }
+  .bilan-exo-card .bilan-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #2D5F8A;
+    background: var(--bleu-clair);
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .pastille-link {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin: 2px 4px 2px 0;
+    transition: opacity 0.15s ease;
+  }
+  .pastille-link:hover { opacity: 0.8; }
+  .pastille-sujet { background: var(--bleu-clair); color: #2D5F8A; }
+  .pastille-corrige { background: #d7f0e6; color: #1e6b4d; }
+  .bilan-exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 6px;
+  }
+  .bilan-exo-card .bilan-theme {
+    font-size: 0.87rem;
+    color: var(--texte-leger);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-sujet, .btn-correction {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: filter 0.15s;
+  }
+  .btn-sujet { background: var(--bleu); color: white; }
+  .btn-correction { background: var(--vert); color: white; }
+  .btn-sujet:hover, .btn-correction:hover { filter: brightness(0.9); }
+  .btn-corriger {
+    padding: 7px 16px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-corriger:hover { background: #2A6B52; }
+  .btn-reset {
+    padding: 7px 16px;
+    background: var(--gris-fond);
+    color: var(--texte-leger);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+  .num-btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .num-correction-inline {
+    display: none;
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: var(--texte);
+  }
+  .num-correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
+  .num-correction-inline .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 7px 11px;
+    margin: 6px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── QCM ── */
+  .qcm-grid { display: grid; gap: 10px; margin: 14px 0; }
+  .qcm-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .qcm-item .substance { font-size: 0.93rem; font-weight: 600; flex: 1; }
+  .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qcm-btn {
+    padding: 5px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    background: var(--gris-fond);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--texte);
+  }
+  .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
+  .qcm-btn.correct { background: var(--vert); color: white; border-color: var(--vert); }
+  .qcm-btn.wrong   { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; width: 100%; }
+  .qcm-feedback.wrong { color: var(--rouge); }
+
+  .dq-select {
+    padding: 7px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--blanc);
+    color: var(--texte);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 160px;
+  }
+  .dq-select:focus { outline: none; border-color: var(--bleu); }
+  .dq-select.correct { border-color: var(--vert); background: var(--vert-exo); color: var(--vert); font-weight: 700; }
+  .dq-select.wrong   { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
+  .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
+  .dq-feedback.wrong { color: var(--rouge); }
+
+  /* ── ACCORDÉON ── */
+  .accord-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: var(--texte);
+    transition: background 0.2s;
+    margin: 10px 0;
+  }
+  .accord-btn:hover { background: var(--bleu-clair); }
+  .accord-body {
+    display: none;
+    padding: 14px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  .accord-body.open { display: block; animation: fadeIn 0.2s; }
+
+  /* ── BILAN GRID ── */
+  .bilan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .bilan-grid { grid-template-columns: 1fr; } }
+  .bilan-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .bilan-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--gris-bord);
+  }
+  .bilan-card ul { padding-left: 16px; }
+  .bilan-card ul li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.5; }
+  .ke-list { list-style: none; padding: 0; }
+  .ke-list li {
+    padding: 6px 10px 6px 28px;
+    position: relative;
+    font-size: 0.84rem;
+    border-bottom: 1px solid var(--gris-bord);
+    line-height: 1.5;
+  }
+  .ke-list li:last-child { border-bottom: none; }
+  .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
+
+  /* ── CANVAS ANIMATION ── */
+  .anim-canvas-wrap {
+    background: #F8FAFC;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 14px 16px 10px;
+    margin: 14px 0;
+  }
+  .anim-canvas-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--texte-leger);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .anim-canvas-wrap canvas { display: block; margin: 0 auto; border-radius: 8px; border: 1px solid var(--gris-bord); background: #fff; max-width: 100%; }
+  .anim-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .anim-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--blanc);
+    color: var(--texte);
+    transition: all 0.15s;
+  }
+  .anim-btn:hover  { border-color: var(--bleu); color: var(--bleu); background: var(--bleu-clair); }
+  .anim-btn.active { background: var(--bleu); color: white; border-color: var(--bleu); }
+
+  .charge-toggle-btn {
+    padding: 7px 18px;
+    border: 2px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    background: var(--blanc);
+    color: var(--texte);
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .charge-toggle-btn:hover { transform: scale(1.03); }
+  .charge-toggle-btn.q-pos { border-color: var(--vert); background: var(--vert-clair); color: var(--vert); }
+  .charge-toggle-btn.q-neg { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); }
+  .charge-toggle-btn .q-symbol {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%;
+    font-size: 1rem; font-weight: 900; color: var(--blanc);
+    line-height: 1;
+  }
+  .charge-toggle-btn.q-pos .q-symbol { background: var(--vert); }
+  .charge-toggle-btn.q-neg .q-symbol { background: var(--rouge); }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; flex-wrap: wrap; }
+  .slider-row label { font-size: 0.84rem; font-weight: 700; color: var(--texte); min-width: 150px; }
+  .slider-row input[type=range] { flex: 1; min-width: 140px; accent-color: var(--bleu); }
+  .slider-row .slider-val { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--bleu); min-width: 56px; text-align: right; font-size: 0.86rem; }
+
+  .legende-vect { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; font-size: 0.78rem; font-weight: 700; }
+  .legende-vect span { display: inline-flex; align-items: center; gap: 5px; }
+  .legende-vect .swatch { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+
+  /* ── FIGURES ILLUSTRATIVES (images du cours) ── */
+  .fig-box {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .fig-box img { max-width: 100%; height: auto; border-radius: 6px; }
+  .fig-box .fig-caption {
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .fig-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+  .fig-row .fig-box { flex: 1; min-width: 200px; margin: 0; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap { height: 4px; background: var(--gris-bord); border-radius: 2px; margin: 12px 0 4px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--bleu), var(--orange)); border-radius: 2px; transition: width 0.4s ease; }
+
+  .etape-msg-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    padding: 20px;
+    border-top: 1px solid var(--gris-bord);
+    margin-top: 30px;
+  }
+
+  sup { font-size: 0.65em; }
+  sub { font-size: 0.65em; }
+  .math { font-family: 'Outfit', sans-serif; font-style: italic; }
+  .vec { text-decoration: overline; }
+
+  /* ── NOTATION VECTORIELLE FIABLE (flèche SVG, évite le caractère combinant qui peut s'afficher en carré) ── */
+  .vecsym {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.45em;
+  }
+  .vecsym svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.55em;
+    overflow: visible;
+  }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 12px 16px 0; }
+    .header-titles h1 { font-size: 1.05rem; }
+    .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
+    .main { padding: 18px 12px 50px; }
+    .mobile-icon-wrap { width: 42px; height: 42px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+    <div class="header-left">
+      <div class="header-badge">T<sup>ale</sup> Spé – Séq. 13</div>
+      <button class="cap-toggle" id="capToggle">📋 Capacités exigibles</button>
+    </div>
+    <div class="header-titles">
+      <h1>Écoulement d'un fluide</h1>
+      <p>Thème : <span>Poussée d'Archimède, débit, relation de Bernoulli</span> · © C. Poirault-Gauvin</p>
+    </div>
+    <!-- Icône fluide animée (tuyau + particules + tourbillon) -->
+    <div class="mobile-icon-wrap" title="Écoulement d'un fluide dans un conduit">
+      <style>
+        @keyframes fluid-flow {
+          0%   { transform: translateX(0);    opacity: 0; }
+          15%  { opacity: 1; }
+          80%  { opacity: 1; }
+          100% { transform: translateX(30px); opacity: 0; }
+        }
+        @keyframes fluid-swirl { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+        .fl-p1 { animation: fluid-flow 2s ease-in-out infinite; }
+        .fl-p2 { animation: fluid-flow 2s ease-in-out 0.5s infinite; }
+        .fl-p3 { animation: fluid-flow 2s ease-in-out 1s infinite; }
+        .fl-p4 { animation: fluid-flow 2s ease-in-out 1.5s infinite; }
+        .fl-vortex { animation: fluid-swirl 3s linear infinite; transform-origin: 60px 40px; }
+        @media(prefers-reduced-motion:reduce){
+          .fl-p1,.fl-p2,.fl-p3,.fl-p4{animation:none;transform:none;opacity:0.7;}
+          .fl-vortex{animation:none;}
+        }
+      </style>
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="88" height="66">
+        <path d="M4,28 L50,28 Q60,28 64,36 Q68,44 64,52 L4,52 Z" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
+        <path d="M4,32 L48,32 Q57,32 60,40 Q57,48 48,48 L4,48 Z" fill="#bfdbfe" opacity="0.5"/>
+        <g>
+          <circle class="fl-p1" cx="15" cy="36" r="3" fill="#3b82f6" opacity="0.8"/>
+          <circle class="fl-p2" cx="25" cy="40" r="3" fill="#0f766e" opacity="0.8"/>
+          <circle class="fl-p3" cx="15" cy="44" r="3" fill="#3b82f6" opacity="0.8"/>
+          <circle class="fl-p4" cx="35" cy="38" r="2.5" fill="#0f766e" opacity="0.7"/>
+        </g>
+        <g class="fl-vortex">
+          <path d="M60,40 Q64,36 68,40 Q64,44 60,40 Z" fill="none" stroke="#0369a1" stroke-width="1.5" opacity="0.8"/>
+          <path d="M60,40 Q62,34 67,37 Q65,43 60,40 Z" fill="none" stroke="#0369a1" stroke-width="1" opacity="0.5"/>
+        </g>
+        <line x1="8"  y1="40" x2="18" y2="40" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrFl)"/>
+        <line x1="8"  y1="35" x2="15" y2="35" stroke="#1d4ed8" stroke-width="1.5"/>
+        <line x1="8"  y1="45" x2="15" y2="45" stroke="#1d4ed8" stroke-width="1.5"/>
+        <defs>
+          <marker id="arrFl" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto">
+            <path d="M0,0 L4,2 L0,4 Z" fill="#1d4ed8"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cap-panel" id="capPanel">
+    <div class="cap-cat">Poussée d'Archimède</div>
+    <ul>
+      <li>Expliquer qualitativement l'origine de la poussée d'Archimède.</li>
+      <li>Utiliser l'expression vectorielle de la poussée d'Archimède.</li>
+      <li>Mettre en œuvre un dispositif permettant de tester ou d'exploiter l'expression de la poussée d'Archimède.</li>
+    </ul>
+    <div class="cap-cat">Écoulement d'un fluide</div>
+    <ul>
+      <li>Exploiter la conservation du débit volumique pour déterminer la vitesse d'un fluide incompressible.</li>
+      <li>Exploiter la relation de Bernoulli, celle-ci étant fournie, pour étudier qualitativement puis quantitativement l'écoulement d'un fluide incompressible en régime permanent.</li>
+      <li>Mettre en œuvre un dispositif expérimental pour étudier l'écoulement permanent d'un fluide et pour tester la relation de Bernoulli.</li>
+    </ul>
+  </div>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">P</span> Prérequis (statique)
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">A</span> Poussée d'Archimède
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">B</span> Débit &amp; régime permanent
+    </button>
+    <button class="tab-btn" onclick="switchTab(3)">
+      <span class="tab-num">C</span> Bernoulli &amp; Venturi
+    </button>
+    <button class="tab-btn" onclick="switchTab(4)">
+      <span class="tab-num">✓</span> Bilan &amp; Ressources
+    </button>
+  </nav>
+  </div><!-- /header-inner -->
+</div>
+
+<div class="main">
+
+<!-- ══════════════ ONGLET P — PRÉREQUIS : STATIQUE DES FLUIDES ══════════════ -->
+<div class="tab-content active" id="tab-0">
+
+  <div class="sub-tabs-nav" id="sub-nav-P">
+    <button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+      <span class="sub-tab-num">1</span> Pression &amp; force pressante
+    </button>
+    <button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+      <span class="sub-tab-num">2</span> Loi fondamentale de la statique
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Avant d'étudier l'écoulement d'un fluide, il faut revoir deux notions de Première : la <strong>force pressante</strong> exercée par un fluide sur une paroi, et la <strong>loi fondamentale de la statique des fluides</strong>, qui relie pression et altitude dans un fluide au repos.
+  </div>
+
+  <!-- ───────── P1 : PRESSION & FORCE PRESSANTE ───────── -->
+  <div class="sub-tab-content active" id="sub-P-0">
+    <div class="def-card">
+      <h3>Pression et force pressante</h3>
+      <p>Un fluide au repos exerce sur toute paroi en contact avec lui des actions mécaniques, modélisées par une <strong>force pressante</strong> <span class="vecsym">F<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span>, perpendiculaire à la paroi et dirigée du fluide vers la paroi.</p>
+    </div>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center; margin:14px 0;">
+      <svg viewBox="0 0 260 150" width="260" xmlns="http://www.w3.org/2000/svg" style="border:1px solid #DDE3EC; border-radius:8px; background:#F8FAFE; flex-shrink:0;">
+        <rect x="20" y="20" width="140" height="100" fill="#bfe3fb" opacity="0.85"/>
+        <rect x="160" y="10" width="14" height="120" fill="#94a3b8"/>
+        <text x="167" y="8" text-anchor="middle" font-family="Nunito,sans-serif" font-size="10" fill="#5A6B7A">Paroi</text>
+        <text x="80" y="12" text-anchor="middle" font-family="Outfit,sans-serif" font-size="11" fill="#1e5f8a" font-weight="700">Fluide au repos</text>
+        <line x1="174" y1="70" x2="220" y2="70" stroke="#E8783A" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="220,70 210,64 210,76" fill="#E8783A"/>
+        <text x="225" y="74" font-family="Outfit,sans-serif" font-style="italic" font-weight="700" font-size="14" fill="#E8783A">F</text>
+      </svg>
+      <div style="flex:1; min-width:220px; font-size:0.9rem; line-height:1.7;">
+        <ul>
+          <li><strong>Direction</strong> de <span class="vecsym">F<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> : perpendiculaire à la paroi.</li>
+          <li><strong>Sens</strong> de <span class="vecsym">F<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> : du fluide vers la paroi.</li>
+          <li><strong>Valeur</strong> (en N) : <span class="math">F = P × S</span>, avec <em>P</em> (en Pa) la pression du fluide et <em>S</em> (en m²) la surface de la paroi en contact avec le fluide.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formule-box">
+      F = P × S
+      <div class="legend">F : valeur de la force pressante (N) &nbsp;•&nbsp; P : pression du fluide (Pa) &nbsp;•&nbsp; S : aire de la surface en contact (m²)</div>
+    </div>
+
+    <div class="exemple-box"><strong>Exemple :</strong> un plongeur subit, à une profondeur donnée, une pression P = 2,0.10⁵ Pa sur une surface de peau de S = 1,8 m². La force pressante résultante vaut F = P×S = 2,0.10⁵ × 1,8 ≈ 3,6.10⁵ N — d'où l'importance de la combinaison de plongée pour répartir cette pression !</div>
+
+    <div class="section-title"><span class="icon">🧮</span> Simulateur — Paroi amovible : F = P × S</div>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Le fluide repousse la paroi mobile : plus la pression P augmente, plus la force pressante F est intense (à surface S fixée)</div>
+      <canvas id="cvParoi" width="300" height="180"></canvas>
+      <div class="slider-row">
+        <label>Pression du fluide P</label>
+        <input type="range" id="paroiP" min="0.5" max="5" step="0.1" value="2" oninput="updateParoi()">
+        <span class="slider-val" id="paroiPVal">2,0×10⁵ Pa</span>
+      </div>
+      <div class="etape-msg-box" id="paroiResult" style="font-family:'Outfit',sans-serif; font-weight:700;"></div>
+      <div style="font-size:0.82rem; color:#5A6B7A; margin-top:6px;">Surface de la paroi fixée à S = 0,50 m².</div>
+    </div>
+  </div>
+
+  <!-- ───────── P2 : LOI FONDAMENTALE DE LA STATIQUE DES FLUIDES ───────── -->
+  <div class="sub-tab-content" id="sub-P-1">
+    <div class="def-card">
+      <h3>Loi fondamentale de la statique des fluides</h3>
+      <p>Dans un fluide incompressible au repos, la pression <strong>augmente avec la profondeur</strong>. Pour deux points A et B d'un même fluide, aux altitudes z<sub>A</sub> et z<sub>B</sub> :</p>
+    </div>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center; margin:14px 0;">
+      <svg viewBox="0 0 200 170" width="200" xmlns="http://www.w3.org/2000/svg" style="border:1px solid #DDE3EC; border-radius:8px; background:#F8FAFE; flex-shrink:0;">
+        <line x1="30" y1="150" x2="30" y2="10" stroke="#5A6B7A" stroke-width="1.3" marker-end="url(#arrZ)"/>
+        <text x="34" y="16" font-family="Outfit,sans-serif" font-size="12" fill="#5A6B7A" font-style="italic">z</text>
+        <defs><marker id="arrZ" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5A6B7A"/></marker></defs>
+        <rect x="55" y="30" width="90" height="110" fill="#bfe3fb" opacity="0.85" stroke="#7dd3fc"/>
+        <text x="100" y="24" text-anchor="middle" font-family="Outfit,sans-serif" font-size="11" fill="#1e5f8a" font-weight="700">Liquide (ρ)</text>
+        <circle cx="70" cy="55" r="3.5" fill="#2D5F8A"/>
+        <text x="78" y="58" font-family="Outfit,sans-serif" font-size="12" font-weight="700" fill="#2D5F8A">A</text>
+        <text x="150" y="58" font-family="Nunito,sans-serif" font-size="10" fill="#5A6B7A">z<tspan baseline-shift="sub" font-size="8">A</tspan></text>
+        <circle cx="70" cy="120" r="3.5" fill="#C0392B"/>
+        <text x="78" y="123" font-family="Outfit,sans-serif" font-size="12" font-weight="700" fill="#C0392B">B</text>
+        <text x="150" y="123" font-family="Nunito,sans-serif" font-size="10" fill="#5A6B7A">z<tspan baseline-shift="sub" font-size="8">B</tspan></text>
+        <line x1="30" y1="55" x2="70" y2="55" stroke="#AABBD0" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="30" y1="120" x2="70" y2="120" stroke="#AABBD0" stroke-width="1" stroke-dasharray="3,2"/>
+      </svg>
+      <div style="flex:1; min-width:220px;">
+        <div class="formule-box" style="margin:0;">
+          P<sub>B</sub> − P<sub>A</sub> = ρ × g × (z<sub>A</sub> − z<sub>B</sub>)
+          <div class="legend">ρ : masse volumique du fluide (kg.m⁻³) &nbsp;•&nbsp; g : intensité de la pesanteur (N.kg⁻¹) &nbsp;•&nbsp; z : altitude (m), axe vers le haut</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="remarque-box"><strong>Conséquence :</strong> B étant plus profond que A (z<sub>B</sub> &lt; z<sub>A</sub>), on a P<sub>B</sub> &gt; P<sub>A</sub> : <strong>la pression augmente avec la profondeur d'immersion</strong>. C'est cette dissymétrie des forces pressantes (plus intenses en bas qu'en haut d'un objet immergé) qui est à l'origine de la poussée d'Archimède (onglet suivant).</div>
+
+    <div class="section-title"><span class="icon">🧮</span> Simulateur — ΔP = ρ.g.Δz</div>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Écart de pression entre deux points d'un fluide au repos</div>
+      <div class="slider-row">
+        <label>Masse volumique ρ</label>
+        <select id="statFluide" class="dq-select" onchange="updateStatique()">
+          <option value="1000">Eau (1000 kg/m³)</option>
+          <option value="1025">Eau de mer (1025 kg/m³)</option>
+          <option value="920">Huile (920 kg/m³)</option>
+          <option value="13600">Mercure (13600 kg/m³)</option>
+        </select>
+      </div>
+      <div class="slider-row">
+        <label>Écart d'altitude Δz = z<sub>A</sub> − z<sub>B</sub></label>
+        <input type="range" id="statDz" min="0.1" max="20" step="0.1" value="2" oninput="updateStatique()">
+        <span class="slider-val" id="statDzVal">2,0 m</span>
+      </div>
+      <div class="etape-msg-box" id="statResult" style="font-family:'Outfit',sans-serif; font-weight:700;"></div>
+    </div>
+
+    <div class="section-title"><span class="icon">🧪</span> Vrai / Faux</div>
+    <div class="qcm-grid" id="qcmStatique"></div>
+  </div>
+</div>
+
+<!-- ══════════════ ONGLET A — POUSSÉE D'ARCHIMÈDE ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+
+    <div class="activite-card">
+      <h3>Activité 1 — Le nautile</h3>
+      <p>Le nautile, mollusque marin, régule sa profondeur en modifiant la quantité de gaz contenue dans les loges de sa coquille, ce qui fait varier son volume immergé effectif et donc la poussée qu'il subit. <em>Document p326</em>.</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Que représente la poussée d'Archimède ?</h3>
+      <p>Tout objet plongé dans un fluide (liquide ou gaz) subit, de la part de ce fluide, des actions mécaniques modélisées par des <strong>forces pressantes</strong> dont la valeur F = P×S augmente avec la pression P du fluide (et l'aire S de la surface de l'objet).</p>
+      <p style="margin-top:8px;">D'après la loi fondamentale de la statique des fluides (ΔP = ρ.g.Δz), la pression exercée par un fluide augmente avec la profondeur d'immersion.</p>
+      <p style="margin-top:8px;">Ainsi, les forces pressantes qui s'exercent sur la surface d'un objet immergé <strong>ne se compensent pas parfaitement</strong> : elles sont plus intenses sur le bas de l'objet que sur le haut. Il en résulte une action mécanique résultante, verticale et orientée vers le haut : la <strong>poussée d'Archimède</strong> <span class="vecsym">π<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span>.</p>
+    </div>
+
+    <svg viewBox="0 0 260 165" width="260" xmlns="http://www.w3.org/2000/svg" style="border:1px solid #DDE3EC; border-radius:8px; background:#F8FAFE; display:block; margin:14px auto;">
+      <defs>
+        <marker id="arrIcePi" markerWidth="5" markerHeight="5" refX="3.6" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#E8783A"/></marker>
+        <marker id="arrIceP" markerWidth="5" markerHeight="5" refX="3.6" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#7B4FA6"/></marker>
+      </defs>
+      <!-- ciel -->
+      <rect x="8" y="6" width="244" height="42" fill="#eaf6ff"/>
+      <!-- mer -->
+      <rect x="8" y="48" width="244" height="112" fill="#bfe3fb" opacity="0.85"/>
+      <line x1="8" y1="48" x2="252" y2="48" stroke="#7dd3fc" stroke-width="1.5"/>
+
+      <!-- BATEAU : flotte, coque peu immergée -->
+      <polygon points="40,48 102,48 95,22 47,22" fill="#eef6fb" stroke="#b8d4e3" stroke-width="1"/>
+      <rect x="60" y="9" width="22" height="14" fill="#5A6B7A"/>
+      <rect x="68" y="2" width="6" height="8" fill="#C0392B"/>
+      <polygon points="45,48 97,48 88,63 54,63" fill="#2D5F8A" opacity="0.9" stroke="#1e4a68" stroke-width="1"/>
+      <line x1="71" y1="16" x2="71" y2="100" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="71" y1="40" x2="71" y2="19" stroke="#E8783A" stroke-width="2" marker-end="url(#arrIcePi)"/>
+      <line x1="71" y1="40" x2="71" y2="97" stroke="#7B4FA6" stroke-width="2" marker-end="url(#arrIceP)"/>
+      <text x="78" y="24" font-family="Outfit,sans-serif" font-style="italic" font-weight="800" font-size="13" fill="#E8783A">π</text>
+      <line x1="76" y1="13" x2="84" y2="13" stroke="#E8783A" stroke-width="1.1"/>
+      <polygon points="84,13 80.5,11.7 80.5,14.3" fill="#E8783A"/>
+      <text x="78" y="103" font-family="Outfit,sans-serif" font-style="italic" font-weight="800" font-size="13" fill="#7B4FA6">P</text>
+      <line x1="76" y1="92" x2="84" y2="92" stroke="#7B4FA6" stroke-width="1.1"/>
+      <polygon points="84,92 80.5,90.7 80.5,93.3" fill="#7B4FA6"/>
+
+      <!-- SOUS-MARIN : totalement immergé, en profondeur -->
+      <ellipse cx="192" cy="140" rx="24" ry="7.5" fill="#1B2A4A"/>
+      <rect x="184" y="128" width="10" height="9" rx="1.5" fill="#1B2A4A"/>
+      <polygon points="171,140 158,132 158,148" fill="#1B2A4A"/>
+      <circle cx="202" cy="139" r="1.3" fill="#eaf6ff"/>
+      <line x1="192" y1="112" x2="192" y2="158" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="192" y1="128" x2="192" y2="115" stroke="#E8783A" stroke-width="2" marker-end="url(#arrIcePi)"/>
+      <line x1="192" y1="148" x2="192" y2="156" stroke="#7B4FA6" stroke-width="2" marker-end="url(#arrIceP)"/>
+      <text x="199" y="117" font-family="Outfit,sans-serif" font-style="italic" font-weight="800" font-size="13" fill="#E8783A">π</text>
+      <line x1="196" y1="107" x2="204" y2="107" stroke="#E8783A" stroke-width="1.1"/>
+      <polygon points="204,107 200.5,105.7 200.5,108.3" fill="#E8783A"/>
+      <text x="199" y="163" font-family="Outfit,sans-serif" font-style="italic" font-weight="800" font-size="13" fill="#7B4FA6">P</text>
+      <line x1="196" y1="153" x2="204" y2="153" stroke="#7B4FA6" stroke-width="1.1"/>
+      <polygon points="204,153 200.5,151.7 200.5,154.3" fill="#7B4FA6"/>
+
+      <text x="71" y="160" text-anchor="middle" font-family="Nunito,sans-serif" font-size="9" fill="#5A6B7A">bateau (flotte)</text>
+      <text x="192" y="10" text-anchor="middle" font-family="Nunito,sans-serif" font-size="9" fill="#5A6B7A">sous-marin (immersion totale, en profondeur)</text>
+    </svg>
+
+    <div class="remarque-box"><strong>À retenir :</strong> la poussée d'Archimède n'est rien d'autre que la <strong>résultante</strong> (non nulle) de toutes les forces pressantes exercées par le fluide sur la surface immergée de l'objet — expression valable même pour un écoulement de fluide horizontal, perpendiculaire au champ de pesanteur <span class="vecsym">g<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span>.</div>
+
+    <div class="def-card">
+      <h3>Expression vectorielle de la poussée d'Archimède</h3>
+      <p>Tout corps immergé, tout ou en partie, dans un fluide, subit de la part du fluide une force verticale, dirigée vers le haut, de valeur égale au poids du volume de fluide déplacé :</p>
+    </div>
+
+    <div class="formule-box">
+      <span class="vecsym">π<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> = − m<sub>f</sub> · <span class="vecsym">g<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> = − ρ<sub>f</sub> · V · <span class="vecsym">g<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span>
+      <div class="legend">π : poussée d'Archimède (N) &nbsp;•&nbsp; ρ<sub>f</sub> : masse volumique du fluide (kg/m³) &nbsp;•&nbsp; g : champ de pesanteur (N/kg) &nbsp;•&nbsp; m<sub>f</sub> : masse de fluide déplacé (kg) &nbsp;•&nbsp; V : volume de fluide déplacé (m³)</div>
+    </div>
+
+    <div class="exemple-box">
+      <strong>Ce que ça change (ou pas) :</strong> la poussée d'Archimède a la même direction que <span class="vecsym">g<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> mais un sens opposé — elle est toujours verticale, vers le haut. Sa valeur π = ρ<sub>f</sub>×V×g ne dépend <strong>ni de la masse de l'objet, ni de sa forme, ni de son orientation, ni de la profondeur d'immersion</strong> (pour un corps totalement immergé) : seuls comptent le volume immergé et la masse volumique du fluide.
+    </div>
+
+    <div class="remarque-box">Les bateaux sont conçus de telle sorte que le poids du volume d'eau déplacé (donc la valeur de la poussée d'Archimède) soit toujours égal au poids du bateau et de son contenu. Ces paramètres sont largement mis en jeu en aéronautique, en plongée sous-marine ou dans la construction navale.</div>
+
+    <div class="section-title"><span class="icon">🛥️</span> Simulateur — Flotte ou coule ?</div>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Comparer la poussée d'Archimède π et le poids P d'un objet immergé</div>
+      <canvas id="cvArchi" width="300" height="200"></canvas>
+      <div class="slider-row">
+        <label>Fluide</label>
+        <select id="archiFluide" class="dq-select" onchange="updateArchi()">
+          <option value="1000">Eau (1000 kg/m³)</option>
+          <option value="1025">Eau de mer (1025 kg/m³)</option>
+          <option value="920">Huile (920 kg/m³)</option>
+          <option value="13600">Mercure (13600 kg/m³)</option>
+        </select>
+      </div>
+      <div class="slider-row">
+        <label>Volume immergé V<sub>i</sub></label>
+        <input type="range" id="archiV" min="50" max="1000" step="10" value="400" oninput="updateArchi()">
+        <span class="slider-val" id="archiVVal">400 cm³</span>
+      </div>
+      <div class="slider-row">
+        <label>Masse de l'objet m</label>
+        <input type="range" id="archiM" min="20" max="1200" step="10" value="350" oninput="updateArchi()">
+        <span class="slider-val" id="archiMVal">350 g</span>
+      </div>
+      <div class="etape-msg-box" id="archiResult" style="font-family:'Outfit',sans-serif; font-weight:700;"></div>
+    </div>
+
+    <div class="remarque-box">
+      <strong>Pourquoi seul le poids change, et pas la poussée ?</strong>
+      <p style="margin-top:6px;">Les deux forces qui s'exercent sur le solide sont :</p>
+      <ul style="margin-top:4px;">
+        <li>le poids <span class="vecsym">P<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> = m · <span class="vecsym">g<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span>, qui dépend directement de la <strong>masse m</strong> de l'objet : c'est pour ça que le curseur « Masse de l'objet » fait varier P ;</li>
+        <li>la poussée d'Archimède <span class="vecsym">π<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> = − ρ<sub>f</sub> · V<sub>i</sub> · <span class="vecsym">g<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span>, qui ne dépend <strong>que</strong> de la masse volumique du fluide ρ<sub>f</sub> et du volume immergé V<sub>i</sub> — la masse de l'objet n'apparaît pas dans cette expression. C'est pour ça que le curseur « Masse » n'a aucun effet sur π : à volume immergé fixé, deux objets de masses différentes subissent exactement la même poussée.</li>
+      </ul>
+      <p style="margin-top:6px;">Le solide flotte ou coule selon la comparaison des <strong>valeurs</strong> de ces deux forces : π &gt; P (l'objet remonte), π &lt; P (il coule), π ≈ P (il reste en équilibre). Autrement dit, à fluide et volume immergé donnés, c'est la <strong>masse de l'objet</strong> qui décide de son comportement.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice — Calculer une poussée d'Archimède</h3>
+      <div class="exo-enonce">Une bouée sphérique en plastique, entièrement immergée dans l'eau de mer (ρ = 1025 kg/m³), a un volume V = 8,0 L. On prend g = 9,8 N/kg.</div>
+      <div class="question-block">
+        <div class="question-label">Calculer la valeur π de la poussée d'Archimède qu'elle subit (en N).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exArchi-q1" placeholder="Valeur">
+          <span class="num-unit">N</span>
+          <button class="btn-verif" onclick="checkArchiEx()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exArchi-fb"></div>
+      </div>
+      <div class="correction" id="exArchi-corr">
+        <div class="calc-step">V = 8,0 L = 8,0.10⁻³ m³</div>
+        <div class="calc-step">π = ρ × V × g = 1025 × 8,0.10⁻³ × 9,8 ≈ <strong>80,4 N</strong></div>
+      </div>
+    </div>
+
+    <div class="methode-box">
+      <div class="methode-titre">Méthode — Exploiter la poussée d'Archimède</div>
+      <ol>
+        <li>Identifier le fluide et sa masse volumique ρ<sub>f</sub> (attention aux unités : kg/m³, et convertir les volumes en m³).</li>
+        <li>Identifier le volume immergé V (tout le volume si le corps est totalement immergé, une partie sinon).</li>
+        <li>Calculer π = ρ<sub>f</sub> × V × g.</li>
+        <li>Comparer π au poids P = m × g pour prévoir si l'objet flotte, coule, ou reste en équilibre.</li>
+      </ol>
+    </div>
+
+    <div class="section-title"><span class="icon">🖥️</span> Activité — Mesurer une poussée d'Archimède au dynamomètre</div>
+    <div class="activite-card">
+      <h3>Animation interactive — Peser un objet dans l'air puis dans l'eau</h3>
+      <p>Ouvre l'animation ci-dessous : un solide est suspendu à un dynamomètre. Note le poids indiqué <strong>dans l'air</strong>, puis immerge complètement le solide dans le liquide et note le <strong>poids apparent</strong> indiqué par le dynamomètre.</p>
+      <p style="margin-top:10px;"><a href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/premiere_1S/poussee_d_archimede_flash.htm" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🖥️ Ouvrir l'animation — Poussée d'Archimède (pccl.fr)</a></p>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice — Exploiter la pesée dans l'air et dans l'eau</h3>
+      <div class="exo-enonce">
+        Un solide est accroché à un dynamomètre. Dans l'air, le dynamomètre indique <strong>P = 2,94 N</strong>. Une fois le solide totalement immergé dans l'eau (ρ<sub>eau</sub> = 1000 kg/m³), le dynamomètre indique un <strong>poids apparent P' = 1,76 N</strong>. On prend g = 9,8 N/kg.
+        <br><br>Le dynamomètre « voit » moins de poids une fois le solide immergé car le fluide exerce en plus la poussée d'Archimède, vers le haut : à l'équilibre, P' = P − π, donc <span class="vecsym">π<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> = P − P'.
+      </div>
+      <div class="question-block">
+        <div class="question-label">1) Calculer la valeur π de la poussée d'Archimède subie par le solide (en N).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exDyna-q1" placeholder="Valeur">
+          <span class="num-unit">N</span>
+          <button class="btn-verif" onclick="checkDynaEx1()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exDyna-fb1"></div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) En déduire le volume V du solide immergé (en cm³).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exDyna-q2" placeholder="Valeur">
+          <span class="num-unit">cm³</span>
+          <button class="btn-verif" onclick="checkDynaEx2()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exDyna-fb2"></div>
+      </div>
+      <div class="correction" id="exDyna-corr">
+        <div class="calc-step">π = P − P' = 2,94 − 1,76 = <strong>1,18 N</strong></div>
+        <div class="calc-step">π = ρ<sub>eau</sub> × V × g ⟹ V = π / (ρ<sub>eau</sub>×g) = 1,18 / (1000×9,8) ≈ 1,20.10⁻⁴ m³ = <strong>120 cm³</strong></div>
+      </div>
+    </div>
+
+    <div class="remarque-box"><strong>C'est exactement ce que fait un TP réel :</strong> ce protocole (pesée dans l'air, puis dans un liquide) permet de <strong>mesurer expérimentalement</strong> la poussée d'Archimède, puis d'en déduire le volume — voire la masse volumique — d'un solide de forme quelconque, sans avoir besoin de le mesurer géométriquement.</div>
+</div>
+
+<!-- ══════════════ ONGLET B — DÉBIT & RÉGIME PERMANENT ══════════════ -->
+<div class="tab-content" id="tab-2">
+
+  <div class="sub-tabs-nav" id="sub-nav-B">
+    <button class="sub-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
+      <span class="sub-tab-num">1</span> Régime permanent
+    </button>
+    <button class="sub-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
+      <span class="sub-tab-num">2</span> Débit volumique
+    </button>
+    <button class="sub-tab-btn" data-sub="B3" onclick="switchSubTab('B',2)">
+      <span class="sub-tab-num">3</span> Conservation du débit
+    </button>
+    <button class="sub-tab-btn" data-sub="B4" onclick="switchSubTab('B',3)">
+      <span class="sub-tab-num">🖥️</span> TP simulation PhET
+    </button>
+  </div>
+
+  <!-- ───────── B1 ───────── -->
+  <div class="sub-tab-content active" id="sub-B-0">
+    <div class="activite-card">
+      <h3>Activité 2 — Surveillance des cours d'eau</h3>
+      <p>Les hydrologues mesurent en continu le débit des rivières pour prévenir crues et étiages. Simulation utile : <a href="https://phet.colorado.edu/fr/simulation/legacy/fluid-pressure-and-flow" target="_blank" rel="noopener">phet.colorado.edu — pression et écoulement des fluides</a>.</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Régime permanent (ou stationnaire)</h3>
+      <p>L'écoulement d'un fluide est modélisé par des <strong>lignes de courant</strong>, qui représentent les trajectoires des particules de fluide en mouvement.</p>
+      <p style="margin-top:8px;">On dit qu'un fluide s'écoule en <strong>régime permanent</strong> lorsque les lignes de courant n'évoluent pas au cours du temps : la vitesse <span class="vecsym">v<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> en un point quelconque du fluide conserve alors les mêmes caractéristiques au cours du temps.</p>
+    </div>
+
+    <svg viewBox="0 0 260 120" width="260" xmlns="http://www.w3.org/2000/svg" style="border:1px solid #DDE3EC; border-radius:8px; background:#F8FAFE; display:block; margin:14px auto;">
+      <path d="M10,60 Q80,20 130,55 Q180,90 250,45" fill="none" stroke="#2D5F8A" stroke-width="1.5"/>
+      <path d="M10,75 Q80,45 130,68 Q180,95 250,60" fill="none" stroke="#5B8FB9" stroke-width="1.5"/>
+      <path d="M10,45 Q80,10 130,40 Q180,80 250,30" fill="none" stroke="#5B8FB9" stroke-width="1.5"/>
+      <circle cx="80" cy="24" r="3" fill="#E8783A"/>
+      <circle cx="130" cy="55" r="3" fill="#E8783A"/>
+      <text x="70" y="14" font-family="Nunito,sans-serif" font-size="9" fill="#5A6B7A">lignes de courant</text>
+    </svg>
+
+    <div class="remarque-box">En régime permanent, la vitesse peut varier <strong>d'un point à un autre</strong> le long d'une ligne de courant (par exemple si la section du conduit varie), mais en un point fixe donné, elle ne varie pas au cours du temps.</div>
+  </div>
+
+  <!-- ───────── B2 ───────── -->
+  <div class="sub-tab-content" id="sub-B-1">
+    <div class="activite-card">
+      <h3>Activité 3 — Athérosclérose</h3>
+      <p>Le rétrécissement d'une artère par une plaque d'athérome modifie localement la vitesse du sang, avec des conséquences sur la pression artérielle (voir l'effet Venturi, onglet C).</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Débit volumique</h3>
+      <p>Le <strong>débit volumique</strong> Q d'un fluide représente le volume de fluide qui traverse une section S du conduit par unité de temps.</p>
+    </div>
+    <div class="formule-box">
+      Q = V / Δt
+      <div class="legend">Q : débit volumique (m³.s⁻¹) &nbsp;•&nbsp; V : volume de fluide écoulé (m³) &nbsp;•&nbsp; Δt : durée de l'écoulement (s)</div>
+    </div>
+    <div class="exemple-box"><strong>Exemple :</strong> chaque jour, la Loire rejette près de 8,0.10⁸ m³ d'eau dans l'océan. Son débit volumique moyen vaut Q = 8,0.10⁸ / (24×3600) ≈ <strong>9,3.10² m³.s⁻¹</strong>.</div>
+
+    <div class="def-card">
+      <h3>Relation entre débit et vitesse</h3>
+      <p>Si un fluide traverse à la vitesse v la section d'aire S d'un conduit pendant une durée Δt, le volume V ayant traversé S s'écrit V = S×v×Δt, d'où :</p>
+    </div>
+    <div class="formule-box">
+      Q = v × S
+      <div class="legend">Q : débit volumique (m³.s⁻¹) &nbsp;•&nbsp; S : aire de la section du conduit (m²) &nbsp;•&nbsp; v : vitesse du fluide (m.s⁻¹)</div>
+    </div>
+
+    <div class="section-title"><span class="icon">🧪</span> Animation — De Q = V/Δt à Q = v×S</div>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Le tronçon coloré représente le volume de fluide qui traverse la section S pendant Δt = 1,0 s</div>
+      <canvas id="cvDebitVS" width="300" height="150"></canvas>
+      <div class="slider-row">
+        <label>Vitesse v</label>
+        <input type="range" id="debitV" min="0.2" max="3" step="0.1" value="1" oninput="updateDebitAnim()">
+        <span class="slider-val" id="debitVVal">1,0 m/s</span>
+      </div>
+      <div class="slider-row">
+        <label>Section S</label>
+        <input type="range" id="debitS" min="5" max="40" step="1" value="15" oninput="updateDebitAnim()">
+        <span class="slider-val" id="debitSVal">15 cm²</span>
+      </div>
+      <div class="etape-msg-box" id="debitAnimResult" style="font-family:'Outfit',sans-serif; font-weight:700;"></div>
+    </div>
+
+    <div class="attention-box"><strong>En régime permanent</strong>, le débit volumique d'un fluide traversant une section S d'un conduit est constant au cours du temps.</div>
+
+    <div class="exo-card">
+      <h3>Exercice guidé — Redémontrer la relation Q = v×S</h3>
+      <div class="exo-enonce">Dans une portion d'artère de section S = 0,50 cm², le sang s'écoule à la vitesse v = 0,20 m/s. On considère une durée Δt = 1,0 s (comme dans l'animation ci-dessus).</div>
+      <div class="question-block">
+        <div class="question-label">1) Exprimer puis calculer la longueur L du tronçon de sang ayant traversé la section pendant Δt (en m).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exDebitDerive-q1" placeholder="Valeur">
+          <span class="num-unit">m</span>
+          <button class="btn-verif" onclick="checkDebitDerive1()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exDebitDerive-fb1"></div>
+        <div class="correction" id="exDebitDerive-corr1">
+          <div class="calc-step">L = v × Δt = 0,20 × 1,0 = <strong>0,20 m</strong></div>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) En déduire le volume V du tronçon (assimilé à un cylindre de section S et de longueur L), en m³.</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exDebitDerive-q2" placeholder="Valeur">
+          <span class="num-unit">m³</span>
+          <button class="btn-verif" onclick="checkDebitDerive2()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exDebitDerive-fb2"></div>
+        <div class="correction" id="exDebitDerive-corr2">
+          <div class="calc-step">S = 0,50 cm² = 0,50.10⁻⁴ m²</div>
+          <div class="calc-step">V = S × L = 0,50.10⁻⁴ × 0,20 = <strong>1,0.10⁻⁵ m³</strong> (soit 10 cm³)</div>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">3) Calculer Q = V/Δt, puis vérifier que l'on retrouve bien Q = v×S (en m³.s⁻¹).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exDebitDerive-q3" placeholder="Valeur">
+          <span class="num-unit">m³.s⁻¹</span>
+          <button class="btn-verif" onclick="checkDebitDerive3()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exDebitDerive-fb3"></div>
+        <div class="correction" id="exDebitDerive-corr3">
+          <div class="calc-step">Q = V/Δt = 1,0.10⁻⁵ / 1,0 = 1,0.10⁻⁵ m³.s⁻¹</div>
+          <div class="calc-step">Vérification : v × S = 0,20 × 0,50.10⁻⁴ = <strong>1,0.10⁻⁵ m³.s⁻¹</strong> ✓ — on retrouve bien la même valeur : Q = V/Δt = S×v×Δt/Δt = <strong>v×S</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice — Débit d'un robinet</h3>
+      <div class="exo-enonce">Un robinet de diamètre intérieur d = 1,2 cm laisse s'écouler l'eau à la vitesse v = 1,5 m/s.</div>
+      <div class="question-block">
+        <div class="question-label">Calculer le débit volumique Q (en L/min).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exDebit1-q1" placeholder="Valeur">
+          <span class="num-unit">L/min</span>
+          <button class="btn-verif" onclick="checkDebit1Ex()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exDebit1-fb"></div>
+      </div>
+      <div class="correction" id="exDebit1-corr">
+        <div class="calc-step">S = π×(d/2)² = π×(0,006)² ≈ 1,13.10⁻⁴ m²</div>
+        <div class="calc-step">Q = v×S ≈ 1,5 × 1,13.10⁻⁴ ≈ 1,70.10⁻⁴ m³.s⁻¹</div>
+        <div class="calc-step">Q ≈ 1,70.10⁻⁴ × 60 × 1000 ≈ <strong>10,2 L/min</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── B3 ───────── -->
+  <div class="sub-tab-content" id="sub-B-2">
+    <div class="def-card">
+      <h3>Conservation du débit volumique</h3>
+      <p>Lors de l'écoulement d'un fluide incompressible en régime permanent, il n'y a pas de perte de matière : le débit volumique Q se conserve le long de l'écoulement. Donc en tous points A et B :</p>
+    </div>
+    <div class="formule-box">
+      Q<sub>(A)</sub> = Q<sub>(B)</sub> &nbsp;⟺&nbsp; v<sub>A</sub>·S<sub>A</sub> = v<sub>B</sub>·S<sub>B</sub> &nbsp;⟺&nbsp; v<sub>B</sub>/v<sub>A</sub> = S<sub>A</sub>/S<sub>B</sub>
+      <div class="legend">La vitesse v du fluide et l'aire S de la section traversée sont deux grandeurs <strong>inversement proportionnelles</strong>. Si S<sub>A</sub> &gt; S<sub>B</sub>, alors v<sub>B</sub> &gt; v<sub>A</sub> : la vitesse du fluide augmente lorsque la section du conduit rétrécit.</div>
+    </div>
+    <div class="exemple-box">C'est le principe du tuyau d'arrosage que l'on pince pour augmenter la portée du jet : en réduisant S, on augmente v tout en gardant Q constant.</div>
+
+    <div class="section-title"><span class="icon">🚿</span> Simulateur — Conservation du débit</div>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Un conduit qui se rétrécit : Q constant, v augmente</div>
+      <canvas id="cvDebit" width="560" height="180"></canvas>
+      <div class="slider-row">
+        <label>Section S<sub>A</sub> (large)</label>
+        <input type="range" id="debitSA" min="10" max="40" step="1" value="30" oninput="updateDebit()">
+        <span class="slider-val" id="debitSAVal">30 cm²</span>
+      </div>
+      <div class="slider-row">
+        <label>Section S<sub>B</sub> (rétrécie)</label>
+        <input type="range" id="debitSB" min="4" max="30" step="1" value="10" oninput="updateDebit()">
+        <span class="slider-val" id="debitSBVal">10 cm²</span>
+      </div>
+      <div class="slider-row">
+        <label>Vitesse v<sub>A</sub> en entrée</label>
+        <input type="range" id="debitVA" min="0.2" max="3" step="0.1" value="1.0" oninput="updateDebit()">
+        <span class="slider-val" id="debitVAVal">1,0 m/s</span>
+      </div>
+      <div class="etape-msg-box" id="debitResult" style="font-family:'Outfit',sans-serif; font-weight:700;"></div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice — Rétrécissement d'une canalisation</h3>
+      <div class="exo-enonce">Une canalisation d'aire S<sub>A</sub> = 12 cm² se raccorde à une canalisation plus étroite d'aire S<sub>B</sub> = 3,0 cm². L'eau s'écoule en A à la vitesse v<sub>A</sub> = 0,60 m/s.</div>
+      <div class="question-block">
+        <div class="question-label">Calculer la vitesse v<sub>B</sub> dans la partie étroite (en m/s).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exDebit2-q1" placeholder="Valeur">
+          <span class="num-unit">m/s</span>
+          <button class="btn-verif" onclick="checkDebit2Ex()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exDebit2-fb"></div>
+      </div>
+      <div class="correction" id="exDebit2-corr">
+        <div class="calc-step">v<sub>A</sub>·S<sub>A</sub> = v<sub>B</sub>·S<sub>B</sub> ⟹ v<sub>B</sub> = v<sub>A</sub> × S<sub>A</sub>/S<sub>B</sub></div>
+        <div class="calc-step">v<sub>B</sub> = 0,60 × 12/3,0 = <strong>2,4 m/s</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── B4 : TP VIRTUEL — SIMULATION PhET ───────── -->
+  <div class="sub-tab-content" id="sub-B-3">
+    <div class="activite-card">
+      <h3>TP virtuel — « Pression et écoulement des fluides » (PhET)</h3>
+      <p>Cette simulation comporte <strong>trois onglets</strong> (Pression / Écoulement / Château d'eau) qui permettent de retrouver, en les manipulant, la quasi-totalité des notions de la séquence : loi de la statique des fluides, conservation du débit, effet Venturi et relation de Bernoulli.</p>
+      <p style="margin-top:10px;"><a href="https://phet.colorado.edu/sims/cheerpj/fluid-pressure-and-flow/latest/fluid-pressure-and-flow.html?simulation=fluid-pressure-and-flow&locale=fr" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🖥️ Ouvrir la simulation PhET — Pression et écoulement des fluides</a></p>
+    </div>
+
+    <div class="intro-box">Travaille avec la simulation ouverte dans un autre onglet. Pour chaque partie, suis le protocole puis réponds aux questions.</div>
+
+    <!-- PARTIE 1 : onglet Pression -->
+    <div class="def-card">
+      <h3>Partie 1 — Onglet « Pression » <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:0.85rem; color:var(--texte-leger);">(revoir la loi de la statique des fluides)</span></h3>
+      <p><strong>Protocole :</strong> place le capteur de pression (jauge) à différentes profondeurs dans le bassin rempli d'eau. Note comment la valeur affichée évolue. Puis change la nature du fluide (eau → essence → « miel ») en conservant la même profondeur, et observe à nouveau. Enfin, essaie de retirer l'atmosphère au-dessus du bassin.</p>
+    </div>
+    <div class="qcm-grid" id="qcmPhetPression"></div>
+
+    <!-- PARTIE 2 : onglet Ecoulement -->
+    <div class="def-card">
+      <h3>Partie 2 — Onglet « Écoulement / Flow » <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:0.85rem; color:var(--texte-leger);">(conservation du débit &amp; effet Venturi)</span></h3>
+      <p><strong>Protocole :</strong> à l'aide des poignées jaunes, resserre le tuyau en son milieu. Place un ou plusieurs capteurs de vitesse (speedomètres) et un ou deux capteurs de pression le long du tuyau, avant, dans, puis après le rétrécissement. Coche éventuellement « débitmètre » (flux meter) pour vérifier le débit à différents endroits.</p>
+    </div>
+    <div class="qcm-grid" id="qcmPhetFlow"></div>
+
+    <div class="exo-card">
+      <h3>Exercice — Exploiter une mesure de la simulation</h3>
+      <div class="exo-enonce">Dans la partie large du tuyau (section S<sub>A</sub> = 20 cm²), tu relèves une vitesse v<sub>A</sub> = 0,50 m/s. Dans la partie resserrée, la simulation indique une vitesse v<sub>B</sub> = 2,0 m/s.</div>
+      <div class="question-block">
+        <div class="question-label">Calculer l'aire S<sub>B</sub> de la section resserrée (en cm²), en utilisant la conservation du débit.</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exPhetFlow-q1" placeholder="Valeur">
+          <span class="num-unit">cm²</span>
+          <button class="btn-verif" onclick="checkPhetFlowEx()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exPhetFlow-fb"></div>
+      </div>
+      <div class="correction" id="exPhetFlow-corr">
+        <div class="calc-step">v<sub>A</sub>·S<sub>A</sub> = v<sub>B</sub>·S<sub>B</sub> ⟹ S<sub>B</sub> = v<sub>A</sub>×S<sub>A</sub> / v<sub>B</sub></div>
+        <div class="calc-step">S<sub>B</sub> = 0,50 × 20 / 2,0 = <strong>5,0 cm²</strong></div>
+      </div>
+    </div>
+
+    <!-- PARTIE 3 : onglet Chateau d'eau -->
+    <div class="def-card">
+      <h3>Partie 3 — Onglet « Château d'eau / Water Tower » <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:0.85rem; color:var(--texte-leger);">(relation de Bernoulli, v = √(2gh))</span></h3>
+      <p><strong>Protocole :</strong> clique sur « Fill » pour remplir le réservoir, puis ouvre le trou (le petit cache rouge) en bas de la cuve. Utilise le mètre et le capteur de vitesse pour mesurer la vitesse d'éjection de l'eau juste à la sortie du trou. Fais ensuite descendre le réservoir (ou laisse le niveau d'eau baisser) et observe l'effet sur la vitesse et la portée du jet.</p>
+    </div>
+    <div class="qcm-grid" id="qcmPhetTower"></div>
+
+    <div class="remarque-box"><strong>Bilan de ce TP :</strong> les trois onglets de cette unique simulation illustrent en réalité <strong>une seule et même relation</strong> — la relation de Bernoulli — appliquée à trois situations différentes : fluide au repos (onglet Pression, cas particulier v = 0), fluide en écoulement horizontal (onglet Écoulement, cas particulier z<sub>A</sub> = z<sub>B</sub>), et fluide en écoulement avec chute de hauteur (onglet Château d'eau, cas général).</div>
+  </div>
+</div>
+
+<!-- ══════════════ ONGLET C — BERNOULLI & VENTURI ══════════════ -->
+<div class="tab-content" id="tab-3">
+
+  <div class="sub-tabs-nav" id="sub-nav-C">
+    <button class="sub-tab-btn active" data-sub="C1" onclick="switchSubTab('C',0)">
+      <span class="sub-tab-num">1</span> Relation de Bernoulli
+    </button>
+    <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+      <span class="sub-tab-num">2</span> Effet Venturi
+    </button>
+    <button class="sub-tab-btn" data-sub="C3" onclick="switchSubTab('C',2)">
+      <span class="sub-tab-num">3</span> Activité — Réservoir & écoulement
+    </button>
+  </div>
+
+  <!-- ───────── C1 ───────── -->
+  <div class="sub-tab-content active" id="sub-C-0">
+    <div class="def-card">
+      <h3>Relation de Bernoulli</h3>
+      <p>Pour l'écoulement d'un fluide incompressible en régime permanent et sans frottement (donc sans échange d'énergie ni par travail ni par transfert thermique), la relation de Bernoulli modélise les évolutions de la pression P, de la vitesse v et de l'altitude z le long d'une ligne de courant :</p>
+    </div>
+    <div class="formule-box">
+      P + ½·ρ·v² + ρ·g·z = constante
+      <div class="legend">Pour deux points A et B d'une même ligne de courant : P<sub>A</sub> + ½ρv<sub>A</sub>² + ρgz<sub>A</sub> = P<sub>B</sub> + ½ρv<sub>B</sub>² + ρgz<sub>B</sub></div>
+    </div>
+    <div class="remarque-box"><strong>Que traduit cette relation ?</strong> Elle traduit la <strong>conservation de l'énergie totale</strong> d'un fluide le long d'une ligne de courant (énergie de pression + énergie cinétique volumique + énergie potentielle de pesanteur volumique). Elle permet d'interpréter les écoulements sanguins en médecine, les masses d'air et d'eau en géophysique, les flux d'air en aéronautique, ou encore l'alimentation en eau des réseaux domestiques.</div>
+
+    <div class="attention-box"><strong>Cas particulier :</strong> si le fluide est au repos (v = 0 partout), la relation de Bernoulli se réduit à P<sub>A</sub> + ρgz<sub>A</sub> = P<sub>B</sub> + ρgz<sub>B</sub>, soit ΔP = ρ.g.Δz : on retrouve la loi de la statique des fluides !</div>
+
+    <div class="section-title"><span class="icon">🏙️</span> Simulateur — Le château d'eau</div>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Vitesse de l'eau au robinet, alimenté par un château d'eau de hauteur h</div>
+      <canvas id="cvChateau" width="300" height="230"></canvas>
+      <div class="slider-row">
+        <label>Hauteur h du château d'eau</label>
+        <input type="range" id="chateauH" min="1" max="30" step="0.5" value="10" oninput="updateChateau()">
+        <span class="slider-val" id="chateauHVal">10,0 m</span>
+      </div>
+      <div class="etape-msg-box" id="chateauResult" style="font-family:'Outfit',sans-serif; font-weight:700;"></div>
+    </div>
+
+    <div class="methode-box">
+      <div class="methode-titre">Méthode — D'où vient v<sub>B</sub> = √(2.g.h) ?</div>
+      <ol>
+        <li>Point A : à la surface libre du réservoir, altitude z<sub>A</sub> = h, pression P<sub>A</sub> = P<sub>atm</sub>, vitesse v<sub>A</sub> ≈ 0 (le réservoir est très large : S<sub>A</sub> ≫ S<sub>B</sub>, donc v<sub>A</sub> ≪ v<sub>B</sub>).</li>
+        <li>Point B : à la sortie du robinet, altitude z<sub>B</sub> = 0, pression P<sub>B</sub> = P<sub>atm</sub> (à l'air libre).</li>
+        <li>Bernoulli : P<sub>atm</sub> + 0 + ρgh = P<sub>atm</sub> + ½ρv<sub>B</sub>² + 0 ⟹ v<sub>B</sub> = √(2gh).</li>
+      </ol>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice p.332 n°30 — Vitesse en sortie de château d'eau</h3>
+      <div class="exo-enonce">On considère un château d'eau de hauteur h = 10 m, avec g = 9,8 N/kg.</div>
+      <div class="question-block">
+        <div class="question-label">Calculer la valeur de la vitesse v<sub>B</sub> à la sortie du robinet (en m/s).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exChateau-q1" placeholder="Valeur">
+          <span class="num-unit">m/s</span>
+          <button class="btn-verif" onclick="checkChateauEx()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exChateau-fb"></div>
+      </div>
+      <div class="correction" id="exChateau-corr">
+        <div class="calc-step">v<sub>B</sub> = √(2×g×h) = √(2×9,8×10) ≈ <strong>14 m/s</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── C2 ───────── -->
+  <div class="sub-tab-content" id="sub-C-1">
+    <div class="def-card">
+      <h3>Effet Venturi</h3>
+      <p>Pour un écoulement en régime permanent, la pression P d'un fluide <strong>diminue</strong> lorsque sa vitesse v <strong>augmente</strong> (et inversement) : c'est l'<strong>effet Venturi</strong>.</p>
+      <p style="margin-top:8px;">Dans le cas d'un conduit horizontal (z<sub>A</sub> = z<sub>B</sub>), la relation de Bernoulli s'écrit P + ½ρv² = constante, d'où pour deux points A et B :</p>
+    </div>
+    <div class="formule-box">
+      P<sub>A</sub> − P<sub>B</sub> = ½·ρ·(v<sub>B</sub>² − v<sub>A</sub>²)
+      <div class="legend">Ainsi, si v<sub>A</sub> &lt; v<sub>B</sub> (conduit qui se rétrécit), alors P<sub>A</sub> &gt; P<sub>B</sub> : la pression est plus faible là où l'écoulement est plus rapide.</div>
+    </div>
+
+    <div class="exemple-box"><strong>Effet Magnus (sport) :</strong> en imposant une rotation à un ballon, on augmente la vitesse de l'air d'un côté et on la diminue de l'autre. Il en résulte une différence de pression de part et d'autre du ballon, donc une force résultante qui incurve sa trajectoire.</div>
+    <div class="exemple-box"><strong>Poire à parfum :</strong> l'air pulsé passe par une section étroite où sa vitesse augmente : sa pression y diminue (dépression), ce qui aspire le parfum liquide par un tube fin — c'est le principe du flacon vaporisateur.</div>
+
+    <div class="section-title"><span class="icon">🌬️</span> Simulateur — Tube de Venturi</div>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Conduit horizontal : la pression chute là où le fluide accélère — la flèche v<sub>A</sub> peut se glisser directement pour régler la vitesse</div>
+      <canvas id="cvVenturi" width="560" height="220"></canvas>
+      <div class="slider-row">
+        <label>Masse volumique ρ (fluide)</label>
+        <select id="ventFluide" class="dq-select" onchange="updateVenturi()">
+          <option value="1000">Eau (1000 kg/m³)</option>
+          <option value="1.2">Air (1,2 kg/m³)</option>
+        </select>
+      </div>
+      <div class="slider-row">
+        <label>Section S<sub>A</sub> (large)</label>
+        <input type="range" id="ventSA" min="10" max="40" step="1" value="30" oninput="updateVenturi()">
+        <span class="slider-val" id="ventSAVal">30 cm²</span>
+      </div>
+      <div class="slider-row">
+        <label>Section S<sub>B</sub> (étranglée)</label>
+        <input type="range" id="ventSB" min="4" max="30" step="1" value="8" oninput="updateVenturi()">
+        <span class="slider-val" id="ventSBVal">8 cm²</span>
+      </div>
+      <div class="slider-row">
+        <label>Vitesse v<sub>A</sub> en entrée</label>
+        <input type="range" id="ventVA" min="0.2" max="3" step="0.1" value="1.0" oninput="updateVenturi()">
+        <span class="slider-val" id="ventVAVal">1,0 m/s</span>
+      </div>
+      <div class="etape-msg-box" id="ventResult" style="font-family:'Outfit',sans-serif; font-weight:700;"></div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice p.333 n°32 — Dépression dans un rétrécissement</h3>
+      <div class="exo-enonce">Une conduite d'eau horizontale (ρ = 1000 kg/m³) a une vitesse v<sub>A</sub> = 0,80 m/s dans sa partie large, et v<sub>B</sub> = 3,2 m/s dans le rétrécissement.</div>
+      <div class="question-block">
+        <div class="question-label">Calculer P<sub>A</sub> − P<sub>B</sub> (en Pa).</div>
+        <div class="num-field-wrap">
+          <input type="text" class="num-input" id="exVent-q1" placeholder="Valeur">
+          <span class="num-unit">Pa</span>
+          <button class="btn-verif" onclick="checkVentEx()">Vérifier</button>
+        </div>
+        <div class="num-feedback" id="exVent-fb"></div>
+      </div>
+      <div class="correction" id="exVent-corr">
+        <div class="calc-step">P<sub>A</sub> − P<sub>B</sub> = ½×ρ×(v<sub>B</sub>² − v<sub>A</sub>²) = 0,5×1000×(3,2² − 0,8²)</div>
+        <div class="calc-step">= 0,5×1000×(10,24 − 0,64) = <strong>4,80.10³ Pa</strong></div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🎬</span> Pour aller plus loin</div>
+    <div class="bilan-card">
+      <p style="font-size:0.9rem; line-height:1.6;">Vidéo « Le tonneau percé » : <a href="http://phymain.unisciel.fr/le-tonneau-perce/" target="_blank" rel="noopener">phymain.unisciel.fr/le-tonneau-perce</a></p>
+    </div>
+  </div>
+
+  <!-- ───────── C3 ───────── -->
+  <div class="sub-tab-content" id="sub-C-2">
+    <div class="activite-card">
+      <h3>Activité — Simulateur réservoir &amp; écoulement (Hatier)</h3>
+      <p>Ce simulateur permet d'étudier la statique et l'écoulement d'un fluide incompressible. Il permet de retrouver, en le manipulant, l'essentiel des notions de la séquence : loi de la statique des fluides, débit, conservation du débit et effet Venturi.</p>
+      <p style="margin-top:10px; text-align:center;">
+        <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_meca_gratte/index.html" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🖥️ Ouvrir le simulateur — Réservoir &amp; écoulement (Hatier)</a>
+      </p>
+    </div>
+
+    <div class="attention-box"><strong>Consigne :</strong> ouvre le simulateur, choisis une activité proposée (bouton « Activités »), puis règle le réservoir et le tuyau pour reproduire la situation demandée. Relève les grandeurs utiles (hauteur d'eau, section, vitesse, débit) et vérifie tes prédictions théoriques (loi de la statique, conservation du débit, effet Venturi) à l'aide des valeurs affichées par l'animation.</div>
+  </div>
+</div>
+
+<!-- ══════════════ ONGLET ✓ — BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-4">
+
+  <div class="sub-tabs-nav" id="sub-nav-R">
+    <button class="sub-tab-btn active" data-sub="R1" onclick="switchSubTab('R',0)">
+      <span class="sub-tab-num">1</span> Bilan
+    </button>
+    <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
+      <span class="sub-tab-num">2</span> Ressources complémentaires
+    </button>
+  </div>
+
+  <!-- ───────── R1 : BILAN ───────── -->
+  <div class="sub-tab-content active" id="sub-R-0">
+  <div class="section-title"><span class="icon">🗺️</span> Schéma bilan de la séquence</div>
+  <div class="bilan-grid">
+    <div class="bilan-card">
+      <h4>Loi de la statique des fluides incompressibles</h4>
+      <ul class="ke-list">
+        <li>Fluide incompressible de masse volumique ρ, immobile, dans un champ de pesanteur uniforme.</li>
+        <li>P<sub>2</sub> − P<sub>1</sub> = ρg(z<sub>1</sub> − z<sub>2</sub>)</li>
+        <li>La pression augmente avec la profondeur.</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Poussée d'Archimède</h4>
+      <ul class="ke-list">
+        <li>Résultante des forces pressantes sur un corps immergé.</li>
+        <li><span class="vecsym">π<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span> = −ρ<sub>f</sub>·V<sub>i</sub>·<span class="vecsym">g<svg viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="1.6"/><polygon points="20,8 14,5 14,11" fill="currentColor"/></svg></span>, verticale, vers le haut.</li>
+        <li>Indépendante de la masse, la forme et l'orientation du corps.</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Conservation du débit volumique</h4>
+      <ul class="ke-list">
+        <li>Fluide incompressible, régime permanent.</li>
+        <li>Q = v×S = constante le long de l'écoulement.</li>
+        <li>v<sub>A</sub>·S<sub>A</sub> = v<sub>B</sub>·S<sub>B</sub> : v et S inversement proportionnelles.</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Relation de Bernoulli &amp; effet Venturi</h4>
+      <ul class="ke-list">
+        <li>Fluide incompressible, non visqueux, régime permanent.</li>
+        <li>P + ½ρv² + ρgz = constante le long d'une ligne de courant.</li>
+        <li>Conduit horizontal : si S<sub>A</sub> &gt; S<sub>B</sub> alors v<sub>A</sub> &lt; v<sub>B</sub> et P<sub>A</sub> &gt; P<sub>B</sub> (effet Venturi).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="icon">✅</span> QCM bilan de la séquence</div>
+  <div class="bilan-exo-card">
+    <span class="bilan-tag">AUTO-ÉVALUATION</span>
+    <h3>6 questions pour faire le point</h3>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="bilanProgress" style="width:0%;"></div></div>
+    <p id="bilanScore" style="font-size:0.85rem; color:var(--texte-leger); margin-bottom:10px;">0 / 6 bonnes réponses</p>
+    <div class="qcm-grid" id="qcmBilan"></div>
+  </div>
+
+  <div class="section-title"><span class="icon">📝</span> Exercices du manuel</div>
+  <table class="tableau-avancement">
+    <tr><th>Notion</th><th>Exercice</th></tr>
+    <tr><td>Poussée d'Archimède</td><td>p.330 n°19</td></tr>
+    <tr><td>Débit volumique</td><td>p.330 n°22</td></tr>
+    <tr><td>Relation de Bernoulli</td><td>p.332 n°30</td></tr>
+    <tr><td>Effet Venturi</td><td>p.333 n°32</td></tr>
+    <tr><td>Grand oral (vidéo)</td><td>p.336 question 1</td></tr>
+    <tr>
+      <td>Bac 2025 — Traitement des eaux d'un bassin d'orage (Archimède, débit, Bernoulli)</td>
+      <td>
+        <a href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Sujet-Bassin-MecaFluide-6pts.pdf" target="_blank" rel="noopener" class="pastille-link pastille-sujet">📄 Sujet</a>
+        <a href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Correction-Traitement-Eau-Bassin-6pts_3.pdf" target="_blank" rel="noopener" class="pastille-link pastille-corrige">✅ Corrigé</a>
+      </td>
+    </tr>
+    <tr>
+      <td>Bac 2025 — Écoulement du sang dans une artère (Doppler, débit, Bernoulli)</td>
+      <td>
+        <a href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-R-Exo2-Sujet-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener" class="pastille-link pastille-sujet">📄 Sujet</a>
+        <a href="https://www.labolycee.org/sites/default/files/2025-06/2025-AmNord-R-Exo2-Correction-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener" class="pastille-link pastille-corrige">✅ Corrigé</a>
+      </td>
+    </tr>
+  </table>
+
+  <div class="attention-box"><strong>Conclusion de séquence :</strong> réalisez un schéma heuristique sur les différentes notions de la séquence, à présenter à l'oral par groupe.</div>
+  </div>
+
+  <!-- ───────── R2 : RESSOURCES COMPLÉMENTAIRES ───────── -->
+  <div class="sub-tab-content" id="sub-R-1">
+  <div class="section-title"><span class="icon">🔗</span> Ressources complémentaires</div>
+
+  <div class="bilan-grid">
+    <div class="bilan-card">
+      <h4>🎬 Vidéos</h4>
+      <ul class="ke-list">
+        <li><a href="https://www.pearltrees.com/private/id105374371/item804904105?paccess=47d63fad60c.2ff9dca9.5c08fda8c7197d41f9d60aa5fda2bfe1" target="_blank" rel="noopener">Vidéo débat — Comment expliquer la trajectoire du ballon ?</a></li>
+        <li><a href="https://www.pearltrees.com/private/id105374371/item804889774?paccess=47d63fc5875.2ff9a4ae.17bab6d95e520f24da34ecb1aaa783a6" target="_blank" rel="noopener">Cours complet — Mécanique des fluides (Paul Olivier)</a></li>
+        <li><a href="https://www.pearltrees.com/private/id105374371/item804889431?paccess=47d63fcc984.2ff9a357.05fb8ce4941b001bfed4175780d881ff" target="_blank" rel="noopener">Débit volumique (Paul Olivier)</a></li>
+        <li><a href="https://www.pearltrees.com/private/id105374371/item804889589?paccess=47d63fd1d03.2ff9a3f5.7189b24d9796da712811c09e458d3f39" target="_blank" rel="noopener">Effet Venturi (Paul Olivier)</a></li>
+        <li><a href="http://phymain.unisciel.fr/le-tonneau-perce/" target="_blank" rel="noopener">Le tonneau percé (phymain.unisciel.fr)</a></li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>🎧 Bilans audio &amp; cours</h4>
+      <ul class="ke-list">
+        <li><a href="https://www.pearltrees.com/private/id105374371/item804895286?paccess=47d63fb463d.2ff9ba36.323568e3bf7a3244a8f714ed3639a46c" target="_blank" rel="noopener">Bilan audio Hatier (fiche de cours)</a></li>
+        <li><a href="https://www.pearltrees.com/private/id105374371/item804895285?paccess=47d63fb967f.2ff9ba35.b9f7447acc7e857c0d1111c551b5d522" target="_blank" rel="noopener">Bilan audio Hachette (fiche de cours)</a></li>
+        <li><a href="https://www.pearltrees.com/private/id105374371/item804894856?paccess=47d6407dd6c.2ff9b888.1f4f3ac8536aebdf718356a3af206823" target="_blank" rel="noopener">Cours 6 — Mécanique des fluides (Stella)</a></li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>✅ QCM &amp; simulation</h4>
+      <ul class="ke-list">
+        <li><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/14_QCM_prerequis/index.html" target="_blank" rel="noopener">QCM prérequis (Hatier)</a></li>
+        <li><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_14/index.html" target="_blank" rel="noopener">QCM de maîtrise des notions (Hatier)</a></li>
+        <li><a href="https://phet.colorado.edu/fr/simulation/legacy/fluid-pressure-and-flow" target="_blank" rel="noopener">Simulation PhET — Pression et écoulement des fluides</a></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+
+<div class="footer-note">Séquence 13 — Écoulement d'un fluide · Terminale spécialité physique-chimie · Cours interactif</div>
+
+<script>
+/* ════════ NAVIGATION ONGLETS ════════ */
+function switchTab(i) {
+  document.querySelectorAll('.tab-content').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('.tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+function switchSubTab(group, i) {
+  document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+document.getElementById('capToggle').addEventListener('click', () => {
+  document.getElementById('capPanel').classList.toggle('open');
+});
+
+/* ════════ OUTIL : dessiner une flèche vectorielle sur canvas ════════ */
+function drawArrow(ctx, x0, y0, x1, y1, color, width) {
+  width = width || 2.5;
+  const dx = x1 - x0, dy = y1 - y0;
+  const len = Math.hypot(dx, dy);
+  if (len < 0.5) return;
+  const headLen = Math.min(Math.max(len * 0.12, width * 3, 8), 20);
+  const angle = Math.atan2(dy, dx);
+  ctx.save();
+  ctx.strokeStyle = color; ctx.fillStyle = color;
+  ctx.lineWidth = width; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  const shaftLen = Math.max(len - headLen * 0.6, 0);
+  const xs = x0 + shaftLen * Math.cos(angle), ys = y0 + shaftLen * Math.sin(angle);
+  if (shaftLen > 0.5) { ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(xs, ys); ctx.stroke(); }
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x1 - headLen*Math.cos(angle - Math.PI/7), y1 - headLen*Math.sin(angle - Math.PI/7));
+  ctx.lineTo(x1 - headLen*Math.cos(angle + Math.PI/7), y1 - headLen*Math.sin(angle + Math.PI/7));
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+
+/* ════════ QCM générique ════════ */
+function buildQCM(containerId, items) {
+  const c = document.getElementById(containerId);
+  items.forEach((it, idx) => {
+    const div = document.createElement('div');
+    div.className = 'qcm-item';
+    let choicesHtml = it.choices.map((ch,i)=>`<button class="qcm-btn" data-i="${i}" onclick="answerQCM('${containerId}',${idx},${i},this)">${ch}</button>`).join('');
+    div.innerHTML = `<span class="substance">${it.q}</span><div class="qcm-choices">${choicesHtml}</div><div class="qcm-feedback" id="${containerId}-fb-${idx}"></div>`;
+    c.appendChild(div);
+  });
+  window['QCM_' + containerId] = items;
+}
+let bilanCorrectCount = 0;
+function answerQCM(containerId, qIdx, choiceIdx, btn) {
+  const items = window['QCM_' + containerId];
+  const it = items[qIdx];
+  const buttons = btn.parentElement.querySelectorAll('.qcm-btn');
+  buttons.forEach(b=>b.disabled=true);
+  const fb = document.getElementById(containerId+'-fb-'+qIdx);
+  if (choiceIdx === it.correct) {
+    btn.classList.add('correct');
+    fb.textContent = '✓ Exact — ' + it.explain;
+    fb.classList.remove('wrong');
+    if (containerId==='qcmBilan') { bilanCorrectCount++; updateBilanProgress(); }
+  } else {
+    btn.classList.add('wrong');
+    buttons[it.correct].classList.add('correct');
+    fb.textContent = '✗ Réponse attendue : « ' + it.choices[it.correct] + ' » — ' + it.explain;
+    fb.classList.add('wrong');
+  }
+}
+function updateBilanProgress() {
+  const pct = (bilanCorrectCount/6)*100;
+  document.getElementById('bilanProgress').style.width = pct+'%';
+  document.getElementById('bilanScore').textContent = bilanCorrectCount + ' / 6 bonnes réponses';
+}
+
+buildQCM('qcmStatique', [
+  { q: "Dans un fluide au repos, la pression augmente avec la profondeur.", choices:['Vrai','Faux'], correct:0, explain:"P_B - P_A = ρ.g.(z_A - z_B) : plus on descend (z diminue), plus P augmente." },
+  { q: "La loi ΔP = ρ.g.Δz ne s'applique qu'à l'eau.", choices:['Vrai','Faux'], correct:1, explain:"elle s'applique à tout fluide incompressible au repos, en remplaçant ρ par sa masse volumique." },
+  { q: "Deux points d'un même fluide, à la même altitude, sont à la même pression.", choices:['Vrai','Faux'], correct:0, explain:"si z_A = z_B alors ΔP = ρ.g.Δz = 0, donc P_A = P_B." }
+]);
+
+buildQCM('qcmBilan', [
+  { q: "La poussée d'Archimède est due :", choices:["À la viscosité du fluide","À la dissymétrie des forces pressantes entre le haut et le bas de l'objet","Au poids de l'objet"], correct:1, explain:"les forces pressantes sont plus intenses en profondeur qu'en surface : leur résultante est non nulle, verticale, vers le haut." },
+  { q: "π = ρ_f × V × g dépend de :", choices:["La masse de l'objet","La masse volumique du fluide et le volume immergé","La profondeur d'immersion pour un corps totalement immergé"], correct:1, explain:"π ne dépend que de ρ_f et de V (volume de fluide déplacé), pas de la masse ni de la profondeur (corps totalement immergé)." },
+  { q: "En régime permanent, le débit volumique le long d'un écoulement :", choices:["Se conserve","Diminue toujours","Augmente toujours"], correct:0, explain:"conservation de la matière pour un fluide incompressible : Q(A) = Q(B)." },
+  { q: "Si la section d'un conduit diminue, la vitesse du fluide :", choices:["Diminue","Reste constante","Augmente"], correct:2, explain:"v et S sont inversement proportionnelles à débit constant : v_B/v_A = S_A/S_B." },
+  { q: "La relation de Bernoulli traduit :", choices:["La conservation de la quantité de mouvement","La conservation de l'énergie totale le long d'une ligne de courant","La conservation de la masse uniquement"], correct:1, explain:"P + ½ρv² + ρgz = constante le long d'une ligne de courant, ce qui traduit une conservation d'énergie (par unité de volume)." },
+  { q: "Dans un conduit horizontal, si la vitesse du fluide augmente, sa pression :", choices:["Augmente","Diminue","Reste constante"], correct:1, explain:"effet Venturi : P + ½ρv² = constante ⟹ v↗ implique P↘." }
+]);
+
+/* ════════ TAB P — pression & force pressante : paroi amovible ════════ */
+const cvParoi = document.getElementById('cvParoi');
+const ctxParoi = cvParoi.getContext('2d');
+const paroiS = 0.50; // m², surface fixe de la paroi
+
+function updateParoi() {
+  const Pbar = parseFloat(document.getElementById('paroiP').value); // en unités de 10⁵ Pa
+  document.getElementById('paroiPVal').textContent = Pbar.toFixed(1).replace('.', ',') + '×10⁵ Pa';
+  const P = Pbar * 1e5;
+  const F = P * paroiS;
+
+  document.getElementById('paroiResult').innerHTML =
+    `F = P × S = ${Pbar.toFixed(1).replace('.', ',')}×10⁵ × ${paroiS.toFixed(2).replace('.', ',')} ≈ <strong>${(F/1e5).toFixed(2).replace('.', ',')}×10⁵ N</strong>`;
+
+  const W = 300, H = 180;
+  ctxParoi.clearRect(0, 0, W, H);
+
+  // déplacement (léger) de la paroi, proportionnel à P (donc à F, à S fixée)
+  const frac = (Pbar - 0.5) / (5 - 0.5); // 0 → 1
+  const wallX = 130 + frac * 15;
+
+  // fluide
+  ctxParoi.fillStyle = '#bfe3fb';
+  ctxParoi.fillRect(20, 20, wallX - 20, 140);
+  ctxParoi.fillStyle = '#1e5f8a';
+  ctxParoi.font = 'bold 11px Outfit';
+  ctxParoi.fillText('Fluide au repos', 26, 16);
+
+  // paroi mobile
+  ctxParoi.fillStyle = '#5A6B7A';
+  ctxParoi.fillRect(wallX, 10, 10, 160);
+  ctxParoi.fillStyle = '#5A6B7A';
+  ctxParoi.font = '10px Nunito';
+  ctxParoi.fillText('Paroi', wallX - 4, 178);
+
+  // support fixe + ressort de rappel, positionnés plus bas pour ne pas croiser la flèche
+  const springY = 120, nZig = 5, springStartX = wallX + 10, springEndX = 250;
+  ctxParoi.fillStyle = '#5A6B7A';
+  ctxParoi.fillRect(250, 105, 8, 30);
+  ctxParoi.strokeStyle = '#94a3b8';
+  ctxParoi.lineWidth = 2;
+  ctxParoi.beginPath();
+  ctxParoi.moveTo(springStartX, springY);
+  const seg = (springEndX - springStartX) / nZig;
+  for (let i = 1; i <= nZig; i++) {
+    const zx = springStartX + i * seg;
+    const zy = springY + (i % 2 === 0 ? 8 : -8);
+    ctxParoi.lineTo(zx, zy);
+  }
+  ctxParoi.lineTo(springEndX, springY);
+  ctxParoi.stroke();
+
+  // flèche F : point d'application SUR la paroi, dirigée vers l'extérieur (sens de la poussée)
+  const arrowLen = 30 + frac * 100;
+  const arrowY = 55;
+  const wallEdge = wallX + 10;
+  drawArrow(ctxParoi, wallEdge, arrowY, wallEdge + arrowLen, arrowY, '#E8783A', 3);
+
+  // label F juste après la pointe, avec petite flèche vectorielle au-dessus de la lettre
+  const labelX = wallEdge + arrowLen + 6, labelY = arrowY + 4;
+  ctxParoi.fillStyle = '#E8783A';
+  ctxParoi.font = 'italic bold 14px Outfit';
+  ctxParoi.fillText('F', labelX, labelY);
+  ctxParoi.strokeStyle = '#E8783A';
+  ctxParoi.lineWidth = 1.4;
+  ctxParoi.beginPath();
+  ctxParoi.moveTo(labelX - 1, labelY - 11);
+  ctxParoi.lineTo(labelX + 9, labelY - 11);
+  ctxParoi.stroke();
+  ctxParoi.beginPath();
+  ctxParoi.moveTo(labelX + 9, labelY - 11);
+  ctxParoi.lineTo(labelX + 5.5, labelY - 13.2);
+  ctxParoi.moveTo(labelX + 9, labelY - 11);
+  ctxParoi.lineTo(labelX + 5.5, labelY - 8.8);
+  ctxParoi.stroke();
+}
+updateParoi();
+
+/* ════════ TAB P — statique des fluides ════════ */
+function updateStatique() {
+  const rho = parseFloat(document.getElementById('statFluide').value);
+  const dz = parseFloat(document.getElementById('statDz').value);
+  document.getElementById('statDzVal').textContent = dz.toFixed(1) + ' m';
+  const dP = rho * 9.8 * dz;
+  document.getElementById('statResult').innerHTML =
+    `ΔP = ρ×g×Δz = ${rho} × 9,8 × ${dz.toFixed(1)} ≈ <strong>${dP >= 1000 ? (dP/1000).toFixed(2)+' kPa' : dP.toFixed(0)+' Pa'}</strong>`;
+}
+updateStatique();
+
+/* ════════ TAB A — poussée d'Archimède ════════ */
+const cvArchi = document.getElementById('cvArchi');
+const ctxArchi = cvArchi.getContext('2d');
+function updateArchi() {
+  const rho = parseFloat(document.getElementById('archiFluide').value);
+  const Vcm3 = parseFloat(document.getElementById('archiV').value);
+  const mG = parseFloat(document.getElementById('archiM').value);
+  document.getElementById('archiVVal').textContent = Vcm3 + ' cm³';
+  document.getElementById('archiMVal').textContent = mG + ' g';
+  const V = Vcm3 * 1e-6;
+  const m = mG / 1000;
+  const g = 9.8;
+  const pi = rho * V * g;
+  const P = m * g;
+  document.getElementById('archiResult').innerHTML =
+    `π = ρ×V×g = ${rho}×${V.toExponential(2)}×9,8 ≈ <strong>${pi.toFixed(2)} N</strong> &nbsp;|&nbsp; P = m×g = <strong>${P.toFixed(2)} N</strong> → ` +
+    (pi > P*1.03 ? `π > P : l'objet <strong style="color:#3A8A6E;">remonte</strong>`
+     : pi < P*0.97 ? `π < P : l'objet <strong style="color:#C0392B;">coule</strong>`
+     : `π ≈ P : l'objet est en <strong style="color:#2D5F8A;">équilibre</strong>`);
+
+  ctxArchi.clearRect(0,0,300,200);
+  ctxArchi.fillStyle = '#bfe3fb'; ctxArchi.fillRect(0,20,300,180);
+  ctxArchi.fillStyle = '#1e5f8a'; ctxArchi.font = 'bold 11px Outfit';
+  ctxArchi.fillText('Fluide', 8, 16);
+  // objet (taille liée à V)
+  const size = 30 + Math.sqrt(Vcm3);
+  const ox = 150, oy = 110;
+  ctxArchi.fillStyle = '#8B9AAE';
+  ctxArchi.fillRect(ox-size/2, oy-size/2, size, size);
+  ctxArchi.fillStyle = '#1e5f8a'; ctxArchi.font = 'bold 11px Outfit'; ctxArchi.textAlign='center';
+  ctxArchi.fillText('m = '+mG+' g', ox, 16); ctxArchi.textAlign='left';
+
+  // centre d'inertie G : point d'application commun des deux vecteurs (mécanique du point)
+  ctxArchi.fillStyle = '#fff';
+  ctxArchi.beginPath(); ctxArchi.arc(ox, oy, 2.8, 0, 2*Math.PI); ctxArchi.fill();
+  ctxArchi.fillStyle = '#1B2A4A'; ctxArchi.font = 'bold 10px Nunito';
+  ctxArchi.fillText('G', ox+6, oy+3);
+
+  // vecteur poussée π : point d'application en G, vers le haut (échelle non-linéaire pour rester visible sur toute la plage de valeurs)
+  const piLen = Math.min(70, 16 + 9*Math.sqrt(pi));
+  drawArrow(ctxArchi, ox, oy, ox, oy - piLen, '#E8783A', 3);
+  const piLabelY = oy - piLen - 10;
+  ctxArchi.fillStyle='#E8783A'; ctxArchi.font='italic bold 14px Outfit';
+  ctxArchi.fillText('π', ox+8, piLabelY+4);
+  ctxArchi.strokeStyle='#E8783A'; ctxArchi.lineWidth=1.3;
+  ctxArchi.beginPath(); ctxArchi.moveTo(ox+5, piLabelY-9); ctxArchi.lineTo(ox+15, piLabelY-9); ctxArchi.stroke();
+  ctxArchi.beginPath();
+  ctxArchi.moveTo(ox+15, piLabelY-9); ctxArchi.lineTo(ox+11.3, piLabelY-11.3);
+  ctxArchi.moveTo(ox+15, piLabelY-9); ctxArchi.lineTo(ox+11.3, piLabelY-6.7);
+  ctxArchi.stroke();
+
+  // vecteur poids P : point d'application en G, vers le bas (même échelle que π)
+  const pLen = Math.min(70, 16 + 9*Math.sqrt(P));
+  drawArrow(ctxArchi, ox, oy, ox, oy + pLen, '#7B4FA6', 3);
+  const pLabelY = oy + pLen + 14;
+  ctxArchi.fillStyle='#7B4FA6'; ctxArchi.font='italic bold 14px Outfit';
+  ctxArchi.fillText('P', ox+8, pLabelY+4);
+  ctxArchi.strokeStyle='#7B4FA6'; ctxArchi.lineWidth=1.3;
+  ctxArchi.beginPath(); ctxArchi.moveTo(ox+5, pLabelY-9); ctxArchi.lineTo(ox+15, pLabelY-9); ctxArchi.stroke();
+  ctxArchi.beginPath();
+  ctxArchi.moveTo(ox+15, pLabelY-9); ctxArchi.lineTo(ox+11.3, pLabelY-11.3);
+  ctxArchi.moveTo(ox+15, pLabelY-9); ctxArchi.lineTo(ox+11.3, pLabelY-6.7);
+  ctxArchi.stroke();
+}
+updateArchi();
+
+function checkArchiEx() {
+  const val = parseFloat(document.getElementById('exArchi-q1').value.replace(',','.'));
+  const expected = 1025 * 8.0e-3 * 9.8;
+  const fb = document.getElementById('exArchi-fb');
+  const inp = document.getElementById('exArchi-q1');
+  const corr = document.getElementById('exArchi-corr');
+  if (isNaN(val)) { fb.textContent = 'Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val - expected)/expected < 0.05) {
+    inp.classList.add('correct'); inp.classList.remove('wrong');
+    fb.textContent = '✓ Correct !'; fb.className='num-feedback ok';
+  } else {
+    inp.classList.add('wrong'); inp.classList.remove('correct');
+    fb.textContent = "✗ Ce n'est pas ça, voir la correction."; fb.className='num-feedback ko';
+  }
+  corr.classList.add('visible');
+}
+
+function checkDynaEx1() {
+  const val = parseFloat(document.getElementById('exDyna-q1').value.replace(',','.'));
+  const expected = 2.94 - 1.76;
+  const fb = document.getElementById('exDyna-fb1');
+  const inp = document.getElementById('exDyna-q1');
+  if (isNaN(val)) { fb.textContent = 'Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val - expected)/expected < 0.05) {
+    inp.classList.add('correct'); inp.classList.remove('wrong');
+    fb.textContent = '✓ Correct !'; fb.className='num-feedback ok';
+  } else {
+    inp.classList.add('wrong'); inp.classList.remove('correct');
+    fb.textContent = "✗ Pense à π = P − P'."; fb.className='num-feedback ko';
+  }
+  document.getElementById('exDyna-corr').classList.add('visible');
+}
+function checkDynaEx2() {
+  const val = parseFloat(document.getElementById('exDyna-q2').value.replace(',','.'));
+  const pi = 2.94 - 1.76;
+  const expected = (pi / (1000*9.8)) * 1e6; // en cm³
+  const fb = document.getElementById('exDyna-fb2');
+  const inp = document.getElementById('exDyna-q2');
+  if (isNaN(val)) { fb.textContent = 'Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val - expected)/expected < 0.05) {
+    inp.classList.add('correct'); inp.classList.remove('wrong');
+    fb.textContent = '✓ Correct !'; fb.className='num-feedback ok';
+  } else {
+    inp.classList.add('wrong'); inp.classList.remove('correct');
+    fb.textContent = '✗ Pense à π = ρ×V×g, donc V = π/(ρ×g).'; fb.className='num-feedback ko';
+  }
+  document.getElementById('exDyna-corr').classList.add('visible');
+}
+
+/* ════════ TAB B4 — TP virtuel simulation PhET ════════ */
+buildQCM('qcmPhetPression', [
+  { q: "Quand on enfonce le capteur de pression plus profondément dans le bassin, la pression affichée :", choices:['Diminue','Reste constante','Augmente'], correct:2, explain:"conformément à ΔP=ρ.g.Δz : la pression augmente avec la profondeur d'immersion." },
+  { q: "À profondeur identique, en passant de l'eau au « miel » (fluide plus dense), la pression affichée :", choices:['Diminue','Augmente','Reste identique'], correct:1, explain:"ΔP=ρ.g.Δz : à Δz fixé, P augmente avec la masse volumique ρ du fluide." },
+  { q: "Si on retire l'atmosphère au-dessus du bassin, la pression lue en profondeur :", choices:['Diminue (on perd la pression atmosphérique)','Augmente','Ne change pas'], correct:0, explain:"la pression totale est P = P_atm + ρgz : sans la contribution atmosphérique, la valeur lue diminue de P_atm." }
+]);
+
+buildQCM('qcmPhetFlow', [
+  { q: "Dans la partie resserrée du tuyau, la vitesse du fluide (débitmètre activé, débit inchangé) :", choices:['Diminue','Augmente','Reste identique'], correct:1, explain:"conservation du débit Q=v.S : S diminue ⟹ v augmente pour garder Q constant." },
+  { q: "Le débitmètre (flux meter), placé à différents endroits du tuyau (même débit imposé), indique :", choices:['Une valeur différente à chaque endroit','La même valeur partout, en régime permanent','Une valeur nulle si le tuyau est droit'], correct:1, explain:"en régime permanent, pour un fluide incompressible, le débit volumique Q est le même en tout point du conduit." },
+  { q: "Dans la partie resserrée où la vitesse est plus grande, la pression indiquée par le manomètre :", choices:['Augmente','Diminue','Reste identique'], correct:1, explain:"effet Venturi : P + ½ρv² = constante (conduit horizontal) ⟹ v↗ implique P↘." }
+]);
+
+buildQCM('qcmPhetTower', [
+  { q: "Quand le niveau d'eau dans le réservoir baisse, la vitesse d'éjection à la sortie du trou :", choices:['Diminue','Reste constante','Augmente'], correct:0, explain:"v = √(2gh) : moins il y a d'eau au-dessus du trou (h diminue), plus la vitesse d'éjection est faible." },
+  { q: "Si on abaisse la hauteur du réservoir (mais que le niveau d'eau au-dessus du trou reste le même), la vitesse d'éjection :", choices:["Change (dépend de la hauteur totale du réservoir)","Ne change pas (ne dépend que de la hauteur d'eau au-dessus du trou)","Devient nulle"], correct:1, explain:"v = √(2gh) où h est la hauteur d'eau au-dessus du point de sortie, pas l'altitude absolue du réservoir." },
+  { q: "Le jet d'eau qui sort du trou retombe en formant une trajectoire :", choices:['Rectiligne horizontale','Parabolique','Circulaire'], correct:1, explain:"le jet a une vitesse horizontale initiale et est soumis à la pesanteur : sa trajectoire est parabolique, comme un projectile." }
+]);
+
+function checkPhetFlowEx() {
+  const val = parseFloat(document.getElementById('exPhetFlow-q1').value.replace(',','.'));
+  const expected = 0.50*20/2.0;
+  const fb = document.getElementById('exPhetFlow-fb');
+  const inp = document.getElementById('exPhetFlow-q1');
+  if (isNaN(val)) { fb.textContent = 'Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val - expected)/expected < 0.05) {
+    inp.classList.add('correct'); inp.classList.remove('wrong');
+    fb.textContent = '✓ Correct !'; fb.className='num-feedback ok';
+  } else {
+    inp.classList.add('wrong'); inp.classList.remove('correct');
+    fb.textContent = "✗ Voir la correction."; fb.className='num-feedback ko';
+  }
+  document.getElementById('exPhetFlow-corr').classList.add('visible');
+}
+
+/* ════════ TAB B — animation Q=V/Δt → Q=v×S (billes de fluide en mouvement continu) ════════ */
+const cvDebitVS = document.getElementById('cvDebitVS');
+const ctxDebitVS = cvDebitVS.getContext('2d');
+const debitPxPerM = 60;
+const debitBallCount = 7;
+const debitBalls = [];
+for (let i = 0; i < debitBallCount; i++) {
+  debitBalls.push({
+    x: 25 + i * ((258 - 25) / debitBallCount),
+    frac: (i % 2 === 0 ? -1 : 1) * (0.25 + 0.15 * (i % 3))
+  });
+}
+let debitLastTs = null;
+
+function updateDebitAnim() {
+  const v = parseFloat(document.getElementById('debitV').value);
+  const Scm2 = parseFloat(document.getElementById('debitS').value);
+  document.getElementById('debitVVal').textContent = v.toFixed(1) + ' m/s';
+  document.getElementById('debitSVal').textContent = Scm2 + ' cm²';
+  const S = Scm2 * 1e-4;
+  const dt = 1.0;
+  const L = v * dt;
+  const V = S * L;
+  const Q = V / dt;
+  document.getElementById('debitAnimResult').innerHTML =
+    `L = v×Δt = ${v.toFixed(1)}×1,0 = <strong>${L.toFixed(1)} m</strong> &nbsp;|&nbsp; V = S×L ≈ <strong>${V.toExponential(2)} m³</strong> &nbsp;|&nbsp; Q = V/Δt = v×S ≈ <strong>${Q.toExponential(2)} m³/s</strong>`;
+}
+
+function drawDebitFrame(ts) {
+  if (debitLastTs === null) debitLastTs = ts;
+  const dtSec = Math.min((ts - debitLastTs) / 1000, 0.1);
+  debitLastTs = ts;
+
+  const v = parseFloat(document.getElementById('debitV').value);
+  const Scm2 = parseFloat(document.getElementById('debitS').value);
+  const W = 300, H = 150;
+  const midY = 75;
+  const halfPipe = 12 + Scm2 * 0.7;
+  const pipeLeft = 22, pipeRight = 278;
+
+  ctxDebitVS.clearRect(0, 0, W, H);
+
+  // conduit
+  ctxDebitVS.fillStyle = '#eef6fb'; ctxDebitVS.strokeStyle = '#b8d4e3'; ctxDebitVS.lineWidth = 1.5;
+  ctxDebitVS.fillRect(20, midY - halfPipe, 260, halfPipe * 2);
+  ctxDebitVS.strokeRect(20, midY - halfPipe, 260, halfPipe * 2);
+
+  // section fixe S (ligne pointillée)
+  const xSection = 210;
+  ctxDebitVS.strokeStyle = '#5A6B7A'; ctxDebitVS.lineWidth = 1.3; ctxDebitVS.setLineDash([3,2]);
+  ctxDebitVS.beginPath(); ctxDebitVS.moveTo(xSection, midY - halfPipe - 6); ctxDebitVS.lineTo(xSection, midY + halfPipe + 6); ctxDebitVS.stroke();
+  ctxDebitVS.setLineDash([]);
+  ctxDebitVS.fillStyle = '#5A6B7A'; ctxDebitVS.font = 'italic bold 12px Outfit'; ctxDebitVS.textAlign = 'center';
+  ctxDebitVS.fillText('S', xSection, midY - halfPipe - 10);
+
+  // tronçon (slug) de longueur L, juste avant la section
+  const L = v * 1.0;
+  const Lpx = Math.min(L * debitPxPerM, 170);
+  const xSlugEnd = xSection;
+  const xSlugStart = xSlugEnd - Lpx;
+  ctxDebitVS.fillStyle = '#E8783A'; ctxDebitVS.globalAlpha = 0.4;
+  ctxDebitVS.fillRect(Math.max(xSlugStart, 22), midY - halfPipe + 2, Lpx, halfPipe * 2 - 4);
+  ctxDebitVS.globalAlpha = 1;
+
+  // billes de fluide : mouvement continu, vitesse à l'écran proportionnelle à v
+  const speedPx = v * debitPxPerM * 0.5;
+  ctxDebitVS.fillStyle = '#1d4ed8';
+  debitBalls.forEach(b => {
+    b.x += speedPx * dtSec;
+    if (b.x > pipeRight) b.x -= (pipeRight - pipeLeft);
+    const by = midY + b.frac * (halfPipe - 4);
+    ctxDebitVS.beginPath();
+    ctxDebitVS.arc(b.x, by, 3, 0, 2 * Math.PI);
+    ctxDebitVS.fill();
+  });
+
+  // cote L
+  ctxDebitVS.strokeStyle = '#E8783A'; ctxDebitVS.lineWidth = 1.2;
+  ctxDebitVS.beginPath(); ctxDebitVS.moveTo(Math.max(xSlugStart, 22), midY + halfPipe + 14); ctxDebitVS.lineTo(xSlugEnd, midY + halfPipe + 14); ctxDebitVS.stroke();
+  ctxDebitVS.fillStyle = '#E8783A'; ctxDebitVS.font = 'italic bold 11px Outfit';
+  ctxDebitVS.fillText('L = v×Δt', (Math.max(xSlugStart, 22) + xSlugEnd) / 2, midY + halfPipe + 27);
+  ctxDebitVS.textAlign = 'left';
+
+  requestAnimationFrame(drawDebitFrame);
+}
+updateDebitAnim();
+requestAnimationFrame(drawDebitFrame);
+
+function checkDebitDerive1() {
+  const val = parseFloat(document.getElementById('exDebitDerive-q1').value.replace(',','.'));
+  const expected = 0.20;
+  const fb = document.getElementById('exDebitDerive-fb1');
+  const inp = document.getElementById('exDebitDerive-q1');
+  const corr = document.getElementById('exDebitDerive-corr1');
+  if (isNaN(val)) { fb.textContent = 'Entrez une valeur numérique.'; fb.className = 'num-feedback ko'; return; }
+  if (Math.abs(val - expected)/expected < 0.05) { inp.classList.add('correct'); inp.classList.remove('wrong'); fb.textContent = '✓ Correct !'; fb.className = 'num-feedback ok'; }
+  else { inp.classList.add('wrong'); inp.classList.remove('correct'); fb.textContent = "✗ Ce n'est pas ça, voir la correction."; fb.className = 'num-feedback ko'; }
+  corr.classList.add('visible');
+}
+function checkDebitDerive2() {
+  const val = parseFloat(document.getElementById('exDebitDerive-q2').value.replace(',','.'));
+  const expected = 1.0e-5;
+  const fb = document.getElementById('exDebitDerive-fb2');
+  const inp = document.getElementById('exDebitDerive-q2');
+  const corr = document.getElementById('exDebitDerive-corr2');
+  if (isNaN(val)) { fb.textContent = 'Entrez une valeur numérique.'; fb.className = 'num-feedback ko'; return; }
+  if (Math.abs(val - expected)/expected < 0.08) { inp.classList.add('correct'); inp.classList.remove('wrong'); fb.textContent = '✓ Correct !'; fb.className = 'num-feedback ok'; }
+  else { inp.classList.add('wrong'); inp.classList.remove('correct'); fb.textContent = "✗ Ce n'est pas ça, voir la correction."; fb.className = 'num-feedback ko'; }
+  corr.classList.add('visible');
+}
+function checkDebitDerive3() {
+  const val = parseFloat(document.getElementById('exDebitDerive-q3').value.replace(',','.'));
+  const expected = 1.0e-5;
+  const fb = document.getElementById('exDebitDerive-fb3');
+  const inp = document.getElementById('exDebitDerive-q3');
+  const corr = document.getElementById('exDebitDerive-corr3');
+  if (isNaN(val)) { fb.textContent = 'Entrez une valeur numérique.'; fb.className = 'num-feedback ko'; return; }
+  if (Math.abs(val - expected)/expected < 0.08) { inp.classList.add('correct'); inp.classList.remove('wrong'); fb.textContent = '✓ Correct !'; fb.className = 'num-feedback ok'; }
+  else { inp.classList.add('wrong'); inp.classList.remove('correct'); fb.textContent = "✗ Ce n'est pas ça, voir la correction."; fb.className = 'num-feedback ko'; }
+  corr.classList.add('visible');
+}
+
+/* ════════ TAB B — débit & conservation (billes en mouvement continu, accélération dans le rétrécissement) ════════ */
+const cvDebit = document.getElementById('cvDebit');
+const ctxDebit = cvDebit.getContext('2d');
+const debitConservCount = 20;
+const debitConservBalls = [];
+for (let i = 0; i < debitConservCount; i++) {
+  debitConservBalls.push({
+    x: 20 + i * ((540 - 20) / debitConservCount),
+    frac: (i % 2 === 0 ? -1 : 1) * (0.2 + 0.15 * (i % 3))
+  });
+}
+let debitConservLastTs = null;
+
+function halfPipeAt(x, halfA, halfB) {
+  const xNarrowStart = 260, xNarrowEnd = 340;
+  if (x <= xNarrowStart) return halfA;
+  if (x >= xNarrowEnd) return halfB;
+  const f = (x - xNarrowStart) / (xNarrowEnd - xNarrowStart);
+  return halfA + (halfB - halfA) * f;
+}
+
+function updateDebit() {
+  const SA = parseFloat(document.getElementById('debitSA').value);
+  const SB = parseFloat(document.getElementById('debitSB').value);
+  const vA = parseFloat(document.getElementById('debitVA').value);
+  document.getElementById('debitSAVal').textContent = SA + ' cm²';
+  document.getElementById('debitSBVal').textContent = SB + ' cm²';
+  document.getElementById('debitVAVal').textContent = vA.toFixed(1) + ' m/s';
+  const vB = vA * SA / SB;
+  const Q = vA * (SA*1e-4);
+  document.getElementById('debitResult').innerHTML =
+    `Q = v<sub>A</sub>×S<sub>A</sub> = ${vA.toFixed(1)}×${(SA*1e-4).toExponential(2)} ≈ <strong>${Q.toExponential(2)} m³/s</strong> &nbsp;|&nbsp; v<sub>B</sub> = v<sub>A</sub>×S<sub>A</sub>/S<sub>B</sub> ≈ <strong>${vB.toFixed(2)} m/s</strong>`;
+}
+
+function drawDebitContFrame(ts) {
+  if (debitConservLastTs === null) debitConservLastTs = ts;
+  const dtSec = Math.min((ts - debitConservLastTs) / 1000, 0.1);
+  debitConservLastTs = ts;
+
+  const SA = parseFloat(document.getElementById('debitSA').value);
+  const SB = parseFloat(document.getElementById('debitSB').value);
+  const vA = parseFloat(document.getElementById('debitVA').value);
+  const vB = vA * SA / SB;
+
+  ctxDebit.clearRect(0,0,560,180);
+  const y0=40, y1=140, xNarrowStart=260, xNarrowEnd=340;
+  const halfA = 45 * (SA/30), halfB = 45 * (SB/30);
+  const midY=(y0+y1)/2;
+  ctxDebit.fillStyle='#e0f2fe'; ctxDebit.strokeStyle='#7dd3fc'; ctxDebit.lineWidth=2;
+  ctxDebit.beginPath();
+  ctxDebit.moveTo(20, midY-halfA);
+  ctxDebit.lineTo(xNarrowStart, midY-halfA);
+  ctxDebit.lineTo(xNarrowEnd, midY-halfB);
+  ctxDebit.lineTo(540, midY-halfB);
+  ctxDebit.lineTo(540, midY+halfB);
+  ctxDebit.lineTo(xNarrowEnd, midY+halfB);
+  ctxDebit.lineTo(xNarrowStart, midY+halfA);
+  ctxDebit.lineTo(20, midY+halfA);
+  ctxDebit.closePath(); ctxDebit.fill(); ctxDebit.stroke();
+
+  // billes de fluide : accélèrent en traversant le rétrécissement (vitesse locale ∝ 1/section locale, cohérent avec Q=v.S constant)
+  const pxScale = 32;
+  ctxDebit.fillStyle = '#1d4ed8';
+  debitConservBalls.forEach(b => {
+    const hLocal = halfPipeAt(b.x, halfA, halfB);
+    const vLocal = vA * (halfA / hLocal);
+    b.x += vLocal * pxScale * dtSec;
+    if (b.x > 540) b.x -= 520;
+    const hAtBall = halfPipeAt(b.x, halfA, halfB);
+    const by = midY + b.frac * (hAtBall - 4);
+    ctxDebit.beginPath();
+    ctxDebit.arc(b.x, by, 3, 0, 2*Math.PI);
+    ctxDebit.fill();
+  });
+
+  ctxDebit.fillStyle='#1d4ed8'; ctxDebit.font='bold 12px Outfit'; ctxDebit.textAlign='left';
+  ctxDebit.fillText('v_A='+vA.toFixed(1)+' m/s', 55, midY-halfA-10);
+  ctxDebit.fillText('S_A='+SA+' cm²', 55, midY+halfA+18);
+
+  ctxDebit.fillStyle='#C0392B';
+  ctxDebit.fillText('v_B='+vB.toFixed(1)+' m/s', 405, midY-halfB-10);
+  ctxDebit.fillText('S_B='+SB+' cm²', 405, midY+halfB+18);
+
+  requestAnimationFrame(drawDebitContFrame);
+}
+updateDebit();
+requestAnimationFrame(drawDebitContFrame);
+
+function checkDebit1Ex() {
+  const val = parseFloat(document.getElementById('exDebit1-q1').value.replace(',','.'));
+  const S = Math.PI*Math.pow(0.006,2);
+  const expected = 1.5*S*60*1000;
+  const fb = document.getElementById('exDebit1-fb');
+  const inp = document.getElementById('exDebit1-q1');
+  const corr = document.getElementById('exDebit1-corr');
+  if (isNaN(val)) { fb.textContent='Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val-expected)/expected < 0.08) { inp.classList.add('correct'); inp.classList.remove('wrong'); fb.textContent='✓ Correct !'; fb.className='num-feedback ok'; }
+  else { inp.classList.add('wrong'); inp.classList.remove('correct'); fb.textContent='✗ Voir la correction.'; fb.className='num-feedback ko'; }
+  corr.classList.add('visible');
+}
+function checkDebit2Ex() {
+  const val = parseFloat(document.getElementById('exDebit2-q1').value.replace(',','.'));
+  const expected = 0.60*12/3.0;
+  const fb = document.getElementById('exDebit2-fb');
+  const inp = document.getElementById('exDebit2-q1');
+  const corr = document.getElementById('exDebit2-corr');
+  if (isNaN(val)) { fb.textContent='Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val-expected)/expected < 0.05) { inp.classList.add('correct'); inp.classList.remove('wrong'); fb.textContent='✓ Correct !'; fb.className='num-feedback ok'; }
+  else { inp.classList.add('wrong'); inp.classList.remove('correct'); fb.textContent='✗ Voir la correction.'; fb.className='num-feedback ko'; }
+  corr.classList.add('visible');
+}
+
+/* ════════ TAB C1 — château d'eau ════════ */
+const cvChateau = document.getElementById('cvChateau');
+const ctxChateau = cvChateau.getContext('2d');
+function updateChateau() {
+  const h = parseFloat(document.getElementById('chateauH').value);
+  document.getElementById('chateauHVal').textContent = h.toFixed(1) + ' m';
+  const vB = Math.sqrt(2*9.8*h);
+  document.getElementById('chateauResult').innerHTML =
+    `v<sub>B</sub> = √(2×g×h) = √(2×9,8×${h.toFixed(1)}) ≈ <strong>${vB.toFixed(1)} m/s</strong>`;
+
+  ctxChateau.clearRect(0,0,300,230);
+  const baseY = 210, towerH = Math.min(h*6, 170), towerTop = baseY-towerH;
+  ctxChateau.fillStyle='#94a3b8'; ctxChateau.fillRect(130,towerTop+30,20,towerH-30);
+  ctxChateau.fillStyle='#bfe3fb'; ctxChateau.strokeStyle='#2D5F8A'; ctxChateau.lineWidth=2;
+  ctxChateau.beginPath(); ctxChateau.roundRect(90,towerTop,80,32,6); ctxChateau.fill(); ctxChateau.stroke();
+  ctxChateau.fillStyle='#1A2A3A'; ctxChateau.font='10px Nunito'; ctxChateau.fillText('P_atm', 100, towerTop-4);
+  ctxChateau.strokeStyle='#DDE3EC'; ctxChateau.setLineDash([4,3]);
+  ctxChateau.beginPath(); ctxChateau.moveTo(60,towerTop+16); ctxChateau.lineTo(60,baseY); ctxChateau.stroke();
+  ctxChateau.setLineDash([]);
+  ctxChateau.fillStyle='#5A6B7A'; ctxChateau.font='11px Nunito'; ctxChateau.fillText('h='+h.toFixed(1)+'m', 20, (towerTop+16+baseY)/2);
+  // sol
+  ctxChateau.strokeStyle='#DDE3EC'; ctxChateau.lineWidth=2;
+  ctxChateau.beginPath(); ctxChateau.moveTo(10,baseY); ctxChateau.lineTo(290,baseY); ctxChateau.stroke();
+  // robinet + jet
+  ctxChateau.fillStyle='#64748b'; ctxChateau.fillRect(146,baseY-8,10,8);
+  const jetLen = Math.min(vB*4, 90);
+  drawArrow(ctxChateau, 151, baseY, 151+jetLen, baseY, '#3b82f6', 3);
+  ctxChateau.fillStyle='#3b82f6'; ctxChateau.font='bold 11px Outfit'; ctxChateau.fillText('v_B≈'+vB.toFixed(1)+' m/s', 155, baseY-12);
+}
+updateChateau();
+
+function checkChateauEx() {
+  const val = parseFloat(document.getElementById('exChateau-q1').value.replace(',','.'));
+  const expected = Math.sqrt(2*9.8*10);
+  const fb = document.getElementById('exChateau-fb');
+  const inp = document.getElementById('exChateau-q1');
+  const corr = document.getElementById('exChateau-corr');
+  if (isNaN(val)) { fb.textContent='Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val-expected)/expected < 0.05) { inp.classList.add('correct'); inp.classList.remove('wrong'); fb.textContent='✓ Correct !'; fb.className='num-feedback ok'; }
+  else { inp.classList.add('wrong'); inp.classList.remove('correct'); fb.textContent='✗ Voir la correction.'; fb.className='num-feedback ko'; }
+  corr.classList.add('visible');
+}
+
+/* ════════ TAB C2 — Venturi (valeurs P_A/P_B affichées + billes en mouvement continu) ════════ */
+const cvVenturi = document.getElementById('cvVenturi');
+const ctxVenturi = cvVenturi.getContext('2d');
+const ventBallCount = 16;
+const ventBalls = [];
+for (let i = 0; i < ventBallCount; i++) {
+  ventBalls.push({
+    x: 20 + i * ((540 - 20) / ventBallCount),
+    frac: (i % 2 === 0 ? -1 : 1) * (0.2 + 0.15 * (i % 3))
+  });
+}
+let ventLastTs = null;
+const P_ATM = 1.013e5; // Pa, pression de référence en A
+
+function updateVenturi() {
+  const rho = parseFloat(document.getElementById('ventFluide').value);
+  const SA = parseFloat(document.getElementById('ventSA').value);
+  const SB = parseFloat(document.getElementById('ventSB').value);
+  const vA = parseFloat(document.getElementById('ventVA').value);
+  document.getElementById('ventSAVal').textContent = SA + ' cm²';
+  document.getElementById('ventSBVal').textContent = SB + ' cm²';
+  document.getElementById('ventVAVal').textContent = vA.toFixed(1) + ' m/s';
+  const vB = vA * SA / SB;
+  const dP = 0.5*rho*(vB*vB - vA*vA);
+  document.getElementById('ventResult').innerHTML =
+    `v<sub>B</sub> = v<sub>A</sub>×S<sub>A</sub>/S<sub>B</sub> ≈ <strong>${vB.toFixed(2)} m/s</strong> &nbsp;|&nbsp; P<sub>A</sub> − P<sub>B</sub> = ½ρ(v<sub>B</sub>²−v<sub>A</sub>²) ≈ <strong>${dP.toFixed(0)} Pa</strong> → P<sub>A</sub> ${dP>0?'&gt;':'&lt;'} P<sub>B</sub>`;
+}
+
+function drawVenturiFrame(ts) {
+  if (ventLastTs === null) ventLastTs = ts;
+  const dtSec = Math.min((ts - ventLastTs) / 1000, 0.1);
+  ventLastTs = ts;
+
+  const rho = parseFloat(document.getElementById('ventFluide').value);
+  const SA = parseFloat(document.getElementById('ventSA').value);
+  const SB = parseFloat(document.getElementById('ventSB').value);
+  const vA = parseFloat(document.getElementById('ventVA').value);
+  const vB = vA * SA / SB;
+  const dP = 0.5*rho*(vB*vB - vA*vA);
+  const PA = P_ATM;
+  const PB = PA - dP;
+
+  ctxVenturi.clearRect(0,0,560,220);
+  const y0=60, y1=150, xNarrowStart=260, xNarrowEnd=340;
+  const halfA = 40 * (SA/30), halfB = 40 * (SB/30);
+  const midY=(y0+y1)/2;
+  ctxVenturi.fillStyle='#e0f2fe'; ctxVenturi.strokeStyle='#7dd3fc'; ctxVenturi.lineWidth=2;
+  ctxVenturi.beginPath();
+  ctxVenturi.moveTo(20, midY-halfA);
+  ctxVenturi.lineTo(xNarrowStart, midY-halfA);
+  ctxVenturi.lineTo(xNarrowEnd, midY-halfB);
+  ctxVenturi.lineTo(540, midY-halfB);
+  ctxVenturi.lineTo(540, midY+halfB);
+  ctxVenturi.lineTo(xNarrowEnd, midY+halfB);
+  ctxVenturi.lineTo(xNarrowStart, midY+halfA);
+  ctxVenturi.lineTo(20, midY+halfA);
+  ctxVenturi.closePath(); ctxVenturi.fill(); ctxVenturi.stroke();
+
+  // billes de fluide : accélèrent en traversant le rétrécissement (cohérent avec Q=v.S constant)
+  const pxScale = 32;
+  ctxVenturi.fillStyle = '#1d4ed8';
+  ventBalls.forEach(b => {
+    const hLocal = halfPipeAt(b.x, halfA, halfB);
+    const vLocal = vA * (halfA / hLocal);
+    b.x += vLocal * pxScale * dtSec;
+    if (b.x > 540) b.x -= 520;
+    const hAtBall = halfPipeAt(b.x, halfA, halfB);
+    const by = midY + b.frac * (hAtBall - 4);
+    ctxVenturi.beginPath();
+    ctxVenturi.arc(b.x, by, 2.8, 0, 2*Math.PI);
+    ctxVenturi.fill();
+  });
+
+  // manometres verticaux (hauteur ~ proportionnelle a P) + valeur numérique
+  const hA = 40, hB = Math.max(10, 40 - dP*0.004);
+  ctxVenturi.strokeStyle='#5A6B7A'; ctxVenturi.lineWidth=1.5;
+  ctxVenturi.beginPath(); ctxVenturi.moveTo(90,20); ctxVenturi.lineTo(90,y0-halfA+20); ctxVenturi.stroke();
+  ctxVenturi.fillStyle='#3b82f6'; ctxVenturi.fillRect(85, 20+ (40-hA), 10, hA);
+  ctxVenturi.beginPath(); ctxVenturi.moveTo(300,20); ctxVenturi.lineTo(300, y0-halfB+20); ctxVenturi.stroke();
+  ctxVenturi.fillStyle= dP>0? '#C0392B':'#3b82f6';
+  ctxVenturi.fillRect(295, 20+(40-hB), 10, hB);
+  ctxVenturi.fillStyle='#1A2A3A'; ctxVenturi.font='10px Nunito';
+  ctxVenturi.fillText('P_A', 78, 16); ctxVenturi.fillText('P_B', 288, 16);
+  ctxVenturi.font='bold 10px Outfit';
+  ctxVenturi.fillText((PA/1e5).toFixed(3)+'×10⁵ Pa', 20, 8);
+  ctxVenturi.fillText((PB/1e5).toFixed(3)+'×10⁵ Pa', 230, 8);
+
+  const vaTipX = 60+Math.min(vA*30,80);
+  drawArrow(ctxVenturi, 60, midY, vaTipX, midY, ventDraggingVA ? '#F2A265' : '#1d4ed8', ventDraggingVA ? 4 : 3);
+  drawArrow(ctxVenturi, 430, midY, 430+Math.min(vB*20,100), midY, '#C0392B', 3);
+  ctxVenturi.fillStyle='#1d4ed8'; ctxVenturi.font='bold 11px Outfit'; ctxVenturi.fillText('v_A = '+vA.toFixed(1)+' m/s', 60, midY+halfA+16);
+  ctxVenturi.fillStyle='#C0392B'; ctxVenturi.fillText('v_B', 430, midY+halfB+16);
+  ventArrowATipX = vaTipX; ventArrowATipY = midY;
+
+  requestAnimationFrame(drawVenturiFrame);
+}
+updateVenturi();
+requestAnimationFrame(drawVenturiFrame);
+
+/* ────── glisser la flèche v_A pour ajuster la vitesse directement sur le schéma ────── */
+let ventDraggingVA = false;
+let ventArrowATipX = 60, ventArrowATipY = 105;
+cvVenturi.style.touchAction = 'none';
+
+function ventCanvasPos(evt) {
+  const rect = cvVenturi.getBoundingClientRect();
+  const scaleX = cvVenturi.width / rect.width;
+  const scaleY = cvVenturi.height / rect.height;
+  return { x: (evt.clientX - rect.left) * scaleX, y: (evt.clientY - rect.top) * scaleY };
+}
+function ventNearTip(pos) {
+  const dx = pos.x - ventArrowATipX, dy = pos.y - ventArrowATipY;
+  return Math.sqrt(dx*dx + dy*dy) < 16;
+}
+cvVenturi.addEventListener('pointerdown', (e) => {
+  const pos = ventCanvasPos(e);
+  if (ventNearTip(pos)) {
+    ventDraggingVA = true;
+    cvVenturi.setPointerCapture(e.pointerId);
+    cvVenturi.style.cursor = 'grabbing';
+  }
+});
+cvVenturi.addEventListener('pointermove', (e) => {
+  const pos = ventCanvasPos(e);
+  if (ventDraggingVA) {
+    let vA = (pos.x - 60) / 30;
+    vA = Math.max(0.2, Math.min(3, vA));
+    vA = Math.round(vA * 10) / 10;
+    document.getElementById('ventVA').value = vA;
+    updateVenturi();
+  } else {
+    cvVenturi.style.cursor = ventNearTip(pos) ? 'grab' : 'default';
+  }
+});
+cvVenturi.addEventListener('pointerup', (e) => {
+  ventDraggingVA = false;
+  cvVenturi.style.cursor = 'default';
+});
+cvVenturi.addEventListener('pointerleave', () => {
+  if (!ventDraggingVA) cvVenturi.style.cursor = 'default';
+});
+
+function checkVentEx() {
+  const val = parseFloat(document.getElementById('exVent-q1').value.replace(',','.'));
+  const expected = 0.5*1000*(3.2*3.2 - 0.8*0.8);
+  const fb = document.getElementById('exVent-fb');
+  const inp = document.getElementById('exVent-q1');
+  const corr = document.getElementById('exVent-corr');
+  if (isNaN(val)) { fb.textContent='Entrez une valeur numérique.'; fb.className='num-feedback ko'; return; }
+  if (Math.abs(val-expected)/expected < 0.05) { inp.classList.add('correct'); inp.classList.remove('wrong'); fb.textContent='✓ Correct !'; fb.className='num-feedback ok'; }
+  else { inp.classList.add('wrong'); inp.classList.remove('correct'); fb.textContent='✗ Voir la correction.'; fb.className='num-feedback ko'; }
+  corr.classList.add('visible');
+}
+</script>
+</body>
+</html>
