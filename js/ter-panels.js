@@ -434,7 +434,7 @@ const TER_SEQUENCES = [
         items: [
       { type:'link', icon:'📖', label:'Cours - Cinétique chimique',
             sub:'Fiche de cours en pdf',
-            href:'seq11/Seq11_Cinetique_ cours.pdf' },
+            href:'seq11/Seq11_Cinetique_cours.pdf' },
       { type:'link', icon:'🎓', label:'Cours interactif',
             sub:'Réalisée par Mme Poirault-Gauvin',
             href:'seq11/cinetique-chimique.html' },
