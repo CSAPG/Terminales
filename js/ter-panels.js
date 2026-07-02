@@ -570,13 +570,13 @@ const TER_SEQUENCES = [
        items:[
             { type:'link', icon:'📖', label:'Cours',
           sub:'Fiche de cours en pdf',
-          href:'seq15/Séquence 15-La lumière un flux de photons.pdf' }
+          href:'seq15/Séquence 15-La lumière un flux de photons.pdf' },
            { type:'link', icon:'💡', label:'Cours interactif',
           sub:'Du photon au courant électrique par Mme Poirault-Gauvin',
           href:'seq15/seq15-cours_interactif.html' },
             { type:'link', icon:'📖', label:'Fiche de révision',
           sub:'Réalisée par Valence et Loic',
-          href:'seq15/seq15_Fiche de révision_Valence et Loic.pdf' }
+          href:'seq15/seq15_Fiche de révision_Valence et Loic.pdf' },
                ]
       },
       { id:'Flashcards', label:'Flashcards', actif: true,
