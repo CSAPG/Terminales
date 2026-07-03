@@ -303,6 +303,12 @@ const TER_SEQUENCES = [
       {
         id:'Cours', label:'Cours', actif: true,
         items: [
+           { type:'link', icon:'📖', label:'Cours - Diffraction et interférences',
+            sub:'Fiche de cours en pdf',
+            href:'seq06/seq06_diffraction_et_interferences.pdf' },         
+           { type:'link', icon:'🎓', label:'Cours interactif',
+            sub:'Réalisé par Mme Poirault-Gauvin',
+            href:'seq06/seq06-cours_interactif.html' },
           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Alexandre et Emilien',
             href:'seq06/seq6_Fiche de révision.html' },
