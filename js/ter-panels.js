@@ -425,7 +425,7 @@ const TER_SEQUENCES = [
             href:'seq10/Séquence 10-cours-Systemes-electriques-capacitifs.pdf' },
            { type:'link', icon:'⚡', label:'Cours interactif . Système capacitif — circuit RC série',
             sub:'Réalisé par Mme Poirault-Gauvin',
-            href:'seq10/systeme-capacitif-circuit-rc-serie.html' },
+            href:'seq10/Systeme capacitif - circuit rc serie.html' },
           { type:'link', icon:'🔋', label:'CapaPhysique',
             sub:'Réalisé par Houssine, Lenny et Yohann',
             href:'seq10/capaphysique.html' },
