@@ -1,0 +1,2442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séquence 06 – Diffraction et interférences – Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #2D5F8A;
+    --bleu-clair: #E8F1F8;
+    --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
+    --orange: #E8783A;
+    --orange-clair: #FDF0E8;
+    --vert: #3A8A6E;
+    --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --gris-fond: #F5F7FA;
+    --gris-bord: #DDE3EC;
+    --texte: #1A2A3A;
+    --texte-leger: #5A6B7A;
+    --blanc: #FFFFFF;
+    --rouge: #C0392B;
+    --rouge-clair: #FDEDEC;
+    --violet: #7B4FA6;
+    --violet-clair: #F3EDF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #DDE6F0;
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blanc);
+    border-bottom: 3px solid var(--bleu);
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+  }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 18px 32px 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .header-badge {
+    background: var(--bleu);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  button.cap-toggle {
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button.cap-toggle:hover { background: #1e4466; }
+  .cap-panel {
+    display: none;
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid #B8D4EC;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .cap-panel.open { display: block; }
+  .cap-panel ul { margin: 0; padding-left: 1.3rem; }
+  .cap-panel li { margin-bottom: 5px; line-height: 1.6; }
+  .cap-panel .cap-cat { font-weight: 700; color: var(--bleu); margin-top: 8px; }
+  .cap-panel .cap-cat:first-child { margin-top: 0; }
+
+  .header-titles h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--bleu);
+    line-height: 1.2;
+  }
+  .header-titles p {
+    font-size: 0.82rem;
+    color: var(--texte-leger);
+    margin-top: 2px;
+  }
+  .header-titles p span { color: var(--orange); font-weight: 700; }
+
+  /* ── ICÔNE PLANÈTE EN ORBITE ── */
+  .mobile-icon-wrap {
+    flex-shrink: 0;
+    width: 84px;
+    height: 56px;
+    position: relative;
+    margin-top: -2px;
+  }
+  .mobile-icon-wrap svg { width: 100%; height: 100%; }
+
+  /* ── ONGLETS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px 10px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: var(--texte-leger);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -3px;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+    background: var(--orange-clair);
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gris-bord);
+    color: var(--texte-leger);
+    font-size: 0.70rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .tab-num { background: var(--bleu); color: white; }
+
+  /* ── SOUS-ONGLETS ── */
+  .sub-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 18px 0 0;
+    margin-bottom: 22px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    background: #b8cfe0;
+    color: #2D5F8A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub-tab-btn:hover { background: #2D5F8A; color: white; }
+  .sub-tab-btn.active { background: #1e4466; color: white; }
+  .sub-tab-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    transition: all 0.2s;
+  }
+  .sub-tab-btn:not(.active) .sub-tab-num {
+    background: rgba(45,95,138,0.2);
+  }
+
+  .sub-tab-content { display: none; }
+  .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+  /* ── CONTENU ── */
+  .main { max-width: 900px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BLOCS COURS ── */
+  .def-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .def-card::before {
+    content: 'COURS';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.6;
+  }
+  .def-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+  .def-card ul { padding-left: 18px; }
+  .def-card ul li { margin-bottom: 5px; }
+
+  /* ── BLOCS ACTIVITÉ ── */
+  .activite-card {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-left: 4px solid var(--bleu-moyen);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .activite-card::before {
+    content: 'ACTIVITÉ';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.8;
+  }
+  .activite-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+  }
+  .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  /* ── BLOCS EXERCICE ── */
+  .exo-card {
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert-exo-bord);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .exo-card::before {
+    content: 'EXERCICE';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--vert);
+    opacity: 0.7;
+  }
+  .exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--vert);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu-clair);
+  }
+  .section-title .icon { font-size: 1.3rem; }
+
+  .intro-box {
+    background: #FFFBF7;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--texte);
+    font-style: italic;
+  }
+
+  .formule-box {
+    background: var(--orange-clair);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  .formule-box .legend {
+    font-size: 0.80rem;
+    font-weight: 500;
+    color: var(--texte-leger);
+    margin-top: 6px;
+    text-align: left;
+  }
+
+  .exemple-box {
+    background: var(--vert-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .exemple-box strong { color: var(--vert); }
+
+  .remarque-box {
+    background: var(--violet-clair);
+    border-left: 4px solid var(--violet);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .remarque-box strong { color: var(--violet); }
+
+  .attention-box {
+    background: var(--rouge-clair);
+    border-left: 4px solid var(--rouge);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .attention-box strong { color: var(--rouge); }
+
+  .methode-box {
+    background: var(--bleu-activite);
+    border: 1.5px dashed var(--bleu-moyen);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .methode-box ol { padding-left: 20px; }
+  .methode-box li { margin-bottom: 6px; }
+  .methode-box .methode-titre {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+  }
+
+  /* ── TABLEAU GÉNÉRIQUE ── */
+  .tableau-avancement {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 14px 0;
+    background: var(--blanc);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .tableau-avancement th {
+    background: var(--bleu);
+    color: white;
+    padding: 10px 14px;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .tableau-avancement td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--gris-bord);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .tableau-avancement tr:last-child td { border-bottom: none; }
+  .tableau-avancement tr:nth-child(even) td { background: var(--gris-fond); }
+  .tableau-avancement td:first-child { font-weight: 600; color: var(--bleu); text-align: left; }
+
+  /* ── CRITÈRE / CARTES 3 COLONNES ── */
+  .critere-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .critere-grid { grid-template-columns: 1fr; } }
+  .critere-item {
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .critere-left  { background: #FEF9F0; border: 2px solid var(--orange); color: var(--texte); }
+  .critere-mid   { background: var(--vert-exo); border: 2px solid var(--vert); color: var(--texte); }
+  .critere-right { background: var(--bleu-activite); border: 2px solid var(--bleu-moyen); color: var(--texte); }
+  .critere-item .critere-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .critere-left .critere-label  { color: var(--orange); }
+  .critere-mid .critere-label   { color: var(--vert); }
+  .critere-right .critere-label { color: var(--bleu); }
+
+  /* ── EXERCICE INTERACTIF ── */
+  .exo-enonce {
+    background: var(--blanc);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.90rem;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    border: 1px solid var(--vert-exo-bord);
+  }
+  .question-block { margin-bottom: 14px; }
+  .question-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 7px;
+    padding-left: 8px;
+    border-left: 3px solid var(--vert);
+    line-height: 1.5;
+  }
+  .btn-correction {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 9px 20px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-correction:hover { background: #2A6B52; transform: translateY(-1px); }
+  .correction {
+    display: none;
+    background: #F0FAF6;
+    border: 1.5px solid var(--vert);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .correction.visible { display: block; animation: fadeIn 0.2s ease; }
+  .btn-indice {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    padding: 8px 18px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-indice:hover { background: #C9622A; transform: translateY(-1px); }
+  .indice-box {
+    display: none;
+    background: var(--orange-clair);
+    border: 1.5px solid var(--orange);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 8px;
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+  .indice-box.visible { display: block; animation: fadeIn 0.2s ease; }
+  .indice-box p { margin: 0 0 8px 0; }
+  .correction strong { color: var(--vert); }
+  .correction .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 7px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── EXERCICE NUMÉRIQUE INLINE ── */
+  .num-field-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .num-field-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--texte); }
+  .num-input {
+    width: 110px;
+    padding: 7px 11px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--gris-fond);
+    transition: border-color 0.2s;
+  }
+  .num-input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); }
+  .num-input.correct { border-color: var(--vert); background: var(--vert-exo); }
+  .num-input.wrong   { border-color: var(--rouge); background: var(--rouge-clair); }
+  .num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
+  .num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
+  .num-feedback.ok   { color: var(--vert); }
+  .num-feedback.ko   { color: var(--rouge); }
+  .btn-verif {
+    padding: 7px 16px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-verif:hover { background: #1E4A72; }
+
+  .bilan-exo-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid #2D5F8A;
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+  }
+  .bilan-exo-card .bilan-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #2D5F8A;
+    background: var(--bleu-clair);
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .bilan-exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 6px;
+  }
+  .bilan-exo-card .bilan-theme {
+    font-size: 0.87rem;
+    color: var(--texte-leger);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-sujet, .btn-correction {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: filter 0.15s;
+  }
+  .btn-sujet { background: var(--bleu); color: white; }
+  .btn-correction { background: var(--vert); color: white; }
+  .btn-sujet:hover, .btn-correction:hover { filter: brightness(0.9); }
+  .btn-corriger {
+    padding: 7px 16px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-corriger:hover { background: #2A6B52; }
+  .btn-reset {
+    padding: 7px 16px;
+    background: var(--gris-fond);
+    color: var(--texte-leger);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+  .num-btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .num-correction-inline {
+    display: none;
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: var(--texte);
+  }
+  .num-correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
+  .num-correction-inline .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 7px 11px;
+    margin: 6px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── QCM ── */
+  .qcm-grid { display: grid; gap: 10px; margin: 14px 0; }
+  .qcm-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .qcm-item .substance { font-size: 0.93rem; font-weight: 600; flex: 1; }
+  .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qcm-btn {
+    padding: 5px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    background: var(--gris-fond);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--texte);
+  }
+  .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
+  .qcm-btn.correct { background: var(--vert); color: white; border-color: var(--vert); }
+  .qcm-btn.wrong   { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; width: 100%; }
+  .qcm-feedback.wrong { color: var(--rouge); }
+
+  .dq-select {
+    padding: 7px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--blanc);
+    color: var(--texte);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 160px;
+  }
+  .dq-select:focus { outline: none; border-color: var(--bleu); }
+  .dq-select.correct { border-color: var(--vert); background: var(--vert-exo); color: var(--vert); font-weight: 700; }
+  .dq-select.wrong   { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
+  .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
+  .dq-feedback.wrong { color: var(--rouge); }
+
+  /* ── ACCORDÉON ── */
+  .accord-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: var(--texte);
+    transition: background 0.2s;
+    margin: 10px 0;
+  }
+  .accord-btn:hover { background: var(--bleu-clair); }
+  .accord-body {
+    display: none;
+    padding: 14px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  .accord-body.open { display: block; animation: fadeIn 0.2s; }
+
+  /* ── BILAN GRID ── */
+  .bilan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .bilan-grid { grid-template-columns: 1fr; } }
+  .bilan-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .bilan-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--gris-bord);
+  }
+  .bilan-card ul { padding-left: 16px; }
+  .bilan-card ul li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.5; }
+  .ke-list { list-style: none; padding: 0; }
+  .ke-list li {
+    padding: 6px 10px 6px 28px;
+    position: relative;
+    font-size: 0.84rem;
+    border-bottom: 1px solid var(--gris-bord);
+    line-height: 1.5;
+  }
+  .ke-list li:last-child { border-bottom: none; }
+  .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
+
+  /* ── ANNALES : CARTES + PASTILLES ── */
+  .annale-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .annale-title { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--bleu); font-size: 0.92rem; margin-bottom: 2px; }
+  .annale-meta { font-size: 0.80rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .annale-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pastille {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 16px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 700; text-decoration: none;
+    transition: all 0.15s ease; border: 1.5px solid transparent;
+  }
+  .pastille-sujet { background: var(--bleu); color: #fff; }
+  .pastille-sujet:hover { background: #1E4A72; }
+  .pastille-corrige { background: var(--vert-exo); color: var(--vert); border-color: var(--vert); }
+  .pastille-corrige:hover { background: var(--vert); color: #fff; }
+
+  /* ── CANVAS ANIMATION ── */
+  .anim-canvas-wrap {
+    background: #F8FAFC;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 14px 16px 10px;
+    margin: 14px 0;
+  }
+  .anim-canvas-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--texte-leger);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .anim-canvas-wrap canvas { display: block; margin: 0 auto; border-radius: 8px; border: 1px solid var(--gris-bord); background: #fff; max-width: 100%; }
+  .anim-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .etape-msg-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+  .anim-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--blanc);
+    color: var(--texte);
+    transition: all 0.15s;
+  }
+  .anim-btn:hover  { border-color: var(--bleu); color: var(--bleu); background: var(--bleu-clair); }
+  .anim-btn.active { background: var(--bleu); color: white; border-color: var(--bleu); }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; flex-wrap: wrap; }
+  .slider-row label { font-size: 0.84rem; font-weight: 700; color: var(--texte); min-width: 150px; }
+  .slider-row input[type=range] { flex: 1; min-width: 140px; accent-color: var(--bleu); }
+  .slider-row .slider-val { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--bleu); min-width: 70px; text-align: right; font-size: 0.86rem; }
+
+  .legende-vect { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; font-size: 0.78rem; font-weight: 700; }
+  .legende-vect span { display: inline-flex; align-items: center; gap: 5px; }
+  .legende-vect .swatch { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+
+  /* ── FIGURES ILLUSTRATIVES (images du cours) ── */
+  .fig-box {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .fig-box img { max-width: 100%; height: auto; border-radius: 6px; }
+  .fig-box .fig-caption {
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .fig-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+  .fig-row .fig-box { flex: 1; min-width: 200px; margin: 0; }
+
+  /* ── CALCULATRICE 3E LOI ── */
+  .calc-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin: 10px 0; }
+  @media (max-width: 560px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-field { display: flex; flex-direction: column; gap: 4px; }
+  .calc-field label { font-size: 0.80rem; font-weight: 700; color: var(--bleu); }
+  .calc-result {
+    margin-top: 10px;
+    background: white;
+    border: 1.5px solid var(--bleu-moyen);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: var(--bleu);
+    font-size: 0.95rem;
+    min-height: 20px;
+  }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    padding: 20px;
+    border-top: 1px solid var(--gris-bord);
+    margin-top: 30px;
+  }
+
+  sup { font-size: 0.65em; }
+  sub { font-size: 0.65em; }
+  .math { font-family: 'Outfit', sans-serif; font-style: italic; }
+  .vec { text-decoration: overline; }
+
+  /* ── NOTATION VECTORIELLE FIABLE (flèche SVG) ── */
+  .vecsym {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.45em;
+  }
+  .vecsym svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.55em;
+    overflow: visible;
+  }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 12px 16px 0; }
+    .header-titles h1 { font-size: 1.05rem; }
+    .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
+    .main { padding: 18px 12px 50px; }
+    .mobile-icon-wrap { width: 42px; height: 42px; }
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+    <div class="header-left">
+      <div class="header-badge">T<sup>ale</sup> Spé – Séq. 06</div>
+      <button class="cap-toggle" id="capToggle">📋 Capacités exigibles</button>
+    </div>
+    <div class="header-titles">
+      <h1>Diffraction et interférences</h1>
+      <p>Thème : <span>Ondes et signaux — optique ondulatoire</span> · © C. Poirault-Gauvin</p>
+    </div>
+    <!-- Icône interférences / diffraction (ter-icons.js, séq. 06) -->
+    <div class="mobile-icon-wrap" title="Interférences par les trous d'Young">
+      <style>
+        @keyframes wave-propagate {
+          0%   { stroke-dashoffset: 60; opacity: 0; }
+          20%  { opacity: 1; }
+          100% { stroke-dashoffset: 0; opacity: 0.3; }
+        }
+        .iw1 { animation: wave-propagate 2s linear infinite; }
+        .iw2 { animation: wave-propagate 2s linear 0.4s infinite; }
+        .iw3 { animation: wave-propagate 2s linear 0.8s infinite; }
+        .iw4 { animation: wave-propagate 2s linear 1.2s infinite; }
+        @media(prefers-reduced-motion:reduce){.iw1,.iw2,.iw3,.iw4{animation:none;stroke-dashoffset:0;opacity:0.6;}}
+      </style>
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
+        <rect x="34" y="5"  width="4" height="26" fill="#1e293b"/>
+        <rect x="34" y="35" width="4" height="8"  fill="#1e293b"/>
+        <rect x="34" y="47" width="4" height="28" fill="#1e293b"/>
+        <circle cx="10" cy="40" r="5" fill="#fbbf24"/>
+        <line x1="15" y1="40" x2="34" y2="40" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <g stroke="#3b82f6" stroke-width="1.5" fill="none" stroke-dasharray="60" stroke-linecap="round">
+          <path class="iw1" d="M38,31 Q52,20 70,15"/>
+          <path class="iw2" d="M38,31 Q52,31 70,31"/>
+          <path class="iw3" d="M38,31 Q52,42 70,47"/>
+        </g>
+        <g stroke="#f43f5e" stroke-width="1.5" fill="none" stroke-dasharray="60" stroke-linecap="round">
+          <path class="iw1" d="M38,43 Q52,33 70,31"/>
+          <path class="iw2" d="M38,43 Q52,43 70,43"/>
+          <path class="iw4" d="M38,43 Q52,54 70,57"/>
+        </g>
+        <rect x="72" y="5" width="4" height="70" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+        <rect x="72" y="28" width="4" height="6" fill="#fbbf24" opacity="0.9"/>
+        <rect x="72" y="37" width="4" height="6" fill="#fbbf24" opacity="0.6"/>
+        <rect x="72" y="19" width="4" height="4" fill="#fbbf24" opacity="0.4"/>
+        <rect x="72" y="47" width="4" height="4" fill="#fbbf24" opacity="0.4"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cap-panel" id="capPanel">
+    <div class="cap-cat">Capacités exigibles</div>
+    <ul>
+      <li>Caractériser le phénomène de diffraction dans des situations variées et en citer des conséquences concrètes.</li>
+      <li>Exploiter la relation exprimant l'angle caractéristique de diffraction en fonction de la longueur d'onde et de la taille de l'ouverture.</li>
+      <li>Illustrer et caractériser qualitativement le phénomène de diffraction dans des situations variées.</li>
+      <li>Caractériser le phénomène d'interférences de deux ondes et en citer des conséquences concrètes.</li>
+      <li>Établir les conditions d'interférences constructives et destructives de deux ondes issues de deux sources ponctuelles en phase dans le cas d'un milieu de propagation homogène.</li>
+      <li>Tester les conditions d'interférences constructives ou destructives à la surface de l'eau dans le cas de deux ondes issues de deux sources ponctuelles en phase.</li>
+      <li>Prévoir les lieux d'interférences constructives et destructives dans le cas des trous d'Young, l'expression linéarisée de la différence de chemin optique étant donnée. Établir l'expression de l'interfrange.</li>
+      <li><strong>Capacité numérique :</strong> représenter, à l'aide d'un langage de programmation, la somme de deux signaux sinusoïdaux périodiques synchrones en faisant varier la phase à l'origine de l'un des deux <em>(traitée dans l'onglet « Interférences » → « Différence de marche »)</em>.</li>
+    </ul>
+  </div>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">D</span> Diffraction
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">I</span> Interférences
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">✓</span> Bilan &amp; Ressources
+    </button>
+  </nav>
+  </div><!-- /header-inner -->
+</div>
+
+<div class="main">
+<!-- ══════════════ ONGLET D — DIFFRACTION ══════════════ -->
+<div class="tab-content active" id="tab-0">
+
+  <div class="sub-tabs-nav" id="sub-nav-D">
+    <button class="sub-tab-btn active" data-sub="D1" onclick="switchSubTab('D',0)">
+      <span class="sub-tab-num">1</span> Le phénomène
+    </button>
+    <button class="sub-tab-btn" data-sub="D2" onclick="switchSubTab('D',1)">
+      <span class="sub-tab-num">2</span> Angle de diffraction
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Thomas Young (1773-1829) fut l'un des premiers à comprendre que la lumière se comporte comme une onde, en observant des phénomènes de diffraction et d'interférences. Ces deux phénomènes, caractéristiques des ondes, se retrouvent aussi bien avec des vagues à la surface de l'eau qu'avec un faisceau laser.
+  </div>
+
+  <!-- ───────── D1 : LE PHÉNOMÈNE ───────── -->
+  <div class="sub-tab-content active" id="sub-D-0">
+
+    <div class="def-card">
+      <h3>Définition</h3>
+      <p>La <strong>diffraction</strong> est un phénomène physique correspondant à la modification de la <strong>direction de propagation</strong> d'une onde au passage d'une petite ouverture ou d'un petit obstacle.</p>
+    </div>
+
+    <div class="section-title"><span class="icon">🌊</span> Exemple 1 — Diffraction d'ondes hydrauliques</div>
+    <p style="font-size:0.92rem;line-height:1.65;margin-bottom:10px;">Dans une cuve à ondes, on envoie des ondes rectilignes sur un obstacle percé d'une ouverture de largeur <em>a</em>. Le comportement de l'onde dépend du rapport entre <em>a</em> et la longueur d'onde λ.</p>
+
+    <div class="fig-box">
+      <img src="images-cours/diffraction-ondes-hydrauliques.png" alt="Doc 1 - Diffraction d'ondes hydrauliques dans une cuve à ondes : à gauche a > λ, diffraction peu marquée ; à droite a < λ ou a = λ, diffraction bien visible.">
+      <div class="fig-caption">Doc 1 — Diffraction d'ondes hydrauliques dans une cuve à ondes. À gauche : a &gt; λ, diffraction pas ou peu marquée. À droite : a &lt; λ ou a = λ, diffraction bien visible.</div>
+    </div>
+
+    <div class="def-card">
+      <h3>Observations</h3>
+      <ul>
+        <li>Le phénomène de diffraction <strong>ne modifie pas</strong> la fréquence ni la longueur d'onde de l'onde.</li>
+        <li>La diffraction dépend de la longueur d'onde λ de l'onde incidente et de la <strong>dimension a</strong> de l'ouverture ou de l'obstacle ; le phénomène est d'autant <strong>plus marqué</strong> que <em>a</em> est voisin ou inférieur à λ.</li>
+      </ul>
+    </div>
+
+    <div class="section-title" style="margin-top:26px;"><span class="icon">🔴</span> Exemple 2 — Diffraction d'un faisceau laser</div>
+    <p style="font-size:0.92rem;line-height:1.65;">On envoie un faisceau laser de longueur d'onde λ sur une fente fine de largeur <em>a</em>. Sur un écran placé à une distance D, on observe une <strong>tache centrale</strong> lumineuse, large et intense, entourée de taches secondaires plus faibles, séparées par des <strong>extinctions</strong> (zones sombres).</p>
+
+    <div class="fig-box" style="margin-top:12px;">
+      <img src="images-cours/doc2-schema-exp-video.png" alt="Doc 2 - Schéma de l'expérience de diffraction d'un faisceau laser par une fente de largeur a, avec l'écart angulaire θ entre l'axe du faisceau et le premier minimum d'amplitude (extinction), sur un écran à distance D.">
+      <div class="fig-caption">Doc 2 — Schéma de l'expérience réalisée dans la vidéo.</div>
+    </div>
+
+    <div class="remarque-box"><strong>Remarque :</strong> la diffraction d'une onde est caractérisée par le <strong>demi-angle θ</strong>, aussi appelé écart angulaire, défini entre le milieu de la première extinction et l'axe du laser. Il s'exprime en radian (rad).</div>
+
+    <div class="def-card">
+      <h3>Observations</h3>
+      <ul>
+        <li>L'onde diffractée présente des <strong>maximas</strong> et des <strong>minimas</strong> (extinctions) d'amplitude.</li>
+        <li>Plus la largeur <em>a</em> de la fente diminue, plus la largeur ℓ des taches augmente.</li>
+      </ul>
+    </div>
+
+    <div class="activite-card">
+      <h3>🧪 Application — Simulation de diffraction et interférence</h3>
+      <p style="margin-bottom:10px;">Manipule l'animation ci-dessous (Adrien Willm — ostralo.net) : choisis « Une fente » ou « Deux fentes », puis fais varier la longueur d'onde, la largeur des fentes et la distance à l'écran pour observer l'effet sur la figure obtenue.</p>
+      <div class="anim-canvas-wrap" style="padding:0;overflow:hidden;">
+        <iframe src="https://physique.ostralo.net/diffraction_interference/" title="Simulation diffraction et interférence — ostralo.net" style="width:100%;height:520px;border:0;display:block;" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <p style="margin-top:8px;font-size:0.86rem;"><a href="https://physique.ostralo.net/diffraction_interference/" target="_blank" style="color:var(--bleu);font-weight:700;">Ouvrir l'animation dans un nouvel onglet ↗</a></p>
+    </div>
+
+    <div class="exo-card" style="margin-top:16px;">
+      <h3>🔬 Investigation guidée — retrouve la relation entre θ, λ et a</h3>
+
+      <div class="exo-enonce">
+        <strong>Étape 1 — Effet de la largeur de fente a (λ et D fixées).</strong><br>
+        Sur la simulation, choisis le mode <em>« Une fente »</em>. Règle une distance écran D et une longueur d'onde λ, note leurs valeurs, et ne les modifie plus pendant cette étape. Fais varier la largeur <em>a</em> de la fente sur toute la plage disponible du curseur (4 valeurs différentes) et, à l'aide de la règle de la simulation, mesure à chaque fois la distance <em>x</em> entre le centre de la tache centrale et la 1ère extinction.
+      </div>
+      <div class="num-field-wrap" style="margin-bottom:4px;flex-wrap:wrap;">
+        <label>λ fixée =</label>
+        <input type="text" class="num-input" id="inv1-lambda-fixe" placeholder="valeur" style="width:80px;">
+        <span class="num-unit">nm</span>
+        <label style="margin-left:14px;">D fixée =</label>
+        <input type="text" class="num-input" id="inv1-D" placeholder="valeur" style="width:80px;" oninput="for(var i=1;i<=4;i++)calcRow1(i)">
+        <span class="num-unit">cm</span>
+      </div>
+      <div class="remarque-box" style="margin:8px 0;font-size:0.85rem;">θ (en rad) est calculé automatiquement par θ ≈ x/D, avec x et D dans la <strong>même unité</strong> (cm) — approximation valable car l'écart angulaire est très faible (tan θ ≈ θ).</div>
+      <table class="tableau-avancement">
+        <tr><th>a (µm)</th><th>x mesuré (cm)</th><th>θ ≈ x/D <span style="font-weight:400;font-size:0.75em;">(auto, rad)</span></th><th>a × θ <span style="font-weight:400;font-size:0.75em;">(auto)</span></th></tr>
+        <tr>
+          <td><input type="text" class="num-input" id="inv1-a1" placeholder="a₁" style="width:65px;" oninput="calcRow1(1)"></td>
+          <td><input type="text" class="num-input" id="inv1-x1" placeholder="x₁" style="width:65px;" oninput="calcRow1(1)"></td>
+          <td><input type="text" class="num-input" id="inv1-t1" style="width:75px;background:var(--gris-fond);" readonly></td>
+          <td><input type="text" class="num-input" id="inv1-p1" style="width:75px;background:var(--gris-fond);" readonly></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="num-input" id="inv1-a2" placeholder="a₂" style="width:65px;" oninput="calcRow1(2)"></td>
+          <td><input type="text" class="num-input" id="inv1-x2" placeholder="x₂" style="width:65px;" oninput="calcRow1(2)"></td>
+          <td><input type="text" class="num-input" id="inv1-t2" style="width:75px;background:var(--gris-fond);" readonly></td>
+          <td><input type="text" class="num-input" id="inv1-p2" style="width:75px;background:var(--gris-fond);" readonly></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="num-input" id="inv1-a3" placeholder="a₃" style="width:65px;" oninput="calcRow1(3)"></td>
+          <td><input type="text" class="num-input" id="inv1-x3" placeholder="x₃" style="width:65px;" oninput="calcRow1(3)"></td>
+          <td><input type="text" class="num-input" id="inv1-t3" style="width:75px;background:var(--gris-fond);" readonly></td>
+          <td><input type="text" class="num-input" id="inv1-p3" style="width:75px;background:var(--gris-fond);" readonly></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="num-input" id="inv1-a4" placeholder="a₄" style="width:65px;" oninput="calcRow1(4)"></td>
+          <td><input type="text" class="num-input" id="inv1-x4" placeholder="x₄" style="width:65px;" oninput="calcRow1(4)"></td>
+          <td><input type="text" class="num-input" id="inv1-t4" style="width:75px;background:var(--gris-fond);" readonly></td>
+          <td><input type="text" class="num-input" id="inv1-p4" style="width:75px;background:var(--gris-fond);" readonly></td>
+        </tr>
+      </table>
+      <div class="question-block">
+        <div class="question-label">Compare les 4 valeurs du produit a × θ (calculées automatiquement). Quel type de relation entre θ et a cela met-il en évidence ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmEtape1(this, false)">θ est proportionnel à a</button>
+              <button class="qcm-btn" onclick="checkQcmEtape1(this, true)">θ est inversement proportionnel à a</button>
+              <button class="qcm-btn" onclick="checkQcmEtape1(this, false)">θ ne dépend pas de a</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="inv1-qcm-fb"></div>
+      </div>
+
+      <div class="exo-enonce" style="margin-top:16px;">
+        <strong>Étape 2 — Effet de la longueur d'onde λ (a et D fixées).</strong><br>
+        Fixe maintenant une largeur de fente <em>a</em> et une distance écran D, note leurs valeurs. Fais varier λ sur toute la plage disponible (4 valeurs) et mesure à chaque fois la distance <em>x</em> entre le centre et la 1ère extinction.
+      </div>
+      <div class="num-field-wrap" style="margin-bottom:4px;flex-wrap:wrap;">
+        <label>a fixée =</label>
+        <input type="text" class="num-input" id="inv2-a-fixe" placeholder="valeur" style="width:80px;">
+        <span class="num-unit">µm</span>
+        <label style="margin-left:14px;">D fixée =</label>
+        <input type="text" class="num-input" id="inv2-D" placeholder="valeur" style="width:80px;" oninput="for(var i=1;i<=4;i++)calcRow2(i)">
+        <span class="num-unit">cm</span>
+      </div>
+      <table class="tableau-avancement">
+        <tr><th>λ (nm)</th><th>x mesuré (cm)</th><th>θ ≈ x/D <span style="font-weight:400;font-size:0.75em;">(auto, rad)</span></th><th>θ / λ <span style="font-weight:400;font-size:0.75em;">(auto)</span></th></tr>
+        <tr>
+          <td><input type="text" class="num-input" id="inv2-l1" placeholder="λ₁" style="width:65px;" oninput="calcRow2(1)"></td>
+          <td><input type="text" class="num-input" id="inv2-x1" placeholder="x₁" style="width:65px;" oninput="calcRow2(1)"></td>
+          <td><input type="text" class="num-input" id="inv2-t1" style="width:75px;background:var(--gris-fond);" readonly></td>
+          <td><input type="text" class="num-input" id="inv2-r1" style="width:75px;background:var(--gris-fond);" readonly></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="num-input" id="inv2-l2" placeholder="λ₂" style="width:65px;" oninput="calcRow2(2)"></td>
+          <td><input type="text" class="num-input" id="inv2-x2" placeholder="x₂" style="width:65px;" oninput="calcRow2(2)"></td>
+          <td><input type="text" class="num-input" id="inv2-t2" style="width:75px;background:var(--gris-fond);" readonly></td>
+          <td><input type="text" class="num-input" id="inv2-r2" style="width:75px;background:var(--gris-fond);" readonly></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="num-input" id="inv2-l3" placeholder="λ₃" style="width:65px;" oninput="calcRow2(3)"></td>
+          <td><input type="text" class="num-input" id="inv2-x3" placeholder="x₃" style="width:65px;" oninput="calcRow2(3)"></td>
+          <td><input type="text" class="num-input" id="inv2-t3" style="width:75px;background:var(--gris-fond);" readonly></td>
+          <td><input type="text" class="num-input" id="inv2-r3" style="width:75px;background:var(--gris-fond);" readonly></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="num-input" id="inv2-l4" placeholder="λ₄" style="width:65px;" oninput="calcRow2(4)"></td>
+          <td><input type="text" class="num-input" id="inv2-x4" placeholder="x₄" style="width:65px;" oninput="calcRow2(4)"></td>
+          <td><input type="text" class="num-input" id="inv2-t4" style="width:75px;background:var(--gris-fond);" readonly></td>
+          <td><input type="text" class="num-input" id="inv2-r4" style="width:75px;background:var(--gris-fond);" readonly></td>
+        </tr>
+      </table>
+      <div class="question-block">
+        <div class="question-label">Compare les 4 valeurs du rapport θ / λ (calculées automatiquement). Quel type de relation entre θ et λ cela met-il en évidence ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmEtape2(this, true)">θ est proportionnel à λ</button>
+              <button class="qcm-btn" onclick="checkQcmEtape2(this, false)">θ est inversement proportionnel à λ</button>
+              <button class="qcm-btn" onclick="checkQcmEtape2(this, false)">θ ne dépend pas de λ</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="inv2-qcm-fb"></div>
+      </div>
+
+      <div class="question-block" style="margin-top:16px;">
+        <div class="question-label">📝 Conclusion — En combinant les deux étapes précédentes (θ proportionnel à λ, θ inversement proportionnel à a), complète la relation entre θ, λ et a :</div>
+        <div class="num-field-wrap">
+          <label>θ =</label>
+          <input type="text" class="num-input" id="inv-formule" placeholder="écris la formule (ex: λ/a)" style="width:160px;">
+          <button class="btn-verif" onclick="checkFormula('inv-formule', ['λ/a'])">Vérifier</button>
+          <span class="num-feedback" id="inv-formule-fb"></span>
+        </div>
+      </div>
+      <div class="remarque-box" style="margin-top:10px;"><strong>À retenir :</strong> cette relation θ = λ/a, obtenue ici par l'expérimentation, est formalisée et appliquée numériquement dans l'onglet suivant « Angle de diffraction ».</div>
+    </div>
+
+  </div>
+  <!-- /sub-D-0 -->
+
+  <!-- ───────── D2 : ANGLE DE DIFFRACTION ───────── -->
+  <div class="sub-tab-content" id="sub-D-1">
+
+    <div class="def-card">
+      <h3>Relation de l'angle caractéristique de diffraction</h3>
+      <p>Pour une onde de longueur d'onde λ traversant une ouverture de largeur <em>a</em>, l'écart angulaire θ (en rad) vérifie :</p>
+      <div class="formule-box">
+        θ = λ / a
+        <div class="legend">avec θ en radian (rad) · λ en mètre (m) · a en mètre (m)</div>
+      </div>
+      <div class="remarque-box"><strong>Remarque :</strong> cette relation montre que plus l'ouverture <em>a</em> est petite devant λ, plus l'écart angulaire θ est grand : le faisceau s'étale davantage. C'est cohérent avec l'observation : diffraction marquée quand a est voisin ou inférieur à λ.</div>
+    </div>
+
+    <div class="def-card">
+      <h3>Lien avec la largeur de la tache centrale</h3>
+      <p>L'écart angulaire étant très faible, on peut confondre tan θ et θ (en radian). Sur un écran à une distance D de la fente, la tache centrale de diffraction a pour largeur totale L, avec :</p>
+      <div class="formule-box">
+        θ ≈ L / (2D) &nbsp;⟹&nbsp; L = 2·D·λ / a
+        <div class="legend">L : largeur de la tache centrale (m) · D : distance fente–écran (m)</div>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>📈 Animation interactive — Diffraction d'un faisceau laser</h3>
+      <p>Fais varier la largeur <em>a</em> de la fente à l'aide du curseur et observe l'effet sur l'écart angulaire θ et la figure de diffraction obtenue sur l'écran (λ = 633 nm, laser hélium-néon).</p>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Diffraction par une fente de largeur a</div>
+        <canvas id="diffCanvas" width="360" height="220"></canvas>
+        <div class="slider-row">
+          <label for="diffA">Largeur a</label>
+          <input type="range" id="diffA" min="20" max="300" step="1" value="80">
+          <span class="slider-val" id="diffAVal">80 µm</span>
+        </div>
+        <div class="etape-msg-box" id="diffResultBox">θ = λ/a = …</div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — Exploitation d'un graphique θ = f(1/a)</h3>
+      <div class="exo-enonce">
+        On réalise la diffraction d'ondes lumineuses avec un laser de longueur d'onde λ = 5,80×10² nm. On fait varier la largeur <em>a</em> de la fente et on mesure l'écart angulaire θ correspondant. Le tracé de θ en fonction de 1/a donne une droite passant par l'origine, de coefficient directeur p ≈ 5,80×10⁻⁵ m (lu graphiquement, en cohérence avec θ = λ·(1/a)).
+      </div>
+      <div class="question-block">
+        <div class="question-label">1) Sachant que le coefficient directeur de la droite θ = f(1/a) correspond à λ, calculer λ en nm à partir de p = 5,80×10⁻⁵ m.</div>
+        <div class="num-field-wrap">
+          <label>λ =</label>
+          <input type="text" class="num-input" id="diff-lambda" placeholder="valeur">
+          <span class="num-unit">nm</span>
+          <button class="btn-verif" onclick="checkNum('diff-lambda', 580, 5)">Vérifier</button>
+          <span class="num-feedback" id="diff-lambda-fb"></span>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) Pour une fente a = 100 µm, calculer l'écart angulaire θ (en 10⁻³ rad).</div>
+        <div class="num-field-wrap">
+          <label>θ =</label>
+          <input type="text" class="num-input" id="diff-theta" placeholder="valeur">
+          <span class="num-unit">×10⁻³ rad</span>
+          <button class="btn-verif" onclick="checkNum('diff-theta', 5.8, 0.3)">Vérifier</button>
+          <span class="num-feedback" id="diff-theta-fb"></span>
+        </div>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">La relation θ = λ/a s'écrit θ = λ × (1/a) : c'est une droite passant par l'origine, de coefficient directeur p = λ.</div>
+        <div class="calc-step">λ = p = 5,80×10⁻⁵ m = <strong>580 nm</strong> (cohérent avec la donnée de l'énoncé).</div>
+        <div class="calc-step">θ = λ/a = 5,80×10⁻⁷ / 100×10⁻⁶ ≈ <strong>5,8×10⁻³ rad</strong></div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="icon">📚</span> À travailler dans le manuel</div>
+    <div class="bilan-card">
+      <p style="font-size:0.88rem;">Exercices n° 7, 12, 13, (23 résolu) et 29 p. 428 à 439.</p>
+    </div>
+
+    <div class="section-title" style="margin-top:26px;"><span class="icon">📝</span> Annales — s'entraîner</div>
+
+    <div class="annale-card">
+      <div class="annale-title">Diffraction par une poudre de cacao</div>
+      <div class="annale-meta">Bac S 2017 — Amérique du Nord · 5 points · diffraction, incertitudes</div>
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2017-AmNord-Exo1-Sujet-DiffractionCacao-5pts.pdf" target="_blank">📄 Sujet</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-12/2017-AmNord-Exo1-Correction-DiffractionCacao-5pts.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+    <div class="annale-card">
+      <div class="annale-title">Contrôle de la largeur d'un fil de suture</div>
+      <div class="annale-meta">Bac 2022 — Septembre, Métropole, jour 1 · 5 points · diffraction</div>
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2022-09-Metro-J1-ExoC-Sujet-DiffractionSuture-5pts.pdf" target="_blank">📄 Sujet</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2023-01/2022-09-Metro-J1-ExoC-Correction-DiffractionSuture-5pts.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+    <div class="annale-card">
+      <div class="annale-title">Granulométrie du lactose</div>
+      <div class="annale-meta">Bac 2022 — Centres étrangers 2, sciences de l'ingénieur, jour 2 · 10 points · diffraction</div>
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2022-CentresEtrangers2-SI-J2-Exo1-Sujet-DiffractionLactose-10pts.pdf" target="_blank">📄 Sujet</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-07/2022-CentresEtrangers2-SI-J2-Exo1-Correction-DiffractionLactose.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+    <div class="annale-card">
+      <div class="annale-title">Un brin en matière synthétique</div>
+      <div class="annale-meta">Bac 2025 — Métropole, sciences de l'ingénieur, jour 1 · 10 points · diffraction</div>
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2025-Metro-SI-J1-ExoA-Sujet-Diffraction.pdf" target="_blank">📄 Sujet</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2025-Metro-SI-J1-ExoA-Correction-Diffraction_1.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-D-1 -->
+
+</div>
+<!-- /tab-0 -->
+<!-- ══════════════ ONGLET I — INTERFÉRENCES ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <div class="sub-tabs-nav" id="sub-nav-I">
+    <button class="sub-tab-btn active" data-sub="I1" onclick="switchSubTab('I',0)">
+      <span class="sub-tab-num">1</span> Le phénomène
+    </button>
+    <button class="sub-tab-btn" data-sub="I2" onclick="switchSubTab('I',1)">
+      <span class="sub-tab-num">2</span> Différence de marche
+    </button>
+    <button class="sub-tab-btn" data-sub="I3" onclick="switchSubTab('I',2)">
+      <span class="sub-tab-num">3</span> Interfrange
+    </button>
+    <button class="sub-tab-btn" data-sub="I4" onclick="switchSubTab('I',3)">
+      <span class="sub-tab-num">4</span> Simulation
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Lorsque deux ondes de même nature se superposent, elles peuvent se renforcer ou s'annuler selon les points de l'espace considérés : c'est le phénomène d'interférences, autre signature caractéristique du comportement ondulatoire.
+  </div>
+
+  <!-- ───────── I1 : LE PHÉNOMÈNE ───────── -->
+  <div class="sub-tab-content active" id="sub-I-0">
+
+    <div class="fig-box">
+      <img src="images-cours/image-interference.png" alt="Interférences entre deux trains d'ondes circulaires produits par deux rochers dans une flaque d'eau, avec des zones de renforcement et d'annulation visibles.">
+      <div class="fig-caption">Interférences entre deux ondes circulaires à la surface de l'eau : les rides issues de deux points se croisent et forment des zones où les crêtes se renforcent, séparées par des zones où elles s'annulent.</div>
+    </div>
+
+    <div class="def-card">
+      <h3>Définition</h3>
+      <p>Lorsque deux ondes monochromatiques de même nature se superposent, l'amplitude de l'onde résultante varie dans l'espace et des <strong>zones d'amplitude minimale et maximale</strong> apparaissent : c'est le phénomène d'<strong>interférence</strong>.</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Conditions d'observation</h3>
+      <p>Pour observer des interférences, les deux sources émettrices doivent être :</p>
+      <ul>
+        <li><strong>synchrones</strong> (avoir la même fréquence) ;</li>
+        <li><strong>cohérentes</strong> (avoir un déphasage constant).</li>
+      </ul>
+    </div>
+
+    <div class="section-title"><span class="icon">➕</span> Interférences constructives et destructives</div>
+    <p style="font-size:0.92rem;line-height:1.65;margin-bottom:10px;">Une onde monochromatique peut être modélisée par une fonction sinusoïdale prenant alternativement des valeurs positives et négatives (succession de crêtes et de creux). On considère deux ondes de même longueur d'onde se superposant.</p>
+
+    <div class="fig-row">
+      <div class="fig-box">
+        <svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+          <rect width="220" height="110" fill="#fff"/>
+          <path d="M6,25 Q23,8 40,25 T74,25 T108,25" fill="none" stroke="#3A8A6E" stroke-width="2"/>
+          <path d="M6,55 Q23,38 40,55 T74,55 T108,55" fill="none" stroke="#3A8A6E" stroke-width="2"/>
+          <text x="112" y="42" font-size="16" fill="#5A6B7A" text-anchor="middle">=</text>
+          <path d="M120,42 Q140,2 160,42 T200,42" fill="none" stroke="#C0392B" stroke-width="2.6"/>
+          <text x="20" y="95" font-size="9" fill="#5A6B7A">ondes en phase</text>
+        </svg>
+        <div class="fig-caption"><strong style="color:var(--vert);">Interférence constructive</strong> : les crêtes coïncident avec les crêtes (ondes en phase) — les ondes se renforcent.</div>
+      </div>
+      <div class="fig-box">
+        <svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+          <rect width="220" height="110" fill="#fff"/>
+          <path d="M6,25 Q23,8 40,25 T74,25 T108,25" fill="none" stroke="#3A8A6E" stroke-width="2"/>
+          <path d="M6,55 Q23,72 40,55 T74,55 T108,55" fill="none" stroke="#3A8A6E" stroke-width="2"/>
+          <text x="112" y="42" font-size="16" fill="#5A6B7A" text-anchor="middle">=</text>
+          <line x1="120" y1="42" x2="200" y2="42" stroke="#C0392B" stroke-width="2.6"/>
+          <text x="14" y="95" font-size="9" fill="#5A6B7A">ondes en opposition</text>
+        </svg>
+        <div class="fig-caption"><strong style="color:var(--rouge);">Interférence destructive</strong> : un creux coïncide avec une crête (opposition de phase) — les ondes s'annulent.</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-I-0 -->
+
+  <!-- ───────── I2 : DIFFÉRENCE DE MARCHE ───────── -->
+  <div class="sub-tab-content" id="sub-I-1">
+
+    <div class="def-card">
+      <h3>Sources secondaires cohérentes</h3>
+      <p>Pour observer des interférences avec une lumière, on utilise une <strong>source primaire</strong> que l'on divise pour créer deux <strong>sources secondaires</strong> cohérentes S<sub>1</sub> et S<sub>2</sub> (par exemple deux fentes fines et parallèles, appelées <strong>fentes d'Young</strong>). Des franges d'interférences apparaissent alors à l'intérieur de la figure de diffraction, sur un écran.</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Différence de marche</h3>
+      <p>Considérons deux sources cohérentes S<sub>1</sub> et S<sub>2</sub>, et un point P du milieu de propagation. Les deux ondes issues des sources parcourent respectivement les distances S<sub>1</sub>P et S<sub>2</sub>P avant d'arriver en P. On appelle <strong>différence de marche</strong> la quantité :</p>
+      <div class="formule-box">
+        δ = S₂P − S₁P
+        <div class="legend">δ en mètre (m)</div>
+      </div>
+      <div class="fig-box">
+        <img src="images-cours/doc1-trous-young.png" alt="Expérience des trous d'Young avec un laser : schéma avec source laser, trous d'Young S1 et S2 séparés de a=500µm, écran à D=2,0m, point M à distance x de l'axe ; et photo de la figure d'interférences observée sur l'écran avec règle graduée.">
+        <div class="fig-caption">Expérience des trous d'Young avec un laser (λ = 632,8 nm, D = 2,0 m, a = 500 µm) et figure d'interférences observée sur l'écran.</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Conditions d'interférences constructives / destructives</h3>
+      <p>⇒ Si la différence de marche δ est égale à un <strong>nombre entier de longueurs d'onde</strong>, les deux ondes arrivent en P en phase : leurs élongations maximales coïncident, la somme est maximale.</p>
+      <div class="formule-box" style="background:var(--vert-clair);border-color:var(--vert);">
+        δ = S₂P − S₁P = n·λ &nbsp;(n ∈ ℤ) &nbsp;⟹&nbsp; interférence constructive
+        <div class="legend">La frange d'interférence est alors <strong>brillante</strong>.</div>
+      </div>
+      <p style="margin-top:10px;">⇒ Si la différence de marche vaut un <strong>nombre demi-entier</strong> de longueurs d'onde, les deux signaux arrivent en opposition de phase : la somme des deux ondes est nulle.</p>
+      <div class="formule-box" style="background:var(--rouge-clair);border-color:var(--rouge);">
+        δ = S₂P − S₁P = (n + 1/2)·λ &nbsp;(n ∈ ℤ) &nbsp;⟹&nbsp; interférence destructive
+        <div class="legend">La frange d'interférence est alors <strong>sombre</strong>.</div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — Nature de l'interférence</h3>
+      <div class="exo-enonce">
+        Une lumière monochromatique de longueur d'onde λ = 633 nm éclaire deux fentes d'Young. En un point P de l'écran, la différence de marche vaut δ = 1,899 µm.
+      </div>
+      <div class="question-block">
+        <div class="question-label">Calculer le rapport δ/λ, puis en déduire la nature de l'interférence en P (constructive ou destructive).</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Nature de l'interférence en P :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmInterf(this, false)">Destructive</button>
+              <button class="qcm-btn" onclick="checkQcmInterf(this, true)">Constructive</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="interf-qcm-fb"></div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — Établir la formule de la différence de marche</h3>
+      <div class="exo-enonce">
+        On reprend le dispositif des trous d'Young (sources S₁ et S₂ distantes de a, écran à distance D). Un point P de l'écran est repéré par sa position x, comptée depuis l'axe central. En projetant S₁, S₂ et P sur le schéma, S₁P et S₂P sont les hypoténuses de deux triangles rectangles de côtés D et (x ∓ a/2) : S₁P = √(D² + (x − a/2)²) et S₂P = √(D² + (x + a/2)²).
+      </div>
+      <div class="question-block">
+        <div class="question-label">Quelle est l'expression correcte de la différence de marche δ = S₂P − S₁P en fonction de a, D et x (sans approximation) ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="Exact : δ = S₂P − S₁P, avec S₂P = √(D² + (x + a/2)²) et S₁P = √(D² + (x − a/2)²)." onclick="checkQcmBulle(this, true)">δ = √(D² + (x + a/2)²) − √(D² + (x − a/2)²)</button>
+              <button class="qcm-btn" data-exp="Cette expression correspond à S₁P − S₂P, c'est-à-dire l'opposé de δ : les deux termes sont inversés par rapport à la définition δ = S₂P − S₁P." onclick="checkQcmBulle(this, false)">δ = √(D² + (x − a/2)²) − √(D² + (x + a/2)²)</button>
+              <button class="qcm-btn" data-exp="Ceci correspond à S₂P + S₁P (une somme), pas à une différence de marche." onclick="checkQcmBulle(this, false)">δ = √(D² + (x + a/2)²) + √(D² + (x − a/2)²)</button>
+              <button class="qcm-btn" data-exp="Cette expression ne vient pas du théorème de Pythagore : D et x ne s'additionnent pas directement à l'intérieur d'une seule racine, il faut bien deux termes au carré, D² et (x ∓ a/2)², sommés sous la racine." onclick="checkQcmBulle(this, false)">δ = √((D + x + a/2)²) − √((D + x − a/2)²)</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="pyInterf-formule-fb"></div>
+      </div>
+    </div>
+
+    <div class="methode-box">
+      <div class="methode-titre">💻 Capacité numérique — Programme Python à modifier</div>
+      <p style="margin-bottom:8px;font-size:0.9rem;">Le programme ci-dessous met en œuvre <strong>la formule que tu viens d'établir</strong> pour calculer δ = S₂P − S₁P, puis en déduit la nature de l'interférence en P, pour le cas λ = 633 nm, a = 500 µm, D = 2,00 m.</p>
+      <p style="margin-bottom:8px;font-size:0.88rem;background:var(--bleu-clair);border-radius:6px;padding:8px 10px;"><strong>Ce que tu dois faire :</strong> modifie uniquement la valeur numérique de <strong>x</strong> (en mm) dans la case surlignée ci-dessous, à la ligne <code>x = …</code>, puis clique sur <strong>▶ Exécuter</strong> pour voir ce qu'afficherait le programme.</p>
+      <pre id="pyInterfCode" style="font-family:'Outfit',monospace;font-size:0.80rem;white-space:pre-wrap;line-height:1.7;background:white;border:1px solid var(--gris-bord);border-radius:6px;padding:10px;margin-bottom:10px;">import numpy as np
+
+lam = 633e-9      # longueur d'onde (m)
+a   = 500e-6      # écart S1-S2 (m)
+D   = 2.00        # distance sources-écran (m)
+x   = <input type="number" id="pyXInput" value="0" step="0.05" style="width:70px;font-family:'Outfit',monospace;font-size:0.80rem;font-weight:700;color:var(--rouge);border:1px solid var(--orange);border-radius:4px;padding:1px 4px;">e-3    # position de P sur l'écran, EN MM  ← À MODIFIER
+
+S1P = np.sqrt(D**2 + (x - a/2)**2)
+S2P = np.sqrt(D**2 + (x + a/2)**2)
+delta = S2P - S1P          # différence de marche
+n = delta / lam             # rapport delta/lambda
+
+print("delta =", delta, "m")
+print("delta/lambda =", n)
+if abs(n - round(n)) &lt; 0.05:
+    print("--> interférence CONSTRUCTIVE (frange brillante)")
+elif abs(abs(n - round(n)) - 0.5) &lt; 0.05:
+    print("--> interférence DESTRUCTIVE (frange sombre)")
+else:
+    print("--> ni constructive ni destructive")</pre>
+
+      <div class="anim-controls" style="margin-bottom:10px;">
+        <button class="anim-btn" onclick="runPyInterf()">▶ Exécuter</button>
+        <button class="anim-btn" onclick="document.getElementById('pyXInput').value=0; runPyInterf();">x = 0 (axe central)</button>
+      </div>
+
+      <div class="etape-msg-box" id="pyInterfConsole" style="font-family:'Outfit',monospace;font-size:0.82rem;white-space:pre-wrap;">&gt;&gt;&gt; …</div>
+
+      <div class="fig-box" style="margin-top:10px;">
+        <svg id="pyInterfSvg" viewBox="0 0 600 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;background:white;">
+          <text x="8" y="14" font-size="10" fill="#5A6B7A">I (intensité, u.a.)</text>
+          <line x1="10" y1="15" x2="10" y2="115" stroke="#B9C3CC" stroke-width="1"/>
+          <line x1="10" y1="115" x2="590" y2="115" stroke="#B9C3CC" stroke-width="1"/>
+          <g id="pyInterfCurve"></g>
+          <text x="8" y="132" font-size="10" fill="#5A6B7A">Écran (figure d'interférence) :</text>
+          <g id="pyInterfBand"></g>
+          <rect x="10" y="140" width="580" height="40" fill="none" stroke="#B9C3CC" stroke-width="1"/>
+          <g id="pyInterfTicks"></g>
+          <line id="pyInterfMarker" x1="300" y1="6" x2="300" y2="180" stroke="var(--rouge)" stroke-width="1.6" stroke-dasharray="3,2"/>
+          <circle id="pyInterfMarkerDot" cx="300" cy="10" r="3.5" fill="var(--rouge)"/>
+          <text id="pyInterfMarkerLabel" x="300" y="196" font-size="10" fill="var(--rouge)" text-anchor="middle" font-weight="700">x</text>
+        </svg>
+        <div class="fig-caption">Courbe d'intensité I(x) (modèle simplifié à 2 sources d'égale amplitude, sans enveloppe de diffraction) et figure de franges correspondante. Le repère rouge indique la position x actuellement testée dans le programme.</div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — Exploiter le programme</h3>
+      <div class="exo-enonce">
+        Modifie la valeur de x (en mm) directement dans le programme ci-dessus, puis clique sur ▶ Exécuter, pour répondre aux questions suivantes (garde x &gt; 0).
+      </div>
+      <div class="question-block">
+        <div class="question-label">1) Trouve, par tâtonnement, la valeur de x correspondant à la <strong>première frange brillante</strong> pour x &gt; 0 (hors axe central). Relève la valeur de x trouvée (en mm).</div>
+        <div class="num-field-wrap">
+          <label>x₁ =</label>
+          <input type="text" class="num-input" id="pyInterf-x1" placeholder="valeur">
+          <span class="num-unit">mm</span>
+          <button class="btn-verif" onclick="checkNum('pyInterf-x1', 2.53, 0.15)">Vérifier</button>
+          <span class="num-feedback" id="pyInterf-x1-fb"></span>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) Trouve de la même façon la valeur de x correspondant à la <strong>première frange sombre</strong> pour x &gt; 0. Relève la valeur de x trouvée (en mm).</div>
+        <div class="num-field-wrap">
+          <label>x₂ =</label>
+          <input type="text" class="num-input" id="pyInterf-x2" placeholder="valeur">
+          <span class="num-unit">mm</span>
+          <button class="btn-verif" onclick="checkNum('pyInterf-x2', 1.27, 0.15)">Vérifier</button>
+          <span class="num-feedback" id="pyInterf-x2-fb"></span>
+        </div>
+      </div>
+      <div class="indice-wrap">
+        <button class="btn-indice" onclick="toggleIndice(this, 'indice1-py', '💡 Indice 1')">💡 Indice 1</button>
+        <div class="indice-box" id="indice1-py">
+          <p>Pour une frange <strong>brillante</strong>, δ doit être proche d'un multiple entier de λ (n = 0, 1, 2…) ; pour une frange <strong>sombre</strong>, δ doit être proche d'un demi-entier de λ. Après chaque essai, regarde la ligne <code>delta/lambda = …</code> affichée dans la console : rapproche-la d'abord d'un nombre entier (pour x₁), puis d'un nombre du type n + 0,5 (pour x₂).</p>
+          <button class="btn-indice" onclick="toggleIndice(this, 'indice2-py', '💡 Indice 2')">💡 Indice 2</button>
+          <div class="indice-box" id="indice2-py">
+            <p>Comme a ≪ D, on peut estimer δ ≈ a·x/D (approximation qui sera vue dans l'onglet suivant). Cela donne un ordre de grandeur de départ pour x₁, puis x₂ ≈ x₁/2. Pars de cette estimation en mm, puis affine par petits pas avec le programme (qui calcule δ exactement, sans approximation).</p>
+          </div>
+        </div>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">Pour a ≪ D, on peut montrer que δ ≈ a·x/D. La première frange brillante hors axe correspond à n = 1 : x₁ = λD/a = 633×10⁻⁹ × 2,00 / 500×10⁻⁶ ≈ <strong>2,53 mm</strong>.</div>
+        <div class="calc-step">La première frange sombre correspond à δ = λ/2, soit x₂ = λD/(2a) ≈ <strong>1,27 mm</strong> (la moitié de x₁).</div>
+        <div class="calc-step">Le programme, lui, calcule δ exactement (sans approximation) via le théorème de Pythagore — c'est pour cela que les valeurs relevées peuvent légèrement différer de ces valeurs approchées.</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-I-1 -->
+
+  <!-- ───────── I3 : INTERFRANGE ───────── -->
+  <div class="sub-tab-content" id="sub-I-2">
+
+    <div class="def-card">
+      <h3>Interfrange</h3>
+      <p>Lors des interférences lumineuses, la distance séparant deux milieux de zones sombres consécutives (ou deux franges brillantes consécutives) est appelée <strong>interfrange i</strong>. Dans le cadre des trous d'Young, sa valeur est donnée par :</p>
+      <div class="formule-box">
+        i = λ·D / a
+        <div class="legend">
+          i : interfrange (m) · λ : longueur d'onde de la radiation (m)<br>
+          D : distance entre les sources secondaires et l'écran (m) · a : distance entre les 2 sources secondaires (m)
+        </div>
+      </div>
+    </div>
+
+    <div class="fig-box">
+      <img src="images-cours/interfrange1.png" alt="Franges d'interférences lumineuses observées sur un écran : succession de taches rouges brillantes séparées par des zones sombres, avec la distance i (interfrange) mesurée entre deux franges consécutives.">
+      <div class="fig-caption">Franges d'interférences observées sur un écran : l'interfrange i est la distance entre deux franges brillantes (ou deux franges sombres) consécutives.</div>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — Calcul de l'interfrange</h3>
+      <div class="exo-enonce">
+        Deux fentes d'Young distantes de a = 0,25 mm sont éclairées par un laser de longueur d'onde λ = 650 nm. L'écran est placé à D = 2,00 m des fentes.
+      </div>
+      <div class="question-block">
+        <div class="question-label">1) Calculer l'interfrange i (en mm).</div>
+        <div class="num-field-wrap">
+          <label>i =</label>
+          <input type="text" class="num-input" id="interf-i" placeholder="valeur">
+          <span class="num-unit">mm</span>
+          <button class="btn-verif" onclick="checkNum('interf-i', 5.2, 0.2)">Vérifier</button>
+          <span class="num-feedback" id="interf-i-fb"></span>
+        </div>
+      </div>
+      <div class="question-block">
+        <div class="question-label">2) On souhaite doubler l'interfrange sans changer la source laser ni la distance D. Comment doit-on modifier a ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmA(this, false)">Doubler a</button>
+              <button class="qcm-btn" onclick="checkQcmA(this, true)">Diviser a par 2</button>
+              <button class="qcm-btn" onclick="checkQcmA(this, false)">a n'a pas d'effet</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="interf-a-fb"></div>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">i = λ·D/a = 650×10⁻⁹ × 2,00 / 0,25×10⁻³ ≈ 5,2×10⁻³ m = <strong>5,2 mm</strong></div>
+        <div class="calc-step">i étant inversement proportionnel à a, il faut <strong>diviser a par 2</strong> pour doubler i (à λ et D fixés).</div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="icon">🌈</span> Cas de la lumière blanche</div>
+    <div class="fig-box">
+      <img src="images-cours/bulle.png" alt="Bulle de savon irisée présentant des couleurs interférentielles tourbillonnantes, dues aux interférences de la lumière blanche sur le film mince de savon." style="max-width:25%;">
+      <div class="fig-caption">Les couleurs d'une bulle de savon sont dues aux interférences de la lumière blanche.</div>
+    </div>
+    <div class="def-card">
+      <p>Si les sources secondaires émettent de la <strong>lumière blanche</strong>, on n'observe que quelques <strong>franges colorées</strong> au centre de la figure d'interférences : ce sont les couleurs interférentielles. Les deux sources émettent plusieurs radiations de longueurs d'onde différentes, correspondant à des figures d'interférences différentes qui se superposent. Les couleurs sont mélangées car les franges de différentes couleurs se brouillent au-delà du centre.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exercice — Pourquoi la bulle de savon est-elle colorée ?</h3>
+      <div class="exo-enonce">
+        Choisis la bonne réponse pour chaque question. Une explication de chaque proposition s'affiche une fois la bonne réponse trouvée.
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">1) Quelle est l'origine des couleurs observées sur une bulle de savon éclairée en lumière blanche ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="La diffraction change la direction de propagation d'une onde au passage d'une ouverture, mais ne crée pas à elle seule des couleurs." onclick="checkQcmBulle(this, false)">Diffraction de la lumière</button>
+              <button class="qcm-btn" data-exp="La lumière se réfléchit sur les deux faces du film de savon ; les deux ondes réfléchies interfèrent entre elles." onclick="checkQcmBulle(this, true)">Interférences entre les deux faces du film de savon</button>
+              <button class="qcm-btn" data-exp="La dispersion (comme dans un prisme) sépare des couleurs déjà présentes dans la lumière incidente, elle ne les crée pas par superposition d'ondes." onclick="checkQcmBulle(this, false)">Dispersion par le savon comme un prisme</button>
+              <button class="qcm-btn" data-exp="La fluorescence est une réémission de lumière après absorption ; ce n'est pas le mécanisme à l'œuvre ici." onclick="checkQcmBulle(this, false)">Fluorescence du savon</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="bulle-q1-fb"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">2) Pourquoi les couleurs varient-elles d'un point à l'autre de la bulle ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="L'épaisseur du film de savon n'est pas uniforme (gravité, évaporation...) : la condition d'interférence constructive change de radiation selon l'épaisseur, donc la couleur dominante change d'un point à l'autre." onclick="checkQcmBulle(this, true)">L'épaisseur du film varie d'un point à l'autre</button>
+              <button class="qcm-btn" data-exp="La rotation éventuelle de la bulle ne change pas la structure de son film ni la physique des interférences en un point donné." onclick="checkQcmBulle(this, false)">La bulle tourne sur elle-même</button>
+              <button class="qcm-btn" data-exp="La longueur d'onde d'une onde ne change pas lors d'une réflexion (seule sa direction et éventuellement sa phase changent)." onclick="checkQcmBulle(this, false)">La lumière change de couleur en se réfléchissant</button>
+              <button class="qcm-btn" data-exp="Le savon n'absorbe pas sélectivement les couleurs de façon à créer ce motif ; le phénomène dominant est l'interférence, pas l'absorption." onclick="checkQcmBulle(this, false)">Le savon absorbe différemment chaque couleur</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="bulle-q2-fb"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">3) Pourquoi observe-t-on des couleurs et non des franges noires et blanches nettes comme avec un laser ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="Le film de savon reste parfaitement capable de produire des interférences cohérentes : les deux ondes réfléchies proviennent de la même onde incidente." onclick="checkQcmBulle(this, false)">Le savon n'est pas cohérent</button>
+              <button class="qcm-btn" data-exp="Il y a bien deux « sources » d'ondes réfléchies (une par face du film), qui jouent un rôle analogue aux sources secondaires des trous d'Young." onclick="checkQcmBulle(this, false)">Il n'y a pas de sources secondaires</button>
+              <button class="qcm-btn" data-exp="La lumière blanche contient toutes les longueurs d'onde visibles. Pour une épaisseur donnée, chaque radiation interfère de façon constructive ou destructive différemment : certaines couleurs s'annulent, d'autres se renforcent, ce qui donne une teinte colorée plutôt que du noir ou du blanc pur." onclick="checkQcmBulle(this, true)">La lumière blanche contient plusieurs longueurs d'onde qui interfèrent chacune différemment selon l'épaisseur</button>
+              <button class="qcm-btn" data-exp="C'est bien un phénomène d'interférences (superposition de deux ondes réfléchies), pas de diffraction (déviation par une ouverture/obstacle)." onclick="checkQcmBulle(this, false)">C'est de la diffraction et non des interférences</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="bulle-q3-fb"></div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="icon">📚</span> À travailler dans le manuel</div>
+    <div class="bilan-card">
+      <p style="font-size:0.88rem;">Exercices n° 8, 20, 24, (25 résolu), 26, 35, 37 et 39 p. 428 à 439.</p>
+    </div>
+
+    <div class="section-title" style="margin-top:26px;"><span class="icon">📝</span> Annales — s'entraîner</div>
+
+    <div class="annale-card">
+      <div class="annale-title">Qualité d'écoute d'une enceinte bluetooth</div>
+      <div class="annale-meta">Bac 2022 — Septembre, Métropole SI, jour 1 · 10 points · interférences, différence de marche</div>
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2024-04/2022-09-SI-Metro-J1-ExoC-Sujet-EnceinteInterferences-10pts.pdf" target="_blank">📄 Sujet</a>
+        <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2023-01/2022-09-SI-Metro-J1-ExoC-Correction-EnceinteInterferences-10pts.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+    <div class="annale-card">
+      <div class="annale-title">Théma Interférences</div>
+      <div class="annale-meta">Bac S 2013–2020 · 5 extraits de sujets corrigés sur les interférences · 2h</div>
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2023-01/Thema-Interferences.pdf" target="_blank">📄 Sujet</a>
+        <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2023-01/Thema-Interferences_0.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-I-2 -->
+
+  <!-- ───────── I4 : SIMULATION ───────── -->
+  <div class="sub-tab-content" id="sub-I-3">
+
+    <div class="intro-box">
+      Utilise la simulation PhET « Interférences d'ondes » pour retrouver, par la manipulation, les conditions d'interférences, leur nature en un point donné, et l'interfrange.
+    </div>
+
+    <div class="activite-card">
+      <h3>🧪 Simulation — Interférences d'ondes (PhET)</h3>
+      <p style="margin-bottom:8px;">Choisis l'onglet <strong>« Ondes »</strong> (ou « Lumière »), passe en mode <strong>« Deux sources »</strong>, et active l'affichage des <strong>« Écrans »</strong> ou de la règle pour effectuer des mesures.</p>
+      <div class="anim-canvas-wrap" style="padding:0;overflow:hidden;">
+        <iframe src="https://phet.colorado.edu/sims/html/wave-interference/latest/wave-interference_all.html?locale=fr" title="Simulation Interférences d'ondes — PhET" style="width:100%;height:520px;border:0;display:block;" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <p style="margin-top:8px;font-size:0.86rem;"><a href="https://phet.colorado.edu/sims/html/wave-interference/latest/wave-interference_all.html?locale=fr" target="_blank" style="color:var(--bleu);font-weight:700;">Ouvrir la simulation dans un nouvel onglet ↗</a></p>
+    </div>
+
+    <div class="exo-card">
+      <h3>✏️ Exploiter la simulation</h3>
+
+      <div class="question-block">
+        <div class="question-label">A) Conditions d'interférences — Pourquoi les deux sources de la simulation, réglées sur le même bouton de fréquence, permettent-elles d'observer une figure d'interférences stable dans le temps ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="Exact : les deux sources ont la même fréquence (synchrones) et un déphasage constant entre elles (cohérentes) ; c'est la condition nécessaire pour une figure d'interférences stable." onclick="checkQcmBulle(this, true)">Elles sont synchrones et cohérentes</button>
+              <button class="qcm-btn" data-exp="Des fréquences différentes empêcheraient d'observer une figure stable : la figure d'interférences se déplacerait continuellement dans le temps." onclick="checkQcmBulle(this, false)">Elles ont des fréquences différentes</button>
+              <button class="qcm-btn" data-exp="L'amplitude des sources ne conditionne pas la stabilité de la figure d'interférences, seuls la fréquence commune et le déphasage constant comptent." onclick="checkQcmBulle(this, false)">Elles ont une amplitude différente</button>
+              <button class="qcm-btn" data-exp="Ce n'est pas le hasard : la stabilité de la figure vient précisément du fait que les deux sources sont synchrones et cohérentes." onclick="checkQcmBulle(this, false)">C'est un effet du hasard</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="phet-a-fb"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">B) Nature de l'interférence — Place le point d'intensité (« Intensity » / capteur) sur l'axe central, à mi-chemin entre les deux sources. Quelle est la nature de l'interférence en ce point, et pourquoi ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="Exact : sur l'axe central, les deux sources étant équidistantes du point, S₁M = S₂M donc δ = 0 = 0×λ : c'est un cas particulier d'interférence constructive." onclick="checkQcmBulle(this, true)">Constructive, car δ = S₂M − S₁M = 0</button>
+              <button class="qcm-btn" data-exp="δ = 0 correspond au cas n = 0 de la condition constructive δ = n·λ, pas à la condition destructive." onclick="checkQcmBulle(this, false)">Destructive, car δ = S₂M − S₁M = 0</button>
+              <button class="qcm-btn" data-exp="Sur l'axe central, la distance aux deux sources est bien égale : ce n'est pas indéterminé, δ y vaut exactement 0." onclick="checkQcmBulle(this, false)">On ne peut pas savoir sans calcul</button>
+              <button class="qcm-btn" data-exp="La distance aux deux sources n'est pas quelconque sur l'axe central : par symétrie, S₁M = S₂M exactement." onclick="checkQcmBulle(this, false)">Ni constructive ni destructive</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="phet-b-fb"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">C) Interfrange — Relève dans la simulation la longueur d'onde λ, l'écart entre les deux sources a, et une distance source–écran D (utilise la règle), puis calcule l'interfrange.</div>
+        <div class="num-field-wrap" style="margin-bottom:6px;">
+          <label>λ =</label>
+          <input type="text" class="num-input" id="phet-lambda" placeholder="valeur" style="width:80px;" oninput="calcPhetInterfrange()">
+          <span class="num-unit">nm</span>
+        </div>
+        <div class="num-field-wrap" style="margin-bottom:6px;">
+          <label>a (écart sources) =</label>
+          <input type="text" class="num-input" id="phet-a" placeholder="valeur" style="width:80px;" oninput="calcPhetInterfrange()">
+          <span class="num-unit">mm</span>
+        </div>
+        <div class="num-field-wrap" style="margin-bottom:6px;">
+          <label>D (source–écran) =</label>
+          <input type="text" class="num-input" id="phet-D" placeholder="valeur" style="width:80px;" oninput="calcPhetInterfrange()">
+          <span class="num-unit">cm</span>
+        </div>
+        <div class="etape-msg-box" id="phet-i-result">i = λD/a = …</div>
+        <p style="margin-top:8px;font-size:0.84rem;color:var(--texte-leger);">Compare cette valeur calculée à l'écart entre deux franges que tu observes directement sur l'écran de la simulation : sont-elles cohérentes ?</p>
+        <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la méthode et un exemple corrigé</button>
+        <div class="correction">
+          <div class="calc-step">1) Repère la couleur affichée par la simulation pour lire λ (en nm).</div>
+          <div class="calc-step">2) Avec la règle, mesure l'écart a entre les deux points sources.</div>
+          <div class="calc-step">3) Toujours avec la règle, mesure une distance D entre les sources et l'endroit de l'écran où tu observes les franges.</div>
+          <div class="calc-step">4) Convertis toutes les grandeurs en mètres, puis calcule i = λD/a.</div>
+          <div class="calc-step">Exemple (valeurs fictives, à titre d'illustration uniquement — pas celles de ta simulation) : si λ = 500 nm, a = 2,0 mm et D = 40 cm, alors i = λD/a = 500×10⁻⁹ × 0,40 / 2,0×10⁻³ = 1,0×10⁻⁴ m = <strong>0,10 mm</strong>.</div>
+          <div class="calc-step">Ta valeur calculée doit être <strong>du même ordre de grandeur</strong> que l'écart entre deux franges brillantes consécutives mesuré directement à la règle sur l'écran. Un léger écart est normal (incertitude de lecture).</div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">D) Effet de l'écart entre les sources — En partant d'une figure d'interférences stable, tu augmentes progressivement l'écart a entre les deux sources (λ et D restant fixes). Que devient l'interfrange i ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="i = λD/a : a est au dénominateur, donc augmenter a fait diminuer i (les franges se resserrent)." onclick="checkQcmBulle(this, false)">i augmente</button>
+              <button class="qcm-btn" data-exp="Exact : i = λD/a est inversement proportionnel à a, donc augmenter a fait diminuer i : les franges se resserrent." onclick="checkQcmBulle(this, true)">i diminue</button>
+              <button class="qcm-btn" data-exp="i dépend explicitement de a via i = λD/a ; ce n'est pas un paramètre sans effet." onclick="checkQcmBulle(this, false)">i ne change pas</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="phet-d-fb"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">E) Effet de la distance à l'écran — Tu éloignes l'écran des sources : D augmente (λ et a restant fixes). Que devient l'interfrange i ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="Exact : i = λD/a est proportionnel à D, donc éloigner l'écran fait augmenter i : les franges s'écartent." onclick="checkQcmBulle(this, true)">i augmente</button>
+              <button class="qcm-btn" data-exp="D est au numérateur dans i = λD/a : augmenter D fait donc augmenter i, pas diminuer." onclick="checkQcmBulle(this, false)">i diminue</button>
+              <button class="qcm-btn" data-exp="i dépend explicitement de D via i = λD/a ; la distance à l'écran a bien un effet." onclick="checkQcmBulle(this, false)">i ne change pas</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="phet-e-fb"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">F) Effet de la longueur d'onde — Sans changer a ni D, tu passes d'une lumière bleue (λ plus petit) à une lumière rouge (λ plus grand). Que devient l'interfrange i ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="Exact : i = λD/a est proportionnel à λ. Le rouge ayant une plus grande longueur d'onde que le bleu, l'interfrange augmente." onclick="checkQcmBulle(this, true)">i augmente</button>
+              <button class="qcm-btn" data-exp="λ est au numérateur dans i = λD/a : une plus grande longueur d'onde donne un i plus grand, pas plus petit." onclick="checkQcmBulle(this, false)">i diminue</button>
+              <button class="qcm-btn" data-exp="i dépend explicitement de λ via i = λD/a ; la couleur (donc λ) a bien un effet sur l'interfrange." onclick="checkQcmBulle(this, false)">i ne change pas</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="phet-f-fb"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">G) Différence de marche à une frange donnée — Repère dans la simulation la 2<sup>e</sup> frange brillante à partir de l'axe central (sans compter la frange centrale). Quelle est alors la valeur de la différence de marche δ en ce point ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="δ = 0 correspond à la frange centrale (n = 0), pas à la 2ᵉ frange brillante." onclick="checkQcmBulle(this, false)">δ = 0</button>
+              <button class="qcm-btn" data-exp="δ = λ (n = 1) correspond à la 1ʳᵉ frange brillante hors axe, pas à la 2ᵉ." onclick="checkQcmBulle(this, false)">δ = λ</button>
+              <button class="qcm-btn" data-exp="Exact : les franges brillantes correspondent à δ = n·λ. La 2ᵉ frange brillante hors axe correspond à n = 2, donc δ = 2λ." onclick="checkQcmBulle(this, true)">δ = 2λ</button>
+              <button class="qcm-btn" data-exp="δ = λ/2 correspond à une frange sombre (condition destructive), pas à une frange brillante." onclick="checkQcmBulle(this, false)">δ = λ/2</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="phet-g-fb"></div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">H) Repère maintenant la frange sombre située juste après la 2<sup>e</sup> frange brillante (en s'éloignant du centre). Quelle est alors la valeur de δ en ce point ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">Réponse :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" data-exp="δ = 2λ correspond exactement à la 2ᵉ frange brillante (n = 2), pas à une frange sombre." onclick="checkQcmBulle(this, false)">δ = 2λ</button>
+              <button class="qcm-btn" data-exp="Exact : les franges sombres correspondent à δ = (n + 1/2)·λ. Juste après n = 2, la frange sombre suivante correspond à δ = 2,5λ." onclick="checkQcmBulle(this, true)">δ = 2,5λ</button>
+              <button class="qcm-btn" data-exp="δ = 3λ correspond à la 3ᵉ frange brillante (n = 3), une frange claire, pas la frange sombre juste après n = 2." onclick="checkQcmBulle(this, false)">δ = 3λ</button>
+              <button class="qcm-btn" data-exp="δ = 1,5λ est la frange sombre entre les franges n = 1 et n = 2, pas celle juste après n = 2." onclick="checkQcmBulle(this, false)">δ = 1,5λ</button>
+            </div>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="phet-h-fb"></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-I-3 -->
+
+</div>
+<!-- /tab-1 -->
+<!-- ══════════════ ONGLET ✓ — BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-2">
+
+  <div class="sub-tabs-nav" id="sub-nav-R">
+    <button class="sub-tab-btn active" data-sub="R1" onclick="switchSubTab('R',0)">
+      <span class="sub-tab-num">1</span> Bilan et points clés
+    </button>
+    <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
+      <span class="sub-tab-num">2</span> Ressources
+    </button>
+  </div>
+
+  <!-- ───────── R1 : BILAN ET POINTS CLÉS ───────── -->
+  <div class="sub-tab-content active" id="sub-R-0">
+
+    <div class="section-title"><span class="icon">📌</span> Bilan sur la diffraction</div>
+    <div class="bilan-grid">
+      <div class="bilan-card">
+        <h4>Diffraction</h4>
+        <p style="font-size:0.86rem;line-height:1.6;">Modification de la direction de propagation d'une onde au passage d'une ouverture ou d'un obstacle de petite taille. D'autant plus marquée que a est voisin ou inférieur à λ. Ne modifie ni f ni λ.</p>
+      </div>
+      <div class="bilan-card">
+        <h4>Angle caractéristique</h4>
+        <div class="formule-box" style="margin:6px 0;">θ = λ/a</div>
+        <p style="font-size:0.84rem;color:var(--texte-leger);">θ en rad, λ et a en m. Écart angulaire entre l'axe et le milieu de la première extinction.</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:26px;"><span class="icon">📌</span> Bilan sur les interférences</div>
+    <div class="bilan-grid">
+      <div class="bilan-card">
+        <h4>Conditions</h4>
+        <p style="font-size:0.86rem;line-height:1.6;">Deux sources <strong>synchrones</strong> (même fréquence) et <strong>cohérentes</strong> (déphasage constant) → zones d'amplitude min. et max. dans l'espace.</p>
+      </div>
+      <div class="bilan-card">
+        <h4>Différence de marche</h4>
+        <p style="font-size:0.86rem;line-height:1.6;">δ = S₂P − S₁P</p>
+        <ul style="margin-top:4px;">
+          <li>δ = n·λ ⟹ interférence <strong>constructive</strong></li>
+          <li>δ = (n+1/2)·λ ⟹ interférence <strong>destructive</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bilan-card" style="margin-top:14px;">
+      <h4>Interfrange (trous d'Young)</h4>
+      <div class="formule-box" style="margin:8px 0;">i = λ·D / a</div>
+      <p style="font-size:0.84rem;color:var(--texte-leger);">i, D et a en mètre ; λ en mètre. i augmente avec λ et D, diminue quand a augmente.</p>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> Points-clés à retenir</div>
+    <div class="bilan-card">
+      <ul class="ke-list">
+        <li>Diffraction et interférences sont deux phénomènes caractéristiques du comportement ondulatoire (mécanique ou lumineux).</li>
+        <li>La diffraction s'observe quand la taille de l'ouverture/obstacle est voisine ou inférieure à λ ; elle ne change ni f ni λ.</li>
+        <li>θ = λ/a : plus l'ouverture est petite, plus l'onde s'étale.</li>
+        <li>Les interférences nécessitent deux sources synchrones et cohérentes.</li>
+        <li>δ = n·λ → constructif (frange brillante) ; δ = (n+1/2)·λ → destructif (frange sombre).</li>
+        <li>Interfrange : i = λD/a, mesurable dans le dispositif des trous d'Young.</li>
+        <li>Capacité numérique : un programme Python permet de calculer la différence de marche δ = S₂P − S₁P en tout point P, puis de déterminer la nature (constructive/destructive) de l'interférence via le rapport δ/λ.</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /sub-R-0 -->
+
+  <!-- ───────── R2 : RESSOURCES ───────── -->
+  <div class="sub-tab-content" id="sub-R-1">
+
+    <div class="section-title"><span class="icon">🎬</span> Vidéos du cours</div>
+    <div class="bilan-card">
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805179014?paccess=47d6acbbcd8.2ffe0e86.bd51fc4c329645d43677cb94834fa329" target="_blank">🎬 Cours 3 — Diffraction</a>
+        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805549603?paccess=47d6acfd7c7.3003b623.f408c1bcf9f7618bd1079a6e2955f91b" target="_blank">🎬 Cours 4 — Interférences</a>
+        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805179806?paccess=47d6acc286e.2ffe119e.19cc3426567f565a5ba1f9282ba76b05" target="_blank">🎬 Diffraction sur cuve à ondes — Olivier Oreggia</a>
+        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805268726?paccess=47d6acd515f.2fff6cf6.58cad342154e1a7cdec018c6fae9ccbb" target="_blank">🎬 Laser Diffraction and Interference — TSG Physics</a>
+        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805203956?paccess=47d6ace4bef.2ffe6ff4.f7acf30554bc968443491822e96da1a2" target="_blank">🎬 Interférences avec des ondes hydrauliques</a>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🔭</span> Histoire des sciences</div>
+    <div class="bilan-card">
+      <p style="font-size:0.88rem;line-height:1.8;margin-bottom:10px;">« La Plus Belle Expérience de la Physique » — ScienceEtonnante : naissance de la dualité ondes/corpuscules, introduction à la physique quantique.</p>
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805179528?paccess=47d6aca389b.2ffe1088.d788712739b35446db8f4b9d4b4b0041" target="_blank">🎬 La plus belle expérience de la physique</a>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🧪</span> Animations et simulations</div>
+    <div class="bilan-card">
+      <div class="annale-pills">
+        <a class="pastille pastille-sujet" href="https://physique.ostralo.net/diffraction_interference/" target="_blank">🧪 Diffraction et interférence (1 ou 2 fentes) — ostralo.net</a>
+        <a class="pastille pastille-sujet" href="https://phet.colorado.edu/fr/simulations/sound-waves" target="_blank">🧪 Ondes sonores — simulation PhET</a>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">📚</span> Travaux pratiques et exercices</div>
+    <div class="bilan-card">
+      <ul style="padding-left:18px;font-size:0.88rem;line-height:1.9;">
+        <li>TP 09 — Diffraction des ondes (Fente d'Young)</li>
+        <li>TP 10 — Interférences des ondes (SalsaJ)</li>
+        <li>TP 11 — Interférences sonores (Python)</li>
+        <li>Exercices n° 7, 12, 13, 23, 29 (diffraction) et 8, 20, 24, 25, 26, 35, 37, 39 (interférences), p. 428 à 439</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /sub-R-1 -->
+
+</div>
+<!-- /tab-2 -->
+
+</div><!-- /main -->
+
+<div class="footer-note">Séquence 06 – Diffraction et interférences · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin</div>
+<script>
+/* ════════ NAVIGATION ONGLETS ════════ */
+function switchTab(i) {
+  document.querySelectorAll('.tab-content').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('.tabs-nav .tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+function switchSubTab(group, i) {
+  document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+document.getElementById('capToggle').addEventListener('click', () => {
+  document.getElementById('capPanel').classList.toggle('open');
+});
+function toggleCorrection(btn) {
+  var c = btn.nextElementSibling;
+  c.classList.toggle('visible');
+  btn.textContent = c.classList.contains('visible') ? '🙈 Masquer la correction' : '✅ Voir la correction';
+}
+function toggleIndice(btn, targetId, label) {
+  var box = document.getElementById(targetId);
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? '🙈 Masquer' : label;
+}
+
+/* ════════ VÉRIFICATION NUMÉRIQUE ════════ */
+function checkNum(id, expected, tol) {
+  var input = document.getElementById(id);
+  var fb = document.getElementById(id + '-fb');
+  var raw = input.value.replace(',', '.').trim();
+  var val = parseFloat(raw);
+  if (isNaN(val)) {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = 'Entre un nombre'; fb.className = 'num-feedback ko';
+    return;
+  }
+  if (Math.abs(val - expected) <= tol) {
+    input.classList.remove('wrong'); input.classList.add('correct');
+    fb.textContent = '✓ Correct'; fb.className = 'num-feedback ok';
+  } else {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = '✗ Réessaie'; fb.className = 'num-feedback ko';
+  }
+}
+
+/* ════════ CALCUL AUTOMATIQUE — investigation diffraction ════════ */
+function calcTheta(xId, dId, outId) {
+  var x = parseFloat(document.getElementById(xId).value.replace(',', '.'));
+  var d = parseFloat(document.getElementById(dId).value.replace(',', '.'));
+  var out = document.getElementById(outId);
+  out.value = (!isNaN(x) && !isNaN(d) && d !== 0) ? (x / d).toPrecision(3) : '';
+}
+function calcProduct(idA, idB, idOut) {
+  var a = parseFloat(document.getElementById(idA).value.replace(',', '.'));
+  var b = parseFloat(document.getElementById(idB).value.replace(',', '.'));
+  var out = document.getElementById(idOut);
+  out.value = (!isNaN(a) && !isNaN(b)) ? (a * b).toPrecision(4) : '';
+}
+function calcRatio(idA, idB, idOut) {
+  var a = parseFloat(document.getElementById(idA).value.replace(',', '.'));
+  var b = parseFloat(document.getElementById(idB).value.replace(',', '.'));
+  var out = document.getElementById(idOut);
+  out.value = (!isNaN(a) && !isNaN(b) && b !== 0) ? (a / b).toPrecision(4) : '';
+}
+function calcRow1(i) {
+  calcTheta('inv1-x' + i, 'inv1-D', 'inv1-t' + i);
+  calcProduct('inv1-a' + i, 'inv1-t' + i, 'inv1-p' + i);
+}
+function calcRow2(i) {
+  calcTheta('inv2-x' + i, 'inv2-D', 'inv2-t' + i);
+  calcRatio('inv2-t' + i, 'inv2-l' + i, 'inv2-r' + i);
+}
+
+/* ════════ VÉRIFICATION FORMULE (texte à trous) ════════ */
+function checkFormula(id, acceptedList) {
+  var input = document.getElementById(id);
+  var fb = document.getElementById(id + '-fb');
+  var norm = input.value
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/lambda/g, 'λ')
+    .replace(/theta/g, 'θ')
+    .replace(/×/g, '*')
+    .replace(/,/g, '.');
+  var ok = acceptedList.some(function(a){ return a.toLowerCase().replace(/\s+/g,'') === norm; });
+  if (norm === '') {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = 'Complète la formule'; fb.className = 'num-feedback ko';
+    return;
+  }
+  if (ok) {
+    input.classList.remove('wrong'); input.classList.add('correct');
+    fb.textContent = '✓ Correct'; fb.className = 'num-feedback ok';
+  } else {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = '✗ Réessaie'; fb.className = 'num-feedback ko';
+  }
+}
+
+/* ════════ QCM — nature de l'interférence ════════ */
+function checkQcmInterf(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  var fb = document.getElementById('interf-qcm-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = '✓ Exact : δ/λ = 1,899×10⁻⁶ / 633×10⁻⁹ = 3,00, un nombre entier ⟹ interférence constructive (frange brillante).';
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ Calcule δ/λ = 1,899×10⁻⁶ / 633×10⁻⁹ = 3,00 : c\'est un nombre entier, donc l\'interférence est constructive.';
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+/* ════════ EXERCICE PYTHON — DIFFÉRENCE DE MARCHE (onglet I2) ════════ */
+var PYI = { lam: 633e-9, a: 500e-6, D: 2.00, xmin: -10, xmax: 10, gx0: 10, gw: 580 };
+
+function pyInterfIntensity(xmm) {
+  var x = xmm * 1e-3;
+  var S1P = Math.sqrt(PYI.D*PYI.D + Math.pow(x - PYI.a/2, 2));
+  var S2P = Math.sqrt(PYI.D*PYI.D + Math.pow(x + PYI.a/2, 2));
+  var delta = S2P - S1P;
+  var phase = Math.PI * delta / PYI.lam;
+  return Math.cos(phase) * Math.cos(phase);
+}
+
+function pyInterfPx(xmm) {
+  return PYI.gx0 + ((xmm - PYI.xmin) / (PYI.xmax - PYI.xmin)) * PYI.gw;
+}
+
+function pyInterfMix(c1, c2, t) {
+  var r = Math.round(c1[0] + (c2[0]-c1[0])*t);
+  var g = Math.round(c1[1] + (c2[1]-c1[1])*t);
+  var b = Math.round(c1[2] + (c2[2]-c1[2])*t);
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+
+function buildPyInterfGraph() {
+  var curveG = document.getElementById('pyInterfCurve');
+  var bandG = document.getElementById('pyInterfBand');
+  var ticksG = document.getElementById('pyInterfTicks');
+  if (!curveG || !bandG) return;
+  var yTop = 15, yBot = 115;
+  var pts = [];
+  var step = 2;
+  var darkColor = [148, 163, 175];   // gris-bleu clair (frange sombre) — jamais noir pur
+  var brightColor = [255, 255, 255]; // blanc (frange brillante)
+  var bandRects = '';
+  for (var px = 0; px <= PYI.gw; px += step) {
+    var xmm = PYI.xmin + (px / PYI.gw) * (PYI.xmax - PYI.xmin);
+    var I = pyInterfIntensity(xmm);
+    var y = yBot - I * (yBot - yTop);
+    pts.push((PYI.gx0 + px) + ',' + y.toFixed(1));
+    var col = pyInterfMix(darkColor, brightColor, I);
+    bandRects += '<rect x="' + (PYI.gx0 + px) + '" y="140" width="' + (step+0.5) + '" height="40" fill="' + col + '"></rect>';
+  }
+  curveG.innerHTML = '<polyline points="' + pts.join(' ') + '" fill="none" stroke="var(--orange)" stroke-width="2"></polyline>';
+  bandG.innerHTML = bandRects;
+
+  var ticks = '';
+  for (var t = PYI.xmin; t <= PYI.xmax; t += 5) {
+    var tx = pyInterfPx(t);
+    ticks += '<line x1="' + tx + '" y1="115" x2="' + tx + '" y2="119" stroke="#B9C3CC" stroke-width="1"></line>';
+    ticks += '<text x="' + tx + '" y="129" font-size="9" fill="#8A97A3" text-anchor="middle">' + t + '</text>';
+  }
+  ticksG.innerHTML = ticks;
+}
+
+function updatePyInterfMarker(xmm) {
+  var xClamped = Math.max(PYI.xmin, Math.min(PYI.xmax, xmm));
+  var px = pyInterfPx(xClamped);
+  var line = document.getElementById('pyInterfMarker');
+  var dot = document.getElementById('pyInterfMarkerDot');
+  var label = document.getElementById('pyInterfMarkerLabel');
+  if (!line) return;
+  line.setAttribute('x1', px); line.setAttribute('x2', px);
+  var I = pyInterfIntensity(xClamped);
+  dot.setAttribute('cx', px);
+  dot.setAttribute('cy', (115 - I * 100).toFixed(1));
+  label.setAttribute('x', px);
+  label.textContent = 'x = ' + xmm.toFixed(2) + ' mm';
+}
+
+function runPyInterf() {
+  var lam = 633e-9, a = 500e-6, D = 2.00;
+  var input = document.getElementById('pyXInput');
+  if (!input) return;
+  var xmm = parseFloat(input.value.replace(',', '.'));
+  if (isNaN(xmm)) xmm = 0;
+  var x = xmm * 1e-3;
+
+  var S1P = Math.sqrt(D*D + Math.pow(x - a/2, 2));
+  var S2P = Math.sqrt(D*D + Math.pow(x + a/2, 2));
+  var delta = S2P - S1P;
+  var n = delta / lam;
+  var frac = Math.abs(n - Math.round(n));
+
+  var nature;
+  if (frac < 0.05) nature = '--> interférence CONSTRUCTIVE (frange brillante)';
+  else if (Math.abs(frac - 0.5) < 0.05) nature = '--> interférence DESTRUCTIVE (frange sombre)';
+  else nature = '--> ni constructive ni destructive';
+
+  var out = document.getElementById('pyInterfConsole');
+  out.textContent =
+    '>>> delta = ' + delta.toExponential(3) + ' m\n' +
+    '>>> delta/lambda = ' + n.toFixed(3) + '\n' +
+    nature;
+
+  updatePyInterfMarker(xmm);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('pyXInput')) { buildPyInterfGraph(); runPyInterf(); }
+});
+
+function checkQcmA(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  var fb = document.getElementById('interf-a-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = '✓ Exact : i = λD/a est inversement proportionnel à a, donc diviser a par 2 double i.';
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ i = λD/a : i est inversement proportionnel à a, il faut donc diviser a par 2 (pas le doubler).';
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+/* ════════ QCM — investigation diffraction, étape 1 (retry autorisé) ════════ */
+function checkQcmEtape1(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => b.classList.remove('correct','wrong'));
+  var fb = document.getElementById('inv1-qcm-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    group.forEach(b => { b.disabled = true; });
+    fb.textContent = '✓ Exact : le produit a × θ reste sensiblement constant (= λ) quelle que soit la valeur de a testée : θ est inversement proportionnel à a.';
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ Regarde tes 4 valeurs de a × θ : si elles restent à peu près constantes, cela signifie que θ est inversement proportionnel à a. Réessaie.';
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+/* ════════ QCM — investigation diffraction, étape 2 (retry autorisé) ════════ */
+function checkQcmEtape2(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => b.classList.remove('correct','wrong'));
+  var fb = document.getElementById('inv2-qcm-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    group.forEach(b => { b.disabled = true; });
+    fb.textContent = '✓ Exact : le rapport θ / λ reste sensiblement constant (= 1/a) quelle que soit la valeur de λ testée : θ est proportionnel à λ.';
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ Regarde tes 4 valeurs de θ / λ : si elles restent à peu près constantes, cela signifie que θ est proportionnel à λ. Réessaie.';
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+/* ════════ ANIMATION — DIFFRACTION PAR UNE FENTE (canvas) ════════ */
+(function() {
+  var canvas = document.getElementById('diffCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var slider = document.getElementById('diffA');
+  var aVal = document.getElementById('diffAVal');
+  var resultBox = document.getElementById('diffResultBox');
+  var lambda = 633e-9;   // m (laser He-Ne)
+  var D = 2.0;           // m
+  var W = canvas.width, H = canvas.height;
+
+  function sinc(x) { return x === 0 ? 1 : Math.sin(x) / x; }
+
+  function draw() {
+    var a_um = parseFloat(slider.value);
+    var a = a_um * 1e-6; // m
+    aVal.textContent = a_um + ' µm';
+
+    var theta = lambda / a;           // rad
+    var L = 2 * D * theta;            // largeur tache centrale (m)
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Bande écran (haut) : intensité colorée
+    var stripY = 15, stripH = 40, stripX = 10, stripW = W - 20;
+    var xRange = 0.05; // m, demi-largeur représentée sur l'écran (±5 cm)
+    for (var px = 0; px < stripW; px++) {
+      var xScreen = (px / stripW - 0.5) * 2 * xRange;
+      var arg = Math.PI * a * xScreen / (lambda * D);
+      var I = Math.pow(sinc(arg), 2);
+      var bright = Math.round(255 * I);
+      ctx.fillStyle = 'rgb(' + Math.min(255,40+bright) + ',' + Math.min(255,30+bright*0.85) + ',' + Math.min(255,10+bright*0.3) + ')';
+      ctx.fillRect(stripX + px, stripY, 1, stripH);
+    }
+    ctx.strokeStyle = '#DDE3EC'; ctx.lineWidth = 1;
+    ctx.strokeRect(stripX, stripY, stripW, stripH);
+
+    // Courbe d'intensité (bas)
+    var gx = stripX, gy = 75, gw = stripW, gh = 120;
+    ctx.strokeStyle = '#DDE3EC'; ctx.strokeRect(gx, gy, gw, gh);
+    ctx.beginPath();
+    ctx.strokeStyle = '#E8783A'; ctx.lineWidth = 2;
+    for (var px2 = 0; px2 <= gw; px2++) {
+      var xS = (px2 / gw - 0.5) * 2 * xRange;
+      var arg2 = Math.PI * a * xS / (lambda * D);
+      var I2 = Math.pow(sinc(arg2), 2);
+      var y = gy + gh - I2 * (gh - 6) - 3;
+      if (px2 === 0) ctx.moveTo(gx + px2, y); else ctx.lineTo(gx + px2, y);
+    }
+    ctx.stroke();
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif';
+    ctx.fillText('Intensité I(x) sur l\'écran (x en cm, D = 2 m)', gx + 6, gy + 14);
+    ctx.fillText('-5 cm', gx + 2, gy + gh + 12);
+    ctx.fillText('0', gx + gw/2 - 3, gy + gh + 12);
+    ctx.fillText('+5 cm', gx + gw - 30, gy + gh + 12);
+
+    resultBox.innerHTML = 'θ = λ/a = ' + (theta*1000).toFixed(2).replace('.', ',') + '×10⁻³ rad &nbsp;|&nbsp; Largeur tache centrale L = 2Dλ/a ≈ ' + (L*100).toFixed(1).replace('.', ',') + ' cm (D = 2 m)';
+  }
+
+  slider.addEventListener('input', draw);
+  draw();
+})();
+/* ════════ QCM — bulle de savon (retry autorisé, explications complètes) ════════ */
+/* ════════ CALCUL AUTOMATIQUE — interfrange, simulation PhET ════════ */
+function calcPhetInterfrange() {
+  var lambda_nm = parseFloat(document.getElementById('phet-lambda').value.replace(',', '.'));
+  var a_mm = parseFloat(document.getElementById('phet-a').value.replace(',', '.'));
+  var D_cm = parseFloat(document.getElementById('phet-D').value.replace(',', '.'));
+  var box = document.getElementById('phet-i-result');
+  if (isNaN(lambda_nm) || isNaN(a_mm) || isNaN(D_cm) || a_mm === 0) {
+    box.textContent = 'i = λD/a = …';
+    return;
+  }
+  var lambda_m = lambda_nm * 1e-9, a_m = a_mm * 1e-3, D_m = D_cm * 1e-2;
+  var i_m = lambda_m * D_m / a_m;
+  var i_mm = i_m * 1000;
+  box.innerHTML = 'i = λD/a ≈ <strong>' + i_mm.toPrecision(3) + ' mm</strong>';
+}
+
+function checkQcmBulle(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  var qBlock = btn.closest('.question-block');
+  var fb = qBlock.querySelector('.qcm-feedback');
+  group.forEach(function(b) { b.classList.remove('correct', 'wrong'); });
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    group.forEach(function(b) { b.disabled = true; });
+    var html = '';
+    group.forEach(function(b) {
+      var correct = b.classList.contains('correct');
+      html += '<div style="padding:7px 12px;border-radius:8px;margin-bottom:6px;' +
+        (correct ? 'background:var(--vert-exo);border-left:3px solid var(--vert);' : 'background:var(--gris-fond);border-left:3px solid var(--gris-bord);') +
+        '"><strong>' + (correct ? '✓ ' : '✗ ') + b.textContent + '</strong> — ' + b.getAttribute('data-exp') + '</div>';
+    });
+    fb.innerHTML = html;
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ ' + btn.getAttribute('data-exp') + ' Réessaie avec une autre réponse.';
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+</script>
+
+</body>
+</html>
