@@ -344,7 +344,8 @@ const TER_SEQUENCES = [
           { type:'link', icon:'🎓', label:'Cours interactif',
             sub:'Réalisé par Mme Poirault-Gauvin',
             href:'seq07/seq07-cours_interactif.html' },
-        ]   
+        ]  
+       },     
       {
         id:'fiche-flash-quiz', label:'Fiche · Flashcards · Quiz',
         items: [
