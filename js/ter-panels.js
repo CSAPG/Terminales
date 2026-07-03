@@ -335,10 +335,19 @@ const TER_SEQUENCES = [
     icone: 'doppler',
     headerBg: 'seq07/image7.png',
     tabs: [
-      {
-        id:'fiche-flash-quiz', label:'Fiche · Flashcards · Quiz', actif: true,
+             {
+        id:'cours', label:'cours', actif: true,
         items: [
-          { type:'link', icon:'📖', label:'Fiche de révision — Flashcards — Quiz',
+          { type:'link', icon:'📖', label:'Cours ',
+            sub:'Fiche de cours en pdf',
+            href:'seq07/Fiche de cours 07-son et effet doppler.pdf' },
+          { type:'link', icon:'🎓', label:'Cours interactif',
+            sub:'Réalisé par Mme Poirault-Gauvin',
+            href:'seq07/seq07-cours_interactif.html' },
+      {
+        id:'fiche-flash-quiz', label:'Fiche · Flashcards · Quiz',
+        items: [
+          { type:'link', icon:'⭐', label:'Fiche de révision — Flashcards — Quiz',
             sub:'Réalisés par Lucas et Ruben',
             href:'seq07/fiche-de-revision-flashcards-quiz.html' },
         ]
