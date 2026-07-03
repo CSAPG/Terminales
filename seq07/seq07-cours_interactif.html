@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séquence 07 – Atténuation des ondes sonores et effet Doppler – Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #2D5F8A;
+    --bleu-clair: #E8F1F8;
+    --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
+    --orange: #E8783A;
+    --orange-clair: #FDF0E8;
+    --vert: #3A8A6E;
+    --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --gris-fond: #F5F7FA;
+    --gris-bord: #DDE3EC;
+    --texte: #1A2A3A;
+    --texte-leger: #5A6B7A;
+    --blanc: #FFFFFF;
+    --rouge: #C0392B;
+    --rouge-clair: #FDEDEC;
+    --violet: #7B4FA6;
+    --violet-clair: #F3EDF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #DDE6F0;
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blanc);
+    border-bottom: 3px solid var(--bleu);
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 32px 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .header-badge {
+    background: var(--bleu);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  button.cap-toggle {
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button.cap-toggle:hover { background: #1e4466; }
+  .cap-panel {
+    display: none;
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid #B8D4EC;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .cap-panel.open { display: block; }
+  .cap-panel ul { margin: 0; padding-left: 1.3rem; }
+  .cap-panel li { margin-bottom: 5px; line-height: 1.6; }
+  .cap-panel .cap-cat { font-weight: 700; color: var(--bleu); margin-top: 8px; }
+  .cap-panel .cap-cat:first-child { margin-top: 0; }
+
+  .header-titles h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--bleu);
+    line-height: 1.2;
+  }
+  .header-titles p {
+    font-size: 0.82rem;
+    color: var(--texte-leger);
+    margin-top: 2px;
+  }
+  .header-titles p span { color: var(--orange); font-weight: 700; }
+
+  /* ── ICÔNE HAUT-PARLEUR / ONDES ── */
+  .mobile-icon-wrap {
+    flex-shrink: 0;
+    width: 84px;
+    height: 56px;
+    position: relative;
+    margin-top: -2px;
+  }
+  .mobile-icon-wrap svg { width: 100%; height: 100%; }
+
+  /* ── ONGLETS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px 10px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: var(--texte-leger);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -3px;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+    background: var(--orange-clair);
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gris-bord);
+    color: var(--texte-leger);
+    font-size: 0.70rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .tab-num { background: var(--bleu); color: white; }
+
+  /* ── SOUS-ONGLETS ── */
+  .sub-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 18px 0 0;
+    margin-bottom: 22px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    background: #b8cfe0;
+    color: #2D5F8A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub-tab-btn:hover { background: #2D5F8A; color: white; }
+  .sub-tab-btn.active { background: #1e4466; color: white; }
+  .sub-tab-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    transition: all 0.2s;
+  }
+  .sub-tab-btn:not(.active) .sub-tab-num {
+    background: rgba(45,95,138,0.2);
+  }
+
+  .sub-tab-content { display: none; }
+  .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+  /* ── CONTENU ── */
+  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BLOCS COURS ── */
+  .def-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .def-card::before {
+    content: 'DÉFINITION';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu);
+    opacity: 0.55;
+  }
+  .def-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    padding-right: 70px;
+  }
+  .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+  .def-card ul { padding-left: 18px; }
+  .def-card ul li { margin-bottom: 5px; }
+
+  .activite-card {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-left: 4px solid var(--bleu-moyen);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .activite-card::before {
+    content: 'ACTIVITÉ';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.7;
+  }
+  .activite-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 10px;
+    padding-right: 70px;
+  }
+  .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  .exo-card {
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert-exo-bord);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .exo-card::before {
+    content: 'EXERCICE';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--vert);
+    opacity: 0.7;
+  }
+  .exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--vert);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu-clair);
+  }
+  .section-title .icon { font-size: 1.3rem; }
+
+  .intro-box {
+    background: #FFFBF7;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--texte);
+    font-style: italic;
+  }
+
+  .formule-box {
+    background: var(--orange-clair);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  .formule-box .legend {
+    font-size: 0.80rem;
+    font-weight: 500;
+    color: var(--texte-leger);
+    margin-top: 6px;
+    text-align: left;
+  }
+
+  .exemple-box {
+    background: var(--vert-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .exemple-box strong { color: var(--vert); }
+
+  .remarque-box {
+    background: var(--violet-clair);
+    border-left: 4px solid var(--violet);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .remarque-box strong { color: var(--violet); }
+
+  .attention-box {
+    background: var(--rouge-clair);
+    border-left: 4px solid var(--rouge);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .attention-box strong { color: var(--rouge); }
+
+  .methode-box {
+    background: var(--bleu-activite);
+    border: 1.5px dashed var(--bleu-moyen);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .methode-box ol { padding-left: 20px; }
+  .methode-box li { margin-bottom: 6px; }
+  .methode-box .methode-titre {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+  }
+
+  /* ── EXERCICE INTERACTIF ── */
+  .exo-enonce {
+    background: var(--blanc);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.90rem;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    border: 1px solid var(--vert-exo-bord);
+  }
+  .question-block { margin-bottom: 14px; }
+  .question-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 7px;
+    padding-left: 8px;
+    border-left: 3px solid var(--vert);
+    line-height: 1.5;
+  }
+  .btn-correction {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 9px 20px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-correction:hover { background: #2A6B52; transform: translateY(-1px); }
+  .correction {
+    display: none;
+    background: #F0FAF6;
+    border: 1.5px solid var(--vert);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .correction.visible { display: block; animation: fadeIn 0.2s ease; }
+  .correction strong { color: var(--vert); }
+  .correction .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 7px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── EXERCICE NUMÉRIQUE INLINE ── */
+  .num-field-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .num-field-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--texte); }
+  .num-input {
+    width: 110px;
+    padding: 7px 11px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--gris-fond);
+    transition: border-color 0.2s;
+  }
+  .num-input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); }
+  .num-input.correct { border-color: var(--vert); background: var(--vert-exo); }
+  .num-input.wrong   { border-color: var(--rouge); background: var(--rouge-clair); }
+  .num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
+  .num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
+  .num-feedback.ok   { color: var(--vert); }
+  .num-feedback.ko   { color: var(--rouge); }
+  .btn-verif {
+    padding: 7px 16px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-verif:hover { background: #1E4A72; }
+
+  .bilan-exo-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid #2D5F8A;
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+  }
+  .bilan-exo-card .bilan-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #2D5F8A;
+    background: var(--bleu-clair);
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .bilan-exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 6px;
+  }
+  .bilan-exo-card .bilan-theme {
+    font-size: 0.87rem;
+    color: var(--texte-leger);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  /* ── PASTILLES CLIQUABLES (ressources externes) ── */
+  .pastille {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: white;
+    white-space: nowrap;
+    transition: filter 0.15s, transform 0.12s;
+  }
+  .pastille:hover { filter: brightness(0.90); transform: translateY(-1px); }
+  .pastille-qcm   { background: #BFDCF0; color: var(--bleu); }
+  .pastille-video { background: #DECBF0; color: var(--violet); }
+  .pastille-simu  { background: var(--vert); }
+  .pastille-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .pastille-row .pastille-source { font-size: 0.82rem; color: var(--texte-leger); }
+  .pastille-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .btn-sujet, .btn-correction {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: filter 0.15s;
+  }
+  .btn-sujet { background: var(--bleu); color: white; }
+  .btn-correction { background: var(--vert); color: white; }
+  .btn-sujet:hover, .btn-correction:hover { filter: brightness(0.9); }
+  .btn-corriger {
+    padding: 7px 16px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-corriger:hover { background: #2A6B52; }
+  .btn-reset {
+    padding: 7px 16px;
+    background: var(--gris-fond);
+    color: var(--texte-leger);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+
+  /* ── QCM / SÉLECTEURS ── */
+  .qcm-grid { display: grid; gap: 10px; margin: 14px 0; }
+  .qcm-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .qcm-item .substance { font-size: 0.93rem; font-weight: 600; flex: 1; }
+  .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qcm-btn {
+    padding: 5px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    background: var(--gris-fond);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--texte);
+  }
+  .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
+  .qcm-btn.correct { background: var(--vert); color: white; border-color: var(--vert); }
+  .qcm-btn.wrong   { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; width: 100%; }
+  .qcm-feedback.wrong { color: var(--rouge); }
+
+  .dq-select {
+    padding: 7px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.86rem;
+    background: var(--blanc);
+    color: var(--texte);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 220px;
+  }
+  .dq-select:focus { outline: none; border-color: var(--bleu); }
+  .dq-select.correct { border-color: var(--vert); background: var(--vert-exo); color: var(--vert); font-weight: 700; }
+  .dq-select.wrong   { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
+  .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
+  .dq-feedback.wrong { color: var(--rouge); }
+  .dq-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .dq-row .dq-label { font-size: 0.88rem; font-weight: 700; color: var(--texte); min-width: 220px; flex: 1; }
+  .dq-row.done.ok { border-color: var(--vert); }
+  .dq-row.done.ko { border-color: var(--rouge); }
+
+  /* ── ACCORDÉON ── */
+  .accord-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: var(--texte);
+    transition: background 0.2s;
+    margin: 10px 0;
+  }
+  .accord-btn:hover { background: var(--bleu-clair); }
+  .accord-body {
+    display: none;
+    padding: 14px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  .accord-body.open { display: block; animation: fadeIn 0.2s; }
+  .accord-body .calc-step {
+    background: var(--gris-fond);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 7px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--bleu);
+  }
+
+  /* ── BILAN GRID ── */
+  .bilan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .bilan-grid { grid-template-columns: 1fr; } }
+  .bilan-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .bilan-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--gris-bord);
+  }
+  .bilan-card ul { padding-left: 16px; }
+  .bilan-card ul li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.5; }
+  .ke-list { list-style: none; padding: 0; }
+  .ke-list li {
+    padding: 6px 10px 6px 28px;
+    position: relative;
+    font-size: 0.84rem;
+    border-bottom: 1px solid var(--gris-bord);
+    line-height: 1.5;
+  }
+  .ke-list li:last-child { border-bottom: none; }
+  .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
+
+  /* ── CANVAS ANIMATION ── */
+  .anim-canvas-wrap {
+    background: #F8FAFC;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 14px 16px 10px;
+    margin: 14px 0;
+  }
+  .anim-canvas-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--texte-leger);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .anim-canvas-wrap canvas { display: block; margin: 0 auto; border-radius: 8px; border: 1px solid var(--gris-bord); background: #fff; max-width: 100%; }
+  .anim-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .etape-msg-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .anim-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--blanc);
+    color: var(--texte);
+    transition: all 0.15s;
+  }
+  .anim-btn:hover  { border-color: var(--bleu); color: var(--bleu); background: var(--bleu-clair); }
+  .anim-btn.active { background: var(--bleu); color: white; border-color: var(--bleu); }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; flex-wrap: wrap; }
+  .slider-row label { font-size: 0.84rem; font-weight: 700; color: var(--texte); min-width: 150px; }
+  .slider-row input[type=range] { flex: 1; min-width: 140px; accent-color: var(--bleu); }
+  .slider-row .slider-val { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--bleu); min-width: 90px; text-align: right; font-size: 0.86rem; }
+
+  .legende-vect { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; font-size: 0.78rem; font-weight: 700; }
+  .legende-vect span { display: inline-flex; align-items: center; gap: 5px; }
+  .legende-vect .swatch { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+
+  /* ── FIGURES ILLUSTRATIVES (images du cours) ── */
+  .fig-box {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .fig-box img { max-width: 100%; height: auto; border-radius: 6px; }
+  .fig-box .fig-caption {
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .fig-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+  .fig-row .fig-box { flex: 1; min-width: 200px; margin: 0; }
+
+  /* ── CALCULATRICE ── */
+  .calc-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin: 10px 0; }
+  @media (max-width: 560px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-field { display: flex; flex-direction: column; gap: 4px; }
+  .calc-field label { font-size: 0.80rem; font-weight: 700; color: var(--bleu); }
+  .calc-result {
+    margin-top: 10px;
+    background: white;
+    border: 1.5px solid var(--bleu-moyen);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: var(--bleu);
+    font-size: 0.95rem;
+    min-height: 20px;
+  }
+  .echelle-pos {
+    position: relative;
+    height: 34px;
+    background: linear-gradient(to right, #3A8A6E 0%, #E8D800 40%, #E8783A 70%, #C0392B 100%);
+    border-radius: 8px;
+    margin: 14px 0 26px;
+  }
+  .echelle-pos .curseur {
+    position: absolute;
+    top: -8px;
+    width: 4px;
+    height: 50px;
+    background: var(--texte);
+    border-radius: 2px;
+    transition: left 0.15s;
+  }
+  .echelle-pos .curseur::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 54px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--texte);
+    background: var(--blanc);
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--gris-bord);
+  }
+  .echelle-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--texte-leger); margin-top: -14px; }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    padding: 20px;
+    border-top: 1px solid var(--gris-bord);
+    margin-top: 30px;
+  }
+
+  sup { font-size: 0.65em; }
+  sub { font-size: 0.65em; }
+  .math { font-family: 'Outfit', sans-serif; font-style: italic; }
+  .vec { text-decoration: overline; }
+
+  /* ── NOTATION VECTORIELLE FIABLE (flèche SVG) ── */
+  .vecsym {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.45em;
+  }
+  .vecsym svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.55em;
+    overflow: visible;
+  }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 12px 16px 0; }
+    .header-titles h1 { font-size: 1.05rem; }
+    .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
+    .main { padding: 18px 12px 50px; }
+    .mobile-icon-wrap { width: 42px; height: 42px; }
+    .calc-grid { grid-template-columns: 1fr; }
+    .dq-row .dq-label { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+    <div class="header-left">
+      <div class="header-badge">T<sup>ale</sup> Spé – Séq. 07</div>
+      <button class="cap-toggle" id="capToggle">📋 Capacités exigibles</button>
+    </div>
+    <div class="header-titles">
+      <h1>Atténuation des ondes sonores &amp; effet Doppler</h1>
+      <p>Thème : <span>Ondes sonores, intensité, décibels, effet Doppler</span> · © C. Poirault-Gauvin</p>
+    </div>
+    <!-- Icône haut-parleur émettant des ondes (fronts circulaires animés, esprit "effet Doppler") -->
+    <div class="mobile-icon-wrap" title="Haut-parleur émettant des ondes sonores">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
+        <defs>
+          <style>
+            @keyframes son-front { 0%{transform:scale(0.35);opacity:0.9;} 100%{transform:scale(1.15);opacity:0;} }
+            @keyframes son-cone  { 0%,100%{opacity:0.85;} 50%{opacity:1;} }
+            .son-f1 { animation: son-front 2.2s ease-out infinite; transform-origin: 30px 40px; }
+            .son-f2 { animation: son-front 2.2s ease-out 0.7s infinite; transform-origin: 30px 40px; }
+            .son-f3 { animation: son-front 2.2s ease-out 1.4s infinite; transform-origin: 30px 40px; }
+            .son-cone { animation: son-cone 2.2s ease-in-out infinite; }
+            @media(prefers-reduced-motion:reduce){ .son-f1,.son-f2,.son-f3,.son-cone{animation:none;} }
+          </style>
+        </defs>
+        <!-- Haut-parleur -->
+        <g class="son-cone">
+          <rect x="10" y="30" width="10" height="20" rx="2" fill="#2D5F8A"/>
+          <path d="M20,30 L34,20 L34,60 L20,50 Z" fill="#2D5F8A"/>
+        </g>
+        <!-- Fronts d'onde circulaires (partiels, orientés vers la droite) -->
+        <path class="son-f1" d="M30,22 A18,18 0 0 1 30,58" fill="none" stroke="#E8783A" stroke-width="2.6" stroke-linecap="round"/>
+        <path class="son-f2" d="M30,22 A18,18 0 0 1 30,58" fill="none" stroke="#E8783A" stroke-width="2.6" stroke-linecap="round"/>
+        <path class="son-f3" d="M30,22 A18,18 0 0 1 30,58" fill="none" stroke="#E8783A" stroke-width="2.6" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cap-panel" id="capPanel">
+    <div class="cap-cat">Capacités exigibles (extrait du B.O. spécial n° 8 du 25 juillet 2019)</div>
+    <ul>
+      <li>Exploiter l'expression donnant le niveau d'intensité sonore d'un signal.</li>
+      <li>Illustrer l'atténuation géométrique et l'atténuation par absorption.</li>
+      <li>Capacité mathématique : utiliser la fonction logarithme décimal et sa fonction réciproque.</li>
+      <li>Décrire et interpréter qualitativement les observations correspondant à une manifestation de l'effet Doppler.</li>
+      <li>Établir l'expression du décalage Doppler dans le cas d'un observateur fixe, d'un émetteur mobile et dans une configuration à une dimension.</li>
+      <li>Exploiter l'expression du décalage Doppler dans des situations variées utilisant des ondes acoustiques ou électromagnétiques.</li>
+      <li>Exploiter l'expression du décalage Doppler en acoustique pour déterminer une vitesse.</li>
+    </ul>
+  </div>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">P</span> Prérequis
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">A</span> Intensité sonore
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">B</span> Atténuations
+    </button>
+    <button class="tab-btn" onclick="switchTab(3)">
+      <span class="tab-num">C</span> Effet Doppler
+    </button>
+    <button class="tab-btn" onclick="switchTab(4)">
+      <span class="tab-num">D</span> Décalage Doppler
+    </button>
+    <button class="tab-btn" onclick="switchTab(5)">
+      <span class="tab-num">E</span> Simulateur Doppler
+    </button>
+    <button class="tab-btn" onclick="switchTab(6)">
+      <span class="tab-num">✓</span> Bilan &amp; Ressources
+    </button>
+  </nav>
+  </div><!-- /header-inner -->
+</div>
+
+<div class="main">
+<!-- ══════════════ ONGLET PRÉREQUIS ══════════════ -->
+<div class="tab-content active" id="tab-0">
+
+  <div class="intro-box">
+    Avant d'étudier l'atténuation des ondes sonores et l'effet Doppler, il est utile de revoir la fonction logarithme décimal, l'outil mathématique qui permet de définir le niveau sonore en décibels, ainsi que les grandeurs de base d'une onde périodique (longueur d'onde, période, fréquence).
+  </div>
+
+  <div class="def-card">
+    <h3>Rappel — fonction logarithme décimal</h3>
+    <p>La fonction logarithme décimal, notée log, est définie pour tout nombre <span class="math">x &gt; 0</span>. C'est la fonction réciproque de la fonction <span class="math">x ↦ 10<sup>x</sup></span>. Elle vérifie en particulier :</p>
+    <ul>
+      <li><span class="math">log(1) = 0</span> et <span class="math">log(10) = 1</span> ;</li>
+      <li><span class="math">log(a × b) = log(a) + log(b)</span> ;</li>
+      <li><span class="math">log(10<sup>n</sup>) = n</span>, pour tout entier n ;</li>
+      <li>fonction réciproque : si <span class="math">y = log(x)</span> alors <span class="math">x = 10<sup>y</sup></span>.</li>
+    </ul>
+    <div class="remarque-box"><strong>À revoir :</strong> la fiche « Incontournables n°4 – Fonction logarithme » regroupe l'essentiel des propriétés à connaître avant d'aborder cette séquence.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>📝 QCM interactif de prérequis</h3>
+    <p>Teste tes acquis sur la caractérisation des phénomènes ondulatoires avant de commencer la séquence :</p>
+    <p style="margin-top:8px;"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/16_QCM_prerequis/index.html" target="_blank">📝 Lancer le QCM interactif</a></p>
+  </div>
+
+  <div class="activite-card">
+    <h3>🎬 Vidéo — Le cours en intégralité</h3>
+    <p>Une présentation vidéo de l'ensemble de la séquence (ondes sonores, intensité, niveau sonore) :</p>
+    <p style="margin-top:8px;"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805049007?paccess=47d683a9192.2ffc12af.98a3c04c40dd6b3aad75d57aa2f3a467" target="_blank">🎬 « Cours 1 – Ondes sonores » — Stella</a></p>
+  </div>
+
+</div>
+<!-- /tab-0 -->
+
+<!-- ══════════════ ONGLET A — INTENSITÉ SONORE ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <div class="intro-box">
+    Une onde sonore transporte de l'énergie depuis la source jusqu'au récepteur. Cette énergie, rapportée à une surface et à une durée, définit l'intensité sonore. Comme l'oreille humaine perçoit les sons sur une échelle très étendue, on préfère utiliser une grandeur logarithmique, le niveau d'intensité sonore, exprimée en décibels.
+  </div>
+
+  <div class="def-card">
+    <h3>Intensité sonore</h3>
+    <p>L'intensité sonore <span class="math">I</span> est la puissance sonore transportée par unité de surface :</p>
+    <div class="formule-box">
+      I = P / S
+      <div class="legend">avec I l'intensité sonore en W·m⁻², P la puissance transportée par l'onde sonore en W, et S la surface de répartition en m².</div>
+    </div>
+  </div>
+
+  <div class="def-card">
+    <h3>Niveau d'intensité sonore (niveau sonore)</h3>
+    <p>La sensation physiologique produite par un son d'intensité sonore <span class="math">I</span> est traduite par le niveau sonore <span class="math">L</span>, exprimé en décibels (dB) :</p>
+    <div class="formule-box">
+      L = 10 · log(I / I<sub>0</sub>)
+      <div class="legend">avec I l'intensité sonore de la vibration et I₀ = 10⁻¹² W·m⁻² l'intensité sonore de référence, qui correspond au seuil d'audibilité de l'oreille humaine.</div>
+    </div>
+    <div class="remarque-box"><strong>Mesure :</strong> le niveau sonore se mesure à l'aide d'un <strong>sonomètre</strong>.</div>
+  </div>
+
+  <div class="fig-box">
+    <img src="images-cours/doc1-niveaux-sonores.png" alt="Échelle des niveaux sonores en dB, du seuil d'audibilité (0 dB, laboratoire acoustique) au seuil de douleur (130 dB, avion au décollage), avec les zones de risque auditif : plus de 105 dB(A) risques immédiats, 85-105 dB(A) risques à moyen/long terme, et effets extra-auditifs du bruit à partir de 40-55 dB(A)">
+    <div class="fig-caption">Échelle des niveaux sonores usuels et seuils de risque pour l'audition. Plusieurs facteurs influencent le risque réel : niveau sonore, fréquence, caractère continu ou intempestif du bruit, durée d'exposition, sensibilité individuelle.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>🎚️ Calculatrice interactive — Niveau sonore</h3>
+    <p>Déplace le curseur pour faire varier l'intensité sonore <span class="math">I</span> et observe l'évolution du niveau sonore <span class="math">L</span>, ainsi que sa position sur l'échelle des sons usuels.</p>
+    <div class="calc-box">
+      <div class="slider-row">
+        <label for="sonSlider">Intensité I = 10<span id="sonExpLabel">−6</span> W·m⁻²</label>
+        <input type="range" id="sonSlider" min="-12" max="2" step="0.1" value="-6">
+      </div>
+      <div class="calc-result" id="sonResultBox">L = 60,0 dB</div>
+      <div class="echelle-pos">
+        <div class="curseur" id="sonCurseur" data-label="60 dB" style="left:46%;"></div>
+      </div>
+      <div class="echelle-labels"><span>0 dB (audibilité)</span><span>130 dB (douleur)</span></div>
+      <div class="etape-msg-box" id="sonCompareBox">Comparable à une conversation dans un restaurant paisible.</div>
+    </div>
+  </div>
+
+  <div class="activite-card">
+    <h3>📝 Exercice d'application — Doubler le niveau sonore</h3>
+
+    <div class="question-block">
+      <div class="question-label">1) Si l'intensité sonore double (I' = 2I), le niveau sonore L double-t-il aussi ?</div>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSon(this,false)">Oui, L double aussi</button>
+            <button class="qcm-btn" onclick="checkQcmSon(this,true)">Non, L augmente d'environ 3 dB</button>
+            <button class="qcm-btn" onclick="checkQcmSon(this,false)">Non, L reste inchangé</button>
+          </div>
+          <div class="qcm-feedback" id="son-qcm-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">2) Un objet sonore isolé produit un niveau L₁ = 60 dB. Combien d'objets identiques (sources incohérentes, comme N personnes qui parlent en même temps) faudrait-il réunir pour que le niveau sonore atteigne L₂ = 120 dB, soit le double de L₁ ?</div>
+      <div class="num-field-wrap">
+        <label>N =</label>
+        <input type="text" class="num-input" id="doubleN" placeholder="valeur">
+        <button class="btn-verif" onclick="checkNum('doubleN', 1000000, 50000)">Vérifier</button>
+        <span class="num-feedback" id="doubleN-fb"></span>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <p>Pour N sources identiques et incohérentes réunies, l'intensité totale est multipliée par N par rapport à celle d'une seule source, donc le niveau sonore devient :</p>
+        <div class="calc-step">L<sub>N</sub> = L₁ + 10·log(N)</div>
+        <p style="margin-top:8px;">On cherche N tel que L<sub>N</sub> = L₂ = 120 dB :</p>
+        <div class="calc-step">10·log(N) = L₂ − L₁ = 120 − 60 = 60 dB</div>
+        <div class="calc-step">N = 10<sup>60/10</sup> = 10⁶ = <strong>1 000 000</strong></div>
+        <p style="margin-top:8px;"><strong>À quoi cela correspond-il ?</strong> Un établissement scolaire compte en moyenne de l'ordre de 1 000 élèves. Réunir 1 000 000 de sources sonores identiques reviendrait donc à faire parler simultanément <strong>tous les élèves de 1 000 établissements scolaires</strong> ! Ce nombre considérable illustre bien le caractère <strong>logarithmique</strong>, et non linéaire, de l'échelle des décibels : doubler la sensation sonore perçue nécessite de multiplier l'intensité par un facteur immense, sans commune mesure avec un simple doublement du nombre de sources.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <h3>📘 Exercices du manuel</h3>
+    <p style="font-size:0.90rem;">Exercices sur les intensités sonores : n° 11, 15, 19, 22, 32 et 42 p.400 à 413.</p>
+  </div>
+
+</div>
+<!-- /tab-1 -->
+
+<!-- ══════════════ ONGLET B — ATTÉNUATIONS ══════════════ -->
+<div class="tab-content" id="tab-2">
+
+  <div class="intro-box">
+    Un son perd de l'intensité en se propageant, pour deux raisons distinctes : il se répartit sur une surface de plus en plus grande (atténuation géométrique), et une partie de son énergie peut être absorbée par les milieux qu'il traverse (atténuation par absorption).
+  </div>
+
+  <div class="def-card">
+    <h3>Atténuation géométrique</h3>
+    <p>Une onde sonore se propage dans les trois dimensions de l'espace : la puissance émise par la source se répartit donc sur une surface de plus en plus grande à mesure que l'on s'éloigne. L'intensité sonore diminue ainsi avec la distance, même en l'absence de tout obstacle : on parle d'<strong>atténuation géométrique</strong>.</p>
+    <div class="formule-box">
+      A = L<sub>proche</sub> − L<sub>éloigné</sub> = 10 · log(I<sub>proche</sub> / I<sub>éloigné</sub>)
+      <div class="legend">avec A l'atténuation en dB, L<sub>proche</sub> et L<sub>éloigné</sub> les niveaux d'intensité sonore en dB mesurés respectivement près et loin de la source émettrice.</div>
+    </div>
+  </div>
+
+  <div class="activite-card">
+    <h3>🖥️ Simulation PhET — Observer l'atténuation géométrique</h3>
+    <p>Ouvre la simulation <strong>Sound Waves</strong> (PhET Colorado, en français). Active le son, laisse la fréquence et l'amplitude au centre, puis déplace le petit personnage (l'auditeur) du haut-parleur vers le bord de l'écran, en observant à la fois les ondes affichées et le volume perçu.</p>
+    <p class="pastille-row"><a class="pastille pastille-simu" href="https://phet.colorado.edu/sims/html/sound-waves/latest/sound-waves_all.html?locale=fr" target="_blank">🖥️ Ouvrir la simulation PhET</a></p>
+
+    <div class="question-block" style="margin-top:14px;">
+      <div class="question-label">1) Quand l'auditeur s'éloigne du haut-parleur (aucun obstacle sur son trajet), que deviennent l'amplitude des ondes affichées et le volume perçu ?</div>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmPhet(this,false)">Ils augmentent</button>
+            <button class="qcm-btn" onclick="checkQcmPhet(this,true)">Ils diminuent</button>
+            <button class="qcm-btn" onclick="checkQcmPhet(this,false)">Ils restent constants</button>
+          </div>
+          <div class="qcm-feedback" id="phet-qcm-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">2) Si on double la distance à la source (dans un milieu homogène, en trois dimensions, sans obstacle), comment varie approximativement l'intensité sonore reçue ?</div>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmPhet2(this,false)">Elle est divisée par 2</button>
+            <button class="qcm-btn" onclick="checkQcmPhet2(this,true)">Elle est divisée par 4</button>
+            <button class="qcm-btn" onclick="checkQcmPhet2(this,false)">Elle reste inchangée</button>
+          </div>
+          <div class="qcm-feedback" id="phet-qcm2-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">3) En une ou deux phrases, explique cette diminution de l'intensité perçue avec la distance, à partir du modèle I = P/S (aucun obstacle n'est traversé, donc il ne s'agit pas d'absorption).</div>
+      <textarea class="num-input" id="phet-reflexion" rows="3" style="width:100%;min-width:100%;resize:vertical;font-family:'Nunito',sans-serif;" placeholder="Ta réponse..."></textarea>
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:8px;">✅ Voir un exemple de réponse</button>
+      <div class="correction">
+        <p>La puissance sonore P émise par la source se répartit sur une surface S qui augmente avec la distance parcourue (en 3D, cette surface est celle d'une sphère centrée sur la source, S = 4πd²). Comme I = P/S, plus S est grande, plus I est faible : l'énergie sonore n'est pas perdue, elle est seulement répartie sur une surface plus vaste, d'où la diminution du volume perçu par l'auditeur qui s'éloigne, même en l'absence de tout obstacle.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="def-card">
+    <h3>Atténuation par absorption</h3>
+    <p>Lorsqu'un son traverse un milieu matériel (mur, casque, vitrage...), une partie de sa puissance est absorbée par ce milieu : l'intensité sonore diminue alors du fait de cette traversée. On parle d'<strong>atténuation par absorption</strong>.</p>
+    <div class="formule-box">
+      A = L<sub>incident</sub> − L<sub>transmis</sub> = 10 · log(I<sub>incident</sub> / I<sub>transmis</sub>)
+      <div class="legend">avec L<sub>incident</sub> le niveau sonore avant la traversée du milieu, et L<sub>transmis</sub> le niveau sonore après cette traversée.</div>
+    </div>
+    <div class="attention-box"><strong>À retenir :</strong> une atténuation A est toujours une grandeur positive.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>🎧 Exercice interactif — Casque anti-bruit</h3>
+    <div class="exo-enonce">
+      Un opérateur travaille dans un environnement bruyant, où le niveau sonore incident vaut <strong>L<sub>incident</sub> = 100 dB</strong>. Grâce à son casque anti-bruit, il perçoit un son de niveau <strong>L<sub>transmis</sub> = 65 dB</strong>.
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">1) Calculer l'atténuation A apportée par le casque.</div>
+      <div class="num-field-wrap">
+        <label>A =</label>
+        <input type="text" class="num-input" id="casque-A" placeholder="valeur">
+        <span class="num-unit">dB</span>
+        <button class="btn-verif" onclick="checkNum('casque-A', 35, 0.5)">Vérifier</button>
+        <span class="num-feedback" id="casque-A-fb"></span>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">2) En déduire le rapport I<sub>incident</sub> / I<sub>transmis</sub>.</div>
+      <div class="num-field-wrap">
+        <label>I<sub>incident</sub> / I<sub>transmis</sub> ≈</label>
+        <input type="text" class="num-input" id="casque-ratio" placeholder="valeur">
+        <button class="btn-verif" onclick="checkNum('casque-ratio', 3162, 200)">Vérifier</button>
+        <span class="num-feedback" id="casque-ratio-fb"></span>
+      </div>
+    </div>
+
+    <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="calc-step">A = L<sub>incident</sub> − L<sub>transmis</sub> = 100 − 65 = <strong>35 dB</strong></div>
+      <p style="margin-top:8px;">Or A = 10·log(I<sub>incident</sub>/I<sub>transmis</sub>), donc :</p>
+      <div class="calc-step">I<sub>incident</sub> / I<sub>transmis</sub> = 10<sup>A/10</sup> = 10<sup>3,5</sup> ≈ <strong>3 160</strong></div>
+      <p style="margin-top:8px;">Le casque anti-bruit divise donc l'intensité sonore perçue par un facteur d'environ 3 160, ce qui correspond à une nette amélioration du confort auditif.</p>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <h3>📘 Exercices du manuel</h3>
+    <p style="font-size:0.90rem;">Exercices sur l'atténuation : n° 21 et 33 p.403-404, ainsi que l'annale « Casque anti-bruit ».</p>
+  </div>
+
+</div>
+<!-- /tab-2 -->
+
+<!-- ══════════════ ONGLET C — EFFET DOPPLER (QUALITATIF) ══════════════ -->
+<div class="tab-content" id="tab-3">
+
+  <div class="intro-box">
+    L'effet Doppler est une propriété générale des ondes, aussi bien mécaniques (son) qu'électromagnétiques (lumière). Il se manifeste dès que la distance entre l'émetteur et le récepteur d'une onde varie au cours du temps.
+  </div>
+
+  <div class="def-card">
+    <h3>Qu'est-ce que l'effet Doppler ?</h3>
+    <p>L'effet Doppler est la variation de fréquence d'une onde entre son émission et sa réception, lorsque la distance entre l'émetteur et le récepteur varie au cours du temps. Le récepteur perçoit alors une fréquence <span class="math">f<sub>R</sub></span> différente de la fréquence <span class="math">f<sub>E</sub></span> émise par la source.</p>
+    <div class="remarque-box"><strong>Vidéo :</strong> « L'EFFET DOPPLER, en 2 minutes » — ScienceClic<br><a class="pastille pastille-video" style="margin-top:8px;" href="https://www.pearltrees.com/private/id105394473/item805065126?paccess=47d68496a3b.2ffc51a6.9e7c8a4cbb8267200e44dd02722c7a9c" target="_blank">🎬 Regarder la vidéo</a></div>
+  </div>
+
+  <div class="fig-box">
+    <img src="images-cours/effet-doppler.png" alt="Trois situations : voiture à l'arrêt (longueur d'onde émise égale à la longueur d'onde reçue), voiture qui approche de l'observateur (fronts d'onde resserrés, fréquence reçue supérieure à la fréquence émise, son plus aigu), voiture qui s'éloigne de l'observateur (fronts d'onde plus écartés, fréquence reçue inférieure à la fréquence émise, son plus grave)">
+    <div class="fig-caption">Une source immobile émet des fronts d'onde concentriques régulièrement espacés. Une source en mouvement « comprime » les fronts d'onde à l'avant et les « étire » à l'arrière : c'est cette dissymétrie qui explique le changement de fréquence perçu.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>🚗 Animation interactive — Fronts d'onde d'une source mobile</h3>
+    <p>Règle la <strong>vitesse de la source</strong> à l'aide du curseur, puis observe la déformation des fronts d'onde autour d'un observateur fixe (croix noire). Compare le son perçu lorsque la source approche puis s'éloigne de l'observateur.</p>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Source mobile émettant des « bips » à intervalle régulier</div>
+      <canvas id="dopplerCanvas" width="560" height="220"></canvas>
+      <div class="slider-row">
+        <label for="dopplerV">Vitesse de la source v</label>
+        <input type="range" id="dopplerV" min="0" max="90" step="1" value="55">
+        <span class="slider-val" id="dopplerVVal">55 % de v<sub>onde</sub></span>
+      </div>
+      <div class="anim-controls">
+        <button class="anim-btn active" id="dopplerPlayBtn" onclick="toggleDopplerAnim()">⏸ Pause</button>
+        <button class="anim-btn" onclick="resetDopplerAnim()">↺ Recommencer</button>
+      </div>
+      <div class="legende-vect">
+        <span><span class="swatch" style="background:#E8783A;"></span> Fronts d'onde émis</span>
+        <span><span class="swatch" style="background:#1A2A3A;"></span> Observateur fixe</span>
+      </div>
+      <div class="etape-msg-box" id="dopplerMsgBox">La source approche de l'observateur : fronts d'onde resserrés à l'avant → son perçu plus aigu (f<sub>R</sub> &gt; f<sub>E</sub>).</div>
+    </div>
+  </div>
+
+  <div class="def-card">
+    <h3>Rappels — ondes périodiques</h3>
+    <ul>
+      <li>La <strong>longueur d'onde</strong> λ est la distance parcourue par l'onde pendant une période temporelle T.</li>
+      <li>La <strong>période temporelle</strong> T (en s) est la plus courte durée pour laquelle le phénomène se reproduit identique à lui-même. La <strong>fréquence</strong> (en Hz) est le nombre de phénomènes par seconde : <span class="math">f = 1/T</span>.</li>
+      <li>La <strong>vitesse d'une onde</strong> est donnée par la relation : <span class="math">v<sub>onde</sub> = λ/T = λ × f</span>.</li>
+      <li>La <strong>vitesse d'un corps</strong> est donnée par la relation : <span class="math">v = distance parcourue / durée du parcours</span>.</li>
+    </ul>
+  </div>
+
+  <div class="activite-card">
+    <h3>🖥️ Simulation Ostralo — Fronts d'onde d'un émetteur mobile</h3>
+    <p>Ouvre la simulation <strong>Effet Doppler</strong> (Ostralo). Mets l'émetteur en marche, puis déplace-le vers le récepteur fixe. Utilise la pause pour figer l'image et observer précisément l'espacement des fronts d'onde de part et d'autre de l'émetteur.</p>
+    <p class="pastille-row"><a class="pastille pastille-simu" href="https://physique.ostralo.net/doppler/" target="_blank">🖥️ Ouvrir la simulation Ostralo</a></p>
+
+    <div class="question-block" style="margin-top:14px;">
+      <div class="question-label">1) Quand l'émetteur se déplace vers le récepteur, comment sont les fronts d'onde entre l'émetteur et le récepteur, par rapport à ceux situés de l'autre côté ?</div>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmOstralo1(this,true)">Resserrés (plus rapprochés)</button>
+            <button class="qcm-btn" onclick="checkQcmOstralo1(this,false)">Écartés (plus espacés)</button>
+            <button class="qcm-btn" onclick="checkQcmOstralo1(this,false)">Identiques des deux côtés</button>
+          </div>
+          <div class="qcm-feedback" id="ostralo-qcm1-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">2) Le récepteur, situé du côté où les fronts d'onde sont resserrés, perçoit alors une fréquence f<sub>R</sub> :</div>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmOstralo2(this,true)">f<sub>R</sub> &gt; f<sub>E</sub></button>
+            <button class="qcm-btn" onclick="checkQcmOstralo2(this,false)">f<sub>R</sub> &lt; f<sub>E</sub></button>
+            <button class="qcm-btn" onclick="checkQcmOstralo2(this,false)">f<sub>R</sub> = f<sub>E</sub></button>
+          </div>
+          <div class="qcm-feedback" id="ostralo-qcm2-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">3) Mets l'émetteur en pause, à l'arrêt. Que remarques-tu sur la répartition des fronts d'onde autour de lui ?</div>
+      <textarea class="num-input" id="ostralo-reflexion" rows="2" style="width:100%;min-width:100%;resize:vertical;font-family:'Nunito',sans-serif;" placeholder="Ta réponse..."></textarea>
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:8px;">✅ Voir la réponse attendue</button>
+      <div class="correction">
+        <p>À l'arrêt, l'émetteur reste au centre de fronts d'onde circulaires régulièrement espacés et symétriques dans toutes les directions : λ<sub>E</sub> = λ<sub>R</sub> et f<sub>E</sub> = f<sub>R</sub> pour tout récepteur, quelle que soit sa position. C'est le mouvement de l'émetteur qui « casse » cette symétrie et provoque le décalage Doppler.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /tab-3 -->
+
+<!-- ══════════════ ONGLET D — ÉTABLIR LE DÉCALAGE DOPPLER ══════════════ -->
+<div class="tab-content" id="tab-4">
+
+  <div class="intro-box">
+    On cherche maintenant à établir une expression quantitative de l'effet Doppler, dans le cas simple d'un observateur fixe et d'une source mobile se déplaçant à vitesse constante v sur une droite (configuration à une dimension).
+  </div>
+
+  <div class="def-card">
+    <h3>Décalage Doppler</h3>
+    <p>Le décalage Doppler, noté Δf (en Hz), est la différence entre la fréquence reçue f<sub>R</sub> et la fréquence émise f<sub>E</sub> :</p>
+    <div class="formule-box">Δf = f<sub>R</sub> − f<sub>E</sub></div>
+    <div class="remarque-box"><strong>Vidéo :</strong> « Établir l'expression du décalage Doppler » — spcbad<br><a class="pastille pastille-video" style="margin-top:8px;" href="https://www.pearltrees.com/private/id105394473/item805065214?paccess=47d6849a853.2ffc51fe.6338f4c45c2b9fe96adb81f1534be301" target="_blank">🎬 Regarder la vidéo</a></div>
+  </div>
+
+  <div class="section-title"><span class="icon">🚙</span> Cas n°1 — La source approche de l'observateur immobile</div>
+
+  <div class="def-card">
+    <p>Un observateur fixe observe une source (par exemple une voiture) se déplaçant à la vitesse constante v et émettant des « bips » avec une période T<sub>E</sub>. La distance entre la source et l'observateur, à l'instant du premier bip, est notée D. Entre l'émission d'un bip et le suivant, la source s'est rapprochée d'une distance <span class="math">d = v × T<sub>E</sub></span> : il lui reste alors une distance <span class="math">D − d</span> à parcourir pour atteindre l'observateur.</p>
+  </div>
+
+  <div class="methode-box">
+    <div class="methode-titre">Établissement pas à pas — clique sur chaque étape</div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)">Étape 1 — Instants de réception des deux bips</button>
+    <div class="accord-body">
+      <p>À t = 0 s, la source émet un premier bip, situé à la distance D de l'observateur. Celui-ci le perçoit à l'instant :</p>
+      <div class="calc-step">t₁ = D / v<sub>onde</sub></div>
+      <p style="margin-top:8px;">À t = T<sub>E</sub>, la source émet un second bip, désormais situé à la distance D − d de l'observateur (avec d = v × T<sub>E</sub>). Celui-ci le perçoit à l'instant :</p>
+      <div class="calc-step">t₂ = T<sub>E</sub> + (D − d) / v<sub>onde</sub> = T<sub>E</sub> + (D − v×T<sub>E</sub>) / v<sub>onde</sub></div>
+    </div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)">Étape 2 — Période reçue T<sub>R</sub> = t₂ − t₁</button>
+    <div class="accord-body">
+      <div class="calc-step">T<sub>R</sub> = T<sub>E</sub> + (D − v×T<sub>E</sub>)/v<sub>onde</sub> − D/v<sub>onde</sub></div>
+      <div class="calc-step">T<sub>R</sub> = T<sub>E</sub> − (v×T<sub>E</sub>)/v<sub>onde</sub> = T<sub>E</sub> × (1 − v/v<sub>onde</sub>)</div>
+      <div class="calc-step">T<sub>R</sub> = T<sub>E</sub> × (v<sub>onde</sub> − v) / v<sub>onde</sub></div>
+    </div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)">Étape 3 — Fréquence reçue f<sub>R</sub> = 1/T<sub>R</sub></button>
+    <div class="accord-body">
+      <div class="calc-step">f<sub>R</sub> = 1/T<sub>R</sub> = (1/T<sub>E</sub>) × v<sub>onde</sub>/(v<sub>onde</sub> − v)</div>
+      <div class="calc-step">f<sub>R</sub> = f<sub>E</sub> × v<sub>onde</sub> / (v<sub>onde</sub> − v)</div>
+    </div>
+
+    <button class="accord-btn" onclick="toggleAccord(this)">Étape 4 — Décalage Doppler Δf = f<sub>R</sub> − f<sub>E</sub></button>
+    <div class="accord-body">
+      <div class="calc-step">Δf = f<sub>E</sub> × v<sub>onde</sub>/(v<sub>onde</sub> − v) − f<sub>E</sub> = f<sub>E</sub> × [v<sub>onde</sub>/(v<sub>onde</sub> − v) − 1]</div>
+      <div class="formule-box" style="margin-top:6px;">Δf = f<sub>E</sub> × v / (v<sub>onde</sub> − v)</div>
+      <p style="margin-top:6px;">Comme v &gt; 0 et v<sub>onde</sub> − v &gt; 0, on a Δf &gt; 0, donc f<sub>R</sub> &gt; f<sub>E</sub> : le son est perçu <strong>plus aigu</strong>, conformément à l'observation qualitative.</p>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="icon">🚙💨</span> Cas n°2 — La source s'éloigne de l'observateur immobile</div>
+
+  <div class="activite-card">
+    <h3>✏️ À toi de compléter le raisonnement</h3>
+    <p>La situation est identique au Cas n°1, mais la source s'éloigne désormais de l'observateur : entre deux bips, la distance Source–Observateur <strong>augmente</strong> de d = v×T<sub>E</sub> au lieu de diminuer. Sélectionne, à chaque étape, l'expression correcte.</p>
+
+    <div class="dq-row" id="dq-cas2-1">
+      <div class="dq-label">Distance Source–Observateur à l'instant T<sub>E</sub> (émission du 2<sup>e</sup> bip) :</div>
+      <select class="dq-select" onchange="checkDQ(this,'D+d','dq-cas2-1')">
+        <option value="">— choisir —</option>
+        <option value="D+d">D + d</option>
+        <option value="D-d">D − d</option>
+        <option value="D">D (inchangée)</option>
+      </select>
+    </div>
+
+    <div class="dq-row" id="dq-cas2-2">
+      <div class="dq-label">Instant t₂ de réception du 2<sup>e</sup> bip :</div>
+      <select class="dq-select" onchange="checkDQ(this,'a','dq-cas2-2')">
+        <option value="">— choisir —</option>
+        <option value="a">t₂ = T_E + (D + d)/v_onde</option>
+        <option value="b">t₂ = T_E − (D + d)/v_onde</option>
+        <option value="c">t₂ = T_E + (D − d)/v_onde</option>
+      </select>
+    </div>
+
+    <div class="dq-row" id="dq-cas2-3">
+      <div class="dq-label">Période reçue T<sub>R</sub> = t₂ − t₁ :</div>
+      <select class="dq-select" onchange="checkDQ(this,'a','dq-cas2-3')">
+        <option value="">— choisir —</option>
+        <option value="a">T_R = T_E × (v_onde + v)/v_onde</option>
+        <option value="b">T_R = T_E × (v_onde − v)/v_onde</option>
+        <option value="c">T_R = T_E</option>
+      </select>
+    </div>
+
+    <div class="dq-row" id="dq-cas2-4">
+      <div class="dq-label">Fréquence reçue f<sub>R</sub> = 1/T<sub>R</sub> :</div>
+      <select class="dq-select" onchange="checkDQ(this,'a','dq-cas2-4')">
+        <option value="">— choisir —</option>
+        <option value="a">f_R = f_E × v_onde/(v_onde + v)</option>
+        <option value="b">f_R = f_E × v_onde/(v_onde − v)</option>
+        <option value="c">f_R = f_E</option>
+      </select>
+    </div>
+
+    <div class="dq-row" id="dq-cas2-5">
+      <div class="dq-label">Décalage Doppler Δf = f<sub>R</sub> − f<sub>E</sub> :</div>
+      <select class="dq-select" onchange="checkDQ(this,'a','dq-cas2-5')">
+        <option value="">— choisir —</option>
+        <option value="a">Δf = − f_E × v/(v_onde + v)</option>
+        <option value="b">Δf = f_E × v/(v_onde + v)</option>
+        <option value="c">Δf = f_E × v/(v_onde − v)</option>
+      </select>
+    </div>
+
+    <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction détaillée</button>
+    <div class="correction">
+      <p>La source s'éloignant, la distance Source–Observateur à l'instant T<sub>E</sub> vaut <strong>D + d</strong> (et non D − d comme dans le cas n°1).</p>
+      <div class="calc-step">t₁ = D/v<sub>onde</sub> &nbsp;&nbsp;|&nbsp;&nbsp; t₂ = T<sub>E</sub> + (D + v×T<sub>E</sub>)/v<sub>onde</sub></div>
+      <div class="calc-step">T<sub>R</sub> = t₂ − t₁ = T<sub>E</sub> + (v×T<sub>E</sub>)/v<sub>onde</sub> = T<sub>E</sub> × (v<sub>onde</sub> + v)/v<sub>onde</sub></div>
+      <div class="calc-step">f<sub>R</sub> = 1/T<sub>R</sub> = f<sub>E</sub> × v<sub>onde</sub> / (v<sub>onde</sub> + v)</div>
+      <div class="formule-box" style="margin-top:6px;">Δf = f<sub>R</sub> − f<sub>E</sub> = − f<sub>E</sub> × v / (v<sub>onde</sub> + v)</div>
+      <p style="margin-top:8px;">Ici Δf &lt; 0, donc f<sub>R</sub> &lt; f<sub>E</sub> : le son est perçu <strong>plus grave</strong>, ce qui est cohérent avec l'observation qualitative d'une source qui s'éloigne.</p>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="icon">📘</span> Annales — à traiter en autonomie</div>
+
+  <div class="bilan-exo-card">
+    <div class="bilan-tag">Bac 2026 · Centres étrangers · Sciences de l'ingénieur · 10 pts · 30 min</div>
+    <h3>Étude de l'effet Doppler à l'aide de deux téléphones</h3>
+    <div class="bilan-theme">Mesure expérimentale du décalage Doppler à partir de deux smartphones (l'un émetteur, l'autre récepteur), et détermination d'une vitesse à partir de la fréquence reçue.</div>
+    <div class="bilan-links">
+      <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Sujet-DopplerTelephone.pdf" target="_blank">📄 Sujet</a>
+      <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Correction-DopplerTelephone.pdf" target="_blank">✅ Corrigé</a>
+    </div>
+  </div>
+
+  <div class="bilan-exo-card">
+    <div class="bilan-tag">Bac 2024 · Métropole · Sciences de l'ingénieur · 10 pts · 30 min</div>
+    <h3>Galaxie d'Andromède</h3>
+    <div class="bilan-theme">Exploitation du décalage Doppler d'une onde électromagnétique pour déterminer la vitesse de rapprochement de la galaxie d'Andromède par rapport à la Voie lactée.</div>
+    <div class="bilan-links">
+      <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-08/2024-Metro-SI-J1-ExoA-Sujet-AndromedeDoppler-10pts-30min.pdf" target="_blank">📄 Sujet</a>
+      <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2024-06/2024-Metro-SI-Exo1-Correction-AndromedeDoppler-10pts-30min_0.pdf" target="_blank">✅ Corrigé</a>
+    </div>
+  </div>
+
+</div>
+<!-- /tab-4 -->
+
+<!-- ══════════════ ONGLET E — SIMULATEUR DOPPLER INTERACTIF (HATIER-CLIC) ══════════════ -->
+<div class="tab-content" id="tab-5">
+
+  <div class="intro-box">
+    Le simulateur interactif Hatier-clic propose une maquette virtuelle « voiture-observateur » permettant de mesurer soi-même les grandeurs caractéristiques de l'effet Doppler (période, fréquence, longueur d'onde) et d'en déduire une vitesse, avec correction intégrée à chaque étape. Les 6 activités ci-dessous se complètent : lance-les dans l'ordre pour progresser du constat expérimental jusqu'au calcul d'incertitude.
+  </div>
+
+  <div class="activite-card">
+    <h3>🖥️ Prise en main du simulateur</h3>
+    <p>Avant de commencer les activités, ouvre le simulateur et repère ses commandes (mise en mouvement de la voiture, réglage de la vitesse, écoute, relevé graphique) :</p>
+    <p style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_Doppler/index.html" target="_blank">🖥️ Ouvrir le simulateur Doppler</a></p>
+  </div>
+
+  <div class="sub-tabs-nav" id="sub-nav-E">
+    <button class="sub-tab-btn active" data-sub="E1" onclick="switchSubTab('E',0)">
+      <span class="sub-tab-num">1</span> Vitesse
+    </button>
+    <button class="sub-tab-btn" data-sub="E2" onclick="switchSubTab('E',1)">
+      <span class="sub-tab-num">2</span> Radar
+    </button>
+    <button class="sub-tab-btn" data-sub="E3" onclick="switchSubTab('E',2)">
+      <span class="sub-tab-num">3</span> Paramètres
+    </button>
+    <button class="sub-tab-btn" data-sub="E4" onclick="switchSubTab('E',3)">
+      <span class="sub-tab-num">4</span> Décalage
+    </button>
+    <button class="sub-tab-btn" data-sub="E5" onclick="switchSubTab('E',4)">
+      <span class="sub-tab-num">5</span> λ et v
+    </button>
+    <button class="sub-tab-btn" data-sub="E6" onclick="switchSubTab('E',5)">
+      <span class="sub-tab-num">6</span> Incertitude
+    </button>
+  </div>
+
+  <!-- ───────── E1 : DÉTERMINATION DE LA VITESSE DE LA VOITURE ───────── -->
+  <div class="sub-tab-content active" id="sub-E-0">
+    <div class="activite-card">
+      <h3>1️⃣ Détermination de la vitesse de la voiture</h3>
+      <p><strong>Objectif :</strong> utiliser l'effet Doppler pour calculer une vitesse.</p>
+      <div class="methode-box">
+        <div class="methode-titre">Ce que tu vas mobiliser</div>
+        <p>À partir des fréquences émise f<sub>E</sub> et reçue f<sub>R</sub> relevées sur le simulateur, tu dois retrouver la vitesse v de la voiture en inversant l'expression du décalage Doppler établie dans l'onglet D (cas de l'approche ou de l'éloignement selon la situation proposée).</p>
+      </div>
+      <p style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_Doppler/docs/act1a.htm" target="_blank">🖥️ Lancer l'activité 1</a></p>
+      <div class="exo-enonce">
+        <em>Exemple générique (valeurs différentes de celles du simulateur, pour illustrer la méthode) :</em> une voiture qui s'approche émet un son de fréquence f<sub>E</sub> = 500 Hz ; un observateur fixe mesure une fréquence reçue f<sub>R</sub> = 550 Hz. On prend v<sub>onde</sub> = 340 m·s⁻¹.<br><strong>Calculer la vitesse v de la voiture.</strong>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Afficher la correction</button>
+      <div class="correction">
+        <div class="calc-step">f<sub>R</sub> = f<sub>E</sub> × v<sub>onde</sub>/(v<sub>onde</sub> − v) &nbsp;⟹&nbsp; v = v<sub>onde</sub> × (1 − f<sub>E</sub>/f<sub>R</sub>)</div>
+        <div class="calc-step">v = 340 × (1 − 500/550) = 340 × 0,091 ≈ <strong>30,9 m·s⁻¹</strong> (soit environ 111 km/h)</div>
+        <p style="margin-top:8px;">Méthode : on repart de l'expression du décalage Doppler établie dans l'onglet D, et on l'inverse pour isoler v.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── E2 : RADAR « À L'OREILLE » ───────── -->
+  <div class="sub-tab-content" id="sub-E-1">
+    <div class="activite-card">
+      <h3>2️⃣ Radar « à l'oreille »</h3>
+      <p><strong>Objectif :</strong> déterminer la fréquence perçue par l'observateur.</p>
+      <div class="methode-box">
+        <div class="methode-titre">Ce que tu vas mobiliser</div>
+        <p>Comme la vitesse d'un véhicule (quelques dizaines de m/s) est très petite devant la vitesse du son (v<sub>onde</sub> ≈ 340 m/s), l'expression exacte du décalage Doppler peut être remplacée par une expression approchée, plus simple à exploiter « à l'oreille ». Tu vas comparer cette approximation à l'expression exacte vue dans l'onglet D.</p>
+      </div>
+      <p style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_Doppler/docs/act2a.htm" target="_blank">🖥️ Lancer l'activité 2</a></p>
+      <div class="exo-enonce">
+        <em>Exemple générique :</em> vitesse maximale autorisée sur autoroute v = 130 km/h ≈ 36,1 m·s⁻¹, pour une source de fréquence f<sub>E</sub> = 800 Hz et v<sub>onde</sub> = 340 m·s⁻¹.<br><strong>Calculer la fréquence perçue f<sub>R</sub> avec l'expression exacte, puis avec l'expression approchée, et comparer les deux résultats.</strong>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Afficher la correction</button>
+      <div class="correction">
+        <div class="calc-step">Expression exacte : f<sub>R</sub> = f<sub>E</sub> × v<sub>onde</sub>/(v<sub>onde</sub> − v) = 800 × 340/(340−36,1) ≈ <strong>895,0 Hz</strong></div>
+        <div class="calc-step">Expression approchée (v ≪ v<sub>onde</sub>) : f<sub>R,approx</sub> ≈ f<sub>E</sub> × (1 + v/v<sub>onde</sub>) = 800 × (1 + 36,1/340) ≈ <strong>884,9 Hz</strong></div>
+        <p style="margin-top:8px;">L'écart entre les deux expressions reste faible (≈ 1 %) pour une vitesse de véhicule usuelle : l'approximation « à l'oreille » est donc satisfaisante dans ce contexte, mais elle ne serait plus valable pour v proche de v<sub>onde</sub>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── E3 : PARAMÈTRES D'INFLUENCE ───────── -->
+  <div class="sub-tab-content" id="sub-E-2">
+    <div class="activite-card">
+      <h3>3️⃣ Paramètres d'influence</h3>
+      <p><strong>Objectif :</strong> étudier l'influence de la vitesse de la voiture sur l'onde sonore.</p>
+      <div class="methode-box">
+        <div class="methode-titre">Ce que tu vas mobiliser</div>
+        <p>En relevant la longueur d'onde, la période et la fréquence du signal à l'arrêt puis pour différentes vitesses de la voiture, tu vas vérifier expérimentalement quelles grandeurs varient avec v (et lesquelles restent inchangées), en cohérence avec les rappels sur les ondes périodiques de l'onglet C.</p>
+      </div>
+      <p style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_Doppler/docs/act3a.htm" target="_blank">🖥️ Lancer l'activité 3</a></p>
+      <div class="exo-enonce">
+        <em>Exemple générique :</em> à l'arrêt, on relève T<sub>E</sub> = 2,0 ms (donc f<sub>E</sub> = 500 Hz) et λ<sub>E</sub> = v<sub>onde</sub> × T<sub>E</sub> = 340 × 0,0020 = 0,68 m. La voiture s'approche ensuite à v = 20 m·s⁻¹.<br><strong>Déterminer la période T<sub>R</sub>, la fréquence f<sub>R</sub> et la longueur d'onde λ<sub>R</sub> perçues par l'observateur, puis comparer v<sub>onde</sub> avant et après la mise en mouvement de la source.</strong>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Afficher la correction</button>
+      <div class="correction">
+        <div class="calc-step">T<sub>R</sub> = T<sub>E</sub> × (v<sub>onde</sub> − v)/v<sub>onde</sub> = 0,0020 × 320/340 ≈ 1,88 ms &nbsp;⟹&nbsp; f<sub>R</sub> ≈ 531 Hz</div>
+        <div class="calc-step">λ<sub>R</sub> = v<sub>onde</sub> × T<sub>R</sub> ≈ 340 × 0,00188 ≈ 0,64 m</div>
+        <p style="margin-top:8px;"><strong>Bilan :</strong> la période et la fréquence perçues changent avec la vitesse de la source, tout comme la longueur d'onde. En revanche, <strong>v<sub>onde</sub> ne dépend que du milieu de propagation (l'air)</strong> : elle reste égale à 340 m·s⁻¹, que la source soit à l'arrêt ou en mouvement.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── E4 : DÉCALAGE DOPPLER ───────── -->
+  <div class="sub-tab-content" id="sub-E-3">
+    <div class="activite-card">
+      <h3>4️⃣ Décalage Doppler</h3>
+      <p><strong>Objectif :</strong> relier période, fréquence et effet Doppler.</p>
+      <div class="methode-box">
+        <div class="methode-titre">Ce que tu vas mobiliser</div>
+        <p>À partir d'un relevé graphique des périodes émise T<sub>E</sub> et reçue T<sub>R</sub>, tu vas retrouver les fréquences correspondantes (f = 1/T), calculer le décalage Doppler Δf, puis en déduire la vitesse de la source — une application numérique complète de la démarche établie pas à pas dans l'onglet D.</p>
+      </div>
+      <p style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_Doppler/docs/act4a.htm" target="_blank">🖥️ Lancer l'activité 4</a></p>
+      <div class="exo-enonce">
+        <em>Exemple générique :</em> un relevé graphique donne T<sub>E</sub> = 2,5 ms (partie « à l'arrêt ») et T<sub>R</sub> = 2,2 ms (partie « approche »).<br><strong>Déterminer les fréquences f<sub>E</sub> et f<sub>R</sub>, le décalage Doppler Δf, puis la vitesse v de la voiture.</strong>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Afficher la correction</button>
+      <div class="correction">
+        <div class="calc-step">f<sub>E</sub> = 1/T<sub>E</sub> = 1/0,0025 = 400 Hz &nbsp;|&nbsp; f<sub>R</sub> = 1/T<sub>R</sub> = 1/0,0022 ≈ 454,5 Hz</div>
+        <div class="calc-step">Δf = f<sub>R</sub> − f<sub>E</sub> ≈ 54,5 Hz</div>
+        <div class="calc-step">v = v<sub>onde</sub> × (1 − f<sub>E</sub>/f<sub>R</sub>) = 340 × (1 − 400/454,5) ≈ <strong>40,8 m·s⁻¹</strong> (≈ 147 km/h)</div>
+        <p style="margin-top:8px;">On retrouve la démarche complète : lecture graphique → périodes → fréquences → décalage Doppler → vitesse, en réutilisant l'expression établie pas à pas dans l'onglet D.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── E5 : LONGUEUR D'ONDE ET VITESSE ───────── -->
+  <div class="sub-tab-content" id="sub-E-4">
+    <div class="activite-card">
+      <h3>5️⃣ Longueur d'onde et vitesse</h3>
+      <p><strong>Objectif :</strong> établir une relation entre longueur d'onde et vitesse de propagation.</p>
+      <div class="methode-box">
+        <div class="methode-titre">Ce que tu vas mobiliser</div>
+        <p>À partir des relations T = 1/f et v<sub>onde</sub> = λ/T, tu vas établir puis exploiter la relation λ = v<sub>onde</sub>/f, valable aussi bien pour une onde sonore que pour une onde électromagnétique (utile pour l'annale « Galaxie d'Andromède » de l'onglet D).</p>
+      </div>
+      <p style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_Doppler/docs/act5a.htm" target="_blank">🖥️ Lancer l'activité 5</a></p>
+      <div class="exo-enonce">
+        <em>Exemple générique :</em> établissement de la relation, puis application à f = 440 Hz (note « la » du diapason) avec v<sub>onde</sub> = 340 m·s⁻¹.<br><strong>Établir la relation entre λ et v<sub>onde</sub> à partir de T = 1/f et v<sub>onde</sub> = λ/T, puis calculer la longueur d'onde λ correspondante.</strong>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Afficher la correction</button>
+      <div class="correction">
+        <div class="calc-step">T = 1/f &nbsp;et&nbsp; v<sub>onde</sub> = λ/T &nbsp;⟹&nbsp; λ = v<sub>onde</sub> × T = v<sub>onde</sub>/f</div>
+        <div class="calc-step">λ = 340/440 ≈ <strong>0,77 m</strong></div>
+        <p style="margin-top:8px;">Cette relation λ = v<sub>onde</sub>/f est générale : elle s'applique aussi bien à une onde sonore (v<sub>onde</sub> = célérité du son) qu'à une onde électromagnétique (λ = c/f), comme dans l'annale « Galaxie d'Andromède » de l'onglet D.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── E6 : PRÉCISION D'UNE MESURE ───────── -->
+  <div class="sub-tab-content" id="sub-E-5">
+    <div class="activite-card">
+      <h3>6️⃣ Précision d'une mesure</h3>
+      <p><strong>Objectif :</strong> évaluer une incertitude de mesure.</p>
+      <div class="methode-box">
+        <div class="methode-titre">Ce que tu vas mobiliser</div>
+        <p>En répétant plusieurs fois un même chronométrage sur le simulateur, tu vas calculer une valeur moyenne et une incertitude-type (écart-type) associées à cette mesure — une compétence expérimentale transversale, indépendante du contexte de l'effet Doppler mais mobilisable dans toute mesure répétée en physique-chimie.</p>
+      </div>
+      <p style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_Doppler/docs/act6a.htm" target="_blank">🖥️ Lancer l'activité 6</a></p>
+      <div class="exo-enonce">
+        <em>Exemple générique :</em> 5 mesures répétées d'une même période T (en ms) : 2,10 ; 2,14 ; 2,08 ; 2,12 ; 2,16.<br><strong>Calculer la valeur moyenne T̄, l'incertitude-type u(T), puis exprimer le résultat sous la forme T = T̄ ± U(T) avec un facteur d'élargissement k = 2.</strong>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Afficher la correction</button>
+      <div class="correction">
+        <div class="calc-step">Moyenne : T̄ = (2,10+2,14+2,08+2,12+2,16)/5 = <strong>2,12 ms</strong></div>
+        <div class="calc-step">Écart-type (N−1) : σ ≈ 0,032 ms</div>
+        <div class="calc-step">Incertitude-type sur la moyenne : u(T) = σ/√N = 0,032/√5 ≈ 0,014 ms</div>
+        <div class="calc-step">Incertitude élargie (k = 2) : U(T) = k × u(T) ≈ 0,03 ms &nbsp;⟹&nbsp; <strong>T = (2,12 ± 0,03) ms</strong></div>
+        <p style="margin-top:8px;">Cette démarche d'évaluation d'une incertitude de type A (mesures répétées) est transversale : elle s'applique à toute mesure expérimentale en physique-chimie, pas seulement à l'effet Doppler.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /tab-5 -->
+
+<!-- ══════════════ ONGLET BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-6">
+
+  <div class="sub-tabs-nav" id="sub-nav-R">
+    <button class="sub-tab-btn active" data-sub="R1" onclick="switchSubTab('R',0)">
+      <span class="sub-tab-num">1</span> Bilan et points clés
+    </button>
+    <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
+      <span class="sub-tab-num">2</span> Ressources
+    </button>
+  </div>
+
+  <!-- ───────── R1 : BILAN ET POINTS CLÉS ───────── -->
+  <div class="sub-tab-content active" id="sub-R-0">
+
+  <div class="section-title"><span class="icon">📌</span> Bilan sur l'atténuation et l'effet Doppler</div>
+
+  <div class="bilan-grid">
+    <div class="bilan-card">
+      <h4>Intensité et niveau sonore</h4>
+      <p style="font-size:0.86rem;line-height:1.6;">I = P/S (en W·m⁻²)</p>
+      <p style="font-size:0.86rem;line-height:1.6;margin-top:6px;">L = 10·log(I/I₀), avec I₀ = 10⁻¹² W·m⁻² (seuil d'audibilité). Mesure : sonomètre.</p>
+    </div>
+    <div class="bilan-card">
+      <h4>Atténuations (toujours A &gt; 0)</h4>
+      <p style="font-size:0.86rem;line-height:1.6;">Géométrique : A = L<sub>proche</sub> − L<sub>éloigné</sub> = 10·log(I<sub>proche</sub>/I<sub>éloigné</sub>)</p>
+      <p style="font-size:0.86rem;line-height:1.6;margin-top:6px;">Par absorption : A = L<sub>incident</sub> − L<sub>transmis</sub> = 10·log(I<sub>incident</sub>/I<sub>transmis</sub>)</p>
+    </div>
+  </div>
+
+  <div class="bilan-grid" style="margin-top:4px;">
+    <div class="bilan-card">
+      <h4>Effet Doppler — description qualitative</h4>
+      <ul>
+        <li>Source à l'arrêt : λ<sub>E</sub> = λ<sub>R</sub>, f<sub>E</sub> = f<sub>R</sub>.</li>
+        <li>Source qui approche : fronts d'onde resserrés, f<sub>R</sub> &gt; f<sub>E</sub> → son plus aigu.</li>
+        <li>Source qui s'éloigne : fronts d'onde écartés, f<sub>R</sub> &lt; f<sub>E</sub> → son plus grave.</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Décalage Doppler (observateur fixe, source mobile)</h4>
+      <p style="font-size:0.86rem;line-height:1.6;">Δf = f<sub>R</sub> − f<sub>E</sub></p>
+      <p style="font-size:0.86rem;line-height:1.6;margin-top:6px;">Approche : Δf = f<sub>E</sub> × v/(v<sub>onde</sub> − v)</p>
+      <p style="font-size:0.86rem;line-height:1.6;margin-top:6px;">Éloignement : Δf = − f<sub>E</sub> × v/(v<sub>onde</sub> + v)</p>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> Points-clés à retenir</div>
+  <div class="bilan-card">
+    <ul class="ke-list">
+      <li>Le niveau sonore L, exprimé en dB, est une grandeur logarithmique adaptée à l'étendue de sensibilité de l'oreille humaine.</li>
+      <li>L'atténuation géométrique traduit la répartition de l'énergie sur une surface croissante ; l'atténuation par absorption traduit une perte d'énergie lors de la traversée d'un milieu matériel.</li>
+      <li>Une atténuation est toujours positive.</li>
+      <li>L'effet Doppler est une propriété générale des ondes : il se manifeste dès que la distance émetteur-récepteur varie au cours du temps.</li>
+      <li>Source qui se rapproche ⟹ fréquence perçue plus élevée (son plus aigu) ; source qui s'éloigne ⟹ fréquence perçue plus faible (son plus grave).</li>
+      <li>Le décalage Doppler Δf = f<sub>R</sub> − f<sub>E</sub> permet, en pratique, de déterminer la vitesse d'une source à partir des fréquences émise et reçue.</li>
+    </ul>
+  </div>
+
+  </div>
+  <!-- /sub-R-0 -->
+
+  <!-- ───────── R2 : RESSOURCES ───────── -->
+  <div class="sub-tab-content" id="sub-R-1">
+
+    <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
+    <div class="bilan-card">
+      <div class="pastille-list">
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805049007?paccess=47d683a9192.2ffc12af.98a3c04c40dd6b3aad75d57aa2f3a467" target="_blank">🎬 « Cours 1 – Ondes sonores »</a><span class="pastille-source">Sciences physiques à Stella</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805102656?paccess=47d688c2429.2ffce440.d8028d5965ad4c7a3fdcf0f243b73ea2" target="_blank">🎬 « Intensité sonore et niveau d'intensité sonore »</a><span class="pastille-source">Florence Raffin</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805065126?paccess=47d68496a3b.2ffc51a6.9e7c8a4cbb8267200e44dd02722c7a9c" target="_blank">🎬 « L'EFFET DOPPLER, en 2 minutes »</a><span class="pastille-source">ScienceClic</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805065214?paccess=47d6849a853.2ffc51fe.6338f4c45c2b9fe96adb81f1534be301" target="_blank">🎬 « Établir l'expression du décalage Doppler »</a><span class="pastille-source">spcbad</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/physique-chimie/effet-doppler.aspx" target="_blank">🎬 « Effet Doppler »</a><span class="pastille-source">CEA</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805065656?paccess=47d684a0112.2ffc53b8.288277ccd0407c98cec843c10a3d4620" target="_blank">🎬 « Effet Doppler - Décalage - formules »</a><span class="pastille-source">TERMINALE spé. PC BAC</span></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🖥️</span> Animations et simulations</div>
+    <div class="bilan-card">
+      <div class="pastille-list">
+        <div class="pastille-row"><a class="pastille pastille-simu" href="https://www.sciences.univ-nantes.fr/sites/genevieve_tulloue/Ondes/son/doppler.php" target="_blank">🖥️ Animation de l'effet Doppler</a><span class="pastille-source">Université de Nantes</span></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> QCM</div>
+    <div class="bilan-card">
+      <div class="pastille-list">
+        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/16_QCM_prerequis/index.html" target="_blank">📝 QCM Prérequis — Caractériser les phénomènes ondulatoires</a><span class="pastille-source">Hatier-clic</span></div>
+        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_16/index.html" target="_blank">📝 QCM — Maîtrise des notions</a><span class="pastille-source">Hatier-clic</span></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🕰️</span> Le saviez-vous ?</div>
+    <div class="bilan-card">
+      <p style="font-size:0.88rem;line-height:1.7;">L'effet Doppler doit son nom au physicien autrichien <strong>Christian Doppler</strong> (1803-1853), qui l'a décrit pour la première fois en 1842. Ce phénomène, valable pour toutes les ondes (sonores comme électromagnétiques), a depuis trouvé de nombreuses applications : radars de vitesse, échographie Doppler en médecine, ou encore mesure du décalage spectral des galaxies en astrophysique.</p>
+    </div>
+
+  </div>
+  <!-- /sub-R-1 -->
+
+</div>
+<!-- /tab-5 -->
+
+</div><!-- /main -->
+
+<div class="footer-note">Séquence 07 – Atténuation des ondes sonores et effet Doppler · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin</div>
+
+<script>
+/* ════════ NAVIGATION ONGLETS ════════ */
+function switchTab(i) {
+  document.querySelectorAll('.tab-content').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('.tabs-nav .tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+function switchSubTab(group, i) {
+  document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+document.getElementById('capToggle').addEventListener('click', () => {
+  document.getElementById('capPanel').classList.toggle('open');
+});
+function toggleAccord(btn) {
+  btn.nextElementSibling.classList.toggle('open');
+}
+function toggleCorrection(btn) {
+  var c = btn.nextElementSibling;
+  c.classList.toggle('visible');
+  btn.textContent = c.classList.contains('visible') ? '🙈 Masquer la correction' : '✅ Voir la correction';
+}
+
+/* ════════ VÉRIFICATION NUMÉRIQUE ════════ */
+/* ════════ QCM — SIMULATION OSTRALO EFFET DOPPLER (onglet C) ════════ */
+function checkQcmOstralo1(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  var fb = document.getElementById('ostralo-qcm1-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = "✓ Exact : les fronts d'onde sont resserrés du côté vers lequel se dirige l'émetteur.";
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = "✗ Observe à nouveau la simulation : du côté vers lequel se déplace l'émetteur, les fronts d'onde successifs se rapprochent les uns des autres.";
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+function checkQcmOstralo2(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  var fb = document.getElementById('ostralo-qcm2-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = "✓ Exact : des fronts d'onde resserrés correspondent à une longueur d'onde plus courte, donc à une fréquence reçue plus élevée : f_R > f_E.";
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = "✗ Rappelle-toi : v_onde = λ × f. Si les fronts d'onde sont resserrés (λ_R plus petite), à v_onde constante, la fréquence reçue est-elle plus grande ou plus petite ?";
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+/* ════════ QCM — SIMULATION PhET ATTÉNUATION GÉOMÉTRIQUE (onglet B) ════════ */
+function checkQcmPhet(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  var fb = document.getElementById('phet-qcm-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = "✓ Exact : l'amplitude des ondes diminue visiblement, et le volume perçu baisse à mesure que l'auditeur s'éloigne — c'est l'atténuation géométrique.";
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = "✗ Observe à nouveau la simulation : sans aucun obstacle, l'intensité perçue par l'auditeur diminue à mesure qu'il s'éloigne du haut-parleur.";
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+function checkQcmPhet2(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  var fb = document.getElementById('phet-qcm2-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = "✓ Exact : en 3D, la puissance se répartit sur une sphère de surface S = 4πd². Si d double, S est multipliée par 4, donc I = P/S est divisée par 4.";
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = "✗ Pense à la surface sur laquelle se répartit la puissance : en 3D, S = 4πd². Si d double, comment évolue cette surface, et donc I = P/S ?";
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+/* ════════ QCM — DOUBLEMENT DU NIVEAU SONORE (onglet A) ════════ */
+function checkQcmSon(btn, isCorrect) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  group.forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  var fb = document.getElementById('son-qcm-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = "✓ Exact : L = 10·log(I/I₀) est une fonction logarithmique de I. Si I → 2I, alors ΔL = 10·log(2) ≈ 3,0 dB : le niveau sonore augmente d'environ 3 dB, il ne double pas.";
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = "✗ Attention, L n'est pas proportionnel à I (relation logarithmique, pas linéaire) : doubler l'intensité n'entraîne pas un doublement du niveau sonore.";
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+function checkNum(id, expected, tol) {
+  var input = document.getElementById(id);
+  var fb = document.getElementById(id + '-fb');
+  var raw = input.value.replace(',', '.').trim();
+  var val = parseFloat(raw);
+  if (isNaN(val)) {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = 'Entre un nombre'; fb.className = 'num-feedback ko';
+    return;
+  }
+  if (Math.abs(val - expected) <= tol) {
+    input.classList.remove('wrong'); input.classList.add('correct');
+    fb.textContent = '✓ Correct'; fb.className = 'num-feedback ok';
+  } else {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = '✗ Réessaie'; fb.className = 'num-feedback ko';
+  }
+}
+
+/* ════════ VÉRIFICATION MENU DÉROULANT (activité à trous — Cas n°2) ════════ */
+function checkDQ(sel, correctValue, rowId) {
+  var row = document.getElementById(rowId);
+  var ok = (sel.value === correctValue);
+  sel.classList.remove('correct','wrong');
+  sel.classList.add(ok ? 'correct' : 'wrong');
+  row.classList.remove('done','ok','ko');
+  row.classList.add('done', ok ? 'ok' : 'ko');
+}
+
+/* ════════ CALCULATRICE — NIVEAU SONORE ════════ */
+(function() {
+  var slider = document.getElementById('sonSlider');
+  var expLabel = document.getElementById('sonExpLabel');
+  var resultBox = document.getElementById('sonResultBox');
+  var curseur = document.getElementById('sonCurseur');
+  var compareBox = document.getElementById('sonCompareBox');
+  if (!slider) return;
+
+  var refs = [
+    { max: 0,   label: '0-10 dB',   text: "Proche du seuil d'audibilité (laboratoire acoustique, studio d'enregistrement)." },
+    { max: 30,  label: '10-30 dB',  text: 'Comparable à une chambre à coucher ou un jardin calme.' },
+    { max: 50,  label: '30-50 dB',  text: 'Comparable à un bureau tranquille.' },
+    { max: 65,  label: '50-65 dB',  text: 'Comparable à une conversation dans un restaurant paisible.' },
+    { max: 80,  label: '65-80 dB',  text: 'Comparable à un marché animé ou une rue à fort trafic.' },
+    { max: 90,  label: '80-90 dB',  text: "Seuil de danger : aboiement, tondeuse à gazon. Une exposition chronique peut entraîner des pertes auditives." },
+    { max: 105, label: '90-105 dB',text: 'Klaxon, marteau-piqueur : risques à moyen/long terme pour l\'audition en cas d\'exposition chronique.' },
+    { max: 130, label: '105-130 dB',text: "Discothèque, avion au décollage : risques immédiats pour l'audition (surdité, acouphènes)." }
+  ];
+
+  function update() {
+    var n = parseFloat(slider.value); // exposant : I = 10^n
+    expLabel.textContent = n.toFixed(1).replace('.', ',');
+    var L = 10 * (n - (-12)); // L = 10*log(I/I0) = 10*(n+12)
+    resultBox.textContent = 'L = ' + L.toFixed(1).replace('.', ',') + ' dB';
+    var pct = Math.max(0, Math.min(100, (L / 130) * 100));
+    curseur.style.left = pct + '%';
+    curseur.setAttribute('data-label', L.toFixed(0) + ' dB');
+    for (var i = 0; i < refs.length; i++) {
+      if (L <= refs[i].max) { compareBox.textContent = refs[i].text; break; }
+    }
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+
+/* ════════ ANIMATION — FRONTS D'ONDE D'UNE SOURCE MOBILE (EFFET DOPPLER) ════════ */
+(function() {
+  var canvas = document.getElementById('dopplerCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var trackY = H / 2;
+  var obsX = W - 60; // observateur fixe, proche du bord droit
+  var vSlider = document.getElementById('dopplerV');
+  var vValLabel = document.getElementById('dopplerVVal');
+  var msgBox = document.getElementById('dopplerMsgBox');
+  var playBtn = document.getElementById('dopplerPlayBtn');
+  var playing = true;
+
+  var vOnde = 90; // px/s, vitesse de propagation des fronts (référence)
+  var sourceX = 40;
+  var dir = 1; // 1 : va vers la droite (vers l'observateur), -1 : s'éloigne
+  var fronts = []; // {x0, t0}
+  var lastEmit = 0;
+  var emitPeriod = 0.42; // s, période d'émission des bips (fixe : f_E constante)
+  var lastTs = null;
+  var simTime = 0;
+
+  function vSource() {
+    return (parseFloat(vSlider.value) / 100) * vOnde;
+  }
+
+  function resetSim() {
+    sourceX = 40;
+    dir = 1;
+    fronts = [];
+    lastEmit = 0;
+    simTime = 0;
+    lastTs = null;
+  }
+
+  function drawCarIcon(x, y, facingRight) {
+    ctx.save();
+    ctx.translate(x, y);
+    if (!facingRight) ctx.scale(-1, 1);
+    ctx.fillStyle = '#E8783A';
+    ctx.beginPath();
+    ctx.moveTo(-14, 6); ctx.lineTo(-10, -6); ctx.lineTo(6, -6); ctx.lineTo(14, 2);
+    ctx.lineTo(14, 6); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#1A2A3A';
+    ctx.beginPath(); ctx.arc(-7, 8, 4, 0, 2*Math.PI); ctx.fill();
+    ctx.beginPath(); ctx.arc(9, 8, 4, 0, 2*Math.PI); ctx.fill();
+    ctx.restore();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // route
+    ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 2; ctx.setLineDash([6,5]);
+    ctx.beginPath(); ctx.moveTo(15, trackY + 22); ctx.lineTo(W - 15, trackY + 22); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // fronts d'onde (cercles émis à intervalle régulier)
+    ctx.lineWidth = 2;
+    for (var i = 0; i < fronts.length; i++) {
+      var age = simTime - fronts[i].t0;
+      var r = age * vOnde;
+      if (r > W) continue;
+      var alpha = Math.max(0, 1 - r / (W * 0.9));
+      ctx.strokeStyle = 'rgba(232,120,58,' + alpha.toFixed(2) + ')';
+      ctx.beginPath();
+      ctx.arc(fronts[i].x0, trackY, r, 0, 2*Math.PI);
+      ctx.stroke();
+    }
+
+    // observateur (croix fixe)
+    ctx.strokeStyle = '#1A2A3A'; ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.moveTo(obsX - 7, trackY - 7); ctx.lineTo(obsX + 7, trackY + 7);
+    ctx.moveTo(obsX + 7, trackY - 7); ctx.lineTo(obsX - 7, trackY + 7);
+    ctx.stroke();
+    ctx.fillStyle = '#1A2A3A'; ctx.font = '11px Outfit, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Observateur', obsX, trackY + 34);
+
+    // source (voiture)
+    drawCarIcon(sourceX, trackY, dir === 1);
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '11px Outfit, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Source', sourceX, trackY - 16);
+    ctx.textAlign = 'left';
+  }
+
+  function tick(ts) {
+    if (lastTs === null) lastTs = ts;
+    var dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    if (playing) {
+      var v = vSource();
+      simTime += dt;
+      sourceX += dir * v * dt;
+
+      // émission régulière de fronts
+      if (simTime - lastEmit >= emitPeriod) {
+        fronts.push({ x0: sourceX, t0: simTime });
+        lastEmit = simTime;
+        if (fronts.length > 40) fronts.shift();
+      }
+
+      // rebond aux bords : la source repart dans l'autre sens
+      if (sourceX > W - 30) { dir = -1; }
+      if (sourceX < 25) { dir = 1; }
+
+      // message qualitatif selon la position/direction par rapport à l'observateur
+      if (dir === 1 && sourceX < obsX - 20) {
+        msgBox.innerHTML = "La source approche de l'observateur : fronts d'onde resserrés à l'avant → son perçu plus aigu (f<sub>R</sub> &gt; f<sub>E</sub>).";
+      } else if (dir === -1) {
+        msgBox.innerHTML = "La source s'éloigne de l'observateur : fronts d'onde écartés à l'arrière → son perçu plus grave (f<sub>R</sub> &lt; f<sub>E</sub>).";
+      } else {
+        msgBox.innerHTML = "La source est proche de l'observateur.";
+      }
+
+      draw();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  vSlider.addEventListener('input', function() {
+    vValLabel.innerHTML = vSlider.value + ' % de v<sub>onde</sub>';
+  });
+
+  window.toggleDopplerAnim = function() {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Lecture';
+    playBtn.classList.toggle('active', playing);
+    lastTs = null;
+  };
+  window.resetDopplerAnim = function() {
+    resetSim();
+    draw();
+  };
+
+  resetSim();
+  draw();
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>
+
