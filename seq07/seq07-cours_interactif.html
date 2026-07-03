@@ -959,28 +959,37 @@
       <p>Thème : <span>Ondes sonores, intensité, décibels, effet Doppler</span> · © C. Poirault-Gauvin</p>
     </div>
     <!-- Icône haut-parleur émettant des ondes (fronts circulaires animés, esprit "effet Doppler") -->
-    <div class="mobile-icon-wrap" title="Haut-parleur émettant des ondes sonores">
+    <div class="mobile-icon-wrap" title="Effet Doppler — source mobile émettant des ondes">
+      <style>
+        @keyframes dop-move  { 0%{transform:translateX(-20px);} 100%{transform:translateX(20px);} }
+        @keyframes dop-wave  { 0%{r:2;opacity:1;} 100%{r:28;opacity:0;} }
+        .dop-src  { animation: dop-move 2s ease-in-out infinite alternate; }
+        .dop-w1   { animation: dop-wave 2s ease-out infinite; }
+        .dop-w2   { animation: dop-wave 2s ease-out 0.5s infinite; }
+        .dop-w3   { animation: dop-wave 2s ease-out 1s infinite; }
+        .dop-w4   { animation: dop-wave 2s ease-out 1.5s infinite; }
+        @media(prefers-reduced-motion:reduce){
+          .dop-src{animation:none;transform:none;}
+          .dop-w1,.dop-w2,.dop-w3,.dop-w4{animation:none;r:14;opacity:0.5;}
+        }
+      </style>
       <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
-        <defs>
-          <style>
-            @keyframes son-front { 0%{transform:scale(0.35);opacity:0.9;} 100%{transform:scale(1.15);opacity:0;} }
-            @keyframes son-cone  { 0%,100%{opacity:0.85;} 50%{opacity:1;} }
-            .son-f1 { animation: son-front 2.2s ease-out infinite; transform-origin: 30px 40px; }
-            .son-f2 { animation: son-front 2.2s ease-out 0.7s infinite; transform-origin: 30px 40px; }
-            .son-f3 { animation: son-front 2.2s ease-out 1.4s infinite; transform-origin: 30px 40px; }
-            .son-cone { animation: son-cone 2.2s ease-in-out infinite; }
-            @media(prefers-reduced-motion:reduce){ .son-f1,.son-f2,.son-f3,.son-cone{animation:none;} }
-          </style>
-        </defs>
-        <!-- Haut-parleur -->
-        <g class="son-cone">
-          <rect x="10" y="30" width="10" height="20" rx="2" fill="#2D5F8A"/>
-          <path d="M20,30 L34,20 L34,60 L20,50 Z" fill="#2D5F8A"/>
+        <g class="dop-src" style="transform-origin:40px 40px;">
+          <!-- Source sonore (voiture stylisée) -->
+          <rect x="30" y="34" width="20" height="12" rx="3" fill="#0f766e"/>
+          <rect x="33" y="29" width="14" height="8"  rx="2" fill="#134e4a"/>
+          <circle cx="34" cy="47" r="3.5" fill="#1e293b"/>
+          <circle cx="46" cy="47" r="3.5" fill="#1e293b"/>
         </g>
-        <!-- Fronts d'onde circulaires (partiels, orientés vers la droite) -->
-        <path class="son-f1" d="M30,22 A18,18 0 0 1 30,58" fill="none" stroke="#E8783A" stroke-width="2.6" stroke-linecap="round"/>
-        <path class="son-f2" d="M30,22 A18,18 0 0 1 30,58" fill="none" stroke="#E8783A" stroke-width="2.6" stroke-linecap="round"/>
-        <path class="son-f3" d="M30,22 A18,18 0 0 1 30,58" fill="none" stroke="#E8783A" stroke-width="2.6" stroke-linecap="round"/>
+        <!-- Ondes compressées à l'avant (bleu) -->
+        <circle class="dop-w1" cx="52" cy="40" r="2" fill="none" stroke="#3b82f6" stroke-width="1.5" style="transform-origin:52px 40px; clip-path:inset(0 0 0 50%)"/>
+        <circle class="dop-w2" cx="52" cy="40" r="2" fill="none" stroke="#3b82f6" stroke-width="1.5" style="transform-origin:52px 40px; clip-path:inset(0 0 0 50%)"/>
+        <!-- Ondes étirées à l'arrière (rouge) -->
+        <circle class="dop-w3" cx="28" cy="40" r="2" fill="none" stroke="#f43f5e" stroke-width="1.5" style="transform-origin:28px 40px; clip-path:inset(0 50% 0 0)"/>
+        <circle class="dop-w4" cx="28" cy="40" r="2" fill="none" stroke="#f43f5e" stroke-width="1.5" style="transform-origin:28px 40px; clip-path:inset(0 50% 0 0)"/>
+        <!-- Labels -->
+        <text x="62" y="28" font-size="7" fill="#3b82f6" font-weight="700">f↑</text>
+        <text x="8"  y="28" font-size="7" fill="#f43f5e" font-weight="700">f↓</text>
       </svg>
     </div>
   </div>
