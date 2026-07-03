@@ -49,7 +49,7 @@
     box-shadow: 0 2px 12px rgba(45,95,138,0.10);
   }
   .header-inner {
-    max-width: 900px;
+    max-width: 1160px;
     margin: 0 auto;
     padding: 18px 32px 0;
   }
@@ -227,7 +227,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 900px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1160px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -1925,6 +1925,9 @@
     <button class="sub-tab-btn" data-sub="B4" onclick="switchSubTab('B',3)">
       <span class="sub-tab-num">4</span> Exercices bilan (Bac)
     </button>
+    <button class="sub-tab-btn" data-sub="B5" onclick="switchSubTab('B',4)">
+      <span class="sub-tab-num">5</span> Simulation PhET
+    </button>
   </div>
 
   <!-- ───────── B1 : LOIS DE NEWTON ───────── -->
@@ -2300,6 +2303,64 @@
         <a class="btn-sujet" href="2024-polynesie-ex3-su.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
         <a class="btn-correction" href="2024-polynesie-ex3-co.pdf" target="_blank" rel="noopener">✅ Correction (PDF)</a>
       </div>
+    </div>
+  </div>
+
+  <!-- ───────── B5 : SIMULATION PhET — FORCES ET MOUVEMENT ───────── -->
+  <div class="sub-tab-content" id="sub-B-4">
+    <div class="section-title"><span class="icon">🧪</span> Simulation PhET — Forces et mouvement</div>
+    <div class="intro-box">
+      La simulation ci-dessous (PhET, université du Colorado) permet de visualiser concrètement les trois lois de Newton étudiées dans cette séquence. Elle comporte quatre écrans, accessibles par les onglets en haut de la simulation : <strong>Force nette</strong>, <strong>Mouvement</strong>, <strong>Accélération</strong> et <strong>Frottement</strong>. Manipulez-la avant de répondre aux questions ; les valeurs numériques ne sont pas données ici car elles dépendent des réglages que vous choisissez dans la simulation.
+    </div>
+
+    <div style="max-width:900px; margin:0 auto 6px; border:1.5px solid var(--gris-bord); border-radius:14px; overflow:hidden; box-shadow:0 4px 16px rgba(45,95,138,0.12); background:#fff; padding:6px;">
+      <iframe src="https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_all.html?locale=fr" width="100%" height="520" style="border:none; display:block;" loading="lazy" title="Simulation PhET — Forces et mouvement"></iframe>
+    </div>
+    <p style="font-size:0.8rem; color:var(--texte-leger); text-align:center; margin:0 0 24px;">
+      Simulation réalisée par PhET Interactive Simulations, université du Colorado Boulder — <a href="https://phet.colorado.edu/fr/simulations/forces-and-motion-basics" target="_blank" rel="noopener">phet.colorado.edu</a> (CC BY).
+      Si elle ne s'affiche pas ci-dessus, <a href="https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_all.html?locale=fr" target="_blank" rel="noopener">ouvre-la dans un nouvel onglet ↗</a>.
+    </p>
+
+    <div class="exo-card">
+      <h3>Activité 1 — Écran « Force nette » : principe d'inertie (1ʳᵉ loi de Newton)</h3>
+      <div class="exo-enonce">Faites tirer des personnes des deux côtés de la corde. Ajustez leur nombre de chaque côté jusqu'à ce que le chariot reste immobile, puis répondez.</div>
+      <div class="qcm-grid" id="qcmPhETNet"></div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Activité 2 — Écran « Mouvement » : force résultante et effet sur le mouvement</h3>
+      <div class="exo-enonce">Choisissez un objet, appliquez une force à l'aide de la manette, et observez le compteur de vitesse ainsi que le vecteur force affiché. Testez successivement une force constante seule, puis une situation où vous ajoutez du frottement.</div>
+      <div class="qcm-grid" id="qcmPhETMvt"></div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Activité 3 — Écran « Accélération » : vérifier quantitativement la 2ᵉ loi de Newton</h3>
+      <div class="exo-enonce">
+        Sur l'écran « Accélération », choisissez une masse totale m et réglez une force appliquée F (lisibles directement dans la simulation). Calculez ci-dessous l'accélération que vous prédisez avec la relation issue de la 2ᵉ loi de Newton, <strong>a = F / m</strong>, puis comparez avec la valeur affichée par le compteur d'accélération de la simulation.
+      </div>
+      <div class="question-block">
+        <div class="num-field-wrap"><label>m (lue dans la simulation) =</label><input type="text" class="num-input" id="phetM" placeholder="ex : 200"><span class="num-unit">kg</span></div>
+        <div class="num-field-wrap"><label>F (lue dans la simulation) =</label><input type="text" class="num-input" id="phetF" placeholder="ex : 200"><span class="num-unit">N</span></div>
+        <div class="num-field-wrap"><label>a prédite = F/m =</label><input type="text" class="num-input" id="phetA" placeholder="votre calcul"><span class="num-unit">m/s²</span></div>
+      </div>
+      <div class="num-btn-row">
+        <button class="btn-verif" onclick="checkPhETCalc()">Vérifier mon calcul</button>
+        <button class="btn-reset" onclick="resetPhETCalc()">Effacer</button>
+      </div>
+      <div class="intro-box" style="margin-top:10px; font-size:0.85rem;">
+        💡 Le bouton ne vérifie que la cohérence de <em>votre</em> calcul (a = F/m à partir de vos propres valeurs de m et F). C'est à vous de comparer ensuite le résultat obtenu avec la valeur affichée par la simulation : si elles ne correspondent pas, vérifiez que vous avez bien lu m et F au bon endroit de l'écran.
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Activité 4 — Écran « Frottement » : frottement statique et frottement dynamique</h3>
+      <div class="exo-enonce">Réglez le frottement sur une valeur non nulle, puis appliquez une force croissante sur l'objet initialement immobile.</div>
+      <div class="qcm-grid" id="qcmPhETFrot"></div>
+    </div>
+
+    <div class="exo-card">
+      <h3>QCM bilan — Synthèse sur la simulation</h3>
+      <div class="qcm-grid" id="qcmPhETBilan"></div>
     </div>
   </div>
 
@@ -3798,6 +3859,48 @@ function drawEnergie(s) {
   ctxEm.fillText(emFriction ? 'Em₀ (sans frottement)' : 'Em = cste ✓', barX-8, barBase-Em0*scale-4);
 }
 drawEnergie(0);
+
+/* ══════════════ B5 — SIMULATION PhET FORCES ET MOUVEMENT ══════════════ */
+function checkPhETCalc() {
+  const m = parseFloat(document.getElementById('phetM').value.replace(',','.'));
+  const F = parseFloat(document.getElementById('phetF').value.replace(',','.'));
+  const a = parseFloat(document.getElementById('phetA').value.replace(',','.'));
+  if (isNaN(m) || isNaN(F) || isNaN(a) || m === 0) {
+    mark('phetA', false);
+    return;
+  }
+  mark('phetA', Math.abs(a - F/m) < 0.05 * Math.max(Math.abs(F/m), 0.1));
+}
+function resetPhETCalc() {
+  ['phetM','phetF','phetA'].forEach(id=>{
+    const el = document.getElementById(id);
+    el.value=''; el.classList.remove('correct','wrong');
+  });
+}
+
+buildQCM('qcmPhETNet', [
+  { q: "Lorsque le chariot reste immobile alors que des personnes tirent des deux côtés, que peut-on dire des forces exercées sur le chariot ?", choices:['Elles sont nulles individuellement','Leur somme vectorielle (force résultante) est nulle','Il n\'y a pas de force du tout','Une seule des deux forces existe réellement'], correct:1, explain:"chaque force existe et est non nulle, mais leur somme vectorielle est nulle : c'est la condition d'équilibre (1ʳᵉ loi de Newton, ou principe d'inertie)." },
+  { q: "D'après la 1ʳᵉ loi de Newton, un système au repos ou en mouvement rectiligne uniforme dans un référentiel galiléen vérifie :", choices:['ΣF ≠ 0','ΣF = 0','F = m·a avec a ≠ 0','Aucune des propositions'], correct:1, explain:"la 1ʳᵉ loi de Newton (principe d'inertie) énonce que la vitesse du centre de masse est constante (éventuellement nulle) si et seulement si la somme des forces extérieures est nulle." },
+  { q: "Si vous ajoutez une personne supplémentaire d'un seul côté de la corde, que doit-il se passer d'après la 1ʳᵉ loi de Newton ?", choices:['Rien, le chariot reste immobile','Le chariot accélère dans le sens du côté renforcé','Le chariot accélère dans le sens opposé','Le chariot ralentit puis s\'arrête'], correct:1, explain:"la somme des forces n'est plus nulle : il apparaît une force résultante non nulle, donc une accélération dans le sens de cette force résultante (2ᵉ loi de Newton)." }
+]);
+
+buildQCM('qcmPhETMvt', [
+  { q: "Sans frottement, en appliquant une force constante et non nulle sur l'objet initialement immobile, son mouvement est :", choices:['Rectiligne uniforme','Rectiligne uniformément accéléré','Il reste immobile','Circulaire'], correct:1, explain:"une force résultante constante et non nulle produit, d'après la 2ᵉ loi de Newton, une accélération constante : le mouvement est rectiligne uniformément accéléré." },
+  { q: "En ajoutant du frottement qui compense exactement la force appliquée, l'objet déjà en mouvement va :", choices:['Continuer à accélérer','Continuer à vitesse constante','S\'arrêter instantanément','Reculer'], correct:1, explain:"si la somme des forces redevient nulle (force motrice compensée par le frottement), l'accélération est nulle : la vitesse reste constante (1ʳᵉ loi de Newton)." },
+  { q: "Que représente la longueur de la flèche affichée par la simulation pour représenter une force ?", choices:['Le temps d\'application de la force','La valeur (intensité) de la force','La masse de l\'objet','La vitesse de l\'objet'], correct:1, explain:"comme pour tout vecteur force, la longueur de la flèche est proportionnelle à la valeur (norme) de la force représentée." }
+]);
+
+buildQCM('qcmPhETFrot', [
+  { q: "Tant que la force appliquée reste inférieure à une certaine valeur seuil, l'objet posé sur le sol :", choices:['Se met en mouvement immédiatement','Reste immobile', 'Recule', 'Accélère puis ralentit'], correct:1, explain:"c'est l'effet du frottement statique : il s'oppose exactement à la force appliquée tant que celle-ci ne dépasse pas une valeur seuil, maintenant le système à l'équilibre." },
+  { q: "Une fois cette valeur seuil dépassée et l'objet en mouvement, la force de frottement observée devient généralement :", choices:['Plus grande qu\'à l\'arrêt','Plus faible que le seuil statique (frottement dynamique)','Strictement nulle','Impossible à déterminer'], correct:1, explain:"le frottement dynamique (une fois le mouvement amorcé) est en général inférieur au frottement statique maximal : c'est plus facile de maintenir un objet en mouvement que de l'initier." },
+  { q: "Si on augmente le réglage du frottement dans la simulation, à force appliquée égale, l'accélération de l'objet :", choices:['Augmente','Diminue (ou peut s\'annuler)','Reste inchangée','Devient négative quel que soit le cas'], correct:1, explain:"le frottement s'oppose au mouvement ; il réduit la force résultante donc, d'après la 2ᵉ loi de Newton (a = ΣF/m), diminue l'accélération." }
+]);
+
+buildQCM('qcmPhETBilan', [
+  { q: "La relation fondamentale illustrée par l'écran « Accélération » de la simulation est :", choices:['P = m·g','ΣF = m·a','Em = Ec + Ep','v = d/t'], correct:1, explain:"c'est la 2ᵉ loi de Newton (principe fondamental de la dynamique) : la somme des forces extérieures appliquées à un système est égale au produit de sa masse par l'accélération de son centre de masse." },
+  { q: "À force résultante fixée, si l'on augmente la masse de l'objet dans la simulation, l'accélération obtenue :", choices:['Augmente','Diminue','Reste identique','Devient nulle'], correct:1, explain:"a = F/m : à force fixée, l'accélération est inversement proportionnelle à la masse — un objet plus massif accélère moins pour une même force." },
+  { q: "Cette simulation permet d'illustrer directement :", choices:['Uniquement la 1ʳᵉ loi de Newton','Uniquement la 2ᵉ loi de Newton','La 1ʳᵉ et la 2ᵉ loi de Newton (équilibre et PFD)','La 3ᵉ loi de Newton (actions réciproques)'], correct:2, explain:"les écrans « Force nette » et « Mouvement » illustrent la 1ʳᵉ loi (équilibre, principe d'inertie) tandis que les écrans « Accélération » et « Frottement » permettent une vérification quantitative de la 2ᵉ loi (ΣF = m·a). La 3ᵉ loi (actions réciproques) n'est pas l'objet de cette simulation." }
+]);
 
 </script>
 </body>
