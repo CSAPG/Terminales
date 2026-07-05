@@ -394,7 +394,7 @@ const TER_SEQUENCES = [
     headerBg: 'seq09/image9.jpg',
     tabs: [
       {
-        id:'Cours', label:'Cours', actif: true,
+        id:'cours', label:'Cours', actif: true,
         items: [
            { type:'link', icon:'📖', label:'Cours',
             sub:'Fiche de cours en pdf',
