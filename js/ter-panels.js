@@ -74,6 +74,8 @@ const TER_SEQUENCES = [
       items: [
         { type:'link', icon:'⭐', label:"Supplément — Vidéo sur le Calcul d'incertitude type A", sub:'Calculatrice TI83Plus', href:'https://www.pearltrees.com/private/id105223373/item803710056?paccess=47d466e44ea.2fe7a468.943419f27ff8475d514c3d9d85a628bbf' },
         { type:'link', icon:'⭐', label:"Supplément — Connais-tu la verrerie ?", sub:'Jeu-Associe un nom à chaque verrerie du laboratoire de chimie', href:'https://learningapps.org/view736796' },
+       { type:'link', icon:'⭐', label:"Supplément — Reconnaître les familles en chimie organiques", sub:'Vous avez 15 secondes pour déterminer la famille chimique d'un maximum de molécules.', href:'https://chimie.ostralo.net/fonctionsorganiques/' },
+      ]
       ]
     },
   ]
