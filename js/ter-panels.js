@@ -394,8 +394,14 @@ const TER_SEQUENCES = [
     headerBg: 'seq09/image9.jpg',
     tabs: [
       {
-        id:'Fiche de révision', label:'Fiche de révision', actif: true,
+        id:'Cours', label:'Cours', actif: true,
         items: [
+           { type:'link', icon:'📖', label:'Cours',
+            sub:'Fiche de cours en pdf',
+            href:'seq09/Séquence 09-fiche de cours.pdf' },
+           { type:'link', icon:'🎓', label:'Cours interactif',
+            sub:'Réalisé par Mme Poirault-Gauvin',
+            href:'seq09/seq09-cours_interactif.html' },
           { type:'link', icon:'📖', label:'Fiche de révision — Partie A',
             sub:'Réalisée par David, Ambre, Morgane et Salma',
             href:'seq09/seq09_Fiche de révision partie A.html' },
@@ -404,6 +410,7 @@ const TER_SEQUENCES = [
             href:'seq09/seq09_Fiche de révision partie B.html' },
         ]
       },
+       
       {
         id:'Quiz', label:'Quiz',
         items: [
