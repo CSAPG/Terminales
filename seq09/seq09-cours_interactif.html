@@ -1,0 +1,3577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séquence 09 – Modèle du gaz parfait et bilan énergétique – Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #2D5F8A;
+    --bleu-clair: #E8F1F8;
+    --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
+    --orange: #E8783A;
+    --orange-clair: #FDF0E8;
+    --vert: #3A8A6E;
+    --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --gris-fond: #F5F7FA;
+    --gris-bord: #DDE3EC;
+    --texte: #1A2A3A;
+    --texte-leger: #5A6B7A;
+    --blanc: #FFFFFF;
+    --rouge: #C0392B;
+    --rouge-clair: #FDEDEC;
+    --violet: #7B4FA6;
+    --violet-clair: #F3EDF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #DDE6F0;
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blanc);
+    border-bottom: 3px solid var(--bleu);
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 32px 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .header-badge {
+    background: var(--bleu);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  button.cap-toggle {
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button.cap-toggle:hover { background: #1e4466; }
+  .cap-panel {
+    display: none;
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid #B8D4EC;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .cap-panel.open { display: block; }
+  .cap-panel ul { margin: 0; padding-left: 1.3rem; }
+  .cap-panel li { margin-bottom: 5px; line-height: 1.6; }
+  .cap-panel .cap-cat { font-weight: 700; color: var(--bleu); margin-top: 8px; }
+  .cap-panel .cap-cat:first-child { margin-top: 0; }
+
+  .header-titles h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--bleu);
+    line-height: 1.2;
+  }
+  .header-titles p {
+    font-size: 0.82rem;
+    color: var(--texte-leger);
+    margin-top: 2px;
+  }
+  .header-titles p span { color: var(--orange); font-weight: 700; }
+
+  /* ── ICÔNE PLANÈTE EN ORBITE ── */
+  .mobile-icon-wrap {
+    flex-shrink: 0;
+    width: 84px;
+    height: 56px;
+    position: relative;
+    margin-top: -2px;
+  }
+  .mobile-icon-wrap svg { width: 100%; height: 100%; }
+
+  /* ── ONGLETS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px 10px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: var(--texte-leger);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -3px;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+    background: var(--orange-clair);
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gris-bord);
+    color: var(--texte-leger);
+    font-size: 0.70rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .tab-num { background: var(--bleu); color: white; }
+
+  /* ── SOUS-ONGLETS ── */
+  .sub-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 18px 0 0;
+    margin-bottom: 22px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    background: #b8cfe0;
+    color: #2D5F8A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub-tab-btn:hover { background: #2D5F8A; color: white; }
+  .sub-tab-btn.active { background: #1e4466; color: white; }
+  .sub-tab-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    transition: all 0.2s;
+  }
+  .sub-tab-btn:not(.active) .sub-tab-num {
+    background: rgba(45,95,138,0.2);
+  }
+
+  .sub-tab-content { display: none; }
+  .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+  /* ── CONTENU ── */
+  .main { max-width: 1100px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BLOCS COURS ── */
+  .def-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .def-card::before {
+    content: 'COURS';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.6;
+  }
+  .def-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+  .def-card ul { padding-left: 18px; }
+  .def-card ul li { margin-bottom: 5px; }
+
+  /* ── BLOCS ACTIVITÉ ── */
+  .activite-card {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-left: 4px solid var(--bleu-moyen);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .activite-card::before {
+    content: 'ACTIVITÉ';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.8;
+  }
+  .activite-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+  }
+  .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  /* ── BLOCS EXERCICE ── */
+  .exo-card {
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert-exo-bord);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .exo-card::before {
+    content: 'EXERCICE';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--vert);
+    opacity: 0.7;
+  }
+  .exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--vert);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu-clair);
+  }
+  .section-title .icon { font-size: 1.3rem; }
+
+  .intro-box {
+    background: #FFFBF7;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--texte);
+    font-style: italic;
+  }
+
+  .formule-box {
+    background: var(--orange-clair);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  .formule-box .legend {
+    font-size: 0.80rem;
+    font-weight: 500;
+    color: var(--texte-leger);
+    margin-top: 6px;
+    text-align: left;
+  }
+
+  .exemple-box {
+    background: var(--vert-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .exemple-box strong { color: var(--vert); }
+
+  .remarque-box {
+    background: var(--violet-clair);
+    border-left: 4px solid var(--violet);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .remarque-box strong { color: var(--violet); }
+
+  .attention-box {
+    background: var(--rouge-clair);
+    border-left: 4px solid var(--rouge);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .attention-box strong { color: var(--rouge); }
+
+  .methode-box {
+    background: var(--bleu-activite);
+    border: 1.5px dashed var(--bleu-moyen);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .methode-box ol { padding-left: 20px; }
+  .methode-box li { margin-bottom: 6px; }
+  .methode-box .methode-titre {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+  }
+
+  /* ── TABLEAU GÉNÉRIQUE ── */
+  .tableau-avancement {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 14px 0;
+    background: var(--blanc);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .tableau-avancement th {
+    background: var(--bleu);
+    color: white;
+    padding: 10px 14px;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .tableau-avancement td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--gris-bord);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .tableau-avancement tr:last-child td { border-bottom: none; }
+  .tableau-avancement tr:nth-child(even) td { background: var(--gris-fond); }
+  .tableau-avancement td:first-child { font-weight: 600; color: var(--bleu); text-align: left; }
+
+  /* ── CRITÈRE / CARTES 3 COLONNES ── */
+  .critere-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .critere-grid { grid-template-columns: 1fr; } }
+  .critere-item {
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .critere-left  { background: #FEF9F0; border: 2px solid var(--orange); color: var(--texte); }
+  .critere-mid   { background: var(--vert-exo); border: 2px solid var(--vert); color: var(--texte); }
+  .critere-right { background: var(--bleu-activite); border: 2px solid var(--bleu-moyen); color: var(--texte); }
+  .critere-item .critere-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .critere-left .critere-label  { color: var(--orange); }
+  .critere-mid .critere-label   { color: var(--vert); }
+  .critere-right .critere-label { color: var(--bleu); }
+
+  /* ── EXERCICE INTERACTIF ── */
+  .exo-enonce {
+    background: var(--blanc);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.90rem;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    border: 1px solid var(--vert-exo-bord);
+  }
+  .question-block { margin-bottom: 14px; }
+  .question-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 7px;
+    padding-left: 8px;
+    border-left: 3px solid var(--vert);
+    line-height: 1.5;
+  }
+  .btn-correction {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 9px 20px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-correction:hover { background: #2A6B52; transform: translateY(-1px); }
+  .correction {
+    display: none;
+    background: #F0FAF6;
+    border: 1.5px solid var(--vert);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .correction.visible { display: block; animation: fadeIn 0.2s ease; }
+  .correction strong { color: var(--vert); }
+  .correction .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 7px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── EXERCICE NUMÉRIQUE INLINE ── */
+  .num-field-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .num-field-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--texte); }
+  .num-input {
+    width: 110px;
+    padding: 7px 11px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--gris-fond);
+    transition: border-color 0.2s;
+  }
+  .num-input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); }
+  .num-input.correct { border-color: var(--vert); background: var(--vert-exo); }
+  .num-input.wrong   { border-color: var(--rouge); background: var(--rouge-clair); }
+  .num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
+  .num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
+  .num-feedback.ok   { color: var(--vert); }
+  .num-feedback.ko   { color: var(--rouge); }
+  .btn-verif {
+    padding: 7px 16px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-verif:hover { background: #1E4A72; }
+
+  .bilan-exo-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid #2D5F8A;
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+  }
+  .bilan-exo-card .bilan-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #2D5F8A;
+    background: var(--bleu-clair);
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .bilan-exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 6px;
+  }
+  .bilan-exo-card .bilan-theme {
+    font-size: 0.87rem;
+    color: var(--texte-leger);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-sujet, .btn-correction {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: filter 0.15s;
+  }
+  .btn-sujet { background: var(--bleu); color: white; }
+  .btn-correction { background: var(--vert); color: white; }
+  .btn-sujet:hover, .btn-correction:hover { filter: brightness(0.9); }
+  .btn-corriger {
+    padding: 7px 16px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-corriger:hover { background: #2A6B52; }
+  .btn-reset {
+    padding: 7px 16px;
+    background: var(--gris-fond);
+    color: var(--texte-leger);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+  .num-btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .num-correction-inline {
+    display: none;
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: var(--texte);
+  }
+  .num-correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
+  .num-correction-inline .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 7px 11px;
+    margin: 6px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── QCM ── */
+  .qcm-grid { display: grid; gap: 10px; margin: 14px 0; }
+  .qcm-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .qcm-item .substance { font-size: 0.93rem; font-weight: 600; flex: 1; }
+  .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qcm-btn {
+    padding: 5px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    background: var(--gris-fond);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--texte);
+  }
+  .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
+  .qcm-btn.correct { background: var(--vert); color: white; border-color: var(--vert); }
+  .qcm-btn.wrong   { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; width: 100%; }
+  .qcm-feedback.wrong { color: var(--rouge); }
+
+  .dq-select {
+    padding: 7px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--blanc);
+    color: var(--texte);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 160px;
+  }
+  .dq-select:focus { outline: none; border-color: var(--bleu); }
+  .dq-select.correct { border-color: var(--vert); background: var(--vert-exo); color: var(--vert); font-weight: 700; }
+  .dq-select.wrong   { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
+  .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
+  .dq-feedback.wrong { color: var(--rouge); }
+
+  /* ── ACCORDÉON ── */
+  .accord-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: var(--texte);
+    transition: background 0.2s;
+    margin: 10px 0;
+  }
+  .accord-btn:hover { background: var(--bleu-clair); }
+  .accord-body {
+    display: none;
+    padding: 14px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  .accord-body.open { display: block; animation: fadeIn 0.2s; }
+
+  /* ── BILAN GRID ── */
+  .bilan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .bilan-grid { grid-template-columns: 1fr; } }
+  .bilan-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .bilan-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--gris-bord);
+  }
+  .bilan-card ul { padding-left: 16px; }
+  .bilan-card ul li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.5; }
+  .ke-list { list-style: none; padding: 0; }
+  .ke-list li {
+    padding: 6px 10px 6px 28px;
+    position: relative;
+    font-size: 0.84rem;
+    border-bottom: 1px solid var(--gris-bord);
+    line-height: 1.5;
+  }
+  .ke-list li:last-child { border-bottom: none; }
+  .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
+
+  /* ── CANVAS ANIMATION ── */
+  .anim-canvas-wrap {
+    background: #F8FAFC;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 14px 16px 10px;
+    margin: 14px 0;
+  }
+  .anim-canvas-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--texte-leger);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .anim-canvas-wrap canvas { display: block; margin: 0 auto; border-radius: 8px; border: 1px solid var(--gris-bord); background: #fff; max-width: 100%; }
+  .anim-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .etape-msg-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    min-height: 48px;
+  }
+  .anim-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--blanc);
+    color: var(--texte);
+    transition: all 0.15s;
+  }
+  .anim-btn:hover  { border-color: var(--bleu); color: var(--bleu); background: var(--bleu-clair); }
+  .anim-btn.active { background: var(--bleu); color: white; border-color: var(--bleu); }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; flex-wrap: wrap; }
+  .slider-row label { font-size: 0.84rem; font-weight: 700; color: var(--texte); min-width: 150px; }
+  .slider-row input[type=range] { flex: 1; min-width: 140px; accent-color: var(--bleu); }
+  .slider-row .slider-val { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--bleu); min-width: 70px; text-align: right; font-size: 0.86rem; }
+
+  .legende-vect { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; font-size: 0.78rem; font-weight: 700; }
+  .legende-vect span { display: inline-flex; align-items: center; gap: 5px; }
+  .legende-vect .swatch { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+
+  /* ── FIGURES ILLUSTRATIVES (images du cours) ── */
+  .fig-box {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .fig-box img { max-width: 100%; height: auto; border-radius: 6px; }
+  .fig-box .fig-caption {
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .fig-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+  .fig-row .fig-box { flex: 1; min-width: 200px; margin: 0; }
+
+  /* ── CALCULATRICE 3E LOI ── */
+  .calc-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin: 10px 0; }
+  @media (max-width: 560px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-field { display: flex; flex-direction: column; gap: 4px; }
+  .calc-field label { font-size: 0.80rem; font-weight: 700; color: var(--bleu); }
+  .calc-result {
+    margin-top: 10px;
+    background: white;
+    border: 1.5px solid var(--bleu-moyen);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: var(--bleu);
+    font-size: 0.95rem;
+    min-height: 20px;
+  }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    padding: 20px;
+    border-top: 1px solid var(--gris-bord);
+    margin-top: 30px;
+  }
+
+  sup { font-size: 0.65em; }
+  sub { font-size: 0.65em; }
+  .math { font-family: 'Outfit', sans-serif; font-style: italic; }
+  .vec { text-decoration: overline; }
+
+  /* ── NOTATION VECTORIELLE FIABLE (flèche SVG) ── */
+  .vecsym {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.45em;
+  }
+  .vecsym svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.55em;
+    overflow: visible;
+  }
+
+  /* ── IFRAME SIMULATION ── */
+  .iframe-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 4 / 3;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--gris-bord);
+    background: #fff;
+  }
+  .iframe-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
+
+  /* ── PASTILLES RESSOURCES ── */
+  .pastille-card-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+  .pastille-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 108px;
+    padding: 10px 8px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .pastille-card:hover { border-color: var(--bleu); background: var(--bleu-clair); transform: translateY(-2px); }
+  .pastille-card-icon { font-size: 1.6rem; line-height: 1; }
+  .pastille-card-label { font-size: 0.72rem; font-weight: 700; color: var(--texte); line-height: 1.3; }
+
+  /* ── ÉTAPES PRÉDICTION / OBSERVATION ── */
+  .predict-step {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 14px;
+    background: #F7FAFD;
+    border: 1px solid var(--gris-bord);
+    border-radius: 10px;
+  }
+  .predict-num {
+    flex: 0 0 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--bleu);
+    color: #fff;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  .predict-content { flex: 1; }
+  .predict-content label { display: block; font-size: 0.82rem; font-weight: 700; color: var(--texte-leger); margin: 8px 0 4px; }
+  .predict-textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 10px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 0.88rem;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  .predict-textarea:focus { outline: none; border-color: var(--bleu); }
+
+  /* ── SCHÉMA SYSTÈME / MILIEU EXTÉRIEUR (W, Q) ── */
+  .arrow-inactive line, .arrow-inactive polygon { stroke: #D8DEE6; fill: #D8DEE6; }
+  .arrow-inactive text { fill: #B7C2CE; }
+
+  /* ── EXERCICE PYTHON (Skulpt) ── */
+  .py-editor {
+    width: 100%;
+    min-height: 260px;
+    padding: 12px 14px;
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    resize: vertical;
+    box-sizing: border-box;
+    tab-size: 4;
+  }
+  .py-editor:focus { outline: none; border-color: var(--bleu); }
+  .py-output {
+    margin-top: 10px;
+    min-height: 40px;
+    padding: 10px 14px;
+    background: #0F172A;
+    color: #86EFAC;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.84rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .btn-run {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-run:hover { background: #234A6E; }
+  .btn-run:disabled { background: #94a3b8; cursor: wait; }
+
+  /* ── THERMOMÈTRES CANVAS CALORIMÉTRIE ── */
+  .thermo-canvas-wrap { display: flex; justify-content: center; margin: 14px 0; }
+
+  /* ── DISPOSITION 2 COLONNES : ENCADRÉS + IMAGE ── */
+  .calo-intro-layout { display: flex; gap: 20px; align-items: flex-start; margin-top: 10px; }
+  .calo-intro-left { flex: 1 1 auto; min-width: 0; }
+  .calo-intro-right { flex: 0 0 260px; text-align: center; }
+  .calo-intro-right img { width: 100%; max-width: 260px; border: 1px solid var(--gris-bord); border-radius: 10px; background: #fff; }
+  .calo-intro-right .img-caption { font-size: 0.78rem; color: var(--texte-leger); margin-top: 6px; }
+  @media (max-width: 640px) {
+    .calo-intro-layout { flex-direction: column; }
+    .calo-intro-right { flex: 1 1 auto; max-width: 320px; margin: 0 auto; }
+  }
+
+  /* ── IMAGES DE COURS (génériques) ── */
+  .cours-img-wrap { text-align: center; margin: 12px 0; }
+  .cours-img-wrap img { max-width: 100%; border: 1px solid var(--gris-bord); border-radius: 10px; background: #fff; }
+  .cours-img-wrap .img-caption { font-size: 0.78rem; color: var(--texte-leger); margin-top: 6px; }
+
+  .pastille-card-badge {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--bleu);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── PASTILLES CLIQUABLES (ressources externes) — style canonique séq07 ── */
+  .pastille {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: white;
+    white-space: nowrap;
+    transition: filter 0.15s, transform 0.12s;
+  }
+  .pastille:hover { filter: brightness(0.90); transform: translateY(-1px); }
+  .pastille-qcm   { background: #BFDCF0; color: var(--bleu); }
+  .pastille-video { background: #DECBF0; color: var(--violet); }
+  .pastille-simu  { background: var(--vert); }
+  .pastille-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .pastille-row .pastille-source { font-size: 0.82rem; color: var(--texte-leger); }
+  .pastille-list { display: flex; flex-direction: column; gap: 12px; }
+  .pastille-list-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+  }
+  .pastille-list-2col .pastille-row { margin-top: 0; }
+  @media (max-width: 560px) {
+    .pastille-list-2col { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 12px 16px 0; }
+    .header-titles h1 { font-size: 1.05rem; }
+    .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
+    .main { padding: 18px 12px 50px; }
+    .mobile-icon-wrap { width: 42px; height: 42px; }
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+    <div class="header-left">
+      <div class="header-badge">T<sup>ale</sup> Spé – Séq. 09</div>
+      <button class="cap-toggle" id="capToggle">📋 Capacités exigibles</button>
+    </div>
+    <div class="header-titles">
+      <h1>Modèle du gaz parfait &amp; bilan énergétique</h1>
+      <p>Thème : <span>L'énergie : conversions et transferts</span> · © C. Poirault-Gauvin</p>
+    </div>
+    <!-- Icône moteur qui tourne (ter-icons.js — Séq. 09) -->
+    <div class="mobile-icon-wrap" title="Moteur électrique en rotation">
+      <style>
+        @keyframes motor-spin   { from{transform:rotate(0deg);}  to{transform:rotate(360deg);}  }
+        @keyframes motor-spin-r { from{transform:rotate(0deg);}  to{transform:rotate(-360deg);} }
+        @keyframes motor-spark  { 0%,85%,100%{opacity:0;} 90%,95%{opacity:1;} }
+        .motor-rotor { animation: motor-spin   1.2s linear infinite; transform-origin: 40px 40px; }
+        .motor-fan   { animation: motor-spin-r 0.8s linear infinite; transform-origin: 68px 40px; }
+        .motor-spark { animation: motor-spark  1.5s ease-in-out infinite; }
+        @media(prefers-reduced-motion:reduce){
+          .motor-rotor,.motor-fan{animation:none;}
+          .motor-spark{animation:none;opacity:0;}
+        }
+      </style>
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
+        <rect x="10" y="24" width="50" height="32" rx="4" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1.5"/>
+        <rect x="10" y="28" width="50" height="4" fill="#94a3b8" opacity="0.6"/>
+        <rect x="10" y="48" width="50" height="4" fill="#94a3b8" opacity="0.6"/>
+        <g class="motor-rotor">
+          <circle cx="40" cy="40" r="10" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+          <rect x="38" y="30" width="4" height="20" rx="1" fill="#64748b"/>
+          <rect x="30" y="38" width="20" height="4" rx="1" fill="#64748b"/>
+          <circle cx="40" cy="40" r="3" fill="#0f766e"/>
+        </g>
+        <rect x="60" y="37" width="12" height="6" rx="2" fill="#475569"/>
+        <g class="motor-fan">
+          <ellipse cx="68" cy="40" rx="5" ry="2" fill="#7dd3fc" transform="rotate(0,  68,40)" opacity="0.8"/>
+          <ellipse cx="68" cy="40" rx="5" ry="2" fill="#7dd3fc" transform="rotate(60, 68,40)" opacity="0.8"/>
+          <ellipse cx="68" cy="40" rx="5" ry="2" fill="#7dd3fc" transform="rotate(120,68,40)" opacity="0.8"/>
+          <circle cx="68" cy="40" r="2" fill="#0369a1"/>
+        </g>
+        <rect x="14" y="18" width="8" height="8" rx="2" fill="#dc2626"/>
+        <rect x="38" y="18" width="8" height="8" rx="2" fill="#1d4ed8"/>
+        <line x1="18" y1="18" x2="18" y2="24" stroke="#dc2626" stroke-width="2"/>
+        <line x1="42" y1="18" x2="42" y2="24" stroke="#1d4ed8" stroke-width="2"/>
+        <g class="motor-spark">
+          <line x1="26" y1="16" x2="29" y2="12" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+          <line x1="29" y1="12" x2="32" y2="16" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cap-panel" id="capPanel">
+    <div class="cap-cat">Partie A — Modèle du gaz parfait</div>
+    <ul>
+      <li>Relier qualitativement les valeurs des grandeurs macroscopiques mesurées aux propriétés du système à l'échelle microscopique.</li>
+      <li>Exploiter l'équation d'état du gaz parfait pour décrire le comportement d'un gaz.</li>
+      <li>Identifier quelques limites du modèle du gaz parfait.</li>
+    </ul>
+    <div class="cap-cat">Partie B-I — Premier principe de la thermodynamique</div>
+    <ul>
+      <li>Citer les différentes contributions microscopiques à l'énergie interne d'un système.</li>
+      <li>Prévoir le sens d'un transfert thermique.</li>
+      <li>Distinguer dans un bilan d'énergie le terme correspondant à la variation de l'énergie du système des termes correspondant à des transferts d'énergie entre le système et l'extérieur.</li>
+      <li>Exploiter l'expression de la variation d'énergie interne d'un système incompressible en fonction de sa capacité thermique et de la variation de sa température pour effectuer un bilan énergétique.</li>
+      <li><strong>Effectuer l'étude énergétique d'un système thermodynamique.</strong></li>
+    </ul>
+    <div class="cap-cat">Partie B-II — Transferts thermiques</div>
+    <ul>
+      <li>Caractériser qualitativement les trois modes de transfert thermique : conduction, convection, rayonnement.</li>
+      <li>Exploiter la relation entre flux thermique, résistance thermique et écart de température, l'expression de la résistance étant donnée.</li>
+    </ul>
+    <div class="cap-cat">Partie B-III — Lois de thermodynamique</div>
+    <ul>
+      <li>Effectuer un bilan d'énergie pour un système incompressible échangeant de l'énergie par un transfert thermique modélisé à l'aide de la loi de Newton fournie. Établir l'expression de la température du système en fonction du temps.</li>
+      <li><strong>Suivre et modéliser l'évolution de la température d'un système incompressible.</strong></li>
+      <li>Résoudre une équation différentielle linéaire du premier ordre à coefficients constants avec un second membre constant.</li>
+    </ul>
+  </div>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">P</span> Prérequis (P1, P2)
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">A</span> Gaz parfait
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">B1</span> 1<sup>er</sup> principe
+    </button>
+    <button class="tab-btn" onclick="switchTab(3)">
+      <span class="tab-num">B2</span> Transferts thermiques
+    </button>
+    <button class="tab-btn" onclick="switchTab(4)">
+      <span class="tab-num">B3</span> Lois de thermo.
+    </button>
+    <button class="tab-btn" onclick="switchTab(5)">
+      <span class="tab-num">✓</span> Bilan &amp; Ressources
+    </button>
+  </nav>
+  </div><!-- /header-inner -->
+</div>
+
+<div class="main">
+<!-- ══════════════ ONGLET PRÉREQUIS ══════════════ -->
+<div class="tab-content active" id="tab-0">
+
+  <div class="sub-tabs-nav" id="sub-nav-P">
+    <button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+      <span class="sub-tab-num">1</span> Changements d'état
+    </button>
+    <button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+      <span class="sub-tab-num">2</span> Bilan radiatif terrestre
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Avant d'étudier le modèle du gaz parfait et le bilan énergétique d'un système, il est indispensable de revoir les énergies macroscopiques, la notion de chaleur latente de changement d'état, la loi de Mariotte, ainsi que les grandeurs qui décrivent les échanges d'énergie entre la Terre et son environnement (effet de serre, albédo, corps noir, flux thermique).
+  </div>
+
+  <!-- ───────── P1 : CHANGEMENTS D'ÉTAT ───────── -->
+  <div class="sub-tab-content active" id="sub-P-0">
+
+    <div class="def-card">
+      <h3>Énergies macroscopiques</h3>
+      <p>Pour un système de masse m, de vitesse v, à l'altitude z dans le champ de pesanteur terrestre :</p>
+      <div class="bilan-grid" style="margin-top:10px;">
+        <div class="bilan-card">
+          <h4>Énergie cinétique E<sub>c</sub></h4>
+          <div class="formule-box" style="margin:0;font-size:0.98rem;">E<sub>c</sub> = ½ · m · v²</div>
+          <p style="font-size:0.80rem;color:var(--texte-leger);margin-top:6px;">m en kg, v en m·s⁻¹, E<sub>c</sub> en J</p>
+        </div>
+        <div class="bilan-card">
+          <h4>Énergie potentielle E<sub>p</sub></h4>
+          <div class="formule-box" style="margin:0;font-size:0.98rem;">E<sub>p</sub> = m · g · z</div>
+          <p style="font-size:0.80rem;color:var(--texte-leger);margin-top:6px;">g = 9,81 m·s⁻², z en m, E<sub>p</sub> en J</p>
+        </div>
+      </div>
+      <div class="formule-box" style="margin-top:10px;">E<sub>m</sub> = E<sub>c</sub> + E<sub>p</sub></div>
+
+      <div class="anim-canvas-wrap" style="margin-top:14px;">
+        <div class="anim-canvas-title">Simulation — Parc d'énergie (conservation / dissipation de E<sub>m</sub>)</div>
+        <div class="iframe-wrap">
+          <iframe src="https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_all.html?locale=fr"
+                  title="PhET — Energy Skate Park: Basics"
+                  loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="etape-msg-box" style="margin-top:10px;">Active le <strong>frottement</strong> : observe que E<sub>c</sub> + E<sub>p</sub> diminue tandis qu'une <strong>énergie thermique</strong> apparaît — un premier aperçu de ce qui deviendra, en partie B, le premier principe de la thermodynamique (l'énergie « perdue » sous forme mécanique n'est pas détruite, elle est transférée sous forme thermique).</div>
+
+        <div class="pastille-card-row">
+          <a class="pastille-card" href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/premiere_1S/energie_cinetique_scooter_flash.htm" target="_blank">
+            <span class="pastille-card-icon">🛵</span>
+            <span class="pastille-card-label">Énergie cinétique<br>&amp; freinage</span>
+          </a>
+          <a class="pastille-card" href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/premiere_1S/energie_potentielle_cinetique_mecanique_flash.htm" target="_blank">
+            <span class="pastille-card-icon">🎢</span>
+            <span class="pastille-card-label">Montagnes russes<br>E<sub>p</sub> / E<sub>c</sub> / E<sub>m</sub></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Chaleur latente de changement d'état</h3>
+      <p>On note <strong>L</strong>, la <strong>chaleur latente de changement d'état</strong> ou <strong>énergie massique de changement d'état</strong>. C'est l'énergie thermique absorbée ou libérée lors du changement d'état d'1 kg de corps pur. Elle s'exprime en <strong>J·kg⁻¹</strong>.</p>
+      <div class="remarque-box" style="margin-top:10px;">
+        L<sub>solidification</sub> = − L<sub>fusion</sub> &lt; 0 &nbsp;·&nbsp; L<sub>liquéfaction</sub> = − L<sub>vaporisation</sub> &lt; 0 &nbsp;·&nbsp; L<sub>condensation</sub> = − L<sub>sublimation</sub> &lt; 0
+      </div>
+      <p style="margin-top:10px;">Pour l'eau : L<sub>fusion</sub> ≈ 334 kJ·kg⁻¹ et L<sub>vaporisation</sub> ≈ 2 260 kJ·kg⁻¹ (à 100 °C sous pression atmosphérique).</p>
+    </div>
+
+    <div class="activite-card">
+      <h3>🧊 Diagramme de changement d'état — les 6 transformations</h3>
+      <p>Un corps pur peut passer d'un état à un autre par <strong>6 transformations</strong>, organisées en triangle solide ⇌ liquide ⇌ gaz : fusion/solidification, vaporisation/liquéfaction, mais aussi <strong>sublimation</strong> (solide → gaz direct) et <strong>condensation</strong> (gaz → solide direct, sans passer par l'état liquide).</p>
+      <p style="margin-top:8px;">Dans le <strong>sens endothermique</strong> (vers un état plus désordonné : fusion, vaporisation, sublimation) : le système <strong>absorbe</strong> de l'énergie (Q = m×L &gt; 0), le milieu extérieur se <strong>refroidit</strong>. Dans le <strong>sens exothermique</strong> (vers un état plus ordonné : solidification, liquéfaction, condensation) : le système <strong>libère</strong> de l'énergie (Q = m×L &lt; 0), le milieu extérieur se <strong>réchauffe</strong>.</p>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Diagramme triangulaire solide ⇌ liquide ⇌ gaz</div>
+        <canvas id="etatCanvas" width="560" height="360"></canvas>
+        <div class="anim-controls">
+          <button class="anim-btn active" id="etatBtnEndo" onclick="setEtatSens('endo')">🔥 Sens endothermique</button>
+          <button class="anim-btn" id="etatBtnExo" onclick="setEtatSens('exo')">❄️ Sens exothermique</button>
+        </div>
+        <div class="etape-msg-box" id="etatMsg">Le système <strong>absorbe</strong> de l'énergie : Q = m×L &gt; 0. Transformations <strong>endothermiques</strong> (fusion, vaporisation, sublimation). Le milieu extérieur se refroidit.</div>
+
+        <div class="pastille-card-row">
+          <a class="pastille-card" href="https://phet.colorado.edu/sims/html/states-of-matter/latest/states-of-matter_all.html?locale=fr" target="_blank">
+            <span class="pastille-card-icon">🧪</span>
+            <span class="pastille-card-label">États de la matière<br>(PhET)</span>
+          </a>
+        </div>
+        <div class="etape-msg-box" style="margin-top:10px;">Dans cette simulation, tu peux choisir une substance (néon, argon, dioxygène, eau), la <strong>chauffer/refroidir</strong> et la <strong>comprimer</strong> pour observer les changements d'état en direct, ainsi que le lien entre agitation microscopique et état (solide compact et vibrant, liquide désordonné et mobile, gaz dispersé et rapide). L'onglet « Interaction » permet en plus de visualiser l'<strong>énergie potentielle d'interaction</strong> entre deux particules en fonction de leur distance — utile pour comprendre pourquoi le modèle du gaz parfait (partie A) néglige ces interactions à faible pression.</div>
+      </div>
+      <div class="formule-box" style="margin-top:12px;">Q = m × L &nbsp;<span class="legend" style="display:inline;font-weight:500;">(Q en J, m en kg, L en J·kg⁻¹)</span></div>
+    </div>
+
+
+    <div class="def-card">
+      <h3>Loi de Mariotte &amp; volume molaire</h3>
+      <p><strong>Loi de Mariotte :</strong> à température constante, le produit P × V d'une quantité de matière de gaz donnée est constant : P × V = constante.</p>
+      <p style="margin-top:8px;"><strong>Volume molaire d'un gaz V<sub>m</sub> :</strong> volume occupé par une mole d'entité chimique à température et pression données. Le volume molaire d'un gaz ne dépend pas de sa nature, mais uniquement de la température et de la pression (V<sub>m</sub> ≈ 24,0 L·mol⁻¹ dans les conditions usuelles de 20 °C).</p>
+      <div class="pastille-card-row">
+        <a class="pastille-card" href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/premiere_1S/loi_mariotte_comportement_gaz_pression_chocs_microscopique_macroscopique_volume_flash.htm" target="_blank">
+          <span class="pastille-card-icon">🧫</span>
+          <span class="pastille-card-label">Loi de Mariotte<br>(PCCL)</span>
+        </a>
+      </div>
+      <p style="font-size:0.80rem;color:var(--texte-leger);margin-top:8px;">Cette animation relie le comportement macroscopique du gaz (pression, volume) à l'origine microscopique de la pression : en comprimant le volume à température constante, on voit les chocs des particules sur les parois devenir plus fréquents, ce qui fait augmenter P — l'illustration directe de la loi de Mariotte (P×V = constante) par le modèle des chocs microscopiques.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>Autotest</h3>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">Lorsqu'un glaçon fond à 0 °C, la transformation est :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'p1-fb1')">exothermique</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'p1-fb1')">endothermique</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="p1-fb1"></div>
+        <div class="qcm-item">
+          <span class="substance">Pendant un palier de changement d'état, la température du corps pur :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'p1-fb2')">varie</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'p1-fb2')">reste constante</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="p1-fb2"></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-P-0 -->
+
+  <!-- ───────── P2 : BILAN RADIATIF TERRESTRE ───────── -->
+  <div class="sub-tab-content" id="sub-P-1">
+
+    <div class="def-card">
+      <h3>Effet de serre</h3>
+      <p>L'atmosphère terrestre est en grande partie transparente au rayonnement solaire visible, mais absorbe une partie du rayonnement infrarouge réémis par le sol. Une partie de cette énergie est renvoyée vers le sol, ce qui contribue à réchauffer la surface terrestre : c'est l'<strong>effet de serre</strong>.</p>
+      <div class="cours-img-wrap">
+        <img src="images-cours/bilan-thermique-terre-atm.png" alt="Bilan des flux thermiques du système {Terre ; atmosphère} : flux solaire φS, flux diffusé φD = A·φS, flux émis par la Terre φE, part transmise (1−α)φE, parts réémises vers le haut et vers le bas α/2·φE">
+        <div class="img-caption">Bilan des flux radiatifs du système {Terre ; atmosphère} : une partie du flux émis par la Terre φ<sub>E</sub> est absorbée puis réémise pour moitié vers le sol (α/2·φ<sub>E</sub>) et pour moitié vers l'espace, l'autre partie (1−α)φ<sub>E</sub> étant directement transmise vers l'espace.</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Albédo</h3>
+      <p>L'<strong>albédo</strong> d'une surface est le rapport entre la puissance du rayonnement qu'elle réfléchit et la puissance du rayonnement incident qu'elle reçoit. C'est un nombre sans dimension compris entre 0 (surface parfaitement absorbante) et 1 (surface parfaitement réfléchissante).</p>
+      <div class="formule-box" style="margin-top:10px;">albédo = P<sub>réfléchie</sub> / P<sub>incidente</sub></div>
+    </div>
+
+    <div class="def-card">
+      <h3>Corps noir et loi de Wien</h3>
+      <p>Un <strong>corps noir</strong> désigne un objet idéal qui absorbe parfaitement toute l'énergie électromagnétique (toute la lumière, quelle que soit sa longueur d'onde) qu'il reçoit. Cette absorption se traduit par une agitation thermique qui provoque l'émission d'un <strong>rayonnement thermique</strong>, dit rayonnement du corps noir.</p>
+      <p style="margin-top:8px;">La <strong>loi de Wien</strong> indique que le produit de la longueur d'onde à laquelle l'émission est maximale (λ<sub>max</sub>) par la température du corps noir est constant : si la température augmente, λ<sub>max</sub> diminue (le pic d'émission se déplace vers les courtes longueurs d'onde).</p>
+      <div class="formule-box" style="margin-top:10px;">λ<sub>max</sub> × T = constante</div>
+    </div>
+
+    <div class="activite-card">
+      <h3>☀️ Animation interactive — Loi de Wien</h3>
+      <p>Fais varier la température du corps noir et observe le déplacement du pic d'émission (λ<sub>max</sub>) sur le spectre.</p>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Spectre d'émission d'un corps noir</div>
+        <canvas id="wienCanvas" width="560" height="260"></canvas>
+        <div class="slider-row" style="justify-content:center;">
+          <label for="wienT">Température du corps noir</label>
+          <input type="range" id="wienT" min="3000" max="6000" step="50" value="4000">
+          <span class="slider-val" id="wienTVal">4000 K</span>
+        </div>
+        <div class="etape-msg-box" id="wienMsg"></div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Flux thermique</h3>
+      <p>Le <strong>flux thermique</strong> représente la quantité de chaleur qui traverse une surface par unité de temps. Il est aussi appelé <strong>transfert de chaleur</strong> et est mesuré en watt par mètre carré (W/m²) lorsqu'il est rapporté à une surface, ou en watt (W) pour un flux global.</p>
+      <div class="remarque-box"><strong>Constante solaire :</strong> le flux thermique reçu au sommet de l'atmosphère terrestre, par unité de surface perpendiculaire aux rayons solaires, vaut en moyenne F ≈ 1 368 W·m⁻².</div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Autotest</h3>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">Si la température d'un corps noir augmente, sa longueur d'onde d'émission maximale λ<sub>max</sub> :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'p2-fb1')">augmente</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'p2-fb1')">diminue</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="p2-fb1"></div>
+        <div class="qcm-item">
+          <span class="substance">Un albédo proche de 1 correspond à une surface :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'p2-fb2')">très réfléchissante (ex. neige)</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'p2-fb2')">très absorbante (ex. océan)</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="p2-fb2"></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-P-1 -->
+
+</div>
+<!-- /tab-0 -->
+<!-- ══════════════ ONGLET A — MODÈLE DU GAZ PARFAIT ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <div class="sub-tabs-nav" id="sub-nav-A">
+    <button class="sub-tab-btn active" data-sub="A1" onclick="switchSubTab('A',0)">
+      <span class="sub-tab-num">1</span> Grandeurs macro / micro
+    </button>
+    <button class="sub-tab-btn" data-sub="A2" onclick="switchSubTab('A',1)">
+      <span class="sub-tab-num">2</span> Équation d'état &amp; limites
+    </button>
+  </div>
+
+  <div class="intro-box">
+    À l'échelle macroscopique, un gaz est décrit par des grandeurs mesurables (pression, température, masse volumique). Ces grandeurs sont en réalité la manifestation collective du comportement de milliards de particules à l'échelle microscopique.
+  </div>
+
+  <!-- ───────── A1 : GRANDEURS MACRO / MICRO ───────── -->
+  <div class="sub-tab-content active" id="sub-A-0">
+
+    <div class="activite-card">
+      <h3>🔬 Activité 1 — Influence des grandeurs macroscopiques sur un gaz</h3>
+      <p>Objectif (capacité B.O. : <em>relier qualitativement les valeurs des grandeurs macroscopiques mesurées aux propriétés du système à l'échelle microscopique</em>). Utilise la simulation ci-dessous : choisis un gaz, injecte quelques particules avec la pompe, puis manipule le nombre de particules N, la température T et le volume V (paroi mobile) pour observer leur effet sur la pression P mesurée par le manomètre.</p>
+
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Simulation — Propriétés des gaz</div>
+        <div class="iframe-wrap" style="aspect-ratio:16/10;">
+          <iframe src="https://phet.colorado.edu/sims/html/gas-properties/latest/gas-properties_all.html?locale=fr"
+                  title="PhET — Propriétés des gaz"
+                  loading="lazy" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="methode-box" style="margin-top:16px;">
+        <div class="methode-titre">Protocole — prédire, puis observer</div>
+        <p style="font-size:0.85rem;margin:0;">Pour chaque étape ci-dessous, écris d'abord ta prédiction, <strong>avant</strong> de manipuler la simulation pour la vérifier.</p>
+      </div>
+
+      <div class="predict-step">
+        <div class="predict-num">1</div>
+        <div class="predict-content">
+          <p><strong>À volume V et température T constants</strong>, utilise la pompe pour augmenter le nombre N de particules dans l'enceinte. Que devient la pression P mesurée ?</p>
+          <label>Ta prédiction :</label>
+          <textarea class="predict-textarea" placeholder="J'imagine que la pression..."></textarea>
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir ce qu'il faut observer</button>
+          <div class="correction">
+            <p>En augmentant N à V et T fixés, les chocs des particules sur les parois deviennent plus <strong>fréquents</strong> : la pression P <strong>augmente</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="predict-step">
+        <div class="predict-num">2</div>
+        <div class="predict-content">
+          <p><strong>À nombre N et volume V constants</strong>, augmente la température T (bouton chauffage). Observe d'abord l'histogramme des vitesses des particules, puis la pression. Que deviennent la vitesse moyenne et la pression ?</p>
+          <label>Ta prédiction :</label>
+          <textarea class="predict-textarea" placeholder="J'imagine que la vitesse... et la pression..."></textarea>
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir ce qu'il faut observer</button>
+          <div class="correction">
+            <p>En augmentant T, l'agitation microscopique augmente : la <strong>vitesse moyenne</strong> des particules augmente. Les chocs sur les parois sont alors plus <strong>fréquents et plus énergétiques</strong> : la pression P <strong>augmente</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="predict-step">
+        <div class="predict-num">3</div>
+        <div class="predict-content">
+          <p><strong>À nombre N et température T constants</strong>, déplace la paroi mobile pour réduire le volume V de l'enceinte. Que devient la pression P ?</p>
+          <label>Ta prédiction :</label>
+          <textarea class="predict-textarea" placeholder="J'imagine que la pression..."></textarea>
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir ce qu'il faut observer</button>
+          <div class="correction">
+            <p>En réduisant V, les particules sont plus rapprochées des parois : les chocs sont plus <strong>fréquents</strong> (sans que leur vitesse ne change) : la pression P <strong>augmente</strong>. C'est la loi de Mariotte (P×V = constante à T fixée).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="predict-step">
+        <div class="predict-num">4</div>
+        <div class="predict-content">
+          <p>Active l'affichage de l'<strong>histogramme des vitesses</strong> (icône graphique) et compare deux températures très différentes. Comment la distribution des vitesses évolue-t-elle avec T ?</p>
+          <label>Ta prédiction :</label>
+          <textarea class="predict-textarea" placeholder="J'imagine que l'histogramme..."></textarea>
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir ce qu'il faut observer</button>
+          <div class="correction">
+            <p>Plus T est élevée, plus l'histogramme des vitesses est <strong>large et décalé vers les grandes vitesses</strong> : la température macroscopique traduit directement l'agitation (l'énergie cinétique) microscopique moyenne des particules.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="exo-card" style="margin-top:18px;">
+        <h3>QCM — Ce que révèle la simulation</h3>
+        <div class="qcm-grid">
+          <div class="qcm-item">
+            <span class="substance">1. À V et T constants, si on double le nombre de particules N, la pression P :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a1-fb1')">double</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb1')">est divisée par 2</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb1')">ne change pas</button>
+            </div>
+          </div>
+          <div class="qcm-feedback" id="a1-fb1"></div>
+
+          <div class="qcm-item">
+            <span class="substance">2. À N et V constants, si on augmente T, la vitesse moyenne des particules :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a1-fb2')">augmente</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb2')">diminue</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb2')">ne change pas</button>
+            </div>
+          </div>
+          <div class="qcm-feedback" id="a1-fb2"></div>
+
+          <div class="qcm-item">
+            <span class="substance">3. À N et V constants, si on augmente T, la pression P :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a1-fb3')">augmente (chocs plus fréquents et plus énergétiques)</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb3')">diminue</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb3')">ne change pas</button>
+            </div>
+          </div>
+          <div class="qcm-feedback" id="a1-fb3"></div>
+
+          <div class="qcm-item">
+            <span class="substance">4. À N et T constants, si on réduit le volume V, la pression P :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a1-fb4')">augmente (chocs plus fréquents sur des parois plus proches)</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb4')">diminue</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb4')">ne change pas</button>
+            </div>
+          </div>
+          <div class="qcm-feedback" id="a1-fb4"></div>
+
+          <div class="qcm-item">
+            <span class="substance">5. Au niveau microscopique, la pression d'un gaz correspond à :</span>
+            <div class="qcm-choices">
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb5')">l'énergie cinétique moyenne des particules</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a1-fb5')">la fréquence et l'intensité des chocs sur les parois</button>
+              <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1-fb5')">la masse totale des particules</button>
+            </div>
+          </div>
+          <div class="qcm-feedback" id="a1-fb5"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="def-card">
+      <h3>Trois grandeurs macroscopiques</h3>
+      <p>À l'échelle macroscopique, l'état d'un gaz peut être décrit au moyen de trois grandeurs mesurables : la pression P, la température θ et la masse volumique ρ. Ces grandeurs sont interdépendantes : la variation de l'une modifie la valeur d'au moins une des deux autres.</p>
+    </div>
+
+    <table class="tableau-avancement" style="font-size:0.80rem;">
+      <tr><th>Grandeur macro.</th><th>Définition / mesure</th><th>Origine microscopique</th><th>Évolution au niveau microscopique</th></tr>
+      <tr>
+        <td>Température θ</td>
+        <td>Thermomètre. T = θ + 273,15 (T en K, θ en °C)</td>
+        <td>Mesure de l'état d'agitation microscopique des particules (énergie cinétique microscopique)</td>
+        <td>Plus l'agitation augmente, plus la vitesse des particules augmente, plus T mesurée est grande</td>
+      </tr>
+      <tr>
+        <td>Pression P (Pa)</td>
+        <td>Manomètre. P = F/S</td>
+        <td>Chocs des particules microscopiques sur les parois</td>
+        <td>Plus les chocs sont fréquents, plus P est élevée</td>
+      </tr>
+      <tr>
+        <td>Masse volumique ρ (kg·m⁻³)</td>
+        <td>ρ = m / V</td>
+        <td>Masse des particules contenues dans une unité de volume (état de dispersion)</td>
+        <td>ρ plus élevée pour un liquide que pour un gaz (entités plus proches)</td>
+      </tr>
+    </table>
+
+    <div class="remarque-box"><strong>Zéro absolu :</strong> quand il n'y a plus d'agitation des particules microscopiques d'un système, la température est nulle : T = 0 K, c'est le zéro absolu (θ = − 273,15 °C).</div>
+
+    <div class="activite-card">
+      <h3>💨 Animation — Agitation microscopique et pression</h3>
+      <p>Fais varier la température : observe la vitesse d'agitation des particules et la fréquence des chocs sur les parois (pression).</p>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Particules de gaz dans une enceinte fermée</div>
+        <canvas id="gazCanvas" width="440" height="230"></canvas>
+        <div class="slider-row" style="justify-content:center;">
+          <label for="gazT">Température</label>
+          <input type="range" id="gazT" min="1" max="10" step="1" value="4">
+          <span class="slider-val" id="gazTVal">Modérée</span>
+        </div>
+        <div class="etape-msg-box" id="gazMsg">Chocs sur les parois : <strong><span id="gazChocs">0</span></strong> par seconde (indicateur qualitatif de pression)</div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>QCM — Ce que montre l'animation</h3>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">1. Quand on augmente la température sur l'animation, la vitesse des particules :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a1anim-fb1')">augmente</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1anim-fb1')">diminue</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1anim-fb1')">ne change pas</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="a1anim-fb1"></div>
+
+        <div class="qcm-item">
+          <span class="substance">2. Quand on augmente la température, la fréquence des chocs sur les parois :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a1anim-fb2')">augmente</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1anim-fb2')">diminue</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1anim-fb2')">reste identique</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="a1anim-fb2"></div>
+
+        <div class="qcm-item">
+          <span class="substance">3. Le nombre de chocs par seconde affiché sur l'animation est un indicateur qualitatif de quelle grandeur macroscopique ?</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1anim-fb3')">la température</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a1anim-fb3')">la pression</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a1anim-fb3')">la masse volumique</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="a1anim-fb3"></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-A-0 -->
+
+  <!-- ───────── A2 : ÉQUATION D'ÉTAT & LIMITES ───────── -->
+  <div class="sub-tab-content" id="sub-A-1">
+
+    <div class="def-card">
+      <h3>Hypothèses du modèle du gaz parfait</h3>
+      <ul>
+        <li>Les molécules constituant le gaz sont assimilées à des <strong>points matériels</strong> (on néglige le volume des molécules).</li>
+        <li>Les <strong>interactions à distance</strong> entre molécules sont négligées (aucune force ne s'exerce sur les particules en dehors des chocs avec les parois de l'enceinte).</li>
+      </ul>
+    </div>
+
+    <div class="def-card">
+      <h3>Équation d'état du gaz parfait</h3>
+      <p>On appelle <strong>gaz parfait</strong> un gaz pour lequel la relation suivante est exactement vérifiée :</p>
+      <div class="formule-box">P × V = n × R × T
+        <div class="legend">avec P en Pa, V en m³, n en mol, T en K, et R : constante des gaz parfaits (R ≈ 8,314 Pa·m³·mol⁻¹·K⁻¹)</div>
+      </div>
+      <p>Cette relation mathématique entre les grandeurs macroscopiques qui décrivent l'état du gaz est nommée <strong>équation d'état du gaz parfait</strong>.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>QCM — Équation d'état</h3>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">1. À température constante, si l'on offre un volume plus grand à une quantité de gaz fixée :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a2-fb1')">sa pression augmente</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a2-fb1')">sa pression diminue</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a2-fb1')">sa pression reste identique</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="a2-fb1"></div>
+
+        <div class="qcm-item">
+          <span class="substance">2. Le modèle du gaz parfait :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a2-fb2')">est particulièrement adapté à haute pression</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a2-fb2')">prend en compte le volume des entités</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a2-fb2')">assimile chaque molécule à un point matériel</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="a2-fb2"></div>
+
+        <div class="qcm-item">
+          <span class="substance">3. Un gaz est considéré parfait si les entités qui le composent sont :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a2-fb3')">à haute pression et haute température</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'a2-fb3')">sans interaction entre elles</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'a2-fb3')">des molécules dont les volumes sont non négligeables</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="a2-fb3"></div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Limites du modèle du gaz parfait</h3>
+      <p><strong>Le modèle du gaz parfait est adapté aux gaz de faible pression et dont les entités ponctuelles n'interagissent pas.</strong> Donc si la pression et la masse volumique du gaz sont trop importantes, le modèle du gaz parfait n'est plus adapté.</p>
+      <ul style="margin-top:8px;">
+        <li>Le gaz n'est pas modélisable par un gaz parfait lorsque l'on tient compte des interactions entre entités (interactions électriques de type Van der Waals ou liaisons hydrogène) : elles ne sont alors plus ponctuelles, on les modélise souvent par des sphères.</li>
+        <li>Ce modèle permet de décrire le comportement d'un gaz réel <strong>dilué</strong>, car la distance entre particules est suffisamment grande (de l'ordre du micromètre) pour qu'on puisse négliger les interactions électrostatiques entre elles.</li>
+      </ul>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice — Calcul avec l'équation d'état</h3>
+      <div class="exo-enonce">Une bouteille de volume V = 5,0 L contient n = 0,80 mol de dioxygène à la température θ = 20 °C. Calculer la pression P du gaz dans la bouteille (donnée : R = 8,314 Pa·m³·mol⁻¹·K⁻¹).</div>
+      <div class="num-field-wrap">
+        <label>P =</label>
+        <input type="text" class="num-input" id="a2-ex1">
+        <span class="num-unit">× 10⁵ Pa</span>
+        <button class="btn-verif" onclick="checkNum('a2-ex1', 3.90, 0.1)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="a2-ex1-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">T = 20 + 273,15 = 293,15 K</div>
+        <div class="calc-step">P = n×R×T / V = (0,80 × 8,314 × 293,15) / (5,0×10⁻³) ≈ 3,90×10⁵ Pa</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-A-1 -->
+
+</div>
+<!-- /tab-1 -->
+<!-- ══════════════ ONGLET B-I — PREMIER PRINCIPE ══════════════ -->
+<div class="tab-content" id="tab-2">
+
+  <div class="sub-tabs-nav" id="sub-nav-B1">
+    <button class="sub-tab-btn active" data-sub="B1a" onclick="switchSubTab('B1',0)">
+      <span class="sub-tab-num">1</span> Énergie interne
+    </button>
+    <button class="sub-tab-btn" data-sub="B1b" onclick="switchSubTab('B1',1)">
+      <span class="sub-tab-num">2</span> Premier principe &amp; capacité thermique
+    </button>
+  </div>
+
+  <div class="intro-box">
+    « Rien ne se crée, rien ne se perd, tout se transforme. » Le premier principe de la thermodynamique permet d'établir le bilan énergétique d'un système à partir de sa variation d'énergie interne et des échanges d'énergie (travail, transfert thermique) avec l'extérieur.
+  </div>
+
+  <!-- ───────── B1a : ÉNERGIE INTERNE ───────── -->
+  <div class="sub-tab-content active" id="sub-B1-0">
+
+    <div class="activite-card">
+      <h3>🌋 Activité 2 — Quelle est la nature de l'énergie interne ?</h3>
+      <p>Les différents états de la matière se distinguent par des énergies de cohésion qui varient selon les interactions entre entités. En mécanique, les énergies cinétique et potentielle sont définies au niveau du centre de masse. À l'échelle microscopique, on peut aussi définir des énergies cinétique et potentielle : agitation des particules (énergie cinétique microscopique) et interactions entre elles, notamment forces électrostatiques (énergie potentielle d'interaction).</p>
+      <p style="margin-top:8px;"><strong>Contexte :</strong> une <em>fumerolle</em> est une émission de gaz très chaud (entre 100 °C et 500 °C) sortant du sol à proximité d'un volcan. Des espèces chimiques présentes dans le sol se vaporisent sous l'effet de l'activité volcanique et remontent vers la surface ; la « brume » blanche observée atteste de la liquéfaction des gaz émis au contact de l'air plus froid.</p>
+      <ul style="margin-top:10px;">
+        <li>1. Classer les trois états de la matière selon la valeur de leur énergie cinétique microscopique.</li>
+        <li>2. Préciser ce que devient l'énergie interne de la matière présente dans une chambre magmatique lorsqu'une fumerolle se forme.</li>
+        <li>3. Prédire l'évolution de l'énergie interne des gaz une fois sortis du sol.</li>
+        <li>4. Justifier le terme de « brume » employé.</li>
+      </ul>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir des éléments de réponse</button>
+      <div class="correction">
+        <p>1. gaz &gt; liquide &gt; solide (agitation microscopique décroissante).</p>
+        <p>2. L'énergie interne diminue : une partie est libérée sous forme d'énergie thermique lors de la remontée et du refroidissement des gaz.</p>
+        <p>3. Une fois sortis du sol, les gaz chauds se refroidissent au contact de l'air ambiant plus froid : leur énergie interne diminue.</p>
+        <p>4. La « brume » correspond à la liquéfaction (condensation) de la vapeur d'eau contenue dans les gaz, sous forme de fines gouttelettes en suspension, lorsque la température chute au contact de l'air extérieur.</p>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Définition de l'énergie interne</h3>
+      <p>Comme la masse volumique, la température ou la pression, l'<strong>énergie interne U</strong> décrit l'état d'un système thermodynamique. C'est la somme des énergies microscopiques au sein du système : l'énergie cinétique liée à l'agitation thermique et l'énergie potentielle due aux interactions entre molécules.</p>
+      <div class="formule-box">U = E<sub>c,micro</sub> + E<sub>p,micro</sub> &nbsp;<span class="legend" style="display:inline;font-weight:500;">(en joule, J)</span></div>
+      <div class="remarque-box"><strong>Remarque :</strong> dans le cas du gaz parfait, il n'y a pas d'interactions donc pas d'énergie potentielle microscopique : U = E<sub>c,micro</sub>.</div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🏺 Activité 3 — La glacière du désert (« bojito »)</h3>
+      <p>Le « bojito » est une cruche en terre cuite poreuse imprégnée d'eau, jadis utilisée pour refroidir les liquides. L'eau qui imprègne la terre cuite s'évapore et provoque un refroidissement (chutes de température de 5 °C à 20 °C).</p>
+      <p style="margin-top:8px;"><strong>Données :</strong> capacité thermique massique de l'eau c<sub>eau</sub> = 4,18 kJ·kg⁻¹·K⁻¹ · énergie massique de vaporisation à 20 °C L<sub>v</sub> = 2,4×10³ kJ·kg⁻¹ · capacité thermique de la cruche C<sub>cruche</sub> = 2,1 kJ·K⁻¹ · masse volumique de l'eau ρ<sub>eau</sub> = 1,0 kg·L⁻¹ · volume d'eau V = 1,9 L</p>
+      <div class="exo-enonce" style="margin-top:10px;">1. Calculer la variation d'énergie d'un volume V = 1,9 L d'eau dont la température diminue de 1 °C.</div>
+      <div class="num-field-wrap">
+        <label>|ΔU| =</label>
+        <input type="text" class="num-input" id="b1-ex1">
+        <span class="num-unit">J</span>
+        <button class="btn-verif" onclick="checkNum('b1-ex1', 7942, 30)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b1-ex1-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">m = ρ × V = 1,0 × 1,9 = 1,9 kg</div>
+        <div class="calc-step">ΔU = m × c<sub>eau</sub> × Δθ = 1,9 × 4180 × 1 ≈ 7 942 J (≈ 7,9 kJ), cédée par l'eau</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Schéma des échanges d'énergie du système « cruche + eau »</h3>
+      <p>Q<sub>1</sub> : énergie <strong>cédée</strong> à l'extérieur par vaporisation de l'eau à travers la paroi poreuse (Q<sub>1</sub> = m × L<sub>v</sub>, avec m la masse d'eau vaporisée). Q<sub>2</sub> : énergie <strong>reçue</strong> de l'extérieur par contact avec l'air ambiant plus chaud. U : énergie interne du système.</p>
+      <div class="remarque-box">Pour prévoir la température du « bojito » au bout de la première heure, on peut, en première approximation, négliger l'énergie Q<sub>2</sub> reçue de l'extérieur devant Q<sub>1</sub> cédée par vaporisation sur cette courte durée — c'est ce qui explique le refroidissement rapide observé sur la <em>zone 1</em> de l'expérience, avant un ralentissement (<em>zone 2</em>) lorsque le système se rapproche de l'équilibre avec l'air ambiant.</div>
+    </div>
+
+  </div>
+  <!-- /sub-B1-0 -->
+
+  <!-- ───────── B1b : PREMIER PRINCIPE & CAPACITÉ THERMIQUE ───────── -->
+  <div class="sub-tab-content" id="sub-B1-1">
+
+    <div class="def-card">
+      <h3>Énergie totale d'un système</h3>
+      <p>C'est la somme des énergies à l'échelle macroscopique et à l'échelle microscopique :</p>
+      <div class="formule-box">E<sub>tot</sub> = E<sub>c</sub> + E<sub>p</sub> + U</div>
+      <p>Au repos, l'énergie macroscopique est constante (E<sub>c</sub> + E<sub>p</sub> = 0). Donc la variation de l'énergie totale d'un système au repos à l'échelle macroscopique est égale à sa variation d'énergie interne :</p>
+      <div class="formule-box">ΔE<sub>tot</sub> = ΔU</div>
+    </div>
+
+    <div class="def-card">
+      <h3>Premier principe de la thermodynamique</h3>
+      <p>En considérant le système au repos à l'échelle macroscopique et <strong>fermé</strong> (il n'échange pas de matière avec l'extérieur), le premier principe indique que si son énergie varie, c'est qu'il échange avec l'extérieur de l'énergie sous forme de <strong>travail (W)</strong> ou de <strong>transfert thermique (Q)</strong> :</p>
+      <div class="formule-box">ΔU = W + Q</div>
+      <div class="remarque-box">
+        <strong>Convention de signe (grandeurs algébriques) :</strong> si W ou Q sont <strong>reçus</strong> par le système, on les compte <strong>positivement</strong> ; s'ils sont <strong>cédés</strong>, on les compte <strong>négativement</strong>.
+      </div>
+      <ul style="margin-top:8px;">
+        <li>Le <strong>travail</strong> W est un transfert d'énergie qui s'effectue macroscopiquement, lié au déplacement du point d'application d'une force s'exerçant sur le système.</li>
+        <li>Le <strong>transfert thermique</strong> Q est un transfert d'énergie qui s'effectue microscopiquement entre le système et l'extérieur, spontanément du corps chaud vers le corps froid.</li>
+      </ul>
+
+      <div class="anim-canvas-wrap" style="margin-top:16px;">
+        <div class="anim-canvas-title">Schéma du système et des échanges d'énergie avec le milieu extérieur</div>
+        <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto;">
+          <rect x="10" y="80" width="120" height="60" rx="8" fill="#F1F5F9" stroke="#94a3b8" stroke-width="1.3"/>
+          <text x="70" y="106" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">Milieu</text>
+          <text x="70" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">extérieur</text>
+
+          <circle cx="280" cy="110" r="62" fill="#EAF2FA" stroke="#2D5F8A" stroke-width="2"/>
+          <text x="280" y="106" text-anchor="middle" font-size="14" font-weight="800" fill="#1A2A3A">Système</text>
+          <text x="280" y="126" text-anchor="middle" font-size="14" font-weight="800" fill="#2D5F8A">ΔU</text>
+
+          <rect x="430" y="80" width="120" height="60" rx="8" fill="#F1F5F9" stroke="#94a3b8" stroke-width="1.3"/>
+          <text x="490" y="106" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">Milieu</text>
+          <text x="490" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">extérieur</text>
+
+          <g id="wRecuArrow">
+            <line x1="133" y1="93" x2="214" y2="93" stroke="#E8783A" stroke-width="3"/>
+            <polygon points="214,93 203,88 203,98" fill="#E8783A"/>
+            <text x="174" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#E8783A">W reçu (W&gt;0)</text>
+          </g>
+          <g id="wCedeArrow">
+            <line x1="214" y1="128" x2="133" y2="128" stroke="#3A8A6E" stroke-width="3"/>
+            <polygon points="133,128 144,123 144,133" fill="#3A8A6E"/>
+            <text x="174" y="150" text-anchor="middle" font-size="11" font-weight="700" fill="#3A8A6E">W cédé (W&lt;0)</text>
+          </g>
+
+          <g id="qRecuArrow">
+            <line x1="427" y1="93" x2="346" y2="93" stroke="#E8783A" stroke-width="3"/>
+            <polygon points="346,93 357,88 357,98" fill="#E8783A"/>
+            <text x="386" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#E8783A">Q reçu (Q&gt;0)</text>
+          </g>
+          <g id="qCedeArrow">
+            <line x1="346" y1="128" x2="427" y2="128" stroke="#3A8A6E" stroke-width="3"/>
+            <polygon points="427,128 416,123 416,133" fill="#3A8A6E"/>
+            <text x="386" y="150" text-anchor="middle" font-size="11" font-weight="700" fill="#3A8A6E">Q cédé (Q&lt;0)</text>
+          </g>
+        </svg>
+
+        <div class="anim-controls">
+          <button class="anim-btn active" id="wRecuBtn" onclick="setSignW('recu')">W reçu (W&gt;0)</button>
+          <button class="anim-btn" id="wCedeBtn" onclick="setSignW('cede')">W cédé (W&lt;0)</button>
+        </div>
+        <div class="anim-controls">
+          <button class="anim-btn active" id="qRecuBtn" onclick="setSignQ('recu')">Q reçu (Q&gt;0)</button>
+          <button class="anim-btn" id="qCedeBtn" onclick="setSignQ('cede')">Q cédé (Q&lt;0)</button>
+        </div>
+        <div class="etape-msg-box" id="signeMsg"></div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Application — Bilan énergétique d'un réfrigérateur</h3>
+      <p style="font-size:0.88rem;">Exercice p374 n°25 du manuel : identifier les transferts W et Q reçus/cédés par le fluide frigorigène au cours d'un cycle et vérifier le signe de ΔU sur un cycle complet (ΔU<sub>cycle</sub> = 0).</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Capacité thermique massique</h3>
+      <p>La <strong>capacité thermique massique c</strong> d'un système thermodynamique est l'énergie absorbée par 1 kg de ce système pour élever sa température de 1 °C (soit de 1 K). Elle dépend de la nature du système et de son état physique.</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Variation d'énergie interne d'un système incompressible</h3>
+      <p>Si la température augmente, l'énergie cinétique microscopique des entités qui composent le système <strong>augmente</strong>, donc son énergie interne <strong>augmente</strong>.</p>
+      <p style="margin-top:8px;">Lorsqu'un système <strong>incompressible</strong> de masse m, de capacité thermique massique c, passe d'une température initiale T<sub>i</sub> à une température finale T<sub>f</sub>, sa variation d'énergie interne s'écrit :</p>
+      <div class="formule-box">ΔU<sub>i→f</sub> = m × c × (T<sub>f</sub> − T<sub>i</sub>) = m × c × (θ<sub>f</sub> − θ<sub>i</sub>)
+        <div class="legend">(avec m en kg, T en K ou θ en °C)</div>
+      </div>
+      <div class="attention-box"><strong>Attention :</strong> ΔU est <strong>positive</strong> si le système s'échauffe, et <strong>négative</strong> si le système se refroidit.</div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice — Variation d'énergie interne</h3>
+      <div class="exo-enonce">Une masse m = 250 g d'aluminium (c<sub>Al</sub> = 897 J·kg⁻¹·K⁻¹) passe de θ<sub>i</sub> = 18 °C à θ<sub>f</sub> = 95 °C. Calculer ΔU.</div>
+      <div class="num-field-wrap">
+        <label>ΔU =</label>
+        <input type="text" class="num-input" id="b1-ex2">
+        <span class="num-unit">J</span>
+        <button class="btn-verif" onclick="checkNum('b1-ex2', 17270, 100)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b1-ex2-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">ΔU = m × c × (θ<sub>f</sub> − θ<sub>i</sub>) = 0,250 × 897 × (95 − 18) ≈ 17 270 J ≈ 17,3 kJ</div>
+        <div class="calc-step">ΔU &gt; 0 : le système s'échauffe, cohérent avec un apport d'énergie.</div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice 2 — Détermination expérimentale de c<sub>métal</sub> par calorimétrie</h3>
+
+      <div class="calo-intro-layout">
+        <div class="calo-intro-left">
+          <div class="intro-box">
+            <strong>Objectif :</strong> déterminer expérimentalement la capacité thermique massique c<sub>métal</sub> d'un échantillon métallique (choisi dans la liste déroulante ci-dessous), par calorimétrie, puis comparer le résultat obtenu à la valeur théorique tabulée.
+          </div>
+          <div class="remarque-box" style="margin-top:10px;">
+            <strong>Hypothèses :</strong> la paroi du calorimètre étant une enceinte calorifugée, il n'y a pas de transfert thermique entre l'intérieur et l'extérieur du calorimètre. On considère de plus, pour simplifier, que le calorimètre ne participe pas aux échanges thermiques et que, par conséquent, les échanges thermiques au sein du calorimètre n'ont lieu qu'entre l'eau et l'échantillon de métal.
+          </div>
+
+          <div class="calc-box" style="margin-top:12px;">
+            <div class="calc-grid">
+              <div class="calc-field">
+                <label>Nature du métal étudié</label>
+                <select id="calo-metal" class="num-input" style="width:100%;" onchange="nouvelleExperienceCalo()">
+                  <option value="897">Aluminium (897 J·kg⁻¹·K⁻¹)</option>
+                  <option value="450">Fer / acier (450 J·kg⁻¹·K⁻¹)</option>
+                  <option value="385">Cuivre (385 J·kg⁻¹·K⁻¹)</option>
+                  <option value="130">Plomb (130 J·kg⁻¹·K⁻¹)</option>
+                </select>
+              </div>
+            </div>
+            <div class="num-btn-row">
+              <button class="btn-reset" onclick="nouvelleExperienceCalo()">🔄 Nouvelle expérience complète (repesée)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="calo-intro-right">
+          <img src="images-cours/calorimetre.png" alt="Schéma d'un calorimètre : thermomètre, agitateur, vase calorimétrique à double paroi de verre argenté avec vide entre les parois">
+          <div class="img-caption">Le calorimètre est calorifugé mais participe lui-même aux échanges thermiques via sa capacité thermique C<sub>calo</sub> (ici négligée, cf. hypothèses).</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:24px;"><span class="icon">🧪</span> Partie 1 — Manipulation</div>
+
+      <div class="methode-box">
+        <div class="methode-titre">Protocole</div>
+        <ol>
+          <li><strong>Étape 1</strong> — Peser une masse m<sub>eau</sub> et une masse m<sub>métal</sub> (en g).</li>
+          <li><strong>Étape 2</strong> — Mesurer <strong>une seule fois</strong> la température initiale de l'eau versée dans le calorimètre (elle reste fixe pour toute la série).</li>
+          <li><strong>Étape 3</strong> — Immerger l'échantillon de métal porté à la température indiquée, puis relever la température d'équilibre une fois celle-ci stabilisée.</li>
+          <li>Répéter l'étape 3 (immersion + relevé), <strong>10 fois</strong> au total, sans remesurer θ<sub>eau</sub>.</li>
+        </ol>
+      </div>
+
+      <div class="anim-canvas-wrap" style="margin-top:14px;">
+        <div class="anim-canvas-title">Étape 1 — Pesée</div>
+        <div class="num-btn-row" style="justify-content:center;">
+          <button class="btn-verif" id="peserBtn" onclick="peserCalo()">⚖️ Peser l'eau et le métal</button>
+        </div>
+        <div class="etape-msg-box" id="calo-masses-recap">Masses relevées : m<sub>eau</sub> = <strong>-- g</strong> &nbsp;·&nbsp; m<sub>métal</sub> = <strong>-- g</strong> <span style="font-size:0.78rem;color:var(--texte-leger);">(reste affiché ici pour ton programme Python)</span></div>
+      </div>
+
+      <div class="anim-canvas-wrap" style="margin-top:14px;">
+        <div class="anim-canvas-title">Étapes 2 et 3 — Mesure de θ<sub>éq</sub> (essai <span id="caloEssaiNum">1</span>/10)</div>
+        <div class="num-btn-row" style="justify-content:center;margin-bottom:6px;">
+          <button class="btn-reset" onclick="reinitialiserMesuresCalo()">↺ Réinitialiser les mesures (étapes 2-3)</button>
+        </div>
+
+        <svg id="caloSVG" viewBox="0 0 480 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;display:block;margin:10px auto;">
+          <!-- calorimètre -->
+          <rect x="60" y="70" width="130" height="130" rx="10" fill="#EAF2FA" stroke="#2D5F8A" stroke-width="2"/>
+          <rect x="70" y="80" width="110" height="112" rx="6" fill="#BFDCF2" stroke="#5B8FB9" stroke-width="1.4"/>
+          <text x="125" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">Calorimètre</text>
+          <!-- thermomètre -->
+          <rect x="118" y="20" width="14" height="70" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.4"/>
+          <rect x="122" y="60" width="6" height="26" fill="#C0392B"/>
+          <!-- écran digital température -->
+          <rect x="200" y="30" width="120" height="46" rx="6" fill="#0F172A"/>
+          <text id="caloThermoLabel" x="210" y="48" font-size="10" fill="#86EFAC" font-family="Consolas,monospace">température</text>
+          <text id="caloThermoDisplay" x="210" y="68" font-size="18" fill="#86EFAC" font-family="Consolas,monospace" font-weight="700">-- °C</text>
+          <!-- métal cliquable, positionné hors du calorimètre au départ de chaque essai -->
+          <g id="caloMetalGroup" style="cursor:pointer;" onclick="immergerMetalCalo()">
+            <circle cx="350" cy="140" r="18" fill="#E8783A" stroke="#B85C1E" stroke-width="1.6"/>
+            <text x="350" y="145" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">métal</text>
+          </g>
+          <text id="caloMetalLabel" x="350" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#B85C1E">-- °C</text>
+        </svg>
+
+        <div class="num-btn-row" style="justify-content:center;">
+          <button class="btn-verif" id="lireEauBtn" onclick="lireEauCalo()">🌡️ Mesurer θ<sub>eau</sub> initiale</button>
+          <button class="btn-verif" id="releverBtn" onclick="releverCalo()" disabled>🌡️ Relever θ<sub>éq</sub> (stabilisée)</button>
+        </div>
+        <p style="text-align:center;font-size:0.78rem;color:var(--texte-leger);margin-top:4px;">Une fois θ<sub>eau</sub> mesurée, clique directement sur le <strong>métal</strong> ci-dessus pour l'immerger dans le calorimètre.</p>
+
+        <div class="etape-msg-box" id="calo-etape-msg">Clique sur « Mesurer θ<sub>eau</sub> initiale » pour commencer l'essai n°1.</div>
+        <div class="etape-msg-box" id="calo-carnet" style="margin-top:8px;">
+          <strong>Carnet de mesures (θ<sub>éq</sub>) :</strong> aucune mesure encore réalisée.
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:26px;"><span class="icon">🐍</span> Partie 2 — Le programme Python</div>
+
+      <div class="methode-box">
+        <div class="methode-titre">À toi de coder</div>
+        <p style="font-size:0.85rem;margin:0;">Recopie dans le programme les valeurs <strong>que tu as relevées</strong> pendant la manipulation (masses en grammes, températures, tes 10 mesures de θ<sub>éq</sub>, et le c théorique du métal choisi). Tout le traitement (moyenne, incertitude, calcul de c<sub>métal</sub>...) est <strong>déjà écrit</strong> : la seule ligne de calcul à compléter toi-même est la <strong>conversion des masses de g en kg</strong>.</p>
+      </div>
+      <textarea class="py-editor" id="py-calo" spellcheck="false">
+# ── Recopie ici les valeurs que TU as relevees pendant la manipulation ──
+m_eau_g = ___          # masse d'eau pesee, en g
+m_metal_g = ___        # masse de metal pesee, en g
+theta_eau = ___         # temperature initiale de l'eau, en °C
+theta_metal = ___        # temperature initiale du metal, en °C
+c_metal_theo = ___       # valeur tabulee du metal choisi, en J.kg-1.K-1 (voir le menu)
+
+# Recopie ici tes 10 mesures de theta_eq lues dans le carnet de mesures (en °C)
+mesures_theta_eq = [ ___ , ___ , ___ , ___ , ___ , ___ , ___ , ___ , ___ , ___ ]
+
+# ── Seule formule a completer : conversion des masses en kg (unite du SI) ──
+m_eau = ___              # convertis m_eau_g (en g) en kg
+m_metal = ___            # convertis m_metal_g (en g) en kg
+
+# ── Tout le reste est deja ecrit : lance le programme et observe le resultat ! ──
+c_eau = 4180
+N = len(mesures_theta_eq)
+moyenne = sum(mesures_theta_eq) / N
+ecart_type = (sum([(x - moyenne)**2 for x in mesures_theta_eq]) / (N - 1)) ** 0.5
+u_theta_eq = ecart_type / (N ** 0.5)
+
+c_metal_exp = m_eau*c_eau*(moyenne - theta_eau) / (m_metal*(theta_metal - moyenne))
+u_c_metal = c_metal_exp * u_theta_eq * (theta_metal - theta_eau) / ((moyenne - theta_eau) * (theta_metal - moyenne))
+ecart_relatif = abs(c_metal_exp - c_metal_theo) / c_metal_theo * 100
+
+print("theta_eq moyenne =", round(moyenne, 2), "degC  (ecart-type =", round(ecart_type, 2), "degC)")
+print("c_metal experimental =", round(c_metal_exp, 1), "+/-", round(u_c_metal, 1), "J.kg-1.K-1")
+print("valeur theorique c_metal_theo =", c_metal_theo, "J.kg-1.K-1")
+print("ecart relatif =", round(ecart_relatif, 1), "%")</textarea>
+      <button class="btn-run" id="py-run-btn" onclick="runCaloPython()">▶ Exécuter</button>
+
+      <div class="anim-canvas-title" style="margin-top:12px;">Histogramme fréquentiel des 10 mesures de θ<sub>éq</sub></div>
+      <div class="thermo-canvas-wrap">
+        <canvas id="caloResultChart" width="380" height="220"></canvas>
+      </div>
+
+      <div class="py-output" id="py-calo-output">// Le résultat de ton programme s'affichera ici.</div>
+
+      <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:12px;">✅ Voir la correction (conversion g → kg)</button>
+      <div class="correction">
+        <div class="calc-step">m_eau = m_eau_g / 1000</div>
+        <div class="calc-step">m_metal = m_metal_g / 1000</div>
+        <div class="calc-step">C'est la seule étape de calcul demandée ici : tout le reste (statistiques, bilan calorimétrique, incertitude) est fourni pour que tu puisses te concentrer sur la démarche expérimentale et l'analyse du résultat, pas sur la retranscription de formules.</div>
+      </div>
+
+      <div class="section-title" style="margin-top:26px;"><span class="icon">📝</span> Partie 3 — Interprétation et conclusion</div>
+
+      <div class="predict-step">
+        <div class="predict-num">?</div>
+        <div class="predict-content">
+          <p><strong>Conclusion :</strong> en comparant l'écart |c<sub>métal,exp</sub> − c<sub>métal,théo</sub>| à l'incertitude u(c<sub>métal</sub>) calculée par ton programme, peux-tu conclure que la valeur théorique est <strong>compatible</strong> avec ta mesure expérimentale ? Justifie, et propose une cause d'erreur expérimentale qui pourrait expliquer un éventuel écart.</p>
+          <label>Ta conclusion :</label>
+          <textarea class="predict-textarea" placeholder="La valeur théorique est / n'est pas compatible avec la mesure car..."></textarea>
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir une méthode de conclusion</button>
+          <div class="correction">
+            <p>On compare l'écart |c<sub>exp</sub> − c<sub>théo</sub>| à l'incertitude u(c<sub>métal</sub>) : si |c<sub>exp</sub> − c<sub>théo</sub>| ≤ u(c<sub>métal</sub>), les deux valeurs sont <strong>compatibles</strong> (l'écart peut s'expliquer par la seule dispersion statistique des mesures). Si l'écart est supérieur à u(c<sub>métal</sub>), l'incertitude de type A seule ne suffit pas à l'expliquer : il existe probablement une <strong>erreur systématique</strong>, par exemple des pertes thermiques vers l'extérieur (calorimètre pas parfaitement isolé), qui n'est pas prise en compte par l'incertitude de type A calculée ici.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-B1-1 -->
+
+</div>
+<!-- /tab-2 -->
+<!-- ══════════════ ONGLET B-II — TRANSFERTS THERMIQUES ══════════════ -->
+<div class="tab-content" id="tab-3">
+
+  <div class="sub-tabs-nav" id="sub-nav-B2">
+    <button class="sub-tab-btn active" data-sub="B2a" onclick="switchSubTab('B2',0)">
+      <span class="sub-tab-num">1</span> Modes de transfert
+    </button>
+    <button class="sub-tab-btn" data-sub="B2b" onclick="switchSubTab('B2',1)">
+      <span class="sub-tab-num">2</span> Flux &amp; résistance thermique
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Pour des raisons écologiques et économiques, les architectes et les industriels rivalisent d'ingéniosité afin de limiter les pertes d'énergie à travers les murs, les fenêtres, le toit... Comment caractériser le transfert thermique à travers une paroi ?
+  </div>
+
+  <!-- ───────── B2a : MODES DE TRANSFERT ───────── -->
+  <div class="sub-tab-content active" id="sub-B2-0">
+
+    <div class="def-card">
+      <h3>Les trois modes de transfert thermique</h3>
+      <p><strong>Conduction thermique :</strong> principalement dans les solides, l'agitation thermique se transmet de proche en proche dans la matière, <strong>sans</strong> déplacement de l'ensemble de celle-ci. La partie la plus froide s'échauffe au contact de la partie la plus chaude.</p>
+      <p style="margin-top:8px;"><strong>Convection thermique :</strong> principalement dans les fluides, l'agitation thermique se transmet de proche en proche dans la matière, <strong>avec</strong> déplacement de l'ensemble de celui-ci : des courants de fluide.</p>
+      <p style="margin-top:8px;"><strong>Rayonnement thermique :</strong> dans tout milieu matériel ou dans le vide. L'absorption ou l'émission d'ondes électromagnétiques par la matière en modifient l'agitation thermique.</p>
+      <div class="cours-img-wrap">
+        <img src="images-cours/transferts-thermiques.png" alt="Casserole sur une flamme illustrant les trois modes de transfert thermique : conduction dans le manche, convection dans l'eau, rayonnement de la flamme">
+        <div class="img-caption">Les trois modes de transfert thermique réunis dans une situation du quotidien : conduction dans le manche métallique, convection dans l'eau chauffée, rayonnement émis par la flamme.</div>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🔥 Animation — Les trois modes de transfert thermique</h3>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Choisis un mode de transfert</div>
+        <canvas id="transfCanvas" width="500" height="220"></canvas>
+        <div class="anim-controls">
+          <button class="anim-btn active" onclick="setTransfMode('conduction', this)">Conduction</button>
+          <button class="anim-btn" onclick="setTransfMode('convection', this)">Convection</button>
+          <button class="anim-btn" onclick="setTransfMode('rayonnement', this)">Rayonnement</button>
+        </div>
+        <div class="etape-msg-box" id="transfMsg"></div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Autotest</h3>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">Le transfert thermique dans un mur en briques (sans mouvement de matière) est de type :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b2-fb1')">conduction</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b2-fb1')">convection</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b2-fb1')">rayonnement</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b2-fb1"></div>
+        <div class="qcm-item">
+          <span class="substance">Le seul mode de transfert thermique possible dans le vide est :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b2-fb2')">conduction</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b2-fb2')">convection</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b2-fb2')">rayonnement</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b2-fb2"></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-B2-0 -->
+
+  <!-- ───────── B2b : FLUX & RÉSISTANCE THERMIQUE ───────── -->
+  <div class="sub-tab-content" id="sub-B2-1">
+
+    <div class="def-card">
+      <h3>Flux thermique (puissance thermique)</h3>
+      <p>Il permet d'évaluer la <strong>vitesse de transfert thermique</strong>. Si le transfert thermique Q entre un système et l'extérieur a comme durée Δt, alors le flux thermique noté ɸ est défini par :</p>
+      <div class="formule-box">ɸ = Q / Δt &nbsp;<span class="legend" style="display:inline;font-weight:500;">(ɸ en W, Q en J, Δt en s)</span></div>
+      <p>Le flux thermique ɸ est aussi appelé <strong>puissance thermique</strong>, notée P<sub>th</sub>. Par convention, il est compté <strong>positivement</strong> s'il est reçu par le système et <strong>négativement</strong> s'il est cédé.</p>
+    </div>
+
+    <div class="def-card">
+      <h3>Résistance thermique</h3>
+      <p>La <strong>résistance thermique R<sub>th</sub></strong> caractérise l'opposition d'un milieu au transfert thermique entre deux points. Plus elle est élevée, plus le flux est faible (matériau plus isolant).</p>
+      <div class="cours-img-wrap">
+        <img src="images-cours/flux-thermique.png" alt="Flux thermique Φ traversant une paroi d'épaisseur e et de surface S, entre une face A à température TA et une face B à température TB, avec TA supérieure à TB">
+        <div class="img-caption">Le flux thermique Φ traverse la paroi (épaisseur e, surface S) de la face A la plus chaude (T<sub>A</sub>) vers la face B la plus froide (T<sub>B</sub>).</div>
+      </div>
+      <div class="formule-box">ɸ = (T<sub>c</sub> − T<sub>f</sub>) / R<sub>th</sub>
+        <div class="legend">avec T<sub>c</sub> la température de la source chaude, T<sub>f</sub> celle de la source froide, ɸ en W et R<sub>th</sub> en K·W⁻¹</div>
+      </div>
+      <div class="remarque-box"><strong>Résistance thermique d'une paroi :</strong> R<sub>th</sub> = e / (λ × S), avec e l'épaisseur (m), λ la conductivité thermique du matériau (W·m⁻¹·K⁻¹) et S la surface (m²). Pour une paroi constituée de plusieurs matériaux accolés, la résistance thermique totale est égale à la <strong>somme</strong> des résistances thermiques de chaque couche.</div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🏠 Activité 4 (Annexe) — Isolation d'un mur</h3>
+      <p>Conductivités thermiques λ (W·m⁻¹·K⁻¹) : air sec 0,025 · laine de verre 0,040 · bois 0,10 à 0,35 · béton plein 1,7 · placoplâtre 0,46 · verre 1,2 · brique 0,84 · polystyrène 0,035 · acier 46.</p>
+      <div class="calc-box">
+        <div class="calc-grid">
+          <div class="calc-field"><label>Épaisseur e (cm)</label><input type="text" class="num-input" id="rth-e" value="10"></div>
+          <div class="calc-field"><label>Conductivité λ (W·m⁻¹·K⁻¹)</label><input type="text" class="num-input" id="rth-lambda" value="0,84"></div>
+          <div class="calc-field"><label>Surface S (m²)</label><input type="text" class="num-input" id="rth-s" value="30"></div>
+        </div>
+        <div class="num-btn-row">
+          <button class="btn-verif" onclick="calcRth()">Calculer R<sub>th</sub></button>
+          <button class="btn-reset" onclick="resetRth()">↺ Réinitialiser</button>
+        </div>
+        <div class="calc-result" id="rth-result">R<sub>th</sub> = e / (λ×S) — remplis les champs puis clique sur « Calculer »</div>
+      </div>
+      <div class="remarque-box" style="margin-top:10px;">Exemple du cours : un mur de 30 m² composé de 10 cm de brique + 5,0 cm de laine de verre + 20 cm de béton a une résistance thermique totale R<sub>th1</sub> = somme des trois résistances (bien supérieure à celle du même mur si les matériaux étaient mélangés en une seule couche homogène) : superposer des couches de nature différente améliore l'isolation.</div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice — Flux à travers une fenêtre</h3>
+      <div class="exo-enonce">Une fenêtre simple vitrage en verre a une épaisseur e = 5,0 mm et une surface S = 1,0 m² (λ<sub>verre</sub> = 1,2 W·m⁻¹·K⁻¹). La température intérieure est de 19 °C et extérieure de 6 °C. Calculer le flux thermique ɸ à travers la fenêtre.</div>
+      <div class="num-field-wrap">
+        <label>ɸ =</label>
+        <input type="text" class="num-input" id="b2-ex1">
+        <span class="num-unit">W</span>
+        <button class="btn-verif" onclick="checkNum('b2-ex1', 3120, 150)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b2-ex1-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">R<sub>th</sub> = e / (λ×S) = 5,0×10⁻³ / (1,2 × 1,0) ≈ 4,17×10⁻³ K·W⁻¹</div>
+        <div class="calc-step">ɸ = (T<sub>c</sub> − T<sub>f</sub>) / R<sub>th</sub> = (19 − 6) / 4,17×10⁻³ ≈ 3 120 W</div>
+        <div class="calc-step">Une double fenêtre (deux vitrages séparés par 10 cm d'air, isolant) augmente fortement R<sub>th</sub> total et réduit le flux : intérêt à la fois énergétique.</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-B2-1 -->
+
+</div>
+<!-- /tab-3 -->
+<!-- ══════════════ ONGLET B-III — LOIS DE THERMODYNAMIQUE ══════════════ -->
+<div class="tab-content" id="tab-4">
+
+  <div class="sub-tabs-nav" id="sub-nav-B3">
+    <button class="sub-tab-btn active" data-sub="B3a" onclick="switchSubTab('B3',0)">
+      <span class="sub-tab-num">1</span> Loi de Newton
+    </button>
+    <button class="sub-tab-btn" data-sub="B3b" onclick="switchSubTab('B3',1)">
+      <span class="sub-tab-num">2</span> Loi de Stefan-Boltzmann
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Comment prévoir l'évolution de la température d'un système incompressible au cours du temps, lorsqu'il échange de l'énergie thermique avec un thermostat extérieur ?
+  </div>
+
+  <!-- ───────── B3a : LOI DE NEWTON ───────── -->
+  <div class="sub-tab-content active" id="sub-B3-0">
+
+    <div class="def-card">
+      <h3>Hypothèse de Newton</h3>
+      <p>Isaac Newton a remarqué qu'un objet se refroidissait d'autant plus rapidement que la différence de température entre ce corps et le milieu extérieur était importante.</p>
+      <p style="margin-top:8px;">La <strong>loi de Newton</strong> indique que le taux de variation de température d'un système incompressible, échangeant de l'énergie par un transfert thermique, est proportionnel à la différence entre la température du corps T et celle du milieu extérieur T<sub>th</sub>, qui joue le rôle de thermostat :</p>
+      <div class="formule-box">dT/dt = − γ · (T − T<sub>th</sub>)
+        <div class="legend">avec dT/dt le taux de variation de température en K·s⁻¹, γ une constante en s⁻¹, T la température du système (K), T<sub>th</sub> la température du thermostat (K)</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Résolution de l'équation différentielle</h3>
+      <p>La loi de Newton est une équation différentielle linéaire du premier ordre à coefficients constants avec second membre constant, du type y' = a·y + b, dont la solution générale est y(x) = A·e<sup>a·x</sup> + B.</p>
+      <div class="methode-box">
+        <div class="methode-titre">Méthode — Détermination de la solution</div>
+        <ol>
+          <li>On identifie T(t) = A · e<sup>−γ·t</sup> + B.</li>
+          <li>Quand t → +∞, T → T<sub>th</sub>, donc B = T<sub>th</sub>.</li>
+          <li>À t = 0 s, T = T<sub>0</sub>, donc T<sub>0</sub> = A + T<sub>th</sub>, d'où A = T<sub>0</sub> − T<sub>th</sub>.</li>
+        </ol>
+      </div>
+      <div class="formule-box">T(t) = (T<sub>0</sub> − T<sub>th</sub>) · e<sup>−γ·t</sup> + T<sub>th</sub></div>
+      <p>L'évolution de la température se traduit par une fonction exponentielle qui tend vers la température du thermostat T<sub>th</sub> (décroissante si T<sub>0</sub> &gt; T<sub>th</sub>, croissante si T<sub>0</sub> &lt; T<sub>th</sub>).</p>
+    </div>
+
+    <div class="activite-card">
+      <h3>🥤 Application — Canette de soda</h3>
+      <p>Une canette de soda sortant du réfrigérateur à la température initiale θ<sub>i</sub> = 5 °C se retrouve à l'air libre en été, dans une pièce à θ<sub>ext</sub> = 30 °C. On modélise le flux thermique reçu par la canette (masse m, capacité thermique massique c) par la loi de Newton : ɸ = k(θ<sub>ext</sub> − θ), avec k une constante positive caractérisant l'échange thermique entre la canette et l'air.</p>
+
+      <div class="section-title" style="margin-top:16px;"><span class="icon">1️⃣</span> Établir l'équation différentielle</div>
+
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">1. Sur une durée dt, la variation d'énergie interne dU du système {canette}, incompressible, s'écrit :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b3can-fb1')">dU = m·c·dθ</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb1')">dU = m·c·θ</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb1')">dU = c·dθ/m</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b3can-fb1"></div>
+
+        <div class="qcm-item">
+          <span class="substance">2. L'énergie δQ reçue par la canette pendant dt, à partir du flux ɸ = k(θ<sub>ext</sub>−θ), s'écrit :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb2')">δQ = k(θ<sub>ext</sub>−θ)</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b3can-fb2')">δQ = k(θ<sub>ext</sub>−θ)·dt</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb2')">δQ = k(θ−θ<sub>ext</sub>)·dt</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b3can-fb2"></div>
+
+        <div class="qcm-item">
+          <span class="substance">3. Le système n'échangeant pas de travail (W = 0), le premier principe (dU = δQ) donne l'équation différentielle :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b3can-fb3')">m·c·dθ/dt = k(θ<sub>ext</sub>−θ)</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb3')">m·c·dθ/dt = −k(θ<sub>ext</sub>−θ)</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb3')">dθ/dt = k(θ<sub>ext</sub>−θ)</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b3can-fb3"></div>
+
+        <div class="qcm-item">
+          <span class="substance">4. En posant τ = m·c/k, l'équation différentielle se met sous forme canonique :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb4')">dθ/dt − θ/τ = θ<sub>ext</sub>/τ</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b3can-fb4')">dθ/dt + θ/τ = θ<sub>ext</sub>/τ</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb4')">dθ/dt + θ·τ = θ<sub>ext</sub>·τ</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b3can-fb4"></div>
+      </div>
+
+      <div class="section-title" style="margin-top:20px;"><span class="icon">2️⃣</span> Résoudre l'équation différentielle</div>
+
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">5. Cette équation différentielle linéaire du premier ordre à coefficients constants (type y' = ay + b) admet une solution générale de la forme :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b3can-fb5')">θ(t) = A·e<sup>−t/τ</sup> + B</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb5')">θ(t) = A·t + B</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb5')">θ(t) = A·e<sup>t/τ</sup> + B</button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b3can-fb5"></div>
+
+        <div class="qcm-item">
+          <span class="substance">6. Quand t → +∞, θ(t) doit tendre vers θ<sub>ext</sub> (température du thermostat). On en déduit :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb6')">A = θ<sub>ext</sub></button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b3can-fb6')">B = θ<sub>ext</sub></button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb6')">A + B = θ<sub>ext</sub></button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b3can-fb6"></div>
+
+        <div class="qcm-item">
+          <span class="substance">7. À t = 0, θ(0) = θ<sub>i</sub> (température initiale). On en déduit :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b3can-fb7')">A = θ<sub>i</sub> − θ<sub>ext</sub></button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb7')">A = θ<sub>i</sub> + θ<sub>ext</sub></button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb7')">A = θ<sub>ext</sub> − θ<sub>i</sub></button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b3can-fb7"></div>
+
+        <div class="qcm-item">
+          <span class="substance">8. L'expression complète de θ(t) est donc :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'b3can-fb8')">θ(t) = (θ<sub>i</sub>−θ<sub>ext</sub>)·e<sup>−t/τ</sup> + θ<sub>ext</sub></button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb8')">θ(t) = (θ<sub>i</sub>+θ<sub>ext</sub>)·e<sup>−t/τ</sup> − θ<sub>ext</sub></button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'b3can-fb8')">θ(t) = θ<sub>i</sub>·e<sup>−t/τ</sup> + θ<sub>ext</sub></button>
+          </div>
+        </div>
+        <div class="qcm-feedback" id="b3can-fb8"></div>
+      </div>
+
+      <div class="section-title" style="margin-top:20px;"><span class="icon">3️⃣</span> Exploiter la solution</div>
+
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Évolution de la température de la canette θ(t) = (θ<sub>i</sub> − θ<sub>ext</sub>)·e<sup>−t/τ</sup> + θ<sub>ext</sub></div>
+        <canvas id="newtonCanvas" width="500" height="240"></canvas>
+        <div class="anim-controls">
+          <button class="anim-btn active" id="newtonPlayBtn" onclick="toggleNewtonAnim()">⏸ Pause</button>
+          <button class="anim-btn" onclick="resetNewtonAnim()">↺ Revenir à t = 0</button>
+        </div>
+        <div class="etape-msg-box" id="newtonMsg"></div>
+      </div>
+      <div class="exo-enonce" style="margin-top:10px;">On donne τ = 910 s. Calculer l'instant t<sub>20°C</sub> pour lequel la température de la canette atteint 20 °C.</div>
+      <div class="num-field-wrap">
+        <label>t<sub>20°C</sub> =</label>
+        <input type="text" class="num-input" id="b3-ex1">
+        <span class="num-unit">s</span>
+        <button class="btn-verif" onclick="checkNum('b3-ex1', 834, 20)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b3-ex1-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">θ(t) = (θ<sub>i</sub> − θ<sub>ext</sub>)·e<sup>−t/τ</sup> + θ<sub>ext</sub> = (5 − 30)·e<sup>−t/910</sup> + 30 = 30 − 25·e<sup>−t/910</sup></div>
+        <div class="calc-step">θ(t) = 20 ⟹ e<sup>−t/910</sup> = 10/25 = 0,4 ⟹ t = −910×ln(0,4) ≈ 834 s (≈ 13,9 min)</div>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>☕ Application — Tasse de café qui refroidit</h3>
+      <p>Une tasse de café, servie à la température initiale θ<sub>i</sub> = 80 °C, refroidit dans une pièce à température ambiante θ<sub>ext</sub> = 20 °C. Comme pour la canette, on modélise le flux thermique reçu par la tasse (masse m, capacité thermique massique c) par la loi de Newton : ɸ = k(θ<sub>ext</sub> − θ), avec k une constante positive. On donne τ = m·c/k = 480 s.</p>
+      <div class="exo-enonce" style="margin-top:10px;">
+        1. En effectuant un bilan d'énergie sur une durée dt (système {café} incompressible, sans travail échangé), établir l'équation différentielle vérifiée par θ(t), puis la mettre sous forme canonique en fonction de τ.<br>
+        2. Résoudre cette équation différentielle : déterminer les constantes A et B de la solution générale θ(t) = A·e<sup>−t/τ</sup> + B à l'aide des conditions aux limites (t→+∞ et t=0), puis donner l'expression complète de θ(t).<br>
+        3. Calculer l'instant t<sub>55°C</sub> pour lequel la température du café atteint 55 °C (température jugée « buvable »).
+      </div>
+      <div class="num-field-wrap">
+        <label>t<sub>55°C</sub> =</label>
+        <input type="text" class="num-input" id="b3-ex-cafe">
+        <span class="num-unit">s</span>
+        <button class="btn-verif" onclick="checkNum('b3-ex-cafe', 259, 15)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b3-ex-cafe-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step"><strong>1. Établir l'équation différentielle :</strong> sur dt, dU = m·c·dθ (système incompressible). Le système ne recevant pas de travail, le premier principe donne dU = δQ, avec δQ = ɸ·dt = k(θ<sub>ext</sub>−θ)·dt. D'où m·c·dθ/dt = k(θ<sub>ext</sub>−θ), soit, en posant τ = m·c/k : <strong>dθ/dt + θ/τ = θ<sub>ext</sub>/τ</strong>.</div>
+        <div class="calc-step"><strong>2. Résoudre l'équation différentielle :</strong> la solution générale est θ(t) = A·e<sup>−t/τ</sup> + B. Quand t→+∞, θ(t)→θ<sub>ext</sub>, donc B = θ<sub>ext</sub>. À t = 0, θ(0) = θ<sub>i</sub>, donc A = θ<sub>i</sub> − θ<sub>ext</sub>. D'où : <strong>θ(t) = (θ<sub>i</sub> − θ<sub>ext</sub>)·e<sup>−t/τ</sup> + θ<sub>ext</sub></strong>.</div>
+        <div class="calc-step"><strong>3. Exploiter la solution :</strong> θ(t) = (80 − 20)·e<sup>−t/480</sup> + 20 = 20 + 60·e<sup>−t/480</sup></div>
+        <div class="calc-step">θ(t) = 55 ⟹ e<sup>−t/480</sup> = 35/60 ≈ 0,583 ⟹ t = −480×ln(0,583) ≈ 259 s (≈ 4,3 min)</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-B3-0 -->
+
+
+  <!-- ───────── B3b : LOI DE STEFAN-BOLTZMANN ───────── -->
+  <div class="sub-tab-content" id="sub-B3-1">
+
+    <div class="def-card">
+      <h3>Loi de Stefan-Boltzmann</h3>
+      <p>Tout corps de température non nulle perd de l'énergie par rayonnement. La loi de Stefan-Boltzmann définit la relation entre le flux thermique par unité de surface d'un objet et sa température, l'objet étant considéré comme un « corps noir » (objet idéal qui émet sous forme de rayonnement toute l'énergie qu'il reçoit).</p>
+      <div class="formule-box">F = σ × T⁴
+        <div class="legend">F : flux thermique par unité de surface (W·m⁻²) · T : température du corps noir (K) · σ = 5,67×10⁻⁸ W·m⁻²·K⁻⁴ (constante de Stefan-Boltzmann)</div>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🌍 Application — Effet de serre</h3>
+      <p>Le fonctionnement d'une serre ne repose pas sur le principe de l'effet de serre atmosphérique, mais sur la <strong>disparition des échanges thermiques dus à la convection</strong> entre la terre et l'air ambiant. On considère un lopin de terre <strong>sans serre</strong>, transmettant à l'air ambiant φ<sub>conv</sub> = 102 W·m⁻² par convection. Donnée : température moyenne de la surface de la Terre T = 288 K.</p>
+      <div class="exo-enonce" style="margin-top:10px;">1. Effectuer un bilan d'énergie avec les flux thermiques surfaciques reçus de l'extérieur φ<sub>ext</sub>, perdus par convection φ<sub>conv</sub> et émis par rayonnement φ<sub>ray</sub>. 2. Calculer φ<sub>ext</sub>.</div>
+      <div class="num-field-wrap">
+        <label>φ<sub>ext</sub> =</label>
+        <input type="text" class="num-input" id="b3-ex2">
+        <span class="num-unit">W·m⁻²</span>
+        <button class="btn-verif" onclick="checkNum('b3-ex2', 492, 15)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b3-ex2-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">Régime stationnaire (température constante) : φ<sub>ext</sub> = φ<sub>conv</sub> + φ<sub>ray</sub></div>
+        <div class="calc-step">φ<sub>ray</sub> = σ×T⁴ = 5,67×10⁻⁸ × 288⁴ ≈ 390 W·m⁻²</div>
+        <div class="calc-step">φ<sub>ext</sub> = 102 + 390 ≈ 492 W·m⁻²</div>
+      </div>
+      <div class="exo-enonce" style="margin-top:14px;">3. Avec une serre installée, le flux φ<sub>ext</sub> reçu est équivalent mais les échanges par convection sont désormais nuls (φ<sub>conv</sub> = 0). Déterminer la température de la terre sous la serre.</div>
+      <div class="num-field-wrap">
+        <label>T<sub>serre</sub> =</label>
+        <input type="text" class="num-input" id="b3-ex3">
+        <span class="num-unit">K</span>
+        <button class="btn-verif" onclick="checkNum('b3-ex3', 310, 3)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b3-ex3-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">φ<sub>ext</sub> = σ×T<sub>serre</sub>⁴ ⟹ T<sub>serre</sub> = (φ<sub>ext</sub>/σ)<sup>1/4</sup> = (492 / 5,67×10⁻⁸)<sup>1/4</sup> ≈ 310 K (≈ 37 °C)</div>
+        <div class="calc-step">Le véritable phénomène responsable de l'échauffement sous la serre est donc la <strong>suppression de la convection</strong>, et non l'effet de serre radiatif au sens atmosphérique.</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Modèle quantitatif de l'effet de serre atmosphérique</h3>
+      <p>En reprenant le bilan radiatif du système {Terre ; atmosphère} vu en prérequis (flux solaire φ<sub>S</sub>, albédo A, coefficient d'absorption atmosphérique α), on peut établir la température d'équilibre T<sub>T</sub> de la surface terrestre. À l'équilibre, le flux reçu par la Terre — flux solaire absorbé (1−A)·φ<sub>S</sub> et rayonnement atmosphérique redescendant (α/2)·φ<sub>E</sub> — est égal au flux qu'elle émet (loi de Stefan-Boltzmann, φ<sub>E</sub> = k×T<sub>T</sub>⁴) :</p>
+      <div class="formule-box">T<sub>T</sub> = [ 2(1−A)·φ<sub>S</sub> / ((2−α)×k) ]<sup>1/4</sup>
+        <div class="legend">avec φ<sub>S</sub> le flux solaire incident (W·m⁻²), A l'albédo terrestre, α le coefficient d'absorption de l'atmosphère (0 ≤ α ≤ 1), k = σ la constante de Stefan-Boltzmann</div>
+      </div>
+      <div class="remarque-box">Sans atmosphère absorbante (α = 0), cette expression se réduit à T<sub>T</sub> = [(1−A)·φ<sub>S</sub>/k]<sup>1/4</sup> : la présence de l'atmosphère (α &gt; 0) fait diminuer (2−α) au dénominateur, donc <strong>augmente</strong> T<sub>T</sub> — c'est la traduction quantitative de l'effet de serre.</div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🌡️ Application — Effet de serre naturel : quelle amplitude de réchauffement ?</h3>
+      <p>On donne le flux solaire incident φ<sub>S</sub> = 342 W·m⁻², l'albédo terrestre A = 0,30, et k = σ = 5,67×10⁻⁸ W·m⁻²·K⁻⁴.</p>
+      <div class="exo-enonce" style="margin-top:10px;">1. Calculer la température T<sub>T</sub> qu'aurait la Terre en l'<strong>absence d'atmosphère absorbante</strong> (α = 0).</div>
+      <div class="num-field-wrap">
+        <label>T<sub>T</sub>(α=0) =</label>
+        <input type="text" class="num-input" id="b3-ex4">
+        <span class="num-unit">K</span>
+        <button class="btn-verif" onclick="checkNum('b3-ex4', 255, 3)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b3-ex4-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">T<sub>T</sub> = [(1−A)·φ<sub>S</sub>/k]<sup>1/4</sup> = [(0,70×342)/5,67×10⁻⁸]<sup>1/4</sup> = [4,22×10⁹]<sup>1/4</sup> ≈ 255 K (≈ −18 °C)</div>
+      </div>
+
+      <div class="exo-enonce" style="margin-top:16px;">2. On donne maintenant α = 0,77 (valeur réaliste de l'absorption atmosphérique). Calculer T<sub>T</sub>.</div>
+      <div class="num-field-wrap">
+        <label>T<sub>T</sub>(α=0,77) =</label>
+        <input type="text" class="num-input" id="b3-ex5">
+        <span class="num-unit">K</span>
+        <button class="btn-verif" onclick="checkNum('b3-ex5', 288, 3)">Vérifier</button>
+      </div>
+      <div class="num-feedback" id="b3-ex5-fb"></div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">T<sub>T</sub> = [2(1−A)φ<sub>S</sub> / ((2−α)k)]<sup>1/4</sup> = [2×0,70×342 / ((2−0,77)×5,67×10⁻⁸)]<sup>1/4</sup> = [478,8 / (6,96×10⁻⁸)]<sup>1/4</sup> ≈ 288 K (≈ 15 °C)</div>
+      </div>
+
+      <div class="exo-enonce" style="margin-top:16px;">3. Comparer les deux résultats et conclure sur l'amplitude de l'effet de serre naturel terrestre.</div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <p>Sans atmosphère absorbante, la température moyenne de surface serait d'environ −18 °C (255 K) ; avec l'atmosphère réelle (α = 0,77), elle atteint environ 15 °C (288 K), proche de la valeur moyenne observée. L'<strong>effet de serre naturel</strong> réchauffe donc la surface terrestre d'environ <strong>33 °C</strong>, ce qui rend la vie telle qu'on la connaît possible sur Terre — à distinguer de l'effet de serre additionnel lié aux activités humaines, qui modifie α et renforce ce réchauffement.</p>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-B3-1 -->
+
+</div>
+<!-- /tab-4 -->
+<!-- ══════════════ ONGLET BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-5">
+
+  <div class="sub-tabs-nav" id="sub-nav-R">
+    <button class="sub-tab-btn active" data-sub="R1" onclick="switchSubTab('R',0)">
+      <span class="sub-tab-num">1</span> Bilan et points clés
+    </button>
+    <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
+      <span class="sub-tab-num">2</span> Ressources
+    </button>
+  </div>
+
+  <!-- ───────── R1 : BILAN ET POINTS CLÉS ───────── -->
+  <div class="sub-tab-content active" id="sub-R-0">
+
+    <div class="section-title"><span class="icon">📌</span> Bilan sur le modèle du gaz parfait</div>
+    <div class="bilan-grid">
+      <div class="bilan-card">
+        <h4>Grandeurs macro / micro</h4>
+        <p style="font-size:0.86rem;line-height:1.6;">P, θ, ρ décrivent l'état macroscopique du gaz ; elles traduisent l'agitation (T) et les chocs sur les parois (P) des particules à l'échelle microscopique.</p>
+      </div>
+      <div class="bilan-card">
+        <h4>Équation d'état</h4>
+        <div class="formule-box" style="margin:6px 0;font-size:0.95rem;">P × V = n × R × T</div>
+        <p style="font-size:0.82rem;color:var(--texte-leger);">Valable pour un gaz parfait : entités ponctuelles, sans interaction, à faible pression.</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:26px;"><span class="icon">📌</span> Bilan sur le premier principe</div>
+    <div class="bilan-grid">
+      <div class="bilan-card">
+        <h4>Premier principe</h4>
+        <div class="formule-box" style="margin:6px 0;font-size:0.95rem;">ΔU = W + Q</div>
+        <p style="font-size:0.82rem;color:var(--texte-leger);">Système fermé, au repos macroscopique. Convention : reçu &gt; 0, cédé &lt; 0.</p>
+      </div>
+      <div class="bilan-card">
+        <h4>Système incompressible</h4>
+        <div class="formule-box" style="margin:6px 0;font-size:0.95rem;">ΔU = m×c×(T<sub>f</sub>−T<sub>i</sub>)</div>
+        <p style="font-size:0.82rem;color:var(--texte-leger);">ΔU &gt; 0 si le système s'échauffe, ΔU &lt; 0 s'il se refroidit.</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:26px;"><span class="icon">📌</span> Bilan sur les transferts thermiques</div>
+    <div class="bilan-grid">
+      <div class="bilan-card">
+        <h4>Trois modes de transfert</h4>
+        <ul>
+          <li><strong>Conduction</strong> : sans déplacement de matière (solides)</li>
+          <li><strong>Convection</strong> : avec déplacement de matière (fluides)</li>
+          <li><strong>Rayonnement</strong> : ondes électromagnétiques, même dans le vide</li>
+        </ul>
+      </div>
+      <div class="bilan-card">
+        <h4>Flux &amp; résistance thermique</h4>
+        <div class="formule-box" style="margin:6px 0;font-size:0.92rem;">ɸ = (T<sub>c</sub>−T<sub>f</sub>)/R<sub>th</sub></div>
+        <p style="font-size:0.82rem;color:var(--texte-leger);">R<sub>th</sub> = e/(λ×S). Résistances en série : elles s'additionnent.</p>
+      </div>
+    </div>
+
+    <div class="bilan-card" style="margin-top:14px;">
+      <h4>Lois de thermodynamique</h4>
+      <div class="formule-box" style="margin:8px 0;">T(t) = (T<sub>0</sub>−T<sub>th</sub>)·e<sup>−γ·t</sup> + T<sub>th</sub> &nbsp;(loi de Newton) &nbsp;·&nbsp; F = σ×T⁴ &nbsp;(loi de Stefan-Boltzmann)</div>
+      <p style="font-size:0.84rem;color:var(--texte-leger);">La loi de Newton décrit l'évolution exponentielle de la température d'un système incompressible vers celle d'un thermostat. La loi de Stefan-Boltzmann relie le flux radiatif surfacique d'un corps noir à sa température.</p>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> Points-clés à retenir</div>
+    <div class="bilan-card">
+      <ul class="ke-list">
+        <li>Les grandeurs macroscopiques P, θ, ρ traduisent l'agitation et les chocs des particules à l'échelle microscopique.</li>
+        <li>Le modèle du gaz parfait (PV = nRT) est valable pour un gaz dilué à faible pression, sans interaction entre entités ponctuelles.</li>
+        <li>L'énergie interne U = E<sub>c,micro</sub> + E<sub>p,micro</sub> ; premier principe : ΔU = W + Q (reçu &gt; 0, cédé &lt; 0).</li>
+        <li>Pour un système incompressible : ΔU = m×c×ΔT.</li>
+        <li>Trois modes de transfert thermique : conduction (sans matière), convection (avec matière), rayonnement (même dans le vide).</li>
+        <li>ɸ = Q/Δt = (T<sub>c</sub>−T<sub>f</sub>)/R<sub>th</sub>, avec R<sub>th</sub> = e/(λ×S), additive en série.</li>
+        <li>Loi de Newton : équation différentielle du 1<sup>er</sup> ordre, solution exponentielle tendant vers T<sub>th</sub>.</li>
+        <li>Loi de Stefan-Boltzmann : F = σ×T⁴, flux radiatif d'un corps noir.</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /sub-R-0 -->
+
+  <!-- ───────── R2 : RESSOURCES ───────── -->
+  <div class="sub-tab-content" id="sub-R-1">
+
+    <div class="section-title"><span class="icon">🔭</span> Simulations et animations</div>
+    <div class="bilan-card">
+      <div class="pastille-list">
+        <div class="pastille-row"><a class="pastille pastille-simu" href="https://phet.colorado.edu/fr/simulation/gas-properties" target="_blank">🖥️ Propriétés des gaz</a><span class="pastille-source">PhET Colorado</span></div>
+        <div class="pastille-row"><a class="pastille pastille-simu" href="http://www.pccl.fr/physique_chimie_college_lycee/quatrieme/chimie/air_pression.htm" target="_blank">🖥️ Loi de Mariotte (air/pression)</a><span class="pastille-source">PCCL</span></div>
+        <div class="pastille-row"><a class="pastille pastille-simu" href="https://phet.colorado.edu/sims/html/states-of-matter/latest/states-of-matter_all.html?locale=fr" target="_blank">🖥️ États de la matière</a><span class="pastille-source">PhET Colorado</span></div>
+        <div class="pastille-row"><a class="pastille pastille-simu" href="https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_all.html?locale=fr" target="_blank">🖥️ Parc d'énergie (Energy Skate Park)</a><span class="pastille-source">PhET Colorado</span></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🎬</span> Vidéos</div>
+    <div class="bilan-card">
+      <p style="font-size:0.78rem;color:var(--texte-leger);margin:0 0 8px;">Classées dans l'ordre des onglets du cours (Prérequis → A → B1 → B2 → B3) :</p>
+      <div class="pastille-list pastille-list-2col">
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011749?paccess=47d749eb9e8.300ac365.2fbee02389f155d0ea4d57c05483c3ea" target="_blank">🎬 Loi de Mariotte (2<sup>nde</sup>)</a><span class="pastille-source">PCCL</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011851?paccess=47d749bff46.300ac3cb.6fcc81c45f5228eccc1f521d72fb7bdb" target="_blank">🎬 Zéro absolu &amp; Kelvin</a><span class="pastille-source">e-penser</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011719?paccess=47d749f4a76.300ac347.ff3030a776f208dbf0033c690439cbf3" target="_blank">🎬 Loi des gaz parfaits</a><span class="pastille-source">Khan Academy</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011886?paccess=47d74a0235c.300ac3ee.8db57a7b32aef7a3da21eb3f018872d8" target="_blank">🎬 Gaz parfaits — exemple 1</a><span class="pastille-source">Khan Academy</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011893?paccess=47d74a072fc.300ac3f5.c6e2d13b03eefcc8c31dcf607dd70672" target="_blank">🎬 Gaz parfaits — exemple 2</a><span class="pastille-source">Khan Academy</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011929?paccess=47d74a0c8a8.300ac419.088ad53429de83c890090a31cfa5a3bc" target="_blank">🎬 Gaz parfaits — exemple 3</a><span class="pastille-source">Khan Academy</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011922?paccess=47d74a12064.300ac412.8b577a2dc55cfc59273f2968863befdb" target="_blank">🎬 Gaz parfaits — exemple 4</a><span class="pastille-source">Khan Academy</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011761?paccess=47d749cd9b5.300ac371.8b5f7b8b6430b0f686c289576865595e" target="_blank">🎬 Bilan d'énergie</a><span class="pastille-source">G. Moreau</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011609?paccess=47d749b6c74.300ac2d9.ff0be34d891d638e52c729f689263c97" target="_blank">🎬 Bilan — Thermodynamique</a><span class="pastille-source">Hatier</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806049758?paccess=47d74a35541.300b57de.0ae949e81f2867e557bc1d942537b071" target="_blank">🎬 Premier principe de thermodynamique</a><span class="pastille-source">F. Raffin</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806013904?paccess=47d7497a4f4.300acbd0.0d98a69ee1de03fd00aa27e0f1a14a7b" target="_blank">🎬 Résistance thermique</a><span class="pastille-source">P. Olivier</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806013890?paccess=47d7498c4c1.300acbc2.d6a32f5990fdb2e29ec7c701ed924543" target="_blank">🎬 Flux thermique échangé par convection</a><span class="pastille-source">F. Raffin</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011799?paccess=47d749dcf80.300ac397.de795de4083417c436ece19867e14d97" target="_blank">🎬 Flux thermique</a><span class="pastille-source">G. Moreau</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806011776?paccess=47d749d52cc.300ac380.6d59b09b86f8865d00a440a2dcde1757" target="_blank">🎬 Transferts thermiques</a><span class="pastille-source">G. Moreau</span></div>
+        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105574635/item806013872?paccess=47d7499d4a4.300acbb0.ec2aed2929bdc84d71c09bf42b1e5801" target="_blank">🎬 Flux par rayonnement &amp; loi de Stefan</a></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> QCM &amp; exercices</div>
+    <div class="bilan-card">
+      <p style="font-size:0.82rem;color:var(--texte-leger);margin:0 0 4px;">Exercices du manuel :</p>
+      <ul style="padding-left:18px;font-size:0.88rem;line-height:1.9;">
+        <li>Exercices manuel : n°36 p355, n°17 p350, n°21-22-23 p351, n°27 p352, n°30 et n°35 p354 (Partie A)</li>
+        <li>Exercices manuel : n°12-13-14 p372, n°29 p376, n°35 p377, n°37-38 p378 (Partie B-I)</li>
+        <li>Exercices manuel : n°17 p372, n°28 et n°31 p376, n°43 p381, n°44 p382 (Partie B-II)</li>
+        <li>Exercices manuel : n°22 p373, n°41 p379 (loi de Newton), n°39 p378 (Stefan-Boltzmann)</li>
+      </ul>
+      <p style="font-size:0.82rem;color:var(--texte-leger);margin:10px 0 4px;">QCM interactifs (Hatier-clic) :</p>
+      <div class="pastille-list">
+        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/15_QCM_prerequis/index.html" target="_blank">📝 QCM Prérequis</a><span class="pastille-source">Hatier-clic</span></div>
+        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_15/index.html" target="_blank">📝 QCM Maîtrise des notions</a><span class="pastille-source">Hatier-clic</span></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">📘</span> Annales de bac — à traiter en autonomie</div>
+
+    <div class="bilan-exo-card">
+      <div class="bilan-tag">Bac Centres étrangers 1 · 2022 Jour 2 · Physique-Chimie · 5 pts · 53 min</div>
+      <h3>Capacité thermique massique du cuivre</h3>
+      <div class="bilan-theme">Flux thermique, capacité thermique, loi phénoménologique de Newton, établissement très guidé de l'équation différentielle relative à l'évolution de la température.</div>
+      <div class="bilan-links">
+        <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-08/2022-CentresEtrangers1-J2-ExoC-Sujet-CmCu-Thermo-5pts.pdf" target="_blank">📄 Sujet</a>
+        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2022-06/2022-CentresEtrangers1-J2-ExoC-Correction-CmCu-Thermo-5pts_0.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+    <div class="bilan-exo-card">
+      <div class="bilan-tag">Bac Amérique du Nord · 2026 Jour 2 · Physique-Chimie · 11 pts · 1h56</div>
+      <h3>« J'ai froid aux pieds sur le carrelage, je préfère le parquet ! »</h3>
+      <div class="bilan-theme">Premier principe, énergie interne, capacité thermique, loi phénoménologique de Newton, établissement de l'équation différentielle relative à l'évolution de la température, constante de temps.</div>
+      <div class="bilan-links">
+        <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2026-05/2026-AmNord-J2-Exo1-Sujet-ThermoCarrelage-11pts.pdf" target="_blank">📄 Sujet</a>
+        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2026-05/2026-AmNord-J2-Exo1-Correction-ThermoCarrelage-11pts_1.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+    <div class="bilan-exo-card">
+      <div class="bilan-tag">Bac Centres étrangers 1 · 2025 Jour 1 · Sciences de l'ingénieur.e · 10 pts · 30 min</div>
+      <h3>Température au sein d'un igloo</h3>
+      <div class="bilan-theme">Transferts thermiques, flux thermique, résistance thermique.</div>
+      <div class="bilan-links">
+        <a class="btn-sujet" href="https://www.sujetdebac.fr/annales-pdf/2025/spe-sciences-ingenieur-2025-centres-etranger-1-sujet-officiel.pdf" target="_blank">📄 Sujet (officiel, exercice B p.19-20)</a>
+        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2026-03/2025-CtresEtrangers1-SI-J1-Exo2-Correction-Igloo-10pts-30min.doc" target="_blank">✅ Corrigé (.doc)</a>
+      </div>
+    </div>
+
+    <div class="bilan-exo-card">
+      <div class="bilan-tag">Bac S Métropole · Septembre 2013 · Ancien programme · 5 pts · 50 min</div>
+      <h3>Le sauna</h3>
+      <div class="bilan-theme">Transferts thermiques (conduction, convection), flux thermique, résistance thermique, capacité thermique, variation d'énergie interne.</div>
+      <div class="bilan-links">
+        <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/exos/sujets/2013/2013-09-Metro-Exo3-Sujet-Sauna-5pts.pdf" target="_blank">📄 Sujet</a>
+        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/exos/corriges/2013/2013-09-Metro-Exo3-Correction-Sauna-5pts.pdf" target="_blank">✅ Corrigé</a>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🕰️</span> Un peu d'histoire</div>
+    <div class="bilan-card">
+      <p style="font-size:0.88rem;line-height:1.7;"><strong>Émile Clapeyron</strong> (1799-1864), ingénieur et physicien français, a formulé l'équation des gaz parfaits en 1834. La constante des gaz parfaits R a ensuite été précisée par <strong>Ludwig Boltzmann</strong> (1844-1906, physicien autrichien, théorie cinétique des gaz) et <strong>Henri Victor Regnault</strong> (1810-1878, physicien et chimiste français) entre 1850 et 1860.</p>
+      <p style="font-size:0.88rem;line-height:1.7;margin-top:8px;"><strong>Lord Kelvin</strong> (William Thomson, 1824-1907), ingénieur, mathématicien et physicien écossais, a caractérisé le zéro absolu (T = 0 K = −273,15 °C), température minimale théorique où l'agitation microscopique des particules cesse. Cette température n'a jamais été atteinte expérimentalement (record : 270,5 mK au-dessus du zéro absolu), notamment en raison du rayonnement fossile résiduel issu du Big Bang.</p>
+    </div>
+
+  </div>
+  <!-- /sub-R-1 -->
+
+</div>
+<!-- /tab-5 -->
+
+</div><!-- /main -->
+
+<div class="footer-note">Séquence 09 – Modèle du gaz parfait et bilan énergétique d'un système · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin</div>
+
+<!-- Skulpt : exécution de code Python directement dans le navigateur (nécessite une connexion internet) -->
+<script src="https://cdn.jsdelivr.net/gh/Tezumie/Skulpt-CDN@latest/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Tezumie/Skulpt-CDN@latest/skulpt-stdlib.js"></script>
+
+<script>
+/* ════════ CALORIMÈTRE VIRTUEL — PROTOCOLE GUIDÉ (pesée → mesure θeau → immersion → θéq) ════════ */
+(function() {
+  var svg = document.getElementById('caloSVG');
+  if (!svg) return;
+
+  /* PRNG reproductible (mulberry32) : mêmes paramètres => même série de mesures */
+  function mulberry32(a) {
+    return function() {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  var etat = {};
+  var STAB_DELAY = 1100; /* ms de "stabilisation" avant de pouvoir relever θéq */
+
+  function nouvelleGraine() {
+    var seed = Math.floor(Math.random()*1e9);
+    var rng = mulberry32(seed);
+    etat.mEauG = Math.round(200 + rng()*200);          /* 200 à 400 g */
+    etat.thetaEauBase = Math.round(15 + rng()*10);      /* 15 à 25 °C */
+    etat.mMetalG = Math.round(80 + rng()*120);          /* 80 à 200 g */
+    etat.thetaMetal = Math.round(80 + rng()*30);        /* 80 à 110 °C */
+    etat.rng = rng;
+    etat.mesures = [];
+    etat.essai = 1;
+    etat.etape = 'pesee'; /* pesee -> lire_eau -> immerger -> stabilise -> (relever) -> lire_eau ... -> termine */
+  }
+
+  function thetaEqTheo(thetaEauCourante) {
+    var cMetal = parseFloat(document.getElementById('calo-metal').value);
+    var mEau = etat.mEauG/1000, mMetal = etat.mMetalG/1000, cEau = 4180;
+    return (mEau*cEau*thetaEauCourante + mMetal*cMetal*etat.thetaMetal) / (mEau*cEau + mMetal*cMetal);
+  }
+
+  function majBoutons() {
+    document.getElementById('peserBtn').disabled = (etat.etape !== 'pesee');
+    document.getElementById('lireEauBtn').disabled = (etat.etape !== 'lire_eau');
+    document.getElementById('releverBtn').disabled = (etat.etape !== 'stabilise');
+    var metalGroup = document.getElementById('caloMetalGroup');
+    metalGroup.style.opacity = (etat.etape === 'immerger') ? '1' : '0.35';
+    metalGroup.style.pointerEvents = (etat.etape === 'immerger') ? 'auto' : 'none';
+  }
+
+  window.nouvelleExperienceCalo = function() {
+    nouvelleGraine();
+    etat.pese = false;
+    document.getElementById('caloThermoDisplay').textContent = '-- °C';
+    document.getElementById('caloThermoLabel').textContent = 'température';
+    document.getElementById('caloMetalLabel').textContent = etat.thetaMetal + ' °C';
+    document.getElementById('caloMetalGroup').setAttribute('transform', 'translate(0,0)');
+    document.getElementById('caloEssaiNum').textContent = etat.essai;
+    document.getElementById('calo-masses-recap').innerHTML = 'Masses relevées : m<sub>eau</sub> = <strong>-- g</strong> &nbsp;·&nbsp; m<sub>métal</sub> = <strong>-- g</strong> <span style="font-size:0.78rem;color:var(--texte-leger);">(reste affiché ici pour ton programme Python)</span>';
+    document.getElementById('calo-etape-msg').innerHTML = 'Commence par peser l\'eau et le métal (ci-dessus), puis reviens ici pour mesurer θ<sub>eau</sub> initiale.';
+    document.getElementById('calo-carnet').innerHTML = '<strong>Carnet de mesures (θ<sub>éq</sub>) :</strong> aucune mesure encore réalisée.';
+    majBoutons();
+  };
+
+  window.peserCalo = function() {
+    etat.pese = true;
+    document.getElementById('calo-masses-recap').innerHTML = 'Masses relevées : m<sub>eau</sub> = <strong>' + etat.mEauG + ' g</strong> &nbsp;·&nbsp; m<sub>métal</sub> = <strong>' + etat.mMetalG + ' g</strong> <span style="font-size:0.78rem;color:var(--texte-leger);">(reste affiché ici pour ton programme Python)</span>';
+    etat.etape = 'lire_eau';
+    document.getElementById('calo-etape-msg').innerHTML = 'Pesée effectuée. Clique sur « Mesurer θ<sub>eau</sub> initiale » pour commencer l\'essai n°' + etat.essai + '.';
+    majBoutons();
+  };
+
+  /* Réinitialise UNIQUEMENT le cycle de mesure (étapes 2-3) : les masses déjà pesées
+     à l'étape 1 sont conservées (pas de nouvelle pesée nécessaire), mais de nouvelles
+     températures initiales (θeau de base, θmétal) sont tirées pour ce nouveau cycle. */
+  window.reinitialiserMesuresCalo = function() {
+    if (!etat.pese) {
+      document.getElementById('calo-etape-msg').innerHTML = 'Pèse d\'abord l\'eau et le métal (étape 1) avant de réinitialiser les mesures.';
+      return;
+    }
+    etat.thetaEauBase = Math.round(15 + etat.rng()*10);
+    etat.thetaMetal = Math.round(80 + etat.rng()*30);
+    etat.mesures = [];
+    etat.essai = 1;
+    etat.etape = 'lire_eau';
+    document.getElementById('caloThermoDisplay').textContent = '-- °C';
+    document.getElementById('caloThermoLabel').textContent = 'température';
+    document.getElementById('caloMetalLabel').textContent = etat.thetaMetal + ' °C';
+    document.getElementById('caloMetalGroup').setAttribute('transform', 'translate(0,0)');
+    document.getElementById('caloEssaiNum').textContent = etat.essai;
+    document.getElementById('calo-etape-msg').innerHTML = 'Mesures réinitialisées (nouvelles températures tirées, masses conservées). Clique sur « Mesurer θ<sub>eau</sub> initiale » pour commencer l\'essai n°1.';
+    document.getElementById('calo-carnet').innerHTML = '<strong>Carnet de mesures (θ<sub>éq</sub>) :</strong> aucune mesure encore réalisée.';
+    majBoutons();
+  };
+
+  window.lireEauCalo = function() {
+    /* mesurée UNE SEULE FOIS avant la série des 10 essais (conditions initiales fixes) */
+    var thetaEauCourante = etat.thetaEauBase;
+    etat.thetaEauCourante = thetaEauCourante;
+    document.getElementById('caloThermoLabel').textContent = 'θeau initiale';
+    document.getElementById('caloThermoDisplay').textContent = thetaEauCourante.toFixed(1)+' °C';
+    etat.etape = 'immerger';
+    document.getElementById('calo-etape-msg').innerHTML = 'θ<sub>eau</sub> = ' + thetaEauCourante.toFixed(1) + ' °C (cette valeur reste fixe pour les 10 essais). Clique maintenant sur le <strong>métal</strong> (à ' + etat.thetaMetal + ' °C) pour l\'immerger dans le calorimètre — essai n°' + etat.essai + '.';
+    majBoutons();
+  };
+
+  window.immergerMetalCalo = function() {
+    if (etat.etape !== 'immerger') return;
+    var metalGroup = document.getElementById('caloMetalGroup');
+    /* animation simple : translation du métal vers l'intérieur du calorimètre */
+    var startX = 0, endX = -225, startY = 0, endY = 20, dur = 500, t0 = performance.now();
+    function anim() {
+      var p = Math.min(1, (performance.now()-t0)/dur);
+      var x = startX + (endX-startX)*p, y = startY + (endY-startY)*p;
+      metalGroup.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+      if (p < 1) requestAnimationFrame(anim);
+    }
+    requestAnimationFrame(anim);
+    metalGroup.style.pointerEvents = 'none';
+    document.getElementById('caloThermoLabel').textContent = 'stabilisation...';
+    document.getElementById('caloThermoDisplay').textContent = '⏳';
+    etat.etape = 'attente_stabilisation';
+    document.getElementById('calo-etape-msg').innerHTML = 'Le métal est immergé, la température évolue... attends la stabilisation.';
+    majBoutons();
+    setTimeout(function() {
+      etat.etape = 'stabilise';
+      document.getElementById('caloThermoLabel').textContent = 'θéq (stabilisée)';
+      document.getElementById('caloThermoDisplay').textContent = '•••';
+      document.getElementById('calo-etape-msg').innerHTML = 'Température stabilisée : clique sur « Relever θ<sub>éq</sub> » pour lire sa valeur.';
+      majBoutons();
+    }, STAB_DELAY);
+  };
+
+  window.releverCalo = function() {
+    if (etat.etape !== 'stabilise') return;
+    var thEqTheo = thetaEqTheo(etat.thetaEauCourante);
+    function gaussianLike() { return (etat.rng()+etat.rng()+etat.rng()-1.5); }
+    var mesure = Math.round((thEqTheo + gaussianLike()*0.4)*10)/10;
+    etat.mesures.push(mesure);
+    document.getElementById('caloThermoDisplay').textContent = mesure.toFixed(1)+' °C';
+    var liste = etat.mesures.map(function(v,i){ return 'Mesure '+(i+1)+' : '+v.toFixed(1)+' °C'; }).join(' &nbsp;·&nbsp; ');
+    document.getElementById('calo-carnet').innerHTML = '<strong>Carnet de mesures (θ<sub>éq</sub>) :</strong><br>' + liste;
+
+    if (etat.mesures.length >= 10) {
+      etat.etape = 'termine';
+      document.getElementById('calo-etape-msg').innerHTML = '<span style="color:var(--vert);font-weight:700;">10 mesures effectuées !</span> Recopie maintenant les masses, températures, tes 10 mesures et le c théorique dans le programme Python ci-dessous.';
+      document.getElementById('calo-carnet').innerHTML += '<br><span style="font-size:0.8rem;color:var(--vert);font-weight:700;">Terminé : passe à la Partie 2.</span>';
+    } else {
+      etat.essai++;
+      etat.etape = 'immerger';
+      document.getElementById('caloEssaiNum').textContent = etat.essai;
+      document.getElementById('caloMetalGroup').setAttribute('transform', 'translate(0,0)');
+      document.getElementById('caloMetalLabel').textContent = etat.thetaMetal + ' °C';
+      document.getElementById('caloThermoLabel').textContent = 'θeau initiale';
+      document.getElementById('caloThermoDisplay').textContent = etat.thetaEauCourante.toFixed(1)+' °C';
+      document.getElementById('calo-etape-msg').innerHTML = 'Mesure n°' + (etat.essai-1) + ' enregistrée. Essai n°' + etat.essai + ' : θ<sub>eau</sub> reste à ' + etat.thetaEauCourante.toFixed(1) + ' °C — clique sur le <strong>métal</strong> pour l\'immerger à nouveau.';
+    }
+    majBoutons();
+  };
+
+  nouvelleGraine();
+  majBoutons();
+})();
+
+
+/* ════════ EXÉCUTION PYTHON (SKULPT) — EXERCICE CALORIMÉTRIE ════════ */
+function runCaloPython() {
+  var outputEl = document.getElementById('py-calo-output');
+  var runBtn = document.getElementById('py-run-btn');
+  var code = document.getElementById('py-calo').value;
+  outputEl.textContent = '';
+  var canvas0 = document.getElementById('caloResultChart');
+  if (canvas0) canvas0.getContext('2d').clearRect(0,0,canvas0.width,canvas0.height);
+  if (typeof Sk === 'undefined') {
+    outputEl.textContent = "⏳ Le module Python (Skulpt) est en cours de chargement, réessaie dans quelques secondes...";
+    return;
+  }
+  runBtn.disabled = true;
+  function outf(text) { outputEl.textContent += text; }
+  function builtinRead(x) {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+      throw "Fichier non trouvé : '" + x + "'";
+    }
+    return Sk.builtinFiles["files"][x];
+  }
+  Sk.configure({ output: outf, read: builtinRead, python3: true });
+  var myPromise = Sk.misceval.asyncToPromise(function() {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  });
+  myPromise.then(
+    function(mod) {
+      runBtn.disabled = false;
+      try {
+        var listObj = mod.$d['mesures_theta_eq'];
+        var mesures = listObj.v.map(function(item) { return item.v; });
+        if (mesures.length > 0 && mesures.every(function(x){ return typeof x === 'number'; })) {
+          drawCaloHistogram(mesures);
+        }
+      } catch (e) { /* liste absente ou incomplète : pas de graphique, ce n'est pas bloquant */ }
+    },
+    function(err) {
+      outputEl.textContent += '\n❌ ' + err.toString();
+      runBtn.disabled = false;
+    }
+  );
+}
+
+/* Histogramme fréquentiel : le nombre de barres correspond au nombre de valeurs
+   DISTINCTES parmi les mesures (pas fixé à l'avance), la hauteur de chaque barre
+   étant l'effectif de cette valeur (combien de fois elle est apparue). */
+function drawCaloHistogram(mesures) {
+  var canvas = document.getElementById('caloResultChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  var freq = {};
+  mesures.forEach(function(v) {
+    var key = v.toFixed(1);
+    freq[key] = (freq[key] || 0) + 1;
+  });
+  var valeurs = Object.keys(freq).map(parseFloat).sort(function(a,b){ return a-b; });
+  var effectifs = valeurs.map(function(v){ return freq[v.toFixed(1)]; });
+  var maxEff = Math.max.apply(null, effectifs);
+  var n = valeurs.length;
+
+  var padL=40, padB=36, padT=18, padR=16;
+  var plotW = canvas.width-padL-padR, plotH = canvas.height-padT-padB;
+  var step = plotW/n;
+  var barW = Math.min(60, step*0.7);
+
+  ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+
+  ctx.textAlign='right'; ctx.font = '10px Nunito';
+  for (var e=0; e<=maxEff; e++) {
+    var y = canvas.height-padB - (e/maxEff)*plotH;
+    ctx.strokeStyle='#E5EAF0'; ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(canvas.width-padR,y); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.fillText(e, padL-6, y+3);
+  }
+
+  ctx.textAlign='center';
+  for (var i=0;i<n;i++) {
+    var x = padL + step*i + step/2;
+    var h = (effectifs[i]/maxEff)*plotH;
+    var yTop = canvas.height-padB-h;
+    ctx.fillStyle = '#5B8FB9';
+    ctx.fillRect(x-barW/2, yTop, barW, h);
+    ctx.fillStyle = '#1A2A3A'; ctx.font='bold 11px Outfit';
+    ctx.fillText(effectifs[i], x, (yTop-6>padT+10)?yTop-6:padT+10);
+    ctx.font='10px Nunito'; ctx.fillStyle='#5A6B7A';
+    ctx.fillText(valeurs[i].toFixed(1), x, canvas.height-padB+14);
+  }
+  ctx.save();
+  ctx.textAlign='left'; ctx.font='10px Nunito'; ctx.fillStyle='#5A6B7A';
+  ctx.translate(12, padT+plotH/2); ctx.rotate(-Math.PI/2);
+  ctx.textAlign='center'; ctx.fillText('effectif', 0, 0);
+  ctx.restore();
+  ctx.textAlign='center'; ctx.font='10px Nunito'; ctx.fillStyle='#5A6B7A';
+  ctx.fillText('θéq (°C)', padL+plotW/2, canvas.height-6);
+}
+
+/* ════════ SCHÉMA SYSTÈME / MILIEU EXTÉRIEUR — SIGNES DE W ET Q ════════ */
+(function() {
+  var msg = document.getElementById('signeMsg');
+  if (!msg) return;
+  var wState = 'recu', qState = 'recu';
+  function updateSigneMsg() {
+    if (wState === 'recu' && qState === 'recu') {
+      msg.innerHTML = 'W et Q sont tous les deux reçus par le système : <strong>ΔU = W + Q &gt; 0</strong> (somme de deux termes positifs). Son énergie interne augmente, il s\'échauffe.';
+    } else if (wState === 'cede' && qState === 'cede') {
+      msg.innerHTML = 'W et Q sont tous les deux cédés par le système : <strong>ΔU = W + Q &lt; 0</strong> (somme de deux termes négatifs). Son énergie interne diminue, il se refroidit.';
+    } else {
+      msg.innerHTML = 'Un terme est positif, l\'autre négatif : le signe de <strong>ΔU = W + Q</strong> dépend alors des valeurs numériques de W et de Q — on ne peut pas conclure sans elles.';
+    }
+  }
+  window.setSignW = function(s) {
+    wState = s;
+    document.getElementById('wRecuBtn').classList.toggle('active', s === 'recu');
+    document.getElementById('wCedeBtn').classList.toggle('active', s === 'cede');
+    document.getElementById('wRecuArrow').classList.toggle('arrow-inactive', s !== 'recu');
+    document.getElementById('wCedeArrow').classList.toggle('arrow-inactive', s !== 'cede');
+    updateSigneMsg();
+  };
+  window.setSignQ = function(s) {
+    qState = s;
+    document.getElementById('qRecuBtn').classList.toggle('active', s === 'recu');
+    document.getElementById('qCedeBtn').classList.toggle('active', s === 'cede');
+    document.getElementById('qRecuArrow').classList.toggle('arrow-inactive', s !== 'recu');
+    document.getElementById('qCedeArrow').classList.toggle('arrow-inactive', s !== 'cede');
+    updateSigneMsg();
+  };
+  updateSigneMsg();
+})();
+
+/* ════════ NAVIGATION ONGLETS ════════ */
+function switchTab(i) {
+  document.querySelectorAll('.tab-content').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('.tabs-nav .tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+function switchSubTab(group, i) {
+  document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+document.getElementById('capToggle').addEventListener('click', () => {
+  document.getElementById('capPanel').classList.toggle('open');
+});
+function toggleAccord(btn) {
+  btn.nextElementSibling.classList.toggle('open');
+}
+function toggleCorrection(btn) {
+  var c = btn.nextElementSibling;
+  c.classList.toggle('visible');
+  btn.textContent = c.classList.contains('visible') ? '🙈 Masquer la correction' : '✅ Voir la correction';
+}
+
+/* ════════ VÉRIFICATION NUMÉRIQUE ════════ */
+function checkNum(id, expected, tol) {
+  var input = document.getElementById(id);
+  var fb = document.getElementById(id + '-fb');
+  var raw = input.value.replace(',', '.').trim();
+  var val = parseFloat(raw);
+  if (isNaN(val)) {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = 'Entre un nombre'; fb.className = 'num-feedback ko';
+    return;
+  }
+  if (Math.abs(val - expected) <= tol) {
+    input.classList.remove('wrong'); input.classList.add('correct');
+    fb.textContent = '✓ Correct'; fb.className = 'num-feedback ok';
+  } else {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = '✗ Réessaie'; fb.className = 'num-feedback ko';
+  }
+}
+
+/* ════════ QCM GÉNÉRIQUE (2-3 choix, avec explication optionnelle) ════════ */
+function checkQcmSimple(btn, isCorrect, fbId) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  var fb = document.getElementById(fbId);
+  if (isCorrect) {
+    group.forEach(b => { b.disabled = true; });
+    btn.classList.add('correct');
+    fb.textContent = '✓ Exact !';
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    btn.disabled = true;
+    fb.textContent = '✗ Ce n\'est pas la bonne réponse, réessaie.';
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+/* ════════ CALCULATRICE — RÉSISTANCE THERMIQUE ════════ */
+function parseFR(str) { return parseFloat(String(str).replace(',', '.')); }
+function calcRth() {
+  var e = parseFR(document.getElementById('rth-e').value) / 100; // cm -> m
+  var lambda = parseFR(document.getElementById('rth-lambda').value);
+  var s = parseFR(document.getElementById('rth-s').value);
+  var resBox = document.getElementById('rth-result');
+  if (isNaN(e) || isNaN(lambda) || isNaN(s) || e <= 0 || lambda <= 0 || s <= 0) {
+    resBox.textContent = 'Merci de remplir des valeurs numériques positives (utilise la virgule).';
+    return;
+  }
+  var rth = e / (lambda * s);
+  resBox.innerHTML = 'R<sub>th</sub> = e / (λ×S) = ' + e.toFixed(3).replace('.', ',') + ' / (' + lambda.toFixed(3).replace('.', ',') + ' × ' + s.toFixed(2).replace('.', ',') + ') = <strong>' + rth.toFixed(4).replace('.', ',') + ' K·W⁻¹</strong>';
+}
+function resetRth() {
+  document.getElementById('rth-e').value = '10';
+  document.getElementById('rth-lambda').value = '0,84';
+  document.getElementById('rth-s').value = '30';
+  document.getElementById('rth-result').textContent = 'Rth = e / (λ×S) — remplis les champs puis clique sur « Calculer »';
+}
+
+/* ════════ ANIMATION — DIAGRAMME CHANGEMENT D'ÉTAT ════════ */
+(function() {
+  var canvas = document.getElementById('etatCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var sens = 'endo';
+  var t = 0;
+  window.setEtatSens = function(s) {
+    sens = s;
+    document.getElementById('etatBtnEndo').classList.toggle('active', s==='endo');
+    document.getElementById('etatBtnExo').classList.toggle('active', s==='exo');
+    var msg = document.getElementById('etatMsg');
+    if (s === 'endo') {
+      msg.innerHTML = 'Le système <strong>absorbe</strong> de l\'énergie : Q = m×L &gt; 0. Transformations <strong>endothermiques</strong> (fusion, vaporisation, sublimation). Le milieu extérieur se refroidit.';
+    } else {
+      msg.innerHTML = 'Le système <strong>libère</strong> de l\'énergie : Q = m×L &lt; 0. Transformations <strong>exothermiques</strong> (solidification, liquéfaction, condensation). Le milieu extérieur se réchauffe.';
+    }
+  };
+  var BW = 130, BH = 90; /* dimensions communes des 3 rectangles */
+  var boxes = [
+    {x:30,  y:230, w:BW, h:BH, label:'Solide',  particles:'solide'},
+    {x:400, y:230, w:BW, h:BH, label:'Liquide', particles:'liquide'},
+    {x:215, y:20,  w:BW, h:BH, label:'Gaz',     particles:'gaz'}
+  ];
+  function centerOf(b) { return { x: b.x+b.w/2, y: b.y+b.h/2 }; }
+  var liqState = null, gazState = null;
+  function initState(n, w, h, speed) {
+    var arr = [];
+    for (var i=0;i<n;i++) {
+      var ang = Math.random()*2*Math.PI;
+      arr.push({ x: 10+Math.random()*(w-20), y: 10+Math.random()*(h-20), vx: Math.cos(ang)*speed, vy: Math.sin(ang)*speed });
+    }
+    return arr;
+  }
+  function updateState(state, w, h, margin, jitter, maxSpeed) {
+    state.forEach(function(p) {
+      /* perturbation aléatoire de la vitesse à chaque image : agitation désordonnée, pas de trajectoire fixe */
+      p.vx += (Math.random()-0.5) * jitter;
+      p.vy += (Math.random()-0.5) * jitter;
+      var sp = Math.hypot(p.vx, p.vy);
+      if (sp > maxSpeed) { p.vx *= maxSpeed/sp; p.vy *= maxSpeed/sp; }
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < margin) { p.x = margin; p.vx = Math.abs(p.vx); }
+      if (p.x > w-margin) { p.x = w-margin; p.vx = -Math.abs(p.vx); }
+      if (p.y < margin) { p.y = margin; p.vy = Math.abs(p.vy); }
+      if (p.y > h-margin) { p.y = h-margin; p.vy = -Math.abs(p.vy); }
+    });
+  }
+  /* Liquide : pas d'attraction centrale (sinon tout s'agglutine en un seul amas central).
+     Seule une répulsion mutuelle, avec un espacement cible plus grand que celui du solide,
+     fait que les particules se répartissent dans tout le rectangle, désordonnées et mobiles,
+     mais plus espacées que le réseau compact et jointif du solide. */
+  function updateLiquidState(state, w, h, margin) {
+    state.forEach(function(p) {
+      p.vx += (Math.random()-0.5) * 0.12;
+      p.vy += (Math.random()-0.5) * 0.12;
+      var sp = Math.hypot(p.vx, p.vy);
+      var maxSpeed = 0.5;
+      if (sp > maxSpeed) { p.vx *= maxSpeed/sp; p.vy *= maxSpeed/sp; }
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < margin) { p.x = margin; p.vx = Math.abs(p.vx); }
+      if (p.x > w-margin) { p.x = w-margin; p.vx = -Math.abs(p.vx); }
+      if (p.y < margin) { p.y = margin; p.vy = Math.abs(p.vy); }
+      if (p.y > h-margin) { p.y = h-margin; p.vy = -Math.abs(p.vy); }
+    });
+    /* répulsion mutuelle : espacement cible supérieur au pas du solide (jointif), pour occuper
+       tout le rectangle sans se coller ni se regrouper en une seule boule */
+    var minD = 14;
+    for (var i=0;i<state.length;i++) {
+      for (var j=i+1;j<state.length;j++) {
+        var dx = state[j].x-state[i].x, dy = state[j].y-state[i].y;
+        var d = Math.hypot(dx,dy);
+        if (d>0.001 && d<minD) {
+          var push = (minD-d)/d*0.5;
+          var ox = dx*push*0.5, oy = dy*push*0.5;
+          state[i].x -= ox; state[i].y -= oy;
+          state[j].x += ox; state[j].y += oy;
+        }
+      }
+    }
+  }
+  function solidPacking(w, h) {
+    var r = 5.5, step = r*2;
+    var cols = Math.floor((w - 2*r) / step) + 1;
+    var rows = Math.floor((h - 2*r) / step) + 1;
+    return { r:r, step:step, cols:cols, rows:rows, count: cols*rows };
+  }
+  function drawParticles(type, x0, w, y0, h, phase) {
+    ctx.fillStyle = '#2D5F8A';
+    if (type === 'solide') {
+      /* rayon et pas égaux (diamètre) pour que les boules soient jointives : réseau compact */
+      var pack = solidPacking(w, h);
+      var r = pack.r, step = pack.step, cols = pack.cols, rows = pack.rows;
+      var startX = x0 + (w - (cols-1)*step) / 2;
+      var startY = y0 + (h - (rows-1)*step) / 2;
+      for (var i=0;i<cols;i++) for (var j=0;j<rows;j++) {
+        /* léger tremblement sur place (agitation thermique), pas de déplacement d'ensemble */
+        var jx = Math.sin(phase*0.4 + i*1.7 + j*0.9) * 0.6;
+        var jy = Math.cos(phase*0.4 + i*0.9 + j*1.7) * 0.6;
+        var px = startX + i*step + jx, py = startY + j*step + jy;
+        ctx.beginPath(); ctx.arc(px, py, r, 0, 2*Math.PI); ctx.fill();
+      }
+    } else if (type === 'liquide') {
+      /* densité liquide = 75 % de la densité (nombre de boules) du solide, mais mobile et désordonné */
+      if (!liqState) {
+        var nLiquide = Math.round(solidPacking(w, h).count * 0.75);
+        liqState = initState(nLiquide, w, h, 0.4);
+      }
+      updateLiquidState(liqState, w, h, 7);
+      liqState.forEach(function(p) {
+        ctx.beginPath(); ctx.arc(x0+p.x, y0+p.y, 4.5, 0, 2*Math.PI); ctx.fill();
+      });
+    } else {
+      if (!gazState) gazState = initState(7, w, h, 1.2);
+      updateState(gazState, w, h, 6, 0.22, 2.4);
+      gazState.forEach(function(p) {
+        ctx.beginPath(); ctx.arc(x0+p.x, y0+p.y, 3.5, 0, 2*Math.PI); ctx.fill();
+      });
+    }
+
+  }
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    boxes.forEach(function(b) {
+      ctx.strokeStyle = '#2D5F8A'; ctx.lineWidth = 1.6;
+      ctx.strokeRect(b.x, b.y, b.w, b.h);
+      drawParticles(b.particles, b.x, b.w, b.y, b.h, t);
+      ctx.fillStyle = '#1A2A3A'; ctx.font = 'bold 12px Outfit, Arial, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(b.label, b.x + b.w/2, b.y + b.h + 18);
+    });
+
+    /* flèche 2D générique pointant vers (x1,y1) */
+    function arrow2D(x0,y0,x1,y1,color) {
+      var dx=x1-x0, dy=y1-y0, len=Math.hypot(dx,dy);
+      if (len < 1) return;
+      var ux=dx/len, uy=dy/len;
+      var back = { x:x1-8*ux, y:y1-8*uy };
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(back.x,back.y); ctx.stroke();
+      var px=-uy, py=ux;
+      ctx.beginPath();
+      ctx.moveTo(x1,y1);
+      ctx.lineTo(back.x+px*4, back.y+py*4);
+      ctx.lineTo(back.x-px*4, back.y-py*4);
+      ctx.closePath(); ctx.fill();
+    }
+
+    var activeCol = sens === 'endo' ? '#E8783A' : '#3A8A6E';
+    var inactiveCol = '#D8DEE6';
+    var forwardActive = sens === 'endo';   /* solide→liquide→gaz : fusion / vaporisation / sublimation */
+    var backwardActive = sens === 'exo';   /* gaz→liquide→solide : liquéfaction / solidification / condensation */
+
+    /* trace un couple de flèches parallèles (aller/retour) le long de l'arête A—B, avec libellés */
+    function edge(boxA, boxB, clearance, offset, labelForward, labelBackward) {
+      var A = centerOf(boxA), B = centerOf(boxB);
+      var dx=B.x-A.x, dy=B.y-A.y, len=Math.hypot(dx,dy);
+      var ux=dx/len, uy=dy/len, px=-uy, py=ux;
+      var startA = { x:A.x+ux*clearance, y:A.y+uy*clearance };
+      var endB   = { x:B.x-ux*clearance, y:B.y-uy*clearance };
+      var f0 = { x:startA.x+px*offset, y:startA.y+py*offset };
+      var f1 = { x:endB.x+px*offset,   y:endB.y+py*offset };
+      var b0 = { x:endB.x-px*offset,   y:endB.y-py*offset };
+      var b1 = { x:startA.x-px*offset, y:startA.y-py*offset };
+      arrow2D(f0.x,f0.y,f1.x,f1.y, forwardActive ? activeCol : inactiveCol);
+      arrow2D(b0.x,b0.y,b1.x,b1.y, backwardActive ? activeCol : inactiveCol);
+      var midF = { x:(f0.x+f1.x)/2 + px*13, y:(f0.y+f1.y)/2 + py*13 };
+      var midB = { x:(b0.x+b1.x)/2 - px*13, y:(b0.y+b1.y)/2 - py*13 };
+      ctx.font = 'bold 11px Outfit, Arial, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillStyle = forwardActive ? activeCol : '#8A97A6';
+      ctx.fillText(labelForward, midF.x, midF.y);
+      ctx.fillStyle = backwardActive ? activeCol : '#8A97A6';
+      ctx.fillText(labelBackward, midB.x, midB.y);
+    }
+
+    edge(boxes[0], boxes[1], 68, 9,  'fusion', 'solidification');       /* solide ⇌ liquide */
+    edge(boxes[1], boxes[2], 68, 9,  'vaporisation', 'liquéfaction');   /* liquide ⇌ gaz */
+    edge(boxes[0], boxes[2], 68, 9,  'sublimation', 'condensation');    /* solide ⇌ gaz (direct) */
+
+    ctx.textAlign = 'left';
+  }
+  function loop() { t += 1; draw(); requestAnimationFrame(loop); }
+  window.setEtatSens('endo');
+  requestAnimationFrame(loop);
+})();
+
+/* ════════ ANIMATION — PARTICULES DE GAZ (agitation / pression) ════════ */
+(function() {
+  var canvas = document.getElementById('gazCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var slider = document.getElementById('gazT');
+  var valLabel = document.getElementById('gazTVal');
+  var chocsLabel = document.getElementById('gazChocs');
+  var N = 16;
+  var box = {x:20, y:20, w:400, h:190};
+  var particles = [];
+  var chocCount = 0, chocDisplay = 0;
+  var labels = ['Très froide','Froide','Froide','Fraîche','Modérée','Modérée','Chaude','Chaude','Très chaude','Extrême'];
+  for (var i=0;i<N;i++) {
+    particles.push({
+      x: box.x + 10 + Math.random()*(box.w-20),
+      y: box.y + 10 + Math.random()*(box.h-20),
+      vx: (Math.random()-0.5), vy: (Math.random()-0.5)
+    });
+  }
+  function speedFactor() { return parseFloat(slider.value) * 0.55; }
+  function step() {
+    var f = speedFactor();
+    particles.forEach(function(p) {
+      p.x += p.vx * f; p.y += p.vy * f;
+      if (p.x < box.x+5) { p.x = box.x+5; p.vx *= -1; chocCount++; }
+      if (p.x > box.x+box.w-5) { p.x = box.x+box.w-5; p.vx *= -1; chocCount++; }
+      if (p.y < box.y+5) { p.y = box.y+5; p.vy *= -1; chocCount++; }
+      if (p.y > box.y+box.h-5) { p.y = box.y+box.h-5; p.vy *= -1; chocCount++; }
+    });
+  }
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle = '#2D5F8A'; ctx.lineWidth = 2; ctx.strokeRect(box.x,box.y,box.w,box.h);
+    ctx.fillStyle = '#5B8FB9';
+    particles.forEach(function(p) {
+      ctx.beginPath(); ctx.arc(p.x,p.y,5,0,2*Math.PI); ctx.fill();
+    });
+  }
+  var frame = 0, lastCount = 0;
+  function loop() {
+    step(); draw();
+    frame++;
+    if (frame % 30 === 0) {
+      chocDisplay = Math.round((chocCount - lastCount) * 1.0);
+      lastCount = chocCount;
+      chocsLabel.textContent = chocDisplay;
+    }
+    requestAnimationFrame(loop);
+  }
+  slider.addEventListener('input', function() {
+    valLabel.textContent = labels[parseInt(slider.value)-1] || 'Modérée';
+  });
+  valLabel.textContent = labels[parseInt(slider.value)-1] || 'Modérée';
+  requestAnimationFrame(loop);
+})();
+
+/* ════════ ANIMATION — LOI DE WIEN ════════ */
+(function() {
+  var canvas = document.getElementById('wienCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var slider = document.getElementById('wienT');
+  var valLabel = document.getElementById('wienTVal');
+  var msg = document.getElementById('wienMsg');
+  var W = canvas.width, H = canvas.height;
+  var padL = 50, padB = 34, padT = 16, padR = 16;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var lambdaMaxRange = [200, 2000]; // nm, plot range
+
+  function wienLambdaMax(T) { return 2.898e6 / T; } // nm, Wien's law b=2.898e-3 m.K
+  function planckIntensity(lambdaNm, T) {
+    // simplified Planck-like curve shape (not physically exact units, for pedagogical shape only)
+    var lm = wienLambdaMax(T);
+    var x = lambdaNm / lm;
+    return Math.pow(x, -5) * (1 / (Math.exp(1.0/Math.max(x,0.001)) - 1 + 1e-9));
+  }
+  function draw() {
+    var T = parseFloat(slider.value);
+    valLabel.textContent = T + ' K';
+    ctx.clearRect(0,0,W,H);
+    // axes
+    ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, H-padB); ctx.lineTo(W-padR, H-padB); ctx.stroke();
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '11px Nunito, Arial, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Longueur d\'onde λ (nm)', padL + plotW/2, H-8);
+    ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
+    ctx.fillText('Intensité (u.a.)', 0, 0); ctx.restore();
+
+    // bande visible colorée en fond
+    var visStart = 380, visEnd = 780;
+    var xVisS = padL + (visStart-lambdaMaxRange[0])/(lambdaMaxRange[1]-lambdaMaxRange[0])*plotW;
+    var xVisE = padL + (visEnd-lambdaMaxRange[0])/(lambdaMaxRange[1]-lambdaMaxRange[0])*plotW;
+    var grad = ctx.createLinearGradient(xVisS,0,xVisE,0);
+    grad.addColorStop(0,'#7c3aed'); grad.addColorStop(0.3,'#2563eb'); grad.addColorStop(0.5,'#22c55e');
+    grad.addColorStop(0.7,'#eab308'); grad.addColorStop(1,'#dc2626');
+    ctx.globalAlpha = 0.18; ctx.fillStyle = grad; ctx.fillRect(xVisS, padT, xVisE-xVisS, plotH); ctx.globalAlpha = 1;
+
+    // graduations X
+    ctx.strokeStyle = '#DDE3EC'; ctx.fillStyle = '#5A6B7A'; ctx.font = '9px Nunito, Arial, sans-serif'; ctx.textAlign='center';
+    for (var lv = 200; lv <= 2000; lv += 200) {
+      var xg = padL + (lv-lambdaMaxRange[0])/(lambdaMaxRange[1]-lambdaMaxRange[0])*plotW;
+      ctx.beginPath(); ctx.moveTo(xg, padT); ctx.lineTo(xg, H-padB); ctx.stroke();
+      ctx.fillText(lv, xg, H-padB+12);
+    }
+
+    // courbe(s) : afficher courbe actuelle + 2 courbes de référence estompées
+    function plotCurve(Tc, color, alpha, lw) {
+      ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      var first = true, maxI = 0;
+      var vals = [];
+      for (var lam = lambdaMaxRange[0]; lam <= lambdaMaxRange[1]; lam += 5) {
+        var I = planckIntensity(lam, Tc);
+        vals.push(I); if (I > maxI) maxI = I;
+      }
+      var idx = 0;
+      for (var lam = lambdaMaxRange[0]; lam <= lambdaMaxRange[1]; lam += 5) {
+        var I = vals[idx++] / maxI;
+        var x = padL + (lam-lambdaMaxRange[0])/(lambdaMaxRange[1]-lambdaMaxRange[0])*plotW;
+        var y = H-padB - I*plotH*0.92;
+        if (first) { ctx.moveTo(x,y); first = false; } else { ctx.lineTo(x,y); }
+      }
+      ctx.stroke(); ctx.globalAlpha = 1;
+    }
+    plotCurve(3000, '#94a3b8', 0.5, 1.3);
+    plotCurve(6000, '#94a3b8', 0.5, 1.3);
+    plotCurve(T, '#C0392B', 1, 2.6);
+
+    // pic lambda_max
+    var lm = wienLambdaMax(T);
+    var xm = padL + (lm-lambdaMaxRange[0])/(lambdaMaxRange[1]-lambdaMaxRange[0])*plotW;
+    if (lm >= lambdaMaxRange[0] && lm <= lambdaMaxRange[1]) {
+      ctx.strokeStyle = '#E8783A'; ctx.setLineDash([4,3]); ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(xm, padT); ctx.lineTo(xm, H-padB); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = '#E8783A'; ctx.font = 'bold 11px Outfit, Arial, sans-serif'; ctx.textAlign='center';
+      ctx.fillText('λmax ≈ ' + Math.round(lm) + ' nm', xm, padT+12);
+    }
+    msg.innerHTML = 'À T = <strong>' + T + ' K</strong>, la loi de Wien donne λ<sub>max</sub> = 2,898×10⁶ / T ≈ <strong>' + Math.round(lm) + ' nm</strong>. ' + (T >= 5000 ? 'Le pic se rapproche du visible/bleu : le corps rayonne davantage vers les courtes longueurs d\'onde.' : 'Le pic est situé dans l\'infrarouge : le corps rayonne surtout de la chaleur.');
+  }
+  slider.addEventListener('input', draw);
+  draw();
+})();
+
+/* ════════ ANIMATION — MODES DE TRANSFERT THERMIQUE ════════ */
+(function() {
+  var canvas = document.getElementById('transfCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var mode = 'conduction';
+  var t = 0;
+  window.setTransfMode = function(m, btn) {
+    mode = m;
+    document.querySelectorAll('#tab-3 .anim-controls .anim-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    var msg = document.getElementById('transfMsg');
+    if (m === 'conduction') msg.innerHTML = '<strong>Conduction :</strong> l\'agitation se transmet de proche en proche dans le solide, sans déplacement de matière. La chaleur se propage du côté chaud (rouge) vers le côté froid (bleu).';
+    else if (m === 'convection') msg.innerHTML = '<strong>Convection :</strong> le fluide chauffé près de la source devient moins dense, monte, puis redescend en se refroidissant : un courant de matière se met en place (mouvement circulaire).';
+    else msg.innerHTML = '<strong>Rayonnement :</strong> la source chaude émet des ondes électromagnétiques (infrarouges) qui se propagent en ligne droite, y compris dans le vide, et sont absorbées par la surface froide.';
+  };
+  function drawConduction() {
+    ctx.fillStyle = '#cbd5e1'; ctx.fillRect(60,60,380,100);
+    var grad = ctx.createLinearGradient(60,0,440,0);
+    grad.addColorStop(0,'#C0392B'); grad.addColorStop(1,'#2D5F8A');
+    for (var i=0;i<10;i++) for (var j=0;j<4;j++) {
+      var x = 80+i*38, y = 78+j*22;
+      var frac = i/9;
+      var jitter = Math.sin(t*0.15 + i + j)*3*(1-frac*0.6);
+      ctx.fillStyle = 'rgba(' + Math.round(192-frac*147) + ',' + Math.round(57+frac*38) + ',' + Math.round(43+frac*95) + ',0.9)';
+      ctx.beginPath(); ctx.arc(x+jitter, y+jitter*0.5, 6, 0, 2*Math.PI); ctx.fill();
+    }
+    ctx.fillStyle = '#C0392B'; ctx.font = 'bold 12px Outfit'; ctx.textAlign='center'; ctx.fillText('Chaud', 80, 50);
+    ctx.fillStyle = '#2D5F8A'; ctx.fillText('Froid', 420, 50);
+  }
+  function drawConvection() {
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(120,20,260,180);
+    ctx.fillStyle = '#E8783A'; ctx.fillRect(120,190,260,14);
+    ctx.fillStyle = '#fff'; ctx.font='bold 11px Outfit'; ctx.textAlign='center'; ctx.fillText('Source chaude', 250, 200);
+    var n = 8;
+    for (var i=0;i<n;i++) {
+      var ang = (t*0.03 + i*(2*Math.PI/n));
+      var cx1 = 250, cy1 = 110, rx = 100, ry = 80;
+      var x = cx1 + rx*Math.cos(ang);
+      var y = cy1 + ry*Math.sin(ang*1.0);
+      var hot = Math.sin(ang) < -0.3;
+      ctx.fillStyle = hot ? '#E8783A' : '#5B8FB9';
+      ctx.beginPath(); ctx.arc(x,y,6,0,2*Math.PI); ctx.fill();
+    }
+  }
+  function drawRayonnement() {
+    ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(90,110,30,0,2*Math.PI); ctx.fill();
+    ctx.fillStyle = '#92400e'; ctx.font='bold 11px Outfit'; ctx.textAlign='center'; ctx.fillText('Source', 90, 155);
+    ctx.fillStyle = '#cbd5e1'; ctx.fillRect(380,30,30,160);
+    ctx.fillStyle = '#5A6B7A'; ctx.fillText('Surface froide', 395, 205);
+    for (var i=0;i<6;i++) {
+      var yA = 50 + i*22;
+      var prog = ((t*1.5 + i*40) % 260);
+      var x = 120 + prog;
+      if (x < 380) {
+        ctx.strokeStyle = '#E8783A'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(120, 110 + (yA-110)*0.4); ctx.lineTo(x, 110 + (yA-110)*0.4); ctx.stroke();
+        ctx.fillStyle = '#E8783A'; ctx.beginPath(); ctx.arc(x, 110 + (yA-110)*0.4, 3, 0, 2*Math.PI); ctx.fill();
+      }
+    }
+  }
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if (mode === 'conduction') drawConduction();
+    else if (mode === 'convection') drawConvection();
+    else drawRayonnement();
+  }
+  function loop() { t++; draw(); requestAnimationFrame(loop); }
+  window.setTransfMode('conduction', document.querySelector('#tab-3 .anim-controls .anim-btn'));
+  requestAnimationFrame(loop);
+})();
+
+/* ════════ ANIMATION — REFROIDISSEMENT/RÉCHAUFFEMENT LOI DE NEWTON (canette) ════════ */
+(function() {
+  var canvas = document.getElementById('newtonCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var playBtn = document.getElementById('newtonPlayBtn');
+  var msg = document.getElementById('newtonMsg');
+  var thetaI = 5, thetaF = 30, tau = 910; // s
+  var tMax = 4000;
+  var t = 0, playing = true;
+  var W = canvas.width, H = canvas.height;
+  var padL = 55, padB = 34, padT = 16, padR = 20;
+  var plotW = W-padL-padR, plotH = H-padT-padB;
+
+  function theta(tt) { return (thetaI - thetaF) * Math.exp(-tt/tau) + thetaF; }
+
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(W-padR,H-padB); ctx.stroke();
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '11px Nunito'; ctx.textAlign='center';
+    ctx.fillText('temps t (s)', padL+plotW/2, H-8);
+    ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('θ (°C)',0,0); ctx.restore();
+
+    // ligne asymptote thetaF
+    var yF = H-padB - ((thetaF-0)/35)*plotH;
+    ctx.strokeStyle = '#B8D4EC'; ctx.setLineDash([4,3]); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(padL,yF); ctx.lineTo(W-padR,yF); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#5B8FB9'; ctx.font='10px Nunito'; ctx.textAlign='left';
+    ctx.fillText('θf = 30 °C', padL+4, yF-4);
+
+    // courbe théta(t)
+    ctx.strokeStyle = '#E8783A'; ctx.lineWidth = 2.4; ctx.beginPath();
+    var first = true;
+    for (var tt=0; tt<=tMax; tt+=20) {
+      var th = theta(tt);
+      var x = padL + (tt/tMax)*plotW;
+      var y = H-padB - ((th-0)/35)*plotH;
+      if (first) { ctx.moveTo(x,y); first=false; } else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    // graduations Y
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '9px Nunito'; ctx.textAlign='right';
+    for (var v=0; v<=35; v+=5) {
+      var y = H-padB - (v/35)*plotH;
+      ctx.strokeStyle = '#DDE3EC'; ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+      ctx.fillText(v, padL-6, y+3);
+    }
+
+    // point mobile
+    var th = theta(t);
+    var x = padL + (t/tMax)*plotW;
+    var y = H-padB - ((th-0)/35)*plotH;
+    ctx.fillStyle = '#C0392B';
+    ctx.beginPath(); ctx.arc(x,y,5,0,2*Math.PI); ctx.fill();
+
+    msg.innerHTML = 'À t = <strong>' + Math.round(t) + ' s</strong>, la température de la canette est θ ≈ <strong>' + th.toFixed(1).replace('.',',') + ' °C</strong>.';
+  }
+  function loop() {
+    if (playing) { t += 12; if (t > tMax) t = 0; }
+    draw();
+    requestAnimationFrame(loop);
+  }
+  window.toggleNewtonAnim = function() {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Lecture';
+    playBtn.classList.toggle('active', playing);
+  };
+  window.resetNewtonAnim = function() { t = 0; draw(); };
+  requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>
