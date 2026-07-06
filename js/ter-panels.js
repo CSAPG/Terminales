@@ -270,7 +270,13 @@ const TER_SEQUENCES = [
       {
         id:'Cours', label:'Cours', actif: true,
         items: [
-          { type:'link', icon:'📖', label:'Fiche de révision',
+          { type:'link', icon:'📖', label:'Fiche de cours',
+            sub:'Fichier en pdf',
+            href:'seq05/Seq5_Controle_de_qualite.pdf' },
+         { type:'link', icon:'🎓', label:'Cours interactif',
+            sub:'Réalisé par Mme Poirault-Gauvin',
+            href:'seq05/seq05-cours_interactif.html' },
+         { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Jules et Léandro',
             href:'seq05/seq05_Fiche de révision.html' },
         ]
