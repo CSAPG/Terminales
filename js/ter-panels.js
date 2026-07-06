@@ -417,7 +417,7 @@ const TER_SEQUENCES = [
             href:'seq09/seq09_Fiche de révision partie B.html' },
         ]
       },
-       
+      
       {
         id:'Quiz', label:'Quiz',
         items: [
