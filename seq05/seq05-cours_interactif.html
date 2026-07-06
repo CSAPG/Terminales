@@ -1,0 +1,3706 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séquence 05 – Contrôle de qualité – Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #2D5F8A;
+    --bleu-clair: #E8F1F8;
+    --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
+    --orange: #E8783A;
+    --orange-clair: #FDF0E8;
+    --vert: #3A8A6E;
+    --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --gris-fond: #F5F7FA;
+    --gris-bord: #DDE3EC;
+    --texte: #1A2A3A;
+    --texte-leger: #5A6B7A;
+    --blanc: #FFFFFF;
+    --rouge: #C0392B;
+    --rouge-clair: #FDEDEC;
+    --violet: #7B4FA6;
+    --violet-clair: #F3EDF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #DDE6F0;
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blanc);
+    border-bottom: 3px solid var(--bleu);
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 18px 32px 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .header-badge {
+    background: var(--bleu);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  button.cap-toggle {
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button.cap-toggle:hover { background: #1e4466; }
+  .cap-panel {
+    display: none;
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid #B8D4EC;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .cap-panel.open { display: block; }
+  .cap-panel ul { margin: 0; padding-left: 1.3rem; }
+  .cap-panel li { margin-bottom: 5px; line-height: 1.6; }
+  .cap-panel .cap-cat { font-weight: 700; color: var(--bleu); margin-top: 8px; }
+  .cap-panel .cap-cat:first-child { margin-top: 0; }
+
+  .header-titles h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--bleu);
+    line-height: 1.2;
+  }
+  .header-titles p {
+    font-size: 0.82rem;
+    color: var(--texte-leger);
+    margin-top: 2px;
+  }
+  .header-titles p span { color: var(--orange); font-weight: 700; }
+
+  /* ── ICÔNE ── */
+  .mobile-icon-wrap {
+    flex-shrink: 0;
+    width: 84px;
+    height: 56px;
+    position: relative;
+    margin-top: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-icon-wrap svg { width: 100%; height: 100%; }
+
+  /* ── ONGLETS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 13px 10px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: var(--texte-leger);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -3px;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+    background: var(--orange-clair);
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gris-bord);
+    color: var(--texte-leger);
+    font-size: 0.70rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .tab-num { background: var(--bleu); color: white; }
+
+  /* ── SOUS-ONGLETS ── */
+  .sub-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 18px 0 0;
+    margin-bottom: 22px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    background: #b8cfe0;
+    color: #2D5F8A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub-tab-btn:hover { background: #2D5F8A; color: white; }
+  .sub-tab-btn.active { background: #1e4466; color: white; }
+  .sub-tab-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    transition: all 0.2s;
+  }
+  .sub-tab-btn:not(.active) .sub-tab-num {
+    background: rgba(45,95,138,0.2);
+  }
+
+  .sub-tab-content { display: none; }
+  .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+  /* ── CONTENU ── */
+  .main { max-width: 1400px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BLOCS COURS ── */
+  .def-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .def-card::before {
+    content: 'COURS';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.6;
+  }
+  .def-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+  .def-card ul { padding-left: 18px; }
+  .def-card ul li { margin-bottom: 5px; }
+
+  /* ── BLOCS ACTIVITÉ ── */
+  .activite-card {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-left: 4px solid var(--bleu-moyen);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .activite-card::before {
+    content: 'ACTIVITÉ';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.8;
+  }
+  .activite-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+  }
+  .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  /* ── BLOCS EXERCICE ── */
+  .exo-card {
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert-exo-bord);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .exo-card::before {
+    content: 'EXERCICE';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--vert);
+    opacity: 0.7;
+  }
+  .exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--vert);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu-clair);
+  }
+  .section-title .icon { font-size: 1.3rem; }
+
+  .intro-box {
+    background: #FFFBF7;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--texte);
+    font-style: italic;
+  }
+
+  .formule-box {
+    background: var(--orange-clair);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  .formule-box .legend {
+    font-size: 0.80rem;
+    font-weight: 500;
+    color: var(--texte-leger);
+    margin-top: 6px;
+    text-align: left;
+  }
+
+  .exemple-box {
+    background: var(--vert-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .exemple-box strong { color: var(--vert); }
+
+  .remarque-box {
+    background: var(--violet-clair);
+    border-left: 4px solid var(--violet);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .remarque-box strong { color: var(--violet); }
+
+  .attention-box {
+    background: var(--rouge-clair);
+    border-left: 4px solid var(--rouge);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .attention-box strong { color: var(--rouge); }
+
+  .methode-box {
+    background: var(--bleu-activite);
+    border: 1.5px dashed var(--bleu-moyen);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .methode-box ol { padding-left: 20px; }
+  .methode-box li { margin-bottom: 6px; }
+  .methode-box .methode-titre {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+  }
+
+  /* ── TABLEAU GÉNÉRIQUE ── */
+  .tableau-avancement {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 14px 0;
+    background: var(--blanc);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .tableau-avancement th {
+    background: var(--bleu);
+    color: white;
+    padding: 10px 14px;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .tableau-avancement td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--gris-bord);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .tableau-avancement tr:last-child td { border-bottom: none; }
+  .tableau-avancement tr:nth-child(even) td { background: var(--gris-fond); }
+  .tableau-avancement td:first-child { font-weight: 600; color: var(--bleu); text-align: left; }
+
+  /* ── CRITÈRE / CARTES 3 COLONNES ── */
+  .critere-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .critere-grid { grid-template-columns: 1fr; } }
+  .critere-item {
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .critere-left  { background: #FEF9F0; border: 2px solid var(--orange); color: var(--texte); }
+  .critere-mid   { background: var(--vert-exo); border: 2px solid var(--vert); color: var(--texte); }
+  .critere-right { background: var(--bleu-activite); border: 2px solid var(--bleu-moyen); color: var(--texte); }
+  .critere-item .critere-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .critere-left .critere-label  { color: var(--orange); }
+  .critere-mid .critere-label   { color: var(--vert); }
+  .critere-right .critere-label { color: var(--bleu); }
+
+  /* ── EXERCICE INTERACTIF ── */
+  .exo-enonce {
+    background: var(--blanc);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.90rem;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    border: 1px solid var(--vert-exo-bord);
+  }
+  .question-block { margin-bottom: 14px; }
+  .question-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 7px;
+    padding-left: 8px;
+    border-left: 3px solid var(--vert);
+    line-height: 1.5;
+  }
+  .btn-correction {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 9px 20px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-correction:hover { background: #2A6B52; transform: translateY(-1px); }
+  .correction {
+    display: none;
+    background: #F0FAF6;
+    border: 1.5px solid var(--vert);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .correction.visible { display: block; animation: fadeIn 0.2s ease; }
+  .correction strong { color: var(--vert); }
+  .correction .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 7px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── EXERCICE NUMÉRIQUE INLINE ── */
+  .num-field-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .num-field-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--texte); }
+  .num-input {
+    width: 110px;
+    padding: 7px 11px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--gris-fond);
+    transition: border-color 0.2s;
+  }
+  .num-input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); }
+  .num-input.correct { border-color: var(--vert); background: var(--vert-exo); }
+  .num-input.wrong   { border-color: var(--rouge); background: var(--rouge-clair); }
+  .num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
+
+  .dq-select {
+    padding: 7px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.86rem;
+    background: var(--blanc);
+    color: var(--texte);
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .dq-select:focus { outline: none; border-color: var(--bleu); }
+  .dq-select.correct { border-color: var(--vert); background: var(--vert-exo); color: var(--vert); font-weight: 700; }
+  .dq-select.wrong   { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
+  .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 6px; }
+  .dq-feedback.wrong { color: var(--rouge); }
+  .num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
+  .num-feedback.ok   { color: var(--vert); }
+  .num-feedback.ko   { color: var(--rouge); }
+  .btn-verif {
+    padding: 7px 16px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-verif:hover { background: #1E4A72; }
+
+  .bilan-exo-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid #2D5F8A;
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+  }
+  .bilan-exo-card .bilan-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #2D5F8A;
+    background: var(--bleu-clair);
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .bilan-exo-card h3 { margin-bottom: 6px; }
+  .bilan-exo-card .bilan-theme {
+    font-size: 0.87rem;
+    color: var(--texte-leger);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .bilan-links .btn-correction { margin-top: 0; padding: 8px 16px; }
+  .btn-sujet {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: filter 0.15s;
+  }
+  .btn-sujet:hover { filter: brightness(0.9); }
+  .btn-reset {
+    padding: 7px 16px;
+    background: var(--gris-fond);
+    color: var(--texte-leger);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+  .num-btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .num-correction-inline {
+    display: none;
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: var(--texte);
+  }
+  .num-correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
+  .num-correction-inline .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 7px 11px;
+    margin: 6px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── QCM ── */
+  .qcm-grid { display: grid; gap: 10px; margin: 14px 0; }
+  .qcm-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .qcm-item .substance { font-size: 0.93rem; font-weight: 600; flex: 1; }
+  .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qcm-btn {
+    padding: 5px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    background: var(--gris-fond);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--texte);
+  }
+  .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
+  .qcm-btn.correct { background: var(--vert); color: white; border-color: var(--vert); }
+  .qcm-btn.active { background: var(--bleu); color: #fff; border-color: var(--bleu); }
+  .qcm-btn.wrong   { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; width: 100%; }
+  .qcm-feedback.wrong { color: var(--rouge); }
+
+  /* ── ACCORDÉON ── */
+  .accord-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: var(--texte);
+    transition: background 0.2s;
+    margin: 10px 0;
+  }
+  .accord-btn:hover { background: var(--bleu-clair); }
+  .accord-body {
+    display: none;
+    padding: 14px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  .accord-body.open { display: block; animation: fadeIn 0.2s; }
+
+  /* ── BILAN GRID ── */
+  .bilan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .bilan-grid { grid-template-columns: 1fr; } }
+  .bilan-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .bilan-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--gris-bord);
+  }
+  .bilan-card ul { padding-left: 16px; }
+  .bilan-card ul li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.5; }
+  .ke-list { list-style: none; padding: 0; }
+  .ke-list li {
+    padding: 6px 10px 6px 28px;
+    position: relative;
+    font-size: 0.84rem;
+    border-bottom: 1px solid var(--gris-bord);
+    line-height: 1.5;
+  }
+  .ke-list li:last-child { border-bottom: none; }
+  .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
+
+  /* ── CANVAS ANIMATION ── */
+  .anim-canvas-wrap {
+    background: #F8FAFC;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 14px 16px 10px;
+    margin: 14px 0;
+  }
+  .anim-canvas-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--texte-leger);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .anim-canvas-wrap canvas { display: block; margin: 0 auto; border-radius: 8px; border: 1px solid var(--gris-bord); background: #fff; max-width: 100%; }
+  .anim-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .etape-msg-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    min-height: 48px;
+  }
+  .anim-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--blanc);
+    color: var(--texte);
+    transition: all 0.15s;
+  }
+  .anim-btn:hover  { border-color: var(--bleu); color: var(--bleu); background: var(--bleu-clair); }
+  .anim-btn.active { background: var(--bleu); color: white; border-color: var(--bleu); }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; flex-wrap: wrap; }
+  .slider-row label { font-size: 0.84rem; font-weight: 700; color: var(--texte); min-width: 150px; }
+  .slider-row input[type=range] { flex: 1; min-width: 140px; accent-color: var(--bleu); }
+  .slider-row .slider-val { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--bleu); min-width: 90px; text-align: right; font-size: 0.86rem; }
+
+  .instrument-display {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    background: #94A3B8;
+    border: 1.5px solid #64748B;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin: 8px 0;
+  }
+  .instrument-display .idisp-cell {
+    background: #0F172A;
+    border-radius: 4px;
+    padding: 6px 14px;
+    text-align: center;
+  }
+  .instrument-display .idisp-val {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #86EFAC;
+  }
+  .instrument-display .idisp-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.68rem;
+    color: #CBD5E1;
+    margin-top: 2px;
+  }
+
+  /* ── FIGURES ILLUSTRATIVES ── */
+  .fig-box {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .fig-box .fig-caption {
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .fig-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+  .fig-row .fig-box { flex: 1; min-width: 200px; margin: 0; }
+
+  /* ── CALCULATRICE ── */
+  .calc-box {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin: 10px 0; }
+  @media (max-width: 560px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-field { display: flex; flex-direction: column; gap: 4px; }
+  .calc-field label { font-size: 0.80rem; font-weight: 700; color: var(--bleu); }
+  .calc-field input, .calc-field select {
+    padding: 7px 10px; border: 1.5px solid var(--gris-bord); border-radius: 7px;
+    font-family: 'Nunito', sans-serif; font-size: 0.88rem; background: var(--blanc);
+  }
+  .calc-result {
+    margin-top: 10px;
+    background: white;
+    border: 1.5px solid var(--bleu-moyen);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: var(--bleu);
+    font-size: 0.95rem;
+    min-height: 20px;
+  }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    padding: 20px;
+    border-top: 1px solid var(--gris-bord);
+    margin-top: 30px;
+  }
+
+  sup { font-size: 0.65em; }
+  sub { font-size: 0.65em; }
+  .math { font-family: 'Outfit', sans-serif; font-style: italic; }
+
+  /* ── PASTILLES ── */
+  .pastille-card-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+  .pastille-video-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .pastille-blue {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 20px;
+    border-radius: 999px;
+    background: var(--bleu);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: filter 0.15s, transform 0.12s;
+  }
+  .pastille-blue:hover { filter: brightness(0.90); transform: translateY(-1px); }
+  .pastille-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 108px;
+    padding: 10px 8px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .pastille-card:hover { border-color: var(--bleu); background: var(--bleu-clair); transform: translateY(-2px); }
+  .pastille-card-icon { font-size: 1.6rem; line-height: 1; }
+  .pastille-card-label { font-size: 0.72rem; font-weight: 700; color: var(--texte); line-height: 1.3; }
+
+  .qcm-grid-4col { grid-template-columns: repeat(4,1fr); }
+  .qcm-grid-4col .qcm-item { min-width: 0; overflow: hidden; }
+  .qcm-grid-4col .fig-box { overflow: hidden; }
+  .qcm-grid-4col .fig-box img { max-width: 100%; width: 100%; height: auto; display: block; }
+  @media (max-width: 800px) { .qcm-grid-4col { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) {
+    .header-inner { padding: 12px 16px 0; }
+    .header-titles h1 { font-size: 1.05rem; }
+    .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
+    .main { padding: 18px 12px 50px; }
+    .mobile-icon-wrap { width: 42px; height: 42px; }
+    .calc-grid { grid-template-columns: 1fr; }
+    .qcm-grid-4col { grid-template-columns: 1fr; }
+  }
+
+  /* ── IFRAME SIMULATION (PhET / PCCL) ── */
+  .iframe-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 4 / 3;
+    margin: 12px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--gris-bord);
+    background: #fff;
+  }
+  .iframe-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
+
+  /* ── PROTOCOLE GUIDÉ (étapes numérotées) ── */
+  .protocole-list { padding-left: 0; list-style: none; margin: 10px 0; }
+  .protocole-list li {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 0.90rem;
+    line-height: 1.6;
+    color: var(--texte);
+  }
+  .protocole-num {
+    flex: 0 0 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bleu-moyen);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  /* ── EXERCICE PYTHON (Skulpt) ── */
+  .py-editor-wrap {
+    display: flex;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #1E293B;
+  }
+  .py-editor-wrap:focus-within { border-color: var(--bleu); }
+  .py-line-numbers {
+    flex: 0 0 auto;
+    background: #0F172A;
+    color: #64748B;
+    text-align: right;
+    padding: 12px 8px 12px 10px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    user-select: none;
+    overflow: hidden;
+    white-space: pre;
+  }
+  .py-editor {
+    width: 100%;
+    min-height: 300px;
+    padding: 12px 14px;
+    background: #1E293B;
+    color: #E2E8F0;
+    border: none;
+    border-radius: 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    resize: vertical;
+    box-sizing: border-box;
+    tab-size: 4;
+    white-space: pre;
+    overflow-x: auto;
+    flex: 1;
+  }
+  .py-editor:focus { outline: none; }
+  .py-output {
+    margin-top: 10px;
+    min-height: 40px;
+    padding: 10px 14px;
+    background: #0F172A;
+    color: #86EFAC;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.84rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .btn-run {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-run:hover { background: #1E4A72; }
+  .btn-run:disabled { background: #94a3b8; cursor: wait; }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+    <div class="header-left">
+      <div class="header-badge">T<sup>ale</sup> Spé – Séq. 05</div>
+      <button class="cap-toggle" id="capToggle">📝 Capacités exigibles</button>
+    </div>
+    <div class="header-titles">
+      <h1>Contrôle de qualité</h1>
+      <p>Analyse spectrale, dosages et titrages · <span>M. FRANCOIS &amp; C. Poirault-Gauvin</span></p>
+    </div>
+    <!-- Icône burette (ter-icons.js — Séq. 05) -->
+    <div class="mobile-icon-wrap" title="Burette de titrage">
+      <style>
+        @keyframes bur-drop  { 0%{transform:translateY(0);opacity:1;} 80%{transform:translateY(18px);opacity:0.8;} 100%{transform:translateY(22px);opacity:0;} }
+        @keyframes bur-color { 0%,60%{fill:#bae6fd;} 80%,100%{fill:#f0abfc;} }
+        .bur-drop-el { animation: bur-drop  1.8s ease-in infinite; }
+        .bur-liquid  { animation: bur-color 5s ease-in-out infinite; }
+        @media(prefers-reduced-motion:reduce){.bur-drop-el,.bur-liquid{animation:none;}}
+      </style>
+      <svg viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg" width="48" height="88">
+        <rect x="28" y="4" width="4" height="72" rx="1" fill="#94a3b8"/>
+        <rect x="4" y="62" width="22" height="3" rx="1" fill="#94a3b8"/>
+        <rect x="4" y="100" width="52" height="6" rx="2" fill="#94a3b8"/>
+        <rect x="24" y="8" width="12" height="55" rx="2" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
+        <rect x="25.5" y="9.5" width="9" height="34" rx="1" class="bur-liquid"/>
+        <line x1="36" y1="18" x2="39" y2="18" stroke="#0369a1" stroke-width="1"/>
+        <line x1="36" y1="26" x2="39" y2="26" stroke="#0369a1" stroke-width="1"/>
+        <line x1="36" y1="34" x2="39" y2="34" stroke="#0369a1" stroke-width="1"/>
+        <line x1="36" y1="42" x2="39" y2="42" stroke="#0369a1" stroke-width="1"/>
+        <rect x="22" y="60" width="16" height="6" rx="3" fill="#475569"/>
+        <rect x="28" y="57" width="4" height="12" rx="1" fill="#64748b"/>
+        <path d="M28,66 L28,78 L30,82 L32,78 L32,66 Z" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.2"/>
+        <ellipse class="bur-drop-el" cx="30" cy="84" rx="2.5" ry="3" fill="#7dd3fc"/>
+        <path d="M12,80 L12,103 Q12,107 16,107 L44,107 Q48,107 48,103 L48,80 Z"
+              fill="#f0fdf9" stroke="#7dd3fc" stroke-width="1.5"/>
+        <clipPath id="bur-becher"><path d="M13,90 L13,103 Q13,106 16,106 L44,106 Q47,106 47,103 L47,90 Z"/></clipPath>
+        <rect x="13" y="90" width="34" height="16" class="bur-liquid" clip-path="url(#bur-becher)" opacity="0.7"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cap-panel" id="capPanel">
+    <div class="cap-cat">Partie A — Analyse spectrale</div>
+    <ul>
+      <li>Exploiter, à partir de données tabulées, un spectre d'absorption infrarouge ou UV-visible pour identifier un groupe caractéristique ou une espèce chimique.</li>
+      <li>Exploiter la loi de Beer-Lambert pour déterminer une concentration. Citer le domaine de validité de cette relation.</li>
+    </ul>
+    <div class="cap-cat">Partie B — Dosages et titrages</div>
+    <ul>
+      <li>Exploiter la loi de Beer-Lambert ou la loi de Kohlrausch pour déterminer une concentration ou une quantité de matière. Citer les domaines de validité de ces relations.</li>
+      <li>Établir la composition du système après ajout d'un volume de solution titrante, la transformation étant considérée comme totale.</li>
+      <li>Exploiter un titrage pour déterminer une quantité de matière, une concentration ou une masse.</li>
+      <li><strong>Dans le cas d'un titrage avec suivi conductimétrique, justifier qualitativement l'évolution de la pente de la courbe à l'aide de données sur les conductivités ioniques molaires.</strong></li>
+    </ul>
+  </div>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">P</span> Prérequis
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">A</span> Analyse spectrale
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">B</span> Étalonnage
+    </button>
+    <button class="tab-btn" onclick="switchTab(3)">
+      <span class="tab-num">C</span> Titrages
+    </button>
+    <button class="tab-btn" onclick="switchTab(4)">
+      <span class="tab-num">D</span> Suivi du titrage
+    </button>
+    <button class="tab-btn" onclick="switchTab(5)">
+      <span class="tab-num">✓</span> Bilan &amp; Ressources
+    </button>
+  </nav>
+  </div><!-- /header-inner -->
+</div>
+
+<div class="main">
+<!-- ══════════════ ONGLET PRÉREQUIS ══════════════ -->
+<div class="tab-content active" id="tab-0">
+
+  <div class="sub-tabs-nav" id="sub-nav-P">
+    <button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+      <span class="sub-tab-num">1</span> Stœchiométrie &amp; isomérie Z/E
+    </button>
+    <button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+      <span class="sub-tab-num">2</span> Liaison H &amp; rappels de 1<sup>ère</sup>
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Avant d'étudier l'analyse spectrale et les dosages, il est indispensable de revoir la nomenclature organique, la notion de mélange stœchiométrique, l'isomérie Z/E, les liaisons conjuguées et la liaison hydrogène — ainsi que ce que vous savez déjà de 1<sup>ère</sup> sur l'absorbance et le titrage.
+  </div>
+
+  <!-- ───────── P1 ───────── -->
+  <div class="sub-tab-content active" id="sub-P-0">
+
+    <div class="def-card">
+      <h3>Mélange stœchiométrique</h3>
+      <p>Un mélange est <strong>stœchiométrique</strong> si les quantités initiales des réactifs sont dans les proportions des nombres stœchiométriques des réactifs. Ainsi, pour la réaction d'équation :</p>
+      <div class="formule-box">
+        aA + bB → cC + dD &nbsp;&nbsp;⟹&nbsp;&nbsp; mélange initial stœchiométrique si <span class="math">n₀(A)/a = n₀(B)/b</span>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exemple d'application</h3>
+      <div class="exo-enonce">Réaction d'oxydation entre l'aluminium et le dioxygène : <strong>4 Al + 3 O₂ → 2 Al₂O₃</strong>. Initialement, les réactifs sont en proportions stœchiométriques si la relation suivante est vérifiée entre les quantités de matière initiales n₀(Al) et n₀(O₂) :</p></div>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">Relation stœchiométrique correcte :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-p1a')">n₀(Al) = n₀(O₂)</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-p1a')">n₀(Al)/4 = n₀(O₂)/3</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-p1a')">n₀(Al)/3 = n₀(O₂)/4</button>
+          </div>
+          <div class="qcm-feedback" id="fb-p1a"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Isomérie Z/E</h3>
+      <p>Un composé de formule A−CH=CH−B, où A et B ne sont pas des atomes d'hydrogène, présente deux isomères notés <strong>Z</strong> (substituants prioritaires du même côté) et <strong>E</strong> (substituants prioritaires de part et d'autre de la double liaison).</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>Z ou E ?</h3>
+      <div class="exo-enonce">Indique si chacune des molécules suivantes correspond à l'isomère <strong>Z</strong> ou à l'isomère <strong>E</strong>.</div>
+
+      <div class="qcm-grid qcm-grid-4col">
+        <div class="qcm-item" style="flex-direction:column;align-items:center;">
+          <div class="fig-box" style="margin-bottom:8px;"><img src="images-cours/isomere-molecule1.png" alt="Molécule 1"></div>
+          <span class="substance">Molécule 1 :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-p1b-1')">Z</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-p1b-1')">E</button>
+          </div>
+          <div class="qcm-feedback" id="fb-p1b-1"></div>
+        </div>
+
+        <div class="qcm-item" style="flex-direction:column;align-items:center;">
+          <div class="fig-box" style="margin-bottom:8px;"><img src="images-cours/isomere-molecule2.png" alt="Molécule 2"></div>
+          <span class="substance">Molécule 2 :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-p1b-2')">Z</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-p1b-2')">E</button>
+          </div>
+          <div class="qcm-feedback" id="fb-p1b-2"></div>
+        </div>
+
+        <div class="qcm-item" style="flex-direction:column;align-items:center;">
+          <div class="fig-box" style="margin-bottom:8px;"><img src="images-cours/isomere-molecule3.png" alt="Molécule 3"></div>
+          <span class="substance">Molécule 3 :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-p1b-3')">Z</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-p1b-3')">E</button>
+          </div>
+          <div class="qcm-feedback" id="fb-p1b-3"></div>
+        </div>
+
+        <div class="qcm-item" style="flex-direction:column;align-items:center;">
+          <div class="fig-box" style="margin-bottom:8px;"><img src="images-cours/isomere-molecule4.png" alt="Molécule 4"></div>
+          <span class="substance">Molécule 4 :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-p1b-4')">Z</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-p1b-4')">E</button>
+          </div>
+          <div class="qcm-feedback" id="fb-p1b-4"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Liaisons conjuguées &amp; couleur</h3>
+      <p>Des doubles liaisons séparées par une liaison simple sont dites <strong>conjuguées</strong>. Les molécules d'espèces organiques colorées présentent souvent de nombreuses liaisons conjuguées : la couleur d'une solution résulte de la <strong>superposition des radiations non absorbées</strong> de la lumière blanche.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>Compter les liaisons conjuguées</h3>
+      <div class="exo-enonce">Un pigment organique coloré présente la structure ci-dessous. Combien de liaisons conjuguées cette molécule comporte-t-elle ?</div>
+      <div class="fig-box">
+        <img src="images-cours/betacarotene.png" alt="Structure d'un pigment organique coloré">
+      </div>
+      <div class="num-field-wrap">
+        <label for="p1c">Nombre de liaisons conjuguées :</label>
+        <input type="number" class="num-input" id="p1c">
+        <button class="btn-verif" onclick="checkNum('p1c',9,0)">Vérifier</button>
+        <span class="num-feedback" id="p1c-fb"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ───────── P2 ───────── -->
+  <div class="sub-tab-content" id="sub-P-1">
+
+    <div class="def-card">
+      <h3>Liaison hydrogène</h3>
+      <p>Une liaison hydrogène se forme lorsqu'un atome H, alors lié à un atome A très <strong>électronégatif</strong>, interagit avec un atome B, lui aussi très électronégatif et porteur d'un doublet <strong>non liant</strong>. A et B peuvent être le fluor F, l'oxygène O, l'azote N, le chlore Cl…</p>
+      <p style="margin-top:8px;">Les molécules d'alcools et d'acides carboxyliques peuvent participer à des liaisons hydrogène.</p>
+
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Exemple — réseau de liaisons hydrogène entre molécules d'éthanol</div>
+        <div class="fig-box">
+          <img src="images-cours/liaison-hydrohène.png" alt="Réseau de liaisons hydrogène entre molécules d'éthanol">
+        </div>
+        <div class="etape-msg-box">Chaque liaison hydrogène relie l'hydrogène δ⁺ d'un groupe hydroxyle -O-H (charge partielle positive, car l'oxygène est très électronégatif) au doublet non liant 2δ⁻ de l'oxygène de la molécule voisine (charge partielle négative). Ce sont des charges de signes opposés qui s'attirent : c'est le caractère <strong>polaire</strong> du groupe hydroxyle -OH qui rend ce réseau de liaisons hydrogène possible, de molécule en molécule.</div>
+      </div>
+    </div>
+
+    <div class="methode-box">
+      <div class="methode-titre">💡 À retenir de 1<sup>ère</sup> avant la séquence 5</div>
+      <ol>
+        <li>Chapitre « composition initiale » : mesure de l'absorbance et relation entre l'absorbance et la concentration (déjà proportionnelle !).</li>
+        <li>Chapitre « Évolution d'un système chimique » et TP sur le titrage : un titrage permet de déterminer une concentration inconnue en faisant réagir l'espèce titrée avec un réactif titrant.</li>
+      </ol>
+    </div>
+
+    <div class="section-title"><span class="icon">🎬</span> Vidéos bilan (à voir plutôt en fin de séquence pour réviser)</div>
+    <div class="pastille-video-row">
+      <a class="pastille-blue" href="https://www.pearltrees.com/private/id105615102/item806292640?paccess=47d78e4cb2f.300f0ca0.73acfb5113159746dd2b1afac1cc129b" target="_blank" rel="noopener">Cours 2 — Méthodes d'analyses physiques</a>
+      <a class="pastille-blue" href="https://www.pearltrees.com/private/id105615102/item806292464?paccess=47d78e41600.300f0bf0.56608987d1db30d282a8dff058b64a17" target="_blank" rel="noopener">Cours 3 — Méthodes d'analyses chimiques</a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ══════════════ ONGLET A — ANALYSE SPECTRALE ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <div class="sub-tabs-nav" id="sub-nav-A">
+    <button class="sub-tab-btn active" data-sub="A1" onclick="switchSubTab('A',0)">
+      <span class="sub-tab-num">1</span> Spectre UV-visible &amp; Beer-Lambert
+    </button>
+    <button class="sub-tab-btn" data-sub="A2" onclick="switchSubTab('A',1)">
+      <span class="sub-tab-num">2</span> Spectre infrarouge
+    </button>
+  </div>
+
+  <div class="intro-box">
+    L'analyse spectrale permet d'identifier une molécule : elle permet de vérifier que la molécule synthétisée en laboratoire est bien présente en solution, et que la solution est pure.
+  </div>
+
+  <!-- ───────── A1 ───────── -->
+  <div class="sub-tab-content active" id="sub-A-0">
+
+    <div class="def-card">
+      <h3>Principe de la spectroscopie</h3>
+      <p>Une espèce chimique est susceptible d'<strong>interagir</strong> avec un rayonnement électromagnétique. L'étude de l'intensité du rayonnement, absorbé ou réémis, en fonction des longueurs d'onde est l'<strong>analyse spectrale</strong>. La spectroscopie est l'étude quantitative des interactions entre la lumière et la matière.</p>
+      <p style="margin-top:8px;">Dans un spectrophotomètre, on fait passer une radiation électromagnétique à travers une solution. On mesure l'intensité <strong>I</strong> de la radiation transmise et on la compare à l'intensité <strong>I₀</strong> de la radiation incidente ; pour certaines longueurs d'onde, I &lt; I₀ : la solution a <strong>absorbé</strong> de l'énergie.</p>
+
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Principe d'un spectrophotomètre</div>
+        <style>
+          @keyframes spectro-fan { 0%,100% { opacity: 0.35; } 50% { opacity: 0.85; } }
+          @keyframes spectro-flow { 0%,100% { opacity: 0.55; } 50% { opacity: 0.95; } }
+          .spectro-fan-line { animation: spectro-fan 2.4s ease-in-out infinite; }
+          .spectro-beam { animation: spectro-flow 2s ease-in-out infinite; }
+          @media (prefers-reduced-motion: reduce) {
+            .spectro-fan-line { animation: none; opacity: 0.7; }
+            .spectro-beam { animation: none; opacity: 0.8; }
+          }
+        </style>
+        <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto;">
+          <!-- Faisceau source -> prisme (lumière polychromatique, blanche) -->
+          <polygon class="spectro-beam" points="45,174 45,190 150,148 150,132" fill="#fde68a" opacity="0.7" stroke="none"/>
+
+          <!-- Source polychromatique -->
+          <circle cx="45" cy="182" r="14" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+          <text x="45" y="210" text-anchor="middle" font-size="11" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">Source</text>
+          <text x="45" y="222" text-anchor="middle" font-size="11" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">polychromatique</text>
+
+          <!-- Système dispersif (prisme) -->
+          <polygon points="150,155 195,155 172,118" fill="#CBD5E1" stroke="#64748B" stroke-width="1.5"/>
+          <text x="172" y="210" text-anchor="middle" font-size="11" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">Système dispersif</text>
+          <text x="172" y="222" text-anchor="middle" font-size="11" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">(prisme)</text>
+
+          <!-- Éventail dispersé (violet -> rouge) vers le diaphragme -->
+          <line class="spectro-fan-line" x1="195" y1="140" x2="270" y2="70"  stroke="#7c3aed" stroke-width="2"/>
+          <line class="spectro-fan-line" x1="195" y1="140" x2="270" y2="80"  stroke="#2563eb" stroke-width="2"/>
+          <line class="spectro-fan-line" x1="195" y1="140" x2="270" y2="92"  stroke="#22c55e" stroke-width="2"/>
+          <line class="spectro-fan-line" x1="195" y1="140" x2="270" y2="104" stroke="#eab308" stroke-width="2"/>
+          <line class="spectro-fan-line" x1="195" y1="140" x2="270" y2="116" stroke="#dc2626" stroke-width="2"/>
+
+          <!-- Diaphragme (sélection de λ) -->
+          <rect x="268" y="62" width="6" height="22" fill="#1A2A3A"/>
+          <rect x="268" y="98" width="6" height="22" fill="#1A2A3A"/>
+          <text x="271" y="210" text-anchor="middle" font-size="11" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">Diaphragme</text>
+          <text x="271" y="222" text-anchor="middle" font-size="10" fill="var(--texte-leger)" font-family="Nunito, Arial, sans-serif">(sélection de λ)</text>
+
+          <!-- Faisceau diaphragme -> échantillon : LARGE, intensité I0,λ (rectangle, pas de convergence) -->
+          <rect class="spectro-beam" x="274" y="83" width="71" height="16" fill="var(--orange)" opacity="0.55"/>
+          <text x="308" y="76" text-anchor="middle" font-size="12" font-weight="700" fill="var(--orange)" font-family="Outfit, Arial, sans-serif">I₀,λ</text>
+
+          <!-- Échantillon (cuve) -->
+          <rect x="345" y="60" width="40" height="64" fill="#E0F2FE" stroke="#7DD3FC" stroke-width="1.5"/>
+          <text x="365" y="205" text-anchor="middle" font-size="11" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">Échantillon</text>
+
+          <!-- Faisceau échantillon -> photodétecteur : NETTEMENT PLUS ÉTROIT, intensité Iλ < I0,λ (rectangle, même axe) -->
+          <rect class="spectro-beam" x="385" y="88" width="70" height="6" fill="var(--orange)" opacity="0.55"/>
+          <text x="418" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--orange)" font-family="Outfit, Arial, sans-serif">Iλ</text>
+
+          <!-- Photodétecteur -->
+          <rect x="455" y="72" width="30" height="40" rx="4" fill="#94A3B8" stroke="#64748B" stroke-width="1.5"/>
+          <circle cx="470" cy="84" r="5" fill="#E2E8F0"/>
+          <text x="470" y="205" text-anchor="middle" font-size="11" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">Photodétecteur</text>
+
+          <!-- Afficheur : grandeur détectée -->
+          <rect x="460" y="94" width="20" height="14" rx="1.5" fill="#0F172A"/>
+          <text x="470" y="104" text-anchor="middle" font-size="8" font-weight="700" fill="#86EFAC" font-family="Consolas, monospace">Iλ</text>
+        </svg>
+        <div class="etape-msg-box">La lumière blanche (polychromatique) émise par la source est décomposée par le système dispersif. Le diaphragme ne laisse passer qu'une bande étroite de longueurs d'onde autour de λ : c'est cette radiation, d'intensité <strong>I₀,λ</strong> (faisceau large), qui traverse l'échantillon. En sortie, le faisceau est <strong>plus étroit</strong> : une partie de l'énergie lumineuse a été absorbée par l'échantillon. Le photodétecteur mesure cette intensité transmise <strong>Iλ</strong> (grandeur détectée, affichée), ce qui permet de calculer l'absorbance A à cette longueur d'onde.</div>
+      </div>
+    </div>
+
+    <div class="formule-box">
+      A = − log(I / I₀) &nbsp;&nbsp;(sans unité) &nbsp;&nbsp;|&nbsp;&nbsp; T = I / I₀ &nbsp;(en %)
+      <div class="legend">A : absorbance à une longueur d'onde donnée · T : transmittance à une longueur d'onde donnée</div>
+    </div>
+
+    <div class="def-card">
+      <h3>Loi de Beer-Lambert</h3>
+      <div class="formule-box">
+        A = ε(λ) × l × C
+        <div class="legend">ε(λ) : coefficient d'absorption molaire (L·mol⁻¹·cm⁻¹) · l : épaisseur traversée (cm) · C : concentration (mol·L⁻¹)</div>
+      </div>
+      <p>Il faut <strong>C &lt; 0,1 mol·L⁻¹</strong> pour éviter la saturation du spectrophotomètre (A &gt; 2 et I<sub>transmis</sub> &lt; 1 %) : c'est le <strong>domaine de validité</strong> de la loi. Si plusieurs espèces colorées sont présentes en solution, leurs absorbances s'additionnent : A = ΣA<sub>i</sub> = Σε<sub>i</sub>·l·C<sub>i</sub>.</p>
+    </div>
+
+    <div class="activite-card">
+      <h3>🧪 Activité expérimentale virtuelle — Vérifier la loi de Beer-Lambert</h3>
+      <p>À l'aide du simulateur <strong>PhET « Beer's Law Lab »</strong> (onglet <em>Beer's Law</em>, pas l'onglet <em>Concentration</em>), tu vas mesurer l'absorbance d'une solution colorée pour différentes concentrations, comme au laboratoire.</p>
+
+      <div class="iframe-wrap">
+        <iframe src="https://phet.colorado.edu/sims/html/beers-law-lab/latest/beers-law-lab_all.html?locale=fr" allowfullscreen></iframe>
+      </div>
+
+      <ol class="protocole-list">
+        <li><span class="protocole-num">1</span><span>Choisis une <strong>solution colorée</strong> dans le menu déroulant (par exemple le permanganate de potassium KMnO₄, violet).</span></li>
+        <li><span class="protocole-num">2</span><span>Clique sur le bouton <strong>« λ at max absorbance »</strong> pour te placer à la longueur d'onde λ<sub>max</sub> de l'espèce choisie (justifie sur ton cahier pourquoi on travaille toujours à λ<sub>max</sub> en pratique).</span></li>
+        <li><span class="protocole-num">3</span><span>Fixe la <strong>largeur de cuve</strong> (cuvette width) à <strong>1 cm</strong> et fais varier la <strong>concentration</strong> C (curseur ou champ numérique) sur <strong>6 à 8 valeurs</strong> réparties entre 0 et la valeur maximale.</span></li>
+        <li><span class="protocole-num">4</span><span>Pour chaque concentration, relève l'<strong>absorbance A</strong> affichée par le détecteur et note le couple (C ; A) sur ton cahier.</span></li>
+        <li><span class="protocole-num">5</span><span>Complète ci-dessous le programme Python avec tes mesures pour tracer la courbe d'étalonnage A = f(C) et en déduire le coefficient d'absorption molaire ε.</span></li>
+      </ol>
+
+      <div class="methode-box">
+        <div class="methode-titre">💻 Programme Python — courbe d'étalonnage A = f(C) et calcul de ε</div>
+        <textarea class="py-editor" id="py-beer" spellcheck="false">
+# Recopie ici les couples (C ; A) relevés sur le simulateur PhET (6 à 8 mesures)
+C_valeurs = [_____, _____, _____, _____, _____, _____]   # concentrations en mol/L
+A_valeurs = [_____, _____, _____, _____, _____, _____]   # absorbances correspondantes (sans unité)
+
+# ─── Tracé de la courbe d'étalonnage A = f(C) ───
+import matplotlib.pyplot as plt
+
+plt.plot(_____, _____, 'o-')          # à compléter : abscisses puis ordonnées
+plt.xlabel("_____")                    # nom et unité de la grandeur en abscisse
+plt.ylabel("_____")                    # nom de la grandeur en ordonnée
+plt.title("Courbe d'étalonnage A = f(C)")
+plt.show()
+
+# ─── Calcul du coefficient directeur k de la droite A = k x C (k = epsilon x l) ───
+somme_k = 0
+for i in range(len(C_valeurs)):
+    k_i = _____ / _____             # A_valeurs[i] divisé par C_valeurs[i]
+    somme_k = somme_k + k_i
+
+k_moyen = somme_k / _____            # à compléter : nombre de mesures
+print("Coefficient directeur moyen k =", k_moyen, "L.mol^-1.cm^-1")
+
+# ─── Calcul de epsilon (l = 1 cm, largeur de cuve fixée à l'étape 3) ───
+l = 1
+epsilon = _____ / _____              # à compléter : formule à partir de k_moyen et l
+print("Coefficient d'absorption molaire epsilon =", epsilon, "L.mol^-1.cm^-1")</textarea>
+        <button class="btn-run" id="py-beer-btn" onclick="runBeerPython()">▶ Exécuter</button>
+        <div class="anim-canvas-wrap" style="margin-top:10px;">
+          <div class="anim-canvas-title">Courbe tracée à partir de tes listes</div>
+          <canvas id="beerPyChart" width="480" height="260"></canvas>
+        </div>
+        <div class="py-output" id="py-beer-output">// Le résultat de ton programme s'affichera ici.</div>
+      </div>
+
+      <div class="remarque-box"><strong>Analyse :</strong> si la droite passe par l'origine, A est bien proportionnelle à C : la loi de Beer-Lambert est vérifiée dans ce domaine de concentration. Compare la valeur d'ε trouvée à celle donnée par le simulateur (visible dans certains modes d'affichage) ou à une valeur tabulée pour l'espèce choisie.</div>
+    </div>
+
+    <div class="remarque-box"><strong>Remarque :</strong> une espèce est caractérisée en spectroscopie UV-visible par la longueur d'onde de son maximum d'absorption λ<sub>max</sub> et la valeur du coefficient d'absorption molaire correspondant. Une espèce <strong>incolore</strong> n'absorbe aucune radiation du spectre visible.</p></div>
+
+    <div class="def-card">
+      <h3>Spectre UV-visible et couleur</h3>
+      <p>Le <strong>spectre UV-visible</strong> représente l'<strong>absorbance</strong> en fonction de la <strong>longueur d'onde</strong>, entre 200 et 800 nm. Il présente une ou plusieurs bandes d'absorption assez larges passant par un <strong>maximum</strong> d'absorption λ<sub>max</sub>.</p>
+      <p style="margin-top:8px;">Lorsqu'une espèce chimique n'absorbe que dans un seul domaine de longueurs d'onde du visible, sa couleur perçue est la couleur <strong>complémentaire</strong> de celle des radiations absorbées (deux couleurs diamétralement opposées sur le cercle chromatique sont complémentaires).</p>
+    </div>
+
+    <div class="exemple-box"><strong>Exemple :</strong> un chromophore est un groupe d'atomes responsable d'une absorption caractéristique (et donc à l'origine de la couleur de l'espèce). La double liaison conjuguée et certains groupes caractéristiques sont des chromophores. La spectroscopie UV-visible ne modifie pas la solution après la mesure : c'est une méthode d'analyse <strong>non destructrice</strong>.</div>
+
+    <div class="exo-card">
+      <h3>QCM — Analyse spectrale UV-visible</h3>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">Une solution qui absorbe dans le bleu (≈ 450–480 nm) apparaît…</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-a1a')">bleue</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-a1a')">jaune-orangé</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-a1a')">incolore</button>
+          </div>
+          <div class="qcm-feedback" id="fb-a1a"></div>
+        </div>
+        <div class="qcm-item">
+          <span class="substance">Doubler la concentration C d'une espèce (loi de Beer-Lambert vérifiée) multiplie l'absorbance A par :</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-a1b')">4</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-a1b')">2</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-a1b')">1</button>
+          </div>
+          <div class="qcm-feedback" id="fb-a1b"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ───────── A2 ───────── -->
+  <div class="sub-tab-content" id="sub-A-1">
+
+    <div class="def-card">
+      <h3>Principe de la spectroscopie IR</h3>
+      <p>La spectroscopie IR repose sur le même principe que la spectroscopie UV-visible, mais dans le domaine de longueur d'onde 2500 – 25000 nm : le rayonnement électromagnétique interagit avec les <strong>liaisons covalentes</strong> de la molécule. Celle-ci subit alors des mouvements de vibration d'<strong>élongation</strong> ou de <strong>déformation</strong> ; certaines liaisons absorbent de l'énergie et changent de fréquence de vibration, faisant apparaître des <strong>bandes d'absorption</strong> dans le spectre.</p>
+
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Modes de vibration d'une liaison</div>
+        <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap;">
+          <div style="display:flex; flex-direction:column; align-items:center;">
+            <svg viewBox="0 0 90 70" xmlns="http://www.w3.org/2000/svg" style="width:110px;height:86px;">
+              <line x1="25" y1="35" x2="65" y2="35" stroke="#5A6B7A" stroke-width="2.2">
+                <animate attributeName="x1" values="25;15;25" dur="1.2s" repeatCount="indefinite"/>
+                <animate attributeName="x2" values="65;75;65" dur="1.2s" repeatCount="indefinite"/>
+              </line>
+              <circle cy="35" r="9" fill="var(--bleu)"><animate attributeName="cx" values="25;15;25" dur="1.2s" repeatCount="indefinite"/></circle>
+              <circle cy="35" r="9" fill="var(--orange)"><animate attributeName="cx" values="65;75;65" dur="1.2s" repeatCount="indefinite"/></circle>
+            </svg>
+            <div style="font-size:0.82rem; font-weight:700; color:#1A2A3A; margin-top:4px;">Élongation</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center;">
+            <svg viewBox="0 0 90 70" xmlns="http://www.w3.org/2000/svg" style="width:110px;height:86px;">
+              <line y1="50" x1="45" stroke="#5A6B7A" stroke-width="2.2" x2="25" y2="18">
+                <animate attributeName="x2" values="25;33;25" dur="1.4s" repeatCount="indefinite"/>
+              </line>
+              <line y1="50" x1="45" stroke="#5A6B7A" stroke-width="2.2" x2="65" y2="18">
+                <animate attributeName="x2" values="65;57;65" dur="1.4s" repeatCount="indefinite"/>
+              </line>
+              <circle cx="45" cy="50" r="9" fill="var(--bleu)"/>
+              <circle cy="18" r="7.5" fill="var(--orange)"><animate attributeName="cx" values="25;33;25" dur="1.4s" repeatCount="indefinite"/></circle>
+              <circle cy="18" r="7.5" fill="var(--orange)"><animate attributeName="cx" values="65;57;65" dur="1.4s" repeatCount="indefinite"/></circle>
+            </svg>
+            <div style="font-size:0.82rem; font-weight:700; color:#1A2A3A; margin-top:4px;">Déformation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formule-box">
+      σ = 1 / λ &nbsp;(en cm⁻¹)
+      <div class="legend">Le nombre d'onde σ est la grandeur portée en abscisse du spectre IR ; le spectre représente la transmittance T (%) en fonction de σ. Chaque creux de transmittance correspond à un pic d'absorption, donc à la radiation absorbée par une liaison qui vibre.</div>
+    </div>
+
+    <div class="remarque-box"><strong>Remarque :</strong> plus une liaison est forte, plus le nombre d'onde d'absorption d'élongation est <strong>élevé</strong>. Les nombres d'onde utiles à la recherche des groupes caractéristiques sont supérieurs à <strong>1500 cm⁻¹</strong> (partie gauche du spectre). La partie droite du spectre (σ &lt; 1500 cm⁻¹) — la « zone d'empreintes digitales » — n'est utile que pour comparer deux spectres entre eux.</div>
+
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Bandes caractéristiques en spectroscopie IR</div>
+      <canvas id="irCanvas" width="560" height="260"></canvas>
+      <div class="anim-controls" style="flex-wrap:wrap;">
+        <button class="anim-btn active" data-mode="ohlibre" onclick="setIrMode('ohlibre',this)">O–H libre</button>
+        <button class="anim-btn" data-mode="ohlie" onclick="setIrMode('ohlie',this)">O–H lié</button>
+        <button class="anim-btn" data-mode="nhamine" onclick="setIrMode('nhamine',this)">N–H amine</button>
+        <button class="anim-btn" data-mode="nhamide" onclick="setIrMode('nhamide',this)">N–H amide</button>
+        <button class="anim-btn" data-mode="chtetra" onclick="setIrMode('chtetra',this)">C–H tétragonal</button>
+        <button class="anim-btn" data-mode="chtrigo" onclick="setIrMode('chtrigo',this)">C–H trigonal</button>
+        <button class="anim-btn" data-mode="coester" onclick="setIrMode('coester',this)">C=O ester</button>
+        <button class="anim-btn" data-mode="coaldehyde" onclick="setIrMode('coaldehyde',this)">C=O aldéhyde</button>
+        <button class="anim-btn" data-mode="cocetone" onclick="setIrMode('cocetone',this)">C=O cétone</button>
+        <button class="anim-btn" data-mode="coacide" onclick="setIrMode('coacide',this)">C=O acide</button>
+        <button class="anim-btn" data-mode="coamide" onclick="setIrMode('coamide',this)">C=O amide</button>
+      </div>
+      <div class="etape-msg-box" id="irMsg"></div>
+    </div>
+
+    <div class="def-card">
+      <p>L'association des molécules d'alcools par liaison hydrogène provoque la <strong>diminution</strong> de la valeur du nombre d'onde σ du maximum d'absorption de la liaison O–H et l'<strong>élargissement</strong> de la bande d'absorption. La liaison O–H étant affaiblie, on a besoin de moins d'énergie pour la faire vibrer ; par conséquent λ est plus longue et σ plus petit.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>QCM — Spectroscopie IR</h3>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">La spectroscopie IR permet de repérer la présence de…</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-a2a')">certaines liaisons</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-a2a')">la masse molaire</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-a2a')">la couleur de la solution</button>
+          </div>
+          <div class="qcm-feedback" id="fb-a2a"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🧪 Activité — Identifier une fonction chimique à partir du spectre IR</h3>
+      <p>À l'aide de l'outil <strong>Ostralo « Spectre infrarouge d'une molécule »</strong>, tu vas comparer les spectres IR de trois molécules de fonctions différentes et en extraire la bande la plus caractéristique de chacune.</p>
+
+      <div class="iframe-wrap" style="aspect-ratio:16/10;max-width:700px;">
+        <iframe src="https://chimie.ostralo.net/spectreIR/" allowfullscreen></iframe>
+      </div>
+
+      <ol class="protocole-list">
+        <li><span class="protocole-num">1</span><span>Sélectionne un <strong>alcool</strong> (par exemple le propan-1-ol) : clique sur les liaisons du tableau pour repérer la bande la plus caractéristique de la fonction alcool, et relève son nombre d'onde.</span></li>
+        <li><span class="protocole-num">2</span><span>Fais de même avec un <strong>acide carboxylique</strong> (par exemple l'acide propanoïque).</span></li>
+        <li><span class="protocole-num">3</span><span>Fais de même avec un <strong>aldéhyde ou une cétone</strong> (par exemple le propanal ou la propanone).</span></li>
+        <li><span class="protocole-num">4</span><span>Complète les trois lignes ci-dessous à partir de tes observations, puis clique sur « Vérifier ».</span></li>
+      </ol>
+
+      <div class="methode-box">
+        <div class="methode-titre">Alcool</div>
+        <div class="num-field-wrap">
+          <label for="mol-1">Molécule choisie :</label>
+          <input type="text" class="num-input" id="mol-1" style="width:150px;" placeholder="ex. propan-1-ol">
+          <label for="wn-1">Nombre d'onde :</label>
+          <input type="number" class="num-input" id="wn-1" style="width:90px;">
+          <span class="num-unit">cm⁻¹</span>
+          <select class="dq-select" id="liaison-1">
+            <option value="">Liaison...</option>
+            <option value="OH">O–H</option>
+            <option value="CO">C=O</option>
+            <option value="CH">C–H</option>
+          </select>
+          <select class="dq-select" id="groupe-1">
+            <option value="">Groupe...</option>
+            <option value="alcool">Alcool</option>
+            <option value="acide">Acide carboxylique</option>
+            <option value="aldcet">Aldéhyde ou cétone</option>
+          </select>
+          <button class="btn-verif" onclick="checkIRRow('1',3200,3400,'OH','alcool')">Vérifier</button>
+        </div>
+        <div class="dq-feedback" id="fb-ir-1"></div>
+      </div>
+
+      <div class="methode-box" style="margin-top:12px;">
+        <div class="methode-titre">Acide carboxylique</div>
+        <div class="num-field-wrap">
+          <label for="mol-2">Molécule choisie :</label>
+          <input type="text" class="num-input" id="mol-2" style="width:150px;" placeholder="ex. acide propanoïque">
+          <label for="wn-2">Nombre d'onde :</label>
+          <input type="number" class="num-input" id="wn-2" style="width:90px;">
+          <span class="num-unit">cm⁻¹</span>
+          <select class="dq-select" id="liaison-2">
+            <option value="">Liaison...</option>
+            <option value="OH">O–H</option>
+            <option value="CO">C=O</option>
+            <option value="CH">C–H</option>
+          </select>
+          <select class="dq-select" id="groupe-2">
+            <option value="">Groupe...</option>
+            <option value="alcool">Alcool</option>
+            <option value="acide">Acide carboxylique</option>
+            <option value="aldcet">Aldéhyde ou cétone</option>
+          </select>
+          <button class="btn-verif" onclick="checkIRRow('2',2500,3200,'OH','acide')">Vérifier</button>
+        </div>
+        <div class="dq-feedback" id="fb-ir-2"></div>
+      </div>
+
+      <div class="methode-box" style="margin-top:12px;">
+        <div class="methode-titre">Aldéhyde ou cétone</div>
+        <div class="num-field-wrap">
+          <label for="mol-3">Molécule choisie :</label>
+          <input type="text" class="num-input" id="mol-3" style="width:150px;" placeholder="ex. propanal">
+          <label for="wn-3">Nombre d'onde :</label>
+          <input type="number" class="num-input" id="wn-3" style="width:90px;">
+          <span class="num-unit">cm⁻¹</span>
+          <select class="dq-select" id="liaison-3">
+            <option value="">Liaison...</option>
+            <option value="OH">O–H</option>
+            <option value="CO">C=O</option>
+            <option value="CH">C–H</option>
+          </select>
+          <select class="dq-select" id="groupe-3">
+            <option value="">Groupe...</option>
+            <option value="alcool">Alcool</option>
+            <option value="acide">Acide carboxylique</option>
+            <option value="aldcet">Aldéhyde ou cétone</option>
+          </select>
+          <button class="btn-verif" onclick="checkIRRow('3',1650,1730,'CO','aldcet')">Vérifier</button>
+        </div>
+        <div class="dq-feedback" id="fb-ir-3"></div>
+      </div>
+
+      <div class="remarque-box" style="margin-top:14px;"><strong>Analyse :</strong> compare la largeur et la position des bandes O–H de l'alcool et de l'acide carboxylique. Laquelle est la plus large ? Laquelle se situe aux nombres d'onde les plus bas ? Explique cette différence à l'aide de la liaison hydrogène étudiée dans l'onglet Prérequis.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ══════════════ ONGLET B — DOSAGES PAR ÉTALONNAGE ══════════════ -->
+<div class="tab-content" id="tab-2">
+
+  <div class="sub-tabs-nav" id="sub-nav-B">
+    <button class="sub-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
+      <span class="sub-tab-num">1</span> Dosage par spectrophotométrie
+    </button>
+    <button class="sub-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
+      <span class="sub-tab-num">2</span> Dosage par conductimétrie
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Le <strong>dosage par étalonnage</strong> consiste à mesurer une grandeur physique (absorbance ou conductivité) sur des solutions filles de concentrations connues, puis à comparer la mesure obtenue sur la solution inconnue à cette <strong>courbe d'étalonnage</strong>.
+  </div>
+
+  <!-- ───────── B1 ───────── -->
+  <div class="sub-tab-content active" id="sub-B-0">
+
+    <div class="def-card">
+      <h3>Dosage avec un spectrophotomètre</h3>
+      <p>On prépare une <strong>gamme étalon</strong> de solutions filles, de concentrations C connues, par dilution d'une solution mère. La mesure de l'absorbance A de chaque solution permet de tracer la <strong>courbe d'étalonnage</strong> A = f(C). Ce graphe est une droite qui passe par l'origine, car d'après la loi de <strong>Beer-Lambert</strong>, il y a une relation de <strong>proportionnalité</strong> entre A et C.</p>
+    </div>
+
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Détermination graphique de C₀ à partir de A₀ mesurée</div>
+      <canvas id="etalonSpectroCanvas" width="560" height="300"></canvas>
+      <div class="slider-row">
+        <label for="etalonSlider">Absorbance mesurée A₀ :</label>
+        <input type="range" id="etalonSlider" min="0.05" max="2" step="0.01" value="0.9">
+        <span class="slider-val" id="etalonVal">0,90</span>
+      </div>
+      <div class="etape-msg-box" id="etalonMsg"></div>
+    </div>
+
+    <div class="methode-box">
+      <div class="methode-titre">🔍 Méthode — lecture graphique</div>
+      <ol>
+        <li>Repérer A₀ sur l'axe des ordonnées et tracer une droite horizontale jusqu'à la courbe d'étalonnage.</li>
+        <li>Depuis le point d'intersection, tracer une droite verticale jusqu'à l'axe des abscisses.</li>
+        <li>Lire C₀, la concentration cherchée, sur l'axe des abscisses (ou calculer C₀ = A₀ / (ε×l)).</li>
+      </ol>
+    </div>
+
+  </div>
+
+  <!-- ───────── B2 ───────── -->
+  <div class="sub-tab-content" id="sub-B-1">
+
+    <div class="def-card">
+      <h3>Nouvelle grandeur : la conductivité σ</h3>
+      <p>Les ions présents dans une solution assurent le passage du courant électrique. On exprime la facilité qu'a le courant à circuler à l'aide d'une grandeur appelée <strong>conductivité</strong> d'une solution, notée σ. Elle est d'autant plus importante que les ions sont mobiles, que leurs concentrations sont élevées, et que la température de la solution est élevée.</p>
+      <p style="margin-top:8px;">La <strong>conductivité molaire ionique</strong> λ traduit l'aptitude d'un ion à conduire le courant électrique ; elle peut varier avec la température.</p>
+    </div>
+
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Comment fonctionne un conductimètre ?</div>
+      <style>
+        @keyframes ion-drift-pos { 0%,100% { transform: translateX(0); } 50% { transform: translateX(52px); } }
+        @keyframes ion-drift-neg { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-52px); } }
+        .ion-pos { animation: ion-drift-pos 2.4s ease-in-out infinite; }
+        .ion-neg { animation: ion-drift-neg 2.4s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) { .ion-pos, .ion-neg { animation: none; } }
+      </style>
+      <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;display:block;margin:0 auto;">
+        <!-- Conductimètre (boîtier + afficheur) -->
+        <rect x="140" y="8" width="120" height="46" rx="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.5"/>
+        <rect x="152" y="18" width="96" height="20" rx="2" fill="#0F172A"/>
+        <text x="200" y="33" text-anchor="middle" font-size="11" font-weight="700" fill="#86EFAC" font-family="Consolas, monospace">σ = 12,6 mS·m⁻¹</text>
+        <text x="200" y="50" text-anchor="middle" font-size="9" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">conductimètre</text>
+
+        <!-- Fils vers les électrodes -->
+        <line x1="160" y1="54" x2="120" y2="90" stroke="#1A2A3A" stroke-width="2"/>
+        <line x1="240" y1="54" x2="280" y2="90" stroke="#1A2A3A" stroke-width="2"/>
+
+        <!-- Bécher + solution -->
+        <path d="M60,90 L60,200 Q60,210 70,210 L330,210 Q340,210 340,200 L340,90" fill="#E0F2FE" stroke="#7DD3FC" stroke-width="2"/>
+
+        <!-- Électrodes -->
+        <rect x="112" y="90" width="16" height="105" fill="#334155"/>
+        <rect x="272" y="90" width="16" height="105" fill="#334155"/>
+
+        <!-- Ions mobiles : cations (+) migrent vers la droite, anions (-) vers la gauche -->
+        <g class="ion-pos"><circle cx="150" cy="120" r="7" fill="var(--orange)"/><text x="150" y="124" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Outfit">+</text></g>
+        <g class="ion-pos" style="animation-delay:-0.6s"><circle cx="160" cy="160" r="7" fill="var(--orange)"/><text x="160" y="164" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Outfit">+</text></g>
+        <g class="ion-pos" style="animation-delay:-1.2s"><circle cx="145" cy="185" r="7" fill="var(--orange)"/><text x="145" y="189" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Outfit">+</text></g>
+
+        <g class="ion-neg"><circle cx="250" cy="110" r="7" fill="#2563eb"/><text x="250" y="114" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Outfit">−</text></g>
+        <g class="ion-neg" style="animation-delay:-0.8s"><circle cx="240" cy="150" r="7" fill="#2563eb"/><text x="240" y="154" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Outfit">−</text></g>
+        <g class="ion-neg" style="animation-delay:-1.6s"><circle cx="255" cy="185" r="7" fill="#2563eb"/><text x="255" y="189" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Outfit">−</text></g>
+
+        <text x="200" y="230" text-anchor="middle" font-size="10" font-weight="700" fill="#1A2A3A" font-family="Nunito, Arial, sans-serif">cellule conductimétrique (2 électrodes)</text>
+      </svg>
+      <div class="etape-msg-box">Le conductimètre applique une tension entre les deux électrodes. Les <strong>cations</strong> (chargés +) migrent vers l'électrode négative, les <strong>anions</strong> (chargés −) migrent vers l'électrode positive : ce déplacement d'ions assure le passage du courant. Plus les ions sont nombreux et mobiles, plus le courant mesuré est grand, donc plus <strong>σ</strong> est grande.</div>
+    </div>
+
+    <div class="formule-box">
+      σ = Σ (λ<sub>i</sub> × [X<sub>i</sub>])
+      <div class="legend">Pour une solution ionique suffisamment diluée contenant des ions X<sub>i</sub> de conductivités molaires ioniques λ<sub>i</sub>. Attention aux unités : σ en S·m⁻¹, [X<sub>i</sub>] en mol·m⁻³ et λ<sub>i</sub> en S·m²·mol⁻¹.</div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🔎 Exploiter la conductivité ionique molaire</h3>
+      <p>La conductivité totale σ se décompose en la somme des contributions de chaque ion présent. Mais tous les ions ne conduisent pas aussi bien le courant : leur conductivité molaire ionique λ peut varier <strong>du simple au septuple</strong> !</p>
+
+      <table class="tableau-avancement">
+        <tr><th>Ion</th><th>H₃O⁺</th><th>HO⁻</th><th>Cl⁻</th><th>K⁺</th><th>Na⁺</th><th>CH₃COO⁻</th></tr>
+        <tr><td>λ (mS·m²·mol⁻¹)</td><td>34,98</td><td>19,8</td><td>7,63</td><td>7,35</td><td>5,01</td><td>4,09</td></tr>
+      </table>
+
+      <div class="anim-canvas-wrap" style="margin-top:12px;">
+        <div class="anim-canvas-title">Comparaison à concentration égale (1 mol·m⁻³)</div>
+        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:0 auto;">
+          <line x1="70" y1="10" x2="70" y2="110" stroke="#5A6B7A" stroke-width="1.2"/>
+          <line x1="70" y1="110" x2="320" y2="110" stroke="#5A6B7A" stroke-width="1.2"/>
+          <rect x="80"  y="15"  width="24" height="95" fill="var(--orange)"/>
+          <text x="92" y="128" text-anchor="middle" font-size="10" font-weight="700" fill="#1A2A3A" font-family="Nunito">H₃O⁺</text>
+          <text x="92" y="12" text-anchor="middle" font-size="9" font-weight="700" fill="var(--orange)" font-family="Outfit">35,0</text>
+          <rect x="150" y="83"  width="24" height="27" fill="#2563eb"/>
+          <text x="162" y="128" text-anchor="middle" font-size="10" font-weight="700" fill="#1A2A3A" font-family="Nunito">Cl⁻</text>
+          <text x="162" y="80" text-anchor="middle" font-size="9" font-weight="700" fill="#2563eb" font-family="Outfit">7,6</text>
+          <rect x="220" y="92"  width="24" height="18" fill="#22c55e"/>
+          <text x="232" y="128" text-anchor="middle" font-size="10" font-weight="700" fill="#1A2A3A" font-family="Nunito">Na⁺</text>
+          <text x="232" y="89" text-anchor="middle" font-size="9" font-weight="700" fill="#22c55e" font-family="Outfit">5,0</text>
+          <text x="10" y="16" font-size="8" fill="var(--texte-leger)" font-family="Nunito">λ</text>
+        </svg>
+        <div class="etape-msg-box">À concentration égale, l'ion <strong>H₃O⁺</strong> conduit environ <strong>7 fois mieux</strong> le courant que Na⁺ : c'est pour cela qu'un acide, même dilué, rend une solution nettement conductrice.</div>
+      </div>
+
+      <div class="exo-enonce" style="margin-top:12px;">Une solution d'acide chlorhydrique dilué contient des ions H₃O⁺ et Cl⁻, chacun à la concentration 2,0 mol·m⁻³. Calcule la conductivité totale σ, puis le pourcentage de la conductivité dû aux ions H₃O⁺.</div>
+      <div class="num-field-wrap">
+        <label for="b2exploit-sigma">σ =</label>
+        <input type="number" class="num-input" id="b2exploit-sigma" step="0.1" style="width:80px;">
+        <span class="num-unit">mS·m⁻¹</span>
+        <span class="num-feedback" id="b2exploit-sigma-fb"></span>
+        <label for="b2exploit-pct">% dû à H₃O⁺ :</label>
+        <input type="number" class="num-input" id="b2exploit-pct" step="0.1" style="width:70px;">
+        <span class="num-unit">%</span>
+        <span class="num-feedback" id="b2exploit-pct-fb"></span>
+        <button class="btn-verif" onclick="checkNum('b2exploit-sigma',85.2,0.5); checkNum('b2exploit-pct',82.1,0.5)">Vérifier</button>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">σ(H₃O⁺) = 34,98 × 2,0 = 69,96 mS·m⁻¹ &nbsp;&nbsp; σ(Cl⁻) = 7,63 × 2,0 = 15,26 mS·m⁻¹</div>
+        <div class="calc-step">σ = 69,96 + 15,26 = <strong>85,2 mS·m⁻¹</strong></div>
+        <div class="calc-step">% H₃O⁺ = 69,96 / 85,2 × 100 = <strong>82,1 %</strong></div>
+      </div>
+
+      <div class="qcm-grid" style="margin-top:12px;">
+        <div class="qcm-item">
+          <span class="substance">Pourquoi H₃O⁺ contribue-t-il autant à σ malgré une concentration égale à celle de Cl⁻ ?</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-b2q1')">Sa conductivité molaire ionique λ est bien plus grande</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-b2q1')">Il est plus concentré que Cl⁻</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-b2q1')">Il est plus gros que Cl⁻</button>
+          </div>
+          <div class="qcm-feedback" id="fb-b2q1"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>Loi de Kohlrausch</h3>
+      <p>Pour une solution ne contenant qu'un seul soluté suffisamment dilué, on utilise des solutions filles de concentrations C connues (préparées par <strong>dilution</strong> d'une solution mère). La mesure de la conductivité σ de chaque solution permet de tracer la <strong>courbe d'étalonnage</strong> σ = f(C), une droite passant par l'origine :</p>
+      <div class="formule-box">σ = k × C</div>
+      <p>La méthode ne peut être utilisée que pour des solutions suffisamment <strong>diluées</strong> et ne contenant qu'un seul soluté <strong>ionique</strong>.</p>
+    </div>
+
+    <div class="exo-card">
+      <h3>QCM — Dosage par étalonnage conductimétrique</h3>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">La droite σ = f(C) passe par l'origine car…</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-b2q2')">σ est proportionnelle à C (loi de Kohlrausch)</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-b2q2')">σ est indépendante de C</button>
+          </div>
+          <div class="qcm-feedback" id="fb-b2q2"></div>
+        </div>
+        <div class="qcm-item">
+          <span class="substance">Cette méthode d'étalonnage n'est valable que pour une solution…</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-b2q3')">diluée et ne contenant qu'un seul soluté ionique</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-b2q3')">concentrée, quel que soit le nombre de solutés</button>
+          </div>
+          <div class="qcm-feedback" id="fb-b2q3"></div>
+        </div>
+        <div class="qcm-item">
+          <span class="substance">Contrairement à un titrage, un dosage par étalonnage conductimétrique est…</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-b2q4')">non destructif : l'échantillon n'est pas consommé</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-b2q4')">destructif : l'échantillon est consommé</button>
+          </div>
+          <div class="qcm-feedback" id="fb-b2q4"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>📊 Exemple guidé — dosage d'une solution de chlorure de sodium</h3>
+      <p>On souhaite déterminer la concentration C₀ inconnue d'une solution de chlorure de sodium (Na⁺ + Cl⁻). On prépare 5 solutions étalons par dilution et on mesure leur conductivité σ :</p>
+      <table class="tableau-avancement">
+        <tr><th>C (mol·m⁻³)</th><td>2,0</td><td>4,0</td><td>6,0</td><td>8,0</td><td>10,0</td></tr>
+        <tr><th>σ (mS·m⁻¹)</th><td>25,3</td><td>50,6</td><td>75,8</td><td>101,1</td><td>126,4</td></tr>
+      </table>
+      <p>La solution inconnue est mesurée à <strong>σ₀ = 63,2 mS·m⁻¹</strong>.</p>
+
+      <div class="methode-box">
+        <div class="methode-titre">🔍 Méthode</div>
+        <ol>
+          <li>Vérifier que σ = f(C) est bien une droite passant par l'origine (loi de Kohlrausch).</li>
+          <li>Calculer la pente k à partir de deux points de mesure : k = Δσ / ΔC.</li>
+          <li>Utiliser σ₀ = k × C₀ pour calculer C₀.</li>
+        </ol>
+      </div>
+
+      <div class="num-field-wrap">
+        <label for="b2ex2-k">k =</label>
+        <input type="number" class="num-input" id="b2ex2-k" step="0.01" style="width:80px;">
+        <span class="num-unit">mS·m²·mol⁻¹</span>
+        <span class="num-feedback" id="b2ex2-k-fb"></span>
+        <label for="b2ex2-c0">C₀ =</label>
+        <input type="number" class="num-input" id="b2ex2-c0" step="0.0001" style="width:90px;">
+        <span class="num-unit">mol·L⁻¹</span>
+        <span class="num-feedback" id="b2ex2-c0-fb"></span>
+        <button class="btn-verif" onclick="checkNum('b2ex2-k',12.64,0.1); checkNum('b2ex2-c0',0.0050,0.0003)">Vérifier</button>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">k = (126,4 − 25,3) / (10,0 − 2,0) = 101,1 / 8,0 = <strong>12,6 mS·m²·mol⁻¹</strong></div>
+        <div class="calc-step">C₀ = σ₀ / k = 63,2 / 12,64 = 5,0 mol·m⁻³ = <strong>5,0×10⁻³ mol·L⁻¹</strong></div>
+        <div class="calc-step" style="margin-top:4px;color:var(--texte-leger);">On retrouve k ≈ λ(Na⁺) + λ(Cl⁻) = 5,01 + 7,63 = 12,64 mS·m²·mol⁻¹, cohérent avec la loi de Kohlrausch.</div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice 1 — calcul de σ à partir des ions présents</h3>
+      <div class="exo-enonce">Une solution contient des ions Na⁺ (λ = 5,01 mS·m²·mol⁻¹) à 8,0 mol·m⁻³ et des ions Cl⁻ (λ = 7,63 mS·m²·mol⁻¹) à 8,0 mol·m⁻³. Calculer la conductivité σ de la solution (en mS·m⁻¹).</div>
+      <div class="num-field-wrap">
+        <label for="b2ex">σ =</label>
+        <input type="number" class="num-input" id="b2ex" step="0.1">
+        <span class="num-unit">mS·m⁻¹</span>
+        <button class="btn-verif" onclick="checkNum('b2ex',101.1,2)">Vérifier</button>
+        <span class="num-feedback" id="b2ex-fb"></span>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">σ = λ(Na⁺)×[Na⁺] + λ(Cl⁻)×[Cl⁻] = 5,01×8,0 + 7,63×8,0</div>
+        <div class="calc-step">σ = 40,08 + 61,04 = <strong>101,1 mS·m⁻¹</strong></div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <h3>Exercice 2 — déterminer une concentration à partir d'un étalonnage</h3>
+      <div class="exo-enonce">Une courbe d'étalonnage σ = f(C) a pour coefficient directeur k = 15,0 mS·m²·mol⁻¹. On mesure la conductivité d'une solution inconnue : σ₀ = 45,0 mS·m⁻¹. Déterminer la concentration C₀ de cette solution (en mol·L⁻¹).</div>
+      <div class="num-field-wrap">
+        <label for="b2ex3">C₀ =</label>
+        <input type="number" class="num-input" id="b2ex3" step="0.0001">
+        <span class="num-unit">mol·L⁻¹</span>
+        <button class="btn-verif" onclick="checkNum('b2ex3',0.003,0.0002)">Vérifier</button>
+        <span class="num-feedback" id="b2ex3-fb"></span>
+      </div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">σ₀ = k × C₀ ⟹ C₀ = σ₀ / k = 45,0 / 15,0 = 3,0 mol·m⁻³</div>
+        <div class="calc-step">C₀ = <strong>3,0×10⁻³ mol·L⁻¹</strong> (1 mol·m⁻³ = 1 mmol·L⁻¹)</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ══════════════ ONGLET C — TITRAGES ══════════════ -->
+<div class="tab-content" id="tab-3">
+
+  <div class="intro-box">
+    Le <strong>dosage par titrage</strong> consiste à faire réagir l'espèce titrée avec un réactif titrant. Contrairement au dosage par étalonnage, cette méthode est <strong>destructive</strong> : l'échantillon est consommé à la fin du titrage.
+  </div>
+
+  <div class="def-card">
+    <h3>Vocabulaire du titrage</h3>
+    <p>Réaliser un titrage, c'est déterminer une <strong>quantité de matière</strong> ou une <strong>concentration</strong> à l'aide d'une méthode qui met en jeu une réaction chimique appelée <strong>réaction support de titrage</strong>. Cette réaction doit être <strong>totale, rapide et unique</strong>.</p>
+    <p style="margin-top:8px;">Un titrage nécessite une solution <strong>titrée</strong> (contenant le réactif dont la concentration est à déterminer) et une solution <strong>titrante</strong> (contenant le réactif de concentration connue, ajoutée généralement à l'aide d'une burette graduée).</p>
+  </div>
+
+  <div class="methode-box">
+    <div class="methode-titre">⚗️ Déroulement du titrage</div>
+    <ol>
+      <li>On introduit progressivement le réactif titrant B dans le bécher contenant la solution du réactif titré A, de volume V<sub>A</sub>.</li>
+      <li>Au début du titrage, B est entièrement consommé par A dont la quantité de matière diminue progressivement : B est le réactif limitant.</li>
+      <li>À un moment donné, tout le réactif A est consommé : les deux réactifs sont alors introduits dans les proportions stœchiométriques. C'est l'<strong>équivalence</strong>.</li>
+      <li>Si on continue à verser B, il devient en excès (A est déjà entièrement consommé) : A devient le réactif limitant.</li>
+    </ol>
+    <p style="margin-top:6px;"><strong>L'équivalence correspond donc au changement de réactif limitant.</strong></p>
+  </div>
+
+  <div class="def-card">
+    <h3>Volume équivalent V<sub>E</sub></h3>
+    <p>Le <strong>volume équivalent</strong> V<sub>E</sub> est le volume de solution titrante qu'il faut ajouter à la solution titrée pour que le réactif titrant et le réactif titré soient dans les <strong>proportions stœchiométriques</strong> de la réaction support de titrage.</p>
+  </div>
+
+  <div class="formule-box">
+    aA + bB → cC + dD &nbsp;&nbsp;⟹&nbsp;&nbsp; à l'équivalence : n₀(A)/a = n<sub>E</sub>(B)/b &nbsp;&nbsp;soit&nbsp;&nbsp; C<sub>A</sub>·V<sub>A</sub>/a = C<sub>B</sub>·V<sub>E</sub>/b
+    <div class="legend">Le repérage de l'équivalence d'un titrage dépend de la technique de suivi utilisée (onglet D).</div>
+  </div>
+
+  <div class="exo-card">
+    <h3>Exercice — TP dosage de l'acide chlorhydrique</h3>
+    <div class="exo-enonce">On titre V<sub>A</sub> = 20,0 mL d'une solution d'acide chlorhydrique de concentration C<sub>A</sub> inconnue par une solution d'hydroxyde de sodium de concentration C<sub>B</sub> = 0,10 mol·L⁻¹. Réaction support : H₃O⁺ + HO⁻ → 2 H₂O (a = b = 1). L'équivalence est repérée pour V<sub>E</sub> = 10,0 mL. Calculer C<sub>A</sub>.</div>
+    <div class="num-field-wrap">
+      <label for="c1ex">C<sub>A</sub> =</label>
+      <input type="number" class="num-input" id="c1ex" step="0.001">
+      <span class="num-unit">mol·L⁻¹</span>
+      <button class="btn-verif" onclick="checkNum('c1ex',0.05,0.002)">Vérifier</button>
+      <span class="num-feedback" id="c1ex-fb"></span>
+    </div>
+    <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="calc-step">À l'équivalence (a = b = 1) : C<sub>A</sub>·V<sub>A</sub> = C<sub>B</sub>·V<sub>E</sub></div>
+      <div class="calc-step">C<sub>A</sub> = C<sub>B</sub>·V<sub>E</sub> / V<sub>A</sub> = 0,10 × 10,0 / 20,0 = <strong>0,050 mol·L⁻¹</strong></div>
+    </div>
+  </div>
+
+  <div class="activite-card">
+    <h3>🧪 Activité — Simuler un titrage avec l'application Hatier-clic</h3>
+    <p>Cette application interactive te permet de réaliser un titrage virtuellement, comme au laboratoire : choix des réactifs, ajout progressif du réactif titrant à la burette, repérage de l'équivalence.</p>
+
+    <div style="text-align:center; margin:14px 0;">
+      <a class="pastille-blue" href="https://www.hatier-clic.fr/2019/01/9782401058705/titrage/index.htm" target="_blank" rel="noopener" style="font-size:0.95rem; padding:12px 26px;">🔗 Ouvrir l'application de titrage (nouvel onglet)</a>
+    </div>
+
+    <ol class="protocole-list">
+      <li><span class="protocole-num">1</span><span>Prends d'abord en main l'application (identifie la burette, le bécher contenant la solution titrée, et le dispositif de suivi proposé).</span></li>
+      <li><span class="protocole-num">2</span><span>Ajoute progressivement le réactif titrant et observe l'évolution de la grandeur suivie (pH, conductivité ou couleur selon l'activité proposée).</span></li>
+      <li><span class="protocole-num">3</span><span>Repère le volume équivalent V<sub>E</sub> à l'aide de la méthode adaptée à la grandeur suivie.</span></li>
+      <li><span class="protocole-num">4</span><span>Utilise la relation à l'équivalence (C<sub>A</sub>·V<sub>A</sub>/a = C<sub>B</sub>·V<sub>E</sub>/b) pour déterminer la concentration ou la quantité de matière demandée par l'activité.</span></li>
+    </ol>
+
+    <div class="remarque-box"><strong>Lien avec le cours :</strong> quelle que soit la grandeur suivie dans cette application (pH, conductivité, couleur), c'est toujours le <strong>changement de réactif limitant</strong> à l'équivalence qui provoque une rupture ou un saut caractéristique sur la courbe — tu retrouveras le détail de chaque méthode dans l'onglet <strong>D</strong>.</div>
+  </div>
+
+</div>
+
+<!-- ══════════════ ONGLET D — MÉTHODES DE SUIVI D'UN TITRAGE ══════════════ -->
+<div class="tab-content" id="tab-4">
+
+  <div class="sub-tabs-nav" id="sub-nav-D">
+    <button class="sub-tab-btn active" data-sub="D1" onclick="switchSubTab('D',0)">
+      <span class="sub-tab-num">1</span> Conductimétrie
+    </button>
+    <button class="sub-tab-btn" data-sub="D2" onclick="switchSubTab('D',1)">
+      <span class="sub-tab-num">2</span> pH-métrie
+    </button>
+    <button class="sub-tab-btn" data-sub="D3" onclick="switchSubTab('D',2)">
+      <span class="sub-tab-num">3</span> Colorimétrie
+    </button>
+    <button class="sub-tab-btn" data-sub="D4" onclick="switchSubTab('D',3)">
+      <span class="sub-tab-num">4</span> S'entraîner
+    </button>
+  </div>
+
+  <div class="intro-box">
+    Exemple fil rouge des trois méthodes : titrage de V<sub>A</sub> = 20,0 mL d'acide chlorhydrique par une solution d'hydroxyde de sodium (NaOH), avec équivalence attendue pour V<sub>E</sub> = 10,0 mL.
+  </div>
+
+  <!-- ───────── D1 — CONDUCTIMÉTRIE ───────── -->
+  <div class="sub-tab-content active" id="sub-D-0">
+
+    <div class="def-card">
+      <h3>Titrage suivi par conductimétrie</h3>
+      <p>Un titrage conductimétrique est envisageable quand la réaction support fait intervenir des <strong>ions</strong> ; il consiste au suivi de l'évolution de la <strong>conductivité</strong> de la solution titrée pour chaque ajout de volume V de solution titrante. La courbe σ = f(V) présente un point de <strong>rupture de pente</strong> qui permet de repérer l'équivalence.</p>
+    </div>
+
+    <div class="fig-row" style="align-items:flex-start;">
+      <div class="fig-box" style="flex:1 1 220px; min-width:200px; margin:0;">
+        <img src="images-cours/montage-titrage-ph-cond.png" alt="Montage de titrage conductimétrique ou pH-métrique">
+      </div>
+      <div class="anim-canvas-wrap" style="flex:2 1 340px; min-width:280px; margin:0;">
+        <div class="anim-canvas-title">Titrage HCl par NaOH — suivi conductimétrique</div>
+        <canvas id="conductoCanvas" width="560" height="300" style="max-width:100%; height:auto;"></canvas>
+        <div class="instrument-display">
+          <div class="idisp-cell"><div class="idisp-val" id="conductoDispV">0,0 mL</div><div class="idisp-label">volume versé</div></div>
+          <div class="idisp-cell"><div class="idisp-val" id="conductoDispSigma">— mS·m⁻¹</div><div class="idisp-label">conductivité σ</div></div>
+        </div>
+        <div class="slider-row">
+          <label for="conductoSlider">Volume V<sub>NaOH</sub> versé :</label>
+          <input type="range" id="conductoSlider" min="0" max="20" step="0.2" value="0">
+          <span class="slider-val" id="conductoVal">0,0 mL</span>
+        </div>
+        <div class="etape-msg-box" id="conductoMsg"></div>
+      </div>
+    </div>
+
+    <div class="remarque-box"><strong>Justification qualitative de la pente (capacité exigible) :</strong> avant l'équivalence, les ions H₃O⁺ (très mobiles, λ élevé) sont progressivement remplacés par des ions Na⁺ (moins mobiles) : la conductivité <strong>diminue</strong>. Après l'équivalence, les ions Na⁺ et HO⁻ (HO⁻ très mobile) s'accumulent en excès dans la solution sans être consommés : la conductivité <strong>augmente</strong>, avec une pente plus marquée. Le changement de pente à V = V<sub>E</sub> signale le changement de réactif limitant.</div>
+
+    <div class="activite-card">
+      <h3>💻 Programme à compléter — Simuler la courbe de titrage conductimétrique</h3>
+      <p>L'objectif de cet exercice est de tracer la courbe de titrage conductimétrique σ = f(V) simulée par un programme Python, pour le titrage de HCl (V<sub>A</sub> = 20,0 mL) par NaOH (c<sub>B</sub> = 0,10 mol·L⁻¹). Il faut d'abord obtenir les quantités de matière des <strong>4 ions</strong> impliqués (H₃O⁺, Cl⁻, Na⁺, HO⁻), avant et après l'équivalence.</p>
+      <textarea class="py-editor" id="py-condukto" spellcheck="false">
+### DONNÉES (à modifier si nécessaire) ###
+cA = 0.050      # concentration de la solution titrée (HCl) en mol/L
+VA = 20.0       # volume de solution titrée en mL
+cB = 0.10       # concentration de la solution titrante (NaOH) en mol/L
+Vmax = 20.0     # volume maximal de titrant versé en mL
+pas = 0.5       # pas de calcul en mL
+
+### NE PAS MODIFIER : calcul du volume équivalent ###
+VE = cA*VA/cB
+
+### Conductivités molaires ioniques (mS.m2.mol-1), NE PAS MODIFIER ###
+lambdaH3O = 34.98
+lambdaCl  = 7.63
+lambdaNa  = 5.01
+lambdaHO  = 19.8
+
+V_valeurs = []
+sigma_valeurs = []
+
+V = 0.0
+while V <= Vmax:
+    # --- Quantités de matière (en mol) à compléter ---
+    nCl = _____                    # n(Cl-) : ion spectateur, ne varie pas
+    nNa = _____                    # n(Na+) apportée par la solution titrante
+
+    if V <= VE:
+        nH3O = _____ - _____       # n(H3O+) restant avant l'équivalence
+        nHO = 0
+    else:
+        nH3O = 0
+        nHO = _____ - _____        # n(HO-) en excès après l'équivalence
+
+    ### NE PAS MODIFIER : conversion en concentrations puis calcul de sigma ###
+    Vtot = (VA + V)/1000                 # volume total en L
+    CH3O = (nH3O/Vtot)*1000              # mol/m3
+    CCl  = (nCl/Vtot)*1000
+    CNa  = (nNa/Vtot)*1000
+    CHO  = (nHO/Vtot)*1000
+    sigma = lambdaH3O*CH3O + lambdaCl*CCl + lambdaNa*CNa + lambdaHO*CHO
+
+    V_valeurs.append(V)
+    sigma_valeurs.append(sigma)
+    V = V + pas
+
+print("Volume équivalent VE =", VE, "mL")
+print("Nombre de points calculés :", len(V_valeurs))</textarea>
+      <button class="btn-run" id="py-condukto-btn" onclick="runConductoPython()">▶ Exécuter</button>
+      <div class="anim-canvas-wrap" style="margin-top:10px;">
+        <div class="anim-canvas-title">Courbe tracée à partir de ton programme</div>
+        <canvas id="conductoPyChart" width="480" height="260"></canvas>
+      </div>
+      <div class="py-output" id="py-condukto-output">// Le résultat de ton programme s'affichera ici.</div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">nCl = cA*VA/1000</div>
+        <div class="calc-step">nNa = cB*V/1000</div>
+        <div class="calc-step">nH3O = cA*VA/1000 - cB*V/1000 (avant l'équivalence)</div>
+        <div class="calc-step">nHO = cB*V/1000 - cA*VA/1000 (après l'équivalence)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ───────── D2 — pH-MÉTRIE ───────── -->
+  <div class="sub-tab-content" id="sub-D-1">
+
+    <div class="def-card">
+      <h3>Titrage suivi par pH-métrie</h3>
+      <p>Un titrage pH-métrique est envisageable quand la réaction support est une réaction <strong>acide-base</strong> ; il consiste au suivi de l'évolution du <strong>pH</strong> de la solution titrée pour chaque ajout de volume V de solution titrante. La brusque <strong>variation</strong> de pH de la courbe pH = f(V) permet de repérer l'équivalence, soit par la <strong>méthode des tangentes parallèles</strong>, soit par la <strong>méthode de la courbe dérivée</strong> (le maximum de |dpH/dV| correspond à V<sub>E</sub>).</p>
+    </div>
+
+    <div class="fig-row" style="align-items:flex-start;">
+      <div class="fig-box" style="flex:1 1 220px; min-width:200px; margin:0;">
+        <img src="images-cours/montage-titrage-ph-cond.png" alt="Montage de titrage conductimétrique ou pH-métrique">
+      </div>
+      <div class="anim-canvas-wrap" style="flex:2 1 340px; min-width:280px; margin:0;">
+        <div class="anim-canvas-title">Titrage HCl par NaOH — suivi pH-métrique</div>
+        <canvas id="phTitCanvas" width="560" height="300" style="max-width:100%; height:auto;"></canvas>
+        <div class="anim-controls">
+          <button class="anim-btn active" id="phBtnCourbe" onclick="setPhMode('courbe',this)">Courbe pH = f(V)</button>
+          <button class="anim-btn" id="phBtnDerivee" onclick="setPhMode('derivee',this)">+ Courbe dérivée</button>
+        </div>
+        <div class="instrument-display">
+          <div class="idisp-cell"><div class="idisp-val" id="phTitDispV">0,0 mL</div><div class="idisp-label">volume versé</div></div>
+          <div class="idisp-cell"><div class="idisp-val" id="phTitDispPh">— </div><div class="idisp-label">pH</div></div>
+        </div>
+        <div class="slider-row">
+          <label for="phTitSlider">Volume V<sub>NaOH</sub> versé :</label>
+          <input type="range" id="phTitSlider" min="0" max="20" step="0.2" value="0">
+          <span class="slider-val" id="phTitVal">0,0 mL</span>
+        </div>
+        <div class="etape-msg-box" id="phTitMsg"></div>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>💻 Programme à compléter — Simuler la courbe de titrage pH-métrique</h3>
+      <p>Même principe que pour la conductimétrie : on calcule, pour chaque volume V de NaOH versé, la quantité de matière d'ion H₃O⁺ restant (avant l'équivalence) ou d'ion HO⁻ en excès (après l'équivalence), pour en déduire le pH.</p>
+      <textarea class="py-editor" id="py-phtitre" spellcheck="false">
+### DONNÉES (à modifier si nécessaire) ###
+cA = 0.050      # concentration de la solution titrée (HCl) en mol/L
+VA = 20.0       # volume de solution titrée en mL
+cB = 0.10       # concentration de la solution titrante (NaOH) en mol/L
+Vmax = 20.0     # volume maximal de titrant versé en mL
+pas = 0.2       # pas de calcul en mL
+
+### NE PAS MODIFIER : calcul du volume équivalent ###
+VE = cA*VA/cB
+
+import math
+
+V_valeurs = []
+pH_valeurs = []
+
+V = 0.01   # on évite V=0 pour ne pas diviser par une quantité nulle
+while V <= Vmax:
+    Vtot = (VA + V)/1000          # volume total en L
+
+    if V <= VE:
+        nH3O = _____ - _____      # n(H3O+) restant avant l'équivalence, en mol
+        if nH3O <= 0:
+            nH3O = 1e-10
+        CH3O = nH3O/Vtot          # mol/L
+        pH = -math.log10(CH3O)    # à compléter : formule du pH à partir de [H3O+]
+    else:
+        nHO = _____ - _____       # n(HO-) en excès après l'équivalence, en mol
+        if nHO <= 0:
+            nHO = 1e-10
+        COH = nHO/Vtot            # mol/L
+        pOH = -math.log10(COH)
+        pH = _____                # à compléter : relation entre pH et pOH
+
+    V_valeurs.append(V)
+    pH_valeurs.append(pH)
+    V = V + pas
+
+print("Volume équivalent VE =", VE, "mL")
+print("Nombre de points calculés :", len(V_valeurs))</textarea>
+      <button class="btn-run" id="py-phtitre-btn" onclick="runPhTitrePython()">▶ Exécuter</button>
+      <div class="anim-canvas-wrap" style="margin-top:10px;">
+        <div class="anim-canvas-title">Courbe tracée à partir de ton programme</div>
+        <canvas id="phTitrePyChart" width="480" height="260"></canvas>
+      </div>
+      <div class="py-output" id="py-phtitre-output">// Le résultat de ton programme s'affichera ici.</div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">nH3O = cA*VA/1000 - cB*V/1000 (avant l'équivalence)</div>
+        <div class="calc-step">nHO = cB*V/1000 - cA*VA/1000 (après l'équivalence)</div>
+        <div class="calc-step">pH = 14 - pOH (relation entre pH et pOH dans l'eau à 25°C)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ───────── D3 — COLORIMÉTRIE ───────── -->
+  <div class="sub-tab-content" id="sub-D-2">
+
+    <div class="def-card">
+      <div class="fig-row" style="align-items:center;">
+        <div style="flex:1 1 260px; min-width:220px;">
+          <h3>Titrage suivi par colorimétrie</h3>
+          <p>Lors d'un titrage colorimétrique, un <strong>changement de couleur</strong> du milieu réactionnel permet de repérer l'équivalence. Ce repérage peut être facilité par l'utilisation d'un <strong>indicateur coloré acido-basique</strong> : un couple acide-base dont les deux espèces n'ont pas la même couleur. Pour être utilisable lors d'un titrage, il faut que sa <strong>zone de virage</strong> (donc son pK<sub>a</sub>) soit comprise dans le saut de pH.</p>
+        </div>
+        <div class="fig-box" style="flex:1 1 200px; min-width:180px; margin:0;">
+          <img src="images-cours/titrage-colo.png" alt="Titrage colorimétrique avant et à l'équivalence">
+        </div>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>🧪 Choisis ton système et ton indicateur</h3>
+      <div class="num-field-wrap">
+        <label for="selTitre">Solution titrée :</label>
+        <select class="dq-select" id="selTitre" onchange="onSystemChange()">
+          <option value="hcl">Acide chlorhydrique HCl (acide fort)</option>
+          <option value="ch3cooh">Acide éthanoïque CH₃COOH (acide faible, pKa = 4,8)</option>
+        </select>
+      </div>
+      <div class="num-field-wrap">
+        <label for="selTitrant">Solution titrante :</label>
+        <select class="dq-select" id="selTitrant" onchange="onSystemChange()">
+          <option value="naoh">Hydroxyde de sodium NaOH</option>
+          <option value="koh">Hydroxyde de potassium KOH</option>
+        </select>
+      </div>
+
+      <div class="methode-titre" style="margin-top:10px;">🧴 Choisis le flacon d'indicateur coloré à utiliser :</div>
+      <div class="qcm-choices" id="flaconChoices" style="margin-top:6px;">
+        <button class="qcm-btn" onclick="selectIndicator('helianthine',this)">🧴 Hélianthine</button>
+        <button class="qcm-btn" onclick="selectIndicator('bbt',this)">🧴 BBT</button>
+        <button class="qcm-btn active" onclick="selectIndicator('phenol',this)">🧴 Phénolphtaléine</button>
+      </div>
+      <button class="btn-verif" style="margin-top:8px;" onclick="checkIndicatorChoice()">Vérifier mon choix</button>
+      <div class="qcm-feedback" id="fb-indicateur"></div>
+    </div>
+
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title" id="colorAnimTitle">Titrage HCl par NaOH — indicateur phénolphtaléine</div>
+      <canvas id="colorCanvas" width="340" height="430"></canvas>
+      <div class="slider-row">
+        <label for="colorSlider">Volume V<sub>NaOH</sub> versé :</label>
+        <input type="range" id="colorSlider" min="0" max="20" step="0.2" value="0">
+        <span class="slider-val" id="colorVal">0,0 mL</span>
+      </div>
+      <div class="etape-msg-box" id="colorMsg"></div>
+    </div>
+
+    <table class="tableau-avancement">
+      <tr><th>Indicateur</th><th>Zone de virage (pH)</th><th>Teinte acide</th><th>Teinte basique</th></tr>
+      <tr><td>Hélianthine</td><td>3,1 – 4,4</td><td>Rouge</td><td>Jaune</td></tr>
+      <tr><td>Bleu de bromothymol (BBT)</td><td>6,0 – 7,6</td><td>Jaune</td><td>Bleu</td></tr>
+      <tr><td>Phénolphtaléine</td><td>8,2 – 10,0</td><td>Incolore</td><td>Rose fuchsia</td></tr>
+    </table>
+    <div class="remarque-box" id="colorRemarque"><strong>À toi de jouer :</strong> choisis un système acide-base et un indicateur ci-dessus, puis vérifie ton choix. Un indicateur convient seulement si sa zone de virage est comprise dans le saut de pH du titrage — celui-ci n'est pas toujours centré sur pH = 7, notamment pour un acide faible !</div>
+    <div class="remarque-box" style="margin-top:8px;"><strong>Aide-toi de la valeur du pH affichée sous l'erlenmeyer</strong> pour observer, en déplaçant le curseur, où se situe le saut de pH pour le système choisi.</div>
+    <div class="remarque-box" style="margin-top:8px;">Pour le titrage acide fort / base forte (HCl), le saut de pH est très large (autour de pH = 7) : les trois indicateurs conviennent. Pour l'acide faible (CH₃COOH), l'équivalence est en milieu basique (pH ≈ 8,7) : seule la phénolphtaléine convient bien.</div>
+
+    <div class="activite-card">
+      <h3>💻 Programme à compléter — Déterminer le volume de virage d'un indicateur</h3>
+      <p>Contrairement à la conductimétrie ou la pH-métrie, il n'y a pas de courbe à tracer ici : l'objectif du programme est de calculer, pour l'indicateur choisi, l'<strong>intervalle de volumes</strong> de solution titrante pour lequel le pH du mélange est compris dans sa zone de virage — c'est cet intervalle qui correspond au changement de couleur observé.</p>
+      <textarea class="py-editor" id="py-colotitre" spellcheck="false">
+### DONNÉES (à modifier si nécessaire) ###
+cA = 0.050      # concentration de la solution titrée (HCl) en mol/L
+VA = 20.0       # volume de solution titrée en mL
+cB = 0.10       # concentration de la solution titrante (NaOH) en mol/L
+Vmax = 20.0     # volume maximal de titrant versé en mL
+pas = 0.05      # pas de calcul en mL (petit pas pour repérer précisément le virage)
+
+### Indicateur choisi : phénolphtaléine ###
+zone_min = 8.2
+zone_max = 10.0
+
+### NE PAS MODIFIER : calcul du volume équivalent ###
+VE = cA*VA/cB
+
+import math
+
+V_virage_debut = None
+V_virage_fin = None
+
+V = 0.01
+while V <= Vmax:
+    Vtot = (VA + V)/1000
+
+    if V <= VE:
+        nH3O = _____ - _____        # n(H3O+) restant avant l'équivalence
+        if nH3O <= 0:
+            nH3O = 1e-10
+        pH = -math.log10(nH3O/Vtot)
+    else:
+        nHO = _____ - _____         # n(HO-) en excès après l'équivalence
+        if nHO <= 0:
+            nHO = 1e-10
+        pOH = -math.log10(nHO/Vtot)
+        pH = 14 - pOH
+
+    ### NE PAS MODIFIER : repérage de l'intervalle de virage ###
+    if zone_min <= pH <= zone_max:
+        if V_virage_debut is None:
+            V_virage_debut = V
+        V_virage_fin = V
+
+    V = V + pas
+
+print("Volume équivalent VE =", VE, "mL")
+print("Virage entre V =", V_virage_debut, "mL et V =", V_virage_fin, "mL")</textarea>
+      <button class="btn-run" id="py-colotitre-btn" onclick="runColoTitrePython()">▶ Exécuter</button>
+      <div class="py-output" id="py-colotitre-output">// Le résultat de ton programme s'affichera ici.</div>
+      <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+      <div class="correction">
+        <div class="calc-step">nH3O = cA*VA/1000 - cB*V/1000 (avant l'équivalence)</div>
+        <div class="calc-step">nHO = cB*V/1000 - cA*VA/1000 (après l'équivalence)</div>
+      </div>
+      <div class="remarque-box" style="margin-top:10px;">Change les valeurs de <code>zone_min</code> et <code>zone_max</code> pour tester un autre indicateur (hélianthine : 3,1–4,4 ; BBT : 6,0–7,6), et observe comment l'intervalle de virage se déplace — ou disparaît si l'indicateur n'est pas adapté !</div>
+    </div>
+
+  </div>
+
+  <div class="sub-tab-content" id="sub-D-3">
+
+    <div class="def-card">
+      <h3>S'entraîner avec le simulateur de titrage (Hatier-clic)</h3>
+      <p>Ce simulateur propose <strong>14 activités</strong> de titrage couvrant les trois méthodes de suivi (conductimétrique, pH-métrique, colorimétrique), à partir de contextes concrets (vinaigre, eau de mer, produits ménagers...).</p>
+      <div style="text-align:center; margin:14px 0;">
+        <a class="pastille-blue" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/index.html" target="_blank" rel="noopener" style="font-size:0.95rem; padding:12px 26px;">🔗 Ouvrir le simulateur (nouvel onglet)</a>
+      </div>
+    </div>
+
+    <table class="tableau-avancement" style="text-align:left;">
+      <tr><th>#</th><th>Activité</th><th>Méthode de suivi</th></tr>
+      <tr><td>1</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act1a.htm" target="_blank">Titrage colorimétrique de l'acide oxalique</a> (échauffement)</td><td>Colorimétrique</td></tr>
+      <tr><td>14</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act14a.htm" target="_blank">Incertitude</a></td><td>Colorimétrique</td></tr>
+      <tr><td>2</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act2a.htm" target="_blank">Pourcentage massique d'acide lactique</a></td><td>pH-métrique</td></tr>
+      <tr><td>4</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act4a.htm" target="_blank">Titrage d'un produit ménager</a></td><td>pH-métrique</td></tr>
+      <tr><td>11</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act11a.htm" target="_blank">Contrôle qualité d'un déboucheur de canalisation</a></td><td>pH-métrique</td></tr>
+      <tr><td>3</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act3a.htm" target="_blank">Titrage d'une solution d'hydroxyde de sodium</a></td><td>Conductimétrique</td></tr>
+      <tr><td>5</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act5a.htm" target="_blank">Salinité d'une eau de mer</a></td><td>Conductimétrique</td></tr>
+      <tr><td>6</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act6a.htm" target="_blank">Titrage de l'acide éthanoïque</a></td><td>Conductimétrique</td></tr>
+      <tr><td>7</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act7a.htm" target="_blank">Ions sulfate dans une eau minérale</a></td><td>Conductimétrique</td></tr>
+      <tr><td>8</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act8a.htm" target="_blank">Courbes de titrage conductimétrique</a></td><td>Conductimétrique</td></tr>
+      <tr><td>12</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act12a.htm" target="_blank">Vérification du degré d'acidité du vinaigre</a></td><td>Conductimétrique</td></tr>
+      <tr><td>9</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act9a.htm" target="_blank">Titrages d'un vinaigre</a> ⭐ (protocole détaillé ci-dessous)</td><td>pH-métrique + Colorimétrique</td></tr>
+      <tr><td>10</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act10a.htm" target="_blank">Ammoniac dans un détachant</a></td><td>pH-métrique + Colorimétrique</td></tr>
+      <tr><td>13</td><td><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act13a.htm" target="_blank">Conditions expérimentales</a> (concentration titrante, volume prélevé)</td><td>Méthodologie</td></tr>
+    </table>
+
+    <div class="activite-card">
+      <h3>⭐ Protocole approfondi — Activité 9 : Titrages d'un vinaigre</h3>
+      <p><strong>Contexte :</strong> on titre V = 10,0 mL d'un vinaigre commercial dilué 20 fois (solution S′) par une solution d'hydroxyde de sodium de concentration c = 5,00×10⁻² mol·L⁻¹.</p>
+      <div style="text-align:center; margin:10px 0;">
+        <a class="pastille-blue" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act9a.htm" target="_blank" rel="noopener">🔗 Ouvrir l'activité 9</a>
+      </div>
+
+      <div class="methode-titre">🔍 Étape 1 — Repérer l'équivalence</div>
+      <p>Réalise le titrage sur le simulateur et détermine les coordonnées du point équivalent.</p>
+      <div class="num-field-wrap">
+        <label for="d4-ve1">V<sub>E1</sub> =</label>
+        <input type="text" class="num-input" id="d4-ve1" style="width:80px;" placeholder="ta valeur">
+        <span class="num-unit">mL</span>
+        <label for="d4-phe">pH<sub>E</sub> =</label>
+        <input type="text" class="num-input" id="d4-phe" style="width:70px;" placeholder="ta valeur">
+      </div>
+
+      <div class="methode-titre" style="margin-top:12px;">🔍 Étape 2 — Déterminer le pKa par demi-équivalence</div>
+      <p>À la demi-équivalence (V = V<sub>E1</sub>/2), le pH du mélange est égal au pKa du couple acide éthanoïque / ion éthanoate. Place le curseur à cette valeur de V et relève le pH correspondant.</p>
+      <div class="num-field-wrap">
+        <label for="d4-pka">pKa (acide éthanoïque) ≈</label>
+        <input type="text" class="num-input" id="d4-pka" style="width:70px;" placeholder="ta valeur">
+      </div>
+      <div class="remarque-box" style="margin-top:8px;">La valeur tabulée du pKa du couple CH₃COOH/CH₃COO⁻ est <strong>4,8</strong> : compare ta valeur graphique à cette référence.</div>
+
+      <div class="methode-titre" style="margin-top:12px;">🔍 Étape 3 — Choisir l'indicateur coloré adapté</div>
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">Quel indicateur choisir pour repérer l'équivalence de ce titrage (acide faible / base forte, équivalence en milieu basique) ?</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-d4a')">Hélianthine (3,1–4,4)</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-d4a')">BBT (6,0–7,6)</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-d4a')">Phénolphtaléine (8,2–10,0)</button>
+          </div>
+          <div class="qcm-feedback" id="fb-d4a"></div>
+        </div>
+      </div>
+      <p style="margin-top:8px;">D'après la zone de virage de cet indicateur (8,2 à 10,0) et la courbe de titrage, à quel intervalle de volumes de solution titrante correspond le virage ?</p>
+      <div class="num-field-wrap">
+        <label for="d4-vmin">Virage entre V =</label>
+        <input type="text" class="num-input" id="d4-vmin" style="width:70px;" placeholder="Vmin">
+        <span class="num-unit">et</span>
+        <input type="text" class="num-input" id="d4-vmax" style="width:70px;" placeholder="Vmax">
+        <span class="num-unit">mL</span>
+      </div>
+    </div>
+
+    <div class="activite-card">
+      <h3>⭐ Protocole approfondi — Activité 14 : Incertitude sur une concentration</h3>
+      <p><strong>Contexte :</strong> on titre V₁ = 5,00 mL d'une solution d'acide chlorhydrique de concentration inconnue c₁ par une solution d'hydroxyde de sodium de concentration c = 5,0×10⁻³ mol·L⁻¹, en présence de BBT.</p>
+      <div style="text-align:center; margin:10px 0;">
+        <a class="pastille-blue" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/docs/act14a.htm" target="_blank" rel="noopener">🔗 Ouvrir l'activité 14</a>
+      </div>
+
+      <div class="qcm-grid">
+        <div class="qcm-item">
+          <span class="substance">Le BBT (zone de virage 6,0–7,6) est-il un indicateur bien choisi pour ce titrage acide fort / base forte (équivalence pH ≈ 7) ?</span>
+          <div class="qcm-choices">
+            <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-d4b')">Oui, sa zone de virage contient pH = 7</button>
+            <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-d4b')">Non, il faut la phénolphtaléine</button>
+          </div>
+          <div class="qcm-feedback" id="fb-d4b"></div>
+        </div>
+      </div>
+
+      <div class="methode-titre" style="margin-top:12px;">🔍 Étape 1 — Titrer et déterminer c₁</div>
+      <p>Réalise le titrage, détermine V<sub>E</sub>, puis calcule c₁ à partir de la relation à l'équivalence.</p>
+      <div class="num-field-wrap">
+        <label for="d4-ve2">V<sub>E</sub> =</label>
+        <input type="text" class="num-input" id="d4-ve2" style="width:70px;" placeholder="ta valeur">
+        <span class="num-unit">mL</span>
+        <label for="d4-c1">c₁ =</label>
+        <input type="text" class="num-input" id="d4-c1" style="width:90px;" placeholder="ta valeur">
+        <span class="num-unit">mol·L⁻¹</span>
+      </div>
+
+      <div class="methode-titre" style="margin-top:12px;">🔍 Étape 2 — Incertitude-type sur le volume (pipette jaugée)</div>
+      <table class="tableau-avancement">
+        <tr><th>Volume (mL)</th><td>5</td><td>10</td><td>20</td><td>25</td><td>50</td></tr>
+        <tr><th>u(V) (mL)</th><td>0,015</td><td>0,020</td><td>0,030</td><td>0,030</td><td>0,050</td></tr>
+      </table>
+      <p>Pour V₁ = 5,00 mL, u(V₁) = 0,015 mL (lecture directe dans le tableau). Pour V<sub>E</sub> (lu à la burette), estime toi-même une incertitude-type raisonnable à partir de la précision de graduation du simulateur.</p>
+
+      <div class="methode-titre" style="margin-top:12px;">🔍 Étape 3 — Calculer u(c₁)</div>
+      <div class="formule-box">
+        (u(c₁)/c₁)² = (u(c)/c)² + (u(V<sub>E</sub>)/V<sub>E</sub>)² + (u(V₁)/V₁)²
+        <div class="legend">Formule de propagation des incertitudes pour une relation du type c₁ = c·V<sub>E</sub>/V₁ (produit/quotient : les incertitudes relatives s'ajoutent quadratiquement). Donnée : u(c) = 1×10⁻⁴ mol·L⁻¹.</div>
+      </div>
+      <div class="num-field-wrap">
+        <label for="d4-uc1">u(c₁) =</label>
+        <input type="text" class="num-input" id="d4-uc1" style="width:100px;" placeholder="ta valeur">
+        <span class="num-unit">mol·L⁻¹</span>
+      </div>
+
+      <div class="remarque-box" style="margin-top:10px;"><strong>Étape 4 — Réduire l'incertitude :</strong> observe quel terme domine dans la somme quadratique. Quelle grandeur faudrait-il mesurer plus précisément (verrerie de classe A, volume prélevé plus grand, répétition des mesures...) pour réduire significativement u(c₁) ? Note ta stratégie sur ton cahier.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ══════════════ ONGLET ✓ — BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-5">
+
+  <div class="sub-tabs-nav" id="sub-nav-Z">
+    <button class="sub-tab-btn active" data-sub="Z1" onclick="switchSubTab('Z',0)">
+      <span class="sub-tab-num">1</span> Bilan et révision
+    </button>
+    <button class="sub-tab-btn" data-sub="Z2" onclick="switchSubTab('Z',1)">
+      <span class="sub-tab-num">2</span> Ressources numériques
+    </button>
+  </div>
+
+  <div class="sub-tab-content active" id="sub-Z-0">
+
+  <div class="section-title"><span class="icon">📌</span> Bilan de la séquence</div>
+
+  <div class="bilan-grid">
+    <div class="bilan-card">
+      <h4>Analyse spectrale</h4>
+      <ul class="ke-list">
+        <li>A = −log(I/I₀) ; T = I/I₀</li>
+        <li>Loi de Beer-Lambert : A = ε·l·C (valide si C &lt; 0,1 mol·L⁻¹)</li>
+        <li>Spectre UV-visible : A = f(λ), λ<sub>max</sub>, couleur complémentaire</li>
+        <li>Spectre IR : T = f(σ), σ = 1/λ, zone &gt; 1500 cm⁻¹ utile aux groupes fonctionnels</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Dosages par étalonnage</h4>
+      <ul class="ke-list">
+        <li>Gamme étalon + courbe A = f(C) ou σ = f(C), droite passant par l'origine</li>
+        <li>Loi de Kohlrausch : σ = k·C (solutions diluées, un seul soluté)</li>
+        <li>Lecture graphique de C₀ à partir de la mesure A₀ ou σ₀</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Titrages</h4>
+      <ul class="ke-list">
+        <li>Réaction support : totale, rapide, unique</li>
+        <li>Équivalence = changement de réactif limitant</li>
+        <li>À l'équivalence : C<sub>A</sub>·V<sub>A</sub>/a = C<sub>B</sub>·V<sub>E</sub>/b</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Suivi d'un titrage</h4>
+      <ul class="ke-list">
+        <li>Conductimétrie : rupture de pente sur σ = f(V)</li>
+        <li>pH-métrie : tangentes parallèles ou courbe dérivée</li>
+        <li>Colorimétrie : changement de teinte, indicateur adapté au saut de pH</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="icon">📝</span> QCM (manuel Hatier)</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/02_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">📝 QCM — Prérequis</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Analyse spectrale (UV-visible, IR) — à faire avant la séquence</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/02_QCM/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">📝 QCM — Maîtrise des notions</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Analyse spectrale (UV-visible, IR) — bilan de fin de séquence</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/03_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">📝 QCM — Prérequis</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Titrages (dosages, équivalence) — à faire avant la séquence</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/03_QCM/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">📝 QCM — Maîtrise des notions</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Titrages (dosages, équivalence) — bilan de fin de séquence</p>
+      </div>
+    </a>
+
+  </div>
+
+
+  <div class="section-title"><span class="icon">📝</span> QCM bilan</div>
+  <div class="bilan-exo-card">
+    <div class="qcm-grid">
+      <div class="qcm-item">
+        <span class="substance">Une méthode d'analyse « non destructrice » est :</span>
+        <div class="qcm-choices">
+          <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-z1')">la spectroscopie UV-visible</button>
+          <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-z1')">le titrage</button>
+        </div>
+        <div class="qcm-feedback" id="fb-z1"></div>
+      </div>
+      <div class="qcm-item">
+        <span class="substance">Sur une courbe de titrage conductimétrique, l'équivalence correspond à :</span>
+        <div class="qcm-choices">
+          <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-z2')">une rupture de pente</button>
+          <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-z2')">un maximum de σ</button>
+        </div>
+        <div class="qcm-feedback" id="fb-z2"></div>
+      </div>
+      <div class="qcm-item">
+        <span class="substance">Pour un titrage pH-métrique, V<sub>E</sub> correspond au maximum de :</span>
+        <div class="qcm-choices">
+          <button class="qcm-btn" onclick="checkQcmSimple(this,false,'fb-z3')">pH</button>
+          <button class="qcm-btn" onclick="checkQcmSimple(this,true,'fb-z3')">|dpH/dV|</button>
+        </div>
+        <div class="qcm-feedback" id="fb-z3"></div>
+      </div>
+    </div>
+  </div>
+
+<div class="section-title" style="margin-top:30px;"><span class="icon">📘</span> Annales de bac — à traiter en autonomie</div>
+
+<div class="bilan-exo-card">
+  <div class="bilan-tag">Bac Amérique du Nord 1 · 2023 Jour 1 · Exercice 2 · 5 pts · 53 min</div>
+  <h3>Technique de dosage de l'urée</h3>
+  <div class="bilan-theme">Spectroscopie IR, isomères, dosage gravimétrique, incertitudes, z-score, loi de Beer-Lambert.</div>
+  <div class="bilan-links">
+    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2025-09/2023-AmNord-J1-Exo2-Sujet-DosageUree-5pts.pdf" target="_blank">📄 Sujet</a>
+    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2024-12/2023-AmNord-J1-Exo2-Correction-DosageUree-5pts.pdf" target="_blank">✅ Corrigé</a>
+  </div>
+</div>
+
+<div class="bilan-exo-card">
+  <div class="bilan-tag">Bac S Amérique du Sud · 2011 · Exercice 3 · 4 pts · 52 min</div>
+  <h3>Dosage colorimétrique de l'aluminium</h3>
+  <div class="bilan-theme">Dissolution, dilution, loi de Beer-Lambert, dosage par étalonnage.</div>
+  <div class="bilan-links">
+    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-01/2011-11-Amsud-Exo3-Sujet-DosageEtalonnageAlu-4pts.pdf" target="_blank">📄 Sujet</a>
+    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2024-01/2011-11-Amsud-Exo3-Correction-DosageEtalonnageAlu-4pts.pdf" target="_blank">✅ Corrigé</a>
+  </div>
+</div>
+
+<div class="bilan-exo-card">
+  <div class="bilan-tag">Bac Amérique du Sud · 2025 Jour 1 · Exercice 3 · 4 pts · 42 min</div>
+  <h3>Étude d'un herbicide</h3>
+  <div class="bilan-theme">Titrage pH-métrique et colorimétrique, nomenclature, z-score.</div>
+  <div class="bilan-links">
+    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2025-Amsud-J1-Exo3-Sujet-TitrageHerbicide-4pts.pdf" target="_blank">📄 Sujet</a>
+    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2025-12/2025-Amsud-J1-Exo3-Correction-TitrageHerbicide-4pts.pdf" target="_blank">✅ Corrigé</a>
+  </div>
+</div>
+
+<div class="bilan-exo-card">
+  <div class="bilan-tag">Bac Amérique du Nord · 2021 Sujet 2 · Exercice B · 5 pts · 55 min</div>
+  <h3>Additif alimentaire pour les agneaux</h3>
+  <div class="bilan-theme">Titrage avec suivi conductimétrique, incertitudes-types composées, programme en langage Python.</div>
+  <div class="bilan-links">
+    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2021-11/2021-AmNord-Sujet2-ExoB-ConductiPython-5pts.pdf" target="_blank">📄 Sujet</a>
+    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2021-10/2021-AmNord-Sujet2-ExoB-ConductiPython-5pts-Correction.pdf" target="_blank">✅ Corrigé</a>
+  </div>
+</div>
+
+<div class="bilan-exo-card">
+  <div class="bilan-tag">Bac Métropole · Septembre 2023 Jour 2 · Exercice 1 · 9 pts · 1h35</div>
+  <h3>Juste une impression gustative ?</h3>
+  <div class="bilan-theme">Groupes caractéristiques, titrage pH-métrique, diagramme de prédominance, titrage en retour, dosage par étalonnage (masse volumique).</div>
+  <div class="bilan-links">
+    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-01/2023-09-Metropole-J2-Exo1-Sujet-Pommes-9pts.pdf" target="_blank">📄 Sujet</a>
+    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2025-02/2023-09-Metropole-J2-Exo1-Correction-Pommes-9pts.pdf" target="_blank">✅ Corrigé</a>
+  </div>
+</div>
+
+  </div><!-- /sub-Z-0 -->
+
+  <div class="sub-tab-content" id="sub-Z-1">
+
+  <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://www.pearltrees.com/private/id105615102/item806292640?paccess=47d78e4cb2f.300f0ca0.73acfb5113159746dd2b1afac1cc129b" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo — Cours 2</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Pearltrees · Méthodes d'analyses physiques d'un système chimique</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105615102/item806292464?paccess=47d78e41600.300f0bf0.56608987d1db30d282a8dff058b64a17" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo — Cours 3</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Pearltrees · Méthodes d'analyses chimiques d'un système chimique</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105615102/item806372506?paccess=47d79e77d58.3010449a.b61240e54434a40f5cec07888aa02c9f" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo bilan — Chapitre 02</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Pearltrees · Méthodes physiques d'analyse d'un système chimique — synthèse de fin de chapitre</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105615102/item806372507?paccess=47d79d5f9eb.3010449b.b051f94eeef75e344cbb7851e699cb3a" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo bilan — Chapitre 03</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Pearltrees · Titrages — synthèse de fin de chapitre</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105615102/item806382912?paccess=47d79dcb62c.30106d40.3c482400ff6785ba94cecce80fa8b612" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Comment exploiter un spectre IR</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Pearltrees · Paul Olivier</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105615102/item806383213?paccess=47d79df771a.30106e6d.8a99c6d56a5770073c28d2b28a3728de" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Titrage pH-métrique et Absorbance</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Pearltrees · Paul Olivier — Dosage par étalonnage</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105615102/item806382733?paccess=47d79da65fd.30106c8d.c7a9088a94c76fdd0822a85ec01033c1" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Titrage conductimétrique</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Pearltrees · Paul Olivier</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">🧪</span> Simulations</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://phet.colorado.edu/sims/html/beers-law-lab/latest/beers-law-lab_all.html?locale=fr" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">⚗️ Simulation — Beer's Law Lab</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET · Mesurer l'absorbance d'une solution colorée, tracer A = f(C), déterminer ε</p>
+      </div>
+    </a>
+
+    <a href="https://chimie.ostralo.net/spectreIR/" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">🔬 Simulation — Spectre IR</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Ostralo · Choisir une molécule, identifier les bandes caractéristiques et les liaisons associées</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/2019/01/9782401058705/titrage/index.htm" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">⚗️ Simulation — Titrage (v1)</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Réaliser un titrage virtuel : choix des réactifs, ajout du titrant, repérage de l'équivalence</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_titrage_accueil/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">⚗️ Simulation — Titrage (v2)</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Simulateur de titrage — page d'accueil, autre version</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer-note">Séquence 05 – Contrôle de qualité · Terminale Spécialité Physique-Chimie · M. FRANCOIS &amp; C. Poirault-Gauvin</div>
+
+  </div><!-- /sub-Z-1 -->
+
+</div>
+
+</div><!-- /main -->
+
+<!-- Skulpt : exécution de code Python directement dans le navigateur (nécessite une connexion internet) -->
+<script src="https://cdn.jsdelivr.net/gh/Tezumie/Skulpt-CDN@latest/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Tezumie/Skulpt-CDN@latest/skulpt-stdlib.js"></script>
+
+<script>
+/* ════════ EXÉCUTION PYTHON (SKULPT) — ACTIVITÉ BEER-LAMBERT ════════ */
+function runBeerPython() {
+  var outputEl = document.getElementById('py-beer-output');
+  var runBtn = document.getElementById('py-beer-btn');
+  var code = document.getElementById('py-beer').value;
+  outputEl.textContent = '';
+  var canvas0 = document.getElementById('beerPyChart');
+  if (canvas0) canvas0.getContext('2d').clearRect(0,0,canvas0.width,canvas0.height);
+  if (typeof Sk === 'undefined') {
+    outputEl.textContent = "⏳ Le module Python (Skulpt) est en cours de chargement, réessaie dans quelques secondes...";
+    return;
+  }
+  runBtn.disabled = true;
+  function outf(text) { outputEl.textContent += text; }
+  function builtinRead(x) {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+      throw "Fichier non trouvé : '" + x + "'";
+    }
+    return Sk.builtinFiles["files"][x];
+  }
+  Sk.configure({ output: outf, read: builtinRead, python3: true });
+  var myPromise = Sk.misceval.asyncToPromise(function() {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  });
+  myPromise.then(
+    function(mod) {
+      runBtn.disabled = false;
+      try {
+        var cList = mod.$d['C_valeurs'].v.map(function(item) { return item.v; });
+        var aList = mod.$d['A_valeurs'].v.map(function(item) { return item.v; });
+        if (cList.length > 0 && cList.every(function(x){ return typeof x === 'number'; })
+            && aList.length === cList.length && aList.every(function(x){ return typeof x === 'number'; })) {
+          drawBeerCourbe(cList, aList);
+        }
+      } catch (e) { /* listes absentes ou incomplètes : pas de graphique, ce n'est pas bloquant */ }
+    },
+    function(err) {
+      outputEl.textContent += '\n❌ ' + err.toString();
+      runBtn.disabled = false;
+    }
+  );
+}
+
+/* Trace le nuage de points (C ; A) rentré par l'élève + la droite de régression passant par l'origine (moyenne de A/C) */
+function drawBeerCourbe(cList, aList) {
+  var canvas = document.getElementById('beerPyChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  var padL=48, padB=36, padT=16, padR=16;
+  var plotW = canvas.width-padL-padR, plotH = canvas.height-padT-padB;
+  var cMax = Math.max.apply(null, cList) * 1.15 || 1;
+  var aMax = Math.max.apply(null, aList) * 1.15 || 1;
+
+  ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif'; ctx.textAlign='center';
+  ctx.fillText('C (mol·L⁻¹)', padL+plotW/2, canvas.height-8);
+  ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText('A', 0, 0); ctx.restore();
+
+  function xOf(c) { return padL + (c/cMax)*plotW; }
+  function yOf(a) { return canvas.height-padB - (a/aMax)*plotH; }
+
+  /* droite de régression passant par l'origine : pente moyenne A/C */
+  var kSum = 0, n = 0;
+  for (var i=0;i<cList.length;i++) { if (cList[i] > 0) { kSum += aList[i]/cList[i]; n++; } }
+  var kMoy = n > 0 ? kSum/n : 0;
+  ctx.strokeStyle = '#E8783A'; ctx.lineWidth = 2; ctx.beginPath();
+  ctx.moveTo(xOf(0), yOf(0)); ctx.lineTo(xOf(cMax), yOf(kMoy*cMax)); ctx.stroke();
+
+  /* points de mesure */
+  ctx.fillStyle = '#2D5F8A';
+  for (var i=0;i<cList.length;i++) {
+    ctx.beginPath(); ctx.arc(xOf(cList[i]), yOf(aList[i]), 4.5, 0, 2*Math.PI); ctx.fill();
+  }
+
+  ctx.fillStyle = '#1A2A3A'; ctx.font = 'bold 11px Outfit, Arial, sans-serif'; ctx.textAlign='left';
+  ctx.fillText('k ≈ ' + kMoy.toFixed(1) + ' L·mol⁻¹·cm⁻¹', padL+8, padT+14);
+}
+
+/* ════════ EXÉCUTION PYTHON — TITRAGE CONDUCTIMÉTRIQUE (D1) ════════ */
+function runConductoPython() {
+  runGenericTitragePython('py-condukto', 'py-condukto-output', ['V_valeurs','sigma_valeurs'], function(mod) {
+    var V = mod.$d['V_valeurs'].v.map(function(i){return i.v;});
+    var S = mod.$d['sigma_valeurs'].v.map(function(i){return i.v;});
+    drawTitragePyCourbe('conductoPyChart', V, S, 'V (mL)', 'σ (mS·m⁻¹)', '#2D5F8A');
+  });
+}
+
+/* ════════ EXÉCUTION PYTHON — TITRAGE pH-MÉTRIQUE (D2) ════════ */
+function runPhTitrePython() {
+  runGenericTitragePython('py-phtitre', 'py-phtitre-output', ['V_valeurs','pH_valeurs'], function(mod) {
+    var V = mod.$d['V_valeurs'].v.map(function(i){return i.v;});
+    var P = mod.$d['pH_valeurs'].v.map(function(i){return i.v;});
+    drawTitragePyCourbe('phTitrePyChart', V, P, 'V (mL)', 'pH', '#7B4FA6');
+  });
+}
+
+/* ════════ EXÉCUTION PYTHON — VIRAGE COLORIMÉTRIQUE (D3, pas de tracé) ════════ */
+function runColoTitrePython() {
+  runGenericTitragePython('py-colotitre', 'py-colotitre-output', [], function(mod) { /* pas de graphique, juste le print() */ });
+}
+
+/* ════════ MOTEUR COMMUN D'EXÉCUTION PYTHON (Skulpt) ════════ */
+function runGenericTitragePython(editorId, outputId, requiredVars, onSuccess) {
+  var outputEl = document.getElementById(outputId);
+  var code = document.getElementById(editorId).value;
+  outputEl.textContent = '';
+  if (typeof Sk === 'undefined') {
+    outputEl.textContent = "⏳ Le module Python (Skulpt) est en cours de chargement, réessaie dans quelques secondes...";
+    return;
+  }
+  function outf(text) { outputEl.textContent += text; }
+  function builtinRead(x) {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+      throw "Fichier non trouvé : '" + x + "'";
+    }
+    return Sk.builtinFiles["files"][x];
+  }
+  Sk.configure({ output: outf, read: builtinRead, python3: true });
+  var myPromise = Sk.misceval.asyncToPromise(function() {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  });
+  myPromise.then(
+    function(mod) {
+      try { onSuccess(mod); } catch (e) { /* variables absentes ou incomplètes : pas bloquant */ }
+    },
+    function(err) {
+      outputEl.textContent += '\n❌ ' + err.toString();
+    }
+  );
+}
+
+/* Tracé générique (V, grandeur) avec repère du volume équivalent */
+function drawTitragePyCourbe(canvasId, xList, yList, xLabel, yLabel, color) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas || xList.length === 0) return;
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  var padL=48, padB=36, padT=16, padR=16;
+  var plotW = canvas.width-padL-padR, plotH = canvas.height-padT-padB;
+  var xMax = Math.max.apply(null, xList) * 1.05 || 1;
+  var yMin = Math.min.apply(null, yList);
+  var yMax = Math.max.apply(null, yList);
+  if (yMin > 0) yMin = 0;
+  var ySpan = (yMax - yMin) * 1.1 || 1;
+
+  ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif'; ctx.textAlign='center';
+  ctx.fillText(xLabel, padL+plotW/2, canvas.height-8);
+  ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText(yLabel, 0, 0); ctx.restore();
+
+  function xOf(x) { return padL + (x/xMax)*plotW; }
+  function yOf(y) { return canvas.height-padB - ((y-yMin)/ySpan)*plotH; }
+
+  ctx.strokeStyle = color; ctx.lineWidth = 2.2; ctx.beginPath();
+  for (var i=0;i<xList.length;i++) {
+    var x = xOf(xList[i]), y = yOf(yList[i]);
+    if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+}
+
+/* ════════ NUMÉROS DE LIGNE POUR LES ÉDITEURS PYTHON ════════ */
+function addLineNumbers(textareaId) {
+  var ta = document.getElementById(textareaId);
+  if (!ta) return;
+  var wrap = document.createElement('div');
+  wrap.className = 'py-editor-wrap';
+  ta.parentNode.insertBefore(wrap, ta);
+  var gutter = document.createElement('div');
+  gutter.className = 'py-line-numbers';
+  wrap.appendChild(gutter);
+  wrap.appendChild(ta);
+
+  function refresh() {
+    var n = ta.value.split('\n').length;
+    var lines = [];
+    for (var i = 1; i <= n; i++) lines.push(i);
+    gutter.textContent = lines.join('\n');
+    gutter.scrollTop = ta.scrollTop;
+  }
+  ta.addEventListener('input', refresh);
+  ta.addEventListener('scroll', function() { gutter.scrollTop = ta.scrollTop; });
+  window.addEventListener('resize', refresh);
+  refresh();
+}
+['py-beer','py-condukto','py-phtitre','py-colotitre'].forEach(addLineNumbers);
+
+/* ════════ NAVIGATION ONGLETS ════════ */
+function switchTab(i) {
+  document.querySelectorAll('.tab-content').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('.tabs-nav .tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+function switchSubTab(group, i) {
+  document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+document.getElementById('capToggle').addEventListener('click', () => {
+  document.getElementById('capPanel').classList.toggle('open');
+});
+function toggleAccord(btn) {
+  btn.nextElementSibling.classList.toggle('open');
+}
+function toggleCorrection(btn) {
+  var c = btn.nextElementSibling;
+  c.classList.toggle('visible');
+  btn.textContent = c.classList.contains('visible') ? '🙈 Masquer la correction' : '✅ Voir la correction';
+}
+
+/* ════════ VÉRIFICATION NUMÉRIQUE ════════ */
+function checkNum(id, expected, tol) {
+  var input = document.getElementById(id);
+  var fb = document.getElementById(id + '-fb');
+  var raw = input.value.replace(',', '.').trim();
+  var val = parseFloat(raw);
+  if (isNaN(val)) {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = 'Entre un nombre'; fb.className = 'num-feedback ko';
+    return;
+  }
+  if (Math.abs(val - expected) <= tol) {
+    input.classList.remove('wrong'); input.classList.add('correct');
+    fb.textContent = '✓ Correct'; fb.className = 'num-feedback ok';
+  } else {
+    input.classList.remove('correct'); input.classList.add('wrong');
+    fb.textContent = '✗ Réessaie'; fb.className = 'num-feedback ko';
+  }
+}
+
+/* ════════ QCM GÉNÉRIQUE ════════ */
+function checkQcmSimple(btn, isCorrect, fbId) {
+  var group = btn.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  var fb = document.getElementById(fbId);
+  if (isCorrect) {
+    group.forEach(b => { b.disabled = true; });
+    btn.classList.add('correct');
+    fb.textContent = '✓ Exact !';
+    fb.className = 'qcm-feedback';
+  } else {
+    btn.classList.add('wrong');
+    btn.disabled = true;
+    fb.textContent = '✗ Ce n\'est pas la bonne réponse, réessaie.';
+    fb.className = 'qcm-feedback wrong';
+  }
+}
+
+/* ════════ VÉRIFICATION — ACTIVITÉ OSTRALO SPECTRE IR ════════ */
+function checkIRRow(id, minWn, maxWn, expectedLiaison, expectedGroupe) {
+  var wnInput = document.getElementById('wn-' + id);
+  var liaisonSel = document.getElementById('liaison-' + id);
+  var groupeSel = document.getElementById('groupe-' + id);
+  var fb = document.getElementById('fb-ir-' + id);
+  var wn = parseFloat(wnInput.value.replace(',', '.'));
+
+  var okWn = !isNaN(wn) && wn >= minWn && wn <= maxWn;
+  var okLiaison = (liaisonSel.value === expectedLiaison);
+  var okGroupe = (groupeSel.value === expectedGroupe);
+
+  wnInput.classList.toggle('correct', okWn); wnInput.classList.toggle('wrong', !okWn);
+  liaisonSel.classList.toggle('correct', okLiaison); liaisonSel.classList.toggle('wrong', !okLiaison);
+  groupeSel.classList.toggle('correct', okGroupe); groupeSel.classList.toggle('wrong', !okGroupe);
+
+  if (okWn && okLiaison && okGroupe) {
+    fb.textContent = '✓ Tout est correct !';
+    fb.className = 'dq-feedback';
+  } else {
+    var msgs = [];
+    if (!okWn) msgs.push("le nombre d'onde attendu est entre " + minWn + " et " + maxWn + " cm⁻¹");
+    if (!okLiaison) msgs.push('vérifie la liaison');
+    if (!okGroupe) msgs.push('vérifie le groupe caractéristique');
+    fb.textContent = '✗ ' + msgs.join(' · ');
+    fb.className = 'dq-feedback wrong';
+  }
+}
+
+/* ════════ ANIMATION — BANDES CARACTÉRISTIQUES IR (A2) ════════ */
+(function() {
+  var canvas = document.getElementById('irCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var msg = document.getElementById('irMsg');
+  var mode = 'ohlibre';
+  var W = canvas.width, H = canvas.height;
+  var padL = 50, padB = 34, padT = 16, padR = 20;
+  var plotW = W-padL-padR, plotH = H-padT-padB;
+  var sigMin = 1500, sigMax = 4000;
+
+  var BANDS = {
+    ohlibre:    { sigma0: 3600, allure: 'fine, forte',     components: [{sigma0:3600, width:60,  depth:0.85}],
+                  desc: "Liaison <strong>O–H libre</strong> (sans liaison hydrogène, ex. vapeur ou solution très diluée) : bande fine et forte, nombre d'onde élevé." },
+    ohlie:      { sigma0: 3300, allure: 'large',           components: [{sigma0:3300, width:260, depth:0.72}],
+                  desc: "Liaison <strong>O–H liée</strong> (association par liaisons hydrogène, ex. alcool pur) : bande large et décalée vers les nombres d'onde plus faibles — la liaison est affaiblie." },
+    nhamine:    { sigma0: 3400, allure: 'moyenne, franche',  components: [{sigma0:3400, width:50,  depth:0.68}],
+                  desc: "Liaison <strong>N–H</strong> d'une amine : bande d'intensité moyenne mais nette, proche de la zone O–H." },
+    nhamide:    { sigma0: 3300, allure: 'moyenne, franche',  components: [{sigma0:3300, width:50,  depth:0.68}],
+                  desc: "Liaison <strong>N–H</strong> d'un amide : bande d'intensité moyenne mais nette, à un nombre d'onde un peu plus faible que celle de l'amine." },
+    chtetra:    { sigma0: 2910, allure: 'forte (« double bosse »)', components: [{sigma0:2940, width:26, depth:0.62},{sigma0:2880, width:26, depth:0.62}],
+                  desc: "Liaison <strong>C–H</strong> d'un carbone tétragonal (alcane) : plusieurs bandes très proches (CH₃ et CH₂) se superposent, donnant cette allure caractéristique « en double bosse », forte et juste en dessous de 3000 cm⁻¹." },
+    chtrigo:    { sigma0: 3050, allure: 'moyenne',         components: [{sigma0:3050, width:35,  depth:0.5}],
+                  desc: "Liaison <strong>C–H</strong> d'un carbone trigonal (alcène ou aromatique) : bande d'intensité moyenne, juste au-dessus de 3000 cm⁻¹." },
+    coester:    { sigma0: 1740, allure: 'fine, forte',     components: [{sigma0:1740, width:25,  depth:0.90}],
+                  desc: "Liaison <strong>C=O</strong> d'un ester : bande fine et forte, au nombre d'onde le plus élevé parmi les groupes carbonyle courants." },
+    coaldehyde: { sigma0: 1730, allure: 'fine, forte',     components: [{sigma0:1730, width:25,  depth:0.90}],
+                  desc: "Liaison <strong>C=O</strong> d'un aldéhyde : bande fine et forte (souvent accompagnée de 2 bandes fines C–H vers 2700–2900 cm⁻¹, non représentées ici)." },
+    cocetone:   { sigma0: 1715, allure: 'fine, forte',     components: [{sigma0:1715, width:25,  depth:0.90}],
+                  desc: "Liaison <strong>C=O</strong> d'une cétone : bande fine et forte." },
+    coacide:    { sigma0: 1710, allure: 'fine, forte',     components: [{sigma0:1710, width:25,  depth:0.90}],
+                  desc: "Liaison <strong>C=O</strong> d'un acide carboxylique : bande fine et forte (l'acide présente aussi une bande O–H très large vers 2500–3200 cm⁻¹, non représentée ici)." },
+    coamide:    { sigma0: 1650, allure: 'fine, forte',     components: [{sigma0:1650, width:25,  depth:0.90}],
+                  desc: "Liaison <strong>C=O</strong> d'un amide : bande fine et forte, au nombre d'onde le plus faible des carbonyles courants (délocalisation avec le doublet de l'azote)." }
+  };
+
+  function sigToX(s) { return padL + (1-(s-sigMin)/(sigMax-sigMin))*plotW; }
+
+  function transmittance(sigma, b) {
+    var T = 1;
+    for (var i=0; i<b.components.length; i++) {
+      var c = b.components[i];
+      var d = (sigma-c.sigma0)/c.width;
+      T -= c.depth*Math.exp(-d*d);
+    }
+    return Math.max(T, 0.02);
+  }
+
+  function draw() {
+    var b = BANDS[mode];
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth=1.2;
+    ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(W-padR,H-padB); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
+    ctx.fillText('nombre d\'onde σ (cm⁻¹)', padL+plotW/2, H-8);
+    ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('T (%)',0,0); ctx.restore();
+
+    ctx.strokeStyle='#DDE3EC'; ctx.fillStyle='#5A6B7A'; ctx.font='9px Nunito'; ctx.textAlign='center';
+    for (var s=sigMin; s<=sigMax; s+=500) {
+      var xg = sigToX(s);
+      ctx.beginPath(); ctx.moveTo(xg,padT); ctx.lineTo(xg,H-padB); ctx.stroke();
+      ctx.fillText(s, xg, H-padB+12);
+    }
+
+    ctx.strokeStyle = '#0f766e'; ctx.lineWidth=2.4; ctx.beginPath();
+    var first = true;
+    for (var s=sigMax; s>=sigMin; s-=5) {
+      var T = transmittance(s, b);
+      var x = sigToX(s), y = H-padB - T*plotH*0.9;
+      if (first) { ctx.moveTo(x,y); first=false; } else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    var xm = sigToX(b.sigma0);
+    ctx.strokeStyle='#E8783A'; ctx.setLineDash([4,3]); ctx.lineWidth=1.2;
+    ctx.beginPath(); ctx.moveTo(xm,padT); ctx.lineTo(xm,H-padB); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='#E8783A'; ctx.font='bold 10px Outfit'; ctx.textAlign='center';
+    ctx.fillText('σ ≈ '+b.sigma0+' cm⁻¹ ('+b.allure+')', xm, padT+12);
+
+    msg.innerHTML = b.desc;
+  }
+  window.setIrMode = function(m, btn) {
+    mode = m;
+    document.querySelectorAll('.anim-controls .anim-btn[data-mode]').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-mode') === m);
+    });
+    draw();
+  };
+  draw();
+})();
+
+/* ════════ ANIMATION — DÉTERMINATION GRAPHIQUE C0 (B1) ════════ */
+(function() {
+  var canvas = document.getElementById('etalonSpectroCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var slider = document.getElementById('etalonSlider');
+  var valLabel = document.getElementById('etalonVal');
+  var msg = document.getElementById('etalonMsg');
+  var EPS = 15, L = 1, AMAX = 2.2, CMAX = AMAX/(EPS*L);
+  var W = canvas.width, H = canvas.height;
+  var padL = 55, padB = 34, padT = 16, padR = 20;
+  var plotW = W-padL-padR, plotH = H-padT-padB;
+
+  function draw() {
+    var A0 = parseFloat(slider.value);
+    var C0 = A0/(EPS*L);
+    valLabel.textContent = A0.toFixed(2).replace('.',',');
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.2;
+    ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(padL+plotW,H-padB); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
+    ctx.fillText('C (mol·L⁻¹)', padL+plotW/2, H-8);
+    ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('Absorbance A',0,0); ctx.restore();
+
+    // droite étalonnage
+    ctx.strokeStyle='#2D5F8A'; ctx.lineWidth=2.4;
+    ctx.beginPath(); ctx.moveTo(padL,H-padB); ctx.lineTo(padL+plotW,padT+(1-1)*plotH); ctx.lineTo(padL+plotW, H-padB-plotH); ctx.stroke();
+
+    var xP = padL + (C0/CMAX)*plotW;
+    var yP = H-padB - (A0/AMAX)*plotH;
+    ctx.strokeStyle='#C0392B'; ctx.setLineDash([3,3]); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(padL,yP); ctx.lineTo(xP,yP); ctx.lineTo(xP,H-padB); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='#C0392B'; ctx.beginPath(); ctx.arc(xP,yP,5,0,2*Math.PI); ctx.fill();
+
+    ctx.fillStyle='#5A6B7A'; ctx.font='10px Nunito'; ctx.textAlign='left';
+    ctx.fillText('A₀ = '+A0.toFixed(2).replace('.',','), padL+4, yP-6);
+    ctx.textAlign='center';
+    ctx.fillText('C₀', xP, H-padB+24);
+
+    msg.innerHTML = 'Pour A₀ = <strong>'+A0.toFixed(2).replace('.',',')+'</strong>, la lecture graphique donne C₀ ≈ <strong>'+C0.toFixed(3).replace('.',',')+' mol·L⁻¹</strong> (C₀ = A₀ / (ε×l)).';
+  }
+  slider.addEventListener('input', draw);
+  draw();
+})();
+
+/* ════════ ANIMATION — TITRAGE CONDUCTIMÉTRIQUE (D1) ════════ */
+(function() {
+  var canvas = document.getElementById('conductoCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var slider = document.getElementById('conductoSlider');
+  var valLabel = document.getElementById('conductoVal');
+  var msg = document.getElementById('conductoMsg');
+  var VE = 10, sigma0 = 5.0, aBefore = 0.30, bAfter = 0.55;
+  var VMAX = 20, SMAX = sigma0 + bAfter*(VMAX-VE) + 0.5;
+  var W = canvas.width, H = canvas.height;
+  var padL = 55, padB = 34, padT = 16, padR = 20;
+  var plotW = W-padL-padR, plotH = H-padT-padB;
+
+  function sigma(V) {
+    if (V <= VE) return sigma0 - aBefore*V;
+    return (sigma0 - aBefore*VE) + bAfter*(V-VE);
+  }
+
+  function draw() {
+    var V = parseFloat(slider.value);
+    valLabel.textContent = V.toFixed(1).replace('.',',') + ' mL';
+    document.getElementById('conductoDispV').textContent = V.toFixed(1).replace('.',',') + ' mL';
+    document.getElementById('conductoDispSigma').textContent = sigma(V).toFixed(2).replace('.',',') + ' mS·cm⁻¹';
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.2;
+    ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(padL+plotW,H-padB); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
+    ctx.fillText('V (mL)', padL+plotW/2, H-8);
+    ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('σ (mS·cm⁻¹)',0,0); ctx.restore();
+
+    ctx.strokeStyle='#DDE3EC'; ctx.fillStyle='#5A6B7A'; ctx.font='9px Nunito'; ctx.textAlign='center';
+    for (var vv=0; vv<=VMAX; vv+=5) {
+      var xg = padL+(vv/VMAX)*plotW;
+      ctx.beginPath(); ctx.moveTo(xg,padT); ctx.lineTo(xg,H-padB); ctx.stroke();
+      ctx.fillText(vv, xg, H-padB+12);
+    }
+
+    // deux segments
+    ctx.strokeStyle='#2D5F8A'; ctx.lineWidth=2.4;
+    ctx.beginPath();
+    ctx.moveTo(padL, H-padB-(sigma(0)/SMAX)*plotH);
+    ctx.lineTo(padL+(VE/VMAX)*plotW, H-padB-(sigma(VE)/SMAX)*plotH);
+    ctx.stroke();
+    ctx.strokeStyle='#E8783A'; ctx.beginPath();
+    ctx.moveTo(padL+(VE/VMAX)*plotW, H-padB-(sigma(VE)/SMAX)*plotH);
+    ctx.lineTo(padL+plotW, H-padB-(sigma(VMAX)/SMAX)*plotH);
+    ctx.stroke();
+
+    // repère VE
+    var xE = padL+(VE/VMAX)*plotW;
+    ctx.strokeStyle='#94a3b8'; ctx.setLineDash([3,3]); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(xE,padT); ctx.lineTo(xE,H-padB); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='#94a3b8'; ctx.font='10px Nunito'; ctx.textAlign='center';
+    ctx.fillText('Vᴇ', xE, padT+12);
+
+    // point mobile
+    var xP = padL+(V/VMAX)*plotW, yP = H-padB-(sigma(V)/SMAX)*plotH;
+    ctx.fillStyle='#C0392B'; ctx.beginPath(); ctx.arc(xP,yP,5,0,2*Math.PI); ctx.fill();
+
+    if (V < VE-0.05) msg.innerHTML = 'Avant l\'équivalence : les ions H₃O⁺ (très mobiles) sont remplacés par des ions Na⁺ (moins mobiles) → σ <strong>diminue</strong>.';
+    else if (V > VE+0.05) msg.innerHTML = 'Après l\'équivalence : les ions Na⁺ et HO⁻ (très mobile) s\'accumulent en excès → σ <strong>augmente</strong>, pente plus marquée.';
+    else msg.innerHTML = '<strong>Équivalence atteinte (V ≈ Vᴇ = 10,0 mL)</strong> : rupture de pente, changement de réactif limitant.';
+  }
+  slider.addEventListener('input', draw);
+  draw();
+})();
+
+/* ════════ ANIMATION — TITRAGE pH-MÉTRIQUE (D2) ════════ */
+(function() {
+  var canvas = document.getElementById('phTitCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var slider = document.getElementById('phTitSlider');
+  var valLabel = document.getElementById('phTitVal');
+  var msg = document.getElementById('phTitMsg');
+  var mode = 'courbe';
+  var VE = 10, VMAX = 20;
+  var W = canvas.width, H = canvas.height;
+  var padL = 55, padB = 34, padT = 16, padR = 20;
+  var plotW = W-padL-padR, plotH = H-padT-padB;
+
+  function pH(V) { return 7 + 6*Math.tanh((V-VE)*0.9); }
+  function dpH(V) { var h=0.05; return (pH(V+h)-pH(V-h))/(2*h); }
+
+  window.setPhMode = function(m, btn) {
+    mode = m;
+    document.getElementById('phBtnCourbe').classList.toggle('active', m==='courbe');
+    document.getElementById('phBtnDerivee').classList.toggle('active', m==='derivee');
+    draw();
+  };
+
+  function draw() {
+    var V = parseFloat(slider.value);
+    valLabel.textContent = V.toFixed(1).replace('.',',') + ' mL';
+    document.getElementById('phTitDispV').textContent = V.toFixed(1).replace('.',',') + ' mL';
+    document.getElementById('phTitDispPh').textContent = pH(V).toFixed(2).replace('.',',');
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.2;
+    ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(padL+plotW,H-padB); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
+    ctx.fillText('V (mL)', padL+plotW/2, H-8);
+
+    var xE = padL+(VE/VMAX)*plotW;
+    ctx.strokeStyle='#94a3b8'; ctx.setLineDash([3,3]); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(xE,padT); ctx.lineTo(xE,H-padB); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='#94a3b8'; ctx.font='10px Nunito'; ctx.textAlign='center';
+    ctx.fillText('Vᴇ', xE, padT+12);
+
+    if (mode === 'courbe') {
+      ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center'; ctx.fillText('pH',0,0); ctx.restore();
+      var PMIN=0, PMAX=14;
+      ctx.fillStyle='#5A6B7A'; ctx.font='9px Nunito'; ctx.textAlign='right';
+      for (var p=0;p<=14;p+=2) {
+        var yg = H-padB-((p-PMIN)/(PMAX-PMIN))*plotH;
+        ctx.strokeStyle='#DDE3EC'; ctx.beginPath(); ctx.moveTo(padL,yg); ctx.lineTo(padL+plotW,yg); ctx.stroke();
+        ctx.fillStyle='#5A6B7A'; ctx.fillText(p, padL-6, yg+3);
+      }
+      ctx.strokeStyle='#2D5F8A'; ctx.lineWidth=2.4; ctx.beginPath();
+      var first=true;
+      for (var vv=0; vv<=VMAX; vv+=0.2) {
+        var y = H-padB-((pH(vv)-PMIN)/(PMAX-PMIN))*plotH;
+        var x = padL+(vv/VMAX)*plotW;
+        if (first) { ctx.moveTo(x,y); first=false; } else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      // point d'inflexion sur la courbe pH (à V = VE)
+      var xInfl = padL+(VE/VMAX)*plotW, yInfl = H-padB-((pH(VE)-PMIN)/(PMAX-PMIN))*plotH;
+      ctx.fillStyle='#2D5F8A'; ctx.beginPath(); ctx.arc(xInfl,yInfl,5.5,0,2*Math.PI); ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.fillStyle='#2D5F8A'; ctx.font='bold 9px Outfit'; ctx.textAlign='left';
+      ctx.fillText('point d\'inflexion', xInfl+8, yInfl-6);
+
+      var xP = padL+(V/VMAX)*plotW, yP = H-padB-((pH(V)-PMIN)/(PMAX-PMIN))*plotH;
+      ctx.fillStyle='#C0392B'; ctx.beginPath(); ctx.arc(xP,yP,5,0,2*Math.PI); ctx.fill();
+      msg.innerHTML = 'pH ≈ <strong>' + pH(V).toFixed(1).replace('.',',') + '</strong> pour V = ' + V.toFixed(1).replace('.',',') + ' mL. Le saut de pH le plus brusque (point d\'inflexion) a lieu en V ≈ Vᴇ.';
+    } else {
+      // Courbe pH en arrière-plan (plus discrète)
+      var PMIN=0, PMAX=14;
+      ctx.strokeStyle='#B7C6D6'; ctx.lineWidth=1.6; ctx.beginPath();
+      var firstBg=true;
+      for (var vv=0; vv<=VMAX; vv+=0.2) {
+        var y = H-padB-((pH(vv)-PMIN)/(PMAX-PMIN))*plotH;
+        var x = padL+(vv/VMAX)*plotW;
+        if (firstBg) { ctx.moveTo(x,y); firstBg=false; } else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      ctx.fillStyle='#2D5F8A'; ctx.font='10px Nunito'; ctx.textAlign='left';
+      ctx.fillText('pH = f(V)', padL+6, padT+12);
+
+      // Axe gauche : pH (rappel graduations légères)
+      ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center'; ctx.fillText('pH',0,0); ctx.restore();
+
+      // Axe droit : dpH/dV (courbe dérivée superposée)
+      var DMAX = dpH(VE)*1.15;
+      ctx.save(); ctx.translate(W-8,padT+plotH/2); ctx.rotate(Math.PI/2); ctx.fillStyle='#7B4FA6'; ctx.font='11px Nunito'; ctx.textAlign='center'; ctx.fillText('dpH/dV',0,0); ctx.restore();
+      ctx.fillStyle='#7B4FA6'; ctx.font='9px Nunito'; ctx.textAlign='left';
+      for (var d=0; d<=DMAX; d+=DMAX/4) {
+        var ygr = H-padB-(d/DMAX)*plotH*0.92;
+        ctx.fillText(d.toFixed(1), padL+plotW+4, ygr+3);
+      }
+
+      ctx.strokeStyle='#7B4FA6'; ctx.lineWidth=2.4; ctx.beginPath();
+      var first2=true;
+      for (var vv=0; vv<=VMAX; vv+=0.2) {
+        var y = H-padB-(dpH(vv)/DMAX)*plotH*0.92;
+        var x = padL+(vv/VMAX)*plotW;
+        if (first2) { ctx.moveTo(x,y); first2=false; } else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      ctx.fillStyle='#7B4FA6'; ctx.font='10px Nunito'; ctx.textAlign='left';
+      ctx.fillText('dpH/dV = f(V)', padL+6, padT+26);
+
+      // pic de la dérivée (à V = VE)
+      var xPic = padL+(VE/VMAX)*plotW, yPic = H-padB-(dpH(VE)/DMAX)*plotH*0.92;
+      ctx.fillStyle='#7B4FA6'; ctx.beginPath(); ctx.arc(xPic,yPic,5.5,0,2*Math.PI); ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.fillStyle='#7B4FA6'; ctx.font='bold 9px Outfit'; ctx.textAlign='right';
+      ctx.fillText('pic (maximum)', xPic-8, yPic-6);
+
+      // point mobile sur la courbe dérivée (suit le curseur V)
+      var xP2 = padL+(V/VMAX)*plotW, yP2 = H-padB-(dpH(V)/DMAX)*plotH*0.92;
+      ctx.fillStyle='#C0392B'; ctx.beginPath(); ctx.arc(xP2,yP2,5,0,2*Math.PI); ctx.fill();
+
+      msg.innerHTML = 'La courbe dérivée (violet) présente un <strong>pic (maximum)</strong> exactement à la verticale du <strong>point d\'inflexion</strong> de la courbe pH = f(V) (bleu clair), en V = Vᴇ : c\'est le principe de la méthode de la courbe dérivée.';
+    }
+  }
+  slider.addEventListener('input', draw);
+  draw();
+})();
+
+/* ════════ ANIMATION — TITRAGE COLORIMÉTRIQUE (D3) : burette détaillée + erlenmeyer + agitateur ════════ */
+(function() {
+  var canvas = document.getElementById('colorCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var slider = document.getElementById('colorSlider');
+  var valLabel = document.getElementById('colorVal');
+  var msg = document.getElementById('colorMsg');
+  var VE = 10, VMAX = 20;
+  var CB = 0.10, VA = 20.0;
+
+  var SYSTEMS = {
+    hcl:     { name: 'HCl', type: 'acide fort',
+               pH: function(V) { return 7 + 6*Math.tanh((V-VE)*0.9); } },
+    ch3cooh: { name: 'CH₃COOH', type: 'acide faible (pKa = 4,8)',
+               pH: function(V) {
+                 if (V <= VE) {
+                   var t = Math.tanh((V-VE/2)/2.5);
+                   return 2.9 + (8.7-2.9)*(0.5+0.5*t);
+                 } else {
+                   return 8.7 + 4*Math.tanh((V-VE)*0.35);
+                 }
+               } }
+  };
+  var TITRANTS = { naoh: { name: 'NaOH' }, koh: { name: 'KOH' } };
+  var INDICATEURS = {
+    helianthine: { nom: 'Hélianthine', zmin: 3.1, zmax: 4.4, cAcide: [231,76,60],  cBasique: [244,208,63] },
+    bbt:         { nom: 'BBT',          zmin: 6.0, zmax: 7.6, cAcide: [244,208,63], cBasique: [52,152,219] },
+    phenol:      { nom: 'Phénolphtaléine', zmin: 8.2, zmax: 10.0, cAcide: [240,245,240], cBasique: [219,39,119] }
+  };
+
+  var currentSystem = 'hcl';
+  var currentTitrant = 'naoh';
+  var currentIndicateur = 'phenol';
+
+  function pH(V) { return SYSTEMS[currentSystem].pH(V); }
+
+  function colorFor(ph) {
+    var ind = INDICATEURS[currentIndicateur];
+    var t = Math.min(1, Math.max(0, (ph-ind.zmin)/(ind.zmax-ind.zmin)));
+    var r = Math.round(ind.cAcide[0] + t*(ind.cBasique[0]-ind.cAcide[0]));
+    var g = Math.round(ind.cAcide[1] + t*(ind.cBasique[1]-ind.cAcide[1]));
+    var b = Math.round(ind.cAcide[2] + t*(ind.cBasique[2]-ind.cAcide[2]));
+    return 'rgb('+r+','+g+','+b+')';
+  }
+
+  // ── Géométrie ──
+  var cx = 95;
+  var funnelTop = 8;                  // évasement du haut
+  var bTop = 20, bCylBot = 135;        // corps cylindrique gradué
+  var bHalfW = 13;
+  var taperBot = 158;                  // fin du rétrécissement conique
+  var stopcockTop = 162, stopcockBot = 178;   // boîtier du robinet
+  var tipY = 202;                      // pointe effilée d'écoulement
+  var neckTop = 210, neckBot = 238, neckHalfW = 8;
+  var baseY = 368, baseHalfW = 62;
+  var liquidSurfaceY = 305;
+
+  function flaskHalfWidthAt(y) {
+    if (y <= neckBot) return neckHalfW;
+    var t = (y-neckBot)/(baseY-neckBot);
+    return neckHalfW + t*(baseHalfW-neckHalfW);
+  }
+
+  var dropT = 0;
+  var stirAngle = 0;
+  var isPouring = false;
+  var pourTimeout = null;
+
+  function drawBurette(V) {
+    var frac = (VMAX-V)/VMAX;
+    var liqTop = bTop + (bCylBot-bTop)*(1-frac);
+
+    // potence : tige verticale (jusqu'au niveau de la table) + pince (noix de burette) + pied de statif
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(cx-bHalfW-30, 4); ctx.lineTo(cx-bHalfW-30, baseY+20); ctx.stroke();
+    ctx.strokeStyle = '#64748B'; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.moveTo(cx-bHalfW-30, 66); ctx.lineTo(cx-bHalfW-3, 66); ctx.stroke();
+    ctx.fillStyle = '#475569';
+    ctx.fillRect(cx-bHalfW-6, 58, 8, 16);
+
+    // évasement du haut (entonnoir d'ouverture)
+    ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx-bHalfW-4, funnelTop); ctx.lineTo(cx-bHalfW, bTop);
+    ctx.moveTo(cx+bHalfW+4, funnelTop); ctx.lineTo(cx+bHalfW, bTop);
+    ctx.stroke();
+
+    // corps cylindrique
+    ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
+    ctx.strokeRect(cx-bHalfW, bTop, bHalfW*2, bCylBot-bTop);
+    ctx.fillStyle = '#CFE4F2';
+    ctx.fillRect(cx-bHalfW+2, liqTop, bHalfW*2-4, (bCylBot-liqTop)-1);
+
+    // graduations : traits majeurs (5 mL, avec chiffre) + mineurs (1 mL)
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1;
+    ctx.font = '8px Nunito'; ctx.fillStyle = '#5A6B7A'; ctx.textAlign = 'left';
+    for (var g=0; g<=VMAX; g++) {
+      var yg = bTop + (bCylBot-bTop)*(g/VMAX);
+      var isMajor = (g % 5 === 0);
+      ctx.beginPath(); ctx.moveTo(cx+bHalfW, yg); ctx.lineTo(cx+bHalfW+(isMajor?7:4), yg); ctx.stroke();
+      if (isMajor) ctx.fillText(g, cx+bHalfW+9, yg+3);
+    }
+
+    // rétrécissement conique vers le robinet
+    ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx-bHalfW, bCylBot); ctx.lineTo(cx-5, taperBot);
+    ctx.moveTo(cx+bHalfW, bCylBot); ctx.lineTo(cx+5, taperBot);
+    ctx.stroke();
+    ctx.fillStyle = '#CFE4F2';
+    ctx.beginPath();
+    ctx.moveTo(cx-bHalfW+2, bCylBot-1); ctx.lineTo(cx-4, taperBot);
+    ctx.lineTo(cx+4, taperBot); ctx.lineTo(cx+bHalfW-2, bCylBot-1);
+    ctx.closePath(); ctx.fill();
+
+    // court segment avant le robinet
+    ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx-5, taperBot); ctx.lineTo(cx-5, stopcockTop); ctx.moveTo(cx+5, taperBot); ctx.lineTo(cx+5, stopcockTop); ctx.stroke();
+
+    // ── ROBINET (boîtier distinct, façon Téflon) ──
+    ctx.fillStyle = '#7FA8C9';
+    ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx-11, stopcockTop);
+    ctx.quadraticCurveTo(cx-13, (stopcockTop+stopcockBot)/2, cx-11, stopcockBot);
+    ctx.lineTo(cx+11, stopcockBot);
+    ctx.quadraticCurveTo(cx+13, (stopcockTop+stopcockBot)/2, cx+11, stopcockTop);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    // tige transversale du robinet (clé)
+    var stopcockMidY = (stopcockTop+stopcockBot)/2;
+    ctx.strokeStyle = '#1f2937'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(cx-11, stopcockMidY); ctx.lineTo(cx+26, stopcockMidY-9); ctx.stroke();
+    ctx.fillStyle = '#1f2937';
+    ctx.beginPath(); ctx.ellipse(cx+29, stopcockMidY-10, 5, 3, -0.4, 0, 2*Math.PI); ctx.fill();
+
+    // tube fin + pointe effilée
+    ctx.strokeStyle = '#334155'; ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(cx-4, stopcockBot); ctx.lineTo(cx-2.5, tipY-8); ctx.lineTo(cx, tipY);
+    ctx.moveTo(cx+4, stopcockBot); ctx.lineTo(cx+2.5, tipY-8); ctx.lineTo(cx, tipY);
+    ctx.stroke();
+
+    // reflet (donne un effet verre)
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx-bHalfW+4, bTop+6); ctx.lineTo(cx-bHalfW+4, bCylBot-6); ctx.stroke();
+  }
+
+  function drawDrop() {
+    if (!isPouring) return;
+    var y0 = tipY+2, y1 = neckTop-2;
+    var y = y0 + (y1-y0)*dropT;
+    var alpha = Math.sin(Math.PI*dropT);
+    ctx.fillStyle = 'rgba(59,130,246,'+(0.25+0.55*alpha)+')';
+    ctx.beginPath(); ctx.ellipse(cx, y, 2.2, 3.2, 0, 0, 2*Math.PI); ctx.fill();
+  }
+
+  function drawFlask(ph) {
+    ctx.strokeStyle='#94a3b8'; ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(cx-neckHalfW, neckTop);
+    ctx.lineTo(cx-neckHalfW, neckBot);
+    ctx.lineTo(cx-baseHalfW, baseY-14);
+    ctx.quadraticCurveTo(cx-baseHalfW, baseY, cx-baseHalfW+14, baseY);
+    ctx.lineTo(cx+baseHalfW-14, baseY);
+    ctx.quadraticCurveTo(cx+baseHalfW, baseY, cx+baseHalfW, baseY-14);
+    ctx.lineTo(cx+neckHalfW, neckBot);
+    ctx.lineTo(cx+neckHalfW, neckTop);
+    ctx.stroke();
+
+    var wSurf = flaskHalfWidthAt(liquidSurfaceY);
+    ctx.fillStyle = colorFor(ph);
+    ctx.beginPath();
+    ctx.moveTo(cx-wSurf, liquidSurfaceY);
+    if (liquidSurfaceY < neckBot) ctx.lineTo(cx-neckHalfW, neckBot);
+    ctx.lineTo(cx-baseHalfW, baseY-14);
+    ctx.quadraticCurveTo(cx-baseHalfW, baseY, cx-baseHalfW+14, baseY);
+    ctx.lineTo(cx+baseHalfW-14, baseY);
+    ctx.quadraticCurveTo(cx+baseHalfW, baseY, cx+baseHalfW, baseY-14);
+    if (liquidSurfaceY < neckBot) ctx.lineTo(cx+neckHalfW, neckBot);
+    ctx.lineTo(cx+wSurf, liquidSurfaceY);
+    ctx.closePath(); ctx.fill();
+
+    // barreau aimanté (vu de côté : ellipse dont la largeur apparente oscille pour simuler la rotation)
+    var rx = 3 + 11*Math.abs(Math.cos(stirAngle));
+    ctx.fillStyle = '#1f2937';
+    ctx.beginPath(); ctx.ellipse(cx, baseY-10, rx, 3.4, 0, 0, 2*Math.PI); ctx.fill();
+    ctx.fillStyle = '#dc2626';
+    ctx.beginPath(); ctx.ellipse(cx - rx*0.4*Math.sign(Math.cos(stirAngle)||1), baseY-10, 1.6, 1.6, 0, 0, 2*Math.PI); ctx.fill();
+  }
+
+  function drawStirrerPlate() {
+    // plaque de l'agitateur magnétique sous l'erlenmeyer
+    ctx.fillStyle = '#334155';
+    ctx.beginPath();
+    ctx.moveTo(cx-baseHalfW-14, baseY+10);
+    ctx.lineTo(cx+baseHalfW+14, baseY+10);
+    ctx.lineTo(cx+baseHalfW+8, baseY+30);
+    ctx.lineTo(cx-baseHalfW-8, baseY+30);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#94a3b8'; ctx.font='9px Nunito'; ctx.textAlign='center';
+    ctx.fillText('agitateur magnétique', cx, baseY+24);
+    // petit voyant / bouton
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath(); ctx.arc(cx+baseHalfW-4, baseY+18, 3, 0, 2*Math.PI); ctx.fill();
+  }
+
+  function drawCompteur(V) {
+    // afficheur numérique du volume versé
+    ctx.fillStyle = '#94A3B8'; ctx.strokeStyle='#64748B'; ctx.lineWidth=1.5;
+    ctx.fillRect(190, 16, 130, 44);
+    ctx.strokeRect(190, 16, 130, 44);
+    ctx.fillStyle = '#0F172A';
+    ctx.fillRect(198, 24, 114, 28);
+    ctx.fillStyle = '#86EFAC'; ctx.font='bold 15px Consolas, monospace'; ctx.textAlign='center';
+    ctx.fillText('V = '+V.toFixed(1).replace('.',',')+' mL', 255, 43);
+    ctx.fillStyle = '#334155'; ctx.font='9px Nunito'; ctx.textAlign='center';
+    ctx.fillText('volume versé', 255, 68);
+  }
+
+  function drawLabels() {
+    ctx.textAlign = 'left'; ctx.font = 'bold 11px Nunito'; ctx.fillStyle = '#2D5F8A';
+    ctx.fillText('Solution titrante', 195, 110);
+    ctx.font = '10px Nunito'; ctx.fillStyle = '#1A2A3A';
+    ctx.fillText(TITRANTS[currentTitrant].name, 195, 126);
+    ctx.fillText('Cᴮ = 0,10 mol·L⁻¹', 195, 142);
+
+    ctx.font = 'bold 11px Nunito'; ctx.fillStyle = '#C0392B';
+    ctx.fillText('Solution titrée', 195, 283);
+    ctx.font = '10px Nunito'; ctx.fillStyle = '#1A2A3A';
+    ctx.fillText(SYSTEMS[currentSystem].name, 195, 299);
+    ctx.fillText('Vᴬ = 20,0 mL', 195, 315);
+  }
+
+  function draw() {
+    var V = parseFloat(slider.value);
+    valLabel.textContent = V.toFixed(1).replace('.',',') + ' mL';
+    var ph = pH(V);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    drawBurette(V);
+    drawDrop();
+    drawStirrerPlate();
+    ctx.fillStyle = '#64748B';
+    ctx.fillRect(cx-bHalfW-50, baseY+14, 46, 8);
+    drawFlask(ph);
+    drawCompteur(V);
+    drawLabels();
+
+    ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
+    ctx.fillText('pH ≈ '+ph.toFixed(1).replace('.',','), cx, baseY+50);
+
+    var ind = INDICATEURS[currentIndicateur];
+    if (ph < ind.zmin) msg.innerHTML = 'Milieu de teinte <strong>acide</strong> (pH &lt; '+ind.zmin+') : '+ind.nom+' est sous sa forme acide.';
+    else if (ph > ind.zmax) msg.innerHTML = 'Milieu de teinte <strong>basique</strong> (pH &gt; '+ind.zmax+') : l\'équivalence est dépassée, '+ind.nom+' est sous sa forme basique.';
+    else msg.innerHTML = '<strong>Virage en cours</strong> ('+ind.zmin+' &lt; pH &lt; '+ind.zmax+') : on approche l\'équivalence, repérée par le changement de teinte.';
+  }
+
+  window.onSystemChange = function() {
+    currentSystem = document.getElementById('selTitre').value;
+    currentTitrant = document.getElementById('selTitrant').value;
+    document.getElementById('colorAnimTitle').textContent =
+      'Titrage ' + SYSTEMS[currentSystem].name + ' par ' + TITRANTS[currentTitrant].name + ' — indicateur ' + INDICATEURS[currentIndicateur].nom;
+    draw();
+  };
+
+  window.selectIndicator = function(key, btn) {
+    currentIndicateur = key;
+    document.querySelectorAll('#flaconChoices .qcm-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('colorAnimTitle').textContent =
+      'Titrage ' + SYSTEMS[currentSystem].name + ' par ' + TITRANTS[currentTitrant].name + ' — indicateur ' + INDICATEURS[currentIndicateur].nom;
+    document.getElementById('fb-indicateur').textContent = '';
+    document.getElementById('fb-indicateur').className = 'qcm-feedback';
+    draw();
+  };
+
+  window.checkIndicatorChoice = function() {
+    var fb = document.getElementById('fb-indicateur');
+    var ind = INDICATEURS[currentIndicateur];
+    var phLow = pH(VE-0.6), phHigh = pH(VE+0.6);
+    var lo = Math.min(phLow, phHigh), hi = Math.max(phLow, phHigh);
+    var convient = (ind.zmin <= hi) && (ind.zmax >= lo);
+    if (convient) {
+      fb.innerHTML = '✓ Bon choix ! La zone de virage de '+ind.nom+' ('+ind.zmin+'–'+ind.zmax+') est bien comprise dans le saut de pH de ce titrage (≈ '+lo.toFixed(1)+' – '+hi.toFixed(1)+').';
+      fb.className = 'qcm-feedback';
+    } else {
+      fb.innerHTML = '✗ '+ind.nom+' (zone '+ind.zmin+'–'+ind.zmax+') ne convient pas : le saut de pH de ce titrage est plutôt autour de '+lo.toFixed(1)+' – '+hi.toFixed(1)+'. Essaie un autre indicateur.';
+      fb.className = 'qcm-feedback wrong';
+    }
+  };
+
+  function animate() {
+    if (isPouring) { dropT += 0.05; if (dropT > 1) dropT = 0; }
+    stirAngle += 0.12;
+    draw();
+    requestAnimationFrame(animate);
+  }
+  slider.addEventListener('input', function() {
+    isPouring = true;
+    clearTimeout(pourTimeout);
+    pourTimeout = setTimeout(function() { isPouring = false; }, 400);
+    draw();
+  });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    draw();
+  } else {
+    animate();
+  }
+})();
+</script>
+
+</body>
+</html>
