@@ -506,6 +506,12 @@ const TER_SEQUENCES = [
       {
         id:'Fiche de révision', label:'Fiche de révision', actif: true,
         items: [
+         { type:'link', icon:'📖', label:'Fiche de cours',
+            sub:'Fichier en pdf',
+            href:'seq12/Séquence 12_cours -Stratégie_de_syntheseavec annexes.pdf' },
+         { type:'link', icon:'🎓', label:'Cours interactif',
+            sub:'Réalisé par Mme Poirault-Gauvin',
+            href:'seq12/seq12-cours_interactif.html' },
           { type:'link', icon:'📖', label:'Fiche de révision',
             sub:'Réalisée par Thomas et Gabriel',
             href:'seq12/seq12_Fiche de révision.pdf' },
