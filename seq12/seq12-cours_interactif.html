@@ -1,0 +1,3048 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séquence 12 – Stratégie de synthèse – Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #2D5F8A;
+    --bleu-clair: #E8F1F8;
+    --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
+    --orange: #E8783A;
+    --orange-clair: #FDF0E8;
+    --vert: #3A8A6E;
+    --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --gris-fond: #F5F7FA;
+    --gris-bord: #DDE3EC;
+    --texte: #1A2A3A;
+    --texte-leger: #5A6B7A;
+    --blanc: #FFFFFF;
+    --rouge: #C0392B;
+    --rouge-clair: #FDEDEC;
+    --violet: #7B4FA6;
+    --violet-clair: #F3EDF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #F0F4F8;
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--blanc);
+    border: 1px solid #E3E8EE;
+    border-bottom: 3px solid var(--bleu);
+    border-radius: 14px;
+    padding: 18px 24px 14px;
+    max-width: 900px;
+    margin: 0 auto 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .header-badge {
+    background: var(--bleu);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  button.cap-toggle {
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button.cap-toggle:hover { background: #1e4466; }
+  .cap-panel {
+    display: none;
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid #B8D4EC;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .cap-panel.open { display: block; }
+  .cap-panel h5 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--bleu);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 10px 0 6px;
+  }
+  .cap-panel h5:first-child { margin-top: 0; }
+  .cap-panel ul { margin: 0; padding-left: 1.3rem; }
+  .cap-panel li { margin-bottom: 5px; line-height: 1.6; }
+
+  .header-titles h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--bleu);
+    line-height: 1.2;
+  }
+  .header-titles p {
+    font-size: 0.82rem;
+    color: var(--texte-leger);
+    margin-top: 2px;
+  }
+  .header-titles p span { color: var(--orange); font-weight: 700; }
+
+  /* ── ICÔNE REFLUX ANIMÉE (séq. 12) ── */
+  .reflux-icon-wrap {
+    flex-shrink: 0;
+    width: 42px;
+    height: 68px;
+    position: relative;
+    margin-top: -2px;
+  }
+  .reflux-icon { width: 100%; height: 100%; }
+  .reflux-svg { width: 100%; height: 100%; overflow: visible; }
+  .reflux-glass { fill: none; stroke: var(--bleu-moyen); stroke-width: 2.2; }
+  .reflux-liquid { fill: var(--orange); opacity: 0.55; }
+  .reflux-vapor { fill: #bcdff5; }
+  .reflux-drop { fill: var(--bleu-moyen); }
+  .reflux-bubble { fill: #ffffff; opacity: 0.85; }
+  @keyframes reflux-rise {
+    0%   { transform: translateY(0);     opacity: 0.9; }
+    85%  { opacity: 0.15; }
+    100% { transform: translateY(-32px); opacity: 0; }
+  }
+  @keyframes reflux-fall {
+    0%, 15%  { transform: translateY(0);    opacity: 0; }
+    25%      { opacity: 1; }
+    55%      { transform: translateY(7px);  opacity: 1; }
+    60%,100% { transform: translateY(7px);  opacity: 0; }
+  }
+  @keyframes reflux-boil {
+    0%, 100% { transform: translateY(0);    opacity: 0.85; }
+    50%      { transform: translateY(-9px); opacity: 0.25; }
+  }
+  .reflux-vapor-1  { animation: reflux-rise 2.2s ease-in infinite; transform-origin: 50px 60px; }
+  .reflux-vapor-2  { animation: reflux-rise 2.2s ease-in 0.6s infinite; transform-origin: 50px 60px; }
+  .reflux-drop     { animation: reflux-fall 2.2s ease-in infinite; }
+  .reflux-bubble-1 { animation: reflux-boil 1.6s ease-in-out infinite; transform-origin: 42px 110px; }
+  .reflux-bubble-2 { animation: reflux-boil 1.6s ease-in-out 0.4s infinite; transform-origin: 54px 113px; }
+  .reflux-bubble-3 { animation: reflux-boil 1.6s ease-in-out 0.8s infinite; transform-origin: 62px 108px; }
+  @media (prefers-reduced-motion: reduce) {
+    .reflux-vapor-1, .reflux-vapor-2, .reflux-drop, .reflux-bubble-1, .reflux-bubble-2, .reflux-bubble-3 { animation: none; }
+  }
+
+  /* ── ONGLETS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px 12px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--texte-leger);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -3px;
+  }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+    background: var(--orange-clair);
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--gris-bord);
+    color: var(--texte-leger);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .tab-num { background: var(--bleu); color: white; }
+
+  /* ── SOUS-ONGLETS ── */
+  .sub-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 18px 0 0;
+    margin-bottom: 22px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    background: #b8cfe0;
+    color: #2D5F8A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub-tab-btn:hover { background: #2D5F8A; color: white; }
+  .sub-tab-btn.active { background: #1e4466; color: white; }
+  .sub-tab-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    transition: all 0.2s;
+  }
+  .sub-tab-btn:not(.active) .sub-tab-num { background: rgba(45,95,138,0.2); }
+
+  .sub-tab-content { display: none; }
+  .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+  /* ── CONTENU ── */
+  .main { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BLOCS COURS ── */
+  .def-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .def-card::before {
+    content: 'COURS';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.6;
+  }
+  .def-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+  .def-card ul { padding-left: 18px; }
+  .def-card ul li { margin-bottom: 5px; }
+
+  /* ── BLOCS ACTIVITÉ ── */
+  .activite-card {
+    background: var(--bleu-activite);
+    border: 1.5px solid var(--bleu-activite-bord);
+    border-left: 4px solid var(--bleu-moyen);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .activite-card::before {
+    content: 'ACTIVITÉ';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bleu-moyen);
+    opacity: 0.8;
+  }
+  .activite-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+  }
+  .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  /* ── BLOCS EXERCICE ── */
+  .exo-card {
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert-exo-bord);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .exo-card::before {
+    content: 'EXERCICE';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--vert);
+    opacity: 0.7;
+  }
+  .exo-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--vert);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu-clair);
+  }
+  .section-title .icon { font-size: 1.3rem; }
+
+  .intro-box {
+    background: #FFFBF7;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--texte);
+    font-style: italic;
+  }
+
+  .formule-box {
+    background: var(--orange-clair);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  .formule-box .legend {
+    font-size: 0.80rem;
+    font-weight: 500;
+    color: var(--texte-leger);
+    margin-top: 6px;
+    text-align: left;
+  }
+
+  .exemple-box {
+    background: var(--vert-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .exemple-box strong { color: var(--vert); }
+
+  .remarque-box {
+    background: var(--violet-clair);
+    border-left: 4px solid var(--violet);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .remarque-box strong { color: var(--violet); }
+
+  .attention-box {
+    background: var(--rouge-clair);
+    border-left: 4px solid var(--rouge);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 16px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--texte);
+  }
+  .attention-box strong { color: var(--rouge); }
+
+  /* ── TABLEAU D'AVANCEMENT / RÉCAPITULATIF ── */
+  .tableau-avancement {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 14px 0;
+    background: var(--blanc);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .tableau-avancement th {
+    background: var(--bleu);
+    color: white;
+    padding: 10px 14px;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .tableau-avancement td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--gris-bord);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+  .tableau-avancement tr:last-child td { border-bottom: none; }
+  .tableau-avancement tr:nth-child(even) td { background: var(--gris-fond); }
+  .tableau-avancement td:first-child { font-weight: 600; color: var(--bleu); }
+
+  /* ── CARTES IMAGE / PROTOCOLE ── */
+  .img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .img-grid { grid-template-columns: 1fr; } }
+  .img-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+  .img-card img {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 8px;
+    border: 1.5px solid #ddd;
+    display: block;
+    margin: 0 auto 8px;
+    background: white;
+  }
+  .img-card .img-legend {
+    font-size: 0.80rem;
+    color: var(--texte-leger);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .img-card .img-legend strong { color: var(--texte); font-style: normal; }
+
+  /* ── QCM ── */
+  .qcm-grid { display: grid; gap: 10px; margin: 14px 0; }
+  .qcm-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .qcm-item .substance { font-size: 0.93rem; font-weight: 600; flex: 1; }
+  .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qcm-btn {
+    padding: 5px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    background: var(--gris-fond);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--texte);
+  }
+  .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
+  .qcm-btn.correct { background: var(--vert); color: white; border-color: var(--vert); }
+  .qcm-btn.wrong   { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; }
+  .qcm-feedback.wrong { color: var(--rouge); }
+
+  /* ── SELECT QCM (listes déroulantes) ── */
+  .dq-select {
+    padding: 7px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--blanc);
+    color: var(--texte);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 160px;
+  }
+  .dq-select:focus { outline: none; border-color: var(--bleu); }
+  .dq-select.correct { border-color: var(--vert); background: var(--vert-exo); color: var(--vert); font-weight: 700; }
+  .dq-select.wrong   { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
+  .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
+  .dq-feedback.wrong { color: var(--rouge); }
+  .blank-sentence { font-size: 0.92rem; line-height: 2.4; color: var(--texte); }
+
+  /* ── ACCORDÉON ── */
+  .accord-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: var(--texte);
+    transition: background 0.2s;
+    margin: 10px 0;
+  }
+  .accord-btn:hover { background: var(--bleu-clair); }
+  .accord-body {
+    display: none;
+    padding: 14px;
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  .accord-body.open { display: block; animation: fadeIn 0.2s; }
+
+  /* ── BILAN GRID ── */
+  .bilan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 560px) { .bilan-grid { grid-template-columns: 1fr; } }
+  .bilan-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .bilan-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--gris-bord);
+  }
+  .bilan-card ul { padding-left: 16px; }
+  .bilan-card ul li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.5; }
+  .ke-list { list-style: none; padding: 0; }
+  .ke-list li {
+    padding: 6px 10px 6px 28px;
+    position: relative;
+    font-size: 0.84rem;
+    border-bottom: 1px solid var(--gris-bord);
+    line-height: 1.5;
+  }
+  .ke-list li:last-child { border-bottom: none; }
+  .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
+
+  .bilan-video-link {
+    display: block;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--gris-bord);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--bleu);
+    text-decoration: none;
+  }
+  .bilan-video-link:hover { color: #1e4466; text-decoration: underline; }
+
+  /* ── EXERCICE INTERACTIF (énoncé, questions, boutons, correction) ── */
+  .exo-enonce {
+    background: var(--blanc);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.90rem;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    border: 1px solid var(--vert-exo-bord);
+  }
+  .question-block { margin-bottom: 14px; }
+  .question-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 7px;
+    padding-left: 8px;
+    border-left: 3px solid var(--vert);
+    line-height: 1.5;
+  }
+  .num-field-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .num-field-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--texte); }
+  .num-btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .btn-verif {
+    padding: 7px 16px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-verif:hover { background: #1E4A72; }
+  .btn-corriger {
+    padding: 7px 16px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-corriger:hover { background: #2A6B52; }
+  .btn-reset {
+    padding: 7px 16px;
+    background: var(--gris-fond);
+    color: var(--texte-leger);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+  .num-correction-inline {
+    display: none;
+    background: var(--vert-exo);
+    border: 1.5px solid var(--vert);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: var(--texte);
+  }
+  .num-correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
+  .num-correction-inline .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 7px 11px;
+    margin: 6px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  .rep-zone {
+    width: 100%;
+    min-height: 90px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--vert-exo-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    background: var(--blanc);
+    color: var(--texte);
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+  .rep-zone:focus { outline: none; border-color: var(--vert); }
+
+  /* ── TYPES DE RÉACTION (blocs empilés) ── */
+  .type-reaction-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 18px;
+    margin-bottom: 10px;
+  }
+  .type-reaction-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .type-reaction-card p { font-size: 0.88rem; line-height: 1.55; color: var(--texte); }
+
+  /* ── CHIMIE VERTE — DIAGRAMME CIRCULAIRE ── */
+  .green-wheel-wrap {
+    background: #F8FAFC;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 14px 0;
+    text-align: center;
+  }
+  .green-wheel-wrap svg { max-width: 100%; height: auto; }
+  .green-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 14px;
+    margin-top: 12px;
+    text-align: left;
+    font-size: 0.80rem;
+  }
+  @media (max-width: 560px) { .green-list { grid-template-columns: 1fr; } }
+  .green-list li { list-style: none; padding: 3px 0; }
+  .green-list b { color: var(--vert); }
+
+  /* ── CANVAS ANIMATION ── */
+  .anim-canvas-wrap {
+    background: #F8FAFC;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 14px 16px 10px;
+    margin: 14px 0;
+  }
+  .anim-canvas-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--texte-leger);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .anim-canvas-wrap canvas { display: block; margin: 0 auto; border-radius: 8px; border: 1px solid var(--gris-bord); max-width: 100%; }
+  .anim-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .anim-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--blanc);
+    color: var(--texte);
+    transition: all 0.15s;
+  }
+  .anim-btn:hover  { border-color: var(--bleu); color: var(--bleu); background: var(--bleu-clair); }
+  .anim-btn.active { background: var(--bleu); color: white; border-color: var(--bleu); }
+
+  /* ── PILE SCHÉMA (rendement / synthèse) ── */
+  .strat-grid {
+    display: flex;
+    gap: 14px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+  }
+  .strat-item {
+    flex: 1;
+    min-width: 200px;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+  .strat-item h4 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.90rem;
+    margin-bottom: 8px;
+  }
+  .strat-item.orange { background: #FEF3E8; border: 2px solid var(--orange); }
+  .strat-item.orange h4 { color: var(--orange); }
+  .strat-item.vert { background: var(--vert-exo); border: 2px solid var(--vert); }
+  .strat-item.vert h4 { color: var(--vert); }
+  .strat-item.bleu { background: var(--bleu-activite); border: 2px solid var(--bleu-moyen); }
+  .strat-item.bleu h4 { color: var(--bleu); }
+
+  /* ── CARTES SUJETS DE BAC (pastilles) ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.76rem;
+    color: var(--texte-leger);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+  .bac-card-head .bac-lieu { color: var(--bleu); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 6px;
+  }
+  .bac-theme {
+    font-size: 0.82rem;
+    color: var(--texte-leger);
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  .bac-notions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .bac-tag {
+    background: var(--bleu-clair);
+    color: var(--bleu);
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 3px 11px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pastille {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .pastille:hover { opacity: 0.88; transform: translateY(-1px); }
+  .pastille-sujet   { background: var(--orange); color: white; }
+  .pastille-corrige { background: var(--vert); color: white; }
+  .pastille-disabled {
+    background: var(--gris-fond);
+    color: var(--texte-leger);
+    border: 1.5px dashed var(--gris-bord);
+    cursor: default;
+  }
+  .pastille-disabled:hover { opacity: 1; transform: none; }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    padding: 20px;
+    border-top: 1px solid var(--gris-bord);
+    margin-top: 30px;
+  }
+
+  sup { font-size: 0.65em; }
+  sub { font-size: 0.65em; }
+  .math { font-family: 'Outfit', sans-serif; font-style: italic; }
+
+  @media (max-width: 600px) {
+    .header { padding: 12px 16px 10px; }
+    .header-titles h1 { font-size: 1.05rem; }
+    .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
+    .main { padding: 18px 12px 50px; }
+    .reflux-icon-wrap { width: 34px; height: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-top">
+    <div class="header-left">
+      <div class="header-badge">T<sup>ale</sup> Spé – Séq. 12</div>
+      <button class="cap-toggle" id="capToggle">📋 Capacités exigibles</button>
+    </div>
+    <div class="header-titles">
+      <h1>Stratégie de synthèse</h1>
+      <p>Thème : <span>Transformations chimiques – Optimisation et synthèse organique</span> · © C. Poirault-Gauvin</p>
+    </div>
+    <!-- Icône montage à reflux animée -->
+    <div class="reflux-icon-wrap" title="Montage à reflux : chauffer sans perte de matière">
+      <div class="reflux-icon">
+        <svg class="reflux-svg" viewBox="0 0 100 135" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="ballonClip-hdr"><circle cx="50" cy="94" r="25"/></clipPath>
+          </defs>
+          <line x1="50" y1="4" x2="50" y2="58" stroke="#7dd3fc" stroke-width="3"/>
+          <circle class="reflux-glass" cx="50" cy="14" r="9"/>
+          <circle class="reflux-glass" cx="50" cy="32" r="9"/>
+          <circle class="reflux-glass" cx="50" cy="50" r="9"/>
+          <circle class="reflux-vapor reflux-vapor-1" cx="50" cy="60" r="3.5"/>
+          <circle class="reflux-vapor reflux-vapor-2" cx="50" cy="60" r="3"/>
+          <circle class="reflux-drop" cx="50" cy="54" r="3"/>
+          <path class="reflux-glass" d="M42,60 L42,72 L58,72 L58,60"/>
+          <circle class="reflux-glass" cx="50" cy="94" r="26"/>
+          <rect class="reflux-liquid" clip-path="url(#ballonClip-hdr)" x="24" y="86" width="52" height="34"/>
+          <circle class="reflux-bubble reflux-bubble-1" cx="42" cy="110" r="3"/>
+          <circle class="reflux-bubble reflux-bubble-2" cx="54" cy="113" r="2.5"/>
+          <circle class="reflux-bubble reflux-bubble-3" cx="62" cy="108" r="3"/>
+          <rect x="14" y="124" width="72" height="7" rx="2" fill="#94a3b8"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">A</span> Optimisation d'une étape (voir A1, A2, A3)
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">B</span> Synthèse multi-étapes (voir B1 à B5)
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">✓</span> Bilan & Ressources
+    </button>
+  </nav>
+  <div class="cap-panel" id="capPanel">
+    <h5>Partie 1/2 — Optimisation d'une étape de synthèse</h5>
+    <ul>
+      <li>Identifier, dans un protocole, les opérations réalisées pour optimiser la vitesse de formation d'un produit.</li>
+      <li>Justifier l'augmentation du rendement d'une synthèse par introduction d'un excès d'un réactif ou par élimination d'un produit du milieu réactionnel.</li>
+    </ul>
+    <h5>Partie 2/2 — Stratégie de synthèse multi-étapes</h5>
+    <ul>
+      <li>À partir d'un mécanisme réactionnel fourni, identifier un intermédiaire réactionnel, un catalyseur et établir l'équation de la réaction qu'il modélise au niveau microscopique.</li>
+      <li>Représenter les flèches courbes d'un acte élémentaire, en justifiant leur sens.</li>
+      <li>Interpréter l'influence des concentrations et de la température sur la vitesse d'un acte élémentaire, en termes de fréquence et d'efficacité des chocs entre entités.</li>
+      <li>Identifier le motif d'un polymère à partir de sa formule.</li>
+      <li>Citer des polymères naturels et synthétiques et des utilisations courantes des polymères.</li>
+      <li>Élaborer une séquence réactionnelle de synthèse d'une espèce à partir d'une banque de réactions.</li>
+      <li>Identifier des réactions d'oxydo-réduction, acide-base, de substitution, d'addition, d'élimination.</li>
+      <li>Identifier des étapes de protection / déprotection et justifier leur intérêt, à partir d'une banque de réactions.</li>
+      <li>Discuter l'impact environnemental d'une synthèse et proposer des améliorations à l'aide de données fournies, par exemple en termes d'énergie, de formation et valorisation de sous-produits et de choix des réactifs et solvants.</li>
+    </ul>
+  </div>
+</div>
+
+<main class="main">
+
+<!-- ══════════════════════════════════
+     ONGLET A – Optimisation d'une étape de synthèse
+══════════════════════════════════════ -->
+<div class="tab-content active" id="tab-0">
+
+  <!-- Sous-onglets A -->
+  <nav class="sub-tabs-nav" id="sub-nav-A">
+    <button class="sub-tab-btn active" data-sub="A1" onclick="switchSubTab('A',0)">
+      <span class="sub-tab-num">A1</span> Rappels — Extraction & identification
+    </button>
+    <button class="sub-tab-btn" data-sub="A2" onclick="switchSubTab('A',1)">
+      <span class="sub-tab-num">A2</span> Rendement d'une synthèse
+    </button>
+    <button class="sub-tab-btn" data-sub="A3" onclick="switchSubTab('A',2)">
+      <span class="sub-tab-num">A3</span> Contrôle de la vitesse
+    </button>
+    <button class="sub-tab-btn" data-sub="A4" onclick="switchSubTab('A',3)">
+      <span class="sub-tab-num">A4</span> Application : optimiser un protocole
+    </button>
+  </nav>
+
+  <!-- ══ Sous-onglet A1 ══ -->
+  <div class="sub-tab-content active" id="sub-A-0">
+  <div class="section-title"><span class="icon">⚗️</span> A.1 – Rappels : les 3 étapes d'une synthèse</div>
+
+  <div class="intro-box">
+    <strong>Question directrice :</strong> Une synthèse chimique se déroule en 3 étapes. Comment isoler et identifier le produit obtenu avant de chercher à optimiser sa formation ?
+  </div>
+
+  <div class="def-card">
+    <h3>Les 3 étapes d'une synthèse</h3>
+    <ul>
+      <li><strong>Étape 1 — Transformation</strong> des réactifs en produits. C'est l'objet principal de cette séquence : obtenir un <strong>rendement maximum</strong> en un <strong>temps le plus court possible</strong>.</li>
+      <li><strong>Étape 2 — Extraction / purification</strong> : isolement du produit synthétisé, séparé des autres espèces présentes dans le milieu (réactifs en excès, solvant, sous-produits, catalyseur…) pour obtenir un produit brut.</li>
+      <li><strong>Étape 3 — Identification</strong> : contrôle de la pureté du produit obtenu.</li>
+    </ul>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">🧪</span> Rappel — Étape 2 : isoler le produit</div>
+
+  <div class="def-card">
+    <h3>a. Cas d'un produit solide</h3>
+    <ul>
+      <li><strong>Filtration sous vide</strong>, avec un montage Büchner (trompe à eau + fiole à vide).</li>
+      <li><strong>Lavage</strong> avec un solvant glacé (toujours sous Büchner), pour limiter la perte par re-dissolution.</li>
+      <li><strong>Séchage</strong> du solide obtenu.</li>
+    </ul>
+  </div>
+
+  <div class="img-grid">
+    <div class="img-card">
+      <img src="images-cours/filtration-buchner.png" alt="Filtration sous Büchner">
+      <div class="img-legend"><strong>Filtration sous Büchner</strong> — le vide créé par la trompe à eau accélère la filtration ; le filtrat est recueilli dans la fiole à vide.</div>
+    </div>
+    <div class="img-card">
+      <img src="images-cours/banc-kofler.png" alt="Banc Kofler">
+      <div class="img-legend"><strong>Banc Kofler</strong> — semelle en inox à gradient de température, utilisée pour mesurer la température de fusion d'un solide.</div>
+    </div>
+  </div>
+
+  <div class="def-card">
+    <h3>b. Cas d'un produit liquide</h3>
+    <ul>
+      <li><strong>Extraction liquide-liquide</strong> (extraction par solvant) : on utilise un solvant extracteur, non miscible avec le solvant initial, dans lequel l'espèce à extraire est plus soluble. Les deux phases sont séparées à l'aide d'une <strong>ampoule à décanter</strong>. Ce solvant doit être <strong>volatil</strong> pour être éliminé facilement ensuite.</li>
+      <li><strong>Séchage</strong> : élimination des traces d'eau à l'aide d'un solide anhydre.</li>
+      <li><strong>Élimination du solvant</strong> par vaporisation (évaporateur rotatif).</li>
+    </ul>
+  </div>
+
+  <div class="img-grid">
+    <div class="img-card">
+      <img src="images-cours/extraction-solvant.png" alt="Extraction par solvant">
+      <div class="img-legend"><strong>Extraction par solvant</strong> — après agitation, l'espèce violette à extraire est passée dans le solvant extracteur (phase supérieure).</div>
+    </div>
+    <div class="img-card">
+      <img src="images-cours/utilisation-banc-kofler.png" alt="Utilisation du banc Kofler">
+      <div class="img-legend"><strong>Utilisation du banc Kofler</strong> — on pousse la poudre vers les parties chaudes puis on fait coïncider l'index avec la limite solide/liquide.</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">🔍</span> Rappel — Étape 3 : identifier le produit</div>
+
+  <div class="def-card">
+    <h3>Identification d'une espèce chimique</h3>
+    <p>Pour identifier une espèce chimique, on mesure l'une de ses caractéristiques physiques et on la compare aux valeurs de tables de données. Les méthodes dépendent de l'état physique du produit :</p>
+    <ul>
+      <li><strong>Solide</strong> : mesure de la <strong>température de fusion</strong> avec un banc Kofler.</li>
+      <li><strong>Liquide</strong> : mesure de la <strong>densité</strong>, de la <strong>température d'ébullition</strong>, de l'<strong>indice de réfraction</strong>.</li>
+      <li><strong>Solide ou liquide</strong> : les méthodes <strong>chromatographiques</strong> et <strong>spectroscopiques</strong> conviennent aux deux états.</li>
+    </ul>
+  </div>
+
+  <div class="remarque-box">
+    <strong>À retenir :</strong> l'étape 1 (transformation) est l'objet de cette séquence. Optimiser une synthèse, c'est diminuer son coût et son impact environnemental en choisissant judicieusement les réactifs et leur quantité, le solvant, le catalyseur, les paramètres (température, pression, agitation, pH…) et le montage utilisé.
+  </div>
+
+  </div><!-- /sub-A-0 (A1) -->
+
+  <!-- ══ Sous-onglet A2 ══ -->
+  <div class="sub-tab-content" id="sub-A-1">
+  <div class="section-title"><span class="icon">📊</span> A.2 – Rendement d'une synthèse</div>
+
+  <div class="intro-box">
+    <strong>Question directrice :</strong> Augmenter le rendement d'une réaction permet de diminuer les quantités de réactifs utilisées pour une même quantité de produit. Comment agir sur ce rendement ?
+  </div>
+
+  <div class="def-card">
+    <h3>Définition du rendement</h3>
+    <p>Le <strong>rendement r</strong> d'une synthèse est le quotient entre la quantité de matière finale <span class="math">n<sub>f</sub></span> de produit obtenu et la quantité maximale <span class="math">n<sub>max</sub></span> qu'on peut produire à partir des réactifs en présence (en supposant la réaction totale).</p>
+  </div>
+
+  <div class="formule-box">
+    r = n<sub>f</sub> / n<sub>max</sub>
+    <div class="legend">n<sub>f</sub> : quantité de matière finale de produit obtenu (mol) — n<sub>max</sub> : quantité de matière maximale théorique (mol), atteinte si le réactif limitant est totalement consommé.</div>
+  </div>
+
+  <div class="strat-grid">
+    <div class="strat-item orange">
+      <h4>① Réactif en excès</h4>
+      <p>Introduire un <strong>réactif en excès</strong> déplace l'équilibre chimique dans le sens direct : le réactif limitant est davantage consommé, ce qui augmente <span class="math">n<sub>f</sub></span> et donc <span class="math">r</span>.</p>
+    </div>
+    <div class="strat-item vert">
+      <h4>② Élimination d'un produit</h4>
+      <p>Si on élimine un produit <strong>au fur et à mesure de sa formation</strong> (distillation par exemple), sa quantité de matière dans le milieu reste nulle : le quotient de réaction Q<sub>r</sub> reste strictement inférieur à K. La réaction est forcée dans le sens direct jusqu'à disparition complète du réactif limitant : la réaction devient <strong>totale</strong>, r = 1.</p>
+    </div>
+  </div>
+
+  <div class="remarque-box">
+    <strong>Point clé :</strong> ces deux stratégies (excès de réactif, élimination d'un produit) sont deux cas de <strong>déplacement d'équilibre</strong> qui augmentent le rendement d'une synthèse.
+  </div>
+
+  <div class="img-grid" style="grid-template-columns:1fr;">
+    <div class="img-card">
+      <img src="images-cours/distillation-fractionnee.png" alt="Distillation fractionnée avec colonne de Vigreux">
+      <div class="img-legend"><strong>Distillation fractionnée</strong> (avec colonne de Vigreux) d'un mélange eau – acétone : le distillat le plus volatil est éliminé du milieu réactionnel au fur et à mesure de sa formation, ce qui force l'évolution de la réaction.</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">📝</span> Je vérifie ma compréhension</div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">Une synthèse d'ester est réalisée avec un excès d'acide carboxylique. Quel est l'effet attendu sur le rendement ?</div>
+      <div class="qcm-feedback" id="fb-rdt1"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Le rendement augmente','Le rendement augmente','L\'excès de réactif déplace l\'équilibre dans le sens direct : n_f augmente donc r augmente.','fb-rdt1')">Le rendement augmente</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Le rendement augmente','Le rendement diminue','L\'excès de réactif déplace l\'équilibre dans le sens direct : n_f augmente donc r augmente (et non l\'inverse).','fb-rdt1')">Le rendement diminue</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Le rendement augmente','Le rendement ne change pas','L\'excès de réactif déplace l\'équilibre dans le sens direct : n_f augmente donc r augmente.','fb-rdt1')">Le rendement ne change pas</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">Pourquoi éliminer un produit au fur et à mesure de sa formation rend-il la réaction totale ?</div>
+      <div class="qcm-feedback" id="fb-rdt2"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Car Qr reste nul et donc toujours < K','Car la température augmente','L\'élimination du produit maintient Qr nul, donc Qr < K en permanence : la réaction évolue dans le sens direct sans jamais atteindre l\'équilibre.','fb-rdt2')">Car la température augmente</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Car Qr reste nul et donc toujours < K','Car Qr reste nul et donc toujours < K','Exact : en absence du produit dans le milieu, Qr reste nul et strictement inférieur à K : la réaction est forcée dans le sens direct jusqu\'à épuisement du réactif limitant.','fb-rdt2')">Car Q<sub>r</sub> reste nul et donc toujours &lt; K</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Car Qr reste nul et donc toujours < K','Car le volume du milieu diminue','L\'élimination du produit maintient Qr nul, donc Qr < K en permanence : c\'est ce déséquilibre qui force la réaction vers la droite.','fb-rdt2')">Car le volume du milieu diminue</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="accord-btn" style="background:rgba(250,255,0,0.4);border:2px solid var(--orange);color:#1A2A3A;font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>🧩 Exercice — Observer le déplacement d'équilibre en estérification</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--vert-exo-bord);background:var(--vert-exo);">
+
+    <div class="exo-enonce">
+      Les deux animations ci-dessous simulent l'équilibre <strong>acide + alcool ⇌ ester + eau</strong> et permettent d'observer, en direct, comment il se déplace selon l'opération réalisée. Ouvre chaque animation dans un nouvel onglet, manipule-la, puis réponds aux questions.
+    </div>
+
+    <div class="img-grid" style="grid-template-columns:1fr 1fr;margin-top:14px;">
+      <a href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/terminale_TS/esterification_hydrolyse_sans_flash.htm" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);height:100%;" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--orange);">⚗️ Animation 1 — Ajout d'un réactif</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PCCL · Observer le déplacement de l'équilibre lorsqu'on ajoute un excès d'alcool ou d'acide.</p>
+        </div>
+      </a>
+      <a href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/terminale_TS/esterification_hydrolyse_avec_flash.htm" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);height:100%;" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--orange);">⚗️ Animation 2 — Élimination d'un produit</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PCCL · Observer le déplacement de l'équilibre lorsqu'on élimine l'ester formé.</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="question-block" style="margin-top:16px;">
+      <div class="question-label">Question 1 — Dans l'animation 1, qu'observe-t-on sur la quantité d'ester formé quand on ajoute un excès d'alcool ?</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="pccl-q1">
+          <option value="">— choisir —</option>
+          <option value="augmente">Elle augmente</option>
+          <option value="diminue">Elle diminue</option>
+          <option value="inchange">Elle ne change pas</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('pccl-q1','augmente','fb-pccl-q1')">Vérifier</button>
+      </div>
+      <span id="fb-pccl-q1" class="dq-feedback"></span>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">Question 2 — Dans l'animation 2, pourquoi éliminer l'ester au fur et à mesure de sa formation permet-il d'atteindre un rendement de 100 % ?</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="pccl-q2">
+          <option value="">— choisir —</option>
+          <option value="qr">Car Qr reste nul, donc toujours &lt; K : la réaction est forcée dans le sens direct</option>
+          <option value="temp">Car la température du milieu augmente automatiquement</option>
+          <option value="catalyseur">Car l'ester agit comme un catalyseur une fois formé</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('pccl-q2','qr','fb-pccl-q2')">Vérifier</button>
+      </div>
+      <span id="fb-pccl-q2" class="dq-feedback"></span>
+    </div>
+
+    <button class="btn-corriger" style="margin-top:10px;" onclick="document.getElementById('nc-pccl').classList.add('visible')">Voir la correction détaillée</button>
+    <button class="btn-reset" style="margin-top:10px;" onclick="resetPccl()">Recommencer</button>
+    <div class="num-correction-inline" id="nc-pccl">
+      <div class="calc-step"><strong>Q1 — Elle augmente.</strong> L'ajout d'un excès d'alcool (réactif) déplace l'équilibre dans le sens direct (formation de l'ester) : c'est le principe déjà vu en cours (partie A.2, réactif en excès).</div>
+      <div class="calc-step"><strong>Q2 — Car Q<sub>r</sub> reste nul, donc toujours &lt; K.</strong> En retirant l'ester du milieu au fur et à mesure de sa formation, sa quantité de matière reste quasi nulle : le quotient de réaction Q<sub>r</sub> reste strictement inférieur à la constante d'équilibre K, ce qui force la réaction à évoluer indéfiniment dans le sens direct, jusqu'à épuisement du réactif limitant.</div>
+      <p style="margin-top:10px;">Ces deux animations illustrent donc les <strong>deux mêmes leviers</strong> vus en cours pour augmenter le rendement d'une synthèse : l'excès d'un réactif, et l'élimination d'un produit.</p>
+    </div>
+
+  </div><!-- /accord-body animations estérification -->
+
+  </div><!-- /sub-A-1 (A2) -->
+
+  <!-- ══ Sous-onglet A3 ══ -->
+  <div class="sub-tab-content" id="sub-A-2">
+  <div class="section-title"><span class="icon">⏱️</span> A.3 – Contrôle de la vitesse de formation</div>
+
+  <div class="intro-box">
+    <strong>Question directrice :</strong> Augmenter la vitesse de formation d'un produit permet de diminuer la durée d'une synthèse et donc d'augmenter la production horaire. Quels leviers actionner ?
+  </div>
+
+  <div class="def-card">
+    <h3>Les facteurs cinétiques</h3>
+    <p>Pour <strong>augmenter la vitesse de formation</strong> d'un produit dans une étape de synthèse, il est possible d'agir sur les <strong>facteurs cinétiques</strong> : la <strong>concentration</strong> des réactifs et la <strong>température</strong>, et/ou d'utiliser un <strong>catalyseur</strong>.</p>
+  </div>
+
+  <div class="anim-canvas-wrap">
+    <div class="anim-canvas-title">n<sub>ester</sub>(t) — Influence de la température et d'un catalyseur sur la cinétique d'une estérification</div>
+    <canvas id="canvasCinetique" width="560" height="300"></canvas>
+    <div class="anim-controls">
+      <button class="anim-btn active" id="btn-cin-play" onclick="toggleCinetique()">▶ Lancer l'animation</button>
+      <button class="anim-btn" onclick="resetCinetique()">↺ Recommencer</button>
+    </div>
+  </div>
+
+  <div class="remarque-box">
+    Les trois courbes tendent vers le <strong>même état final</strong> (0,67 mol, fixé par la thermodynamique / l'équilibre), mais l'atteignent plus ou moins vite : à 20 °C il faut environ 155 h, à 70 °C environ 28 h, et à 70 °C en présence d'acide sulfurique (catalyseur) seulement 8 h. Le catalyseur et la température n'ont <strong>aucun effet sur l'état final</strong>, seulement sur la vitesse pour l'atteindre.
+  </div>
+
+  <div class="attention-box">
+    Plusieurs arguments conduisent à préférer l'utilisation d'un <strong>catalyseur</strong> plutôt que l'augmentation de la température :
+    <ul style="margin-top:6px;padding-left:18px;">
+      <li>Chauffer a un <strong>coût énergétique et environnemental</strong> important.</li>
+      <li>Un catalyseur est <strong>régénéré</strong> : son coût d'utilisation est nul.</li>
+    </ul>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">🧫</span> Deux montages classiques pour accélérer une réaction</div>
+
+  <div class="def-card">
+    <h3>L'agitation</h3>
+    <p>L'<strong>agitation</strong> (agitateur magnétique) homogénéise la solution et aide à solubiliser les réactifs : elle accélère donc la réaction en favorisant les contacts entre entités réactives.</p>
+  </div>
+
+  <div class="def-card">
+    <h3>Le montage à reflux</h3>
+    <p>Le <strong>montage à reflux</strong> permet d'augmenter la température du milieu sans perte de matière par évaporation. La réaction se déroule à la <strong>température d'ébullition du solvant</strong>, ce qui entraîne la vaporisation d'une partie des réactifs. Les vapeurs se liquéfient au contact des parois froides du réfrigérant et retombent en gouttelettes dans le milieu réactionnel : il faut <strong>récupérer ces vapeurs pour ne pas perdre en rendement</strong>. Des grains de pierre ponce régulent l'ébullition.</p>
+  </div>
+
+  <div class="img-grid" style="grid-template-columns:1fr;">
+    <div class="img-card">
+      <img src="images-cours/montage-reflux.png" alt="Montage à reflux">
+      <div class="img-legend"><strong>Montage à reflux</strong> — le réfrigérant à boules condense les vapeurs qui retombent dans le ballon bicol ; le chauffe-ballon et le support élévateur permettent de contrôler la température de chauffe.</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">📝</span> Je vérifie ma compréhension</div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">Le montage à reflux modifie-t-il le rendement final de la réaction ?</div>
+      <div class="qcm-feedback" id="fb-reflux1"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Non, il agit seulement sur la vitesse','Non, il agit seulement sur la vitesse','Le reflux permet de chauffer sans perte de réactifs par évaporation : il augmente la vitesse de la transformation, mais ne modifie pas l\'état d\'équilibre final ni donc le rendement.','fb-reflux1')">Non, il agit seulement sur la vitesse</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Non, il agit seulement sur la vitesse','Oui, il augmente le rendement','Le reflux évite les pertes de matière par évaporation (ce qui aurait pu faire baisser le rendement), mais il n\'augmente pas le rendement au-delà de sa valeur d\'équilibre : il agit sur la vitesse.','fb-reflux1')">Oui, il augmente le rendement</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Non, il agit seulement sur la vitesse','Oui, il diminue le rendement','Au contraire, le reflux évite de perdre du rendement par évaporation ; il agit surtout sur la vitesse de la réaction.','fb-reflux1')">Oui, il diminue le rendement</button>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /sub-A-2 (A3) -->
+
+  <!-- ══ Sous-onglet A4 ══ -->
+  <div class="sub-tab-content" id="sub-A-3">
+  <div class="section-title"><span class="icon">🧩</span> A.4 – Application : optimiser un protocole</div>
+
+  <div class="intro-box">
+    Cette application mobilise conjointement les notions de <strong>rendement</strong> (A.2) et de <strong>vitesse</strong> (A.3) sur un protocole expérimental complet et réaliste.
+  </div>
+
+  <button class="accord-btn" style="background:rgba(250,255,0,0.4);border:2px solid var(--orange);color:#1A2A3A;font-weight:800;padding:14px 18px;" onclick="toggleAccord(this)">
+    <span>🧩 Exercice — Identifier les opérations d'optimisation dans un protocole</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--vert-exo-bord);background:var(--vert-exo);">
+
+    <div class="exo-enonce">
+      <strong>Contexte :</strong> on réalise la synthèse de l'<strong>acétate d'isoamyle</strong> (arôme de banane) à partir de l'acide éthanoïque et de l'alcool isoamylique (3-méthylbutan-1-ol), selon le protocole ci-dessous. Pour chaque étape numérotée, indique si l'opération réalisée a pour but principal d'<strong>optimiser le rendement</strong>, d'<strong>optimiser la vitesse</strong> de la synthèse, ou si elle relève d'un <strong>autre rôle</strong> (extraction, purification, sécurité…).
+    </div>
+
+    <div class="def-card" style="margin-top:14px;">
+      <h3>Protocole expérimental</h3>
+      <ol style="padding-left:20px;line-height:1.8;font-size:0.90rem;">
+        <li>Dans un ballon bicol, introduire 0,20 mol d'acide éthanoïque et <strong>0,24 mol</strong> d'alcool isoamylique (léger excès par rapport à l'acide).</li>
+        <li>Ajouter avec précaution quelques gouttes d'<strong>acide sulfurique concentré</strong>.</li>
+        <li>Ajouter quelques grains de pierre ponce, puis adapter un montage à reflux muni d'un <strong>Dean-Stark</strong> permettant d'éliminer l'eau formée au fur et à mesure de sa formation.</li>
+        <li><strong>Chauffer à reflux</strong> pendant 45 minutes sous <strong>agitation magnétique</strong>.</li>
+        <li>Laisser <strong>refroidir</strong> le mélange réactionnel à température ambiante.</li>
+        <li>Verser le mélange dans une ampoule à décanter contenant de l'eau glacée, agiter puis laisser décanter.</li>
+        <li>Récupérer la phase organique, la laver avec une solution saturée d'hydrogénocarbonate de sodium puis à l'eau distillée.</li>
+        <li>Sécher la phase organique sur sulfate de magnésium anhydre, puis filtrer.</li>
+      </ol>
+    </div>
+
+    <div class="question-block" style="margin-top:14px;">
+      <div class="question-label">Pour chaque étape, sélectionne le rôle principal de l'opération réalisée :</div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
+        <div class="num-field-wrap"><label style="min-width:210px;">Étape 1 — excès d'alcool :</label>
+          <select class="dq-select" id="proto-1"><option value="">— choisir —</option><option value="rendement">Optimise le rendement</option><option value="vitesse">Optimise la vitesse</option><option value="autre">Autre rôle</option></select>
+        </div>
+        <div class="num-field-wrap"><label style="min-width:210px;">Étape 2 — H<sub>2</sub>SO<sub>4</sub> :</label>
+          <select class="dq-select" id="proto-2"><option value="">— choisir —</option><option value="rendement">Optimise le rendement</option><option value="vitesse">Optimise la vitesse</option><option value="autre">Autre rôle</option></select>
+        </div>
+        <div class="num-field-wrap"><label style="min-width:210px;">Étape 3 — Dean-Stark :</label>
+          <select class="dq-select" id="proto-3"><option value="">— choisir —</option><option value="rendement">Optimise le rendement</option><option value="vitesse">Optimise la vitesse</option><option value="autre">Autre rôle</option></select>
+        </div>
+        <div class="num-field-wrap"><label style="min-width:210px;">Étape 4 — reflux + agitation :</label>
+          <select class="dq-select" id="proto-4"><option value="">— choisir —</option><option value="rendement">Optimise le rendement</option><option value="vitesse">Optimise la vitesse</option><option value="autre">Autre rôle</option></select>
+        </div>
+        <div class="num-field-wrap"><label style="min-width:210px;">Étape 5 — refroidissement :</label>
+          <select class="dq-select" id="proto-5"><option value="">— choisir —</option><option value="rendement">Optimise le rendement</option><option value="vitesse">Optimise la vitesse</option><option value="autre">Autre rôle</option></select>
+        </div>
+        <div class="num-field-wrap"><label style="min-width:210px;">Étape 6 — extraction :</label>
+          <select class="dq-select" id="proto-6"><option value="">— choisir —</option><option value="rendement">Optimise le rendement</option><option value="vitesse">Optimise la vitesse</option><option value="autre">Autre rôle</option></select>
+        </div>
+        <div class="num-field-wrap"><label style="min-width:210px;">Étape 7 — lavages :</label>
+          <select class="dq-select" id="proto-7"><option value="">— choisir —</option><option value="rendement">Optimise le rendement</option><option value="vitesse">Optimise la vitesse</option><option value="autre">Autre rôle</option></select>
+        </div>
+        <div class="num-field-wrap"><label style="min-width:210px;">Étape 8 — séchage :</label>
+          <select class="dq-select" id="proto-8"><option value="">— choisir —</option><option value="rendement">Optimise le rendement</option><option value="vitesse">Optimise la vitesse</option><option value="autre">Autre rôle</option></select>
+        </div>
+      </div>
+
+      <div class="num-btn-row">
+        <button class="btn-verif" onclick="verifProtocole()">Vérifier</button>
+        <button class="btn-corriger" onclick="document.getElementById('nc-proto').classList.add('visible')">Voir la correction</button>
+        <button class="btn-reset" onclick="resetProtocole()">Recommencer</button>
+      </div>
+      <div class="dq-feedback" id="fb-proto"></div>
+
+      <div class="num-correction-inline" id="nc-proto">
+        <div class="calc-step"><strong>Étape 1 — Rendement.</strong> L'alcool isoamylique est introduit en excès par rapport à l'acide éthanoïque (réactif limitant) : ce déplacement d'équilibre augmente la quantité de matière finale d'ester, donc le rendement.</div>
+        <div class="calc-step"><strong>Étape 2 — Vitesse.</strong> L'acide sulfurique concentré est un <strong>catalyseur</strong> de l'estérification : il accélère la réaction sans modifier l'état d'équilibre final.</div>
+        <div class="calc-step"><strong>Étape 3 — Rendement.</strong> Le Dean-Stark élimine l'eau formée au fur et à mesure : Q<sub>r</sub> reste strictement inférieur à K, ce qui force la réaction vers la formation de l'ester (réaction quasi totale, rendement maximal).</div>
+        <div class="calc-step"><strong>Étape 4 — Vitesse.</strong> Le chauffage à reflux (température, facteur cinétique) et l'agitation magnétique (homogénéisation, contact entre réactifs) accélèrent tous deux la transformation, sans perte de matière par évaporation.</div>
+        <div class="calc-step"><strong>Étape 5 — Autre rôle.</strong> Le refroidissement est une précaution avant la manipulation en ampoule à décanter (sécurité, éviter les surpressions) : il n'agit ni sur le rendement, ni sur la vitesse de la synthèse déjà terminée.</div>
+        <div class="calc-step"><strong>Étape 6 — Autre rôle.</strong> L'extraction par décantation est l'étape 2 d'une synthèse (isolement du produit) : elle ne change ni la quantité d'ester formée, ni la vitesse à laquelle elle s'est formée.</div>
+        <div class="calc-step"><strong>Étape 7 — Autre rôle.</strong> Les lavages (purification) éliminent les espèces indésirables (acide résiduel, catalyseur) du produit brut ; ils n'ont aucun effet sur le rendement de la réaction elle-même.</div>
+        <div class="calc-step"><strong>Étape 8 — Autre rôle.</strong> Le séchage élimine les traces d'eau de la phase organique (purification) ; il n'intervient ni sur le rendement, ni sur la vitesse de la synthèse.</div>
+        <p style="margin-top:10px;"><strong>À retenir :</strong> seules les opérations qui agissent sur la <strong>transformation chimique elle-même</strong> (étape 1 de la synthèse) optimisent le rendement ou la vitesse. Les opérations d'extraction, de purification et de sécurité (étapes 2 et 3 d'une synthèse, cf. partie A.1) n'ont pas cet effet.</p>
+      </div>
+    </div>
+
+  </div><!-- /accord-body protocole optimisation -->
+
+  </div><!-- /sub-A-3 (A4) -->
+
+</div><!-- /tab-0 (Partie A) -->
+
+<!-- ══════════════════════════════════
+     ONGLET B – Stratégie de synthèse multi-étapes
+══════════════════════════════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <!-- Sous-onglets B -->
+  <nav class="sub-tabs-nav" id="sub-nav-B">
+    <button class="sub-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
+      <span class="sub-tab-num">B1</span> Mécanisme réactionnel
+    </button>
+    <button class="sub-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
+      <span class="sub-tab-num">B2</span> Facteurs cinétiques (microscopique)
+    </button>
+    <button class="sub-tab-btn" data-sub="B3" onclick="switchSubTab('B',2)">
+      <span class="sub-tab-num">B3</span> Types de réaction & polymères
+    </button>
+    <button class="sub-tab-btn" data-sub="B4" onclick="switchSubTab('B',3)">
+      <span class="sub-tab-num">B4</span> Protection / Déprotection
+    </button>
+    <button class="sub-tab-btn" data-sub="B5" onclick="switchSubTab('B',4)">
+      <span class="sub-tab-num">B5</span> Synthèse écoresponsable
+    </button>
+  </nav>
+
+  <!-- ══ Sous-onglet B1 ══ -->
+  <div class="sub-tab-content active" id="sub-B-0">
+  <div class="section-title"><span class="icon">🔗</span> B.1 – Mécanisme réactionnel & flèches courbes</div>
+
+  <div class="intro-box">
+    <strong>Question directrice :</strong> Comment décomposer une réaction complexe en étapes élémentaires, et comment modéliser le déplacement des électrons au cours de ces étapes ?
+  </div>
+
+  <div class="def-card">
+    <h3>Mécanisme réactionnel et intermédiaire réactionnel</h3>
+    <p>Une réaction complexe peut être décomposée au niveau moléculaire en étapes (ou actes) élémentaires : l'ensemble de ces étapes constitue le <strong>mécanisme réactionnel</strong>. Il permet notamment de rendre compte de la loi de vitesse établie expérimentalement.</p>
+    <p style="margin-top:8px;">Un <strong>intermédiaire réactionnel</strong> est une espèce chimique <strong>formée</strong> au cours d'une étape élémentaire, puis <strong>consommée</strong> au cours d'une étape ultérieure.</p>
+  </div>
+
+  <div class="remarque-box">
+    <strong>Intermédiaire réactionnel ≠ catalyseur :</strong> un <strong>catalyseur</strong> est une espèce chimique <strong>consommée</strong> au cours d'une étape élémentaire puis <strong>régénérée</strong> au cours d'une étape ultérieure. Il permet la formation d'intermédiaires réactionnels plus réactifs que les réactifs initiaux, ce qui accélère la transformation. L'ajout d'un catalyseur <strong>modifie le mécanisme réactionnel</strong> d'une transformation (mais pas l'équation bilan, ni l'état final).
+  </div>
+
+  <div class="def-card">
+    <h3>Établir l'équation de la réaction à partir du mécanisme</h3>
+    <p>L'équation de la réaction modélisée par un mécanisme réactionnel s'obtient en faisant le bilan de tout ce qui est consommé et produit au cours des différentes étapes : on l'écrit en <strong>additionnant les étapes du mécanisme</strong> (les intermédiaires réactionnels et le catalyseur régénéré s'éliminent de part et d'autre).</p>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">➰</span> Le formalisme de la flèche courbe</div>
+
+  <div class="def-card">
+    <h3>Sites donneur et accepteur de doublet d'électrons</h3>
+    <ul>
+      <li>Un <strong>site donneur de doublet d'électrons</strong> est un site de <strong>forte densité électronique</strong>, portant une charge partielle δ<sup>−</sup> (ou une charge négative, ou un doublet non liant).</li>
+      <li>Un <strong>site accepteur de doublet d'électrons</strong> est un site de <strong>faible densité électronique</strong>, portant une charge partielle δ<sup>+</sup> (ou une charge positive).</li>
+    </ul>
+    <p style="margin-top:8px;">On modélise le déplacement d'un doublet d'électrons lors d'une étape d'un mécanisme réactionnel par une <strong>flèche courbe</strong> qui <strong>part d'un site donneur</strong> de doublet d'électrons et qui <strong>pointe vers un site accepteur</strong> de doublet d'électrons.</p>
+  </div>
+
+  <div class="img-grid" style="grid-template-columns:1fr;">
+    <div class="img-card">
+      <img src="images-cours/sites-donneur-accepteur.png" alt="Site donneur et site accepteur de doublet d'électrons">
+      <div class="img-legend">Réaction acide-base : le site donneur (doublet non liant de l'oxygène du groupe carbonyle) attaque le site accepteur (l'atome d'hydrogène de l'ion oxonium H<sub>3</sub>O<sup>+</sup>).</div>
+    </div>
+    <div class="img-card">
+      <img src="images-cours/exempleflechescourbes.png" alt="Exemple de flèches courbes lors d'une substitution">
+      <div class="img-legend">Substitution nucléophile : les flèches courbes montrent le déplacement des doublets — le doublet non liant de HO<sup>−</sup> attaque le carbone électrophile (δ<sup>+</sup>), tandis que le doublet de la liaison C–Cl part vers l'atome de chlore (δ<sup>−</sup>), qui devient l'ion chlorure sortant.</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">📝</span> Je vérifie ma compréhension</div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">D'où part une flèche courbe, et vers où pointe-t-elle ?</div>
+      <div class="qcm-feedback" id="fb-fleche1"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'D\'un site donneur (δ−) vers un site accepteur (δ+)','D\'un site donneur (δ−) vers un site accepteur (δ+)','C\'est la définition du formalisme : la flèche part toujours d\'une zone riche en électrons (site donneur, δ−) vers une zone pauvre en électrons (site accepteur, δ+).','fb-fleche1')">D'un site donneur (δ<sup>−</sup>) vers un site accepteur (δ<sup>+</sup>)</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'D\'un site donneur (δ−) vers un site accepteur (δ+)','D\'un site accepteur (δ+) vers un site donneur (δ−)','C\'est l\'inverse : la flèche part du site riche en électrons (donneur, δ−) vers le site pauvre en électrons (accepteur, δ+).','fb-fleche1')">D'un site accepteur (δ<sup>+</sup>) vers un site donneur (δ<sup>−</sup>)</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'D\'un site donneur (δ−) vers un site accepteur (δ+)','Dans n\'importe quel sens, cela n\'a pas d\'importance','Le sens est essentiel : il traduit physiquement le déplacement réel du doublet d\'électrons, du site donneur (δ−) vers le site accepteur (δ+).','fb-fleche1')">Dans n'importe quel sens, cela n'a pas d'importance</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">🎬</span> Application — 3 mécanismes réactionnels animés</div>
+
+  <div class="intro-box">
+    Retrouve, pour chacun de ces trois mécanismes, l'intermédiaire réactionnel formé et le sens des flèches courbes en manipulant l'animation interactive dédiée (site Ostralo).
+  </div>
+
+  <div class="activite-card">
+    <h3>① Bromation d'un alcène — addition électrophile</h3>
+    <p>Équation générale : <span class="math">C=C + Br<sub>2</sub> → C(Br)–C(Br)</span></p>
+    <p style="margin-top:6px;">Mécanisme en <strong>2 étapes</strong> :</p>
+    <ul style="margin-top:4px;">
+      <li><strong>Étape 1</strong> — le doublet π de la double liaison C=C (site donneur) attaque l'atome de brome le plus proche de Br<sub>2</sub> (site accepteur) ; le doublet de la liaison Br–Br part vers l'autre atome de brome, qui devient l'ion bromure Br<sup>−</sup>. Il se forme un <strong>ion bromonium</strong> (intermédiaire réactionnel, cycle à 3 atomes chargé positivement).</li>
+      <li><strong>Étape 2</strong> — l'ion bromure Br<sup>−</sup> formé (site donneur, doublet non liant) attaque l'un des carbones de l'ion bromonium (site accepteur), ce qui rouvre le cycle et donne le dérivé dibromé.</li>
+    </ul>
+    <p style="margin-top:8px;"><a href="https://chimie.ostralo.net/mecanisme_reaction/pages/bromation.htm" target="_blank" rel="noopener" style="color:var(--bleu);font-weight:700;">▶ Voir l'animation étape par étape (Ostralo)</a></p>
+  </div>
+
+  <div class="activite-card">
+    <h3>② Hydratation d'un alcène en milieu acide — addition électrophile</h3>
+    <p>Équation générale : <span class="math">C=C + H<sub>2</sub>O →<sub>(H<sub>3</sub>O<sup>+</sup>)</sub> C(H)–C(OH)</span></p>
+
+    <div class="img-grid" style="grid-template-columns:1fr;margin-top:10px;">
+      <div class="img-card">
+        <img src="images-cours/alcene-alcool.png" alt="Hydratation du but-1-ène en butan-2-ol">
+        <div class="img-legend">Exemple : hydratation du but-1-ène en butan-2-ol, catalysée par H<sub>2</sub>SO<sub>4</sub>/H<sub>2</sub>O.</div>
+      </div>
+    </div>
+
+    <p style="margin-top:12px;">Mécanisme en <strong>3 étapes</strong> :</p>
+
+    <div class="img-grid" style="grid-template-columns:1fr;margin-top:8px;">
+      <div class="img-card">
+        <img src="images-cours/etape1.png" alt="Étape 1 : attaque de l'alcène sur le proton (addition électrophile)">
+        <div class="img-legend"><strong>Étape 1 — Protonation</strong> : le doublet π de la double liaison C=C (site donneur) attaque un atome d'hydrogène de l'ion oxonium H<sub>3</sub>O<sup>+</sup> (site accepteur) ; le doublet de la liaison O–H part vers l'oxygène. Il se forme un <strong>carbocation</strong> (intermédiaire réactionnel) et une molécule d'eau.</div>
+      </div>
+      <div class="img-card">
+        <img src="images-cours/etape2.png" alt="Étape 2 : attaque nucléophile de l'eau sur le carbocation formé">
+        <div class="img-legend"><strong>Étape 2 — Addition nucléophile</strong> : un doublet non liant de l'eau (site donneur) attaque le carbocation (site accepteur, carbone déficitaire en électrons).</div>
+      </div>
+      <div class="img-card">
+        <img src="images-cours/etape3.png" alt="Étape 3 : déprotonation de l'alcool, l'eau sert de base">
+        <div class="img-legend"><strong>Étape 3 — Déprotonation</strong> : le doublet non liant d'une molécule d'eau du milieu (site donneur) arrache un proton de l'oxonium formé (site accepteur), régénérant H<sub>3</sub>O<sup>+</sup> et libérant l'alcool.</div>
+      </div>
+      <div class="img-card">
+        <img src="images-cours/hydratation-alcene.png" alt="Récapitulatif compact du mécanisme d'hydratation d'un alcène">
+        <div class="img-legend">Récapitulatif compact des 3 étapes (formalisme flèche courbe).</div>
+      </div>
+    </div>
+
+    <p style="margin-top:8px;"><a href="https://chimie.ostralo.net/mecanisme_reaction/pages/hydratation.htm" target="_blank" rel="noopener" style="color:var(--bleu);font-weight:700;">▶ Voir l'animation étape par étape (Ostralo)</a></p>
+
+    <div class="remarque-box" style="margin-top:14px;">
+      <strong>Régiosélectivité — règle de Markovnikov :</strong> à l'étape 1, le proton s'additionne préférentiellement sur le carbone <strong>le moins substitué</strong> de la double liaison, car cela conduit au carbocation <strong>le plus stable</strong> (le plus substitué). Le groupe hydroxyle se retrouve donc sur le carbone le plus substitué de l'alcène de départ.
+    </div>
+
+    <div class="img-grid" style="grid-template-columns:1fr;margin-top:8px;">
+      <div class="img-card">
+        <img src="images-cours/reactions.png" alt="Quatre exemples d'hydratation d'alcènes illustrant la régiosélectivité de Markovnikov">
+        <div class="img-legend">Quatre exemples d'hydratation : dans chaque cas, l'OH se fixe sur le carbone de la double liaison portant le plus de substituants carbonés.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="activite-card">
+    <h3>③ Synthèse d'un éther en milieu basique — substitution nucléophile (type Williamson)</h3>
+    <p>Équation générale : <span class="math">R–O<sup>−</sup> + R'–X → R–O–R' + X<sup>−</sup></span></p>
+    <p style="margin-top:6px;">Mécanisme en <strong>1 étape</strong> (réaction élémentaire) :</p>
+    <ul style="margin-top:4px;">
+      <li>Un doublet non liant de l'ion alcoolate R–O<sup>−</sup> (site donneur) attaque le carbone porteur de l'halogène de l'halogénoalcane R'–X (site accepteur, δ<sup>+</sup>) ; simultanément, le doublet de la liaison C–X part vers l'atome X, qui devient l'ion halogénure sortant X<sup>−</sup>.</li>
+      <li>Cette réaction ne fait <strong>pas apparaître d'intermédiaire réactionnel</strong> : les deux mouvements de doublets sont simultanés (mécanisme concerté).</li>
+    </ul>
+    <p style="margin-top:8px;"><a href="https://chimie.ostralo.net/mecanisme_reaction/pages/ether.htm" target="_blank" rel="noopener" style="color:var(--bleu);font-weight:700;">▶ Voir l'animation étape par étape (Ostralo)</a></p>
+  </div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">Parmi ces trois mécanismes, lequel ne fait intervenir aucun intermédiaire réactionnel ?</div>
+      <div class="qcm-feedback" id="fb-mecan1"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'La synthèse de l\'éther (substitution nucléophile)','La bromation de l\'alcène','La bromation forme un ion bromonium intermédiaire (étape 1), consommé à l\'étape 2 : c\'est bien un intermédiaire réactionnel.','fb-mecan1')">La bromation de l'alcène</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'La synthèse de l\'éther (substitution nucléophile)','L\'hydratation de l\'alcène','L\'hydratation forme un carbocation intermédiaire (étape 1), consommé à l\'étape 2 : c\'est bien un intermédiaire réactionnel.','fb-mecan1')">L'hydratation de l'alcène</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'La synthèse de l\'éther (substitution nucléophile)','La synthèse de l\'éther (substitution nucléophile)','Exact : la substitution nucléophile de type Williamson est un mécanisme concerté en une seule étape — les deux doublets se déplacent simultanément, sans intermédiaire réactionnel.','fb-mecan1')">La synthèse de l'éther (substitution nucléophile)</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="accord-btn" style="background:rgba(250,255,0,0.4);border:2px solid var(--orange);color:#1A2A3A;font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>🧩 Exercice — Analyser un mécanisme réactionnel</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--vert-exo-bord);background:var(--vert-exo);">
+
+    <div class="exo-enonce">
+      On reprend le mécanisme de l'<strong>hydratation d'un alcène en milieu acide</strong> (voir ci-dessus), décomposé en 3 étapes élémentaires :
+      <div style="margin-top:8px;font-family:'Outfit',sans-serif;font-size:0.88rem;line-height:1.9;">
+        <strong>Étape 1 :</strong> C=C + H<sub>3</sub>O<sup>+</sup> → carbocation + H<sub>2</sub>O<br>
+        <strong>Étape 2 :</strong> carbocation + H<sub>2</sub>O → alcool protoné (oxonium)<br>
+        <strong>Étape 3 :</strong> alcool protoné + H<sub>2</sub>O → alcool + H<sub>3</sub>O<sup>+</sup>
+      </div>
+    </div>
+
+    <div class="question-block" style="margin-top:14px;">
+      <div class="question-label">Question 1 — Quelle espèce est l'intermédiaire réactionnel de ce mécanisme ?</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="mec-q1">
+          <option value="">— choisir —</option>
+          <option value="carbocation">Le carbocation</option>
+          <option value="h3o">H<sub>3</sub>O<sup>+</sup></option>
+          <option value="h2o">H<sub>2</sub>O</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('mec-q1','carbocation','fb-mec-q1')">Vérifier</button>
+      </div>
+      <span id="fb-mec-q1" class="dq-feedback"></span>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">Question 2 — Quelle espèce joue le rôle de catalyseur ?</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="mec-q2">
+          <option value="">— choisir —</option>
+          <option value="carbocation">Le carbocation</option>
+          <option value="h3o">H<sub>3</sub>O<sup>+</sup></option>
+          <option value="h2o">H<sub>2</sub>O</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('mec-q2','h3o','fb-mec-q2')">Vérifier</button>
+      </div>
+      <span id="fb-mec-q2" class="dq-feedback"></span>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">Question 3 — En sommant les 3 étapes (en simplifiant les espèces qui apparaissent des deux côtés), quelle est l'équation bilan de la réaction ?</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="mec-q3">
+          <option value="">— choisir —</option>
+          <option value="bilan1">C=C + H<sub>2</sub>O → alcool</option>
+          <option value="bilan2">C=C + H<sub>3</sub>O<sup>+</sup> → alcool + H<sub>2</sub>O</option>
+          <option value="bilan3">carbocation + H<sub>2</sub>O → alcool</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('mec-q3','bilan1','fb-mec-q3')">Vérifier</button>
+      </div>
+      <span id="fb-mec-q3" class="dq-feedback"></span>
+    </div>
+
+    <button class="btn-corriger" style="margin-top:10px;" onclick="document.getElementById('nc-mec').classList.add('visible')">Voir la correction détaillée</button>
+    <button class="btn-reset" style="margin-top:10px;" onclick="resetMecanisme()">Recommencer</button>
+    <div class="num-correction-inline" id="nc-mec">
+      <div class="calc-step"><strong>Q1 — Intermédiaire réactionnel : le carbocation.</strong> Il est formé à l'étape 1 puis consommé à l'étape 2 : il n'apparaît ni dans les réactifs, ni dans les produits du bilan global.</div>
+      <div class="calc-step"><strong>Q2 — Catalyseur : H<sub>3</sub>O<sup>+</sup>.</strong> Il est consommé à l'étape 1 puis régénéré à l'étape 3 : sa quantité ne varie pas globalement, mais il a permis d'accélérer la transformation.</div>
+      <div class="calc-step"><strong>Q3 — Équation bilan : C=C + H<sub>2</sub>O → alcool.</strong> En additionnant les 3 étapes : H<sub>3</sub>O<sup>+</sup> apparaît à gauche (étape 1) et à droite (étape 3) → il s'élimine. Le carbocation et l'alcool protoné, formés puis consommés, s'éliminent aussi. Il reste 2 H<sub>2</sub>O à gauche (étapes 1 et 2 - un se régénère en fait à l'étape 3) contre 1 à droite consommée en 2 → au bilan net, une seule molécule d'eau est consommée : C=C + H<sub>2</sub>O → alcool.</div>
+    </div>
+
+  </div><!-- /accord-body mécanisme -->
+
+  </div><!-- /sub-B-0 (B1) -->
+
+
+  <!-- ══ Sous-onglet B2 ══ -->
+  <div class="sub-tab-content" id="sub-B-1">
+  <div class="section-title"><span class="icon">💥</span> B.2 – Facteurs cinétiques à l'échelle microscopique</div>
+
+  <div class="intro-box">
+    <strong>Question directrice :</strong> Comment interpréter, au niveau microscopique, l'effet de la température et de la concentration sur la vitesse d'une réaction ?
+  </div>
+
+  <div class="def-card">
+    <h3>Choc efficace</h3>
+    <p>Un choc entre deux entités réactives est dit <strong>efficace</strong> s'il entraîne une <strong>modification des liaisons chimiques</strong> de ces deux entités (formation et/ou rupture de liaisons).</p>
+  </div>
+
+  <div class="strat-grid">
+    <div class="strat-item orange">
+      <h4>🌡️ Effet de la température</h4>
+      <p>Lorsque la température augmente, l'<strong>agitation thermique</strong> des entités augmente : les chocs entre entités des réactifs sont <strong>plus fréquents et plus violents</strong>. Par conséquent, les <strong>chocs efficaces sont plus fréquents</strong>.</p>
+    </div>
+    <div class="strat-item bleu">
+      <h4>🧪 Effet de la concentration</h4>
+      <p>Lorsque la concentration des réactifs augmente, il y a <strong>plus d'entités par unité de volume</strong> : les chocs entre entités des réactifs sont <strong>plus fréquents</strong>. Par conséquent, les <strong>chocs efficaces sont plus fréquents</strong>.</p>
+    </div>
+  </div>
+
+  <div class="anim-canvas-wrap">
+    <div class="anim-canvas-title">Modélisation des chocs entre entités réactives</div>
+    <canvas id="canvasChocs" width="560" height="260"></canvas>
+    <div class="anim-controls">
+      <button class="anim-btn active" data-choc="froid" onclick="setChocMode('froid')">❄️ T faible, [X] faible</button>
+      <button class="anim-btn" data-choc="chaud" onclick="setChocMode('chaud')">🔥 T élevée</button>
+      <button class="anim-btn" data-choc="concentre" onclick="setChocMode('concentre')">🧫 [X] élevée</button>
+    </div>
+  </div>
+
+  <div class="remarque-box">
+    Plus la température <em>T</em> est élevée et/ou plus la concentration [X] est grande, alors : le <strong>nombre de chocs augmente</strong> et la <strong>vitesse volumique de réaction augmente</strong>.
+  </div>
+
+  <div class="attention-box">
+    Un <strong>catalyseur ne modifie pas la fréquence des chocs</strong> : il modifie les <strong>étapes intermédiaires</strong> du mécanisme réactionnel (en formant des intermédiaires réactionnels différents, plus faciles à former) pour accélérer la transformation globale, sans changer l'état final.
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">📝</span> Je vérifie ma compréhension</div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">Un catalyseur augmente-t-il la fréquence des chocs entre entités réactives ?</div>
+      <div class="qcm-feedback" id="fb-choc1"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Non, il modifie le mécanisme réactionnel','Non, il modifie le mécanisme réactionnel','Le catalyseur agit en formant des intermédiaires réactionnels plus réactifs : il modifie le chemin réactionnel (mécanisme), pas la fréquence des chocs.','fb-choc1')">Non, il modifie le mécanisme réactionnel</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Non, il modifie le mécanisme réactionnel','Oui, comme la température','Contrairement à la température, le catalyseur n\'augmente pas la fréquence des chocs : il ouvre un chemin réactionnel différent, avec des intermédiaires plus réactifs.','fb-choc1')">Oui, comme la température</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Non, il modifie le mécanisme réactionnel','Oui, comme la concentration','Contrairement à la concentration, le catalyseur n\'augmente pas le nombre d\'entités ni la fréquence des chocs : il modifie le mécanisme réactionnel.','fb-choc1')">Oui, comme la concentration</button>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /sub-B-1 (B2) -->
+
+  <!-- ══ Sous-onglet B3 ══ -->
+  <div class="sub-tab-content" id="sub-B-2">
+  <div class="section-title"><span class="icon">🔀</span> B.3 – Grands types de réaction & polymères</div>
+
+  <div class="intro-box">
+    <strong>Question directrice :</strong> Comment classer les réactions organiques selon le type de transformation subie par la molécule, et qu'est-ce qu'une réaction de polymérisation ?
+  </div>
+
+  <div class="def-card">
+    <h3>Une séquence réactionnelle</h3>
+    <p>Une <strong>séquence réactionnelle</strong> (ou synthèse multi-étapes) est une suite de réactions chimiques permettant la synthèse d'une <strong>molécule cible</strong> à partir de réactifs. Chaque étape peut inclure une <strong>modification de groupe caractéristique</strong>, de <strong>chaîne carbonée</strong>, ou une <strong>polymérisation</strong>. On peut aussi classer chaque étape selon le type de transformation subie par la molécule.</p>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">📖</span> Les 5 grands types de réaction</div>
+
+  <div class="def-card">
+    <h3>Caractériser une transformation</h3>
+    <p>Une transformation chimique peut être caractérisée soit par le <strong>couple</strong> mis en jeu (oxydoréduction, acide-base), soit par la comparaison du <strong>nombre de liaisons simples</strong> entre le substrat et le produit (addition, élimination), soit par le <strong>devenir d'un atome ou groupe d'atomes</strong> (substitution).</p>
+  </div>
+
+  <div class="type-reaction-card" style="border-left-color:var(--bleu);">
+    <h4 style="color:var(--bleu);">Oxydoréduction</h4>
+    <p>Couple oxydant<sub>1</sub>/réducteur<sub>1</sub> : transformation de l'oxydant 1 en réducteur 1 (ou du réducteur 1 en oxydant 1).</p>
+  </div>
+  <div class="type-reaction-card" style="border-left-color:var(--violet);">
+    <h4 style="color:var(--violet);">Acide-base</h4>
+    <p>Couple acide<sub>1</sub>/base<sub>1</sub> : transformation de l'acide 1 en base 1 (ou de la base 1 en acide 1).</p>
+  </div>
+  <div class="type-reaction-card" style="border-left-color:var(--vert);">
+    <h4 style="color:var(--vert);">Addition</h4>
+    <p>Un ou des atome(s) du produit possède(nt) <strong>plus de liaisons simples</strong> que dans le substrat.</p>
+  </div>
+  <div class="type-reaction-card" style="border-left-color:var(--orange);">
+    <h4 style="color:var(--orange);">Élimination</h4>
+    <p>Un ou des atome(s) du produit possède(nt) <strong>moins de liaisons simples</strong> que dans le substrat.</p>
+  </div>
+  <div class="type-reaction-card" style="border-left-color:var(--bleu-moyen);">
+    <h4 style="color:var(--bleu-moyen);">Substitution</h4>
+    <p>Un atome ou groupe d'atomes du substrat est <strong>remplacé</strong> par un autre atome ou groupe d'atomes dans le produit.</p>
+  </div>
+
+  <div class="img-grid" style="grid-template-columns:1fr;">
+    <div class="img-card">
+      <a href="images-cours/types-reactions.png" target="_blank" rel="noopener" style="display:block;">
+        <img src="images-cours/types-reactions.png" alt="Tableau des 5 grands types de réaction avec exemples" style="cursor:zoom-in;">
+      </a>
+      <div class="img-legend" style="text-align:center;font-weight:700;color:var(--bleu);font-style:normal;margin-bottom:6px;">🔍 Cliquer sur l'image pour l'agrandir dans un nouvel onglet</div>
+      <div class="img-legend">
+        <strong>Exemples :</strong> oxydation de l'alcool benzylique en acide benzoïque (MnO<sub>4</sub><sup>−</sup>/H<sup>+</sup>) · transformation de l'acide benzoïque en ion benzoate (CO<sub>3</sub><sup>2−</sup>) · hydrogénation de l'éthène (H<sub>2</sub>/[Pd]) · déshydratation du 2-méthylpropan-2-ol (H<sub>2</sub>SO<sub>4</sub>) · transformation du 2-chloro-2-méthylpropane en 2-méthylpropan-2-ol (HO<sup>−</sup>).
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">📝</span> Je vérifie ma compréhension</div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">L'oxydation de l'alcool benzylique en acide benzoïque par MnO<sub>4</sub><sup>−</sup> (en milieu acide) est une réaction :</div>
+      <div class="qcm-feedback" id="fb-type1"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'d\'oxydoréduction','d\'oxydoréduction','MnO4−/Mn2+ et le couple de l\'alcool/acide benzoïque sont deux couples oxydant/réducteur : c\'est une réaction d\'oxydoréduction.','fb-type1')">d'oxydoréduction</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'d\'oxydoréduction','acide-base','Il ne s\'agit pas d\'un transfert de proton entre deux couples acide/base, mais d\'un transfert d\'électrons entre les couples MnO4−/Mn2+ et C7H6O2/C7H8O : c\'est une oxydoréduction.','fb-type1')">acide-base</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'d\'oxydoréduction','de substitution','Aucun atome n\'est remplacé par un autre ici : c\'est un transfert d\'électrons entre deux couples oxydant/réducteur, donc une oxydoréduction.','fb-type1')">de substitution</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">La transformation de l'acide benzoïque en ion benzoate par les ions carbonate CO<sub>3</sub><sup>2−</sup> est une réaction :</div>
+      <div class="qcm-feedback" id="fb-type2"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'acide-base','d\'addition','Aucune liaison multiple n\'est concernée ici : il s\'agit d\'un transfert de proton entre les couples C7H6O2/C7H5O2− et HCO3−/CO32− : c\'est une réaction acide-base.','fb-type2')">d'addition</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'acide-base','acide-base','L\'acide benzoïque (acide du couple C7H6O2/C7H5O2−) cède un proton à l\'ion carbonate (base du couple HCO3−/CO32−) : c\'est bien une réaction acide-base.','fb-type2')">acide-base</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'acide-base','d\'oxydoréduction','Il n\'y a pas de transfert d\'électrons ici, mais un transfert de proton entre deux couples acide/base : c\'est une réaction acide-base.','fb-type2')">d'oxydoréduction</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <h3>Exercice à trous — Compléter les définitions (addition, élimination, substitution)</h3>
+    <p class="blank-sentence">
+      Une <strong>substitution</strong> est une réaction chimique au cours de laquelle un atome ou groupe d'atomes, groupe sortant, est
+      <select class="dq-select" id="sel-sub" onchange="verifBlank('sel-sub','remplacé','fb-sub')">
+        <option value="">— choisir —</option>
+        <option value="remplacé">remplacé</option>
+        <option value="ajouté">ajouté</option>
+        <option value="dédoublé">dédoublé</option>
+      </select>
+      par un autre, groupe entrant.<br>
+      <span id="fb-sub" class="dq-feedback"></span>
+    </p>
+    <p class="blank-sentence" style="margin-top:14px;">
+      Une <strong>addition</strong> est une réaction chimique au cours de laquelle deux atomes ou groupes d'atomes viennent se
+      <select class="dq-select" id="sel-add1" onchange="verifBlank('sel-add1','fixer','fb-add1')">
+        <option value="">— choisir —</option>
+        <option value="fixer">fixer</option>
+        <option value="substituer">substituer</option>
+        <option value="détacher">détacher</option>
+      </select>
+      sur des atomes initialement liés par une liaison multiple, sans
+      <select class="dq-select" id="sel-add2" onchange="verifBlank('sel-add2','libération','fb-add2')">
+        <option value="">— choisir —</option>
+        <option value="libération">libération</option>
+        <option value="protonation">protonation</option>
+        <option value="oxydation">oxydation</option>
+      </select>
+      d'autres groupes d'atomes.<br>
+      <span id="fb-add1" class="dq-feedback"></span> <span id="fb-add2" class="dq-feedback"></span>
+    </p>
+    <p class="blank-sentence" style="margin-top:14px;">
+      Une <strong>élimination</strong> est une réaction chimique au cours de laquelle deux atomes ou groupes d'atomes portés par des atomes voisins sont
+      <select class="dq-select" id="sel-eli1" onchange="verifBlank('sel-eli1','enlevés','fb-eli1')">
+        <option value="">— choisir —</option>
+        <option value="enlevés">enlevés</option>
+        <option value="ajoutés">ajoutés</option>
+        <option value="protonés">protonés</option>
+      </select>
+      d'une molécule sans
+      <select class="dq-select" id="sel-eli2" onchange="verifBlank('sel-eli2','remplacement','fb-eli2')">
+        <option value="">— choisir —</option>
+        <option value="remplacement">remplacement</option>
+        <option value="élimination">élimination</option>
+        <option value="catalyse">catalyse</option>
+      </select>
+      d'autres groupes ; il se forme alors une liaison
+      <select class="dq-select" id="sel-eli3" onchange="verifBlank('sel-eli3','multiple','fb-eli3')">
+        <option value="">— choisir —</option>
+        <option value="multiple">multiple</option>
+        <option value="hydrogène">hydrogène</option>
+        <option value="ionique">ionique</option>
+      </select>.<br>
+      <span id="fb-eli1" class="dq-feedback"></span> <span id="fb-eli2" class="dq-feedback"></span> <span id="fb-eli3" class="dq-feedback"></span>
+    </p>
+  </div>
+
+  <div class="exemple-box">
+    <strong>Exemples génériques :</strong><br>
+    Substitution : C–X + Y → C–Y + X.<br>
+    Addition : C=C + X–Y → CX–CY.<br>
+    Élimination : CX–CY → C=C + X–Y.
+  </div>
+
+  <button class="accord-btn" style="background:rgba(250,255,0,0.4);border:2px solid var(--orange);color:#1A2A3A;font-weight:800;padding:14px 18px;" onclick="toggleAccord(this)">
+    <span>🧩 Exercice — Élaborer une séquence réactionnelle à partir d'une banque de réactions</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--vert-exo-bord);background:var(--vert-exo);">
+
+    <div class="exo-enonce">
+      Pour chacune des <strong>3 synthèses</strong> proposées ci-dessous, sélectionne dans la <strong>banque de réactions</strong> commune les étapes qui permettent d'obtenir la molécule cible à partir du réactif de départ.
+    </div>
+
+    <div class="def-card" style="margin-top:14px;">
+      <h3>Banque de réactions disponibles</h3>
+      <ul>
+        <li><strong>A.</strong> Addition électrophile d'eau sur un alcène, catalysée par H<sub>3</sub>O<sup>+</sup> (règle de Markovnikov) → alcool secondaire</li>
+        <li><strong>B.</strong> Substitution nucléophile d'un ion hydroxyde sur un dérivé halogéné → alcool</li>
+        <li><strong>C.</strong> Oxydation ménagée d'un alcool secondaire par les ions dichromate en milieu acide → cétone</li>
+        <li><strong>D.</strong> Réduction d'une cétone par le borohydrure de sodium NaBH<sub>4</sub> → alcool secondaire</li>
+        <li><strong>E.</strong> Estérification d'un alcool par l'acide éthanoïque, catalyse acide, chauffage à reflux → ester + eau</li>
+        <li><strong>F.</strong> Élimination d'eau (E1) d'un alcool en milieu acide chauffé → alcène</li>
+        <li><strong>G.</strong> Addition électrophile de HBr sur un alcène (règle de Markovnikov) → dérivé bromé</li>
+        <li><strong>H.</strong> Hydrolyse basique (saponification) d'un ester par HO<sup>−</sup> → ion carboxylate + alcool</li>
+        <li><strong>I.</strong> Protection sélective d'un groupe hydroxyle par estérification avec l'anhydride éthanoïque → ester protecteur</li>
+        <li><strong>J.</strong> Déprotection par hydrolyse acide de l'ester protecteur → groupe hydroxyle régénéré</li>
+        <li><strong>K.</strong> Réaction acide-base : acide carboxylique + hydrogénocarbonate de sodium → ion carboxylate + CO<sub>2</sub> + eau</li>
+      </ul>
+    </div>
+
+    <!-- ═══ Synthèse 1 ═══ -->
+    <div class="question-block" style="margin-top:18px;">
+      <div class="question-label">Synthèse 1 (2 étapes) — pent-1-ène → pentan-2-one</div>
+      <div style="font-family:'Outfit',sans-serif;font-size:0.86rem;margin:4px 0 8px;">CH<sub>2</sub>=CH–CH<sub>2</sub>–CH<sub>2</sub>–CH<sub>3</sub> &nbsp;→&nbsp; CH<sub>3</sub>–CO–CH<sub>2</sub>–CH<sub>2</sub>–CH<sub>3</sub></div>
+      <div class="num-field-wrap">
+        <label>Étape 1 :</label>
+        <select class="dq-select" id="syn1-1">
+          <option value="">— choisir —</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option><option value="K">K</option>
+        </select>
+        <label>Étape 2 :</label>
+        <select class="dq-select" id="syn1-2">
+          <option value="">— choisir —</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option><option value="K">K</option>
+        </select>
+      </div>
+      <div class="num-btn-row">
+        <button class="btn-verif" onclick="verifSynthese('syn1',['A','C'])">Vérifier</button>
+        <button class="btn-corriger" onclick="document.getElementById('nc-syn1').classList.add('visible')">Voir la correction</button>
+        <button class="btn-reset" onclick="resetSynthese('syn1',2)">Recommencer</button>
+      </div>
+      <div class="dq-feedback" id="fb-syn1"></div>
+      <div class="num-correction-inline" id="nc-syn1">
+        <strong>Séquence attendue : A puis C.</strong><br>
+        <div class="calc-step">Étape 1 (A) : addition électrophile d'eau sur le pent-1-ène (catalyse acide, Markovnikov) → pentan-2-ol.</div>
+        <div class="calc-step">Étape 2 (C) : oxydation ménagée du pentan-2-ol par les ions dichromate en milieu acide → pentan-2-one.</div>
+        <p style="margin-top:10px;"><strong>Pourquoi pas les autres réactions ?</strong></p>
+        <ul style="margin-top:4px;padding-left:18px;">
+          <li><strong>B</strong> nécessite un dérivé halogéné au départ, absent ici.</li>
+          <li><strong>D</strong> est l'inverse de l'étape recherchée (réduction, pas oxydation).</li>
+          <li><strong>E</strong> conduirait à un ester, pas à une cétone (voir synthèse 2).</li>
+          <li><strong>F</strong> est l'inverse de l'étape 1 (élimination, pas addition).</li>
+          <li><strong>G, H, I, J, K</strong> ne correspondent à aucune transformation utile ici (pas d'alcool à protéger, pas d'ester ni d'acide carboxylique en présence).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══ Synthèse 2 ═══ -->
+    <div class="question-block" style="margin-top:22px;">
+      <div class="question-label">Synthèse 2 (2 étapes) — pent-1-ène → pentan-2-yl éthanoate</div>
+      <div style="font-family:'Outfit',sans-serif;font-size:0.86rem;margin:4px 0 8px;">CH<sub>2</sub>=CH–CH<sub>2</sub>–CH<sub>2</sub>–CH<sub>3</sub> &nbsp;→&nbsp; CH<sub>3</sub>–CO–O–CH(CH<sub>3</sub>)–CH<sub>2</sub>–CH<sub>2</sub>–CH<sub>3</sub> (un ester)</div>
+      <div class="num-field-wrap">
+        <label>Étape 1 :</label>
+        <select class="dq-select" id="syn2-1">
+          <option value="">— choisir —</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option><option value="K">K</option>
+        </select>
+        <label>Étape 2 :</label>
+        <select class="dq-select" id="syn2-2">
+          <option value="">— choisir —</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option><option value="K">K</option>
+        </select>
+      </div>
+      <div class="num-btn-row">
+        <button class="btn-verif" onclick="verifSynthese('syn2',['A','E'])">Vérifier</button>
+        <button class="btn-corriger" onclick="document.getElementById('nc-syn2').classList.add('visible')">Voir la correction</button>
+        <button class="btn-reset" onclick="resetSynthese('syn2',2)">Recommencer</button>
+      </div>
+      <div class="dq-feedback" id="fb-syn2"></div>
+      <div class="num-correction-inline" id="nc-syn2">
+        <strong>Séquence attendue : A puis E.</strong><br>
+        <div class="calc-step">Étape 1 (A) : addition électrophile d'eau sur le pent-1-ène (identique à la synthèse 1) → pentan-2-ol.</div>
+        <div class="calc-step">Étape 2 (E) : estérification du pentan-2-ol par l'acide éthanoïque (catalyse acide, reflux) → pentan-2-yl éthanoate + eau.</div>
+        <p style="margin-top:10px;"><strong>Le piège à éviter :</strong> l'étape 2 n'est pas C (oxydation) — l'oxydation donnerait une cétone (synthèse 1), pas un ester. Il faut bien reconnaître le groupe caractéristique de la molécule cible (ici un ester) pour choisir la bonne réaction finale.</p>
+      </div>
+    </div>
+
+    <!-- ═══ Synthèse 3 ═══ -->
+    <div class="question-block" style="margin-top:22px;">
+      <div class="question-label">Synthèse 3 (3 étapes, avec protection/déprotection) — pentan-2,4-diol → 4-hydroxypentan-2-one</div>
+      <div style="font-family:'Outfit',sans-serif;font-size:0.86rem;margin:4px 0 8px;">CH<sub>3</sub>–CH(OH)–CH<sub>2</sub>–CH(OH)–CH<sub>3</sub> &nbsp;→&nbsp; CH<sub>3</sub>–CO–CH<sub>2</sub>–CH(OH)–CH<sub>3</sub></div>
+      <div class="remarque-box" style="margin:0 0 10px;">Le diol de départ porte <strong>deux groupes hydroxyle</strong> a priori aussi réactifs l'un que l'autre : pour n'oxyder qu'un seul des deux (celui en position 2), il faut d'abord <strong>protéger</strong> l'autre (position 4).</div>
+      <div class="num-field-wrap">
+        <label>Étape 1 :</label>
+        <select class="dq-select" id="syn3-1">
+          <option value="">— choisir —</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option><option value="K">K</option>
+        </select>
+        <label>Étape 2 :</label>
+        <select class="dq-select" id="syn3-2">
+          <option value="">— choisir —</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option><option value="K">K</option>
+        </select>
+        <label>Étape 3 :</label>
+        <select class="dq-select" id="syn3-3">
+          <option value="">— choisir —</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option><option value="K">K</option>
+        </select>
+      </div>
+      <div class="num-btn-row">
+        <button class="btn-verif" onclick="verifSynthese('syn3',['I','C','J'])">Vérifier</button>
+        <button class="btn-corriger" onclick="document.getElementById('nc-syn3').classList.add('visible')">Voir la correction</button>
+        <button class="btn-reset" onclick="resetSynthese('syn3',3)">Recommencer</button>
+      </div>
+      <div class="dq-feedback" id="fb-syn3"></div>
+      <div class="num-correction-inline" id="nc-syn3">
+        <strong>Séquence attendue : I puis C puis J.</strong><br>
+        <div class="calc-step">Étape 1 (I) — <strong>Protection</strong> : le groupe hydroxyle en position 4 est transformé en ester protecteur par l'anhydride éthanoïque, ce qui bloque sa réactivité.</div>
+        <div class="calc-step">Étape 2 (C) — <strong>Oxydation ciblée</strong> : le groupe hydroxyle libre restant (position 2) est oxydé par les ions dichromate en cétone.</div>
+        <div class="calc-step">Étape 3 (J) — <strong>Déprotection</strong> : hydrolyse acide de l'ester protecteur, qui régénère le groupe hydroxyle en position 4.</div>
+        <p style="margin-top:10px;">Sans l'étape de protection, l'oxydation (C) aurait transformé <strong>les deux</strong> groupes hydroxyle en groupes carbonyle, ce qui n'est pas le produit recherché.</p>
+      </div>
+    </div>
+
+  </div><!-- /accord-body banque de réactions -->
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">🧬</span> Les polymères</div>
+
+  <div class="def-card">
+    <h3>Polymère, monomère et motif</h3>
+    <p>Un <strong>polymère</strong> est une macromolécule formée de l'assemblage de <strong>motifs</strong> chimiques identiques liés en chaîne. Il est le résultat de la <strong>polymérisation</strong> de molécules <strong>monomères</strong>. On représente un polymère en écrivant le motif entre deux crochets ou parenthèses, en notant en indice le nombre <em>N</em> (ou <em>n</em>) de répétitions du motif.</p>
+  </div>
+
+  <div class="img-grid" style="grid-template-columns:1fr;">
+    <div class="img-card">
+      <img src="images-cours/polyethene.png" alt="Polymérisation de l'éthène en poly(éthène)">
+      <div class="img-legend">Exemple le plus simple : <strong>n</strong> molécules d'éthène (monomère) polymérisent pour former le <strong>poly(éthène)</strong> — la liaison double C=C s'ouvre pour former deux liaisons simples qui relient les motifs entre eux.</div>
+    </div>
+  </div>
+
+  <div class="exemple-box">
+    <strong>Exemple — le polystyrène :</strong> le <strong>styrène</strong> (monomère, squelette carboné cyclique et insaturé : un cycle à 6 carbones portant un groupe vinyle –CH=CH<sub>2</sub>) subit une réaction de polymérisation pour former le <strong>polystyrène</strong> (isolant thermique), constitué d'un motif répété un grand nombre de fois : <span class="math">–[CH(C<sub>6</sub>H<sub>5</sub>)–CH<sub>2</sub>]<sub>N</sub>–</span>.
+  </div>
+
+  <div class="img-grid" style="grid-template-columns:1fr;">
+    <div class="img-card">
+      <img src="images-cours/polystyrene.png" alt="Polymérisation du styrène en polystyrène">
+      <div class="img-legend">Plusieurs monomères de styrène polymérisent, dans des conditions contrôlées, pour former le <strong>polystyrène</strong> : on retrouve bien le motif <span class="math">–[CH(C<sub>6</sub>H<sub>5</sub>)–CH<sub>2</sub>]–</span> répété.</div>
+    </div>
+  </div>
+
+  <div class="remarque-box">
+    La <strong>bakélite</strong> fut, en 1910, le premier polymère de synthèse. On sait aujourd'hui synthétiser de nombreux polymères comme le <strong>polychlorure de vinyle (PVC)</strong> (construction) ou les polyamides comme le <strong>nylon</strong> (textile). Il existe aussi de nombreux polymères naturels : l'<strong>amidon</strong>, la <strong>cellulose</strong>, la <strong>soie</strong>, l'<strong>ADN</strong>…
+  </div>
+
+  <div class="attention-box">
+    <strong>Une troisième catégorie : les polymères synthétiques biosourcés.</strong> Certains polymères synthétiques ne sont pas fabriqués à partir du pétrole mais à partir de ressources renouvelables (végétales) : c'est le cas du <strong>PLA</strong> (acide polylactique), obtenu à partir de l'amidon de maïs, utilisé par exemple pour les filaments d'impression 3D ou les emballages compostables. On distingue donc : polymères <strong>naturels</strong> (déjà présents dans le vivant), <strong>synthétiques biosourcés</strong> (fabriqués par l'humain à partir de ressources renouvelables) et <strong>synthétiques issus du pétrole</strong> (fabriqués à partir de ressources fossiles).
+  </div>
+
+  <div class="exo-card">
+    <h3>Application — Polymère de degré 4 du 2-méthylprop-1-ène</h3>
+    <p>Le 2-méthylprop-1-ène a pour formule semi-développée CH<sub>2</sub>=C(CH<sub>3</sub>)<sub>2</sub>. Représenter le motif de son polymère, puis le polymère de degré 4 (N = 4).</p>
+    <button class="accord-btn" onclick="toggleAccord(this)">
+      <span>Voir la correction</span><span>▼</span>
+    </button>
+    <div class="accord-body">
+      <p><strong>Motif</strong> (obtenu en ouvrant la liaison double C=C, chaque carbone gardant ses substituants) : –[CH<sub>2</sub>–C(CH<sub>3</sub>)<sub>2</sub>]–</p>
+      <p style="margin-top:8px;"><strong>Polymère de degré 4</strong> (N = 4) : on répète 4 fois ce motif relié bout à bout : <br>
+      –CH<sub>2</sub>–C(CH<sub>3</sub>)<sub>2</sub>–CH<sub>2</sub>–C(CH<sub>3</sub>)<sub>2</sub>–CH<sub>2</sub>–C(CH<sub>3</sub>)<sub>2</sub>–CH<sub>2</sub>–C(CH<sub>3</sub>)<sub>2</sub>–</p>
+      <p style="margin-top:8px;">On peut aussi le noter, de façon condensée : <span class="math">–[CH<sub>2</sub>–C(CH<sub>3</sub>)<sub>2</sub>]<sub>4</sub>–</span></p>
+    </div>
+  </div>
+
+  <button class="accord-btn" style="background:rgba(250,255,0,0.4);border:2px solid var(--orange);color:#1A2A3A;font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>🧩 Exercice — Monomères, motifs et classification des polymères</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--vert-exo-bord);background:var(--vert-exo);">
+
+    <div class="exo-enonce">
+      <strong>Partie A</strong> — À partir des deux images de la polymérisation de l'éthène et du styrène présentées dans le cours ci-dessus, réponds aux questions suivantes.
+    </div>
+
+    <div class="question-block" style="margin-top:14px;">
+      <div class="question-label">Question 1 — Dans la polymérisation de l'éthène, quel est le motif du poly(éthène) ?</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="poly-q1">
+          <option value="">— choisir —</option>
+          <option value="ch2ch2">–[CH<sub>2</sub>–CH<sub>2</sub>]–</option>
+          <option value="chch">–[CH=CH]–</option>
+          <option value="ch3ch3">–[CH<sub>3</sub>–CH<sub>3</sub>]–</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('poly-q1','ch2ch2','fb-poly-q1')">Vérifier</button>
+      </div>
+      <span id="fb-poly-q1" class="dq-feedback"></span>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">Question 2 — Pourquoi la liaison double C=C de l'éthène disparaît-elle dans le motif du polymère ?</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="poly-q2">
+          <option value="">— choisir —</option>
+          <option value="ouverture">Elle s'ouvre : un doublet sert à créer les liaisons entre motifs voisins</option>
+          <option value="oxydation">Elle est oxydée en groupe carbonyle</option>
+          <option value="rien">Elle ne disparaît pas, elle est toujours présente dans le polymère</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('poly-q2','ouverture','fb-poly-q2')">Vérifier</button>
+      </div>
+      <span id="fb-poly-q2" class="dq-feedback"></span>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">Question 3 — Sur l'image du polystyrène, combien de motifs styrène sont représentés avant les crochets « …n » ?</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="poly-q3">
+          <option value="">— choisir —</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+          <option value="n">Un nombre indéterminé (n)</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('poly-q3','5','fb-poly-q3')">Vérifier</button>
+      </div>
+      <span id="fb-poly-q3" class="dq-feedback"></span>
+      <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:6px;font-style:italic;">L'image représente 5 motifs pour illustrer la répétition, mais dans le polymère réel, ce nombre n (degré de polymérisation) est bien plus grand — de l'ordre de plusieurs milliers.</p>
+    </div>
+
+    <div class="exo-enonce" style="margin-top:20px;">
+      <strong>Partie B</strong> — Pour chacun des polymères suivants, indique s'il s'agit d'un polymère <strong>naturel</strong>, <strong>synthétique biosourcé</strong> ou <strong>synthétique issu du pétrole</strong>.
+    </div>
+
+    <div class="question-block" style="margin-top:10px;">
+      <div class="question-label">La cellulose (constituant des parois végétales)</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="poly-q4">
+          <option value="">— choisir —</option>
+          <option value="naturel">Naturel</option>
+          <option value="biosource">Synthétique biosourcé</option>
+          <option value="petrole">Synthétique issu du pétrole</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('poly-q4','naturel','fb-poly-q4')">Vérifier</button>
+      </div>
+      <span id="fb-poly-q4" class="dq-feedback"></span>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">Le PLA (acide polylactique, obtenu à partir d'amidon de maïs)</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="poly-q5">
+          <option value="">— choisir —</option>
+          <option value="naturel">Naturel</option>
+          <option value="biosource">Synthétique biosourcé</option>
+          <option value="petrole">Synthétique issu du pétrole</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('poly-q5','biosource','fb-poly-q5')">Vérifier</button>
+      </div>
+      <span id="fb-poly-q5" class="dq-feedback"></span>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">Le polystyrène (obtenu à partir du styrène, dérivé du pétrole)</div>
+      <div class="num-field-wrap">
+        <select class="dq-select" id="poly-q6">
+          <option value="">— choisir —</option>
+          <option value="naturel">Naturel</option>
+          <option value="biosource">Synthétique biosourcé</option>
+          <option value="petrole">Synthétique issu du pétrole</option>
+        </select>
+        <button class="btn-verif" onclick="verifBlank('poly-q6','petrole','fb-poly-q6')">Vérifier</button>
+      </div>
+      <span id="fb-poly-q6" class="dq-feedback"></span>
+    </div>
+
+    <button class="btn-reset" style="margin-top:10px;" onclick="resetPolymeres()">Recommencer</button>
+
+  </div><!-- /accord-body polymères -->
+
+  </div><!-- /sub-B-2 (B3) -->
+
+  <!-- ══ Sous-onglet B4 ══ -->
+  <div class="sub-tab-content" id="sub-B-3">
+  <div class="section-title"><span class="icon">🛡️</span> B.4 – Protection / Déprotection</div>
+
+  <div class="intro-box">
+    <strong>Question directrice :</strong> Comment faire réagir sélectivement une seule fonction d'une molécule qui en porte plusieurs ?
+  </div>
+
+  <div class="def-card">
+    <h3>Composé polyfonctionnel</h3>
+    <p>Un <strong>composé polyfonctionnel</strong> porte plusieurs groupes caractéristiques qui peuvent réagir <strong>simultanément</strong> avec un même réactif.</p>
+  </div>
+
+  <div class="exemple-box">
+    <strong>Exemple :</strong> l'oxydation du <strong>3-hydroxybutanal</strong> (qui porte un groupe hydroxyle et un groupe carbonyle) par les ions permanganate MnO<sub>4</sub><sup>−</sup> donne l'<strong>acide 3-oxobutanoïque</strong> (qui porte un groupe carbonyle et un groupe carboxyle) : les <strong>deux groupes</strong> ont été oxydés simultanément par les ions permanganate, alors qu'on ne souhaitait oxyder que l'une des deux fonctions.
+  </div>
+
+  <div class="def-card">
+    <h3>Stratégie de protection / déprotection</h3>
+    <p>Pour privilégier la réaction de l'une des fonctions d'un composé bifonctionnel, on peut choisir un <strong>réactif chimiosélectif</strong>, ou empêcher qu'un réactif non chimiosélectif réagisse sur l'autre fonction.</p>
+    <p style="margin-top:8px;">Une étape de <strong>protection</strong> est la création d'un groupe protecteur sur l'une des fonctions d'un composé polyfonctionnel afin de <strong>bloquer sa réactivité</strong>. Après action du réactif sur la fonction non protégée, on réalise l'étape de <strong>déprotection</strong> de la fonction. La séquence réactionnelle est donc allongée de deux étapes.</p>
+    <ul style="margin-top:8px;">
+      <li>Le groupe protecteur doit se former de façon <strong>sélective</strong> avec la fonction à protéger.</li>
+      <li>Il doit être <strong>stable</strong> lors des étapes suivantes.</li>
+      <li>Il doit être <strong>facile à enlever</strong> une fois la transformation terminée.</li>
+    </ul>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">🔬</span> Exemple détaillé : protection du groupe hydroxyle</div>
+
+  <div class="def-card">
+    <h3>Protection, oxydation et déprotection du 3-hydroxybutanal</h3>
+    <p>Pour empêcher la fonction <strong>hydroxyle</strong> du 3-hydroxybutanal d'être oxydée par les ions permanganate, on forme au préalable un <strong>groupe ester protecteur</strong>, grâce à une réaction avec l'acide éthanoïque.</p>
+    <div class="strat-grid" style="margin-top:10px;">
+      <div class="strat-item bleu">
+        <h4>① Protection</h4>
+        <p>3-hydroxybutanal + acide éthanoïque → formation du groupe ester protecteur sur la fonction hydroxyle.</p>
+      </div>
+      <div class="strat-item orange">
+        <h4>② Oxydation</h4>
+        <p>MnO<sub>4</sub><sup>−</sup> oxyde uniquement l'aldéhyde (non protégé) en acide carboxylique ; le groupe ester protège l'ancien hydroxyle.</p>
+      </div>
+      <div class="strat-item vert">
+        <h4>③ Déprotection</h4>
+        <p>Hydrolyse du groupe ester : on retrouve la fonction hydroxyle, tandis que la fonction oxydée (carboxyle) est conservée.</p>
+      </div>
+    </div>
+    <p style="margin-top:10px;">On obtient finalement l'<strong>acide 3-hydroxybutanoïque</strong> : seule la fonction aldéhyde a été oxydée, la fonction hydroxyle ayant été protégée puis restaurée.</p>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">📝</span> Je vérifie ma compréhension</div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">Pourquoi ajoute-t-on une étape de protection dans une synthèse multi-étapes ?</div>
+      <div class="qcm-feedback" id="fb-prot1"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Pour empêcher une fonction non ciblée de réagir aussi','Pour empêcher une fonction non ciblée de réagir aussi','La protection bloque temporairement la réactivité d\'une fonction que l\'on ne veut pas voir réagir, afin de privilégier la réaction sur l\'autre fonction.','fb-prot1')">Pour empêcher une fonction non ciblée de réagir aussi</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Pour empêcher une fonction non ciblée de réagir aussi','Pour augmenter la vitesse de la réaction','La protection n\'a pas pour but d\'accélérer la réaction, mais d\'assurer la sélectivité : éviter qu\'une fonction non visée ne réagisse également.','fb-prot1')">Pour augmenter la vitesse de la réaction</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Pour empêcher une fonction non ciblée de réagir aussi','Pour diminuer le nombre d\'étapes de la synthèse','Au contraire, protection puis déprotection ajoutent deux étapes à la séquence réactionnelle ; l\'objectif est la sélectivité, pas la réduction du nombre d\'étapes.','fb-prot1')">Pour diminuer le nombre d'étapes de la synthèse</button>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /sub-B-3 (B4) -->
+
+  <!-- ══ Sous-onglet B5 ══ -->
+  <div class="sub-tab-content" id="sub-B-4">
+  <div class="section-title"><span class="icon">🌱</span> B.5 – Synthèse écoresponsable</div>
+
+  <div class="intro-box">
+    <strong>Question directrice :</strong> Comment concevoir une synthèse chimique moins nocive pour l'être humain et l'environnement ?
+  </div>
+
+  <div class="def-card">
+    <h3>Une synthèse écoresponsable</h3>
+    <p>Une <strong>synthèse écoresponsable</strong> doit utiliser des procédés chimiques permettant de <strong>réduire ou d'éliminer</strong> l'utilisation et la production de substances dangereuses. Ce type de synthèse doit respecter les <strong>12 principes de la chimie verte</strong>, énoncés par les chimistes américains <strong>Paul Anastas et John C. Warner</strong> en 1998.</p>
+  </div>
+
+  <div class="green-wheel-wrap">
+    <svg viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg" width="380" height="380">
+      <circle cx="230" cy="230" r="80" fill="var(--vert)"/>
+      <text x="230" y="222" text-anchor="middle" fill="white" font-family="Outfit,sans-serif" font-weight="800" font-size="17">12 principes</text>
+      <text x="230" y="244" text-anchor="middle" fill="white" font-family="Outfit,sans-serif" font-weight="700" font-size="15">de la chimie verte</text>
+      <g font-family="Nunito,sans-serif" font-size="12.5" fill="var(--texte)">
+        <!-- 12 branches régulières -->
+        <g stroke="var(--gris-bord)" stroke-width="1.5">
+          <line x1="230" y1="150" x2="230" y2="34"/>
+          <line x1="292" y1="168" x2="368" y2="80"/>
+          <line x1="310" y1="230" x2="426" y2="230"/>
+          <line x1="292" y1="292" x2="368" y2="380"/>
+          <line x1="230" y1="310" x2="230" y2="426"/>
+          <line x1="168" y1="292" x2="92" y2="380"/>
+          <line x1="150" y1="230" x2="34" y2="230"/>
+          <line x1="168" y1="168" x2="92" y2="80"/>
+        </g>
+        <text x="230" y="26"  text-anchor="middle">① Éviter les déchets</text>
+        <text x="330" y="60"  text-anchor="middle">② Maximiser l'économie d'atome</text>
+        <text x="366" y="150" text-anchor="middle">③ Synthèses moins nocives</text>
+        <text x="434" y="234" text-anchor="start">④ Produits plus sûrs</text>
+        <text x="366" y="318" text-anchor="middle">⑤ Solvants plus sûrs</text>
+        <text x="330" y="404" text-anchor="middle">⑥ Minimiser l'énergie</text>
+        <text x="230" y="448" text-anchor="middle">⑦ Matières renouvelables</text>
+        <text x="130" y="404" text-anchor="middle">⑧ Réduire les dérivés</text>
+        <text x="94"  y="318" text-anchor="middle">⑨ Utiliser des catalyseurs</text>
+        <text x="26"  y="234" text-anchor="start">⑩ Produits biodégradables</text>
+        <text x="94"  y="150" text-anchor="middle">⑪ Analyser en temps réel</text>
+        <text x="130" y="60"  text-anchor="middle">⑫ Limiter les risques</text>
+      </g>
+    </svg>
+    <ul class="green-list">
+      <li><b>Catalyseurs</b> — diminuent la consommation d'énergie, augmentent la sélectivité, réduisent les quantités de réactifs.</li>
+      <li><b>Réactifs</b> — doivent être les moins toxiques possible pour l'environnement.</li>
+      <li><b>Solvants verts</b> — facilement récupérables, recyclables, faiblement toxiques, tout en conservant vitesses de réaction et rendements.</li>
+    </ul>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;"><span class="icon">📝</span> Je vérifie ma compréhension</div>
+
+  <div class="qcm-grid">
+    <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+      <div class="substance">Utiliser un catalyseur participe-t-il à une démarche de chimie verte ?</div>
+      <div class="qcm-feedback" id="fb-green1"></div>
+      <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Oui, il diminue l\'énergie consommée et augmente la sélectivité','Oui, il diminue l\'énergie consommée et augmente la sélectivité','C\'est le principe n°9 de la chimie verte : le catalyseur permet de travailler à plus basse température (moins d\'énergie) et d\'améliorer la sélectivité de la réaction.','fb-green1')">Oui, il diminue l'énergie consommée et augmente la sélectivité</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Oui, il diminue l\'énergie consommée et augmente la sélectivité','Non, un catalyseur est toujours toxique','Rien n\'impose qu\'un catalyseur soit toxique ; au contraire, son usage est l\'un des 12 principes de la chimie verte (principe n°9).','fb-green1')">Non, un catalyseur est toujours toxique</button>
+        <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+          onclick="repondreQCM(this,'Oui, il diminue l\'énergie consommée et augmente la sélectivité','Non, cela n\'a aucun rapport avec la chimie verte','Au contraire : l\'utilisation de catalyseurs est explicitement l\'un des 12 principes de la chimie verte (principe n°9).','fb-green1')">Non, cela n'a aucun rapport avec la chimie verte</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="accord-btn" style="background:rgba(250,255,0,0.4);border:2px solid var(--orange);color:#1A2A3A;font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>🧩 Exercice ouvert — Comparer deux voies de synthèse</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--vert-exo-bord);background:var(--vert-exo);">
+
+    <div class="exo-enonce">
+      Deux voies de synthèse permettent d'obtenir le même ester (l'éthanoate de linalyle, arôme de lavande) à partir de réactifs différents. Leurs caractéristiques sont résumées ci-dessous.
+    </div>
+
+    <table class="tableau-avancement" style="width:100%;margin-top:10px;">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Critère</th>
+          <th>Voie A</th>
+          <th>Voie B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="text-align:left;">Rendement</td><td>68 %</td><td>91 %</td></tr>
+        <tr><td style="text-align:left;">Solvant utilisé</td><td>dichlorométhane (toxique, CMR suspecté)</td><td>éthanol (peu toxique, biosourcé)</td></tr>
+        <tr><td style="text-align:left;">Catalyseur</td><td>aucun</td><td>acide sulfurique (catalytique, régénéré)</td></tr>
+        <tr><td style="text-align:left;">Température / durée</td><td>110 °C pendant 6 h</td><td>78 °C (reflux) pendant 1 h</td></tr>
+        <tr><td style="text-align:left;">Nombre d'étapes</td><td>4 (dont 1 protection/déprotection)</td><td>2</td></tr>
+        <tr><td style="text-align:left;">Sous-produits</td><td>non valorisés, rejetés</td><td>eau uniquement</td></tr>
+      </tbody>
+    </table>
+
+    <div class="question-block" style="margin-top:16px;">
+      <div class="question-label">Quelle voie de synthèse est la plus conforme aux principes de la chimie verte ? Justifie ta réponse avec au moins 3 arguments chiffrés ou qualitatifs tirés du tableau.</div>
+      <textarea class="rep-zone" id="rep-green" placeholder="Rédige ta réponse ici..."></textarea>
+      <div class="num-btn-row">
+        <button class="btn-corriger" onclick="document.getElementById('nc-green-open').classList.add('visible')">Voir un exemple de réponse</button>
+        <button class="btn-reset" onclick="document.getElementById('rep-green').value='';document.getElementById('nc-green-open').classList.remove('visible')">Recommencer</button>
+      </div>
+      <div class="num-correction-inline" id="nc-green-open">
+        <strong>Exemple de réponse argumentée :</strong>
+        <div class="calc-step">La voie B est la plus conforme à la chimie verte. D'abord, son <strong>rendement</strong> (91 % contre 68 %) permet d'utiliser moins de matières premières pour la même quantité de produit, ce qui réduit les déchets (principe n°1 : éviter les déchets).</div>
+        <div class="calc-step">Le <strong>solvant</strong> de la voie B (éthanol, biosourcé et peu toxique) est bien plus sûr que le dichlorométhane de la voie A, suspecté CMR (principe n°5 : solvants plus sûrs).</div>
+        <div class="calc-step">La voie B utilise un <strong>catalyseur régénéré</strong> (acide sulfurique) et fonctionne à <strong>plus basse température</strong> et sur une <strong>durée plus courte</strong> : elle consomme donc moins d'énergie (principe n°6 et n°9).</div>
+        <div class="calc-step">Enfin, la voie B compte <strong>2 étapes</strong> contre 4 pour la voie A (dont une protection/déprotection, coûteuse en réactifs et en énergie), et ne produit que de l'<strong>eau</strong> comme sous-produit, contre des sous-produits non valorisés en voie A (principe n°8 : réduire le nombre de dérivés).</div>
+        <p style="margin-top:10px;">La voie A n'est pas nécessairement à écarter dans l'absolu (elle peut être choisie pour d'autres raisons, ex. disponibilité des réactifs), mais du point de vue strict de la chimie verte, la voie B est clairement préférable.</p>
+      </div>
+    </div>
+
+  </div><!-- /accord-body chimie verte -->
+
+  </div><!-- /sub-B-4 (B5) -->
+
+</div><!-- /tab-1 (Partie B) -->
+
+<!-- ══════════════════════════════════
+     ONGLET 3 – BILAN & RESSOURCES
+══════════════════════════════════════ -->
+<div class="tab-content" id="tab-2">
+
+  <!-- Sous-onglets C -->
+  <nav class="sub-tabs-nav" id="sub-nav-C">
+    <button class="sub-tab-btn active" data-sub="C1" onclick="switchSubTab('C',0)">
+      <span class="sub-tab-num">📋</span> Bilan
+    </button>
+    <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+      <span class="sub-tab-num">🔗</span> Ressources
+    </button>
+  </nav>
+
+  <!-- ══ Sous-onglet Bilan ══ -->
+  <div class="sub-tab-content active" id="sub-C-0">
+  <div class="section-title"><span class="icon">📋</span> Bilan de la séquence</div>
+
+  <div class="intro-box">
+    Récapitulatif des notions essentielles et des capacités exigibles du B.O. spécial n° 8 du 25 juillet 2019.
+  </div>
+
+  <div class="bilan-grid">
+    <div class="bilan-card">
+      <h4>Partie A.1 – Extraction & identification</h4>
+      <ul class="ke-list">
+        <li>Solide : filtration Büchner, lavage au solvant glacé, séchage</li>
+        <li>Liquide : extraction par solvant à l'ampoule à décanter, séchage, élimination du solvant</li>
+        <li>Identification solide : température de fusion (banc Kofler)</li>
+        <li>Identification liquide : densité, T° ébullition, indice de réfraction</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Partie A.2 – Rendement r = n<sub>f</sub>/n<sub>max</sub></h4>
+      <ul class="ke-list">
+        <li>Réactif en excès → déplacement d'équilibre → r augmente</li>
+        <li>Élimination d'un produit formé → Q<sub>r</sub> &lt; K en permanence → réaction totale, r = 1</li>
+        <li>Distillation fractionnée : élimine le produit le plus volatil</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Partie A.3 – Contrôle de la vitesse</h4>
+      <ul class="ke-list">
+        <li>Facteurs cinétiques : concentration, température ; catalyseur</li>
+        <li>Catalyseur préférable à T↑ : coût énergétique nul (régénéré)</li>
+        <li>Agitation : homogénéise et solubilise</li>
+        <li>Reflux : chauffe sans perte de matière par évaporation</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Partie B.1/B.2 – Mécanisme & chocs</h4>
+      <ul class="ke-list">
+        <li>Intermédiaire réactionnel : formé puis consommé</li>
+        <li>Catalyseur : consommé puis régénéré, modifie le mécanisme</li>
+        <li>Flèche courbe : part d'un site donneur (δ<sup>−</sup>) vers un site accepteur (δ<sup>+</sup>)</li>
+        <li>T↑ et/ou [X]↑ → chocs plus fréquents → chocs efficaces plus fréquents</li>
+      </ul>
+    </div>
+    <div class="bilan-card">
+      <h4>Partie B.3 – Types de réaction & polymères</h4>
+      <ul class="ke-list">
+        <li>Oxydoréduction : transfert d'électrons entre 2 couples ox/réd</li>
+        <li>Acide-base : transfert de proton entre 2 couples acide/base</li>
+        <li>Addition : plus de liaisons simples que dans le substrat</li>
+        <li>Élimination : moins de liaisons simples que dans le substrat</li>
+        <li>Substitution : un groupe sortant remplacé par un groupe entrant</li>
+        <li>Polymère = motifs répétés (N fois) issus de monomères</li>
+      </ul>
+      <a class="bilan-video-link" href="https://www.youtube.com/watch?v=SX89g3r57O0" target="_blank" rel="noopener">▶ Vidéo — La synthèse du nylon (C'est pas sorcier)</a>
+      <a class="bilan-video-link" href="https://youtu.be/BUA7lbchuAA" target="_blank" rel="noopener">▶ Vidéo — Polymérisation (Les Bons Profs)</a>
+    </div>
+    <div class="bilan-card">
+      <h4>Partie B.4/B.5 – Protection & chimie verte</h4>
+      <ul class="ke-list">
+        <li>Protection/déprotection : assure la sélectivité sur composé polyfonctionnel</li>
+        <li>Groupe protecteur : sélectif, stable, facile à enlever</li>
+        <li>12 principes de la chimie verte (Anastas & Warner, 1998)</li>
+        <li>Catalyseurs, réactifs et solvants moins toxiques : synthèse écoresponsable</li>
+      </ul>
+      <a class="bilan-video-link" href="https://youtu.be/2NJTYWIf7BY" target="_blank" rel="noopener">▶ Vidéo — Exercice : protection/déprotection (Florence Raffin)</a>
+    </div>
+  </div>
+
+  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>📖 Glossaire de la séquence</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p><strong style="color:var(--bleu);">Rendement (r)</strong><br>Quotient entre la quantité de matière finale de produit obtenu et la quantité maximale théorique (r = n<sub>f</sub>/n<sub>max</sub>).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Catalyseur</strong><br>Espèce chimique consommée puis régénérée au cours d'un mécanisme réactionnel ; elle accélère la transformation sans modifier l'état final.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Intermédiaire réactionnel</strong><br>Espèce chimique formée puis consommée au cours d'un mécanisme réactionnel ; elle n'apparaît pas dans l'équation bilan.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Mécanisme réactionnel</strong><br>Suite d'étapes (actes) élémentaires qui décrit, au niveau moléculaire, comment se déroule une réaction complexe.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Acte élémentaire</strong><br>Étape unique d'un mécanisme réactionnel, au cours de laquelle un ou plusieurs doublets d'électrons se déplacent.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Site donneur / accepteur de doublet</strong><br>Site de forte densité électronique (δ<sup>−</sup>) qui cède un doublet, ou site de faible densité électronique (δ<sup>+</sup>) qui l'accueille ; relié par une flèche courbe.</p>
+      </div>
+      <div>
+        <p><strong style="color:var(--bleu);">Chimiosélectif</strong><br>Se dit d'un réactif qui ne réagit que sur une seule fonction d'un composé polyfonctionnel, sans affecter les autres.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Groupe protecteur</strong><br>Groupe formé sur une fonction pour bloquer temporairement sa réactivité ; il doit être sélectif, stable, et facile à enlever (déprotection).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Addition / Élimination / Substitution</strong><br>Trois types de réactions caractérisés par la comparaison du nombre de liaisons simples (addition : plus ; élimination : moins) ou par le remplacement d'un groupe (substitution).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Polymère / Monomère</strong><br>Macromolécule formée par répétition d'un motif (polymère), issue de l'assemblage de petites molécules appelées monomères.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Chimie verte</strong><br>Ensemble de 12 principes (Anastas & Warner, 1998) visant à réduire l'impact environnemental d'une synthèse chimique.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Montage à reflux</strong><br>Dispositif permettant de chauffer un milieu réactionnel à ébullition sans perte de matière, grâce à la condensation des vapeurs par un réfrigérant.</p>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /sub-C-0 (Bilan) -->
+
+  <!-- ══ Sous-onglet Ressources ══ -->
+  <div class="sub-tab-content" id="sub-C-1">
+
+  <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
+
+    <a href="https://www.youtube.com/watch?v=_ZKJu78COCU" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo — Capsule Stratégie de synthèse</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Physique Chimie · Introduction à l'optimisation d'une synthèse</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/09_schema_anime.mp4" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo bilan animée</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier · Schéma animé de synthèse de la séquence</p>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=VycmSMY5-cw" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo — Synthèse organique : cours complet</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Nomenclature, familles fonctionnelles, formules topologiques, polymères, rendement, reflux, stratégie de synthèse — révision globale de la séquence.</p>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=k5L-gGmQbPc" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo — Stratégie de synthèse organique</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Synthèse multi-étapes, banque de réactions, addition/élimination/substitution, protection — révision globale de la partie B.</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🔬</span> Simulations & animations</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
+
+    <a href="http://chimie.ostralo.net/mecanisme_reaction/index.htm" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">⚗️ Mécanismes réactionnels (3 exemples)</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Ostralo · Bromation, hydratation, synthèse d'éther — Partie B.1</p>
+      </div>
+    </a>
+
+    <a href="https://chimie.ostralo.net/mecanisme_reaction/pages/bromation.htm" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">⚗️ Bromation d'un alcène</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Ostralo · Addition électrophile, ion bromonium intermédiaire</p>
+      </div>
+    </a>
+
+    <a href="https://chimie.ostralo.net/mecanisme_reaction/pages/hydratation.htm" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">⚗️ Hydratation d'un alcène</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Ostralo · Addition électrophile en milieu acide, carbocation intermédiaire</p>
+      </div>
+    </a>
+
+    <a href="https://chimie.ostralo.net/mecanisme_reaction/pages/ether.htm" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">⚗️ Synthèse d'un éther en milieu basique</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Ostralo · Substitution nucléophile de type Williamson</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">📝</span> QCM</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/09_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM de prérequis</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Vérifier ses acquis avant d'aborder la séquence</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/09_QCM/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM de maîtrise des notions</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Faire le point sur l'ensemble de la séquence</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🔭</span> Pour aller plus loin</div>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:8px;">
+
+    <a href="https://miao.ensad.fr/2018/08/21/polymeres-bio-sources-quels-defis/" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--violet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(123,79,166,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--violet);">🔭 Article — Polymères bio-sourcés, quels défis ?</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">M.I.A.O (ENSAD) · Article de fond sur les polymères biosourcés (PLA, PHA…), niveau supérieur au programme — pour les élèves curieux d'approfondir la notion de synthèse écoresponsable (partie B.5).</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2025 · Nouvelle Calédonie · Jour 2</span>
+      <span>9 points · 1h35</span>
+    </div>
+    <h4>Synthèse d'un édulcorant : l'aspartame</h4>
+    <div class="bac-theme">Thème : Acide-base · Synthèse organique · Titrage pH-métrique</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Acide-base</span>
+      <span class="bac-tag">pKa</span>
+      <span class="bac-tag">Diagramme de prédominance</span>
+      <span class="bac-tag">Titrage pH-métrique</span>
+      <span class="bac-tag">Taux d'avancement final</span>
+      <span class="bac-tag">Mécanismes réactionnels</span>
+      <span class="bac-tag">Site donneur / accepteur</span>
+      <span class="bac-tag">Protection / déprotection</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-04/2025-11-NelleCaledonie-J2-Exo1-Sujet-Aspartame-9pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <span class="pastille pastille-disabled">Corrigé non disponible</span>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2021 · Asie · Sujet 1 · Exercice B</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Synthèse d'un biocarburant</h4>
+    <div class="bac-theme">Thème : Synthèse organique</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Synthèse d'un ester</span>
+      <span class="bac-tag">Cinétique</span>
+      <span class="bac-tag">Incertitude</span>
+      <span class="bac-tag">Rendement</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2022-03/2021-Asie-Sujet1-ExoB-SyntheseEster-Biocarburant-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-01/2021-Asie-Sujet1-ExoB-Correction-Biocarburant-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2021 · Centres étrangers · Sujet 2 · Exercice B</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Synthèse d'un arôme alimentaire</h4>
+    <div class="bac-theme">Thème : Spectroscopie · Synthèse organique</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Synthèse chimique</span>
+      <span class="bac-tag">Optimisation d'une synthèse</span>
+      <span class="bac-tag">Spectroscopie IR</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2022-03/2021-Centres-etrangers-ExoB-Sujet-EsterRhum-5pts.doc" target="_blank" rel="noopener">📄 Sujet (.doc)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-03/2021-Centres-etrangers-ExoB-Correction-EsterRhum-5pts.docx" target="_blank" rel="noopener">✓ Corrigé (.docx)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2023 · Centres étrangers 2 · Jour 2 · Exercice 2</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Synthèse et recyclage du PET en vanilline</h4>
+    <div class="bac-theme">Thème : Acide-base · Synthèse organique</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Synthèse organique</span>
+      <span class="bac-tag">Élimination d'un produit</span>
+      <span class="bac-tag">Rendement</span>
+      <span class="bac-tag">Polymères</span>
+      <span class="bac-tag">Acide-base</span>
+      <span class="bac-tag">Diagramme de prédominance</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-01/2023-Liban-J2-Exo2-Sujet-PETVanilline-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-03/2023-Liban-J2-Exo2-Correction-PETVanilline-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  </div><!-- /sub-C-1 (Ressources) -->
+
+  <div class="footer-note">
+    Séquence 12 — Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin<br>
+    D'après le B.O. spécial n° 8 du 25 juillet 2019
+  </div>
+
+</div><!-- /tab-2 (Bilan & Ressources) -->
+
+
+</main>
+
+<script>
+// ──────────────────────────────────────────────────────
+// ── NAVIGATION ONGLETS
+// ──────────────────────────────────────────────────────
+function switchTab(n) {
+  document.querySelectorAll('.tab-content').forEach((t,i) => {
+    t.classList.toggle('active', i === n);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', i === n);
+  });
+}
+
+function switchSubTab(group, n) {
+  const prefix = 'sub-' + group + '-';
+  document.querySelectorAll('[id^="' + prefix + '"]').forEach((el, i) => {
+    el.classList.toggle('active', i === n);
+  });
+  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === n);
+  });
+}
+
+// ── TOGGLE CAPACITÉS
+document.getElementById('capToggle').addEventListener('click', () => {
+  document.getElementById('capPanel').classList.toggle('open');
+});
+
+// ── ACCORDÉON
+function toggleAccord(btn) {
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+  btn.querySelector('span:last-child').textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+// ──────────────────────────────────────────────────────
+// ── QCM (boutons)
+// ──────────────────────────────────────────────────────
+function repondreQCM(btnEl, bonne, choix, explication, fbId) {
+  const fb = document.getElementById(fbId);
+  const btns = fb.parentElement.querySelectorAll('.qcm-btn');
+  btns.forEach(b => b.disabled = true);
+  const isCorrect = (choix === bonne);
+  if (isCorrect) {
+    fb.textContent = '✓ ' + explication;
+    fb.className = 'qcm-feedback';
+    btnEl.classList.add('correct');
+  } else {
+    fb.textContent = '✗ ' + explication;
+    fb.className = 'qcm-feedback wrong';
+    btnEl.classList.add('wrong');
+    btns.forEach(b => { if (b.textContent.trim().replace(/\s+/g,' ') === bonne) b.classList.add('correct'); });
+  }
+}
+
+// ──────────────────────────────────────────────────────
+// ── EXERCICE À TROUS (listes déroulantes)
+// ──────────────────────────────────────────────────────
+function verifBlank(selId, bonneValeur, fbId) {
+  const sel = document.getElementById(selId);
+  const fb  = document.getElementById(fbId);
+  const val = sel.value;
+  if (!val) { fb.textContent = '⚠ Choisis une réponse.'; fb.className = 'dq-feedback wrong'; return; }
+  const ok = (val === bonneValeur);
+  sel.className = 'dq-select ' + (ok ? 'correct' : 'wrong');
+  if (ok) {
+    fb.textContent = '✓';
+    fb.className = 'dq-feedback';
+    sel.disabled = true;
+  } else {
+    fb.textContent = '✗ réessaie';
+    fb.className = 'dq-feedback wrong';
+  }
+}
+
+// ──────────────────────────────────────────────────────
+// ── EXERCICE — Banque de réactions (3 synthèses)
+// ──────────────────────────────────────────────────────
+function verifSynthese(id, correctSteps) {
+  const vals = correctSteps.map((_, i) => document.getElementById(id + '-' + (i + 1)).value);
+  const fb = document.getElementById('fb-' + id);
+  if (vals.some(v => !v)) {
+    fb.textContent = '⚠ Choisis une réaction pour chaque étape.';
+    fb.className = 'dq-feedback wrong';
+    return;
+  }
+  const ok = vals.every((v, i) => v === correctSteps[i]);
+  if (ok) {
+    fb.textContent = '✓ Exact ! Séquence correcte : ' + correctSteps.join(' puis ') + '.';
+    fb.className = 'dq-feedback';
+    document.getElementById('nc-' + id).classList.add('visible');
+  } else {
+    fb.textContent = '✗ Ce n\'est pas la bonne séquence — clique sur « Voir la correction » pour comprendre pourquoi.';
+    fb.className = 'dq-feedback wrong';
+  }
+}
+function resetSynthese(id, nSteps) {
+  for (let i = 1; i <= nSteps; i++) document.getElementById(id + '-' + i).value = '';
+  document.getElementById('fb-' + id).textContent = '';
+  document.getElementById('fb-' + id).className = 'dq-feedback';
+  document.getElementById('nc-' + id).classList.remove('visible');
+}
+
+// ──────────────────────────────────────────────────────
+// ── EXERCICE — Identifier les opérations d'optimisation (protocole)
+// ──────────────────────────────────────────────────────
+const PROTO_CORRECT = ['rendement','vitesse','rendement','vitesse','autre','autre','autre','autre'];
+function verifProtocole() {
+  const fb = document.getElementById('fb-proto');
+  const vals = PROTO_CORRECT.map((_, i) => document.getElementById('proto-' + (i + 1)).value);
+  if (vals.some(v => !v)) {
+    fb.textContent = '⚠ Choisis une réponse pour chaque étape.';
+    fb.className = 'dq-feedback wrong';
+    return;
+  }
+  let allOk = true;
+  PROTO_CORRECT.forEach((c, i) => {
+    const sel = document.getElementById('proto-' + (i + 1));
+    const ok = sel.value === c;
+    sel.className = 'dq-select ' + (ok ? 'correct' : 'wrong');
+    if (!ok) allOk = false;
+  });
+  if (allOk) {
+    fb.textContent = '✓ Bravo, toutes les réponses sont correctes !';
+    fb.className = 'dq-feedback';
+    document.getElementById('nc-proto').classList.add('visible');
+  } else {
+    fb.textContent = '✗ Certaines réponses ne sont pas correctes (en rouge) — clique sur « Voir la correction » pour comprendre.';
+    fb.className = 'dq-feedback wrong';
+  }
+}
+function resetProtocole() {
+  for (let i = 1; i <= 8; i++) {
+    const sel = document.getElementById('proto-' + i);
+    sel.value = '';
+    sel.className = 'dq-select';
+  }
+  document.getElementById('fb-proto').textContent = '';
+  document.getElementById('fb-proto').className = 'dq-feedback';
+  document.getElementById('nc-proto').classList.remove('visible');
+}
+
+// ──────────────────────────────────────────────────────
+// ── EXERCICE — Analyser un mécanisme réactionnel (B.1)
+// ──────────────────────────────────────────────────────
+function resetMecanisme() {
+  ['mec-q1', 'mec-q2', 'mec-q3'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.value = '';
+    sel.className = 'dq-select';
+    sel.disabled = false;
+  });
+  document.getElementById('fb-mec-q1').textContent = '';
+  document.getElementById('fb-mec-q1').className = 'dq-feedback';
+  document.getElementById('fb-mec-q2').textContent = '';
+  document.getElementById('fb-mec-q2').className = 'dq-feedback';
+  document.getElementById('fb-mec-q3').textContent = '';
+  document.getElementById('fb-mec-q3').className = 'dq-feedback';
+  document.getElementById('nc-mec').classList.remove('visible');
+}
+
+// ──────────────────────────────────────────────────────
+// ── EXERCICE — Animations PCCL estérification (A.2)
+// ──────────────────────────────────────────────────────
+function resetPccl() {
+  ['pccl-q1', 'pccl-q2'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.value = '';
+    sel.className = 'dq-select';
+    sel.disabled = false;
+  });
+  document.getElementById('fb-pccl-q1').textContent = '';
+  document.getElementById('fb-pccl-q1').className = 'dq-feedback';
+  document.getElementById('fb-pccl-q2').textContent = '';
+  document.getElementById('fb-pccl-q2').className = 'dq-feedback';
+  document.getElementById('nc-pccl').classList.remove('visible');
+}
+
+// ──────────────────────────────────────────────────────
+// ── EXERCICE — Monomères, motifs et classification (B.3)
+// ──────────────────────────────────────────────────────
+function resetPolymeres() {
+  ['poly-q1', 'poly-q2', 'poly-q3', 'poly-q4', 'poly-q5', 'poly-q6'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.value = '';
+    sel.className = 'dq-select';
+    sel.disabled = false;
+    const fb = document.getElementById('fb-' + id);
+    fb.textContent = '';
+    fb.className = 'dq-feedback';
+  });
+}
+
+// ──────────────────────────────────────────────────────
+// ── ANIMATION CANVAS — Cinétique n_ester(t)
+// ──────────────────────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('canvasCinetique');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const marginL = 55, marginB = 36, marginT = 18, marginR = 16;
+  const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
+
+  // Échelle temps non linéaire par paliers : 0-8-28-155 (h), représentés proportionnellement (avec cassure visuelle)
+  const tTicks = [0, 8, 28, 155];
+  const tLabels = ['0', '8', '28', '155'];
+  const nEsterMax = 0.67;
+
+  // Courbes (approximations de type 1 - exp(-k t) atteignant 0.67 aux temps caractéristiques)
+  function courbe(t, tCarac) { return nEsterMax * (1 - Math.exp(-3 * t / tCarac)); }
+
+  function xOf(t) {
+    // échelle log-like simplifiée pour étaler les 3 temps caractéristiques sur le graphe
+    const tMax = 160;
+    return marginL + (Math.log(1 + t) / Math.log(1 + tMax)) * plotW;
+  }
+  function yOf(n) { return marginT + plotH - (n / (nEsterMax * 1.15)) * plotH; }
+
+  let progress = 0; // 0 → 1
+  let animId = null;
+  let playing = false;
+
+  function drawAxes() {
+    ctx.strokeStyle = '#DDE3EC';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(marginL, marginT); ctx.lineTo(marginL, marginT + plotH); ctx.lineTo(marginL + plotW, marginT + plotH);
+    ctx.stroke();
+
+    ctx.fillStyle = '#5A6B7A';
+    ctx.font = '11px Nunito, sans-serif';
+    ctx.textAlign = 'center';
+    tTicks.forEach((t, i) => {
+      const x = xOf(t);
+      ctx.beginPath(); ctx.moveTo(x, marginT + plotH); ctx.lineTo(x, marginT + plotH + 4); ctx.strokeStyle = '#DDE3EC'; ctx.stroke();
+      ctx.fillText(tLabels[i], x, marginT + plotH + 16);
+    });
+    ctx.textAlign = 'right';
+    ctx.fillText('0,67', marginL - 8, yOf(nEsterMax) + 4);
+    ctx.fillText('0', marginL - 8, yOf(0) + 4);
+    ctx.beginPath(); ctx.setLineDash([3,3]); ctx.strokeStyle = '#B8D4EC';
+    ctx.moveTo(marginL, yOf(nEsterMax)); ctx.lineTo(marginL + plotW, yOf(nEsterMax));
+    ctx.stroke(); ctx.setLineDash([]);
+
+    ctx.save();
+    ctx.translate(14, marginT + plotH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#2D5F8A';
+    ctx.font = '11px Outfit, sans-serif';
+    ctx.fillText('n_ester (mol)', 0, 0);
+    ctx.restore();
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#2D5F8A';
+    ctx.font = '11px Outfit, sans-serif';
+    ctx.fillText('t (h)', marginL + plotW, marginT + plotH + 30);
+  }
+
+  function drawCurve(tCarac, color, labelX, labelY, label, tMaxDraw) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    const steps = 120;
+    let started = false;
+    for (let i = 0; i <= steps; i++) {
+      const t = (tMaxDraw * i / steps);
+      const frac = t / tMaxDraw;
+      if (frac > progress) break;
+      const n = courbe(t, tCarac);
+      const x = xOf(t), y = yOf(n);
+      if (!started) { ctx.moveTo(x, y); started = true; } else { ctx.lineTo(x, y); }
+    }
+    ctx.stroke();
+    if (progress > 0.05) {
+      ctx.fillStyle = color;
+      ctx.font = 'bold 11px Nunito, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(label, labelX, labelY);
+    }
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+    drawAxes();
+    drawCurve(8,   '#E8783A', xOf(3),  yOf(0.60), '70°C + H₂SO₄', 8);
+    drawCurve(28,  '#7B4FA6', xOf(14), yOf(0.42), '70°C', 28);
+    drawCurve(155, '#2D5F8A', xOf(60), yOf(0.30), '20°C', 155);
+  }
+
+  function step() {
+    progress += 0.006;
+    if (progress >= 1) { progress = 1; playing = false; document.getElementById('btn-cin-play').textContent = '▶ Rejouer'; }
+    render();
+    if (playing) animId = requestAnimationFrame(step);
+  }
+
+  window.toggleCinetique = function () {
+    const btn = document.getElementById('btn-cin-play');
+    if (progress >= 1) { progress = 0; }
+    if (!playing) {
+      playing = true;
+      btn.textContent = '⏸ Pause';
+      animId = requestAnimationFrame(step);
+    } else {
+      playing = false;
+      btn.textContent = '▶ Reprendre';
+      if (animId) cancelAnimationFrame(animId);
+    }
+  };
+  window.resetCinetique = function () {
+    playing = false;
+    if (animId) cancelAnimationFrame(animId);
+    progress = 0;
+    document.getElementById('btn-cin-play').textContent = '▶ Lancer l\'animation';
+    render();
+  };
+
+  render();
+})();
+
+// ──────────────────────────────────────────────────────
+// ── ANIMATION CANVAS — Chocs entre entités (B.2)
+// ──────────────────────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('canvasChocs');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  let mode = 'froid';
+  const MODES = {
+    froid:     { n: 8,  speed: 0.5, label: 'T faible, [X] faible : peu de chocs' },
+    chaud:     { n: 8,  speed: 1.8, label: 'T élevée : chocs plus fréquents et plus violents' },
+    concentre: { n: 18, speed: 0.5, label: '[X] élevée : plus d\'entités, chocs plus fréquents' }
+  };
+
+  let particles = [];
+  function initParticles(n) {
+    particles = [];
+    for (let i = 0; i < n; i++) {
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * (H - 40) + 10,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        color: i % 2 === 0 ? '#2D5F8A' : '#E8783A',
+        flashT: 0
+      });
+    }
+  }
+  initParticles(MODES[mode].n);
+
+  window.setChocMode = function (m) {
+    mode = m;
+    document.querySelectorAll('#canvasChocs').forEach(()=>{});
+    document.querySelectorAll('.anim-btn[data-choc]').forEach(b => b.classList.toggle('active', b.dataset.choc === m));
+    initParticles(MODES[m].n);
+  };
+
+  function step() {
+    const cfg = MODES[mode];
+    ctx.clearRect(0, 0, W, H);
+
+    // titre dynamique
+    ctx.fillStyle = '#5A6B7A';
+    ctx.font = '12px Nunito, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(cfg.label, W / 2, H - 8);
+
+    // déplacement
+    particles.forEach(p => {
+      p.x += p.vx * cfg.speed;
+      p.y += p.vy * cfg.speed;
+      if (p.x < 8 || p.x > W - 8) p.vx *= -1;
+      if (p.y < 8 || p.y > H - 30) p.vy *= -1;
+      if (p.flashT > 0) p.flashT -= 1;
+    });
+
+    // collisions simplifiées
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 14) {
+          const tmpvx = a.vx; a.vx = b.vx; b.vx = tmpvx;
+          const tmpvy = a.vy; a.vy = b.vy; b.vy = tmpvy;
+          a.flashT = 12; b.flashT = 12;
+        }
+      }
+    }
+
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.fillStyle = p.flashT > 0 ? '#3A8A6E' : p.color;
+      ctx.arc(p.x, p.y, p.flashT > 0 ? 7 : 5.5, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
+</script>
+</body>
+</html>
+
