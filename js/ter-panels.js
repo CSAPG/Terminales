@@ -90,7 +90,7 @@ const TER_SEQUENCES = [
       {
         id: 'Cours', label: 'Cours', actif: true,
         items: [
-          { type:'link', icon:'📄', label:'Cours - Evolution d'un système chimique',
+          { type:'link', icon:'📄', label:'Cours - Evolution d\'un système chimique',
         sub:'Fiche de cours en pdf',
         href:'seq01/Sequence_01-fiche_de_cours.pdf' },    
           { type:'link', icon:'🎓', label:'Cours interactif',
