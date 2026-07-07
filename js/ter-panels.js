@@ -90,7 +90,10 @@ const TER_SEQUENCES = [
       {
         id: 'Cours', label: 'Cours', actif: true,
         items: [
-          { type:'link', icon:'📖', label:'Cours interactif',
+          { type:'link', icon:'📄', label:'Cours - Evolution d'un système chimique',
+        sub:'Fiche de cours en pdf',
+        href:'seq01/Sequence_01-fiche_de_cours.pdf' },    
+          { type:'link', icon:'🎓', label:'Cours interactif',
             sub:'Séquence 1 — Évolution d\'un système chimique par Mme Poirault-Gauvin',
             href:'seq01/seq01-cours_interactif.html' },
           { type:'link', icon:'📖', label:'Fiche de révision',
@@ -138,6 +141,9 @@ const TER_SEQUENCES = [
       {
         id:'Cours', label:'Cours', actif: true,
         items: [
+       { type:'link', icon:'📄', label:'Cours Acides-Bases',
+        sub:'Fiche de cours en pdf',
+        href:'seq02/Seq2_Acide_Base.pdf' },      
           { type:'link', icon:'🎓', label:'Cours interactif — Acides et bases',
             sub:'Théorie de Brønsted-Lowry · pH · pKa · Réactions acido-basiques',
             href:'seq02/seq02-cours_interactif.html' },
@@ -589,8 +595,11 @@ const TER_SEQUENCES = [
     headerBg: 'seq14/image14.png',
     tabs: [
        {
-          id:'Cours interactif', label:'Cours interactif', actif: true,
+          id:'Cours', label:'Cours', actif: true,
         items: [
+           { type:'link', icon:'📖', label:'Cours-Radioactivité',
+          sub:'Fiche de cours en pdf',
+          href:'seq14/Séquence 14_radioactivité_fiche de cours.pdf' },
             { type:'link', icon:'🎓', label:'cours interactif',
         sub:'Désintégration . Loi de décroissance . Activité . Par Mme Poirault-Gauvin',
         href:'seq14/seq14-cours-interactif-radioactivite.html' }, 
