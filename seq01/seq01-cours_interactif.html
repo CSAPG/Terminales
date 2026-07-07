@@ -914,6 +914,58 @@
   .ke-list li:last-child { border-bottom: none; }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
+  /* ── SUJETS DE BAC ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-bottom: 6px;
+  }
+  .bac-lieu { font-weight: 700; color: var(--violet); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 4px 0 6px;
+  }
+  .bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .bac-tag {
+    background: var(--violet-clair);
+    color: var(--violet);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pastille {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    transition: box-shadow 0.2s, background 0.2s;
+  }
+  .pastille-sujet { color: var(--bleu); border-color: var(--bleu); }
+  .pastille-sujet:hover { background: var(--bleu-clair); }
+  .pastille-corrige { color: var(--vert); border-color: var(--vert); }
+  .pastille-corrige:hover { background: var(--vert-clair); }
+
   /* ── CANVAS ANIMATION ── */
   .anim-canvas-wrap {
     background: #F8FAFC;
@@ -987,7 +1039,7 @@
     </div>
     <div class="header-titles">
       <h1>Évolution spontanée d'un système chimique</h1>
-      <p>Thème : <span>Transformations chimiques – Piles et électrolyse</span> ·&copy C. Poirault-Gauvin</p>
+      <p>Thème : <span>Transformations chimiques – Piles et électrolyse</span> · C. Poirault-Gauvin</p>
     </div>
     <!-- Icône pile animée -->
     <div class="pile-icon-wrap" title="Pile électrochimique : conversion d'énergie chimique en énergie électrique">
@@ -1011,7 +1063,7 @@
       <span class="tab-num">B</span> Forcer l'évolution (voir B1, B2, B3)
     </button>
     <button class="tab-btn" onclick="switchTab(2)">
-      <span class="tab-num">✓</span> Bilan & Ressources
+      <span class="tab-num">C</span> Bilan & Ressources
     </button>
   </nav>
   <div class="cap-panel" id="capPanel">
@@ -3638,8 +3690,18 @@
 ══════════════════════════════════════ -->
 <div class="tab-content" id="tab-2">
 
+ <!-- Sous-onglets C -->
+<nav class="sub-tabs-nav" id="sub-nav-C">
+  <button class="sub-tab-btn active" data-sub="C1" onclick="switchSubTab('C',0)">
+    <span class="sub-tab-num">C1</span> Bilan
+  </button>
+  <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+    <span class="sub-tab-num">C2</span> Ressources
+  </button>
+</nav>
+  <!-- Sous-onglet C1 -->
+<div class="sub-tab-content active" id="sub-C-0">
   <div class="section-title"><span class="icon">📋</span> Bilan de la séquence</div>
-
   <div class="intro-box">
     Récapitulatif des notions essentielles et des capacités exigibles du B.O. spécial n° 8 du 25 juillet 2019.
   </div>
@@ -3685,9 +3747,11 @@
       </ul>
     </div>
   </div>
-
-  <!-- Ressources numériques -->
-  <div class="section-title" style="margin-top:32px;"><span class="icon">🔗</span> Ressources numériques</div>
+</div><!-- /sub-C-0 (Bilan) -->
+  <!-- Sous-onglet C2 -->
+  <div class="sub-tab-content" id="sub-C-1">
+  <!-- Vidéos -->
+  <div class="section-title" style="margin-top:32px;"><span class="icon">🎬</span> Vidéos</div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
 
@@ -3704,6 +3768,16 @@
         <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Cours n°6 · Sciences physiques à Stella<br>Partie A.3</p>
       </div>
     </a>
+        <a href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/energies/fonctionnement-electrolyseur-pile-a-combustible.aspx" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">▶ Vidéo — Électrolyseur et pile à combustible</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">CEA · Fonctionnement de l'électrolyseur et de la pile à combustible · Partie B</p>
+      </div>
+    </a>
+</div>
+ <div class="section-title" style="margin-top:28px;"><span class="icon">🔬</span> Simulations & animations</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
 
     <a href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/terminale_TS/ajusterRedox_flash.htm" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
@@ -3726,20 +3800,74 @@
       </div>
     </a>
 
-    <a href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/energies/fonctionnement-electrolyseur-pile-a-combustible.aspx" target="_blank" rel="noopener" style="text-decoration:none;">
-      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
-        <h4 style="color:var(--vert);">▶ Vidéo — Électrolyseur et pile à combustible</h4>
-        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">CEA · Fonctionnement de l'électrolyseur et de la pile à combustible · Partie B</p>
-      </div>
-    </a>
+</div>
+  </div>
+<div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2022 · Métropole · Jour 2</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Des piles historiques</h4>
+    <div class="bac-theme">Thème : Transformations chimiques · Piles et électrolyse</div>
+    <div class="bac-notions">
+      <span class="bac-tag">oxydo-réduction</span>
+      <span class="bac-tag">fonctionnement d'une pile</span>
+      <span class="bac-tag">calcul de réactif limitant</span>
+      <span class="bac-tag">durée d'utilisation maximale de la pile</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-06/2022-Metropole-J2-ExoC-Sujet-PilesHistoriques-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-05/2022-Metropole-J2-ExoC-Correction-PilesHistoriques-5pts_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2025 · Métropole (session sept.) · Jour 1</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Traitement de surface d'une pièce de jeu d'échecs</h4>
+    <div class="bac-theme">Thème : Électrolyse · Anodisation de l'aluminium</div>
+    <div class="bac-notions">
+      <span class="bac-tag">oxydo-réduction</span>
+      <span class="bac-tag">électrolyse</span>
+      <span class="bac-tag">masse de dépôt métallique</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2025-09-Metropole-J1-Exo3-Sujet-ElectrolyseAnodisation-5pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-03/2025-09-Metropole-J1-Exo3-Correction-ElectrolyseAnodisation-5pts.docx" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2026 · Amérique du Nord · Jour 2</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>HOPE, l'espoir du dihydrogène vert</h4>
+    <div class="bac-theme">Thème : Électrolyse · Production de dihydrogène</div>
+    <div class="bac-notions">
+      <span class="bac-tag">électrolyse</span>
+      <span class="bac-tag">production de dihydrogène</span>
+      <span class="bac-tag">étude quantitative</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2026-05/2026-AmNord-J2-Exo2-Sujet-ElectrolyseH2-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2026-05/2026-AmNord-J2-Exo2-Correction-ElectrolyseH2-5pts_2.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
 
   </div>
+
+  </div><!-- /sub-C-1 (Ressources) -->
 
   <div class="footer-note">
     Séquence 01 — Terminale Spécialité Physique-Chimie · C. Poirault-Gauvin<br>
     D'après le B.O. spécial n° 8 du 25 juillet 2019
   </div>
-
+ </div>
 </div><!-- /tab-2 (Bilan) -->
 
 </main>
