@@ -45,7 +45,7 @@
     border-bottom: 3px solid var(--bleu);
     border-radius: 14px;
     padding: 18px 24px 14px;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto 24px;
     position: sticky;
     top: 0;
@@ -279,7 +279,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -914,6 +914,18 @@
   .ke-list li:last-child { border-bottom: none; }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
+  .bilan-video-link {
+    display: block;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--gris-bord);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--bleu);
+    text-decoration: none;
+  }
+  .bilan-video-link:hover { color: #1e4466; text-decoration: underline; }
+
   /* ── SUJETS DE BAC ── */
   .bac-card {
     background: var(--blanc);
@@ -1039,7 +1051,7 @@
     </div>
     <div class="header-titles">
       <h1>Évolution spontanée d'un système chimique</h1>
-      <p>Thème : <span>Transformations chimiques – Piles et électrolyse</span> · C. Poirault-Gauvin</p>
+      <p>Thème : <span>Transformations chimiques – Piles et électrolyse</span> ·© C. Poirault-Gauvin</p>
     </div>
     <!-- Icône pile animée -->
     <div class="pile-icon-wrap" title="Pile électrochimique : conversion d'énergie chimique en énergie électrique">
@@ -1063,7 +1075,7 @@
       <span class="tab-num">B</span> Forcer l'évolution (voir B1, B2, B3)
     </button>
     <button class="tab-btn" onclick="switchTab(2)">
-      <span class="tab-num">C</span> Bilan & Ressources
+      <span class="tab-num">✓</span> Bilan & Ressources
     </button>
   </nav>
   <div class="cap-panel" id="capPanel">
@@ -1081,6 +1093,7 @@
       <li>Relier la durée, l'intensité du courant et les quantités de matière de produits formés.</li>
       <li>Citer des exemples de dispositifs de conversion et stockage d'énergie chimique et les enjeux sociétaux associés.</li>
     </ul>
+    <p style="margin-top:10px;font-size:0.78rem;color:var(--texte-leger);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
   </div>
 </div>
 
@@ -3693,10 +3706,10 @@
  <!-- Sous-onglets C -->
 <nav class="sub-tabs-nav" id="sub-nav-C">
   <button class="sub-tab-btn active" data-sub="C1" onclick="switchSubTab('C',0)">
-    <span class="sub-tab-num">C1</span> Bilan
+    <span class="sub-tab-num">📋</span> Bilan
   </button>
   <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
-    <span class="sub-tab-num">C2</span> Ressources
+    <span class="sub-tab-num">🔗</span> Ressources
   </button>
 </nav>
   <!-- Sous-onglet C1 -->
@@ -3725,6 +3738,7 @@
         <li>Q<sub>r,i</sub> = K → équilibre, pas d'évolution</li>
         <li>Q<sub>r,i</sub> &gt; K → sens indirect (←)</li>
       </ul>
+      <a class="bilan-video-link" href="https://www.youtube.com/watch?v=OK1wQKtd09U" target="_blank" rel="noopener">▶ Vidéo — Sens d'évolution (A.1 et A.2)</a>
     </div>
     <div class="bilan-card">
       <h4>Partie A.3 – Piles électrochimiques</h4>
@@ -3735,18 +3749,55 @@
         <li>Q<sub>max</sub> = n(e<sup>–</sup>)<sub>max</sub> × F = I × Δt (en coulombs)</li>
         <li>Pile qui débite : Q<sub>r</sub> ≠ K — Pile usée : Q<sub>r</sub> = K</li>
       </ul>
+      <a class="bilan-video-link" href="https://www.youtube.com/watch?v=XGiG3pohbyU" target="_blank" rel="noopener">▶ Vidéo — Piles électrochimiques (A.3)</a>
     </div>
     <div class="bilan-card">
-      <h4>Partie B – Électrolyse & Stockage</h4>
+      <h4>Partie B.1/B.2 – L'électrolyseur</h4>
       <ul class="ke-list">
+        <li>Électrolyse : transformation forcée par passage d'un courant électrique</li>
         <li>q = I × Δt et q = n(e<sup>–</sup>) × F</li>
         <li>Anode (pôle + du générateur) : oxydation forcée</li>
         <li>Cathode (pôle – du générateur) : réduction forcée</li>
+        <li>Modélisation des transferts d'électrons aux électrodes de l'électrolyseur</li>
+      </ul>
+      <a class="bilan-video-link" href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/energies/fonctionnement-electrolyseur-pile-a-combustible.aspx" target="_blank" rel="noopener">▶ Vidéo — Électrolyseur et pile à combustible (B)</a>
+    </div>
+    <div class="bilan-card">
+      <h4>Partie B.3/B.4 – Stockage & pile à combustible</h4>
+      <ul class="ke-list">
         <li>Accumulateur : pile lors de la décharge, électrolyseur lors de la charge</li>
-        <li>Piles à combustible et accumulateurs Li-ion : enjeux de transition énergétique</li>
+        <li>Pile à combustible : conversion directe H<sub>2</sub> + O<sub>2</sub> → H<sub>2</sub>O, sans combustion</li>
+        <li>Pile à combustible non rechargeable : consomme en continu son combustible</li>
+        <li>Piles à combustible et accumulateurs Li-ion : enjeux de la transition énergétique</li>
       </ul>
     </div>
   </div>
+
+  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>📖 Glossaire de la séquence</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p><strong style="color:var(--bleu);">Transformation non totale</strong><br>Transformation pour laquelle, à l'état final, réactifs et produits coexistent (x<sub>f</sub> &lt; x<sub>max</sub>).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Taux d'avancement final τ</strong><br>Rapport τ = x<sub>f</sub> / x<sub>max</sub>, compris entre 0 et 1, qui mesure le degré d'avancement d'une réaction à l'état final.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Quotient de réaction Q<sub>r</sub></strong><br>Grandeur sans unité construite à partir des concentrations des espèces dissoutes (solides et solvant exclus), qui permet de prévoir le sens d'évolution d'un système par comparaison à K.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Constante d'équilibre K</strong><br>Valeur du quotient de réaction à l'état d'équilibre, à une température donnée ; elle ne dépend que de la réaction et de la température.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Équilibre dynamique</strong><br>État final d'un système non totalement transformé, où les réactions directe et inverse se poursuivent à la même vitesse, sans évolution macroscopique des quantités de matière.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Pile électrochimique</strong><br>Dispositif qui convertit spontanément de l'énergie chimique en énergie électrique grâce à une réaction d'oxydoréduction séparée en deux demi-piles.</p>
+      </div>
+      <div>
+        <p><strong style="color:var(--bleu);">Anode / Cathode</strong><br>Anode : électrode où a lieu l'oxydation. Cathode : électrode où a lieu la réduction. Dans une pile, l'anode est la borne négative ; dans un électrolyseur, elle est reliée au pôle + du générateur.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Pont salin</strong><br>Dispositif reliant les deux demi-piles, qui ferme le circuit électrique et assure l'électroneutralité des solutions sans les mélanger.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Capacité électrique Q<sub>max</sub></strong><br>Quantité maximale d'électricité que peut débiter une pile, Q<sub>max</sub> = n(e<sup>–</sup>)<sub>max</sub> × F, avec F la constante de Faraday.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Électrolyse</strong><br>Transformation chimique forcée, imposée par le passage d'un courant électrique, dans le sens opposé à l'évolution spontanée du système (Q<sub>r</sub> évolue à l'opposé du sens spontané).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Électrolyseur</strong><br>Dispositif dans lequel un générateur impose un courant électrique pour forcer une transformation chimique non spontanée.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Accumulateur</strong><br>Générateur électrochimique rechargeable : il fonctionne comme une pile lors de la décharge (chimique → électrique) et comme un électrolyseur lors de la charge (électrique → chimique).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Pile à combustible</strong><br>Générateur électrochimique qui convertit en continu l'énergie chimique d'un combustible (H<sub>2</sub>) en énergie électrique, sans combustion ; non rechargeable, à ne pas confondre avec un accumulateur.</p>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /sub-C-0 (Bilan) -->
   <!-- Sous-onglet C2 -->
   <div class="sub-tab-content" id="sub-C-1">
@@ -3801,7 +3852,6 @@
     </a>
 
 </div>
-  </div>
 <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
 
   <div class="bac-card">
@@ -3859,18 +3909,15 @@
     </div>
   </div>
 
-  </div>
-
   </div><!-- /sub-C-1 (Ressources) -->
 
-  <div class="footer-note">
-    Séquence 01 — Terminale Spécialité Physique-Chimie · C. Poirault-Gauvin<br>
-    D'après le B.O. spécial n° 8 du 25 juillet 2019
-  </div>
- </div>
 </div><!-- /tab-2 (Bilan) -->
 
 </main>
+
+<div class="footer-note">
+  Séquence 01 — Évolution spontanée d'un système chimique · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin
+</div>
 
 <script>
 // ──────────────────────────────────────────────────────
