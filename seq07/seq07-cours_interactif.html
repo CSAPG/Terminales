@@ -41,17 +41,18 @@
   /* ── HEADER ── */
   .header {
     background: var(--blanc);
+    border: 1px solid #E3E8EE;
     border-bottom: 3px solid var(--bleu);
-    width: 100%;
+    border-radius: 14px;
+    max-width: 1300px;
+    margin: 0 auto 24px;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 12px rgba(45,95,138,0.10);
   }
   .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 18px 32px 0;
+    padding: 18px 24px 14px;
   }
   .header-top {
     display: flex;
@@ -227,7 +228,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1300px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -767,6 +768,58 @@
     line-height: 1.5;
   }
   .ke-list li:last-child { border-bottom: none; }
+
+  /* ── SUJETS DE BAC ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-bottom: 6px;
+  }
+  .bac-lieu { font-weight: 700; color: var(--violet); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 4px 0 6px;
+  }
+  .bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .bac-tag {
+    background: var(--violet-clair);
+    color: var(--violet);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .bac-pastille {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    transition: box-shadow 0.2s, background 0.2s;
+  }
+  .bac-pastille-sujet { color: var(--bleu); border-color: var(--bleu); }
+  .bac-pastille-sujet:hover { background: var(--bleu-clair); }
+  .bac-pastille-corrige { color: var(--vert); border-color: var(--vert); }
+  .bac-pastille-corrige:hover { background: var(--vert-clair); }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
   /* ── CANVAS ANIMATION ── */
@@ -934,7 +987,7 @@
   }
 
   @media (max-width: 600px) {
-    .header-inner { padding: 12px 16px 0; }
+    .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
     .main { padding: 18px 12px 50px; }
@@ -1490,28 +1543,6 @@
     </div>
   </div>
 
-  <div class="section-title"><span class="icon">📘</span> Annales — à traiter en autonomie</div>
-
-  <div class="bilan-exo-card">
-    <div class="bilan-tag">Bac 2026 · Centres étrangers · Sciences de l'ingénieur · 10 pts · 30 min</div>
-    <h3>Étude de l'effet Doppler à l'aide de deux téléphones</h3>
-    <div class="bilan-theme">Mesure expérimentale du décalage Doppler à partir de deux smartphones (l'un émetteur, l'autre récepteur), et détermination d'une vitesse à partir de la fréquence reçue.</div>
-    <div class="bilan-links">
-      <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Sujet-DopplerTelephone.pdf" target="_blank">📄 Sujet</a>
-      <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Correction-DopplerTelephone.pdf" target="_blank">✅ Corrigé</a>
-    </div>
-  </div>
-
-  <div class="bilan-exo-card">
-    <div class="bilan-tag">Bac 2024 · Métropole · Sciences de l'ingénieur · 10 pts · 30 min</div>
-    <h3>Galaxie d'Andromède</h3>
-    <div class="bilan-theme">Exploitation du décalage Doppler d'une onde électromagnétique pour déterminer la vitesse de rapprochement de la galaxie d'Andromède par rapport à la Voie lactée.</div>
-    <div class="bilan-links">
-      <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-08/2024-Metro-SI-J1-ExoA-Sujet-AndromedeDoppler-10pts-30min.pdf" target="_blank">📄 Sujet</a>
-      <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2024-06/2024-Metro-SI-Exo1-Correction-AndromedeDoppler-10pts-30min_0.pdf" target="_blank">✅ Corrigé</a>
-    </div>
-  </div>
-
 </div>
 <!-- /tab-4 -->
 
@@ -1746,6 +1777,26 @@
     </ul>
   </div>
 
+  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>📖 Glossaire de la séquence</span><span>▾</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p><strong style="color:var(--bleu);">Intensité sonore I</strong><br>Puissance sonore reçue par unité de surface : I = P/S, exprimée en W·m⁻².</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Niveau d'intensité sonore L</strong><br>Grandeur logarithmique adaptée à l'étendue de sensibilité de l'oreille humaine : L = 10·log(I/I₀), avec I₀ = 10⁻¹² W·m⁻² le seuil d'audibilité ; mesuré à l'aide d'un sonomètre.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Atténuation géométrique</strong><br>Diminution du niveau sonore due à la répartition de l'énergie sur une surface croissante à mesure que l'on s'éloigne de la source : A = L<sub>proche</sub> − L<sub>éloigné</sub>, toujours positive.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Atténuation par absorption</strong><br>Diminution du niveau sonore due à une perte d'énergie lors de la traversée d'un milieu matériel : A = L<sub>incident</sub> − L<sub>transmis</sub>, toujours positive.</p>
+      </div>
+      <div>
+        <p><strong style="color:var(--bleu);">Effet Doppler</strong><br>Modification de la fréquence perçue par un récepteur lorsque la distance qui le sépare de la source varie au cours du temps ; propriété générale des ondes (sonores ou électromagnétiques).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Décalage Doppler Δf</strong><br>Différence entre la fréquence reçue et la fréquence émise : Δf = f<sub>R</sub> − f<sub>E</sub> ; positif si la source se rapproche (son plus aigu), négatif si elle s'éloigne (son plus grave).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Fréquence émise f<sub>E</sub></strong><br>Fréquence de l'onde produite par la source, telle qu'elle serait perçue si la distance source-récepteur restait constante.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Fréquence reçue f<sub>R</sub></strong><br>Fréquence de l'onde effectivement perçue par le récepteur, modifiée par l'effet Doppler lorsque la source est en mouvement relatif par rapport à lui.</p>
+      </div>
+    </div>
+  </div>
+
   </div>
   <!-- /sub-R-0 -->
 
@@ -1782,6 +1833,44 @@
     <div class="section-title" style="margin-top:30px;"><span class="icon">🕰️</span> Le saviez-vous ?</div>
     <div class="bilan-card">
       <p style="font-size:0.88rem;line-height:1.7;">L'effet Doppler doit son nom au physicien autrichien <strong>Christian Doppler</strong> (1803-1853), qui l'a décrit pour la première fois en 1842. Ce phénomène, valable pour toutes les ondes (sonores comme électromagnétiques), a depuis trouvé de nombreuses applications : radars de vitesse, échographie Doppler en médecine, ou encore mesure du décalage spectral des galaxies en astrophysique.</p>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2026 · Centres étrangers · SI</span>
+        <span>10 points · 30 min</span>
+      </div>
+      <h4>Étude de l'effet Doppler à l'aide de deux téléphones</h4>
+      <div class="bac-theme">Thème : Effet Doppler · Mesure expérimentale</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Effet Doppler</span>
+        <span class="bac-tag">Décalage Doppler</span>
+        <span class="bac-tag">Mesure de vitesse</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Sujet-DopplerTelephone.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Correction-DopplerTelephone.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2024 · Métropole · SI</span>
+        <span>10 points · 30 min</span>
+      </div>
+      <h4>Galaxie d'Andromède</h4>
+      <div class="bac-theme">Thème : Effet Doppler · Ondes électromagnétiques</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Effet Doppler</span>
+        <span class="bac-tag">Décalage Doppler</span>
+        <span class="bac-tag">Astrophysique</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-08/2024-Metro-SI-J1-ExoA-Sujet-AndromedeDoppler-10pts-30min.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-06/2024-Metro-SI-Exo1-Correction-AndromedeDoppler-10pts-30min_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
     </div>
 
   </div>
