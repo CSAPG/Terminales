@@ -33,7 +33,7 @@
 
   body {
     font-family: 'Nunito', sans-serif;
-    background: #DDE6F0;
+    background: #F0F4F8;
     color: var(--texte);
     min-height: 100vh;
   }
@@ -145,12 +145,12 @@
   .tab-btn {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 8px 13px 10px;
+    gap: 8px;
+    padding: 10px 20px 12px;
     border: none;
     background: transparent;
     font-family: 'Nunito', sans-serif;
-    font-size: 0.80rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--texte-leger);
     cursor: pointer;
@@ -171,7 +171,7 @@
     border-radius: 6px 6px 0 0;
   }
   .tab-num {
-    width: 20px; height: 20px;
+    width: 22px; height: 22px;
     border-radius: 50%;
     background: var(--gris-bord);
     color: var(--texte-leger);
@@ -228,7 +228,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -909,6 +909,59 @@
     min-height: 20px;
   }
 
+
+  /* ── SUJETS DE BAC ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-bottom: 6px;
+  }
+  .bac-lieu { font-weight: 700; color: var(--violet); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 4px 0 6px;
+  }
+  .bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .bac-tag {
+    background: var(--violet-clair);
+    color: var(--violet);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pastille {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    transition: box-shadow 0.2s, background 0.2s;
+  }
+  .pastille-sujet { color: var(--bleu); border-color: var(--bleu); }
+  .pastille-sujet:hover { background: var(--bleu-clair); }
+  .pastille-corrige { color: var(--vert); border-color: var(--vert); }
+  .pastille-corrige:hover { background: var(--vert-clair); }
+
   /* ── FOOTER ── */
   .footer-note {
     text-align: center;
@@ -938,35 +991,6 @@
     height: 0.55em;
     overflow: visible;
   }
-
-  /* ── PASTILLES CLIQUABLES (ressources externes) ── */
-  .pastille {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 18px;
-    border-radius: 999px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.84rem;
-    font-weight: 700;
-    text-decoration: none;
-    color: white;
-    white-space: nowrap;
-    transition: filter 0.15s, transform 0.12s;
-  }
-  .pastille:hover { filter: brightness(0.90); transform: translateY(-1px); }
-  .pastille-qcm   { background: #BFDCF0; color: var(--bleu); }
-  .pastille-video { background: #DECBF0; color: var(--violet); }
-  .pastille-simu  { background: var(--vert); }
-  .pastille-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
-  .pastille-row .pastille-source { font-size: 0.82rem; color: var(--texte-leger); }
-  .pastille-list { display: flex; flex-direction: column; gap: 12px; }
 
   @media (max-width: 600px) {
     .header-inner { padding: 12px 16px 10px; }
@@ -1569,7 +1593,7 @@
           <!-- indication de prolongement -->
           <text x="255" y="15" font-size="8.5" fill="#94a3b8" text-anchor="end" font-style="italic">Jupiter, Saturne… (hors cadre)</text>
         </svg>
-        <div class="fig-caption">T² en fonction de a³ pour les planètes telluriques (Mercure, Vénus, Terre, Mars) : les points sont alignés sur une droite passant par l'origine, qui se prolonge pour les planètes géantes. C'est la même démarche que dans l'annale « Mars vue sous l'œil de Kepler » (onglet K4).</div>
+        <div class="fig-caption">T² en fonction de a³ pour les planètes telluriques (Mercure, Vénus, Terre, Mars) : les points sont alignés sur une droite passant par l'origine, qui se prolonge pour les planètes géantes.</div>
       </div>
     </div>
 
@@ -1712,31 +1736,130 @@
   <!-- ───────── R2 : RESSOURCES ───────── -->
   <div class="sub-tab-content" id="sub-R-1">
 
-    <div class="section-title"><span class="icon">🎬</span> Vidéos bilan</div>
-    <div class="bilan-card">
-      <div class="pastille-list">
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105370152/item804860917?paccess=47d630b2e72.2ff933f5.b5e16379dc0f88c76b92d0f24c4bcd2d" target="_blank">🎬 Mouvement dans un champ de gravitation – Lois de Kepler</a><span class="pastille-source">Paul Olivier</span></div>
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105370152/item804868473?paccess=47d6330dc4d.2ff95179.773ffe3d1aadcc60372fed56a9b16b27" target="_blank">🎬 Schéma bilan : mécanique céleste et satellites</a></div>
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105370152/item804862609?paccess=47d63110549.2ff93a91.a3a61071a381912c399c29217db9865a" target="_blank">🎬 Cours 5 – Mouvement dans un champ de gravitation</a><span class="pastille-source">Stella</span></div>
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/physique-chimie/lois-kepler.aspx" target="_blank">🎬 Les lois de Kepler</a><span class="pastille-source">CEA</span></div>
-      </div>
+    <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
+    <div class="bilan-grid" style="grid-template-columns:1fr 1fr;">
+      <a href="https://www.pearltrees.com/private/id105370152/item804860917?paccess=47d630b2e72.2ff933f5.b5e16379dc0f88c76b92d0f24c4bcd2d" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Mouvement dans un champ de gravitation — Lois de Kepler</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Paul Olivier</p>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105370152/item804868473?paccess=47d6330dc4d.2ff95179.773ffe3d1aadcc60372fed56a9b16b27" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Schéma bilan : mécanique céleste et satellites</h4>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105370152/item804862609?paccess=47d63110549.2ff93a91.a3a61071a381912c399c29217db9865a" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Cours 5 — Mouvement dans un champ de gravitation</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Stella</p>
+        </div>
+      </a>
+      <a href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/physique-chimie/lois-kepler.aspx" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Les lois de Kepler</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">CEA</p>
+        </div>
+      </a>
     </div>
 
     <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> QCM</div>
-    <div class="bilan-card">
-      <div class="pastille-list">
-        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/pct372" target="_blank">📝 QCM Prérequis</a><span class="pastille-source">Hatier-clic</span></div>
-        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/pct385" target="_blank">📝 QCM Bilan</a><span class="pastille-source">Hatier-clic</span></div>
-        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.cea.fr/multimedia/Pages/animations/physique-chimie/quiz-lois-Kepler.aspx" target="_blank">📝 Quiz sur les lois de Kepler</a><span class="pastille-source">CEA</span></div>
+    <div class="bilan-grid" style="grid-template-columns:1fr 1fr;">
+      <a href="https://www.hatier-clic.fr/pct372" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--vert);">📝 QCM prérequis</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+        </div>
+      </a>
+      <a href="https://www.hatier-clic.fr/pct385" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--vert);">📝 QCM bilan</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+        </div>
+      </a>
+      <a href="https://www.cea.fr/multimedia/Pages/animations/physique-chimie/quiz-lois-Kepler.aspx" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--vert);">📝 Quiz sur les lois de Kepler</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">CEA</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🖥️</span> Simulations &amp; animations</div>
+    <div class="bilan-grid" style="grid-template-columns:1fr 1fr;">
+      <a href="http://www.jf-noblet.fr/kepler2/" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--orange);">🖥️ Animations sur les 3 lois de Kepler</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">jf-noblet.fr</p>
+        </div>
+      </a>
+      <a href="https://javalab.org/en/keplers_law_en/" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--orange);">🖥️ Simulation interactive des lois de Kepler</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Javalab</p>
+        </div>
+      </a>
+      <a href="https://phet.colorado.edu/sims/html/keplers-laws/latest/keplers-laws_all.html?locale=fr" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--orange);">🖥️ Simulation « Kepler's Laws »</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET Colorado</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2022 · Polynésie · Jour 1</span>
+        <span>5 points · 53 min</span>
+      </div>
+      <h4>Un tracteur gravitationnel pour dévier un astéroïde</h4>
+      <div class="bac-theme">Thème : Satellites, lois de Kepler</div>
+      <div class="bac-notions">
+        <span class="bac-tag">2e loi de Newton</span>
+        <span class="bac-tag">champ de gravitation</span>
+        <span class="bac-tag">3e loi de Kepler</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://labolycee.org/sites/default/files/2024-04/2022-Polynesie-J1-ExoA-Sujet-TracteurGravitationnel-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://labolycee.org/sites/default/files/2023-01/2022-Polynesie-J1-ExoA-Correction-TracteurGravitationnel-5pts_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
       </div>
     </div>
 
-    <div class="section-title" style="margin-top:30px;"><span class="icon">🔗</span> Autres ressources</div>
-    <div class="bilan-card">
-      <div class="pastille-list">
-        <div class="pastille-row"><a class="pastille pastille-simu" href="http://www.jf-noblet.fr/kepler2/" target="_blank">🖥️ Animations sur les 3 lois de Kepler</a><span class="pastille-source">jf-noblet.fr</span></div>
-        <div class="pastille-row"><a class="pastille pastille-simu" href="https://javalab.org/en/keplers_law_en/" target="_blank">🖥️ Simulation interactive des lois de Kepler</a><span class="pastille-source">Javalab</span></div>
-        <div class="pastille-row"><a class="pastille pastille-simu" href="https://phet.colorado.edu/sims/html/keplers-laws/latest/keplers-laws_all.html?locale=fr" target="_blank">🖥️ Simulation « Kepler's Laws »</a><span class="pastille-source">PhET Colorado</span></div>
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2022 · Polynésie · Jour 2</span>
+        <span>5 points · 53 min</span>
+      </div>
+      <h4>La planète Mercure</h4>
+      <div class="bac-theme">Thème : Satellites, lois de Kepler</div>
+      <div class="bac-notions">
+        <span class="bac-tag">lois de Kepler</span>
+        <span class="bac-tag">interaction gravitationnelle</span>
+        <span class="bac-tag">2e loi de Newton</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-10/2022-Polynesie-J2-ExoB-Sujet-KeplerMercure-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-11/2022-Polynesie-J2-ExoB-Correction-Mercure-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac S 2019 · Polynésie <span style="font-weight:400;">(ancien programme)</span></span>
+        <span>10 points · 1h30</span>
+      </div>
+      <h4>Mission Rosetta</h4>
+      <div class="bac-theme">Thème : Satellites, lois de Kepler · Mouvement dans un champ de pesanteur uniforme</div>
+      <div class="bac-notions">
+        <span class="bac-tag">lois de Kepler</span>
+        <span class="bac-tag">satellites</span>
+        <span class="bac-tag">3e loi de Kepler</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2023-01/2019-Polynesie-Exo1-Sujet-Rosetta-10pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2020-03/2019-Polynesie-Exo1-Correction-Rosetta-10pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
       </div>
     </div>
 
