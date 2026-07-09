@@ -33,7 +33,7 @@
 
   body {
     font-family: 'Nunito', sans-serif;
-    background: #DDE6F0;
+    background: #F0F4F8;
     color: var(--texte);
     min-height: 100vh;
   }
@@ -145,12 +145,12 @@
   .tab-btn {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 8px 13px 10px;
+    gap: 8px;
+    padding: 10px 20px 12px;
     border: none;
     background: transparent;
     font-family: 'Nunito', sans-serif;
-    font-size: 0.80rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--texte-leger);
     cursor: pointer;
@@ -171,7 +171,7 @@
     border-radius: 6px 6px 0 0;
   }
   .tab-num {
-    width: 20px; height: 20px;
+    width: 22px; height: 22px;
     border-radius: 50%;
     background: var(--gris-bord);
     color: var(--texte-leger);
@@ -228,7 +228,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1300px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1300px; margin: 0 auto; padding: 28px 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -553,7 +553,6 @@
     margin-bottom: 12px;
     line-height: 1.5;
   }
-  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
   /* ── PASTILLES CLIQUABLES (ressources externes) ── */
   .pastille {
     display: inline-flex;
@@ -581,9 +580,8 @@
     margin-top: 8px;
   }
   .pastille-row .pastille-source { font-size: 0.82rem; color: var(--texte-leger); }
-  .pastille-list { display: flex; flex-direction: column; gap: 12px; }
 
-  .btn-sujet, .btn-correction {
+  .btn-correction {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
@@ -597,9 +595,8 @@
     gap: 6px;
     transition: filter 0.15s;
   }
-  .btn-sujet { background: var(--bleu); color: white; }
   .btn-correction { background: var(--vert); color: white; }
-  .btn-sujet:hover, .btn-correction:hover { filter: brightness(0.9); }
+  .btn-correction:hover { filter: brightness(0.9); }
   .btn-corriger {
     padding: 7px 16px;
     background: var(--vert);
@@ -1804,30 +1801,69 @@
   <div class="sub-tab-content" id="sub-R-1">
 
     <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
-    <div class="bilan-card">
-      <div class="pastille-list">
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805049007?paccess=47d683a9192.2ffc12af.98a3c04c40dd6b3aad75d57aa2f3a467" target="_blank">🎬 « Cours 1 – Ondes sonores »</a><span class="pastille-source">Sciences physiques à Stella</span></div>
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805102656?paccess=47d688c2429.2ffce440.d8028d5965ad4c7a3fdcf0f243b73ea2" target="_blank">🎬 « Intensité sonore et niveau d'intensité sonore »</a><span class="pastille-source">Florence Raffin</span></div>
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805065126?paccess=47d68496a3b.2ffc51a6.9e7c8a4cbb8267200e44dd02722c7a9c" target="_blank">🎬 « L'EFFET DOPPLER, en 2 minutes »</a><span class="pastille-source">ScienceClic</span></div>
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805065214?paccess=47d6849a853.2ffc51fe.6338f4c45c2b9fe96adb81f1534be301" target="_blank">🎬 « Établir l'expression du décalage Doppler »</a><span class="pastille-source">spcbad</span></div>
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/physique-chimie/effet-doppler.aspx" target="_blank">🎬 « Effet Doppler »</a><span class="pastille-source">CEA</span></div>
-        <div class="pastille-row"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805065656?paccess=47d684a0112.2ffc53b8.288277ccd0407c98cec843c10a3d4620" target="_blank">🎬 « Effet Doppler - Décalage - formules »</a><span class="pastille-source">TERMINALE spé. PC BAC</span></div>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <a href="https://www.pearltrees.com/private/id105394473/item805049007?paccess=47d683a9192.2ffc12af.98a3c04c40dd6b3aad75d57aa2f3a467" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Cours 1 — Ondes sonores</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Sciences physiques à Stella</p>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105394473/item805102656?paccess=47d688c2429.2ffce440.d8028d5965ad4c7a3fdcf0f243b73ea2" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Intensité sonore et niveau d'intensité sonore</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Florence Raffin</p>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105394473/item805065126?paccess=47d68496a3b.2ffc51a6.9e7c8a4cbb8267200e44dd02722c7a9c" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ L'effet Doppler, en 2 minutes</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">ScienceClic</p>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105394473/item805065214?paccess=47d6849a853.2ffc51fe.6338f4c45c2b9fe96adb81f1534be301" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Établir l'expression du décalage Doppler</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">spcbad</p>
+        </div>
+      </a>
+      <a href="https://www.cea.fr/multimedia/Pages/videos/culture-scientifique/physique-chimie/effet-doppler.aspx" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Effet Doppler</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">CEA</p>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105394473/item805065656?paccess=47d684a0112.2ffc53b8.288277ccd0407c98cec843c10a3d4620" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Effet Doppler — Décalage — formules</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">TERMINALE spé. PC BAC</p>
+        </div>
+      </a>
     </div>
 
     <div class="section-title" style="margin-top:30px;"><span class="icon">🖥️</span> Animations et simulations</div>
-    <div class="bilan-card">
-      <div class="pastille-list">
-        <div class="pastille-row"><a class="pastille pastille-simu" href="https://www.sciences.univ-nantes.fr/sites/genevieve_tulloue/Ondes/son/doppler.php" target="_blank">🖥️ Animation de l'effet Doppler</a><span class="pastille-source">Université de Nantes</span></div>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <a href="https://www.sciences.univ-nantes.fr/sites/genevieve_tulloue/Ondes/son/doppler.php" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--orange);">🖥️ Animation de l'effet Doppler</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Université de Nantes</p>
+        </div>
+      </a>
     </div>
 
     <div class="section-title" style="margin-top:30px;"><span class="icon">📝</span> QCM</div>
-    <div class="bilan-card">
-      <div class="pastille-list">
-        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/16_QCM_prerequis/index.html" target="_blank">📝 QCM Prérequis — Caractériser les phénomènes ondulatoires</a><span class="pastille-source">Hatier-clic</span></div>
-        <div class="pastille-row"><a class="pastille pastille-qcm" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_16/index.html" target="_blank">📝 QCM — Maîtrise des notions</a><span class="pastille-source">Hatier-clic</span></div>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/16_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--vert);">📝 QCM — Prérequis</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Caractériser les phénomènes ondulatoires</p>
+        </div>
+      </a>
+      <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_16/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--vert);">📝 QCM — Maîtrise des notions</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+        </div>
+      </a>
     </div>
 
     <div class="section-title" style="margin-top:30px;"><span class="icon">🕰️</span> Le saviez-vous ?</div>
