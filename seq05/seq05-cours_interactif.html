@@ -41,17 +41,18 @@
   /* ── HEADER ── */
   .header {
     background: var(--blanc);
+    border: 1px solid #E3E8EE;
     border-bottom: 3px solid var(--bleu);
-    width: 100%;
+    border-radius: 14px;
+    max-width: 1200px;
+    margin: 0 auto 24px;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 12px rgba(45,95,138,0.10);
   }
   .header-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 18px 32px 0;
+    padding: 18px 24px 14px;
   }
   .header-top {
     display: flex;
@@ -230,7 +231,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1400px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -790,6 +791,58 @@
     line-height: 1.5;
   }
   .ke-list li:last-child { border-bottom: none; }
+
+  /* ── SUJETS DE BAC ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-bottom: 6px;
+  }
+  .bac-lieu { font-weight: 700; color: var(--violet); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 4px 0 6px;
+  }
+  .bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .bac-tag {
+    background: var(--violet-clair);
+    color: var(--violet);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pastille {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    transition: box-shadow 0.2s, background 0.2s;
+  }
+  .pastille-sujet { color: var(--bleu); border-color: var(--bleu); }
+  .pastille-sujet:hover { background: var(--bleu-clair); }
+  .pastille-corrige { color: var(--vert); border-color: var(--vert); }
+  .pastille-corrige:hover { background: var(--vert-clair); }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
   /* ── CANVAS ANIMATION ── */
@@ -974,7 +1027,7 @@
   .qcm-grid-4col .fig-box img { max-width: 100%; width: 100%; height: auto; display: block; }
   @media (max-width: 800px) { .qcm-grid-4col { grid-template-columns: repeat(2,1fr); } }
   @media (max-width: 600px) {
-    .header-inner { padding: 12px 16px 0; }
+    .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
     .main { padding: 18px 12px 50px; }
@@ -1102,7 +1155,7 @@
     </div>
     <div class="header-titles">
       <h1>Contrôle de qualité</h1>
-      <p>Analyse spectrale, dosages et titrages · <span> © C. Poirault-Gauvin</span></p>
+      <p>Analyse spectrale, dosages et titrages · <span>C. Poirault-Gauvin</span></p>
     </div>
     <!-- Icône burette (ter-icons.js — Séq. 05) -->
     <div class="mobile-icon-wrap" title="Burette de titrage">
@@ -1147,7 +1200,9 @@
       <li>Établir la composition du système après ajout d'un volume de solution titrante, la transformation étant considérée comme totale.</li>
       <li>Exploiter un titrage pour déterminer une quantité de matière, une concentration ou une masse.</li>
       <li><strong>Dans le cas d'un titrage avec suivi conductimétrique, justifier qualitativement l'évolution de la pente de la courbe à l'aide de données sur les conductivités ioniques molaires.</strong></li>
+      <li><em>Capacité numérique</em> : Représenter, à l'aide d'un langage de programmation, l'évolution des quantités de matière des espèces en fonction du volume de solution titrante versé.</li>
     </ul>
+    <p style="margin-top:10px;font-size:0.78rem;color:var(--texte-leger);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
   </div>
 
   <nav class="tabs-nav">
@@ -2623,57 +2678,33 @@ print("Virage entre V =", V_virage_debut, "mL et V =", V_virage_fin, "mL")</text
     </div>
   </div>
 
-<div class="section-title" style="margin-top:30px;"><span class="icon">📘</span> Annales de bac — à traiter en autonomie</div>
-
-<div class="bilan-exo-card">
-  <div class="bilan-tag">Bac Amérique du Nord 1 · 2023 Jour 1 · Exercice 2 · 5 pts · 53 min</div>
-  <h3>Technique de dosage de l'urée</h3>
-  <div class="bilan-theme">Spectroscopie IR, isomères, dosage gravimétrique, incertitudes, z-score, loi de Beer-Lambert.</div>
-  <div class="bilan-links">
-    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2025-09/2023-AmNord-J1-Exo2-Sujet-DosageUree-5pts.pdf" target="_blank">📄 Sujet</a>
-    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2024-12/2023-AmNord-J1-Exo2-Correction-DosageUree-5pts.pdf" target="_blank">✅ Corrigé</a>
+  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>📖 Glossaire de la séquence</span><span>▾</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p><strong style="color:var(--bleu);">Absorbance A</strong><br>Grandeur sans unité qui mesure l'atténuation d'un rayonnement traversant une solution : A = −log(I/I₀), avec I₀ l'intensité incidente et I l'intensité transmise.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Transmittance T</strong><br>Rapport T = I/I₀ entre l'intensité transmise et l'intensité incidente d'un rayonnement traversant une solution.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Loi de Beer-Lambert</strong><br>Relation de proportionnalité entre l'absorbance d'une solution et la concentration de l'espèce colorée qui absorbe : A = ε·l·C, valable pour des solutions suffisamment diluées (C &lt; 0,1 mol·L⁻¹).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Spectre infrarouge (IR)</strong><br>Représentation de la transmittance T en fonction du nombre d'onde σ = 1/λ ; les bandes d'absorption au-delà de 1500 cm⁻¹ permettent d'identifier les groupes caractéristiques d'une molécule.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Spectre UV-visible</strong><br>Représentation de l'absorbance en fonction de la longueur d'onde, entre 200 et 800 nm ; présente une ou plusieurs bandes d'absorption assez larges passant par un maximum d'absorption λ<sub>max</sub>.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Loi de Kohlrausch</strong><br>Relation de proportionnalité entre la conductivité σ d'une solution ionique diluée et la concentration C d'un unique soluté apporté : σ = k·C.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Conductimètre</strong><br>Appareil qui mesure la conductance (ou la conductivité) d'une solution en appliquant une tension entre deux électrodes immergées ; les cations migrent vers l'électrode négative, les anions vers l'électrode positive.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Conductance G</strong><br>Grandeur mesurée directement par le conductimètre (en siemens, S) ; reliée à la conductivité σ de la solution par la géométrie de la cellule de mesure (constante de cellule).</p>
+      </div>
+      <div>
+        <p><strong style="color:var(--bleu);">Dosage par étalonnage</strong><br>Méthode de détermination d'une concentration inconnue à partir d'une courbe d'étalonnage (A = f(C) ou σ = f(C)), tracée à partir de solutions de concentrations connues.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Mélange stœchiométrique</strong><br>Mélange dans lequel les réactifs sont introduits dans les proportions exactes des coefficients stœchiométriques de l'équation de la réaction : aucun réactif n'est en excès, tous sont consommés simultanément.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Titrage</strong><br>Technique quantitative utilisant une réaction chimique support (totale, rapide et unique) entre l'espèce à doser et une solution titrante de concentration connue.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Équivalence</strong><br>Instant d'un titrage où les réactifs ont été mélangés dans les proportions stœchiométriques ; correspond à un changement de réactif limitant.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Volume équivalent V<sub>E</sub></strong><br>Volume de solution titrante qu'il faut ajouter à la solution titrée pour atteindre l'équivalence, c'est-à-dire pour que le réactif titrant et le réactif titré soient dans les proportions stœchiométriques de la réaction support de titrage.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Suivi conductimétrique</strong><br>Méthode de repérage de l'équivalence d'un titrage par mesure de la conductivité σ ; l'équivalence correspond à une rupture de pente sur la courbe σ = f(V).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Suivi pH-métrique</strong><br>Méthode de repérage de l'équivalence d'un titrage par mesure du pH ; l'équivalence correspond au point d'inflexion de la courbe pH = f(V) (méthode des tangentes ou de la dérivée).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Suivi colorimétrique</strong><br>Méthode de repérage de l'équivalence d'un titrage par changement de teinte de la solution, à l'aide d'un indicateur coloré adapté au saut de pH de l'équivalence.</p>
+      </div>
+    </div>
   </div>
-</div>
-
-<div class="bilan-exo-card">
-  <div class="bilan-tag">Bac S Amérique du Sud · 2011 · Exercice 3 · 4 pts · 52 min</div>
-  <h3>Dosage colorimétrique de l'aluminium</h3>
-  <div class="bilan-theme">Dissolution, dilution, loi de Beer-Lambert, dosage par étalonnage.</div>
-  <div class="bilan-links">
-    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-01/2011-11-Amsud-Exo3-Sujet-DosageEtalonnageAlu-4pts.pdf" target="_blank">📄 Sujet</a>
-    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2024-01/2011-11-Amsud-Exo3-Correction-DosageEtalonnageAlu-4pts.pdf" target="_blank">✅ Corrigé</a>
-  </div>
-</div>
-
-<div class="bilan-exo-card">
-  <div class="bilan-tag">Bac Amérique du Sud · 2025 Jour 1 · Exercice 3 · 4 pts · 42 min</div>
-  <h3>Étude d'un herbicide</h3>
-  <div class="bilan-theme">Titrage pH-métrique et colorimétrique, nomenclature, z-score.</div>
-  <div class="bilan-links">
-    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2025-Amsud-J1-Exo3-Sujet-TitrageHerbicide-4pts.pdf" target="_blank">📄 Sujet</a>
-    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2025-12/2025-Amsud-J1-Exo3-Correction-TitrageHerbicide-4pts.pdf" target="_blank">✅ Corrigé</a>
-  </div>
-</div>
-
-<div class="bilan-exo-card">
-  <div class="bilan-tag">Bac Amérique du Nord · 2021 Sujet 2 · Exercice B · 5 pts · 55 min</div>
-  <h3>Additif alimentaire pour les agneaux</h3>
-  <div class="bilan-theme">Titrage avec suivi conductimétrique, incertitudes-types composées, programme en langage Python.</div>
-  <div class="bilan-links">
-    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2021-11/2021-AmNord-Sujet2-ExoB-ConductiPython-5pts.pdf" target="_blank">📄 Sujet</a>
-    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2021-10/2021-AmNord-Sujet2-ExoB-ConductiPython-5pts-Correction.pdf" target="_blank">✅ Corrigé</a>
-  </div>
-</div>
-
-<div class="bilan-exo-card">
-  <div class="bilan-tag">Bac Métropole · Septembre 2023 Jour 2 · Exercice 1 · 9 pts · 1h35</div>
-  <h3>Juste une impression gustative ?</h3>
-  <div class="bilan-theme">Groupes caractéristiques, titrage pH-métrique, diagramme de prédominance, titrage en retour, dosage par étalonnage (masse volumique).</div>
-  <div class="bilan-links">
-    <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-01/2023-09-Metropole-J2-Exo1-Sujet-Pommes-9pts.pdf" target="_blank">📄 Sujet</a>
-    <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2025-02/2023-09-Metropole-J2-Exo1-Correction-Pommes-9pts.pdf" target="_blank">✅ Corrigé</a>
-  </div>
-</div>
 
   </div><!-- /sub-Z-0 -->
 
@@ -2766,13 +2797,114 @@ print("Virage entre V =", V_virage_debut, "mL et V =", V_virage_fin, "mL")</text
 
   </div>
 
-  <div class="footer-note">Séquence 05 – Contrôle de qualité · Terminale Spécialité Physique-Chimie ·  © C. Poirault-Gauvin</div>
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2023 · Amérique du Nord 1 · Jour 1 · Exercice 2</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Technique de dosage de l'urée</h4>
+    <div class="bac-theme">Thème : Spectroscopie IR · Loi de Beer-Lambert</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Spectroscopie IR</span>
+      <span class="bac-tag">Isomères</span>
+      <span class="bac-tag">Dosage gravimétrique</span>
+      <span class="bac-tag">Incertitudes</span>
+      <span class="bac-tag">Z-score</span>
+      <span class="bac-tag">Loi de Beer-Lambert</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-09/2023-AmNord-J1-Exo2-Sujet-DosageUree-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-12/2023-AmNord-J1-Exo2-Correction-DosageUree-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac S 2011 · Amérique du Sud · Exercice 3</span>
+      <span>4 points · 52 min</span>
+    </div>
+    <h4>Dosage colorimétrique de l'aluminium</h4>
+    <div class="bac-theme">Thème : Dosage par étalonnage · Loi de Beer-Lambert</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Dissolution</span>
+      <span class="bac-tag">Dilution</span>
+      <span class="bac-tag">Loi de Beer-Lambert</span>
+      <span class="bac-tag">Dosage par étalonnage</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-01/2011-11-Amsud-Exo3-Sujet-DosageEtalonnageAlu-4pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-01/2011-11-Amsud-Exo3-Correction-DosageEtalonnageAlu-4pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2025 · Amérique du Sud · Jour 1 · Exercice 3</span>
+      <span>4 points · 42 min</span>
+    </div>
+    <h4>Étude d'un herbicide</h4>
+    <div class="bac-theme">Thème : Titrage pH-métrique et colorimétrique</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Titrage pH-métrique</span>
+      <span class="bac-tag">Titrage colorimétrique</span>
+      <span class="bac-tag">Nomenclature</span>
+      <span class="bac-tag">Z-score</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2025-Amsud-J1-Exo3-Sujet-TitrageHerbicide-4pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-12/2025-Amsud-J1-Exo3-Correction-TitrageHerbicide-4pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2021 · Amérique du Nord · Sujet 2 · Exercice B</span>
+      <span>5 points · 55 min</span>
+    </div>
+    <h4>Additif alimentaire pour les agneaux</h4>
+    <div class="bac-theme">Thème : Titrage avec suivi conductimétrique · Python</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Titrage conductimétrique</span>
+      <span class="bac-tag">Incertitudes-types composées</span>
+      <span class="bac-tag">Python</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2021-11/2021-AmNord-Sujet2-ExoB-ConductiPython-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2021-10/2021-AmNord-Sujet2-ExoB-ConductiPython-5pts-Correction.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2023 · Métropole · Session sept. · Jour 2 · Exercice 1</span>
+      <span>9 points · 1h35</span>
+    </div>
+    <h4>Juste une impression gustative ?</h4>
+    <div class="bac-theme">Thème : Titrage pH-métrique · Titrage en retour · Dosage par étalonnage</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Groupes caractéristiques</span>
+      <span class="bac-tag">Titrage pH-métrique</span>
+      <span class="bac-tag">Diagramme de prédominance</span>
+      <span class="bac-tag">Titrage en retour</span>
+      <span class="bac-tag">Dosage par étalonnage</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-01/2023-09-Metropole-J2-Exo1-Sujet-Pommes-9pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-02/2023-09-Metropole-J2-Exo1-Correction-Pommes-9pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
 
   </div><!-- /sub-Z-1 -->
 
 </div>
 
 </div><!-- /main -->
+
+<div class="footer-note">
+  Séquence 05 — Contrôle de qualité · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin
+</div>
 
 <!-- Skulpt : exécution de code Python directement dans le navigateur (nécessite une connexion internet) -->
 <script src="https://cdn.jsdelivr.net/gh/Tezumie/Skulpt-CDN@latest/skulpt.min.js"></script>
