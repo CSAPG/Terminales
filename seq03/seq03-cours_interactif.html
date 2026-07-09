@@ -41,17 +41,18 @@
   /* ── HEADER ── */
   .header {
     background: var(--blanc);
+    border: 1px solid #E3E8EE;
     border-bottom: 3px solid var(--bleu);
-    width: 100%;
+    border-radius: 14px;
+    max-width: 1200px;
+    margin: 0 auto 24px;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 12px rgba(45,95,138,0.10);
   }
   .header-inner {
-    max-width: 1160px;
-    margin: 0 auto;
-    padding: 18px 32px 0;
+    padding: 18px 24px 14px;
   }
   .header-top {
     display: flex;
@@ -227,7 +228,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1160px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -808,6 +809,70 @@
   .ke-list li:last-child { border-bottom: none; }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
+  .bilan-video-link {
+    display: block;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--gris-bord);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--bleu);
+    text-decoration: none;
+  }
+  .bilan-video-link:hover { color: #1e4466; text-decoration: underline; }
+
+  /* ── SUJETS DE BAC ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-bottom: 6px;
+  }
+  .bac-lieu { font-weight: 700; color: var(--violet); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 4px 0 6px;
+  }
+  .bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .bac-tag {
+    background: var(--violet-clair);
+    color: var(--violet);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pastille {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    transition: box-shadow 0.2s, background 0.2s;
+  }
+  .pastille-sujet { color: var(--bleu); border-color: var(--bleu); }
+  .pastille-sujet:hover { background: var(--bleu-clair); }
+  .pastille-corrige { color: var(--vert); border-color: var(--vert); }
+  .pastille-corrige:hover { background: var(--vert-clair); }
+
   /* ── CANVAS ANIMATION ── */
   .anim-canvas-wrap {
     background: #F8FAFC;
@@ -946,7 +1011,7 @@
   }
 
   @media (max-width: 600px) {
-    .header-inner { padding: 12px 16px 0; }
+    .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
     .main { padding: 18px 12px 50px; }
@@ -1052,6 +1117,7 @@
     <ul>
       <li>Définir le vecteur vitesse comme la dérivée du vecteur position par rapport au temps et le vecteur accélération comme la dérivée du vecteur vitesse par rapport au temps.</li>
       <li>Établir les coordonnées cartésiennes des vecteurs vitesse et accélération à partir des coordonnées du vecteur position et/ou du vecteur vitesse.</li>
+      <li>Citer et exploiter les expressions des coordonnées des vecteurs vitesse et accélération dans le repère de Frenet, dans le cas d'un mouvement circulaire.</li>
       <li>Caractériser le vecteur accélération pour les mouvements suivants : rectiligne, rectiligne uniforme, uniformément accéléré, circulaire, circulaire uniforme.</li>
       <li><em>Capacité mathématique :</em> dériver une fonction.</li>
     </ul>
@@ -1070,7 +1136,9 @@
     <div class="cap-cat">Aspects énergétiques</div>
     <ul>
       <li>Exploiter la conservation de l'énergie mécanique ou le théorème de l'énergie cinétique dans le cas du mouvement dans un champ uniforme.</li>
+      <li><em>Capacité numérique :</em> représenter, à partir de données expérimentales variées, l'évolution des grandeurs énergétiques d'un système en mouvement dans un champ uniforme à l'aide d'un langage de programmation ou d'un tableur.</li>
     </ul>
+    <p style="margin-top:10px;font-size:0.78rem;color:var(--texte-leger);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
   </div>
 
   <nav class="tabs-nav">
@@ -2601,6 +2669,19 @@
 <!-- ══════════════ ONGLET BILAN & RESSOURCES ══════════════ -->
 <div class="tab-content" id="tab-4">
 
+  <!-- Sous-onglets C -->
+  <div class="sub-tabs-nav" id="sub-nav-C">
+    <button class="sub-tab-btn active" data-sub="C1" onclick="switchSubTab('C',0)">
+      <span class="sub-tab-num">📋</span> Bilan
+    </button>
+    <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+      <span class="sub-tab-num">🔗</span> Ressources
+    </button>
+  </div>
+
+  <!-- ══ Sous-onglet Bilan ══ -->
+  <div class="sub-tab-content active" id="sub-C-0">
+
   <div class="section-title"><span class="icon">📊</span> Bilan de la séquence</div>
   <div class="bilan-grid">
     <div class="bilan-card">
@@ -2619,6 +2700,7 @@
         <li>Mouvement plan dans un champ uniforme (pesanteur ou électrique)</li>
         <li>Méthode en 7 étapes pour établir la trajectoire</li>
       </ul>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id105286804/item804812030?paccess=47d605354f2.2ff874fe.1ce0e5dd16069ce742ca978d3bc70efc" target="_blank" rel="noopener">▶ Vidéo — Cours 2 : Les lois de Newton</a>
     </div>
     <div class="bilan-card">
       <h4>Énergie</h4>
@@ -2628,6 +2710,7 @@
         <li>Théorème de l'énergie cinétique</li>
         <li>Conservation de l'énergie mécanique sans frottement</li>
       </ul>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id105286804/item804812052?paccess=47d605466fe.2ff87514.6986f21be66c6d6d19a340391f4ff5f3" target="_blank" rel="noopener">▶ Vidéo — Travail et énergie mécanique</a>
     </div>
     <div class="bilan-card">
       <h4>Capacités mathématiques</h4>
@@ -2639,63 +2722,258 @@
     </div>
   </div>
 
-  <div class="section-title"><span class="icon">📝</span> QCM bilan</div>
+  <div class="section-title" style="margin-top:28px;"><span class="icon">📝</span> QCM bilan</div>
   <div class="exo-card">
     <div class="qcm-grid" id="qcmBilan"></div>
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="bilanProgress" style="width:0%;"></div></div>
     <div style="text-align:center; font-size:0.82rem; color:var(--texte-leger); margin-top:6px;" id="bilanScore">0 / 6 bonnes réponses</div>
   </div>
 
-  <div class="section-title"><span class="icon">🔗</span> Ressources complémentaires</div>
-
-  <div class="bilan-card">
-    <h4>📝 QCM de prérequis (Hatier-clic)</h4>
-    <div class="bilan-links">
-      <a href="https://www.pearltrees.com/private/id105286804/item804812475?paccess=47d604fb767.2ff876bb.d401b1e472fc54f010a954ef80d8ff11" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">📝 Chapitre 10 — Cinématique du point</a>
-      <a href="https://www.pearltrees.com/private/id105286804/item804812398?paccess=47d6050307e.2ff8766e.ad6873ed69d5a6e99e7c94b1945389b6" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">📝 Chapitre 11 — Mouvement et forces</a>
-      <a href="https://www.pearltrees.com/private/id105286804/item804812387?paccess=47d6050833f.2ff87663.ff40b944e2af64ad5059f66ef66512dc" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">📝 Chapitre 12 — Mouvement dans un champ uniforme</a>
+  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>📖 Glossaire de la séquence</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p><strong style="color:var(--bleu);">Référentiel galiléen</strong><br>Référentiel dans lequel le principe d'inertie (1<sup>re</sup> loi de Newton) est vérifié ; les référentiels terrestre, géocentrique et héliocentrique sont considérés galiléens selon l'échelle de temps et de mouvement étudiée.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Vecteur vitesse</strong><br>Dérivée par rapport au temps du vecteur position ; tangent à la trajectoire, il indique la direction et le sens du mouvement.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Vecteur accélération</strong><br>Dérivée par rapport au temps du vecteur vitesse (dérivée seconde du vecteur position) ; traduit la variation de vitesse (en norme et/ou en direction).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Principe d'inertie (1<sup>re</sup> loi de Newton)</strong><br>Dans un référentiel galiléen, un système isolé ou pseudo-isolé est soit au repos, soit en mouvement rectiligne uniforme.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Principe fondamental de la dynamique (2<sup>e</sup> loi de Newton)</strong><br>Dans un référentiel galiléen, la somme des forces extérieures appliquées à un système est égale au produit de sa masse par son vecteur accélération.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Repère cartésien</strong><br>Repère (O ; <em>i</em>, <em>j</em>, <em>k</em>) fixe lié à un référentiel, d'origine O et de vecteurs unitaires constants, utilisé pour repérer la position d'un point mobile par ses coordonnées x(t), y(t), z(t).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Repère de Frenet</strong><br>Repère mobile lié au point en mouvement G, formé des vecteurs unitaires <em>u<sub>t</sub></em> (tangent à la trajectoire, dans le sens du mouvement) et <em>u<sub>n</sub></em> (perpendiculaire à <em>u<sub>t</sub></em>, orienté vers l'intérieur de la trajectoire) ; utilisé pour un mouvement circulaire ou curviligne.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Équations horaires</strong><br>Expressions donnant, en fonction du temps t, les coordonnées de la position (ou de la vitesse, de l'accélération) d'un point mobile dans un repère donné ; elles s'obtiennent par intégrations successives du vecteur accélération.</p>
+      </div>
+      <div>
+        <p><strong style="color:var(--bleu);">Principe des actions réciproques (3<sup>e</sup> loi de Newton)</strong><br>Si un système A exerce une force sur un système B, alors B exerce sur A une force de même valeur, même direction et de sens opposé.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Mouvement dans un champ uniforme</strong><br>Mouvement d'un système soumis à une force constante (poids ou force électrique) ; sa trajectoire est parabolique si la vitesse initiale n'est pas colinéaire au champ.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Champ de pesanteur</strong><br>Champ vectoriel <em>g</em>, uniforme à l'échelle de quelques kilomètres à la surface de la Terre (même direction, sens et valeur g ≈ 9,8 N·kg⁻¹ en tout point) ; le poids d'un système est P = m·g.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Champ électrique</strong><br>Champ vectoriel <em>E</em>, créé par exemple entre les armatures d'un condensateur plan, uniforme entre celles-ci ; il exerce sur une particule de charge q une force F = q·E, dans le sens de E si q &gt; 0.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Travail d'une force</strong><br>Grandeur qui mesure le transfert d'énergie associé au déplacement du point d'application d'une force ; moteur si W &gt; 0, résistant si W &lt; 0, nul si la force est perpendiculaire au déplacement.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Force conservative</strong><br>Force dont le travail ne dépend pas du chemin suivi mais seulement des positions initiale et finale (ex. poids) ; s'oppose aux forces de frottement, non conservatives.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Théorème de l'énergie cinétique (TEC)</strong><br>La variation d'énergie cinétique d'un système entre deux instants est égale à la somme des travaux des forces qui s'exercent sur lui.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Théorème de l'énergie potentielle</strong><br>Pour une force conservative (poids, force électrostatique, force de rappel élastique...), le travail ne dépend pas du chemin suivi mais seulement des positions de départ et d'arrivée ; on lui associe une énergie potentielle E<sub>p</sub>, telle que <span style="white-space:nowrap;">W(A→B) = −ΔE<sub>p</sub> = E<sub>p</sub>(A) − E<sub>p</sub>(B)</span>.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Énergie potentielle de pesanteur</strong><br>Cas particulier du théorème de l'énergie potentielle pour le poids : E<sub>pp</sub> = m·g·z (z : altitude sur un axe vertical ascendant, avec E<sub>pp</sub> = 0 choisie en z = 0).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Énergie mécanique</strong><br>Somme de l'énergie cinétique et de l'énergie potentielle d'un système ; elle se conserve en l'absence de frottement.</p>
+      </div>
     </div>
   </div>
 
-  <div class="bilan-card">
-    <h4>📝 QCM de maîtrise des notions (Hatier-clic)</h4>
-    <div class="bilan-links">
-      <a href="https://www.pearltrees.com/private/id105286804/item804812846?paccess=47d6050dcd1.2ff8782e.5e488e19d74f6cd96656029e5bb9e8ae" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">📝 Chapitre 10 — Cinématique du point</a>
-      <a href="https://www.pearltrees.com/private/id105286804/item804812825?paccess=47d60514896.2ff87819.b57913da8b9241061570ab85b69fb286" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">📝 Chapitre 11 — Mouvement et forces</a>
-      <a href="https://www.pearltrees.com/private/id105286804/item804812857?paccess=47d60519bf5.2ff87839.1dcb68160fe3a14f104deccf960f52f3" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">📝 Chapitre 12 — Mouvement dans un champ uniforme</a>
-    </div>
+  </div><!-- /sub-C-0 (Bilan) -->
+
+  <!-- ══ Sous-onglet Ressources ══ -->
+  <div class="sub-tab-content" id="sub-C-1">
+
+  <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812010?paccess=47d60532d1e.2ff874ea.467b8cc82c63959739a2c2cdad3d63c7" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Cours 1 — Décrire un mouvement</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Vecteurs position, vitesse, accélération · Types de mouvements</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812030?paccess=47d605354f2.2ff874fe.1ce0e5dd16069ce742ca978d3bc70efc" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Cours 2 — Les lois de Newton</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">3 lois de Newton · Mouvement dans un champ uniforme</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812052?paccess=47d605466fe.2ff87514.6986f21be66c6d6d19a340391f4ff5f3" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Travail et énergie mécanique</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">TEC · Conservation de l'énergie mécanique</p>
+      </div>
+    </a>
+
+    <!-- TODO Cynthia : coller le lien Pearltrees ci-dessous (item 804812515) -->
+    <a href="LIEN_A_COMPLETER" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--gris-bord);" onmouseover="this.style.boxShadow='0 4px 16px rgba(90,107,122,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--texte-leger);">▶ [titre à compléter]</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Lien Pearltrees à renvoyer (item 804812515)</p>
+      </div>
+    </a>
+
+    <!-- TODO Cynthia : coller le lien Pearltrees ci-dessous (item 804812426) -->
+    <a href="LIEN_A_COMPLETER" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--gris-bord);" onmouseover="this.style.boxShadow='0 4px 16px rgba(90,107,122,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--texte-leger);">▶ [titre à compléter]</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Lien Pearltrees à renvoyer (item 804812426)</p>
+      </div>
+    </a>
+
+    <!-- TODO Cynthia : coller le lien Pearltrees ci-dessous (item 804812543) -->
+    <a href="LIEN_A_COMPLETER" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--gris-bord);" onmouseover="this.style.boxShadow='0 4px 16px rgba(90,107,122,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--texte-leger);">▶ [titre à compléter]</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Lien Pearltrees à renvoyer (item 804812543)</p>
+      </div>
+    </a>
+
+  </div>
+  <p style="font-size:0.82rem; color:var(--texte-leger); margin-top:-8px; margin-bottom:16px;">⚠️ 3 des 7 liens vidéo transmis renvoyaient une erreur « fichier privé » côté Pearltrees (items 804812515, 804812426, 804812543) — merci de renvoyer des liens valides pour ces vidéos.</p>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🧩</span> Activités interactives</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812646?paccess=47d6051fa4d.2ff87766.eec100fa08a81aafee02b73bcd47ad28" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">🧩 Newton — Première</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Activité interactive de révision</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812680?paccess=47d6052316a.2ff87788.e0bb9b70bafd2c626852238c5313caef" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">🧩 Newton — Terminale</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Activité interactive de révision</p>
+      </div>
+    </a>
+
   </div>
 
-  <div class="bilan-card">
-    <h4>🧩 Activités interactives</h4>
-    <div class="bilan-links">
-      <a href="https://www.pearltrees.com/private/id105286804/item804812646?paccess=47d6051fa4d.2ff87766.eec100fa08a81aafee02b73bcd47ad28" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🧩 Newton — Première</a>
-      <a href="https://www.pearltrees.com/private/id105286804/item804812680?paccess=47d6052316a.2ff87788.e0bb9b70bafd2c626852238c5313caef" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🧩 Newton — Terminale</a>
-    </div>
+  <div class="section-title" style="margin-top:28px;"><span class="icon">📝</span> QCM</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812475?paccess=47d604fb767.2ff876bb.d401b1e472fc54f010a954ef80d8ff11" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM prérequis — Chapitre 10 : Cinématique du point</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812398?paccess=47d6050307e.2ff8766e.ad6873ed69d5a6e99e7c94b1945389b6" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM prérequis — Chapitre 11 : Mouvement et forces</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812387?paccess=47d6050833f.2ff87663.ff40b944e2af64ad5059f66ef66512dc" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM prérequis — Chapitre 12 : Mouvement dans un champ uniforme</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812846?paccess=47d6050dcd1.2ff8782e.5e488e19d74f6cd96656029e5bb9e8ae" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">📝 QCM maîtrise — Chapitre 10 : Cinématique du point</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812825?paccess=47d60514896.2ff87819.b57913da8b9241061570ab85b69fb286" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">📝 QCM maîtrise — Chapitre 11 : Mouvement et forces</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+      </div>
+    </a>
+
+    <a href="https://www.pearltrees.com/private/id105286804/item804812857?paccess=47d60519bf5.2ff87839.1dcb68160fe3a14f104deccf960f52f3" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">📝 QCM maîtrise — Chapitre 12 : Mouvement dans un champ uniforme</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+      </div>
+    </a>
+
   </div>
 
-  <div class="bilan-card">
-    <h4>🎬 Vidéos</h4>
-    <div class="bilan-links">
-      <a href="https://www.pearltrees.com/private/id105286804/item804812010?paccess=47d60532d1e.2ff874ea.467b8cc82c63959739a2c2cdad3d63c7" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🎬 Cours 1 — Décrire un mouvement</a>
-      <a href="https://www.pearltrees.com/private/id105286804/item804812030?paccess=47d605354f2.2ff874fe.1ce0e5dd16069ce742ca978d3bc70efc" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🎬 Cours 2 — Les lois de Newton</a>
-      <a href="https://www.pearltrees.com/private/id105286804/item804812052?paccess=47d605466fe.2ff87514.6986f21be66c6d6d19a340391f4ff5f3" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🎬 Travail et énergie mécanique</a>
-      <!-- TODO Cynthia : coller le lien Pearltrees ci-dessous (item 804812515) -->
-      <a href="LIEN_A_COMPLETER" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🎬 [titre à compléter]</a>
-      <!-- TODO Cynthia : coller le lien Pearltrees ci-dessous (item 804812426) -->
-      <a href="LIEN_A_COMPLETER" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🎬 [titre à compléter]</a>
-      <!-- TODO Cynthia : coller le lien Pearltrees ci-dessous (item 804812543) -->
-      <a href="LIEN_A_COMPLETER" target="_blank" rel="noopener" class="btn-verif" style="text-decoration:none; display:inline-block;">🎬 [titre à compléter]</a>
-    </div>
-    <p style="font-size:0.82rem; color:var(--texte-leger); margin-top:8px;">⚠️ 3 des 7 liens vidéo transmis renvoyaient une erreur « fichier privé » côté Pearltrees (items 804812515, 804812426, 804812543) — merci de renvoyer des liens valides pour ces vidéos.</p>
-  </div>
+  <div class="section-title" style="margin-top:28px;"><span class="icon">📖</span> Manuel</div>
 
-  <div class="bilan-card">
-    <h4>📖 Manuel</h4>
+  <div class="bilan-card" style="margin-bottom:16px;">
     <p style="font-size:0.86rem; line-height:1.6;">Exercices p. 260 à 269 (cinématique), p. 284 à 295 (dynamique &amp; énergie), Activité p. 277 (accélérateur de particules), AD p. 277.</p>
   </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2021 · Asie · Sujet 2 · Exercice B</span>
+      <span>5 points</span>
+    </div>
+    <h4>Water bottle flip</h4>
+    <div class="bac-theme">Thème : Mouvement dans un champ de pesanteur uniforme</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Lois de Newton</span>
+      <span class="bac-tag">Champ de pesanteur uniforme</span>
+      <span class="bac-tag">Python</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2022-03/2021-Asie-Sujet2-ExoB-BottleFlip-MvtChpPesanteur-5pts.doc" target="_blank" rel="noopener">📄 Sujet (Word)</a>
+      <a class="pastille pastille-corrige" href="https://labolycee.org/sites/default/files/2022-12/2021-Asie-Sujet2-ExoB-Correction-BottleFlip-MvtChpPesanteur-5pts.docx" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2024 · Polynésie · Jour 1 · Exercice 2</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>La protonthérapie sauve la vue</h4>
+    <div class="bac-theme">Thème : Mouvement dans un champ électrique uniforme</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Cyclotron</span>
+      <span class="bac-tag">2<sup>e</sup> loi de Newton</span>
+      <span class="bac-tag">Théorème de l'énergie cinétique</span>
+      <span class="bac-tag">Force de Lorentz</span>
+      <span class="bac-tag">Repère de Frenet</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-02/2024-Polynesie-J1-Exo2-Sujet-Cyclotron-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-02/2024-Polynesie-J1-Exo2-Correction-Cyclotron-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2024 · Polynésie · Session sept. · Exercice 3</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Émilie du Châtelet, madame pompon Newton</h4>
+    <div class="bac-theme">Thème : Lois de Newton · Mouvement dans un champ de pesanteur uniforme</div>
+    <div class="bac-notions">
+      <span class="bac-tag">3 lois de Newton</span>
+      <span class="bac-tag">Centre de masse</span>
+      <span class="bac-tag">Chronophotographie</span>
+      <span class="bac-tag">Équation horaire y(t)</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2024-09-Polynesie-Exo3-Sujet-EmilieDuChatelet-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-10/2024-09-Polynesie-Exo3-Correction-EmilieDuChatelet-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac S 2019 · Antilles-Guyane · Exercice II</span>
+      <span>6 points</span>
+    </div>
+    <h4>Saut à la perche</h4>
+    <div class="bac-theme">Thème : Mouvement dans un champ de pesanteur uniforme · Énergie</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Caractériser un mouvement</span>
+      <span class="bac-tag">Énergie cinétique</span>
+      <span class="bac-tag">Énergie potentielle</span>
+      <span class="bac-tag">Énergie mécanique</span>
+      <span class="bac-tag">Équations horaires</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2021-12/2019-Antilles-Exo2-Sujet-SautPerche-6pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2020-06/2019-Antilles-Exo2-Correction-SautPerche-6pts.doc" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+    </div>
+  </div>
+
+  </div><!-- /sub-C-1 (Ressources) -->
+
 </div>
 <!-- FIN ONGLET BILAN & RESSOURCES -->
+
 
 </div><!-- /main -->
 
