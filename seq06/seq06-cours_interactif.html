@@ -33,7 +33,7 @@
 
   body {
     font-family: 'Nunito', sans-serif;
-    background: #DDE6F0;
+    background: #F0F4F8;
     color: var(--texte);
     min-height: 100vh;
   }
@@ -145,12 +145,12 @@
   .tab-btn {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 8px 13px 10px;
+    gap: 8px;
+    padding: 10px 20px 12px;
     border: none;
     background: transparent;
     font-family: 'Nunito', sans-serif;
-    font-size: 0.80rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--texte-leger);
     cursor: pointer;
@@ -171,7 +171,7 @@
     border-radius: 6px 6px 0 0;
   }
   .tab-num {
-    width: 20px; height: 20px;
+    width: 22px; height: 22px;
     border-radius: 50%;
     background: var(--gris-bord);
     color: var(--texte-leger);
@@ -228,7 +228,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -645,8 +645,7 @@
     margin-bottom: 12px;
     line-height: 1.5;
   }
-  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn-sujet, .btn-correction {
+  .btn-correction {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
@@ -660,9 +659,8 @@
     gap: 6px;
     transition: filter 0.15s;
   }
-  .btn-sujet { background: var(--bleu); color: white; }
   .btn-correction { background: var(--vert); color: white; }
-  .btn-sujet:hover, .btn-correction:hover { filter: brightness(0.9); }
+  .btn-correction:hover { filter: brightness(0.9); }
   .btn-corriger {
     padding: 7px 16px;
     background: var(--vert);
@@ -886,27 +884,17 @@
   }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
-  /* ── ANNALES : CARTES + PASTILLES ── */
-  .annale-card {
-    background: var(--blanc);
-    border: 1.5px solid var(--gris-bord);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
-  }
-  .annale-title { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--bleu); font-size: 0.92rem; margin-bottom: 2px; }
-  .annale-meta { font-size: 0.80rem; color: var(--texte-leger); margin-bottom: 10px; }
-  .annale-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  /* ── ANNALES : PASTILLES ── */
   .pastille {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 7px 16px; border-radius: 999px;
     font-size: 0.82rem; font-weight: 700; text-decoration: none;
     transition: all 0.15s ease; border: 1.5px solid transparent;
   }
-  .pastille-sujet { background: var(--bleu); color: #fff; }
-  .pastille-sujet:hover { background: #1E4A72; }
-  .pastille-corrige { background: var(--vert-exo); color: var(--vert); border-color: var(--vert); }
-  .pastille-corrige:hover { background: var(--vert); color: #fff; }
+  .pastille-sujet { color: var(--bleu); border-color: var(--bleu); }
+  .pastille-sujet:hover { background: var(--bleu-clair); }
+  .pastille-corrige { color: var(--vert); border-color: var(--vert); }
+  .pastille-corrige:hover { background: var(--vert-clair); }
 
   /* ── CANVAS ANIMATION ── */
   .anim-canvas-wrap {
@@ -2035,30 +2023,60 @@ else:
   <div class="sub-tab-content" id="sub-R-1">
 
     <div class="section-title"><span class="icon">🎬</span> Vidéos du cours</div>
-    <div class="bilan-card">
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805179014?paccess=47d6acbbcd8.2ffe0e86.bd51fc4c329645d43677cb94834fa329" target="_blank">🎬 Cours 3 — Diffraction</a>
-        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805549603?paccess=47d6acfd7c7.3003b623.f408c1bcf9f7618bd1079a6e2955f91b" target="_blank">🎬 Cours 4 — Interférences</a>
-        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805179806?paccess=47d6acc286e.2ffe119e.19cc3426567f565a5ba1f9282ba76b05" target="_blank">🎬 Diffraction sur cuve à ondes — Olivier Oreggia</a>
-        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805268726?paccess=47d6acd515f.2fff6cf6.58cad342154e1a7cdec018c6fae9ccbb" target="_blank">🎬 Laser Diffraction and Interference — TSG Physics</a>
-        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805203956?paccess=47d6ace4bef.2ffe6ff4.f7acf30554bc968443491822e96da1a2" target="_blank">🎬 Interférences avec des ondes hydrauliques</a>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <a href="https://www.pearltrees.com/private/id105411901/item805179014?paccess=47d6acbbcd8.2ffe0e86.bd51fc4c329645d43677cb94834fa329" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Cours 3 — Diffraction</h4>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105411901/item805549603?paccess=47d6acfd7c7.3003b623.f408c1bcf9f7618bd1079a6e2955f91b" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Cours 4 — Interférences</h4>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105411901/item805179806?paccess=47d6acc286e.2ffe119e.19cc3426567f565a5ba1f9282ba76b05" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Diffraction sur cuve à ondes</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Olivier Oreggia</p>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105411901/item805268726?paccess=47d6acd515f.2fff6cf6.58cad342154e1a7cdec018c6fae9ccbb" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Laser Diffraction and Interference</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">TSG Physics</p>
+        </div>
+      </a>
+      <a href="https://www.pearltrees.com/private/id105411901/item805203956?paccess=47d6ace4bef.2ffe6ff4.f7acf30554bc968443491822e96da1a2" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Interférences avec des ondes hydrauliques</h4>
+        </div>
+      </a>
     </div>
 
     <div class="section-title" style="margin-top:30px;"><span class="icon">🔭</span> Histoire des sciences</div>
-    <div class="bilan-card">
-      <p style="font-size:0.88rem;line-height:1.8;margin-bottom:10px;">« La Plus Belle Expérience de la Physique » — ScienceEtonnante : naissance de la dualité ondes/corpuscules, introduction à la physique quantique.</p>
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id105411901/item805179528?paccess=47d6aca389b.2ffe1088.d788712739b35446db8f4b9d4b4b0041" target="_blank">🎬 La plus belle expérience de la physique</a>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <a href="https://www.pearltrees.com/private/id105411901/item805179528?paccess=47d6aca389b.2ffe1088.d788712739b35446db8f4b9d4b4b0041" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--violet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(123,79,166,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--violet);">🔭 La plus belle expérience de la physique</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">ScienceEtonnante · naissance de la dualité ondes/corpuscules</p>
+        </div>
+      </a>
     </div>
 
     <div class="section-title" style="margin-top:30px;"><span class="icon">🧪</span> Animations et simulations</div>
-    <div class="bilan-card">
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://physique.ostralo.net/diffraction_interference/" target="_blank">🧪 Diffraction et interférence (1 ou 2 fentes) — ostralo.net</a>
-        <a class="pastille pastille-sujet" href="https://phet.colorado.edu/fr/simulations/sound-waves" target="_blank">🧪 Ondes sonores — simulation PhET</a>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <a href="https://physique.ostralo.net/diffraction_interference/" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--orange);">🧪 Diffraction et interférence (1 ou 2 fentes)</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">ostralo.net</p>
+        </div>
+      </a>
+      <a href="https://phet.colorado.edu/fr/simulations/sound-waves" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--orange);">🧪 Ondes sonores</h4>
+          <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Simulation PhET</p>
+        </div>
+      </a>
     </div>
 
     <div class="section-title" style="margin-top:30px;"><span class="icon">📚</span> Travaux pratiques et exercices</div>
