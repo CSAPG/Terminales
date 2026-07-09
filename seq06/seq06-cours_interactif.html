@@ -41,17 +41,18 @@
   /* ── HEADER ── */
   .header {
     background: var(--blanc);
+    border: 1px solid #E3E8EE;
     border-bottom: 3px solid var(--bleu);
-    width: 100%;
+    border-radius: 14px;
+    max-width: 1200px;
+    margin: 0 auto 24px;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 12px rgba(45,95,138,0.10);
   }
   .header-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 18px 32px 0;
+    padding: 18px 24px 14px;
   }
   .header-top {
     display: flex;
@@ -227,7 +228,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 900px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -835,6 +836,54 @@
     line-height: 1.5;
   }
   .ke-list li:last-child { border-bottom: none; }
+
+  /* ── SUJETS DE BAC ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-bottom: 6px;
+  }
+  .bac-lieu { font-weight: 700; color: var(--violet); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 4px 0 6px;
+  }
+  .bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .bac-tag {
+    background: var(--violet-clair);
+    color: var(--violet);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pastille {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    transition: box-shadow 0.2s, background 0.2s;
+  }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
   /* ── ANNALES : CARTES + PASTILLES ── */
@@ -990,7 +1039,7 @@
   }
 
   @media (max-width: 600px) {
-    .header-inner { padding: 12px 16px 0; }
+    .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
     .main { padding: 18px 12px 50px; }
@@ -1064,6 +1113,7 @@
       <li>Prévoir les lieux d'interférences constructives et destructives dans le cas des trous d'Young, l'expression linéarisée de la différence de chemin optique étant donnée. Établir l'expression de l'interfrange.</li>
       <li><strong>Capacité numérique :</strong> représenter, à l'aide d'un langage de programmation, la somme de deux signaux sinusoïdaux périodiques synchrones en faisant varier la phase à l'origine de l'un des deux <em>(traitée dans l'onglet « Interférences » → « Différence de marche »)</em>.</li>
     </ul>
+    <p style="margin-top:10px;font-size:0.78rem;color:var(--texte-leger);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
   </div>
 
   <nav class="tabs-nav">
@@ -1348,44 +1398,6 @@
     <div class="section-title"><span class="icon">📚</span> À travailler dans le manuel</div>
     <div class="bilan-card">
       <p style="font-size:0.88rem;">Exercices n° 7, 12, 13, (23 résolu) et 29 p. 428 à 439.</p>
-    </div>
-
-    <div class="section-title" style="margin-top:26px;"><span class="icon">📝</span> Annales — s'entraîner</div>
-
-    <div class="annale-card">
-      <div class="annale-title">Diffraction par une poudre de cacao</div>
-      <div class="annale-meta">Bac S 2017 — Amérique du Nord · 5 points · diffraction, incertitudes</div>
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2017-AmNord-Exo1-Sujet-DiffractionCacao-5pts.pdf" target="_blank">📄 Sujet</a>
-        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-12/2017-AmNord-Exo1-Correction-DiffractionCacao-5pts.pdf" target="_blank">✅ Corrigé</a>
-      </div>
-    </div>
-
-    <div class="annale-card">
-      <div class="annale-title">Contrôle de la largeur d'un fil de suture</div>
-      <div class="annale-meta">Bac 2022 — Septembre, Métropole, jour 1 · 5 points · diffraction</div>
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2022-09-Metro-J1-ExoC-Sujet-DiffractionSuture-5pts.pdf" target="_blank">📄 Sujet</a>
-        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2023-01/2022-09-Metro-J1-ExoC-Correction-DiffractionSuture-5pts.pdf" target="_blank">✅ Corrigé</a>
-      </div>
-    </div>
-
-    <div class="annale-card">
-      <div class="annale-title">Granulométrie du lactose</div>
-      <div class="annale-meta">Bac 2022 — Centres étrangers 2, sciences de l'ingénieur, jour 2 · 10 points · diffraction</div>
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2022-CentresEtrangers2-SI-J2-Exo1-Sujet-DiffractionLactose-10pts.pdf" target="_blank">📄 Sujet</a>
-        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-07/2022-CentresEtrangers2-SI-J2-Exo1-Correction-DiffractionLactose.pdf" target="_blank">✅ Corrigé</a>
-      </div>
-    </div>
-
-    <div class="annale-card">
-      <div class="annale-title">Un brin en matière synthétique</div>
-      <div class="annale-meta">Bac 2025 — Métropole, sciences de l'ingénieur, jour 1 · 10 points · diffraction</div>
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2025-Metro-SI-J1-ExoA-Sujet-Diffraction.pdf" target="_blank">📄 Sujet</a>
-        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2025-Metro-SI-J1-ExoA-Correction-Diffraction_1.pdf" target="_blank">✅ Corrigé</a>
-      </div>
     </div>
 
   </div>
@@ -1766,26 +1778,6 @@ else:
       <p style="font-size:0.88rem;">Exercices n° 8, 20, 24, (25 résolu), 26, 35, 37 et 39 p. 428 à 439.</p>
     </div>
 
-    <div class="section-title" style="margin-top:26px;"><span class="icon">📝</span> Annales — s'entraîner</div>
-
-    <div class="annale-card">
-      <div class="annale-title">Qualité d'écoute d'une enceinte bluetooth</div>
-      <div class="annale-meta">Bac 2022 — Septembre, Métropole SI, jour 1 · 10 points · interférences, différence de marche</div>
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2024-04/2022-09-SI-Metro-J1-ExoC-Sujet-EnceinteInterferences-10pts.pdf" target="_blank">📄 Sujet</a>
-        <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2023-01/2022-09-SI-Metro-J1-ExoC-Correction-EnceinteInterferences-10pts.pdf" target="_blank">✅ Corrigé</a>
-      </div>
-    </div>
-
-    <div class="annale-card">
-      <div class="annale-title">Théma Interférences</div>
-      <div class="annale-meta">Bac S 2013–2020 · 5 extraits de sujets corrigés sur les interférences · 2h</div>
-      <div class="annale-pills">
-        <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2023-01/Thema-Interferences.pdf" target="_blank">📄 Sujet</a>
-        <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2023-01/Thema-Interferences_0.pdf" target="_blank">✅ Corrigé</a>
-      </div>
-    </div>
-
   </div>
   <!-- /sub-I-2 -->
 
@@ -2016,6 +2008,26 @@ else:
       </ul>
     </div>
 
+    <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+      <span>📖 Glossaire de la séquence</span><span>▾</span>
+    </button>
+    <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <p><strong style="color:var(--bleu);">Diffraction</strong><br>Modification de la direction de propagation d'une onde au passage d'une ouverture ou d'un obstacle de petite taille (voisine ou inférieure à λ) ; ne modifie ni la fréquence ni la longueur d'onde.</p>
+          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Angle caractéristique de diffraction θ</strong><br>Écart angulaire entre l'axe de propagation et le milieu de la première extinction de la figure de diffraction : θ = λ/a, avec a la taille de l'ouverture ou de l'obstacle.</p>
+          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Sources synchrones</strong><br>Deux sources d'ondes de même fréquence.</p>
+          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Sources cohérentes</strong><br>Deux sources d'ondes dont le déphasage est constant au cours du temps ; condition nécessaire, avec la synchronisation, pour observer une figure d'interférences stable.</p>
+        </div>
+        <div>
+          <p><strong style="color:var(--bleu);">Différence de marche δ</strong><br>Différence des distances parcourues par les ondes issues de deux sources pour atteindre un même point P : δ = S₂P − S₁P.</p>
+          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Interférence constructive</strong><br>Amplification de l'onde résultante en un point où la différence de marche est un multiple entier de la longueur d'onde : δ = n·λ.</p>
+          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Interférence destructive</strong><br>Atténuation (ou annulation) de l'onde résultante en un point où la différence de marche est un multiple demi-entier de la longueur d'onde : δ = (n + 1/2)·λ.</p>
+          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Interfrange i</strong><br>Distance séparant deux franges brillantes (ou sombres) consécutives dans une figure d'interférences ; pour le dispositif des trous d'Young : i = λ·D/a.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
   <!-- /sub-R-0 -->
 
@@ -2057,6 +2069,107 @@ else:
         <li>TP 11 — Interférences sonores (Python)</li>
         <li>Exercices n° 7, 12, 13, 23, 29 (diffraction) et 8, 20, 24, 25, 26, 35, 37, 39 (interférences), p. 428 à 439</li>
       </ul>
+    </div>
+
+    <div class="section-title" style="margin-top:30px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac S 2017 · Amérique du Nord</span>
+        <span>5 points</span>
+      </div>
+      <h4>Diffraction par une poudre de cacao</h4>
+      <div class="bac-theme">Thème : Diffraction</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Diffraction</span>
+        <span class="bac-tag">Incertitudes</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2017-AmNord-Exo1-Sujet-DiffractionCacao-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-12/2017-AmNord-Exo1-Correction-DiffractionCacao-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2022 · Métropole · Session sept. · Jour 1</span>
+        <span>5 points</span>
+      </div>
+      <h4>Contrôle de la largeur d'un fil de suture</h4>
+      <div class="bac-theme">Thème : Diffraction</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Diffraction</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2022-09-Metro-J1-ExoC-Sujet-DiffractionSuture-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2023-01/2022-09-Metro-J1-ExoC-Correction-DiffractionSuture-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2022 · Centres étrangers 2 · SI · Jour 2</span>
+        <span>10 points</span>
+      </div>
+      <h4>Granulométrie du lactose</h4>
+      <div class="bac-theme">Thème : Diffraction</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Diffraction</span>
+        <span class="bac-tag">Granulométrie</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2022-CentresEtrangers2-SI-J2-Exo1-Sujet-DiffractionLactose-10pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-07/2022-CentresEtrangers2-SI-J2-Exo1-Correction-DiffractionLactose.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2025 · Métropole · SI · Jour 1</span>
+        <span>10 points</span>
+      </div>
+      <h4>Un brin en matière synthétique</h4>
+      <div class="bac-theme">Thème : Diffraction</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Diffraction</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-06/2025-Metro-SI-J1-ExoA-Sujet-Diffraction.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2025-Metro-SI-J1-ExoA-Correction-Diffraction_1.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2022 · Métropole · SI · Session sept. · Jour 1</span>
+        <span>10 points</span>
+      </div>
+      <h4>Qualité d'écoute d'une enceinte bluetooth</h4>
+      <div class="bac-theme">Thème : Interférences · Différence de marche</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Interférences</span>
+        <span class="bac-tag">Différence de marche</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2024-04/2022-09-SI-Metro-J1-ExoC-Sujet-EnceinteInterferences-10pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2023-01/2022-09-SI-Metro-J1-ExoC-Correction-EnceinteInterferences-10pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac S 2013–2020 · Théma Interférences</span>
+        <span>5 extraits · 2h</span>
+      </div>
+      <h4>Théma Interférences</h4>
+      <div class="bac-theme">Thème : Interférences — recueil de 5 extraits de sujets corrigés</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Interférences</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2023-01/Thema-Interferences.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2023-01/Thema-Interferences_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
     </div>
 
   </div>
