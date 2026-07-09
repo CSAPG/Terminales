@@ -45,7 +45,7 @@
     border-bottom: 3px solid var(--bleu);
     border-radius: 14px;
     padding: 18px 24px 14px;
-    max-width: 1250px;
+    max-width: 1200px;
     margin: 0 auto 24px;
     position: sticky;
     top: 0;
@@ -80,14 +80,14 @@
   /* ── ONGLETS ── */
   .tabs-nav { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
   .tabs-nav::-webkit-scrollbar { display: none; }
-  .tab-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px 12px; border: 2px solid #fed7aa; background: transparent; font-family: 'Nunito', sans-serif; font-size: 1.0rem; font-weight: 800; color: var(--texte-leger); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; position: relative; bottom: -3px; border-radius: 6px 6px 0 0; }
-  .tab-btn:hover { color: #ea580c; border-color: #ea580c; }
-  .tab-btn.active { color: #ea580c; border-color: #9a3412; border-bottom-color: transparent; background: #fff7ed; border-radius: 6px 6px 0 0; }
-  .tab-num { width: 22px; height: 22px; border-radius: 50%; background: #fed7aa; color: #c2410c; border: 2px solid #c2410c; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
-  .tab-btn.active .tab-num { background: #ea580c; color: white; border-color: #9a3412; }
+  .tab-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px 12px; border: none; background: transparent; font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--texte-leger); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; position: relative; bottom: -3px; }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); background: var(--orange-clair); border-radius: 6px 6px 0 0; }
+  .tab-num { width: 22px; height: 22px; border-radius: 50%; background: var(--gris-bord); color: var(--texte-leger); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+  .tab-btn.active .tab-num { background: var(--bleu); color: white; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1250px; margin: 0 auto; padding: 10px 20px 60px; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -141,9 +141,9 @@
   .exo-enonce { background: var(--blanc); border-radius: 8px; padding: 12px 16px; font-size: 0.90rem; line-height: 1.65; margin-bottom: 12px; border: 1px solid var(--vert-exo-bord); }
   .question-block { margin-bottom: 14px; }
   .question-label { font-size: 0.88rem; font-weight: 700; color: var(--texte); margin-bottom: 7px; padding-left: 8px; border-left: 3px solid var(--vert); line-height: 1.5; }
-  .dq-select { padding: 7px 14px; border: 1.5px solid var(--gris-bord); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; background: var(--blanc); color: var(--texte); cursor: pointer; transition: border-color 0.2s; min-width: 200px; }
+  .dq-select { padding: 7px 14px; border: 1.5px solid var(--gris-bord); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; background: var(--blanc); color: var(--texte); cursor: pointer; transition: border-color 0.2s; min-width: 160px; }
   .dq-select:focus { outline: none; border-color: var(--bleu); }
-  .dq-select.correct { border-color: var(--vert); background: var(--blanc); color: var(--vert); font-weight: 700; }
+  .dq-select.correct { border-color: var(--vert); background: var(--vert-exo); color: var(--vert); font-weight: 700; }
   .dq-select.wrong { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); font-weight: 700; }
   .dq-feedback { font-size: 0.82rem; font-weight: 700; min-height: 18px; color: var(--vert); margin-top: 5px; }
   .dq-feedback.wrong { color: var(--rouge); }
@@ -158,9 +158,9 @@
   .btn-reset:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
   .num-btn-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
 
-  .num-input { width: 120px; padding: 7px 11px; border: 1.5px solid var(--gris-bord); border-radius: 7px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; background: var(--gris-fond); transition: border-color 0.2s; }
+  .num-input { width: 110px; padding: 7px 11px; border: 1.5px solid var(--gris-bord); border-radius: 7px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; background: var(--gris-fond); transition: border-color 0.2s; }
   .num-input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); }
-  .num-input.correct { border-color: var(--vert); background: var(--blanc); }
+  .num-input.correct { border-color: var(--vert); background: var(--vert-exo); }
   .num-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
   .num-feedback { font-size: 0.80rem; font-weight: 700; min-height: 16px; }
   .num-feedback.ok { color: var(--vert); }
@@ -168,7 +168,7 @@
   .num-unit { font-size: 0.82rem; color: var(--texte-leger); font-weight: 600; }
   .num-field-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
 
-  .num-correction-inline { display: none; background: var(--blanc); border: 1.5px solid var(--vert); border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 0.86rem; line-height: 1.7; color: var(--texte); }
+  .num-correction-inline { display: none; background: var(--vert-exo); border: 1.5px solid var(--vert); border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 0.86rem; line-height: 1.7; color: var(--texte); }
   .num-correction-inline.visible { display: block; animation: fadeIn 0.2s ease; }
   .num-correction-inline .calc-step { background: white; border-radius: 6px; padding: 7px 11px; margin: 6px 0; font-family: 'Outfit', sans-serif; font-size: 0.88rem; border-left: 3px solid var(--vert); }
 
@@ -179,7 +179,7 @@
   .qcm-choices { display: flex; gap: 8px; flex-wrap: wrap; }
   .qcm-btn { padding: 5px 14px; border: 1.5px solid var(--gris-bord); border-radius: 20px; background: var(--gris-fond); font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--texte); }
   .qcm-btn:hover { border-color: var(--vert); color: var(--vert); background: var(--vert-exo); }
-  .qcm-btn.correct { background: var(--blanc); color: var(--vert); border-color: var(--vert); font-weight: 700; }
+  .qcm-btn.correct { background: var(--vert); color: white; border-color: var(--vert); }
   .qcm-btn.wrong { background: var(--rouge); color: white; border-color: var(--rouge); }
   .qcm-feedback { font-size: 0.80rem; margin-top: 4px; min-height: 14px; color: var(--vert); font-weight: 600; }
   .qcm-feedback.wrong { color: var(--rouge); }
@@ -202,13 +202,77 @@
   .ke-list li:last-child { border-bottom: none; }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
+  .bilan-video-link {
+    display: block;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--gris-bord);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--bleu);
+    text-decoration: none;
+  }
+  .bilan-video-link:hover { color: #1e4466; text-decoration: underline; }
+
+  /* ── SUJETS DE BAC ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-bottom: 6px;
+  }
+  .bac-lieu { font-weight: 700; color: var(--violet); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 4px 0 6px;
+  }
+  .bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .bac-tag {
+    background: var(--violet-clair);
+    color: var(--violet);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pastille {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    transition: box-shadow 0.2s, background 0.2s;
+  }
+  .pastille-sujet { color: var(--bleu); border-color: var(--bleu); }
+  .pastille-sujet:hover { background: var(--bleu-clair); }
+  .pastille-corrige { color: var(--vert); border-color: var(--vert); }
+  .pastille-corrige:hover { background: var(--vert-clair); }
+
   /* ── DRAG & DROP couples ── */
   .drag-pool { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: var(--gris-fond); border: 1.5px dashed var(--gris-bord); border-radius: 10px; min-height: 48px; margin-bottom: 14px; }
   .drag-zones { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
   @media (max-width: 500px) { .drag-zones { grid-template-columns: 1fr; } }
   .drop-zone { min-height: 60px; border: 2px dashed var(--gris-bord); border-radius: 10px; padding: 10px 12px; background: var(--blanc); display: flex; flex-wrap: wrap; gap: 7px; align-items: flex-start; transition: border-color 0.15s, background 0.15s; }
   .drop-zone.drag-over { border-color: var(--bleu); background: var(--bleu-clair); border-style: solid; }
-  .drop-zone.drop-ok { border-color: var(--vert); background: var(--blanc); border-style: solid; }
+  .drop-zone.drop-ok { border-color: var(--vert); background: var(--vert-exo); border-style: solid; }
   .drop-zone.drop-ko { border-color: var(--rouge); background: var(--rouge-clair); border-style: solid; }
   .drop-zone-label { display: block; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--texte-leger); margin-bottom: 8px; letter-spacing: 0.04em; text-transform: uppercase; width: 100%; }
   .drag-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 20px; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: grab; user-select: none; border: 2px solid transparent; transition: opacity 0.15s, transform 0.1s; touch-action: none; }
@@ -216,7 +280,7 @@
 
   /* ── CANVAS pH ── */
   .anim-canvas-wrap { background: #F8FAFC; border: 1.5px solid var(--gris-bord); border-radius: 12px; padding: 14px 16px 10px; margin: 14px 0; }
-  .anim-canvas-title { font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--texte-leger); letter-spacing: 0.06em; margin-bottom: 8px; text-align: center; }
+  .anim-canvas-title { font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--texte-leger); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; text-align: center; }
   .anim-canvas-wrap canvas { display: block; margin: 0 auto; border-radius: 8px; border: 1px solid var(--gris-bord); }
   .anim-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
   .anim-btn { padding: 6px 14px; border: 1.5px solid var(--gris-bord); border-radius: 20px; font-family: 'Nunito', sans-serif; font-size: 0.80rem; font-weight: 700; cursor: pointer; background: var(--blanc); color: var(--texte); transition: all 0.15s; }
@@ -272,26 +336,19 @@
             .ph-disc-seq02 { animation: ph-spin-seq02 16s linear infinite; transform-origin: 40px 40px; }
             @media(prefers-reduced-motion:reduce){ .ph-disc-seq02{animation:none;} }
           
-  /* ── Onglets principaux : orange ── */
-  .tab-btn { color: var(--texte-leger); }
-  .tab-btn:hover { color: #ea580c; }
-  .tab-btn.active { color: #ea580c; border-bottom-color: #ea580c; background: #fff7ed; }
-  .tab-btn.active .tab-num { background: #ea580c; color: white; }
-  .tab-num { background: #fed7aa; color: #c2410c; }
-
-  /* ── Sous-onglets : bleus ── */
-  .sub-nav { display:flex; gap:0; overflow-x:auto; scrollbar-width:none; margin:16px 0 0; border-bottom:3px solid var(--bleu-clair); }
+  /* ── Sous-onglets : style pastille harmonisé (séq. 01/12) ── */
+  .sub-nav { display:flex; gap:6px; padding:18px 0 0; margin-bottom:22px; flex-wrap:nowrap; overflow-x:auto; }
   .sub-nav::-webkit-scrollbar { display:none; }
   .sub-btn {
     display:flex; align-items:center; gap:8px;
-    padding:10px 20px 12px; border: 2px solid #bfdbfe; background:#eff6ff;
-    font-family:'Nunito',sans-serif; font-size:1.0rem; font-weight:800;
-    color:#1e40af; cursor:pointer;
-    border-bottom:3px solid transparent; transition:all 0.2s;
-    white-space:nowrap; position:relative; bottom:-3px; border-radius:6px 6px 0 0;
+    padding:8px 18px; border:none; background:#b8cfe0;
+    font-family:'Nunito',sans-serif; font-size:0.84rem; font-weight:700;
+    color:var(--bleu); cursor:pointer;
+    border-radius:999px; transition:all 0.2s;
+    white-space:nowrap;
   }
-  .sub-btn:hover { background:#dbeafe; border-color:#93c5fd; }
-  .sub-btn.active { background:#93c5fd; border-color:#1d4ed8; border-bottom-color:transparent; color:#1e3a8a; border-radius:6px 6px 0 0; }
+  .sub-btn:hover { background:var(--bleu); color:white; }
+  .sub-btn.active { background:#1e4466; color:white; }
 
   .sub-content { display:none; }
   .sub-content.active { display:block; animation:fadeIn 0.25s ease; }
@@ -368,13 +425,16 @@
       <li>Associer le caractère fort d'un acide (d'une base) à la transformation quasi-totale de cet acide (cette base) avec l'eau.</li>
       <li>Prévoir la composition finale d'une solution aqueuse de concentration donnée en acide fort ou faible apporté.</li>
       <li>Comparer la force de différents acides ou de différentes bases dans l'eau.</li>
+      <li><em>Capacité numérique</em> : Déterminer, à l'aide d'un langage de programmation, le taux d'avancement final d'une transformation, modélisée par la réaction d'un acide sur l'eau.</li>
       <li><em>Capacité mathématique</em> : Résoudre une équation du second degré.</li>
       <li>Citer des solutions aqueuses d'acides et de bases courantes et les formules des espèces dissoutes associées.</li>
       <li>Représenter le diagramme de prédominance d'un couple acide-base.</li>
       <li>Exploiter un diagramme de prédominance ou de distribution.</li>
       <li>Justifier le choix d'un indicateur coloré lors d'un titrage.</li>
+      <li><em>Capacité numérique</em> : Tracer, à l'aide d'un langage de programmation, le diagramme de distribution des espèces d'un couple acide-base de pK<sub>A</sub> donné.</li>
       <li>Citer les propriétés d'une solution tampon.</li>
     </ul>
+    <p style="margin-top:10px;font-size:0.78rem;color:var(--texte-leger);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
   </div>
 </div>
 
@@ -1987,15 +2047,18 @@ updateSimAvancement();
 ══════════════════════════════════════ -->
 <div class="tab-content" id="tab-5">
 
-  <!-- Bilan en vidéo -->
-  <div class="section-title"><span class="icon">🎬</span> Bilan en vidéo</div>
+  <!-- Sous-onglets Bilan / Ressources -->
+  <nav class="sub-nav">
+    <button class="sub-btn active" onclick="switchSubTab('tab-5',0)">
+      📋 Bilan
+    </button>
+    <button class="sub-btn" onclick="switchSubTab('tab-5',1)">
+      🔗 Ressources
+    </button>
+  </nav>
 
-  <a href="https://www.pearltrees.com/private/id105194982/item803472128?paccess=47d40169f9f.2fe40300.5e7d0081d38653aa9a5800dcce4a6f11" target="_blank" rel="noopener" style="text-decoration:none;">
-    <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);margin-bottom:16px;" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.25)'" onmouseout="this.style.boxShadow=''">
-      <h4 style="color:var(--orange);">▶ Bilan en vidéo – Séquence 02 : Acides et bases</h4>
-      <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Récapitulatif vidéo de l'ensemble de la séquence · Toutes parties</p>
-    </div>
-  </a>
+  <!-- ══ Sous-onglet Bilan ══ -->
+  <div class="sub-content active" id="sub-5-0">
 
   <div class="section-title"><span class="icon">📋</span> Bilan de la séquence</div>
 
@@ -2023,6 +2086,7 @@ updateSimAvancement();
         <li>pK<sub>e</sub> = 14,0 à 25 °C</li>
         <li><span class="tau">τ</span> = x<sub>f</sub>/x<sub>max</sub> ; si <span class="tau">τ</span> = 1 totale ; si <span class="tau">τ</span> &lt; 1 équilibre</li>
       </ul>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id105194982/item803469969?paccess=47d4018699e.2fe3fa91.0a042a2ca9f89be205aae3ebdc8fa32a" target="_blank" rel="noopener">▶ Vidéo — Réactions acido-basiques (I et II)</a>
     </div>
     <div class="bilan-card">
       <h4>Partie III – Force des acides et bases</h4>
@@ -2043,6 +2107,7 @@ updateSimAvancement();
         <li>pH = pK<sub>a</sub> → [HA] = [A<sup>–</sup>]</li>
         <li>Diagramme de distribution et de prédominance à tracer</li>
       </ul>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id105194982/item803470001?paccess=47d40180c27.2fe3fab1.4ae5025e018dae6f4953277cdff9835e" target="_blank" rel="noopener">▶ Vidéo — Forces des acides et des bases (III et IV)</a>
     </div>
     <div class="bilan-card">
       <h4>Suppléments – Indicateurs et tampons</h4>
@@ -2066,10 +2131,45 @@ updateSimAvancement();
     </div>
   </div>
 
-  <!-- Ressources numériques -->
-  <div class="section-title" style="margin-top:32px;"><span class="icon">🔗</span> Ressources numériques</div>
+  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>📖 Glossaire de la séquence</span><span>▼</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p><strong style="color:var(--bleu);">pH</strong><br>Grandeur sans unité qui mesure l'acidité d'une solution aqueuse : pH = –log([H<sub>3</sub>O<sup>+</sup>]/C°).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Couple acide/base</strong><br>Couple de deux espèces HA/A<sup>–</sup> reliées par un échange de H<sup>+</sup> : HA ⇌ A<sup>–</sup> + H<sup>+</sup>.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Espèce amphotère</strong><br>Espèce chimique qui est à la fois acide d'un couple et base d'un autre couple acide/base.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Autoprotolyse de l'eau</strong><br>Réaction entre deux molécules d'eau : 2 H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + HO<sup>–</sup>.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Produit ionique de l'eau K<sub>e</sub></strong><br>Constante d'équilibre de l'autoprotolyse de l'eau, K<sub>e</sub> = 10<sup>–14</sup> à 25 °C (pK<sub>e</sub> = 14,0).</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Acide fort / Base forte</strong><br>Acide (base) dont la réaction avec l'eau est totale : il ne reste plus de forme HA (BOH) en solution à l'état final.</p>
+      </div>
+      <div>
+        <p><strong style="color:var(--bleu);">Acide faible / Base faible</strong><br>Acide (base) dont la réaction avec l'eau est limitée : les deux espèces du couple coexistent à l'état final.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Constante d'acidité K<sub>a</sub></strong><br>Constante d'équilibre de la réaction d'un acide HA avec l'eau ; pK<sub>a</sub> = –log K<sub>a</sub>, caractéristique du couple acide/base.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Diagramme de prédominance</strong><br>Représentation qui indique, selon le pH comparé au pK<sub>a</sub>, quelle espèce du couple (HA ou A<sup>–</sup>) est majoritaire en solution.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Diagramme de distribution</strong><br>Représentation graphique donnant, pour chaque pH, la proportion de chaque espèce du couple acide/base.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Zone de virage</strong><br>Intervalle de pH, centré sur le pK<sub>a</sub> de l'indicateur coloré (± 1 unité), dans lequel sa couleur change.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Solution tampon</strong><br>Mélange d'un acide HA et de sa base conjuguée A<sup>–</sup> à concentrations voisines, dont le pH varie peu par ajout modéré d'acide, de base ou par dilution.</p>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /sub-5-0 (Bilan) -->
+
+  <!-- ══ Sous-onglet Ressources ══ -->
+  <div class="sub-content" id="sub-5-1">
+
+  <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://www.pearltrees.com/private/id105194982/item803472128?paccess=47d40169f9f.2fe40300.5e7d0081d38653aa9a5800dcce4a6f11" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.25)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">▶ Bilan en vidéo – Séquence 02 : Acides et bases</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Récapitulatif vidéo de l'ensemble de la séquence · Toutes parties</p>
+      </div>
+    </a>
 
     <a href="https://www.pearltrees.com/private/id105194982/item803469969?paccess=47d4018699e.2fe3fa91.0a042a2ca9f89be205aae3ebdc8fa32a" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
@@ -2085,24 +2185,16 @@ updateSimAvancement();
       </div>
     </a>
 
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🔬</span> Simulations & animations</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
     <a href="https://phet.colorado.edu/sims/html/acid-base-solutions/latest/acid-base-solutions_fr.html" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
         <h4 style="color:var(--orange);">⚗️ Simulation PhET – Solutions acido-basiques</h4>
         <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Composition d'une solution en fonction de la force de l'acide ou de la base · Toute la séquence</p>
-      </div>
-    </a>
-
-    <a href="https://www.pearltrees.com/private/id105194982/item803470100?paccess=47d40190c0a.2fe3fb14.f4fbab9369e836d494d70332036b1ca4" target="_blank" rel="noopener" style="text-decoration:none;">
-      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
-        <h4 style="color:var(--orange);">📝 QCM Hatier corrigé</h4>
-        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Auto-évaluation sur l'ensemble de la séquence · Toutes parties</p>
-      </div>
-    </a>
-
-    <a href="https://www.pearltrees.com/private/id105194982/item803470465?paccess=47d40198f6b.2fe3fc81.db24f9ea56de250492e5002f3439852d" target="_blank" rel="noopener" style="text-decoration:none;">
-      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
-        <h4 style="color:var(--vert);">📝 QCM Hatier – Prérequis</h4>
-        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Autoprotolyse de l'eau, K<sub>e</sub> · Partie II</p>
       </div>
     </a>
 
@@ -2113,12 +2205,31 @@ updateSimAvancement();
       </div>
     </a>
 
-    <a href="https://www.pearltrees.com/private/id105194982/item803474877?paccess=47d401ae649.2fe40dbd.561caa72a0798bb529f4bdd7f76e3deb" target="_blank" rel="noopener" style="text-decoration:none;">
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">📝</span> QCM</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+
+    <a href="https://www.pearltrees.com/private/id105194982/item803470465?paccess=47d40198f6b.2fe3fc81.db24f9ea56de250492e5002f3439852d" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
-        <h4 style="color:var(--vert);">📝 Exercice sur le choix de l'indicateur coloré</h4>
-        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Exercice d'application – Acides et bases</p>
+        <h4 style="color:var(--vert);">📝 QCM Hatier – Prérequis</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Autoprotolyse de l'eau, K<sub>e</sub> · Partie II</p>
       </div>
     </a>
+
+    <a href="https://www.pearltrees.com/private/id105194982/item803470100?paccess=47d40190c0a.2fe3fb14.f4fbab9369e836d494d70332036b1ca4" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">📝 QCM Hatier corrigé</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Auto-évaluation sur l'ensemble de la séquence · Toutes parties</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🔭</span> Compléments & exercices</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
 
     <a href="https://www.pearltrees.com/private/id105194982/item803475376?paccess=47d401b3096.2fe40fb0.b750400d3fa2152bc963e3308ede7238" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
@@ -2127,23 +2238,117 @@ updateSimAvancement();
       </div>
     </a>
 
+    <a href="https://www.pearltrees.com/private/id105194982/item803474877?paccess=47d401ae649.2fe40dbd.561caa72a0798bb529f4bdd7f76e3deb" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 Exercice sur le choix de l'indicateur coloré</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Exercice d'application – Acides et bases</p>
+      </div>
+    </a>
+
     <a href="https://www.pearltrees.com/private/id105194982/item803478621?paccess=47d401cf5c2.2fe41c5d.0a87fed6d0d63edcb9e5d1e3c6c3542e" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
-        <h4 style="color:var(--vert);">📝 Exercice: comment tracer un diagramme de prédominance ?</h4>
+        <h4 style="color:var(--vert);">📝 Exercice : comment tracer un diagramme de prédominance ?</h4>
         <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Exercice complémentaire – Acides et bases</p>
       </div>
     </a>
 
-  </div><!-- /grid ressources -->
-
-  <div class="footer-note">
-    Séquence 02 — Terminale Spécialité Physique-Chimie · C. Poirault-Gauvin &amp; M. François<br>
-    D'après le B.O. spécial n° 8 du 25 juillet 2019
   </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2026 · Asie Pacifique · Jour 1</span>
+      <span>9 points · 1h35</span>
+    </div>
+    <h4>Acidité des sols</h4>
+    <div class="bac-theme">Thème : Acide-base</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Groupes caractéristiques</span>
+      <span class="bac-tag">K<sub>a</sub> / pK<sub>a</sub></span>
+      <span class="bac-tag">Diagramme de distribution</span>
+      <span class="bac-tag">pH = pK<sub>a</sub> + log([A<sup>–</sup>]/[HA])</span>
+      <span class="bac-tag">K<sub>e</sub></span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2026-06/2026-Asie-J1-Exo1-Sujet-AciditeSol-9ts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2026-06/2026-Asie-J1-Exo1-Correction-AciditeSol-9ts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2024 · Amérique du Nord · Jour 2</span>
+      <span>4 points · 38 min</span>
+    </div>
+    <h4>Acidité totale d'un vin</h4>
+    <div class="bac-theme">Thème : Acide-base · Titrage pH-métrique</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Groupes caractéristiques</span>
+      <span class="bac-tag">Diagramme de prédominance</span>
+      <span class="bac-tag">Choix de l'indicateur coloré</span>
+      <span class="bac-tag">Titrage</span>
+      <span class="bac-tag">Incertitude</span>
+      <span class="bac-tag">Z-score</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-11/2024-AmNord-J2-Exo3-Sujet-AciditeVin-4pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-05/2024-AmNord-J2-Exo3-Correction-AciditeVin-4pts_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2021 · Polynésie · Exercice 1</span>
+      <span>10 points · 1h45</span>
+    </div>
+    <h4>L'acide lactique à la base de composés « verts »</h4>
+    <div class="bac-theme">Thème : Acide-base · Nomenclature · Spectroscopie · Synthèse organique</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Nomenclature</span>
+      <span class="bac-tag">Schéma de Lewis</span>
+      <span class="bac-tag">K<sub>a</sub> / pK<sub>a</sub></span>
+      <span class="bac-tag">Domaine de prédominance</span>
+      <span class="bac-tag">Spectroscopie IR</span>
+      <span class="bac-tag">Quotient de réaction</span>
+      <span class="bac-tag">Sens d'évolution spontanée</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://labolycee.org/sites/default/files/2022-11/2021-Polynesie-Sujet-Exo1-AcideLactiqueVert-10pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
+      <a class="pastille pastille-corrige" href="https://labolycee.org/sites/default/files/2022-04/2021-Polynesie-Correction-Exo1-AcideLactiqueVert-10pts_2.docx" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac S 2018 · Nouvelle Calédonie · Exercice 3</span>
+      <span>5 points · 50 min</span>
+    </div>
+    <h4>Contrôle du dioxyde de carbone dans l'eau d'un aquarium</h4>
+    <div class="bac-theme">Thème : Acide-base · Titrage pH-métrique</div>
+    <div class="bac-notions">
+      <span class="bac-tag">pH = pK<sub>a</sub> + log([base]/[acide])</span>
+      <span class="bac-tag">Diagramme de prédominance</span>
+      <span class="bac-tag">Espèce prédominante</span>
+      <span class="bac-tag">Titrage pH-métrique</span>
+      <span class="bac-tag">Équivalence</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/exos/sujets/2018/2018-NelleCaledo-Exo3-Sujet-AquariumCO2-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/exos/corriges/2018/2018-NelleCaledo-Exo3-Correction-AquariumCO2-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  </div><!-- /sub-5-1 (Ressources) -->
 
 </div><!-- /tab-5 -->
 
+
 </main>
+
+<div class="footer-note">
+  Séquence 02 — Acides – Bases · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin
+</div>
 
 <script>
 // ──────────────────────────────────────────────────────
