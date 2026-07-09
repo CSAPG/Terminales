@@ -119,74 +119,18 @@
   }
   .header-titles p span { color: var(--orange); font-weight: 700; }
 
-  /* ── ICÔNE PILE ANIMÉE ── */
+  /* ── ICÔNE PILE ANIMÉE (rendue par ter-icons.js) ── */
   .pile-icon-wrap {
     flex-shrink: 0;
     width: 40px;
     height: 68px;
     position: relative;
     margin-top: -2px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
   }
-  .pile-body {
-    position: absolute;
-    bottom: 10px; left: 50%;
-    transform: translateX(-50%);
-    width: 28px; height: 48px;
-    background: linear-gradient(180deg, #E8F1F8 0%, #B8D4EC 100%);
-    border: 2px solid var(--bleu-moyen);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .pile-fill {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(180deg, #5B8FB9, #2D5F8A);
-    border-radius: 0 0 2px 2px;
-    animation: pileCharge 3.5s ease-in-out infinite;
-  }
-  @keyframes pileCharge {
-    0%   { height: 20%; }
-    40%  { height: 80%; }
-    60%  { height: 80%; }
-    100% { height: 20%; }
-  }
-  .pile-minus {
-    position: absolute;
-    bottom: 8px; left: 50%;
-    transform: translateX(-50%);
-    width: 16px; height: 3px;
-    background: var(--blanc);
-    border-radius: 2px;
-    z-index: 2;
-  }
-  .pile-cap {
-    position: absolute;
-    bottom: 58px; left: 50%;
-    transform: translateX(-50%);
-    width: 12px; height: 6px;
-    background: var(--bleu);
-    border-radius: 2px 2px 0 0;
-  }
-  .pile-plus-v { position: absolute; bottom: 61px; left: 50%; transform: translateX(-50%); width: 2px; height: 7px; background: white; border-radius: 1px; z-index: 2; }
-  .pile-plus-h { position: absolute; bottom: 64px; left: 50%; transform: translateX(-55%); width: 7px; height: 2px; background: white; border-radius: 1px; z-index: 2; }
-  .pile-spark {
-    position: absolute;
-    top: 2px; right: 2px;
-    font-size: 0.9rem;
-    animation: spark 2s ease-in-out infinite;
-  }
-  @keyframes spark {
-    0%, 100% { opacity: 0.2; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.1); }
-  }
-  .pile-base {
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 34px; height: 10px;
-    background: linear-gradient(180deg, #5B8FB9, #2D5F8A);
-    border-radius: 3px 3px 5px 5px;
-  }
+  .pile-icon-wrap svg { width: 100%; height: auto; }
 
   /* ── ONGLETS ── */
   .tabs-nav {
@@ -1039,6 +983,7 @@
     .pile-icon-wrap { width: 32px; height: 56px; }
   }
 </style>
+<script src="js/ter-icons.js"></script>
 </head>
 <body>
 
@@ -1053,19 +998,8 @@
       <h1>Évolution spontanée d'un système chimique</h1>
       <p>Thème : <span>Transformations chimiques – Piles et électrolyse</span> ·© C. Poirault-Gauvin</p>
     </div>
-    <!-- Icône pile animée -->
-    <div class="pile-icon-wrap" title="Pile électrochimique : conversion d'énergie chimique en énergie électrique">
-      <div class="pile-cap">
-        <div class="pile-plus-v"></div>
-        <div class="pile-plus-h"></div>
-      </div>
-      <div class="pile-body">
-        <div class="pile-fill"></div>
-        <div class="pile-minus"></div>
-        <span class="pile-spark">⚡</span>
-      </div>
-      <div class="pile-base"></div>
-    </div>
+    <!-- Icône pile animée (bibliothèque partagée ter-icons.js) -->
+    <div class="pile-icon-wrap" id="pileIconWrap" title="Pile électrochimique : conversion d'énergie chimique en énergie électrique"></div>
   </div>
   <nav class="tabs-nav">
     <button class="tab-btn active" onclick="switchTab(0)">
@@ -3738,7 +3672,7 @@
         <li>Q<sub>r,i</sub> = K → équilibre, pas d'évolution</li>
         <li>Q<sub>r,i</sub> &gt; K → sens indirect (←)</li>
       </ul>
-      <a class="bilan-video-link" href="https://www.youtube.com/watch?v=OK1wQKtd09U" target="_blank" rel="noopener">▶ Vidéo — Sens d'évolution (A.1 et A.2)</a>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id81585729/item806351284?paccess=47d86cbb69a.300ff1b4.1694d15f779f67e3137ca64eb374cfbb" target="_blank" rel="noopener">▶ Vidéo — Sens d'évolution (A.1 et A.2)</a>
     </div>
     <div class="bilan-card">
       <h4>Partie A.3 – Piles électrochimiques</h4>
@@ -3749,7 +3683,7 @@
         <li>Q<sub>max</sub> = n(e<sup>–</sup>)<sub>max</sub> × F = I × Δt (en coulombs)</li>
         <li>Pile qui débite : Q<sub>r</sub> ≠ K — Pile usée : Q<sub>r</sub> = K</li>
       </ul>
-      <a class="bilan-video-link" href="https://www.youtube.com/watch?v=XGiG3pohbyU" target="_blank" rel="noopener">▶ Vidéo — Piles électrochimiques (A.3)</a>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id81585729/item806350817?paccess=47d86cc5e41.300fefe1.a7f7f539fcfa02739ee56978e865bdee" target="_blank" rel="noopener">▶ Vidéo — Piles électrochimiques (A.3)</a>
     </div>
     <div class="bilan-card">
       <h4>Partie B.1/B.2 – L'électrolyseur</h4>
@@ -3806,14 +3740,14 @@
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
 
-    <a href="https://www.youtube.com/watch?v=OK1wQKtd09U" target="_blank" rel="noopener" style="text-decoration:none;">
+    <a href="https://www.pearltrees.com/private/id81585729/item806351284?paccess=47d86cbb69a.300ff1b4.1694d15f779f67e3137ca64eb374cfbb" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
         <h4 style="color:var(--bleu);">▶ Vidéo — Sens d'évolution</h4>
         <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Cours n°5 · Sciences physiques à Stella<br>Parties A.1 et A.2</p>
       </div>
     </a>
 
-    <a href="https://www.youtube.com/watch?v=XGiG3pohbyU" target="_blank" rel="noopener" style="text-decoration:none;">
+    <a href="https://www.pearltrees.com/private/id81585729/item806350817?paccess=47d86cc5e41.300fefe1.a7f7f539fcfa02739ee56978e865bdee" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
         <h4 style="color:var(--bleu);">▶ Vidéo — Piles électrochimiques</h4>
         <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Cours n°6 · Sciences physiques à Stella<br>Partie A.3</p>
@@ -3823,6 +3757,20 @@
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
         <h4 style="color:var(--vert);">▶ Vidéo — Électrolyseur et pile à combustible</h4>
         <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">CEA · Fonctionnement de l'électrolyseur et de la pile à combustible · Partie B</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/06_schema_anime.mp4" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Schéma animé — Piles</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 06 · Partie A</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/08_schema_anime.mp4" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">▶ Schéma animé — Électrolyseur</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 08 · Partie B</p>
       </div>
     </a>
 </div>
@@ -3852,6 +3800,49 @@
     </a>
 
 </div>
+<div class="section-title" style="margin-top:28px;"><span class="icon">🎮</span> Jeu d'évasion</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
+    <a href="seq01/seq01-escape-volta.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--violet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(123,79,166,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--violet);">🎮 L'Héritage de Volta</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Jeu d'évasion pédagogique · Piles électrochimiques et électrolyse</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">📝</span> QCM</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/06_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">📝 QCM prérequis — Piles</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 06 · Partie A</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/08_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM prérequis — Électrolyseur</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 08 · Partie B</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_06/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">📝 QCM de maîtrise — Piles</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 06 · Partie A</p>
+      </div>
+    </a>
+
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_08/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM de maîtrise — Électrolyseur</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 08 · Partie B</p>
+      </div>
+    </a>
+</div>
+
 <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
 
   <div class="bac-card">
@@ -3920,6 +3911,11 @@
 </div>
 
 <script>
+// ──────────────────────────────────────────────────────
+// ── ICÔNE PILE (bibliothèque partagée ter-icons.js)
+// ──────────────────────────────────────────────────────
+document.getElementById('pileIconWrap').innerHTML = (typeof getIconTer === 'function') ? getIconTer('pile') : '';
+
 // ──────────────────────────────────────────────────────
 // ── NAVIGATION ONGLETS
 // ──────────────────────────────────────────────────────
