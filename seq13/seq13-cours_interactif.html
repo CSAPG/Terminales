@@ -33,7 +33,7 @@
 
   body {
     font-family: 'Nunito', sans-serif;
-    background: #DDE6F0;
+    background: #F0F4F8;
     color: var(--texte);
     min-height: 100vh;
   }
@@ -41,17 +41,18 @@
   /* ── HEADER ── */
   .header {
     background: var(--blanc);
+    border: 1px solid #E3E8EE;
     border-bottom: 3px solid var(--bleu);
-    width: 100%;
+    border-radius: 14px;
+    max-width: 1200px;
+    margin: 0 auto 24px;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 12px rgba(45,95,138,0.10);
   }
   .header-inner {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 18px 32px 0;
+    padding: 18px 24px 14px;
   }
   .header-top {
     display: flex;
@@ -138,18 +139,17 @@
     gap: 0;
     overflow-x: auto;
     scrollbar-width: none;
-    flex-wrap: nowrap;
   }
   .tabs-nav::-webkit-scrollbar { display: none; }
   .tab-btn {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 8px 13px 10px;
+    gap: 8px;
+    padding: 10px 20px 12px;
     border: none;
     background: transparent;
     font-family: 'Nunito', sans-serif;
-    font-size: 0.80rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--texte-leger);
     cursor: pointer;
@@ -158,9 +158,6 @@
     white-space: nowrap;
     position: relative;
     bottom: -3px;
-    flex: 1;
-    justify-content: center;
-    text-align: center;
   }
   .tab-btn:hover { color: var(--orange); }
   .tab-btn.active {
@@ -170,11 +167,11 @@
     border-radius: 6px 6px 0 0;
   }
   .tab-num {
-    width: 20px; height: 20px;
+    width: 22px; height: 22px;
     border-radius: 50%;
     background: var(--gris-bord);
     color: var(--texte-leger);
-    font-size: 0.70rem;
+    font-size: 0.75rem;
     font-weight: 700;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.2s;
@@ -227,7 +224,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1000px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -821,6 +818,49 @@
     line-height: 1.5;
   }
   .ke-list li:last-child { border-bottom: none; }
+
+  /* ── SUJETS DE BAC ── */
+  .bac-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .bac-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    margin-bottom: 6px;
+  }
+  .bac-lieu { font-weight: 700; color: var(--violet); }
+  .bac-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 4px 0 6px;
+  }
+  .bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+  .bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .bac-tag {
+    background: var(--violet-clair);
+    color: var(--violet);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .bac-pastille-sujet { text-decoration: none; font-size: 0.82rem; font-weight: 700; padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--bleu); color: var(--bleu); background: transparent; transition: box-shadow 0.2s, background 0.2s; }
+  .bac-pastille-sujet:hover { background: var(--bleu-clair); }
+  .bac-pastille-corrige { text-decoration: none; font-size: 0.82rem; font-weight: 700; padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--vert); color: var(--vert); background: transparent; transition: box-shadow 0.2s, background 0.2s; }
+  .bac-pastille-corrige:hover { background: var(--vert-clair); }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
   /* ── CANVAS ANIMATION ── */
@@ -961,7 +1001,7 @@
   }
 
   @media (max-width: 600px) {
-    .header-inner { padding: 12px 16px 0; }
+    .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
     .main { padding: 18px 12px 50px; }
@@ -1041,6 +1081,7 @@
       <li>Exploiter la relation de Bernoulli, celle-ci étant fournie, pour étudier qualitativement puis quantitativement l'écoulement d'un fluide incompressible en régime permanent.</li>
       <li>Mettre en œuvre un dispositif expérimental pour étudier l'écoulement permanent d'un fluide et pour tester la relation de Bernoulli.</li>
     </ul>
+    <p style="margin-top:10px;font-size:0.78rem;color:var(--texte-leger);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
   </div>
 
   <nav class="tabs-nav">
@@ -1843,23 +1884,30 @@
     <tr><td>Relation de Bernoulli</td><td>p.332 n°30</td></tr>
     <tr><td>Effet Venturi</td><td>p.333 n°32</td></tr>
     <tr><td>Grand oral (vidéo)</td><td>p.336 question 1</td></tr>
-    <tr>
-      <td>Bac 2025 — Traitement des eaux d'un bassin d'orage (Archimède, débit, Bernoulli)</td>
-      <td>
-        <a href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Sujet-Bassin-MecaFluide-6pts.pdf" target="_blank" rel="noopener" class="pastille-link pastille-sujet">📄 Sujet</a>
-        <a href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Correction-Traitement-Eau-Bassin-6pts_3.pdf" target="_blank" rel="noopener" class="pastille-link pastille-corrige">✅ Corrigé</a>
-      </td>
-    </tr>
-    <tr>
-      <td>Bac 2025 — Écoulement du sang dans une artère (Doppler, débit, Bernoulli)</td>
-      <td>
-        <a href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-R-Exo2-Sujet-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener" class="pastille-link pastille-sujet">📄 Sujet</a>
-        <a href="https://www.labolycee.org/sites/default/files/2025-06/2025-AmNord-R-Exo2-Correction-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener" class="pastille-link pastille-corrige">✅ Corrigé</a>
-      </td>
-    </tr>
   </table>
 
   <div class="attention-box"><strong>Conclusion de séquence :</strong> réalisez un schéma heuristique sur les différentes notions de la séquence, à présenter à l'oral par groupe.</div>
+
+  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>📖 Glossaire de la séquence</span><span>▾</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p><strong style="color:var(--bleu);">Pression</strong><br>Grandeur scalaire qui traduit l'action d'un fluide sur une surface, exprimée en pascal (Pa) : P = F/S, où F est la valeur de la force pressante exercée sur une surface S.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Loi fondamentale de la statique des fluides</strong><br>Pour un fluide incompressible immobile dans un champ de pesanteur uniforme, la différence de pression entre deux points est proportionnelle à la différence d'altitude : P₂ − P₁ = ρg(z₁ − z₂) ; la pression augmente avec la profondeur.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Poussée d'Archimède</strong><br>Résultante des forces pressantes exercées par un fluide sur un corps immergé ; verticale, dirigée vers le haut, de valeur égale au poids du volume de fluide déplacé. Elle ne dépend ni de la masse, ni de la forme, ni de l'orientation du corps.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Régime permanent</strong><br>Régime d'écoulement d'un fluide pour lequel les grandeurs qui le caractérisent (vitesse, pression, débit...) en un point donné ne dépendent pas du temps.</p>
+      </div>
+      <div>
+        <p><strong style="color:var(--bleu);">Débit volumique Q</strong><br>Volume de fluide traversant une section par unité de temps : Q = v×S, avec v la vitesse du fluide et S l'aire de la section ; se conserve le long d'un écoulement pour un fluide incompressible en régime permanent.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Ligne de courant</strong><br>Trajectoire suivie par une particule de fluide en régime permanent ; les lignes de courant ne se croisent jamais.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Relation de Bernoulli</strong><br>Relation de conservation valable le long d'une ligne de courant, pour un fluide incompressible et non visqueux en régime permanent : P + ½ρv² + ρgz = constante.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Effet Venturi</strong><br>Dans un conduit horizontal, diminution de la pression d'un fluide au niveau d'un rétrécissement de section, où sa vitesse augmente (conséquence directe de la relation de Bernoulli).</p>
+      </div>
+    </div>
+  </div>
+
   </div>
 
   <!-- ───────── R2 : RESSOURCES COMPLÉMENTAIRES ───────── -->
@@ -1894,16 +1942,58 @@
       </ul>
     </div>
   </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2025 · Amérique du Nord · Jour 1 · Exercice 3</span>
+      <span>6 points</span>
+    </div>
+    <h4>Traitement des eaux d'un bassin d'orage</h4>
+    <div class="bac-theme">Thème : Poussée d'Archimède · Débit · Relation de Bernoulli</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Poussée d'Archimède</span>
+      <span class="bac-tag">Débit volumique</span>
+      <span class="bac-tag">Relation de Bernoulli</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Sujet-Bassin-MecaFluide-6pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Correction-Traitement-Eau-Bassin-6pts_3.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2025 · Amérique du Nord · Exercice 2</span>
+      <span>5 points</span>
+    </div>
+    <h4>Écoulement du sang dans une artère</h4>
+    <div class="bac-theme">Thème : Effet Doppler · Débit · Relation de Bernoulli</div>
+    <div class="bac-notions">
+      <span class="bac-tag">Effet Doppler</span>
+      <span class="bac-tag">Débit volumique</span>
+      <span class="bac-tag">Relation de Bernoulli</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-R-Exo2-Sujet-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2025-AmNord-R-Exo2-Correction-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
   </div>
 </div>
 
 </div><!-- /main -->
 
 
-<div class="footer-note">Séquence 13 — Écoulement d'un fluide · Terminale spécialité physique-chimie · Cours interactif</div>
+<div class="footer-note">Séquence 13 — Écoulement d'un fluide · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin</div>
 
 <script>
 /* ════════ NAVIGATION ONGLETS ════════ */
+function toggleAccord(btn) {
+  btn.nextElementSibling.classList.toggle('open');
+}
 function switchTab(i) {
   document.querySelectorAll('.tab-content').forEach((t,idx) => t.classList.toggle('active', idx===i));
   document.querySelectorAll('.tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
