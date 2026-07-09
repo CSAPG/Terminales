@@ -41,17 +41,18 @@
   /* ── HEADER ── */
   .header {
     background: var(--blanc);
+    border: 1px solid #E3E8EE;
     border-bottom: 3px solid var(--bleu);
-    width: 100%;
+    border-radius: 14px;
+    max-width: 1200px;
+    margin: 0 auto 24px;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 12px rgba(45,95,138,0.10);
   }
   .header-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 18px 32px 0;
+    padding: 18px 24px 14px;
   }
   .header-top {
     display: flex;
@@ -227,7 +228,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 900px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -968,7 +969,7 @@
   .pastille-list { display: flex; flex-direction: column; gap: 12px; }
 
   @media (max-width: 600px) {
-    .header-inner { padding: 12px 16px 0; }
+    .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
     .main { padding: 18px 12px 50px; }
@@ -1024,7 +1025,9 @@
       <li>Citer et exploiter les expressions des coordonnées des vecteurs vitesse et accélération dans le repère de Frenet, dans le cas d'un mouvement circulaire.</li>
       <li>Déterminer les caractéristiques des vecteurs vitesse et accélération du centre de masse d'un système en mouvement circulaire dans un champ de gravitation newtonien.</li>
       <li>Établir et exploiter la troisième loi de Kepler dans le cas du mouvement circulaire.</li>
+      <li><em>Capacité numérique</em> : Exploiter, à l'aide d'un langage de programmation, des données astronomiques ou satellitaires pour tester les deuxième et troisième lois de Kepler.</li>
     </ul>
+    <p style="margin-top:10px;font-size:0.78rem;color:var(--texte-leger);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
   </div>
 
   <nav class="tabs-nav">
@@ -1035,7 +1038,7 @@
       <span class="tab-num">A</span> Satellites en orbite
     </button>
     <button class="tab-btn" onclick="switchTab(2)">
-      <span class="tab-num">K</span> Lois de Kepler (K1–K4)
+      <span class="tab-num">K</span> Lois de Kepler (K1–K3)
     </button>
     <button class="tab-btn" onclick="switchTab(3)">
       <span class="tab-num">✓</span> Bilan &amp; Ressources
@@ -1326,9 +1329,6 @@
     <button class="sub-tab-btn" data-sub="K3" onclick="switchSubTab('K',2)">
       <span class="sub-tab-num">3</span> Loi des périodes
     </button>
-    <button class="sub-tab-btn" data-sub="K4" onclick="switchSubTab('K',3)">
-      <span class="sub-tab-num">4</span> Exercices bilan &amp; annales
-    </button>
   </div>
 
   <div class="intro-box">
@@ -1616,237 +1616,6 @@
   </div>
   <!-- /sub-K-2 -->
 
-  <!-- ───────── K4 : EXERCICES BILAN & ANNALES ───────── -->
-  <div class="sub-tab-content" id="sub-K-3">
-
-    <div class="intro-box">
-      Deux sujets de baccalauréat pour s'entraîner et réinvestir l'ensemble de la séquence : 2<sup>e</sup> loi de Newton, champ de gravitation et 3<sup>e</sup> loi de Kepler. Corrections dépliables, d'après <a href="https://labolycee.org" target="_blank" style="color:var(--bleu);">labolycee.org</a>.
-    </div>
-
-    <!-- ══ ANNALE 1 : TRACTEUR GRAVITATIONNEL (Polynésie 2022) ══ -->
-    <div class="bilan-exo-card">
-      <span class="bilan-tag">BAC 2022 · POLYNÉSIE J1 · EXERCICE (5 points)</span>
-      <h3>Un tracteur gravitationnel pour dévier un astéroïde</h3>
-      <div class="bilan-theme">Mots-clés : 2<sup>e</sup> loi de Newton, champ de gravitation, 3<sup>e</sup> loi de Kepler. Pour dévier un astéroïde qui pourrait entrer en collision avec la Terre, on utilise l'attraction gravitationnelle mutuelle entre l'astéroïde A et un engin spatial E de masse m, maintenu à distance constante d.</div>
-      <div class="bilan-links">
-        <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-04/2022-Polynesie-J1-ExoA-Sujet-TracteurGravitationnel-5pts.pdf" target="_blank">📄 Sujet</a>
-        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2023-01/2022-Polynesie-J1-ExoA-Correction-TracteurGravitationnel-5pts_0.pdf" target="_blank">✅ Corrigé officiel</a>
-      </div>
-
-      <div class="exo-enonce">
-        <strong>Données :</strong> masse d'Apophis M = 4×10¹⁰ kg · masse de l'engin spatial m = 5×10³ kg · distance d = 240 m · G = 6,67408×10⁻¹¹ N·m².kg⁻² · rayon de l'orbite R = 1,37961×10¹¹ m · masse du Soleil M<sub>S</sub> = 1,98892×10³⁰ kg · période sans tracteur T = 323,442 jours.
-      </div>
-
-
-      <div class="question-block">
-        <div class="question-label">1–3) Représenter <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>E/A</sub>, tracer <span class="vecsym">Δv<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="26,5 21,1.5 21,8.5" fill="currentColor"/></svg></span> = <span class="vecsym">v<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span><sub>f</sub> − <span class="vecsym">v<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span><sub>i</sub>, et en déduire la direction dans laquelle placer l'engin E pour dévier A.</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <p><span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>E/A</sub> est dirigée de A vers E (attraction). D'après la 2<sup>e</sup> loi de Newton appliquée à l'astéroïde de masse M : Σ<span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = M<span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> ≈ M·<span class="vecsym">Δv<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="26,5 21,1.5 21,8.5" fill="currentColor"/></svg></span>/Δt.</p>
-          <p style="margin-top:6px;">Comme <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>E/A</sub> est l'unique force responsable de la variation de vitesse, elle a <strong>la même direction et le même sens</strong> que <span class="vecsym">Δv<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="26,5 21,1.5 21,8.5" fill="currentColor"/></svg></span>. Les astronomes doivent donc placer l'engin E <strong>dans la direction de <span class="vecsym">Δv<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="26" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="26,5 21,1.5 21,8.5" fill="currentColor"/></svg></span></strong> souhaitée.</p>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">4–6) Calculer F<sub>E/A</sub>, montrer que Δt = ΔV·d²/(G·m), puis vérifier que Δt ≈ 4 jours pour ΔV = 2×10⁻⁶ m·s⁻¹.</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <div class="calc-step">F<sub>E/A</sub> = G·M·m/d² = 6,67408×10⁻¹¹ × (4×10¹⁰ × 5×10³)/240² ≈ <strong>0,2 N</strong></div>
-          <div class="calc-step">2<sup>e</sup> loi de Newton : F<sub>E/A</sub> = M·ΔV/Δt = G·M·m/d² ⟹ G·m/d² = ΔV/Δt ⟹ Δt = ΔV·d²/(G·m)</div>
-          <div class="calc-step">Δt = (2×10⁻⁶ × 240²)/(6,67408×10⁻¹¹ × 5×10³) ≈ 3×10⁵ s = 96 h ≈ <strong>4 jours</strong></div>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">7) Établir la 3<sup>e</sup> loi de Kepler pour Apophis (mouvement circulaire uniforme, référentiel héliocentrique).</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <p>Système : astéroïde Apophis (masse M) · Référentiel héliocentrique, galiléen · seule force : <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>S/A</sub> = G·M<sub>S</sub>M/R² · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>.</p>
-          <div class="calc-step">PFD : <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = G·M<sub>S</sub>/R² · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub>, et en repère de Frenet (mvt circ. unif.) : <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = v²/R · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub></div>
-          <div class="calc-step">Donc v² = G·M<sub>S</sub>·R/R² = G·M<sub>S</sub>/R. Or v = 2πR/T ⟹ v² = 4π²R²/T²</div>
-          <div class="calc-step">En égalisant : 4π²R²/T² = G·M<sub>S</sub>/R ⟹ (2π)²R³ = G·M<sub>S</sub>·T² ⟹ <strong>T²/R³ = 4π²/(G·M<sub>S</sub>)</strong> — 3<sup>e</sup> loi de Kepler</div>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">8–9) Le tracteur augmente T de 15 min. Déterminer T', puis le nouveau rayon R' et l'augmentation ΔR du rayon de l'orbite.</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <div class="calc-step">T = 323,442 j = 2,79454×10⁷ s ; T' = T + 900 s = <strong>2,79463×10⁷ s</strong></div>
-          <div class="calc-step">D'après la 3<sup>e</sup> loi de Kepler : T²/R³ = T'²/R'³ ⟹ R'³ = T'²R³/T²</div>
-          <div class="calc-step">R'³ = (2,79463×10⁷)² × (1,37961×10¹¹)³ / (2,79454×10⁷)² ⟹ R' ≈ <strong>1,37964×10¹¹ m</strong></div>
-          <div class="calc-step">ΔR = R' − R ≈ 137 964×10⁶ − 137 961×10⁶ = <strong>3×10⁶ m</strong> (soit 3 000 km d'augmentation du rayon de l'orbite)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ ANNALE 2 : MARS SOUS L'OEIL DE KEPLER (Métropole 2023) — Partie 1 uniquement ══ -->
-    <div class="bilan-exo-card">
-      <span class="bilan-tag">BAC 2023 · MÉTROPOLE SEPT. J2 · EXERCICE (extrait — Partie 1)</span>
-      <h3>Mars vue sous l'œil de Kepler</h3>
-      <div class="bilan-theme">Johannes Kepler, assistant de Tycho Brahe, a établi ses trois lois à partir de l'étude de la trajectoire de Mars. On vérifie ici la 3<sup>e</sup> loi de Kepler à l'aide d'un programme Python, puis on détermine le demi-grand axe de l'orbite de Mars. <em>(La partie 2 de ce sujet, sur la lunette astronomique, relève du programme d'optique et n'est pas reprise ici.)</em></div>
-      <div class="bilan-links">
-        <a class="btn-sujet" href="https://www.labolycee.org/sites/default/files/2024-02/2023-09-Metropole-J2-Exo3-Sujet-Kepler-Lunette-6pts.pdf" target="_blank">📄 Sujet complet</a>
-        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2026-02/2023-09-Metropole-J2-Exo3-Correction-Kepler-Lunette-6pts.pdf" target="_blank">✅ Corrigé officiel</a>
-      </div>
-
-      <div class="exo-enonce">
-        <strong>Données :</strong> 1 unité astronomique (au) = 1,496×10¹¹ m · période de révolution de Mars T<sub>Mars</sub> = 687 jours · tableau des couples (T, a) des autres planètes du système solaire, avec 1 an = 365×24×3600 s.
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">1) Énoncer les deux premières lois de Kepler. Justifier, à l'aide de la 2<sup>e</sup> loi, que le mouvement de Mars n'est pas uniforme.</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <p><strong>1<sup>ère</sup> loi (orbites) :</strong> dans le référentiel héliocentrique, l'orbite de chaque planète est une ellipse dont le Soleil occupe l'un des foyers.</p>
-          <p style="margin-top:6px;"><strong>2<sup>e</sup> loi (aires) :</strong> le rayon vecteur Soleil–planète balaie des aires égales pendant des durées égales.</p>
-          <p style="margin-top:6px;">Pendant une même durée Δt, Mars parcourt des arcs d'ellipse de longueurs L₁ et L₂ avec L₁ &gt; L₂ (aire balayée identique mais rayon vecteur différent). Donc v₁ = L₁/Δt &gt; v₂ = L₂/Δt : la vitesse de Mars n'est pas constante, son mouvement n'est donc <strong>pas uniforme</strong>.</p>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">2–3) Compléter la ligne « an = … » du programme Python (1 an en secondes). Commenter les lignes « acube = am**3 » et « Tcarre = Ts**2 ».</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <div class="calc-step">1 an = 365 j = 365×24 h = 365×24×3600 s &nbsp;⟹&nbsp; ligne 8 : <code>an = 365*24*3600</code></div>
-          <div class="calc-step">Ligne 16 <code>acube = am**3</code> : calcule le cube du demi-grand axe, exprimé en m³ (car am = a·au est en mètres)</div>
-          <div class="calc-step">Ligne 17 <code>Tcarre = Ts**2</code> : calcule le carré de la période de révolution, exprimé en s² (car Ts = T·an est en secondes)</div>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">4) La figure obtenue (T² en fonction de a³) est une droite passant par l'origine. Commenter au regard des lois de Kepler.</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <p>La courbe T² = f(a³) est une droite passant par l'origine, donc T² est <strong>proportionnel</strong> à a³ : T² = k×a³ avec k la pente de la droite. La <strong>3<sup>e</sup> loi de Kepler est ainsi vérifiée</strong> expérimentalement pour les planètes du système solaire.</p>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">5) Déterminer le demi-grand axe a<sub>Mars</sub> de l'orbite de Mars (avec k = 3,0×10⁻¹⁹ s²·m⁻³) et justifier qu'il s'agit de la 4<sup>e</sup> planète du système solaire.</div>
-        <div class="num-field-wrap">
-          <label>a<sub>Mars</sub> ≈</label>
-          <input type="text" class="num-input" id="mars-a" placeholder="valeur">
-          <span class="num-unit">×10¹¹ m</span>
-          <button class="btn-verif" onclick="checkNum('mars-a', 2.3, 0.15)">Vérifier</button>
-          <span class="num-feedback" id="mars-a-fb"></span>
-        </div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <div class="calc-step">D'après la 3<sup>e</sup> loi de Kepler : T²<sub>Mars</sub> = k × a³<sub>Mars</sub> ⟹ a<sub>Mars</sub> = (T²<sub>Mars</sub>/k)<sup>1/3</sup></div>
-          <div class="calc-step">T<sub>Mars</sub> = 687×24×3600 s ⟹ a<sub>Mars</sub> = ((687×24×3600)²/3,0×10⁻¹⁹)<sup>1/3</sup> ≈ <strong>2,3×10¹¹ m</strong></div>
-          <div class="calc-step">Cette valeur est cohérente : elle est comprise entre a<sub>Terre</sub> = 1,5×10¹¹ m et a<sub>Jupiter</sub> = 7,8×10¹¹ m. Mars est donc bien la <strong>4<sup>e</sup> planète</strong> du système solaire en partant du Soleil (après Mercure, Vénus, la Terre).</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ EXERCICE ORIGINAL : PROXIMA B — LES 3 LOIS DE KEPLER + PYTHON ══ -->
-    <div class="bilan-exo-card">
-      <span class="bilan-tag">EXERCICE ORIGINAL · SYNTHÈSE · PYTHON</span>
-      <h3>🪐 Proxima b, l'exoplanète la plus proche du Système solaire</h3>
-      <div class="bilan-theme">Découverte en 2016, Proxima b est une exoplanète en orbite autour de Proxima Centauri, l'étoile la plus proche du Soleil (4,2 années-lumière). Elle évolue dans la « zone habitable » de son étoile. Cet exercice mobilise successivement les <strong>trois lois de Kepler</strong>, puis un script <strong>Python</strong> à compléter.</div>
-
-      <div class="exo-enonce">
-        <strong>Données :</strong> masse de Proxima Centauri M* ≈ 0,122 M<sub>☉</sub> = 2,43×10²⁹ kg · demi-grand axe de l'orbite de Proxima b : a ≈ 0,0485 UA = 7,26×10⁹ m · excentricité de l'orbite : e ≈ 0,02 · période de révolution mesurée : T<sub>mesurée</sub> ≈ 11,2 jours · G = 6,674×10⁻¹¹ N·m².kg⁻² · 1 UA = 1,496×10¹¹ m.
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">1) [Loi des orbites] L'excentricité de l'orbite de Proxima b vaut e ≈ 0,02. Que peut-on dire de la forme de cette orbite ? Rappeler la valeur de e pour un cercle parfait.</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <p>Pour un cercle, e = 0 exactement (les deux foyers sont confondus au centre). Ici e ≈ 0,02 est très proche de 0 : l'orbite de Proxima b est une ellipse <strong>très peu excentrique</strong>, quasiment confondue avec un cercle. On peut donc, en très bonne approximation, assimiler son mouvement à un <strong>mouvement circulaire</strong> pour la suite de l'exercice.</p>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">2) [Loi des aires] On suppose maintenant, à titre de comparaison, une exoplanète fictive sur une orbite très excentrique (e = 0,9) autour de la même étoile. Comment sa vitesse varierait-elle au cours d'une révolution ? Justifier à l'aide de la loi des aires, sans calcul.</div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <p>D'après la loi des aires, le segment étoile-planète balaie des aires égales en durées égales. Pour une orbite très excentrique, la distance à l'étoile varie fortement entre le périastre (point le plus proche) et l'apoastre (point le plus éloigné). Pour balayer la même aire en un temps donné, la planète doit donc parcourir un arc <strong>beaucoup plus long</strong> près du périastre qu'en un temps égal près de l'apoastre : sa vitesse serait <strong>très grande</strong> au périastre et <strong>très faible</strong> à l'apoastre — contrairement à Proxima b (orbite quasi circulaire), dont la vitesse reste quasiment constante.</p>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">3) [Loi des périodes] En assimilant l'orbite de Proxima b à un cercle de rayon a, calculer la période de révolution T attendue par la 3<sup>e</sup> loi de Kepler, en secondes puis en jours. Comparer à la valeur mesurée T<sub>mesurée</sub> ≈ 11,2 jours.</div>
-        <div class="num-field-wrap">
-          <label>T =</label>
-          <input type="text" class="num-input" id="proxima-t" placeholder="valeur">
-          <span class="num-unit">jours (1 chiffre après la virgule)</span>
-          <button class="btn-verif" onclick="checkNum('proxima-t', 11.2, 0.3)">Vérifier</button>
-          <span class="num-feedback" id="proxima-t-fb"></span>
-        </div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir la correction <span>▾</span></button>
-        <div class="accord-body">
-          <div class="calc-step">D'après la 3<sup>e</sup> loi de Kepler (cas circulaire) : T² = 4π²a³/(G·M*)</div>
-          <div class="calc-step">a³ = (7,26×10⁹)³ ≈ 3,83×10²⁹ m³</div>
-          <div class="calc-step">T² = 4π² × 3,83×10²⁹ / (6,674×10⁻¹¹ × 2,43×10²⁹) ≈ 9,3×10¹¹ s²</div>
-          <div class="calc-step">T = √(9,3×10¹¹) ≈ 9,65×10⁵ s = 9,65×10⁵/86400 ≈ <strong>11,2 jours</strong></div>
-          <div class="calc-step">La valeur calculée (≈ 11,2 j) est en excellent accord avec la valeur mesurée par les astronomes (11,2 j) : cela confirme que la 3<sup>e</sup> loi de Kepler s'applique bien à ce système extrasolaire, et pas seulement au système solaire.</div>
-        </div>
-      </div>
-
-      <div class="question-block">
-        <div class="question-label">4) [Python] Compléter le script ci-dessous, qui doit calculer la période T (en jours) à partir de a, G et M*, puis afficher l'écart relatif avec la valeur mesurée.</div>
-        <div class="exo-enonce" style="background:#F8FAFC;">
-          <pre style="font-family:'Courier New',monospace;font-size:0.82rem;line-height:1.7;white-space:pre-wrap;margin:0;color:#1A2A3A;">import numpy as np
-
-G = 6.674e-11          # constante de gravitation, en N.m^2.kg^-2
-M_etoile = 2.43e29      # masse de Proxima Centauri, en kg
-a = 7.26e9              # demi-grand axe de l'orbite, en m
-T_mesuree = 11.2        # période mesurée, en jours
-
-# 1) Calcul de la période T (en secondes) à partir de la 3e loi de Kepler
-T_s = ___________________________          # à compléter : T^2 = 4*pi^2*a^3/(G*M_etoile)
-
-# 2) Conversion de T_s en jours
-T_jours = ___________________________      # à compléter
-
-# 3) Écart relatif entre la valeur calculée et la valeur mesurée (en %)
-ecart = ___________________________        # à compléter : |T_jours - T_mesuree| / T_mesuree * 100
-
-print("Période calculée :", round(T_jours, 2), "jours")
-print("Écart relatif avec la mesure :", round(ecart, 2), "%")</pre>
-        </div>
-        <button class="accord-btn" onclick="toggleAccord(this)">✅ Voir le script complété <span>▾</span></button>
-        <div class="accord-body">
-          <pre style="font-family:'Courier New',monospace;font-size:0.82rem;line-height:1.7;white-space:pre-wrap;margin:0;color:#1A2A3A;background:#F0FAF6;padding:10px;border-radius:6px;">import numpy as np
-
-G = 6.674e-11
-M_etoile = 2.43e29
-a = 7.26e9
-T_mesuree = 11.2
-
-# 1) Calcul de la période T (en secondes)
-T_s = np.sqrt(4 * np.pi**2 * a**3 / (G * M_etoile))
-
-# 2) Conversion en jours
-T_jours = T_s / (24 * 3600)
-
-# 3) Écart relatif (en %)
-ecart = abs(T_jours - T_mesuree) / T_mesuree * 100
-
-print("Période calculée :", round(T_jours, 2), "jours")
-print("Écart relatif avec la mesure :", round(ecart, 2), "%")
-
-# Résultat attendu : Période calculée ≈ 11.17 jours ; écart relatif < 1 %</pre>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ ANNALE 3 : MISSION ROSETTA (Bac S Polynésie 2019) ══ -->
-    <div class="bilan-exo-card">
-      <span class="bilan-tag">BAC S 2019 · POLYNÉSIE · EXERCICE 1 (10 points)</span>
-      <h3>Mission Rosetta</h3>
-      <div class="bilan-theme">Mots-clés : 3 lois de Kepler, satellisation autour d'une comète, interaction gravitationnelle, chute libre, largage d'un atterrisseur (conservation de la quantité de mouvement). La sonde ROSETTA a été mise en orbite autour de la comète 67P Churyumov-Gerasimenko avant de larguer l'atterrisseur PHILAE à sa surface.</div>
-      <div class="bilan-links">
-        <a class="btn-sujet" href="https://www.sujetdebac.fr/annales-pdf/2019/s-physique-chimie-obligatoire-2019-polynesie-sujet-officiel.pdf" target="_blank">📄 Sujet (officiel complet, exercice 1 p.2-5)</a>
-        <a class="btn-correction" href="https://www.labolycee.org/sites/default/files/2020-03/2019-Polynesie-Exo1-Correction-Rosetta-10pts.doc" target="_blank">✅ Corrigé (.doc)</a>
-      </div>
-    </div>
-
-  </div>
-  <!-- /sub-K-3 -->
-
 </div>
 <!-- /tab-2 -->
 
@@ -1912,6 +1681,29 @@ print("Écart relatif avec la mesure :", round(ecart, 2), "%")
       <li>2<sup>e</sup> loi de Kepler : loi des aires ⟹ vitesse non constante sur une ellipse.</li>
       <li>3<sup>e</sup> loi de Kepler : T²/a³ = constante, ne dépend que de la masse de l'astre central.</li>
     </ul>
+  </div>
+
+  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
+    <span>📖 Glossaire de la séquence</span><span>▾</span>
+  </button>
+  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p><strong style="color:var(--bleu);">Loi d'attraction universelle</strong><br>Deux corps A et B, de masses m<sub>A</sub> et m<sub>B</sub> séparés d'une distance d, exercent l'un sur l'autre une force d'attraction gravitationnelle F = G·m<sub>A</sub>·m<sub>B</sub>/d², avec G = 6,67×10⁻¹¹ N·m²·kg⁻² la constante de gravitation universelle.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Repère de Frenet</strong><br>Repère mobile lié au point en mouvement, formé des vecteurs unitaires <em>u<sub>t</sub></em> (tangent à la trajectoire, dans le sens du mouvement) et <em>u<sub>n</sub></em> (perpendiculaire à <em>u<sub>t</sub></em>, dirigé vers le centre de la trajectoire) ; adapté à la description d'un mouvement circulaire.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Accélération centripète</strong><br>Composante de l'accélération dirigée vers le centre de la trajectoire (selon <em>u<sub>n</sub></em>) ; pour un mouvement circulaire, elle vaut a = v²/r.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Mouvement circulaire uniforme</strong><br>Mouvement sur une trajectoire circulaire à vitesse constante (dv/dt = 0) ; l'accélération est alors purement centripète, dirigée vers le centre du cercle.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Période de révolution</strong><br>Durée d'un tour complet effectué par un astre ou un satellite sur son orbite ; pour une orbite circulaire de rayon r parcourue à la vitesse v, T = 2πr/v.</p>
+      </div>
+      <div>
+        <p><strong style="color:var(--bleu);">Référentiel héliocentrique</strong><br>Référentiel dont l'origine est le centre du Soleil et les axes dirigés vers des étoiles lointaines fixes ; adapté à l'étude du mouvement des planètes autour du Soleil.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Satellite géostationnaire</strong><br>Satellite dont la période de révolution est égale à la période de rotation de la Terre sur elle-même ; il paraît donc fixe dans le référentiel terrestre.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Périhélie / Aphélie</strong><br>Sur une orbite elliptique, position la plus proche du Soleil (périhélie) ou la plus éloignée (aphélie) — on parle de périgée/apogée pour un satellite terrestre. D'après la loi des aires, la vitesse est maximale au périhélie et minimale à l'aphélie.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">1<sup>ère</sup> loi de Kepler — loi des orbites</strong><br>Dans le référentiel héliocentrique, l'orbite de chaque planète est une ellipse dont le Soleil occupe l'un des foyers.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">2<sup>e</sup> loi de Kepler — loi des aires</strong><br>Le segment reliant le Soleil à une planète balaie des aires égales pendant des durées égales ; la vitesse n'est donc pas constante sur une orbite elliptique.</p>
+        <p style="margin-top:10px;"><strong style="color:var(--bleu);">3<sup>e</sup> loi de Kepler — loi des périodes</strong><br>Pour un même astre attracteur central, le rapport T²/a³ est constant, quelle que soit la planète ou le satellite considéré (a : demi-grand axe de l'orbite).</p>
+      </div>
+    </div>
   </div>
 
   </div>
