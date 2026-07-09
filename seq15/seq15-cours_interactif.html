@@ -5,29 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Effet photoélectrique &amp; Jonction PN — Terminale spécialité</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap');
 
   :root {
-    --bleu:    #1B4F8A;
-    --bleu-cl: #4A90D9;
-    --bleu-bg: #EAF3FB;
-    --orange:  #D97706;
-    --orange-cl:#F59E0B;
-    --orange-bg:#FEF3C7;
-    --rouge:   #B91C1C;
-    --rouge-cl:#EF4444;
-    --rouge-bg:#FEE2E2;
-    --vert:    #166534;
-    --vert-cl: #22C55E;
-    --vert-bg: #DCFCE7;
-    --gris:    #374151;
+    --bleu:    #2D5F8A;
+    --bleu-cl: #5B8FB9;
+    --bleu-bg: #E8F1F8;
+    --orange:  #E8783A;
+    --orange-cl:#E8783A;
+    --orange-bg:#FDF0E8;
+    --rouge:   #C0392B;
+    --rouge-cl:#C0392B;
+    --rouge-bg:#FDEDEC;
+    --vert:    #3A8A6E;
+    --vert-cl: #3A8A6E;
+    --vert-bg: #E8F5F0;
+    --gris:    #5A6B7A;
     --gris-cl: #9CA3AF;
     --gris-bg: #F3F4F6;
-    --fond:    #FAFAF8;
+    --fond:    #F0F4F8;
     --blanc:   #FFFFFF;
-    --txt:     #1C1917;
-    --lora:    'Lora', Georgia, serif;
-    --sans:    'Source Sans 3', system-ui, sans-serif;
+    --txt:     #1A2A3A;
+    --lora:    'Outfit', sans-serif;
+    --sans:    'Nunito', sans-serif;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -264,14 +264,14 @@
     font-size:.9rem; line-height:1.7;
     margin: 1rem 0;
   }
-  .info-box.bleu  { background:var(--bleu-bg);   border-left:4px solid var(--bleu-cl);  color:#1e3a5f; }
-  .info-box.orange{ background:var(--orange-bg);  border-left:4px solid var(--orange-cl);color:#78350F; }
+  .info-box.bleu  { background:var(--bleu-bg);   border-left:4px solid var(--bleu-cl);  color:#1e4466; }
+  .info-box.orange{ background:var(--orange-bg);  border-left:4px solid var(--orange-cl);color:#8A4A1F; }
   .info-box.rouge { background:var(--rouge-bg);   border-left:4px solid var(--rouge-cl); color:#7F1D1D; }
-  .info-box.vert  { background:var(--vert-bg);    border-left:4px solid var(--vert-cl);  color:#14532D; }
-  .info-box.gris  { background:var(--gris-bg);    border-left:4px solid var(--gris-cl);  color:#374151; }
+  .info-box.vert  { background:var(--vert-bg);    border-left:4px solid var(--vert-cl);  color:#2B6B54; }
+  .info-box.gris  { background:var(--gris-bg);    border-left:4px solid var(--gris-cl);  color:#5A6B7A; }
   .info-box b { font-weight:700; }
   .formula-box {
-    background: linear-gradient(135deg, #0F2847, #1B4F8A);
+    background: linear-gradient(135deg, #0F2847, #2D5F8A);
     color:#fff; border-radius:12px;
     padding:1.1rem 1.5rem; margin:1rem 0;
     font-family: var(--lora); font-size:1.15rem;
@@ -333,7 +333,7 @@
   .corr-toggle-btn {
     font-family:var(--sans); font-size:.85rem; font-weight:700;
     padding:.65rem 1.3rem; border-radius:8px; border:1.5px solid var(--orange-cl);
-    background:var(--orange-bg); color:#78350F; cursor:pointer; margin-top:.6rem;
+    background:var(--orange-bg); color:#8A4A1F; cursor:pointer; margin-top:.6rem;
   }
   .corr-toggle-btn:hover { background:var(--orange-cl); color:#fff; }
   .corr-box { display:none; margin-top:1rem; }
@@ -394,7 +394,7 @@
     position:relative; border-radius:16px; overflow:hidden;
     margin:0 0 1.2rem;
     box-shadow:0 8px 32px rgba(0,0,0,.18);
-    background: #0a1628;
+    background: #E8F1F8;
     height: 260px;
   }
   .photo-hero canvas { display:block; width:100%; height:100%; }
@@ -408,8 +408,8 @@
   /* ── ANIMATION PHOTONS ── */
   .anim-wrap {
     border-radius:14px; overflow:hidden;
-    background:#0d1b2a;
-    border:2px solid #1B4F8A;
+    background:#E8F1F8;
+    border:2px solid #2D5F8A;
     margin:1rem 0;
     position:relative;
   }
@@ -469,8 +469,8 @@
     font-family:var(--sans); font-size:.82rem; font-weight:700;
     transition:all .3s;
   }
-  .status-badge.non { background:#FEE2E2; color:#B91C1C; border:1.5px solid #FCA5A5; }
-  .status-badge.oui { background:#DCFCE7; color:#166534; border:1.5px solid #86EFAC; }
+  .status-badge.non { background:#FDEDEC; color:#C0392B; border:1.5px solid #FCA5A5; }
+  .status-badge.oui { background:#E8F5F0; color:#3A8A6E; border:1.5px solid #86EFAC; }
 
   /* ── MATÉRIAUX PV ── */
   .mat-grid {
@@ -497,6 +497,53 @@
     .chain-arrow { display:none; }
     .photo-hero { height:180px; }
   }
+  .footer-note {
+    text-align: center; font-size: 0.78rem; color: #5A6B7A;
+    padding: 20px; border-top: 1px solid #E5E7EB; margin-top: 30px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  /* ── HARMONISATION RESSOURCES (style séq01) ── */
+  .section-title {
+    font-family:'Outfit', sans-serif; font-size:1.05rem; font-weight:800; color:#2D5F8A;
+    margin:26px 0 12px; display:flex; align-items:center; gap:10px; padding-bottom:8px;
+    border-bottom:2px solid #E8F1F8;
+  }
+  .section-title:first-child { margin-top:4px; }
+  .section-title .icon { font-size:1.2rem; }
+
+  .bilan-card {
+    background:#fff; border:1.5px solid #E5E7EB; border-radius:12px; padding:16px;
+  }
+  .bilan-card h4 { font-family:'Outfit', sans-serif; font-size:.92rem; font-weight:700; margin-bottom:6px; }
+  .bilan-card p { font-family:'Nunito', sans-serif; }
+
+  .bac-card {
+    background:#fff; border:1.5px solid #E5E7EB; border-left:4px solid #7B4FA6;
+    border-radius:12px; padding:16px; margin-bottom:14px;
+  }
+  .bac-card-head {
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+    gap:6px; font-size:.78rem; color:#5A6B7A; margin-bottom:6px; font-family:'Nunito',sans-serif;
+  }
+  .bac-lieu { font-weight:700; color:#7B4FA6; }
+  .bac-card h4 { font-family:'Outfit', sans-serif; font-size:.98rem; font-weight:700; color:#1A2A3A; margin:4px 0 6px; }
+  .bac-theme { font-size:.82rem; color:#5A6B7A; margin-bottom:10px; font-family:'Nunito',sans-serif; }
+  .bac-notions { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+  .bac-tag {
+    background:#F3EDF9; color:#7B4FA6; font-size:.72rem; font-weight:600;
+    padding:3px 10px; border-radius:20px; font-family:'Nunito',sans-serif;
+  }
+  .bac-pastilles { display:flex; gap:10px; flex-wrap:wrap; }
+  .pastille {
+    text-decoration:none; font-size:.82rem; font-weight:700; padding:7px 14px;
+    border-radius:20px; border:1.5px solid; transition:box-shadow .2s, background .2s;
+    font-family:'Nunito',sans-serif;
+  }
+  .pastille-sujet { color:#2D5F8A; border-color:#2D5F8A; }
+  .pastille-sujet:hover { background:#E8F1F8; }
+  .pastille-corrige { color:#3A8A6E; border-color:#3A8A6E; }
+  .pastille-corrige:hover { background:#E8F5F0; }
 </style>
 </head>
 <body>
@@ -519,7 +566,7 @@
             <linearGradient id="h-spectrum-grad" x1="0" x2="1" y1="0" y2="0">
               <stop offset="0%"   stop-color="#f43f5e"/>
               <stop offset="33%"  stop-color="#eab308"/>
-              <stop offset="66%"  stop-color="#22c55e"/>
+              <stop offset="66%"  stop-color="#3A8A6E"/>
               <stop offset="100%" stop-color="#8b5cf6"/>
             </linearGradient>
             <style>
@@ -536,9 +583,9 @@
           <rect x="6" y="52" width="68" height="8" rx="4" fill="url(#h-spectrum-grad)" opacity="0.85"/>
           <g class="h-ph-wave-g">
             <path d="M10,35 Q17,20 24,35 Q31,50 38,35 Q45,20 52,35 Q59,50 66,35 Q73,20 80,35"
-                  fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+                  fill="none" stroke="#E8783A" stroke-width="2.5" stroke-linecap="round"/>
           </g>
-          <circle cx="40" cy="35" r="5" fill="#fbbf24" class="h-ph-dot"/>
+          <circle cx="40" cy="35" r="5" fill="#E8783A" class="h-ph-dot"/>
           <line x1="14" y1="43" x2="64" y2="43" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
           <polygon points="64,40 70,43 64,46" fill="#94a3b8"/>
           <text x="40" y="16" text-anchor="middle" font-size="10" fill="#0f766e" font-weight="800">E = hν</text>
@@ -547,13 +594,14 @@
     </div>
 
     <div class="h-cap-panel" id="hCapPanel">
-      <div class="h-cap-cat">Capacités exigibles (B.O. — Ondes et signaux, modèle particulaire de la lumière)</div>
+      <div class="h-cap-cat">Capacités exigibles (B.O. — Ondes et signaux, B) Décrire la lumière par un flux de photons)</div>
       <ul>
-        <li>Connaître et exploiter la relation de Planck-Einstein donnant l'énergie E d'un photon en fonction de la fréquence ν de la radiation lumineuse associée : E = h·ν.</li>
-        <li>Décrire l'effet photoélectrique et ses caractéristiques (existence d'une fréquence seuil ν₀ propre au matériau, indépendance de l'énergie cinétique des électrons éjectés vis-à-vis de l'intensité lumineuse).</li>
-        <li>Interpréter l'effet photoélectrique à l'aide du modèle particulaire de la lumière : interaction photon-électron, travail d'extraction W du métal.</li>
-        <li>Exploiter le bilan de conservation de l'énergie associé à l'effet photoélectrique (relation d'Einstein).</li>
-        <li>Décrire le principe de fonctionnement d'une cellule photovoltaïque à jonction PN et déterminer son rendement.</li>
+        <li>Décrire l'effet photoélectrique, ses caractéristiques et son importance historique.</li>
+        <li>Interpréter qualitativement l'effet photoélectrique à l'aide du modèle particulaire de la lumière.</li>
+        <li>Établir, par un bilan d'énergie, la relation entre l'énergie cinétique des électrons et la fréquence.</li>
+        <li>Expliquer qualitativement le fonctionnement d'une cellule photoélectrique.</li>
+        <li>Citer quelques applications actuelles mettant en jeu l'interaction photon-matière (capteurs de lumière, cellules photovoltaïques, diodes électroluminescentes, spectroscopies UV-visible et IR, etc.).</li>
+        <li>Déterminer le rendement d'une cellule photovoltaïque.</li>
       </ul>
     </div>
 
@@ -565,6 +613,9 @@
 
 <main class="content" id="slides-container"></main>
 
+<div class="footer-note">Séquence 15 — Effet photoélectrique &amp; Jonction PN · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin</div>
+
+
 <script>
 /* ══════════════════════════════════════════════
    DONNÉES MATÉRIAUX (effet PE et PV)
@@ -572,7 +623,7 @@
 const METALS_PE = {
   cesium:   { name:'Césium (Cs)',  W:2.0,  color:'#a78bfa', desc:'Métal alcalin très réactif, seuil dans le visible' },
   potassium:{ name:'Potassium (K)',W:2.3,  color:'#60a5fa', desc:'Métal alcalin, cellule photoélectrique classique' },
-  sodium:   { name:'Sodium (Na)', W:2.36, color:'#fbbf24', desc:'Métal alcalin, seuil UV proche-visible' },
+  sodium:   { name:'Sodium (Na)', W:2.36, color:'#E8783A', desc:'Métal alcalin, seuil UV proche-visible' },
   zinc:     { name:'Zinc (Zn)',   W:4.33, color:'#6ee7b7', desc:'Métal de transition, expérience de Hertz (1887)' },
   aluminium:{ name:'Aluminium (Al)',W:4.28,color:'#d1d5db', desc:'Métal léger, très répandu, seuil UV' },
   cuivre:   { name:'Cuivre (Cu)', W:4.7,  color:'#fb923c', desc:'Métal conducteur, seuil UV profond' },
@@ -581,9 +632,9 @@ const METALS_PE = {
 };
 
 const MATS_PV = [
-  { id:'si-mono',  icon:'🔷', name:'Si monocristallin', Eg:1.12, eff:'22–26 %', lmax:1107, color:'#1B4F8A',
+  { id:'si-mono',  icon:'🔷', name:'Si monocristallin', Eg:1.12, eff:'22–26 %', lmax:1107, color:'#2D5F8A',
     desc:'Cellule standard haut de gamme. Silicium purifié à 99,9999 %, réseau cristallin parfait. Eg = 1,12 eV → λmax ≈ 1 107 nm (IR proche).' },
-  { id:'si-poly',  icon:'🔵', name:'Si polycristallin', Eg:1.12, eff:'16–20 %', lmax:1107, color:'#3B82F6',
+  { id:'si-poly',  icon:'🔵', name:'Si polycristallin', Eg:1.12, eff:'16–20 %', lmax:1107, color:'#5B8FB9',
     desc:'Cellules bleutées classiques. Même Eg que le monocristallin mais rendement réduit par les joints de grains.' },
   { id:'gaas',     icon:'🟣', name:'GaAs (arséniure de gallium)', Eg:1.43, eff:'28–34 %', lmax:867, color:'#7c3aed',
     desc:'Semiconducteur III-V. Eg direct → excellent absorbeur. Utilisé dans les satellites et concentrateurs solaires. λmax ≈ 867 nm.' },
@@ -641,57 +692,57 @@ const SLIDES = [
           <svg id="frise-svg" viewBox="0 0 820 90" xmlns="http://www.w3.org/2000/svg" style="min-width:480px;width:100%;display:block">
             <defs>
               <marker id="frise-arrow" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="10" markerHeight="10" orient="auto">
-                <path d="M1 2 L12 7 L1 12 Z" fill="#1B4F8A"/>
+                <path d="M1 2 L12 7 L1 12 Z" fill="#2D5F8A"/>
               </marker>
             </defs>
             <!-- Flèche principale épaisse -->
-            <line x1="40" y1="48" x2="780" y2="48" stroke="#1B4F8A" stroke-width="7" stroke-linecap="round" marker-end="url(#frise-arrow)"/>
+            <line x1="40" y1="48" x2="780" y2="48" stroke="#2D5F8A" stroke-width="7" stroke-linecap="round" marker-end="url(#frise-arrow)"/>
 
             <!-- Date 1887 -->
-            <line x1="140" y1="38" x2="140" y2="58" stroke="#92400E" stroke-width="2.5"/>
-            <rect x="108" y="10" width="64" height="26" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5" style="cursor:pointer" onclick="toggleFrise('f1887')"/>
-            <text x="140" y="28" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="13" font-weight="700" fill="#92400E" style="cursor:pointer;pointer-events:none">1887</text>
+            <line x1="140" y1="38" x2="140" y2="58" stroke="#B85C2E" stroke-width="2.5"/>
+            <rect x="108" y="10" width="64" height="26" rx="8" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5" style="cursor:pointer" onclick="toggleFrise('f1887')"/>
+            <text x="140" y="28" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="13" font-weight="700" fill="#B85C2E" style="cursor:pointer;pointer-events:none">1887</text>
 
             <!-- Date 1905 -->
-            <line x1="320" y1="38" x2="320" y2="58" stroke="#1e3a5f" stroke-width="2.5"/>
-            <rect x="288" y="10" width="64" height="26" rx="8" fill="#DBEAFE" stroke="#4A90D9" stroke-width="1.5" style="cursor:pointer" onclick="toggleFrise('f1905')"/>
-            <text x="320" y="28" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="13" font-weight="700" fill="#1e3a5f" style="cursor:pointer;pointer-events:none">1905</text>
+            <line x1="320" y1="38" x2="320" y2="58" stroke="#1e4466" stroke-width="2.5"/>
+            <rect x="288" y="10" width="64" height="26" rx="8" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5" style="cursor:pointer" onclick="toggleFrise('f1905')"/>
+            <text x="320" y="28" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="13" font-weight="700" fill="#1e4466" style="cursor:pointer;pointer-events:none">1905</text>
 
             <!-- Date 1954 -->
-            <line x1="540" y1="38" x2="540" y2="58" stroke="#14532D" stroke-width="2.5"/>
-            <rect x="508" y="10" width="64" height="26" rx="8" fill="#DCFCE7" stroke="#22C55E" stroke-width="1.5" style="cursor:pointer" onclick="toggleFrise('f1954')"/>
-            <text x="540" y="28" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="13" font-weight="700" fill="#14532D" style="cursor:pointer;pointer-events:none">1954</text>
+            <line x1="540" y1="38" x2="540" y2="58" stroke="#2B6B54" stroke-width="2.5"/>
+            <rect x="508" y="10" width="64" height="26" rx="8" fill="#E8F5F0" stroke="#3A8A6E" stroke-width="1.5" style="cursor:pointer" onclick="toggleFrise('f1954')"/>
+            <text x="540" y="28" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="13" font-weight="700" fill="#2B6B54" style="cursor:pointer;pointer-events:none">1954</text>
 
             <!-- Date 2024 -->
-            <line x1="720" y1="38" x2="720" y2="58" stroke="#581C87" stroke-width="2.5"/>
+            <line x1="720" y1="38" x2="720" y2="58" stroke="#5C3680" stroke-width="2.5"/>
             <rect x="688" y="10" width="64" height="26" rx="8" fill="#F3E8FF" stroke="#9333EA" stroke-width="1.5" style="cursor:pointer" onclick="toggleFrise('f2024')"/>
-            <text x="720" y="28" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="13" font-weight="700" fill="#581C87" style="cursor:pointer;pointer-events:none">2024</text>
+            <text x="720" y="28" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="13" font-weight="700" fill="#5C3680" style="cursor:pointer;pointer-events:none">2024</text>
 
             <!-- Points sur la flèche -->
-            <circle cx="140" cy="48" r="5" fill="#D97706"/>
-            <circle cx="320" cy="48" r="5" fill="#4A90D9"/>
-            <circle cx="540" cy="48" r="5" fill="#22C55E"/>
+            <circle cx="140" cy="48" r="5" fill="#E8783A"/>
+            <circle cx="320" cy="48" r="5" fill="#5B8FB9"/>
+            <circle cx="540" cy="48" r="5" fill="#3A8A6E"/>
             <circle cx="720" cy="48" r="5" fill="#9333EA"/>
 
             <!-- Légende "cliquez" -->
-            <text x="410" y="80" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="10" fill="#9CA3AF" font-style="italic">▲ cliquez sur une date pour afficher le détail</text>
+            <text x="410" y="80" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="10" fill="#9CA3AF" font-style="italic">▲ cliquez sur une date pour afficher le détail</text>
           </svg>
         </div>
 
         <!-- Panneaux de contenu, initialement masqués -->
-        <div id="f1887" style="display:none;border-top:1.5px solid #FDE68A;background:#FFFBEB;border-radius:0 0 10px 10px;padding:.75rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:.85rem;color:#78350F;line-height:1.65;animation:fadeUp .25s ease">
+        <div id="f1887" style="display:none;border-top:1.5px solid #FDF0E8;background:#FFFBEB;border-radius:0 0 10px 10px;padding:.75rem 1rem;font-family:'Nunito',sans-serif;font-size:.85rem;color:#8A4A1F;line-height:1.65;animation:fadeUp .25s ease">
           <b>🔬 1887 — Heinrich Hertz</b><br>
           En étudiant la propagation des ondes électromagnétiques, Hertz observe qu'une plaque de zinc irradiée par de la lumière ultraviolette émet spontanément des particules chargées. Il constate que seule la <em>fréquence</em> de la lumière importe, pas son intensité : la physique classique (ondulatoire) est incapable d'expliquer ce phénomène — c'est « l'énigme de 1887 ».
         </div>
-        <div id="f1905" style="display:none;border-top:1.5px solid #BFDBFE;background:#EFF6FF;border-radius:0 0 10px 10px;padding:.75rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:.85rem;color:#1e3a5f;line-height:1.65;animation:fadeUp .25s ease">
+        <div id="f1905" style="display:none;border-top:1.5px solid #B8D4EC;background:#E8F1F8;border-radius:0 0 10px 10px;padding:.75rem 1rem;font-family:'Nunito',sans-serif;font-size:.85rem;color:#1e4466;line-height:1.65;animation:fadeUp .25s ease">
           <b>💡 1905 — Albert Einstein</b><br>
           Dans son article sur l'effet photoélectrique — l'un des quatre articles <em>annus mirabilis</em> — Einstein postule que la lumière est quantifiée en <b>photons</b> d'énergie <b>E = hν</b>. Un photon unique interagit avec un seul électron : si <b>hν ≥ W</b> (travail d'extraction), l'électron est arraché avec une énergie cinétique <b>E<sub>c</sub> = hν − W</b>. Cette explication vaut à Einstein le <b>Prix Nobel de Physique 1921</b>.
         </div>
-        <div id="f1954" style="display:none;border-top:1.5px solid #BBF7D0;background:#F0FDF4;border-radius:0 0 10px 10px;padding:.75rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:.85rem;color:#14532D;line-height:1.65;animation:fadeUp .25s ease">
+        <div id="f1954" style="display:none;border-top:1.5px solid #BBF7D0;background:#F0FDF4;border-radius:0 0 10px 10px;padding:.75rem 1rem;font-family:'Nunito',sans-serif;font-size:.85rem;color:#2B6B54;line-height:1.65;animation:fadeUp .25s ease">
           <b>⚡ 1954 — Bell Laboratories</b><br>
           Chapin, Fuller et Pearson (Bell Labs) mettent au point la première cellule solaire au silicium avec un rendement de <b>6 %</b>, suffisant pour alimenter un appareil électrique. C'est la naissance du <b>photovoltaïque moderne</b> : le même mécanisme quantique qu'en 1887, mais exploité dans un semi-conducteur pour générer un courant continu utilisable.
         </div>
-        <div id="f2024" style="display:none;border-top:1.5px solid #E9D5FF;background:#FAF5FF;border-radius:0 0 10px 10px;padding:.75rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:.85rem;color:#581C87;line-height:1.65;animation:fadeUp .25s ease">
+        <div id="f2024" style="display:none;border-top:1.5px solid #F3EDF9;background:#F3EDF9;border-radius:0 0 10px 10px;padding:.75rem 1rem;font-family:'Nunito',sans-serif;font-size:.85rem;color:#5C3680;line-height:1.65;animation:fadeUp .25s ease">
           <b>🚀 2024 — Tandem pérovskite/silicium</b><br>
           Le record de rendement pour une cellule tandem pérovskite/silicium dépasse <b>33 %</b>, franchissant la limite théorique de Shockley-Queisser (~29 %) pour une jonction simple. En combinant deux matériaux aux gaps complémentaires (Si ≈ 1,12 eV ; pérovskite ≈ 1,7 eV), ces cellules absorbent un spectre solaire plus large — une révolution en cours pour la filière solaire.
         </div>
@@ -733,7 +784,7 @@ const SLIDES = [
             <label style="min-width:165px">🌈 Longueur d'onde λ :</label>
             <input type="range" id="sldr-lam" min="155" max="2500" step="5" value="620"
               oninput="onLamChange()" style="flex:1;accent-color:#60a5fa">
-            <span class="val-badge" id="val-lam-s" style="min-width:80px;color:#1B4F8A">620 nm</span>
+            <span class="val-badge" id="val-lam-s" style="min-width:80px;color:#2D5F8A">620 nm</span>
             <span id="lam-color-s" style="display:inline-block;width:26px;height:18px;border-radius:4px;border:1px solid #ccc;vertical-align:middle;margin-left:.3rem"></span>
           </div>
 
@@ -741,7 +792,7 @@ const SLIDES = [
           <div class="ctrl-row">
             <label style="min-width:165px">⚡ Énergie photon E=hν :</label>
             <input type="range" id="sldr-hnu" min="0.5" max="8.0" step="0.05" value="2.0"
-              oninput="onHnuChange()" style="flex:1;accent-color:#f59e0b">
+              oninput="onHnuChange()" style="flex:1;accent-color:#E8783A">
             <span class="val-badge" id="val-hnu" style="color:var(--orange);min-width:80px">2,00 eV</span>
             <span id="hnu-vs-W" style="font-size:.8rem;font-weight:700;margin-left:.5rem;min-width:130px"></span>
           </div>
@@ -750,8 +801,8 @@ const SLIDES = [
           <div class="ctrl-row">
             <label style="min-width:165px">💡 Nombre de photons :</label>
             <input type="range" id="sldr-nphot" min="1" max="20" step="1" value="6"
-              oninput="document.getElementById('val-nphot').textContent=this.value" style="flex:1;accent-color:#f59e0b">
-            <span class="val-badge" id="val-nphot" style="color:#D97706;min-width:80px">6</span>
+              oninput="document.getElementById('val-nphot').textContent=this.value" style="flex:1;accent-color:#E8783A">
+            <span class="val-badge" id="val-nphot" style="color:#E8783A;min-width:80px">6</span>
             <span style="font-size:.76rem;color:#6B7280;font-style:italic;margin-left:.4rem">↑ flux, pas énergie !</span>
           </div>
 
@@ -759,14 +810,14 @@ const SLIDES = [
           <div class="ctrl-row">
             <label style="min-width:165px">🎚️ Vitesse simulation :</label>
             <input type="range" id="sldr-speed" min="0.5" max="5" step="0.5" value="2"
-              oninput="document.getElementById('val-speed').textContent='×'+parseFloat(this.value).toFixed(1)" style="flex:1;accent-color:#22c55e">
-            <span class="val-badge" id="val-speed" style="color:#166534;min-width:80px">×2,0</span>
+              oninput="document.getElementById('val-speed').textContent='×'+parseFloat(this.value).toFixed(1)" style="flex:1;accent-color:#3A8A6E">
+            <span class="val-badge" id="val-speed" style="color:#3A8A6E;min-width:80px">×2,0</span>
             <span style="font-size:.76rem;color:#6B7280;font-style:italic;margin-left:.4rem">ralentir pour observer</span>
           </div>
 
           <!-- Ligne 5 : résumé ν + résultat -->
           <div class="ctrl-row" style="border-top:1px solid #e5e7eb;padding-top:.6rem;flex-wrap:wrap;gap:.4rem">
-            <span style="font-size:.82rem;color:#374151;font-family:var(--sans)">ν :</span>
+            <span style="font-size:.82rem;color:#5A6B7A;font-family:var(--sans)">ν :</span>
             <span id="val-nu" style="font-size:.85rem;font-family:var(--lora);color:var(--bleu);font-weight:700"></span>
             <span id="nu-vs-nu0" style="font-size:.8rem;font-weight:700;margin-left:.4rem"></span>
             <span id="ejection-status" class="status-badge non" style="margin-left:auto">✗ Pas d'effet photoélectrique</span>
@@ -819,8 +870,8 @@ const SLIDES = [
         <select id="s3-metal" onchange="drawGraph3()" style="font-family:var(--sans);font-size:.82rem;border:1.5px solid #D1D5DB;border-radius:8px;padding:.35rem .7rem;background:#fff;color:var(--gris);cursor:pointer">
           ${metalOptions}
         </select>
-        <span id="s3-W-badge" style="font-family:var(--lora);font-size:.9rem;font-weight:700;color:#EF4444"></span>
-        <span id="s3-nu0-badge" style="font-family:var(--lora);font-size:.9rem;font-weight:700;color:#D97706;margin-left:.5rem"></span>
+        <span id="s3-W-badge" style="font-family:var(--lora);font-size:.9rem;font-weight:700;color:#C0392B"></span>
+        <span id="s3-nu0-badge" style="font-family:var(--lora);font-size:.9rem;font-weight:700;color:#E8783A;margin-left:.5rem"></span>
       </div>
 
       <!-- Canvas graphe -->
@@ -833,7 +884,7 @@ const SLIDES = [
       </div>
 
       <!-- Tooltip info survol -->
-      <div id="s3-tooltip" style="display:none;background:linear-gradient(135deg,#0F2847,#1B4F8A);color:#fff;border-radius:10px;padding:.75rem 1.2rem;font-family:var(--sans);font-size:.85rem;margin-bottom:.75rem;line-height:1.8">
+      <div id="s3-tooltip" style="display:none;background:linear-gradient(135deg,#0F2847,#2D5F8A);color:#fff;border-radius:10px;padding:.75rem 1.2rem;font-family:var(--sans);font-size:.85rem;margin-bottom:.75rem;line-height:1.8">
         —
       </div>
 
@@ -868,25 +919,25 @@ const SLIDES = [
       <svg viewBox="0 0 820 340" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="a4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M1 1L9 5L1 9" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 1L9 5L1 9" fill="none" stroke="#E8783A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
         </defs>
 
         <!-- Axe énergie -->
         <!-- Origine de l'axe (zéro) -->
-        <line x1="44" y1="310" x2="56" y2="310" stroke="#374151" stroke-width="1.5"/>
-        <text x="58" y="314" font-family="Georgia,serif" font-size="10" fill="#374151">0 eV</text>
-        <line x1="50" y1="310" x2="50" y2="20" stroke="#374151" stroke-width="1.5"/>
-        <polygon points="50,15 44,30 56,30" fill="#374151"/>
+        <line x1="44" y1="310" x2="56" y2="310" stroke="#5A6B7A" stroke-width="1.5"/>
+        <text x="58" y="314" font-family="Georgia,serif" font-size="10" fill="#5A6B7A">0 eV</text>
+        <line x1="50" y1="310" x2="50" y2="20" stroke="#5A6B7A" stroke-width="1.5"/>
+        <polygon points="50,15 44,30 56,30" fill="#5A6B7A"/>
         <!-- Titre axe avec unité -->
-        <text x="14" y="18" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#374151">E (eV)</text>
+        <text x="14" y="18" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#5A6B7A">E (eV)</text>
 
         <!-- Bande de valence -->
-        <rect x="80" y="240" width="560" height="70" rx="8" fill="#D1FAE5" stroke="#22C55E" stroke-width="2"/>
-        <text x="360" y="271" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#166534">Bande de valence</text>
-        <text x="360" y="293" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#166534">Électrons liés à leur atome — pas de courant possible</text>
+        <rect x="80" y="240" width="560" height="70" rx="8" fill="#D1FAE5" stroke="#3A8A6E" stroke-width="2"/>
+        <text x="360" y="271" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#3A8A6E">Bande de valence</text>
+        <text x="360" y="293" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#3A8A6E">Électrons liés à leur atome — pas de courant possible</text>
         <!-- Annotation analogie valence -->
-        <text x="88" y="258" font-family="sans-serif" font-size="10" fill="#166534" font-style="italic">🏠 Rez-de-chaussée</text>
+        <text x="88" y="258" font-family="sans-serif" font-size="10" fill="#3A8A6E" font-style="italic">🏠 Rez-de-chaussée</text>
 
         <!-- Bande interdite -->
         <rect x="80" y="140" width="560" height="96" rx="0" fill="#F9FAFB"/>
@@ -902,34 +953,34 @@ const SLIDES = [
         <polygon points="54,139 49,152 59,152" fill="#6B7280"/>
         <polygon points="54,237 49,224 59,224" fill="#6B7280"/>
         <rect x="4" y="174" width="42" height="24" rx="4" fill="white" stroke="#9CA3AF" stroke-width="1"/>
-        <text x="25" y="190" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-style="italic" fill="#374151" font-weight="700">Eg (eV)</text>
+        <text x="25" y="190" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-style="italic" fill="#5A6B7A" font-weight="700">Eg (eV)</text>
 
         <!-- Bande de conduction -->
-        <rect x="80" y="50" width="560" height="86" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
-        <text x="360" y="88" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#1B4F8A">Bande de conduction</text>
-        <text x="360" y="110" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#1B4F8A">Électrons libres de se déplacer → courant électrique possible</text>
+        <rect x="80" y="50" width="560" height="86" rx="8" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="2"/>
+        <text x="360" y="88" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#2D5F8A">Bande de conduction</text>
+        <text x="360" y="110" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#2D5F8A">Électrons libres de se déplacer → courant électrique possible</text>
         <!-- Annotation analogie conduction -->
-        <text x="88" y="68" font-family="sans-serif" font-size="10" fill="#1B4F8A" font-style="italic">🏢 Étage supérieur</text>
+        <text x="88" y="68" font-family="sans-serif" font-size="10" fill="#2D5F8A" font-style="italic">🏢 Étage supérieur</text>
 
         <!-- Flèche photon (orange) -->
-        <line x1="690" y1="296" x2="690" y2="108" stroke="#D97706" stroke-width="2.5" stroke-dasharray="8 4" marker-end="url(#a4)"/>
+        <line x1="690" y1="296" x2="690" y2="108" stroke="#E8783A" stroke-width="2.5" stroke-dasharray="8 4" marker-end="url(#a4)"/>
         <!-- Cercle photon hν — agrandi r=20 -->
-        <circle cx="690" cy="316" r="20" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
-        <text x="690" y="312" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#92400E">hν</text>
-        <text x="690" y="325" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#92400E">photon</text>
+        <circle cx="690" cy="316" r="20" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/>
+        <text x="690" y="312" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#B85C2E">hν</text>
+        <text x="690" y="325" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#B85C2E">photon</text>
         <!-- Condition -->
-        <rect x="714" y="188" width="88" height="26" rx="6" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
-        <text x="758" y="205" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#92400E">hν ≥ Eg</text>
+        <rect x="714" y="188" width="88" height="26" rx="6" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/>
+        <text x="758" y="205" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#B85C2E">hν ≥ Eg</text>
 
         <!-- Électron promu en conduction — agrandi r=20 -->
-        <circle cx="690" cy="83" r="20" fill="#EAF3FB" stroke="#1B4F8A" stroke-width="2"/>
-        <text x="690" y="79" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <text x="690" y="92" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#4A90D9">libre</text>
+        <circle cx="690" cy="83" r="20" fill="#E8F1F8" stroke="#2D5F8A" stroke-width="2"/>
+        <text x="690" y="79" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <text x="690" y="92" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5B8FB9">libre</text>
 
         <!-- Trou (⊕) laissé en valence — agrandi r=20, étiquette dans le cercle -->
-        <circle cx="690" cy="263" r="20" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
-        <text x="690" y="259" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#D97706" font-weight="700">⊕</text>
-        <text x="690" y="272" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#92400E">trou</text>
+        <circle cx="690" cy="263" r="20" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/>
+        <text x="690" y="259" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#E8783A" font-weight="700">⊕</text>
+        <text x="690" y="272" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#B85C2E">trou</text>
 
         <!-- Encadré Si -->
         <rect x="720" y="55" width="100" height="46" rx="7" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
@@ -989,16 +1040,16 @@ const SLIDES = [
       <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:1.4rem">
 
         <!-- Accordéon 1 : courbe universelle -->
-        <div class="accordion-item" style="border:1.5px solid #F59E0B;border-radius:10px;overflow:hidden">
+        <div class="accordion-item" style="border:1.5px solid #E8783A;border-radius:10px;overflow:hidden">
           <button onclick="toggleAccordion('acc-courbe')"
             style="width:100%;display:flex;justify-content:space-between;align-items:center;
-                   padding:.75rem 1.1rem;background:#FEF3C7;border:none;cursor:pointer;
-                   font-family:var(--sans);font-size:.9rem;font-weight:700;color:#78350F;text-align:left">
+                   padding:.75rem 1.1rem;background:#FDF0E8;border:none;cursor:pointer;
+                   font-family:var(--sans);font-size:.9rem;font-weight:700;color:#8A4A1F;text-align:left">
             <span>📊 Pourquoi la courbe a-t-elle le même aspect quelques soit le matériau choisi ?</span>
             <span id="acc-courbe-icon" style="font-size:1rem;transition:transform .25s">▼</span>
           </button>
           <div id="acc-courbe" style="display:none;padding:.9rem 1.1rem;background:#fffbeb;
-               font-size:.88rem;line-height:1.75;color:#78350F;border-top:1px solid #FDE68A">
+               font-size:.88rem;line-height:1.75;color:#8A4A1F;border-top:1px solid #FDF0E8">
             Cette courbe représente le <b>spectre solaire</b> — la répartition de l'énergie lumineuse émise par le Soleil selon la longueur d'onde.
             C'est une propriété du <b>Soleil</b>, pas du matériau de la cellule. Peu importe le matériau choisi (silicium, GaAs, pérovskite…), le Soleil émet toujours la même lumière.<br><br>
             Ce qui change selon le matériau, c'est la <b>zone colorée</b> : elle montre la portion du spectre que ce matériau peut absorber, jusqu'à
@@ -1011,12 +1062,12 @@ const SLIDES = [
           <button onclick="toggleAccordion('acc-700')"
             style="width:100%;display:flex;justify-content:space-between;align-items:center;
                    padding:.75rem 1.1rem;background:#F3F4F6;border:none;cursor:pointer;
-                   font-family:var(--sans);font-size:.9rem;font-weight:700;color:#374151;text-align:left">
+                   font-family:var(--sans);font-size:.9rem;font-weight:700;color:#5A6B7A;text-align:left">
             <span>💡 Pourquoi le spectre solaire baisse-t-il après 700 nm ?</span>
             <span id="acc-700-icon" style="font-size:1rem;transition:transform .25s">▼</span>
           </button>
           <div id="acc-700" style="display:none;padding:.9rem 1.1rem;background:#fafafa;
-               font-size:.88rem;line-height:1.75;color:#374151;border-top:1px solid #E5E7EB">
+               font-size:.88rem;line-height:1.75;color:#5A6B7A;border-top:1px solid #E5E7EB">
             Le spectre solaire présente un maximum vers <b>500 nm</b> (lumière verte-jaune) puis décroît progressivement.
             À partir de 700 nm, on entre dans l'<b>infrarouge (IR)</b> : les photons sont moins énergétiques.
             De plus, des molécules de l'atmosphère terrestre — vapeur d'eau (H₂O), dioxyde de carbone (CO₂), oxygène (O₂) —
@@ -1028,23 +1079,23 @@ const SLIDES = [
         </div>
 
         <!-- Accordéon 3 : liste déroulante matériaux -->
-        <div class="accordion-item" style="border:1.5px solid #4A90D9;border-radius:10px;overflow:hidden">
+        <div class="accordion-item" style="border:1.5px solid #5B8FB9;border-radius:10px;overflow:hidden">
           <button onclick="toggleAccordion('acc-mat')"
             style="width:100%;display:flex;justify-content:space-between;align-items:center;
-                   padding:.75rem 1.1rem;background:#EAF3FB;border:none;cursor:pointer;
-                   font-family:var(--sans);font-size:.9rem;font-weight:700;color:#1B4F8A;text-align:left">
+                   padding:.75rem 1.1rem;background:#E8F1F8;border:none;cursor:pointer;
+                   font-family:var(--sans);font-size:.9rem;font-weight:700;color:#2D5F8A;text-align:left">
             <span>🔬 Qu'est-ce que… ? — Comprendre chaque matériau</span>
             <span id="acc-mat-icon" style="font-size:1rem;transition:transform .25s">▼</span>
           </button>
           <div id="acc-mat" style="display:none;padding:.9rem 1.1rem;background:#f0f7ff;
-               border-top:1px solid #BFDBFE">
+               border-top:1px solid #B8D4EC">
             <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:.85rem">
-              <label style="font-family:var(--sans);font-size:.88rem;font-weight:600;color:#1B4F8A">
+              <label style="font-family:var(--sans);font-size:.88rem;font-weight:600;color:#2D5F8A">
                 Qu'est-ce que…
               </label>
               <select id="mat-explain-select" onchange="showMatExplain()"
                 style="font-family:var(--sans);font-size:.88rem;border:1.5px solid #93C5FD;
-                       border-radius:8px;padding:.4rem .8rem;background:#fff;color:#1e3a5f;cursor:pointer;flex:1;min-width:200px">
+                       border-radius:8px;padding:.4rem .8rem;background:#fff;color:#1e4466;cursor:pointer;flex:1;min-width:200px">
                 <option value="">— choisir un matériau —</option>
                 <option value="si-mono">🔷 le silicium monocristallin ?</option>
                 <option value="si-poly">🔵 le silicium polycristallin ?</option>
@@ -1054,7 +1105,7 @@ const SLIDES = [
                 <option value="cigs">🟠 le CIGS ?</option>
               </select>
             </div>
-            <div id="mat-explain-content" style="font-size:.88rem;line-height:1.75;color:#1e3a5f"></div>
+            <div id="mat-explain-content" style="font-size:.88rem;line-height:1.75;color:#1e4466"></div>
           </div>
         </div>
 
@@ -1068,98 +1119,98 @@ const SLIDES = [
     steps:['Dopage P','Dopage N','Zone de déplétion','Champ électrique interne'],
     renderStep(s){
       const svgs = [
-        `<rect x="80" y="80" width="280" height="220" rx="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="2.5"/>
-        <text x="220" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#9A3412">Semiconducteur P</text>
-        <text x="220" y="143" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#DC6B49">Dopage : bore B — lacunes ⊕</text>
-        ${[180,240,300].map(x=>[160,220,280].map(y=>`<circle cx="${x}" cy="${y}" r="14" fill="#FEF2F0" stroke="#DC6B49" stroke-width="2"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#DC6B49">⊕</text>`).join('')).join('')}`,
-        `<rect x="80" y="80" width="280" height="220" rx="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="2.5"/>
-        <text x="220" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#9A3412">Semiconducteur P</text>
-        ${[180,240,300].map(x=>[160,220,280].map(y=>`<circle cx="${x}" cy="${y}" r="14" fill="#FEF2F0" stroke="#DC6B49" stroke-width="2"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#DC6B49">⊕</text>`).join('')).join('')}
-        <rect x="460" y="80" width="280" height="220" rx="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="2.5"/>
-        <text x="600" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#1B4F8A">Semiconducteur N</text>
-        <text x="600" y="143" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#4A90D9">Dopage : phosphore P — e⁻</text>
-        ${[520,580,640].map(x=>[160,220,280].map(y=>`<circle cx="${x}" cy="${y}" r="14" fill="#EAF3FB" stroke="#4A90D9" stroke-width="2"/><text x="${x}" y="${y+4}" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1B4F8A" font-weight="700">e⁻</text>`).join('')).join('')}`,
+        `<rect x="80" y="80" width="280" height="220" rx="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="2.5"/>
+        <text x="220" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#B85C2E">Semiconducteur P</text>
+        <text x="220" y="143" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#E8783A">Dopage : bore B — lacunes ⊕</text>
+        ${[180,240,300].map(x=>[160,220,280].map(y=>`<circle cx="${x}" cy="${y}" r="14" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#E8783A">⊕</text>`).join('')).join('')}`,
+        `<rect x="80" y="80" width="280" height="220" rx="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="2.5"/>
+        <text x="220" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#B85C2E">Semiconducteur P</text>
+        ${[180,240,300].map(x=>[160,220,280].map(y=>`<circle cx="${x}" cy="${y}" r="14" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#E8783A">⊕</text>`).join('')).join('')}
+        <rect x="460" y="80" width="280" height="220" rx="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="2.5"/>
+        <text x="600" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#2D5F8A">Semiconducteur N</text>
+        <text x="600" y="143" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#5B8FB9">Dopage : phosphore P — e⁻</text>
+        ${[520,580,640].map(x=>[160,220,280].map(y=>`<circle cx="${x}" cy="${y}" r="14" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="2"/><text x="${x}" y="${y+4}" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2D5F8A" font-weight="700">e⁻</text>`).join('')).join('')}`,
         `<!-- STEP 2 : animation canvas zone de déplétion -->
         <canvas id="depletionCanvas" width="840" height="320" style="width:100%;display:block;border-radius:10px;border:1px solid #E5E7EB"></canvas>`,
         /* ── step 3 : champ électrique interne AMÉLIORÉ ── */
-        `<defs><marker id="aEv2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#B91C1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        `<defs><marker id="aEv2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 
         <!-- 1. FONDS : zone P, déplétion, zone N -->
-        <rect x="60"  y="70" width="230" height="240" rx="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="2.5"/>
+        <rect x="60"  y="70" width="230" height="240" rx="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="2.5"/>
         <rect x="292" y="64" width="196" height="252" rx="0" fill="#F5F5F5"/>
-        <rect x="490" y="70" width="230" height="240" rx="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="2.5"/>
+        <rect x="490" y="70" width="230" height="240" rx="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="2.5"/>
 
         <!-- 2. ÉTIQUETTES zones -->
-        <text x="175" y="95"  text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#9A3412">P</text>
-        <text x="175" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="9"  fill="#DC6B49">trous mobiles</text>
+        <text x="175" y="95"  text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#B85C2E">P</text>
+        <text x="175" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="9"  fill="#E8783A">trous mobiles</text>
         <line x1="292" y1="64" x2="292" y2="316" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="6 4"/>
         <line x1="488" y1="64" x2="488" y2="316" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="6 4"/>
         <text x="390" y="58"  text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#6B7280">Zone de déplétion</text>
-        <text x="605" y="95"  text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#1B4F8A">N</text>
-        <text x="605" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="9"  fill="#4A90D9">électrons mobiles</text>
+        <text x="605" y="95"  text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#2D5F8A">N</text>
+        <text x="605" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="9"  fill="#5B8FB9">électrons mobiles</text>
 
         <!-- 3. PORTEURS MOBILES zone P -->
-        <circle cx="100" cy="130" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="100" y="135" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="150" cy="130" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="150" y="135" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="200" cy="130" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="200" y="135" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="100" cy="185" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="100" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="150" cy="185" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="150" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="200" cy="185" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="200" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="100" cy="240" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="100" y="245" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="150" cy="240" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="150" y="245" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="200" cy="240" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="200" y="245" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="100" cy="295" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="100" y="300" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="150" cy="295" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="150" y="300" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
-        <circle cx="200" cy="295" r="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/><text x="200" y="300" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49">⊕</text>
+        <circle cx="100" cy="130" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="100" y="135" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="150" cy="130" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="150" y="135" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="200" cy="130" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="200" y="135" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="100" cy="185" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="100" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="150" cy="185" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="150" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="200" cy="185" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="200" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="100" cy="240" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="100" y="245" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="150" cy="240" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="150" y="245" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="200" cy="240" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="200" y="245" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="100" cy="295" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="100" y="300" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="150" cy="295" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="150" y="300" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
+        <circle cx="200" cy="295" r="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/><text x="200" y="300" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A">⊕</text>
 
         <!-- 4. PORTEURS MOBILES zone N -->
-        <circle cx="520" cy="130" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="520" y="134" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="570" cy="130" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="570" y="134" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="620" cy="130" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="620" y="134" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="520" cy="185" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="520" y="189" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="570" cy="185" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="570" y="189" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="620" cy="185" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="620" y="189" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="520" cy="240" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="520" y="244" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="570" cy="240" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="570" y="244" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="620" cy="240" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="620" y="244" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="520" cy="295" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="520" y="299" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="570" cy="295" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="570" y="299" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <circle cx="620" cy="295" r="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/><text x="620" y="299" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1B4F8A" font-weight="700">e⁻</text>
+        <circle cx="520" cy="130" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="520" y="134" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="570" cy="130" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="570" y="134" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="620" cy="130" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="620" y="134" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="520" cy="185" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="520" y="189" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="570" cy="185" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="570" y="189" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="620" cy="185" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="620" y="189" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="520" cy="240" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="520" y="244" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="570" cy="240" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="570" y="244" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="620" cy="240" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="620" y="244" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="520" cy="295" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="520" y="299" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="570" cy="295" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="570" y="299" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <circle cx="620" cy="295" r="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/><text x="620" y="299" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2D5F8A" font-weight="700">e⁻</text>
 
         <!-- 5. IONS FIXES B⁻ colonne gauche déplétion -->
         <text x="320" y="78" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#6B21A8" font-weight="700">B⁻</text>
-        <circle cx="320" cy="95"  r="9" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/><text x="320" y="100"  text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#5B21B6" font-weight="700">−</text>
-        <circle cx="320" cy="130" r="9" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/><text x="320" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#5B21B6" font-weight="700">−</text>
-        <circle cx="320" cy="245" r="9" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/><text x="320" y="250" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#5B21B6" font-weight="700">−</text>
-        <circle cx="320" cy="280" r="9" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/><text x="320" y="285" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#5B21B6" font-weight="700">−</text>
+        <circle cx="320" cy="95"  r="9" fill="#F3EDF9" stroke="#7B4FA6" stroke-width="2"/><text x="320" y="100"  text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#5C3680" font-weight="700">−</text>
+        <circle cx="320" cy="130" r="9" fill="#F3EDF9" stroke="#7B4FA6" stroke-width="2"/><text x="320" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#5C3680" font-weight="700">−</text>
+        <circle cx="320" cy="245" r="9" fill="#F3EDF9" stroke="#7B4FA6" stroke-width="2"/><text x="320" y="250" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#5C3680" font-weight="700">−</text>
+        <circle cx="320" cy="280" r="9" fill="#F3EDF9" stroke="#7B4FA6" stroke-width="2"/><text x="320" y="285" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#5C3680" font-weight="700">−</text>
 
         <!-- 6. IONS FIXES P⁺ colonne droite déplétion -->
-        <text x="460" y="78" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#92400E" font-weight="700">P⁺</text>
-        <rect x="451" y="86"  width="18" height="18" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/><text x="460" y="99"  text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#92400E" font-weight="700">+</text>
-        <rect x="451" y="121" width="18" height="18" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/><text x="460" y="134" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#92400E" font-weight="700">+</text>
-        <rect x="451" y="236" width="18" height="18" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/><text x="460" y="249" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#92400E" font-weight="700">+</text>
-        <rect x="451" y="271" width="18" height="18" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/><text x="460" y="284" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#92400E" font-weight="700">+</text>
+        <text x="460" y="78" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#B85C2E" font-weight="700">P⁺</text>
+        <rect x="451" y="86"  width="18" height="18" rx="3" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/><text x="460" y="99"  text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#B85C2E" font-weight="700">+</text>
+        <rect x="451" y="121" width="18" height="18" rx="3" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/><text x="460" y="134" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#B85C2E" font-weight="700">+</text>
+        <rect x="451" y="236" width="18" height="18" rx="3" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/><text x="460" y="249" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#B85C2E" font-weight="700">+</text>
+        <rect x="451" y="271" width="18" height="18" rx="3" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/><text x="460" y="284" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#B85C2E" font-weight="700">+</text>
 
         <!-- 7. FLÈCHE champ + étiquette -->
-        <line x1="455" y1="210" x2="335" y2="210" stroke="#B91C1C" stroke-width="3" marker-end="url(#aEv2)"/>
-        <rect x="290" y="158" width="205" height="28" rx="6" fill="#B91C1C"/>
+        <line x1="455" y1="210" x2="335" y2="210" stroke="#C0392B" stroke-width="3" marker-end="url(#aEv2)"/>
+        <rect x="290" y="158" width="205" height="28" rx="6" fill="#C0392B"/>
         <text x="385" y="177" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#fff">champ électrique interne</text>
-        <text x="462" y="207" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#B91C1C">N</text>
-        <text x="318" y="207" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#B91C1C">P</text>
+        <text x="462" y="207" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#C0392B">N</text>
+        <text x="318" y="207" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#C0392B">P</text>
 
         <!-- 8. LÉGENDE en bas -->
-        <circle cx="80" cy="345" r="9" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+        <circle cx="80" cy="345" r="9" fill="#F3EDF9" stroke="#7B4FA6" stroke-width="1.5"/>
         <text x="80" y="351" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#6D28D9" font-weight="700">−</text>
         <text x="96" y="350" font-family="sans-serif" font-size="9" fill="#6B21A8">Ion B⁻ fixe (côté P)</text>
-        <rect x="240" y="336" width="18" height="18" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
-        <text x="249" y="349" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#92400E" font-weight="700">+</text>
-        <text x="264" y="350" font-family="sans-serif" font-size="9" fill="#92400E">Ion P⁺ fixe (côté N)</text>
-        <circle cx="440" cy="345" r="9" fill="#FEF2F0" stroke="#DC6B49" stroke-width="1.5"/>
-        <text x="440" y="351" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#DC6B49">⊕</text>
-        <text x="455" y="350" font-family="sans-serif" font-size="9" fill="#DC6B49">Trou mobile</text>
-        <circle cx="600" cy="345" r="9" fill="#EAF3FB" stroke="#4A90D9" stroke-width="1.5"/>
-        <text x="600" y="349" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1B4F8A" font-weight="700">e⁻</text>
-        <text x="615" y="350" font-family="sans-serif" font-size="9" fill="#1B4F8A">Électron mobile</text>`
+        <rect x="240" y="336" width="18" height="18" rx="3" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/>
+        <text x="249" y="349" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#B85C2E" font-weight="700">+</text>
+        <text x="264" y="350" font-family="sans-serif" font-size="9" fill="#B85C2E">Ion P⁺ fixe (côté N)</text>
+        <circle cx="440" cy="345" r="9" fill="#FDF0E8" stroke="#E8783A" stroke-width="1.5"/>
+        <text x="440" y="351" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#E8783A">⊕</text>
+        <text x="455" y="350" font-family="sans-serif" font-size="9" fill="#E8783A">Trou mobile</text>
+        <circle cx="600" cy="345" r="9" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="1.5"/>
+        <text x="600" y="349" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#2D5F8A" font-weight="700">e⁻</text>
+        <text x="615" y="350" font-family="sans-serif" font-size="9" fill="#2D5F8A">Électron mobile</text>`
       ];
       const explications = [
         'Le <b>semiconducteur P</b> est dopé avec des atomes accepteurs (bore B). Il contient un excès de <b>lacunes ⊕</b> (trous) comme porteurs majoritaires.',
@@ -1216,12 +1267,12 @@ const SLIDES = [
 
       function drawBackground(){
         // Zone P
-        ctx.fillStyle='#FEF2F0'; ctx.strokeStyle='#DC6B49'; ctx.lineWidth=2.5;
+        ctx.fillStyle='#FDF0E8'; ctx.strokeStyle='#E8783A'; ctx.lineWidth=2.5;
         roundRect(ctx,pLeft,yTop,pRight-pLeft,yBot-yTop,10); ctx.fill(); ctx.stroke();
         // Zone déplétion
         ctx.fillStyle='#F5F5F5'; ctx.fillRect(deplLeft,yTop,deplRight-deplLeft,yBot-yTop);
         // Zone N
-        ctx.fillStyle='#EAF3FB'; ctx.strokeStyle='#4A90D9'; ctx.lineWidth=2.5;
+        ctx.fillStyle='#E8F1F8'; ctx.strokeStyle='#5B8FB9'; ctx.lineWidth=2.5;
         roundRect(ctx,nLeft,yTop,nRight-nLeft,yBot-yTop,10); ctx.fill(); ctx.stroke();
         // Borders déplétion
         ctx.setLineDash([6,4]); ctx.strokeStyle='#9CA3AF'; ctx.lineWidth=1.5;
@@ -1230,10 +1281,10 @@ const SLIDES = [
         ctx.setLineDash([]);
         // Labels
         ctx.font='bold 16px Georgia,serif';
-        ctx.fillStyle='#9A3412'; ctx.textAlign='center'; ctx.fillText('P',155,70);
-        ctx.fillStyle='#1B4F8A'; ctx.fillText('N',605,70);
-        ctx.font='9px sans-serif'; ctx.fillStyle='#DC6B49'; ctx.fillText('trous mobiles',155,84);
-        ctx.fillStyle='#4A90D9'; ctx.fillText('électrons mobiles',605,84);
+        ctx.fillStyle='#B85C2E'; ctx.textAlign='center'; ctx.fillText('P',155,70);
+        ctx.fillStyle='#2D5F8A'; ctx.fillText('N',605,70);
+        ctx.font='9px sans-serif'; ctx.fillStyle='#E8783A'; ctx.fillText('trous mobiles',155,84);
+        ctx.fillStyle='#5B8FB9'; ctx.fillText('électrons mobiles',605,84);
         ctx.font='10px Georgia,serif'; ctx.fillStyle='#6B7280';
         ctx.fillText('Zone de déplétion',380,H-8);
       }
@@ -1242,26 +1293,26 @@ const SLIDES = [
         ctx.globalAlpha=alpha;
         if(type==='trou'){
           ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2);
-          ctx.fillStyle='#FEF2F0'; ctx.strokeStyle='#DC6B49'; ctx.lineWidth=1.5;
+          ctx.fillStyle='#FDF0E8'; ctx.strokeStyle='#E8783A'; ctx.lineWidth=1.5;
           ctx.fill(); ctx.stroke();
-          ctx.font='12px sans-serif'; ctx.fillStyle='#DC6B49'; ctx.textAlign='center';
+          ctx.font='12px sans-serif'; ctx.fillStyle='#E8783A'; ctx.textAlign='center';
           ctx.fillText('⊕',x,y+5);
         } else if(type==='electron'){
           ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2);
-          ctx.fillStyle='#EAF3FB'; ctx.strokeStyle='#4A90D9'; ctx.lineWidth=1.5;
+          ctx.fillStyle='#E8F1F8'; ctx.strokeStyle='#5B8FB9'; ctx.lineWidth=1.5;
           ctx.fill(); ctx.stroke();
-          ctx.font='bold 9px sans-serif'; ctx.fillStyle='#1B4F8A'; ctx.textAlign='center';
+          ctx.font='bold 9px sans-serif'; ctx.fillStyle='#2D5F8A'; ctx.textAlign='center';
           ctx.fillText('e⁻',x,y+4);
         } else if(type==='ionB'){
           ctx.beginPath(); ctx.arc(x,y,9,0,Math.PI*2);
-          ctx.fillStyle='#EDE9FE'; ctx.strokeStyle='#7C3AED'; ctx.lineWidth=2;
+          ctx.fillStyle='#F3EDF9'; ctx.strokeStyle='#7B4FA6'; ctx.lineWidth=2;
           ctx.fill(); ctx.stroke();
-          ctx.font='bold 13px Georgia,serif'; ctx.fillStyle='#5B21B6'; ctx.textAlign='center';
+          ctx.font='bold 13px Georgia,serif'; ctx.fillStyle='#5C3680'; ctx.textAlign='center';
           ctx.fillText('−',x,y+5);
         } else if(type==='ionP'){
-          ctx.fillStyle='#FEF3C7'; ctx.strokeStyle='#D97706'; ctx.lineWidth=2;
+          ctx.fillStyle='#FDF0E8'; ctx.strokeStyle='#E8783A'; ctx.lineWidth=2;
           ctx.beginPath(); roundRect(ctx,x-9,y-9,18,18,3); ctx.fill(); ctx.stroke();
-          ctx.font='bold 13px Georgia,serif'; ctx.fillStyle='#92400E'; ctx.textAlign='center';
+          ctx.font='bold 13px Georgia,serif'; ctx.fillStyle='#B85C2E'; ctx.textAlign='center';
           ctx.fillText('+',x,y+6);
         }
         ctx.globalAlpha=1;
@@ -1308,7 +1359,7 @@ const SLIDES = [
         // Label "recombinaison" au centre pendant phase 1 fin / phase 2 début
         if(t1>0.7 && t2<0.5){
           ctx.globalAlpha = t1>0.9 ? (t2<0.3?1:1-t2/0.3) : (t1-0.7)/0.2;
-          ctx.font='bold 11px sans-serif'; ctx.fillStyle='#374151'; ctx.textAlign='center';
+          ctx.font='bold 11px sans-serif'; ctx.fillStyle='#5A6B7A'; ctx.textAlign='center';
           ctx.fillText('recombinaison',recombX,H/2-15);
           ctx.font='18px sans-serif'; ctx.fillText('💥',recombX,H/2+8);
           ctx.globalAlpha=1;
@@ -1346,61 +1397,61 @@ const SLIDES = [
         <svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <marker id="aPV" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M1 1L9 5L1 9" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1 1L9 5L1 9" fill="none" stroke="#E8783A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </marker>
             <marker id="aPVb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M1 1L9 5L1 9" fill="none" stroke="#1B4F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1 1L9 5L1 9" fill="none" stroke="#2D5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </marker>
             <marker id="aPVr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M1 1L9 5L1 9" fill="none" stroke="#DC6B49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1 1L9 5L1 9" fill="none" stroke="#E8783A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </marker>
             <marker id="aPVg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M1 1L9 5L1 9" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1 1L9 5L1 9" fill="none" stroke="#3A8A6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </marker>
             <marker id="aPVE" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M1 1L9 5L1 9" fill="none" stroke="#B91C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1 1L9 5L1 9" fill="none" stroke="#C0392B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </marker>
           </defs>
-          <rect x="60" y="100" width="200" height="220" rx="10" fill="#FEF2F0" stroke="#DC6B49" stroke-width="2"/>
-          <text x="160" y="132" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#9A3412">P</text>
-          <circle cx="100" cy="185" r="12" fill="none" stroke="#DC6B49" stroke-width="1.5"/><text x="100" y="190" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#DC6B49">⊕</text>
-          <circle cx="150" cy="220" r="12" fill="none" stroke="#DC6B49" stroke-width="1.5"/><text x="150" y="225" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#DC6B49">⊕</text>
-          <circle cx="210" cy="185" r="12" fill="none" stroke="#DC6B49" stroke-width="1.5"/><text x="210" y="190" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#DC6B49">⊕</text>
-          <circle cx="110" cy="280" r="12" fill="none" stroke="#DC6B49" stroke-width="1.5"/><text x="110" y="285" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#DC6B49">⊕</text>
+          <rect x="60" y="100" width="200" height="220" rx="10" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/>
+          <text x="160" y="132" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#B85C2E">P</text>
+          <circle cx="100" cy="185" r="12" fill="none" stroke="#E8783A" stroke-width="1.5"/><text x="100" y="190" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#E8783A">⊕</text>
+          <circle cx="150" cy="220" r="12" fill="none" stroke="#E8783A" stroke-width="1.5"/><text x="150" y="225" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#E8783A">⊕</text>
+          <circle cx="210" cy="185" r="12" fill="none" stroke="#E8783A" stroke-width="1.5"/><text x="210" y="190" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#E8783A">⊕</text>
+          <circle cx="110" cy="280" r="12" fill="none" stroke="#E8783A" stroke-width="1.5"/><text x="110" y="285" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#E8783A">⊕</text>
           <rect x="262" y="94" width="176" height="232" rx="0" fill="#F9FAFB"/>
           <line x1="262" y1="94" x2="262" y2="326" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="6 4"/>
           <line x1="438" y1="94" x2="438" y2="326" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="6 4"/>
           <text x="350" y="330" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#9CA3AF">Zone de déplétion</text>
-          <rect x="268" y="177" width="126" height="20" rx="4" fill="white" stroke="#EF4444" stroke-width="1"/>
-          <text x="331" y="188" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#B91C1C">champ élec. int.</text>
-          <line x1="418" y1="210" x2="282" y2="210" stroke="#B91C1C" stroke-width="3" marker-end="url(#aPVE)"/>
-          <rect x="440" y="100" width="200" height="220" rx="10" fill="#EAF3FB" stroke="#4A90D9" stroke-width="2"/>
-          <text x="540" y="132" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#1B4F8A">N</text>
-          <circle cx="480" cy="185" r="12" fill="none" stroke="#4A90D9" stroke-width="1.5"/><text x="480" y="190" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1B4F8A" font-weight="700">e⁻</text>
-          <circle cx="530" cy="220" r="12" fill="none" stroke="#4A90D9" stroke-width="1.5"/><text x="530" y="225" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1B4F8A" font-weight="700">e⁻</text>
-          <circle cx="580" cy="185" r="12" fill="none" stroke="#4A90D9" stroke-width="1.5"/><text x="580" y="190" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1B4F8A" font-weight="700">e⁻</text>
-          <circle cx="500" cy="280" r="12" fill="none" stroke="#4A90D9" stroke-width="1.5"/><text x="500" y="285" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1B4F8A" font-weight="700">e⁻</text>
-          ${s>=0?`<line x1="350" y1="30" x2="350" y2="90" stroke="#D97706" stroke-width="4" stroke-dasharray="9 4" marker-end="url(#aPV)"/>
-          <circle cx="350" cy="17" r="16" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
-          <text x="350" y="12" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#92400E">hν</text>
-          <text x="350" y="24" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#92400E">≥Eg</text>`:''}
-          ${s>=1?`<circle cx="350" cy="155" r="16" fill="#EAF3FB" stroke="#1B4F8A" stroke-width="2.5"/>
-          <text x="350" y="153" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1B4F8A" font-weight="700">e⁻</text>
-          <text x="350" y="165" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#4A90D9">créé</text>
-          <circle cx="350" cy="265" r="16" fill="#FEF2F0" stroke="#DC6B49" stroke-width="2.5"/>
-          <text x="350" y="263" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#DC6B49" font-weight="700">⊕</text>
-          <text x="350" y="275" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#DC6B49">créé</text>`:''}
-          ${s>=2?`<line x1="367" y1="155" x2="437" y2="155" stroke="#1B4F8A" stroke-width="3" marker-end="url(#aPVb)"/>
-          <line x1="333" y1="265" x2="263" y2="265" stroke="#DC6B49" stroke-width="3" marker-end="url(#aPVr)"/>
-          <text x="490" y="152" font-family="Georgia,serif" font-size="11" fill="#1B4F8A">e⁻ → N</text>
-          <text x="175" y="262" text-anchor="end" font-family="Georgia,serif" font-size="11" fill="#DC6B49">⊕ → P</text>`:''}
-          ${s>=3?`<path d="M640 210 Q700 210 700 80 Q700 50 350 50 Q200 50 60 80 Q60 160 60 210" fill="none" stroke="#166534" stroke-width="2.5" stroke-dasharray="10 4" marker-end="url(#aPVg)"/>
-          <rect x="640" y="155" width="90" height="60" rx="8" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
-          <text x="685" y="183" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#166534">R</text>
-          <text x="685" y="202" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#166534">charge</text>
-          <line x1="640" y1="185" x2="640" y2="210" stroke="#166534" stroke-width="2"/>
-          <line x1="640" y1="185" x2="642" y2="100" stroke="#166534" stroke-width="2"/>
-          <text x="450" y="46" font-family="Georgia,serif" font-size="12" fill="#166534" font-weight="700">→ I</text>`:''}
+          <rect x="268" y="177" width="126" height="20" rx="4" fill="white" stroke="#C0392B" stroke-width="1"/>
+          <text x="331" y="188" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#C0392B">champ élec. int.</text>
+          <line x1="418" y1="210" x2="282" y2="210" stroke="#C0392B" stroke-width="3" marker-end="url(#aPVE)"/>
+          <rect x="440" y="100" width="200" height="220" rx="10" fill="#E8F1F8" stroke="#5B8FB9" stroke-width="2"/>
+          <text x="540" y="132" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#2D5F8A">N</text>
+          <circle cx="480" cy="185" r="12" fill="none" stroke="#5B8FB9" stroke-width="1.5"/><text x="480" y="190" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2D5F8A" font-weight="700">e⁻</text>
+          <circle cx="530" cy="220" r="12" fill="none" stroke="#5B8FB9" stroke-width="1.5"/><text x="530" y="225" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2D5F8A" font-weight="700">e⁻</text>
+          <circle cx="580" cy="185" r="12" fill="none" stroke="#5B8FB9" stroke-width="1.5"/><text x="580" y="190" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2D5F8A" font-weight="700">e⁻</text>
+          <circle cx="500" cy="280" r="12" fill="none" stroke="#5B8FB9" stroke-width="1.5"/><text x="500" y="285" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2D5F8A" font-weight="700">e⁻</text>
+          ${s>=0?`<line x1="350" y1="30" x2="350" y2="90" stroke="#E8783A" stroke-width="4" stroke-dasharray="9 4" marker-end="url(#aPV)"/>
+          <circle cx="350" cy="17" r="16" fill="#FDF0E8" stroke="#E8783A" stroke-width="2"/>
+          <text x="350" y="12" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#B85C2E">hν</text>
+          <text x="350" y="24" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#B85C2E">≥Eg</text>`:''}
+          ${s>=1?`<circle cx="350" cy="155" r="16" fill="#E8F1F8" stroke="#2D5F8A" stroke-width="2.5"/>
+          <text x="350" y="153" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2D5F8A" font-weight="700">e⁻</text>
+          <text x="350" y="165" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#5B8FB9">créé</text>
+          <circle cx="350" cy="265" r="16" fill="#FDF0E8" stroke="#E8783A" stroke-width="2.5"/>
+          <text x="350" y="263" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#E8783A" font-weight="700">⊕</text>
+          <text x="350" y="275" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#E8783A">créé</text>`:''}
+          ${s>=2?`<line x1="367" y1="155" x2="437" y2="155" stroke="#2D5F8A" stroke-width="3" marker-end="url(#aPVb)"/>
+          <line x1="333" y1="265" x2="263" y2="265" stroke="#E8783A" stroke-width="3" marker-end="url(#aPVr)"/>
+          <text x="490" y="152" font-family="Georgia,serif" font-size="11" fill="#2D5F8A">e⁻ → N</text>
+          <text x="175" y="262" text-anchor="end" font-family="Georgia,serif" font-size="11" fill="#E8783A">⊕ → P</text>`:''}
+          ${s>=3?`<path d="M640 210 Q700 210 700 80 Q700 50 350 50 Q200 50 60 80 Q60 160 60 210" fill="none" stroke="#3A8A6E" stroke-width="2.5" stroke-dasharray="10 4" marker-end="url(#aPVg)"/>
+          <rect x="640" y="155" width="90" height="60" rx="8" fill="#E8F5F0" stroke="#3A8A6E" stroke-width="2"/>
+          <text x="685" y="183" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#3A8A6E">R</text>
+          <text x="685" y="202" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#3A8A6E">charge</text>
+          <line x1="640" y1="185" x2="640" y2="210" stroke="#3A8A6E" stroke-width="2"/>
+          <line x1="640" y1="185" x2="642" y2="100" stroke="#3A8A6E" stroke-width="2"/>
+          <text x="450" y="46" font-family="Georgia,serif" font-size="12" fill="#3A8A6E" font-weight="700">→ I</text>`:''}
         </svg>
         </div>
         <div class="info-box ${['orange','bleu','rouge','vert'][s]}">${explications[s]}</div>
@@ -1413,28 +1464,28 @@ const SLIDES = [
     render(){return `
       <div class="slide-title"><span class="num">8</span>Synthèse — de la lumière au courant</div>
       <div class="chain">
-        <div class="chain-box" style="border-top:3px solid #F59E0B">
+        <div class="chain-box" style="border-top:3px solid #E8783A">
           <div class="cb-num">① Photon</div>
           <div class="cb-icon">☀️</div>
           <div class="cb-label">hν</div>
           <div class="cb-sub">hν ≥ Eg</div>
         </div>
         <div class="chain-arrow">→</div>
-        <div class="chain-box" style="border-top:3px solid #3B82F6">
+        <div class="chain-box" style="border-top:3px solid #5B8FB9">
           <div class="cb-num">② Absorption</div>
           <div class="cb-icon">⚛️</div>
           <div class="cb-label">Paire e⁻/⊕</div>
           <div class="cb-sub">zone déplétion</div>
         </div>
         <div class="chain-arrow">→</div>
-        <div class="chain-box" style="border-top:3px solid #EF4444">
+        <div class="chain-box" style="border-top:3px solid #C0392B">
           <div class="cb-num">③ Séparation</div>
           <div class="cb-icon">⚡</div>
           <div class="cb-label">Champ électrique</div>
           <div class="cb-sub">e⁻→N, ⊕→P</div>
         </div>
         <div class="chain-arrow">→</div>
-        <div class="chain-box" style="border-top:3px solid #22C55E">
+        <div class="chain-box" style="border-top:3px solid #3A8A6E">
           <div class="cb-num">④ Courant</div>
           <div class="cb-icon">🔋</div>
           <div class="cb-label">Courant I</div>
@@ -1460,6 +1511,33 @@ const SLIDES = [
       </div>
       <div class="info-box vert">
         <b>Lien effet PE ↔ jonction PN :</b> Dans les deux cas, un photon arrache un électron d'un état lié (métal → vide / bande de valence → bande de conduction). Dans la jonction PN, le champ électrique interne collecte ces porteurs avant qu'ils ne se recombinent, permettant un courant continu utilisable.
+      </div>
+
+      <div class="accordion-item" style="border:1.5px solid #2D5F8A;border-radius:10px;overflow:hidden;margin-top:1.2rem">
+        <button onclick="toggleAccordion('acc-glossaire')"
+          style="width:100%;display:flex;justify-content:space-between;align-items:center;
+                 padding:.75rem 1.1rem;background:#E8F1F8;border:none;cursor:pointer;
+                 font-family:var(--sans);font-size:.9rem;font-weight:700;color:#2D5F8A;text-align:left">
+          <span>📖 Glossaire de la séquence</span>
+          <span id="acc-glossaire-icon" style="font-size:1rem;transition:transform .25s">▼</span>
+        </button>
+        <div id="acc-glossaire" style="display:none;padding:.9rem 1.1rem;background:#fff;
+             font-size:.86rem;line-height:1.75;color:#1A2A3A;border-top:1px solid #E8F1F8">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div>
+              <p><b style="color:#2D5F8A">Photon</b><br>Grain de lumière, particule élémentaire porteuse d'énergie E = h·ν, sans masse, se déplaçant à la vitesse c.</p>
+              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Effet photoélectrique</b><br>Émission d'électrons par un matériau (souvent un métal) sous l'effet de l'absorption de photons suffisamment énergétiques.</p>
+              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Travail d'extraction W</b><br>Énergie minimale nécessaire pour arracher un électron du matériau ; caractéristique de chaque matériau.</p>
+              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Fréquence seuil ν₀</b><br>Fréquence minimale du rayonnement en dessous de laquelle aucun électron n'est éjecté, quelle que soit l'intensité lumineuse ; ν₀ = W/h.</p>
+            </div>
+            <div>
+              <p><b style="color:#2D5F8A">Jonction PN</b><br>Interface entre un semi-conducteur dopé P (excès de trous) et un semi-conducteur dopé N (excès d'électrons), à la base des cellules photovoltaïques.</p>
+              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Zone de déplétion</b><br>Zone dépourvue de porteurs de charge libres au voisinage de la jonction PN, siège d'un champ électrique interne.</p>
+              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Dopage (P / N)</b><br>Introduction d'impuretés dans un semi-conducteur pour créer un excès de trous (dopage P) ou d'électrons libres (dopage N).</p>
+              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Rendement photovoltaïque</b><br>Rapport entre la puissance électrique produite par la cellule et la puissance lumineuse reçue.</p>
+            </div>
+          </div>
+        </div>
       </div>
     `}
   },
@@ -1562,31 +1640,101 @@ const SLIDES = [
         Retrouvez ci-dessous des ressources externes pour vous auto-évaluer et revoir les notions clés en vidéo.
       </div>
 
-      <!-- ── QCM Hatier ── -->
-      <div class="exam-card">
-        <span class="exam-tag">Auto-évaluation</span>
-        <h4>QCM Hatier</h4>
-        <div class="exam-meta">Deux questionnaires à choix multiples pour tester vos connaissances.</div>
-        <div class="exam-links">
-          <a class="exam-link-btn" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/18_QCM_prerequis/index.html" target="_blank" rel="noopener">📝 QCM prérequis</a>
-          <a class="exam-link-btn" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_18/index.html" target="_blank" rel="noopener">📝 QCM de maîtrise des notions</a>
+      <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+        <a href="https://www.pearltrees.com/private/id105373209/item804880850?paccess=47d635c5bdc.2ff981d2.3931306e8a42d23940452657d8ca47ac" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid #2D5F8A;" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+            <h4 style="color:#2D5F8A;">▶ Vidéo — Effet photoélectrique</h4>
+            <p style="font-size:.82rem;color:#5A6B7A;margin-top:4px;line-height:1.5;">Paul Olivier · Présentation et interprétation de l'effet photoélectrique</p>
+          </div>
+        </a>
+        <a href="https://www.pearltrees.com/private/id105373209/item804881291?paccess=47d635cfefe.2ff9838b.dad5b4e2fed642d19eb14f191031a970" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid #E8783A;" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+            <h4 style="color:#E8783A;">▶ Vidéo — Interaction lumière-matière</h4>
+            <p style="font-size:.82rem;color:#5A6B7A;margin-top:4px;line-height:1.5;">Hatier · Bilan sur l'interaction lumière-matière</p>
+          </div>
+        </a>
+        <a href="https://www.pearltrees.com/private/id105373209/item804881292?paccess=47d635db821.2ff9838c.e7a8c231aef226e80b9d04b765585c65" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid #3A8A6E;" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+            <h4 style="color:#3A8A6E;">▶ Vidéo — Bilan énergétique</h4>
+            <p style="font-size:.82rem;color:#5A6B7A;margin-top:4px;line-height:1.5;">Hachette · Bilan énergétique de l'effet photoélectrique</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="section-title"><span class="icon">📝</span> QCM</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+        <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/18_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid #2D5F8A;" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+            <h4 style="color:#2D5F8A;">📝 QCM — Prérequis</h4>
+            <p style="font-size:.82rem;color:#5A6B7A;margin-top:4px;line-height:1.5;">Hatier-clic · Vérifier les notions nécessaires avant d'aborder la séquence</p>
+          </div>
+        </a>
+        <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_18/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid #3A8A6E;" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+            <h4 style="color:#3A8A6E;">📝 QCM — Maîtrise des notions</h4>
+            <p style="font-size:.82rem;color:#5A6B7A;margin-top:4px;line-height:1.5;">Hatier-clic · S'auto-évaluer sur les notions de la séquence</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="section-title"><span class="icon">🎓</span> Sujets de bac</div>
+
+      <div class="bac-card">
+        <div class="bac-card-head">
+          <span class="bac-lieu">Bac 2026 · Amérique du Nord · Jour 1</span>
+          <span>6 points · 1 h 03</span>
+        </div>
+        <h4>L'effet photoélectrique et ses applications</h4>
+        <div class="bac-theme">Thème : Effet photoélectrique</div>
+        <div class="bac-notions">
+          <span class="bac-tag">effet photoélectrique</span>
+          <span class="bac-tag">travail d'extraction</span>
+          <span class="bac-tag">énergie cinétique</span>
+        </div>
+        <div class="bac-pastilles">
+          <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-06/2026-AmNord-J1-Exo2-Sujet-EffetPhotoelectrique-6pts_0.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+          <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-05/2026-AmNord-J1-Exo2-Correction-EffetPhotoelectrique-6pts_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
         </div>
       </div>
 
-      <!-- ── Vidéos ── -->
-      <div class="exam-card">
-        <span class="exam-tag">Vidéos</span>
-        <h4>Trois vidéos pour revoir les notions clés</h4>
-        <div class="exam-meta">Les liens ouvrent la vidéo dans un nouvel onglet.</div>
-        <div class="exam-links" style="flex-direction:column;align-items:flex-start;gap:.6rem">
-          <a class="exam-link-btn" href="https://www.pearltrees.com/private/id105373209/item804880850?paccess=47d635c5bdc.2ff981d2.3931306e8a42d23940452657d8ca47ac" target="_blank" rel="noopener">🎬 Effet photoélectrique — Paul Olivier</a>
-          <a class="exam-link-btn" href="https://www.pearltrees.com/private/id105373209/item804881291?paccess=47d635cfefe.2ff9838b.dad5b4e2fed642d19eb14f191031a970" target="_blank" rel="noopener">🎬 Bilan sur l'interaction lumière-matière — Hatier</a>
-          <a class="exam-link-btn" href="https://www.pearltrees.com/private/id105373209/item804881292?paccess=47d635db821.2ff9838c.e7a8c231aef226e80b9d04b765585c65" target="_blank" rel="noopener">🎬 Bilan énergétique de l'effet photoélectrique — Hachette</a>
+      <div class="bac-card">
+        <div class="bac-card-head">
+          <span class="bac-lieu">Bac 2025 · Nouvelle-Calédonie · Jour 2</span>
+          <span>5 points · 53 min</span>
+        </div>
+        <h4>Installation d'un panneau routier</h4>
+        <div class="bac-theme">Thème : Effet Doppler + effet photoélectrique</div>
+        <div class="bac-notions">
+          <span class="bac-tag">effet Doppler</span>
+          <span class="bac-tag">effet photoélectrique</span>
+        </div>
+        <div class="bac-pastilles">
+          <a class="pastille pastille-sujet" href="http://prod.labolycee.org/sites/default/files/2026-04/2025-11-NelleCaledonie-J2-Exo3-Sujet-DopplerPhotoElectrique-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+          <a class="pastille pastille-corrige" href="http://prod.labolycee.org/sites/default/files/2026-06/2025-11-NelleCaledonie-J2-Exo3-Correction-DopplerPhotoElectrique-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+        </div>
+      </div>
+
+      <div class="bac-card">
+        <div class="bac-card-head">
+          <span class="bac-lieu">Bac 2025 · Sciences de l'ingénieur.e · Métropole septembre</span>
+          <span>4 points · 20 min</span>
+        </div>
+        <h4>Transition énergétique</h4>
+        <div class="bac-theme">Thème : Panneaux photovoltaïques</div>
+        <div class="bac-notions">
+          <span class="bac-tag">cellule photovoltaïque</span>
+          <span class="bac-tag">rendement</span>
+        </div>
+        <div class="bac-pastilles">
+          <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-04/2025-09-Metro-SI-J1-ExoA-Sujet-PanneauxPhotovoltaiques.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+          <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-04/2025-09-Metro-SI-J1-ExoA-Correction-PanneauxPhotovoltaiques.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
         </div>
       </div>
     `}
   }
 ];
+
 
 const QUIZ = [
   {
@@ -1660,7 +1808,7 @@ function initPhotoPV(){
   sunGrad.addColorStop(1,'rgba(255,220,50,0)');
   ctx.fillStyle = sunGrad;
   ctx.beginPath(); ctx.arc(sunX,sunY,sunR*2.5,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle = '#fffde7';
+  ctx.fillStyle = '#FDF0E8';
   ctx.beginPath(); ctx.arc(sunX,sunY,sunR,0,Math.PI*2); ctx.fill();
 
   // Quelques nuages légers
@@ -1676,7 +1824,7 @@ function initPhotoPV(){
 
   // Sol + herbe
   const ground = ctx.createLinearGradient(0,H*0.55,0,H);
-  ground.addColorStop(0,'#4ade80'); ground.addColorStop(0.3,'#22c55e'); ground.addColorStop(1,'#15803d');
+  ground.addColorStop(0,'#4ade80'); ground.addColorStop(0.3,'#3A8A6E'); ground.addColorStop(1,'#15803d');
   ctx.fillStyle = ground;
   ctx.fillRect(0,H*0.55,W,H*0.45);
 
@@ -1687,14 +1835,14 @@ function initPhotoPV(){
   // Cadre panneau PV
   const px=60, py=100, pw=W-120, ph=H*0.45;
   const frameGrad = ctx.createLinearGradient(px,py,px,py+ph);
-  frameGrad.addColorStop(0,'#374151'); frameGrad.addColorStop(1,'#111827');
+  frameGrad.addColorStop(0,'#5A6B7A'); frameGrad.addColorStop(1,'#111827');
   ctx.fillStyle=frameGrad;
   ctx.beginPath(); ctx.roundRect(px-8,py-8,pw+16,ph+16,6); ctx.fill();
 
   // Surface panneau — Si monocristallin (bleu foncé brillant)
   const panelGrad = ctx.createLinearGradient(px,py,px+pw,py+ph);
-  panelGrad.addColorStop(0,'#1e3a5f'); panelGrad.addColorStop(0.3,'#1a56db');
-  panelGrad.addColorStop(0.6,'#1e3a5f'); panelGrad.addColorStop(1,'#0f2847');
+  panelGrad.addColorStop(0,'#1e4466'); panelGrad.addColorStop(0.3,'#1a56db');
+  panelGrad.addColorStop(0.6,'#1e4466'); panelGrad.addColorStop(1,'#0f2847');
   ctx.fillStyle=panelGrad;
   ctx.beginPath(); ctx.roundRect(px,py,pw,ph,3); ctx.fill();
 
@@ -1860,27 +2008,27 @@ function runPhotonAnim(){
     const photonCSS = `rgb(${r},${g},${b})`;
 
     // ── FOND ──
-    ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#E8F1F8'; ctx.fillRect(0,0,W,H);
 
-    // Étoiles (zone gauche seulement)
-    for(let i=0;i<30;i++){
-      const sx=(i*137.5)%metalX, sy=(i*89.3+17)%H;
-      ctx.fillStyle=`rgba(255,255,255,${0.15+0.3*((i%5)/5)})`;
-      ctx.beginPath(); ctx.arc(sx,sy,0.7,0,Math.PI*2); ctx.fill();
+    // Petits nuages discrets (zone gauche seulement) — remplace les étoiles (scène de jour)
+    for(let i=0;i<10;i++){
+      const sx=(i*331.7)%metalX, sy=(i*57.1+10)%(H*0.35);
+      ctx.fillStyle=`rgba(26,42,58,${0.35+0.25*((i%3)/3)})`;
+      ctx.beginPath(); ctx.arc(sx,sy,3.5,0,Math.PI*2); ctx.fill();
     }
 
     // ── SOLEIL ──
     const sg=ctx.createRadialGradient(sunX,sunY,0,sunX,sunY,40);
     sg.addColorStop(0,'rgba(255,248,180,1)'); sg.addColorStop(0.5,'rgba(255,200,30,0.4)'); sg.addColorStop(1,'transparent');
     ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(sunX,sunY,40,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#fffde7'; ctx.beginPath(); ctx.arc(sunX,sunY,16,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#FDF0E8'; ctx.beginPath(); ctx.arc(sunX,sunY,16,0,Math.PI*2); ctx.fill();
     ctx.fillStyle='rgba(255,220,80,0.6)'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
     ctx.fillText('☀',sunX,sunY+3);
 
     // ── MÉTAL (intérieur) ──
     const metalColor = metal.color;
     const metalGrad = ctx.createLinearGradient(metalX,0,metalX+metalW,0);
-    metalGrad.addColorStop(0,'#1a2535'); metalGrad.addColorStop(0.15,metalColor+'33');
+    metalGrad.addColorStop(0,'#D8E2EC'); metalGrad.addColorStop(0.15,metalColor+'33');
     metalGrad.addColorStop(0.5,metalColor+'22'); metalGrad.addColorStop(1,metalColor+'11');
     ctx.fillStyle=metalGrad;
     ctx.fillRect(metalX,metalY,metalW,metalH);
@@ -1898,15 +2046,15 @@ function runPhotonAnim(){
         // Ion
         ctx.fillStyle=metalColor+'cc';
         ctx.beginPath(); ctx.arc(ax,ay,5,0,Math.PI*2); ctx.fill();
-        ctx.fillStyle='rgba(255,255,255,0.8)'; ctx.font='bold 7px sans-serif'; ctx.textAlign='center';
+        ctx.fillStyle='rgba(26,42,58,0.8)'; ctx.font='bold 7px sans-serif'; ctx.textAlign='center';
         ctx.fillText('+',ax,ay+2.5);
       }
     }
 
     // Nom métal + W
-    ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+    ctx.fillStyle='rgba(26,42,58,0.7)'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
     ctx.fillText(metal.name, metalX+metalW/2, metalY+14);
-    ctx.font='11px sans-serif'; ctx.fillStyle='rgba(255,255,255,0.5)';
+    ctx.font='11px sans-serif'; ctx.fillStyle='rgba(26,42,58,0.5)';
     ctx.fillText('W = '+metal.W+' eV', metalX+metalW/2, metalY+28);
 
     // Barre de travail d'extraction (W) sur la surface
@@ -1933,15 +2081,15 @@ function runPhotonAnim(){
       ctx.shadowColor='rgba(59,130,246,0.5)'; ctx.shadowBlur=6;
       ctx.beginPath(); ctx.arc(e.x,e.y,4,0,Math.PI*2); ctx.fill();
       ctx.shadowBlur=0;
-      ctx.fillStyle='rgba(255,255,255,0.85)'; ctx.font='bold 7px sans-serif'; ctx.textAlign='center';
+      ctx.fillStyle='rgba(26,42,58,0.85)'; ctx.font='bold 7px sans-serif'; ctx.textAlign='center';
       ctx.fillText('e⁻',e.x,e.y+2.5);
     });
 
     // Bordure métal (surface éclairée = bord gauche)
-    ctx.strokeStyle='rgba(255,255,255,0.35)'; ctx.lineWidth=2; ctx.setLineDash([]);
+    ctx.strokeStyle='rgba(26,42,58,0.35)'; ctx.lineWidth=2; ctx.setLineDash([]);
     ctx.strokeRect(metalX,metalY,metalW,metalH);
     // Flèche surface
-    ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+    ctx.fillStyle='rgba(26,42,58,0.4)'; ctx.font='10px sans-serif'; ctx.textAlign='center';
     ctx.fillText('▼ surface', metalX+30, metalY+10);
 
     // ── SPAWN PHOTONS ──
@@ -2047,7 +2195,7 @@ function runPhotonAnim(){
         ctx.beginPath(); ctx.arc(p.x,p.y,haloR,0,Math.PI*2); ctx.fill();
         // Corps boule avec dégradé radial
         const ballG=ctx.createRadialGradient(p.x-p.size*0.3,p.y-p.size*0.3,0,p.x,p.y,p.size);
-        ballG.addColorStop(0,'rgba(255,255,255,0.95)');
+        ballG.addColorStop(0,'rgba(26,42,58,0.95)');
         ballG.addColorStop(0.4,photonCSS);
         ballG.addColorStop(1,`rgba(${r},${g},${b},0.7)`);
         ctx.shadowColor=photonCSS; ctx.shadowBlur=10;
@@ -2055,7 +2203,7 @@ function runPhotonAnim(){
         ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill();
         ctx.shadowBlur=0;
         // Label hν
-        ctx.fillStyle='rgba(255,255,255,0.95)'; ctx.font='bold 8px Georgia,serif'; ctx.textAlign='center';
+        ctx.fillStyle='rgba(26,42,58,0.95)'; ctx.font='bold 8px Georgia,serif'; ctx.textAlign='center';
         ctx.fillText('hν',p.x,p.y-p.size-4);
 
         // Hors espace (gauche)
@@ -2079,7 +2227,7 @@ function runPhotonAnim(){
       ctx.fillStyle=`rgba(59,130,246,${alpha})`;
       ctx.beginPath(); ctx.arc(e.x,e.y,6,0,Math.PI*2); ctx.fill();
       ctx.shadowBlur=0;
-      ctx.fillStyle=`rgba(255,255,255,${alpha})`; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+      ctx.fillStyle=`rgba(26,42,58,${alpha})`; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
       ctx.fillText('e⁻',e.x,e.y+3);
       if(e.ejectedAge<30 && e.Ec!==undefined){
         ctx.fillStyle=`rgba(34,197,94,${alpha})`; ctx.font='bold 9px sans-serif';
@@ -2089,12 +2237,12 @@ function runPhotonAnim(){
 
     // ── Photons bloqués (rebond sur surface métal si hν < W) ──
     // Ligne de séparation espace/métal
-    ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+    ctx.strokeStyle='rgba(26,42,58,0.15)'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
     ctx.beginPath(); ctx.moveTo(metalX,metalY); ctx.lineTo(metalX,metalY+metalH); ctx.stroke();
     ctx.setLineDash([]);
 
     // Info λ/hν flottante
-    ctx.fillStyle='rgba(255,255,255,0.6)'; ctx.font='11px sans-serif'; ctx.textAlign='left';
+    ctx.fillStyle='rgba(26,42,58,0.6)'; ctx.font='11px sans-serif'; ctx.textAlign='left';
     const lamV=document.getElementById('sldr-lam')?.value||500;
     ctx.fillText(`λ = ${lamV} nm  |  hν = ${(1240/lamV).toFixed(2)} eV`, 6, H-8);
 
@@ -2321,7 +2469,7 @@ function runEjectionAnimFused(){
       ctx.beginPath(); ctx.moveTo(anch.ax,anch.ay); ctx.lineTo(ex2,ey2); ctx.stroke();
       ctx.shadowColor='rgba(239,68,68,0.6)'; ctx.shadowBlur=8;
       const eg2=ctx.createRadialGradient(ex2-1.5,ey2-1.5,0,ex2,ey2,5);
-      eg2.addColorStop(0,'#fca5a5'); eg2.addColorStop(1,'#dc2626');
+      eg2.addColorStop(0,'#E8A29B'); eg2.addColorStop(1,'#C0392B');
       ctx.fillStyle=eg2; ctx.beginPath(); ctx.arc(ex2,ey2,5.5,0,Math.PI*2); ctx.fill();
       ctx.shadowBlur=0;
       ctx.fillStyle='white'; ctx.font='bold 7px sans-serif'; ctx.textAlign='center';
@@ -2343,30 +2491,30 @@ function runEjectionAnimFused(){
       const fa=1-anch.hitAge/15;
       ctx.shadowColor='rgba(251,191,36,0.9)'; ctx.shadowBlur=18*fa;
       const fg=ctx.createRadialGradient(ex-2,ey-2,0,ex,ey,8+4*fa);
-      fg.addColorStop(0,'#fef9c3'); fg.addColorStop(0.5,`rgba(251,191,36,${fa})`); fg.addColorStop(1,'transparent');
+      fg.addColorStop(0,'#FDF0E8'); fg.addColorStop(0.5,`rgba(251,191,36,${fa})`); fg.addColorStop(1,'transparent');
       ctx.fillStyle=fg; ctx.beginPath(); ctx.arc(ex,ey,8+4*fa,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0;
     }
     const eSize=anch.hit?6.5:4.5;
     ctx.shadowColor='rgba(37,99,235,0.45)'; ctx.shadowBlur=5;
     const eg=ctx.createRadialGradient(ex-1.5,ey-1.5,0,ex,ey,eSize);
-    eg.addColorStop(0,'#93c5fd'); eg.addColorStop(1,'#1d4ed8');
+    eg.addColorStop(0,'#B8D4EC'); eg.addColorStop(1,'#1d4ed8');
     ctx.fillStyle=eg; ctx.beginPath(); ctx.arc(ex,ey,eSize,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0;
     ctx.fillStyle='white'; ctx.font=`bold ${anch.hit?8:7}px sans-serif`; ctx.textAlign='center';
     ctx.fillText('e⁻',ex,ey+2.5);
   });
 
   // ── Surface & barrière W ──
-  ctx.strokeStyle='#ef4444'; ctx.lineWidth=2.5; ctx.setLineDash([]);
+  ctx.strokeStyle='#C0392B'; ctx.lineWidth=2.5; ctx.setLineDash([]);
   ctx.beginPath(); ctx.moveTo(surfX,mY+4); ctx.lineTo(surfX,mY+mH-4); ctx.stroke();
   const wMid=H/2, wScale=Math.min(16,(mH*0.7)/(metal.W+0.5));
   const wTop=wMid-metal.W*wScale/2, wBot=wMid+metal.W*wScale/2;
-  ctx.strokeStyle='#ef4444'; ctx.lineWidth=1.5;
+  ctx.strokeStyle='#C0392B'; ctx.lineWidth=1.5;
   ctx.beginPath(); ctx.moveTo(surfX+18,wTop); ctx.lineTo(surfX+18,wBot); ctx.stroke();
   ctx.beginPath();
   ctx.moveTo(surfX+13,wTop+5); ctx.lineTo(surfX+18,wTop); ctx.lineTo(surfX+23,wTop+5);
   ctx.moveTo(surfX+13,wBot-5); ctx.lineTo(surfX+18,wBot); ctx.lineTo(surfX+23,wBot-5);
   ctx.stroke();
-  ctx.fillStyle='#ef4444'; ctx.font='bold 10px Georgia,serif'; ctx.textAlign='left';
+  ctx.fillStyle='#C0392B'; ctx.font='bold 10px Georgia,serif'; ctx.textAlign='left';
   ctx.fillText('W='+metal.W+' eV', surfX+28, wMid+4);
 
   // ── Spawn photons depuis source — rythme proportionnel à N ──
@@ -2437,7 +2585,7 @@ function runEjectionAnimFused(){
       ctx.fillStyle='rgba(30,30,30,0.85)'; ctx.font='bold 8px Georgia,serif'; ctx.textAlign='center';
       ctx.fillText('hν',p.x,p.y-r2-3);
       if(p.state==='rebound'){
-        ctx.fillStyle='#ef4444'; ctx.font='bold 9px sans-serif';
+        ctx.fillStyle='#C0392B'; ctx.font='bold 9px sans-serif';
         ctx.fillText('hν < W',p.x,p.y+r2+13);
       }
       if(p.state==='impact'){
@@ -2449,7 +2597,7 @@ function runEjectionAnimFused(){
   }
 
   // ── Zone résultat ──
-  ctx.fillStyle=ejection?'#166534':'#991b1b';
+  ctx.fillStyle=ejection?'#3A8A6E':'#922B21';
   ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
   const zMid=zoneR+zoneW/2;
   if(ejection){
@@ -2458,7 +2606,7 @@ function runEjectionAnimFused(){
     ctx.fillText('Ec max = hν − W', zMid, mY+mH*0.37);
     ctx.font='bold 13px Georgia,serif'; ctx.fillStyle='#14532d';
     ctx.fillText('= '+Ec.toFixed(2)+' eV', zMid, mY+mH*0.50);
-    ctx.font='10px sans-serif'; ctx.fillStyle='#166534';
+    ctx.font='10px sans-serif'; ctx.fillStyle='#3A8A6E';
     ctx.fillText('hν = '+hnu.toFixed(2)+' eV', zMid, mY+mH*0.63);
     ctx.fillText('W  = '+metal.W.toFixed(2)+' eV', zMid, mY+mH*0.74);
     // Rappel intensité
@@ -2469,7 +2617,7 @@ function runEjectionAnimFused(){
     ctx.font='10px sans-serif'; ctx.fillStyle='#7f1d1d';
     ctx.fillText('hν = '+hnu.toFixed(2)+' eV', zMid, mY+mH*0.43);
     ctx.fillText('W  = '+metal.W.toFixed(2)+' eV', zMid, mY+mH*0.55);
-    ctx.fillStyle='#991b1b'; ctx.font='bold 10px Georgia,serif';
+    ctx.fillStyle='#922B21'; ctx.font='bold 10px Georgia,serif';
     ctx.fillText('hν < W', zMid, mY+mH*0.68);
     ctx.fillText('manque '+(metal.W-hnu).toFixed(2)+' eV', zMid, mY+mH*0.78);
     ctx.fillStyle='rgba(153,27,27,0.55)'; ctx.font='italic 9px sans-serif';
@@ -2555,7 +2703,7 @@ function runEjectionAnim(){
   ctx.fillStyle=photonCSS; ctx.beginPath(); ctx.arc(srcX,srcY,12,0,Math.PI*2); ctx.fill();
   ctx.fillStyle='white'; ctx.font='bold 9px Georgia,serif'; ctx.textAlign='center';
   ctx.fillText('hν',srcX,srcY+3);
-  ctx.fillStyle='#374151'; ctx.font='10px sans-serif';
+  ctx.fillStyle='#5A6B7A'; ctx.font='10px sans-serif';
   ctx.fillText('Source',srcX,srcY+26);
   ctx.fillStyle='#d97706'; ctx.font='bold 10px Georgia,serif';
   ctx.fillText(hnu.toFixed(2)+' eV', srcX, srcY-22);
@@ -2654,7 +2802,7 @@ function runEjectionAnim(){
       ctx.beginPath(); ctx.moveTo(anch.ax,anch.ay); ctx.lineTo(ex2,ey2); ctx.stroke();
       ctx.shadowColor='rgba(239,68,68,0.6)'; ctx.shadowBlur=8;
       const eg2=ctx.createRadialGradient(ex2-1.5,ey2-1.5,0,ex2,ey2,5);
-      eg2.addColorStop(0,'#fca5a5'); eg2.addColorStop(1,'#dc2626');
+      eg2.addColorStop(0,'#E8A29B'); eg2.addColorStop(1,'#C0392B');
       ctx.fillStyle=eg2; ctx.beginPath(); ctx.arc(ex2,ey2,5.5,0,Math.PI*2); ctx.fill();
       ctx.shadowBlur=0;
       ctx.fillStyle='white'; ctx.font='bold 7px sans-serif'; ctx.textAlign='center';
@@ -2685,7 +2833,7 @@ function runEjectionAnim(){
       const fa = 1 - anch.hitAge/15;
       ctx.shadowColor='rgba(251,191,36,0.9)'; ctx.shadowBlur=18*fa;
       const fg=ctx.createRadialGradient(ex-2,ey-2,0,ex,ey,8+4*fa);
-      fg.addColorStop(0,'#fef9c3'); fg.addColorStop(0.5,`rgba(251,191,36,${fa})`); fg.addColorStop(1,'transparent');
+      fg.addColorStop(0,'#FDF0E8'); fg.addColorStop(0.5,`rgba(251,191,36,${fa})`); fg.addColorStop(1,'transparent');
       ctx.fillStyle=fg; ctx.beginPath(); ctx.arc(ex,ey,8+4*fa,0,Math.PI*2); ctx.fill();
       ctx.shadowBlur=0;
     }
@@ -2694,7 +2842,7 @@ function runEjectionAnim(){
     const eSize = anch.hit ? 6.5 : 4.5;
     ctx.shadowColor='rgba(37,99,235,0.45)'; ctx.shadowBlur=5;
     const eg=ctx.createRadialGradient(ex-1.5,ey-1.5,0,ex,ey,eSize);
-    eg.addColorStop(0,'#93c5fd'); eg.addColorStop(1,'#1d4ed8');
+    eg.addColorStop(0,'#B8D4EC'); eg.addColorStop(1,'#1d4ed8');
     ctx.fillStyle=eg; ctx.beginPath(); ctx.arc(ex,ey,eSize,0,Math.PI*2); ctx.fill();
     ctx.shadowBlur=0;
     ctx.fillStyle='white'; ctx.font=`bold ${anch.hit?8:7}px sans-serif`; ctx.textAlign='center';
@@ -2708,18 +2856,18 @@ function runEjectionAnim(){
   ctx.fillText('W = '+metal.W+' eV', mX+mW/2, mY+mH-6);
 
   // ── SURFACE & BARRIÈRE W ──
-  ctx.strokeStyle='#ef4444'; ctx.lineWidth=2.5; ctx.setLineDash([]);
+  ctx.strokeStyle='#C0392B'; ctx.lineWidth=2.5; ctx.setLineDash([]);
   ctx.beginPath(); ctx.moveTo(surfX,mY+4); ctx.lineTo(surfX,mY+mH-4); ctx.stroke();
   // Double flèche W centrée sur la surface
   const wMid=H/2, wScale=Math.min(16, (mH*0.7)/(metal.W+0.5));
   const wTop=wMid-metal.W*wScale/2, wBot=wMid+metal.W*wScale/2;
-  ctx.strokeStyle='#ef4444'; ctx.lineWidth=1.5;
+  ctx.strokeStyle='#C0392B'; ctx.lineWidth=1.5;
   ctx.beginPath(); ctx.moveTo(surfX+18,wTop); ctx.lineTo(surfX+18,wBot); ctx.stroke();
   ctx.beginPath();
   ctx.moveTo(surfX+13,wTop+5); ctx.lineTo(surfX+18,wTop); ctx.lineTo(surfX+23,wTop+5);
   ctx.moveTo(surfX+13,wBot-5); ctx.lineTo(surfX+18,wBot); ctx.lineTo(surfX+23,wBot-5);
   ctx.stroke();
-  ctx.fillStyle='#ef4444'; ctx.font='bold 10px Georgia,serif'; ctx.textAlign='left';
+  ctx.fillStyle='#C0392B'; ctx.font='bold 10px Georgia,serif'; ctx.textAlign='left';
   ctx.fillText('W='+metal.W+' eV', surfX+28, wMid+4);
 
   // ── SPAWN photons — max 3, un par lane centrale ──
@@ -2821,7 +2969,7 @@ function runEjectionAnim(){
 
       // Annotation rebond
       if(p.state==='rebound'){
-        ctx.fillStyle='#ef4444'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+        ctx.fillStyle='#C0392B'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
         ctx.fillText('hν < W',p.x,p.y+r2+13);
       }
       // Flash impact (impactAge 1-7)
@@ -2836,7 +2984,7 @@ function runEjectionAnim(){
   }
 
   // ── Zone résultat (droite) — toujours visible ──
-  ctx.fillStyle=ejection?'#166534':'#991b1b';
+  ctx.fillStyle=ejection?'#3A8A6E':'#922B21';
   ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
   const zMid=zoneR+zoneW/2;
   if(ejection){
@@ -2845,7 +2993,7 @@ function runEjectionAnim(){
     ctx.fillText('Ec max = hν − W', zMid, mY+mH*0.44);
     ctx.font='bold 13px Georgia,serif'; ctx.fillStyle='#14532d';
     ctx.fillText('= '+Ec.toFixed(2)+' eV', zMid, mY+mH*0.57);
-    ctx.font='10px sans-serif'; ctx.fillStyle='#166534';
+    ctx.font='10px sans-serif'; ctx.fillStyle='#3A8A6E';
     ctx.fillText('hν = '+hnu.toFixed(2)+' eV', zMid, mY+mH*0.70);
     ctx.fillText('W  = '+metal.W.toFixed(2)+' eV', zMid, mY+mH*0.82);
   } else {
@@ -2853,7 +3001,7 @@ function runEjectionAnim(){
     ctx.font='10px sans-serif'; ctx.fillStyle='#7f1d1d';
     ctx.fillText('hν = '+hnu.toFixed(2)+' eV', zMid, mY+mH*0.50);
     ctx.fillText('W  = '+metal.W.toFixed(2)+' eV', zMid, mY+mH*0.62);
-    ctx.fillStyle='#991b1b'; ctx.font='bold 10px Georgia,serif';
+    ctx.fillStyle='#922B21'; ctx.font='bold 10px Georgia,serif';
     ctx.fillText('hν < W', zMid, mY+mH*0.76);
     ctx.fillText('→ manque '+(metal.W-hnu).toFixed(2)+' eV', zMid, mY+mH*0.87);
   }
@@ -2875,10 +3023,10 @@ function updateEjectionAnim(){
   const hnuVsW = document.getElementById('hnu-vs-W');
   if(hnuVsW){
     if(ejection){
-      hnuVsW.style.color='#166534';
+      hnuVsW.style.color='#3A8A6E';
       hnuVsW.textContent = `≥ W (${metal.W} eV)  →  Ec = ${(hnu-metal.W).toFixed(2)} eV`;
     } else {
-      hnuVsW.style.color='#B91C1C';
+      hnuVsW.style.color='#C0392B';
       hnuVsW.textContent = `< W (${metal.W} eV)  →  aucun effet`;
     }
   }
@@ -2893,10 +3041,10 @@ function updateEjectionAnim(){
   if(nuVsNu0){
     const nu0str = (nu0/1e14).toFixed(2)+' × 10¹⁴ Hz';
     if(ejection){
-      nuVsNu0.style.color='#166534';
+      nuVsNu0.style.color='#3A8A6E';
       nuVsNu0.textContent = `≥ ν₀ = ${nu0str}`;
     } else {
-      nuVsNu0.style.color='#B91C1C';
+      nuVsNu0.style.color='#C0392B';
       nuVsNu0.textContent = `< ν₀ = ${nu0str}`;
     }
   }
@@ -2966,7 +3114,7 @@ function drawSpectrum(mat){
   const lMin=300, lMax=1200;
 
   // Titre du graphique
-  ctx.fillStyle='#1B4F8A'; ctx.font='bold 13px Georgia,serif'; ctx.textAlign='center';
+  ctx.fillStyle='#2D5F8A'; ctx.font='bold 13px Georgia,serif'; ctx.textAlign='center';
   ctx.fillText('Spectre solaire et zone d\'absorption du matériau sélectionné', W/2, 18);
 
   // Spectre solaire (approximation corps noir 5778K + atmosphère)
@@ -2988,7 +3136,7 @@ function drawSpectrum(mat){
   ctx.globalAlpha=1;
 
   // Courbe spectre solaire
-  ctx.beginPath(); ctx.strokeStyle='#F59E0B'; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.strokeStyle='#E8783A'; ctx.lineWidth=2.5;
   for(let lam=lMin;lam<=lMax;lam+=5){
     const x=padL+(lam-lMin)/(lMax-lMin)*gW;
     const irr=solarIrrad(lam);
@@ -3009,7 +3157,7 @@ function drawSpectrum(mat){
     const bw=170, bh=40, bx=xAnnot+6, by=padT+gH*0.18;
     ctx.fillStyle='rgba(255,255,255,0.93)'; ctx.strokeStyle='#9CA3AF'; ctx.lineWidth=1.2;
     ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,6); ctx.fill(); ctx.stroke();
-    ctx.fillStyle='#374151'; ctx.font='bold 10px sans-serif'; ctx.textAlign='left';
+    ctx.fillStyle='#5A6B7A'; ctx.font='bold 10px sans-serif'; ctx.textAlign='left';
     ctx.fillText('⬇ Fin du visible (≈700 nm)',bx+6,by+14);
     ctx.font='10px sans-serif'; ctx.fillStyle='#6B7280';
     ctx.fillText('Début IR : absorption atmosphérique',bx+6,by+30);
@@ -3048,17 +3196,17 @@ function drawSpectrum(mat){
   ctx.fillText('λmax = '+mat.lmax+' nm',xCut,padT-5);
 
   // Axes fléchés
-  ctx.strokeStyle='#374151'; ctx.lineWidth=1.5;
+  ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.5;
   // Axe X (lambda) avec flèche
   ctx.beginPath(); ctx.moveTo(padL,padT+gH); ctx.lineTo(padL+gW+14,padT+gH); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(padL+gW+14,padT+gH-5); ctx.lineTo(padL+gW+22,padT+gH); ctx.lineTo(padL+gW+14,padT+gH+5); ctx.fillStyle='#374151'; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(padL+gW+14,padT+gH-5); ctx.lineTo(padL+gW+22,padT+gH); ctx.lineTo(padL+gW+14,padT+gH+5); ctx.fillStyle='#5A6B7A'; ctx.fill();
   // Axe Y (irradiance) avec flèche
-  ctx.strokeStyle='#374151'; ctx.lineWidth=1.5;
+  ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.5;
   ctx.beginPath(); ctx.moveTo(padL,padT+gH); ctx.lineTo(padL,padT-8); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(padL-5,padT-8); ctx.lineTo(padL,padT-16); ctx.lineTo(padL+5,padT-8); ctx.fillStyle='#374151'; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(padL-5,padT-8); ctx.lineTo(padL,padT-16); ctx.lineTo(padL+5,padT-8); ctx.fillStyle='#5A6B7A'; ctx.fill();
 
   // Étiquettes axe X
-  ctx.fillStyle='#374151'; ctx.font='11px sans-serif'; ctx.textAlign='center';
+  ctx.fillStyle='#5A6B7A'; ctx.font='11px sans-serif'; ctx.textAlign='center';
   [400,500,600,700,800,900,1000,1100,1200].forEach(l=>{
     const x=padL+(l-lMin)/(lMax-lMin)*gW;
     ctx.fillText(l,x,padT+gH+16);
@@ -3071,22 +3219,22 @@ function drawSpectrum(mat){
   const yTickVals=[0,200,400,600,800,1000];
   yTickVals.forEach(v=>{
     const y=padT+gH-v/1200*gH;
-    ctx.beginPath(); ctx.strokeStyle='#374151'; ctx.moveTo(padL,y); ctx.lineTo(padL-5,y); ctx.stroke();
-    ctx.fillStyle='#374151'; ctx.font='11px sans-serif';
+    ctx.beginPath(); ctx.strokeStyle='#5A6B7A'; ctx.moveTo(padL,y); ctx.lineTo(padL-5,y); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.font='11px sans-serif';
     ctx.fillText(v,padL-8,y+4);
   });
 
   // Axe Y label
   ctx.save(); ctx.translate(12,padT+gH/2); ctx.rotate(-Math.PI/2);
-  ctx.textAlign='center'; ctx.fillStyle='#374151'; ctx.font='11px sans-serif';
+  ctx.textAlign='center'; ctx.fillStyle='#5A6B7A'; ctx.font='11px sans-serif';
   ctx.fillText('Irradiance solaire (W·m⁻²·nm⁻¹)',0,0); ctx.restore();
 
   // Légende
   ctx.fillStyle=mat.color+'cc'; ctx.fillRect(padL+10,padT+8,14,14);
-  ctx.fillStyle='#374151'; ctx.font='11px sans-serif'; ctx.textAlign='left';
+  ctx.fillStyle='#5A6B7A'; ctx.font='11px sans-serif'; ctx.textAlign='left';
   ctx.fillText(`Zone absorbée par ${mat.name}`,padL+30,padT+19);
-  ctx.fillStyle='#F59E0B'; ctx.fillRect(padL+10,padT+28,14,4);
-  ctx.fillStyle='#374151'; ctx.fillText('Spectre solaire (approximé)',padL+30,padT+35);
+  ctx.fillStyle='#E8783A'; ctx.fillRect(padL+10,padT+28,14,4);
+  ctx.fillStyle='#5A6B7A'; ctx.fillText('Spectre solaire (approximé)',padL+30,padT+35);
 }
 
 /* ══════════════════════════════════════════════
@@ -3178,7 +3326,7 @@ function drawGraph3(){
 
   // ── Droite Ec = hν − W (prolongée en pointillés sous l'axe) ──
   // Partie pointillée (ν < ν₀ où Ec < 0, prolongement fictif)
-  ctx.strokeStyle = '#93c5fd'; ctx.lineWidth = 2; ctx.setLineDash([8,5]);
+  ctx.strokeStyle = '#B8D4EC'; ctx.lineWidth = 2; ctx.setLineDash([8,5]);
   ctx.beginPath();
   const nuStartDash = Math.max(S3.nuMin, 0);
   const nuEndDash = nu0;
@@ -3188,7 +3336,7 @@ function drawGraph3(){
   ctx.setLineDash([]);
 
   // ── Segment Ec = 0 pour ν < ν₀ (même style que la courbe montante) ──
-  ctx.strokeStyle = '#374151'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+  ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 3; ctx.lineCap = 'round';
   ctx.beginPath();
   ctx.moveTo(s3NuToPx(S3.nuMin, padL, gW), yAxis0);
   ctx.lineTo(xNu0, yAxis0);
@@ -3196,7 +3344,7 @@ function drawGraph3(){
   ctx.lineCap = 'butt';
 
   // Partie pleine (ν ≥ ν₀)
-  ctx.strokeStyle = '#1B4F8A'; ctx.lineWidth = 3;
+  ctx.strokeStyle = '#2D5F8A'; ctx.lineWidth = 3;
   ctx.beginPath();
   const nuStart = nu0;
   const nuEnd = S3.nuMax;
@@ -3207,37 +3355,37 @@ function drawGraph3(){
   // ── W sur l'axe vertical (intercept à ν=0) ──
   const yW = s3EcToPx(-metal.W, padT, gH);
   // Accolade W
-  ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2;
+  ctx.strokeStyle = '#C0392B'; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.moveTo(padL-28, yW); ctx.lineTo(padL-28, yAxis0); ctx.stroke();
   ctx.beginPath();
   ctx.moveTo(padL-34, yW+5);    ctx.lineTo(padL-28, yW);    ctx.lineTo(padL-22, yW+5);
   ctx.moveTo(padL-34, yAxis0-5); ctx.lineTo(padL-28, yAxis0); ctx.lineTo(padL-22, yAxis0-5);
   ctx.stroke();
-  ctx.fillStyle = '#ef4444'; ctx.font = 'bold 13px Georgia,serif'; ctx.textAlign = 'center';
+  ctx.fillStyle = '#C0392B'; ctx.font = 'bold 13px Georgia,serif'; ctx.textAlign = 'center';
   ctx.fillText('W', padL-44, (yW+yAxis0)/2 + 5);
 
 
   // ── ν₀ sur l'axe des abscisses ──
-  ctx.strokeStyle = '#D97706'; ctx.lineWidth = 1.5; ctx.setLineDash([6,3]);
+  ctx.strokeStyle = '#E8783A'; ctx.lineWidth = 1.5; ctx.setLineDash([6,3]);
   ctx.beginPath(); ctx.moveTo(xNu0, padT); ctx.lineTo(xNu0, padT+gH); ctx.stroke();
   ctx.setLineDash([]);
-  ctx.fillStyle = '#D97706'; ctx.font = 'bold 13px Georgia,serif'; ctx.textAlign = 'center';
+  ctx.fillStyle = '#E8783A'; ctx.font = 'bold 13px Georgia,serif'; ctx.textAlign = 'center';
   ctx.fillText('ν₀', xNu0, padT+gH+18);
   // Point ν₀ sur la droite
-  ctx.fillStyle = '#D97706'; ctx.strokeStyle = '#92400e'; ctx.lineWidth = 2;
+  ctx.fillStyle = '#E8783A'; ctx.strokeStyle = '#92400e'; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.arc(xNu0, yAxis0, 7, 0, Math.PI*2); ctx.fill(); ctx.stroke();
 
   // ── Label pente = h ──
   const xMid = s3NuToPx((nu0 + S3.nuMax)/2, padL, gW);
   const yMid = s3EcToPx(((nu0+S3.nuMax)/2*1e14*h/eV - metal.W)/2, padT, gH);
-  ctx.fillStyle = 'rgba(255,255,255,0.92)'; ctx.strokeStyle = '#1B4F8A'; ctx.lineWidth = 1.5;
+  ctx.fillStyle = 'rgba(255,255,255,0.92)'; ctx.strokeStyle = '#2D5F8A'; ctx.lineWidth = 1.5;
   const boxW=130, boxH=28;
   ctx.beginPath(); ctx.roundRect(xMid-boxW/2, yMid-boxH/2, boxW, boxH, 6); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#1B4F8A'; ctx.font = 'bold 13px Georgia,serif'; ctx.textAlign = 'center';
+  ctx.fillStyle = '#2D5F8A'; ctx.font = 'bold 13px Georgia,serif'; ctx.textAlign = 'center';
   ctx.fillText('pente = h', xMid, yMid+5);
 
   // ── Axes principaux ──
-  ctx.strokeStyle = '#374151'; ctx.lineWidth = 2;
+  ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 2;
   // Axe ν
   ctx.beginPath(); ctx.moveTo(padL, padT+gH); ctx.lineTo(padL+gW+10, padT+gH); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(padL+gW+10, padT+gH-5); ctx.lineTo(padL+gW+18, padT+gH); ctx.lineTo(padL+gW+10, padT+gH+5); ctx.fill();
@@ -3246,13 +3394,13 @@ function drawGraph3(){
   ctx.beginPath(); ctx.moveTo(padL-5, padT-10); ctx.lineTo(padL, padT-18); ctx.lineTo(padL+5, padT-10); ctx.fill();
 
   // Labels axes
-  ctx.fillStyle = '#374151'; ctx.font = 'italic 14px Georgia,serif'; ctx.textAlign = 'left';
+  ctx.fillStyle = '#5A6B7A'; ctx.font = 'italic 14px Georgia,serif'; ctx.textAlign = 'left';
   ctx.fillText('ν (×10¹⁴ Hz)', padL+gW+22, padT+gH+5);
   ctx.save(); ctx.translate(padL-55, padT-14); ctx.rotate(-Math.PI/2);
   ctx.textAlign = 'center'; ctx.fillText('Ec (eV)', 0, 0); ctx.restore();
 
   // Graduations axe ν
-  ctx.fillStyle = '#374151'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
   for(let nu=2; nu<=S3.nuMax; nu+=2){
     const x = s3NuToPx(nu, padL, gW);
     ctx.beginPath(); ctx.moveTo(x, padT+gH); ctx.lineTo(x, padT+gH+5); ctx.stroke();
@@ -3270,10 +3418,10 @@ function drawGraph3(){
 
   // Labels zones
   ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center';
-  ctx.fillStyle = '#B91C1C';
+  ctx.fillStyle = '#C0392B';
   ctx.fillText("Pas d\u2019effet", Math.min(xNu0-10, padL + (xNu0-padL)/2), padT+30);
   ctx.fillText('photoélectrique', Math.min(xNu0-10, padL + (xNu0-padL)/2), padT+46);
-  ctx.fillStyle = '#166534';
+  ctx.fillStyle = '#3A8A6E';
   ctx.fillText('Effet photoélectrique', padL + (xNu0-padL) + (padL+gW - xNu0)/2, padT+30);
 
   // ── CURSEUR SOURIS ──
@@ -3298,16 +3446,16 @@ function drawGraph3(){
       ctx.setLineDash([]);
 
       // Projection sur axe ν (tiret bas)
-      ctx.fillStyle = '#374151';
+      ctx.fillStyle = '#5A6B7A';
       ctx.beginPath(); ctx.arc(xCur, padT+gH, 4, 0, Math.PI*2); ctx.fill();
       // Projection sur axe Ec
       if(isEjection){
-        ctx.fillStyle = '#166534';
+        ctx.fillStyle = '#3A8A6E';
         ctx.beginPath(); ctx.arc(padL, yCur, 4, 0, Math.PI*2); ctx.fill();
       }
 
       // Point sur la droite
-      ctx.fillStyle = isEjection ? '#1B4F8A' : '#9ca3af';
+      ctx.fillStyle = isEjection ? '#2D5F8A' : '#9ca3af';
       ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.arc(xCur, yCur, 8, 0, Math.PI*2); ctx.fill(); ctx.stroke();
       ctx.fillStyle = '#fff'; ctx.font = 'bold 7px sans-serif'; ctx.textAlign = 'center';
@@ -3324,7 +3472,7 @@ function drawGraph3(){
       const ty = yCur > padT+80 ? yCur - 48 : yCur + 16;
 
       ctx.fillStyle = isEjection ? 'rgba(240,253,244,0.97)' : 'rgba(255,241,242,0.97)';
-      ctx.strokeStyle = isEjection ? '#16a34a' : '#ef4444'; ctx.lineWidth = 1.5;
+      ctx.strokeStyle = isEjection ? '#16a34a' : '#C0392B'; ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.roundRect(tx, ty, tipW, 30, 6); ctx.fill(); ctx.stroke();
       ctx.fillStyle = '#111827'; ctx.textAlign = 'left';
       ctx.fillText(tip, tx+14, ty+19);
@@ -3341,7 +3489,7 @@ function drawGraph3(){
         } else {
           tooltipDiv.innerHTML =
             `<b>ν = ${nu.toFixed(3)} × 10¹⁴ Hz</b> &nbsp;|&nbsp; ν < ν₀ = ${nu0.toFixed(2)} × 10¹⁴ Hz<br>` +
-            `<span style="color:#fca5a5">hν = ${(nu*1e14*h/eV).toFixed(3)} eV &lt; W = ${metal.W} eV → <b>aucun effet photoélectrique</b></span>`;
+            `<span style="color:#E8A29B">hν = ${(nu*1e14*h/eV).toFixed(3)} eV &lt; W = ${metal.W} eV → <b>aucun effet photoélectrique</b></span>`;
         }
       }
     }
@@ -3355,9 +3503,9 @@ function drawGraph3(){
     const fX = padL+gW-170, fY = padT+gH-80;
     ctx.fillStyle = 'rgba(255,255,255,0.95)'; ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.roundRect(fX, fY, 165, 60, 8); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#374151'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillStyle = '#5A6B7A'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
     ctx.fillText("Relation d\u2019Einstein (1905)", fX+82, fY+18);
-    ctx.fillStyle = '#1B4F8A'; ctx.font = 'bold 15px Georgia,serif';
+    ctx.fillStyle = '#2D5F8A'; ctx.font = 'bold 15px Georgia,serif';
     ctx.fillText('Ec = h·ν − W', fX+82, fY+44);
   }
 }
