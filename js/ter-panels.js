@@ -392,7 +392,7 @@ const TER_SEQUENCES = [
             href:'seq08/Seq8_Lunette astronomique.pdf' }, 
            { type:'link', icon:'🔭', label:'Lunette astronomique — formation d\'image',
             sub:'réalisé par Mme Poirault-Gauvin',
-            href:'seq08/lunette_interactive.html' },
+            href:'seq08/seq08-cours_interactif.html' },
         ]
       },
     ]
