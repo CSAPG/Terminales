@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #DDE6F0;
+  --bg: #F0F4F8;
   --bg2: #F5F7FA;
   --bg3: #ffffff;
   --card: #F5F7FA;
@@ -40,7 +40,7 @@ body {
 .page-wrapper {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 18px 60px;
+  padding: 28px 20px 60px;
 }
 
 /* ── HEADER (sticky, façon séquence 01) ── */
@@ -177,7 +177,7 @@ button.cap-toggle:hover { background: #1e4466; }
   border-radius: 6px 6px 0 0;
 }
 .tab-btn .tab-num {
-  width: 20px; height: 20px;
+  width: 22px; height: 22px;
   border-radius: 50%;
   background: var(--border);
   color: var(--text3);
@@ -260,6 +260,12 @@ button.cap-toggle:hover { background: #1e4466; }
 .res-link-card:hover { box-shadow: 0 4px 16px rgba(45,95,138,0.18); }
 .res-link-card h4 { font-family: 'Outfit', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--accent1); margin: 0; }
 .res-link-card p { font-size: 0.8rem; color: var(--text3); margin-top: 4px; }
+.res-link-card.orange { border-left-color: var(--accent4); }
+.res-link-card.orange h4 { color: var(--accent4); }
+.res-link-card.orange:hover { box-shadow: 0 4px 16px rgba(232,120,58,0.18); }
+.res-link-card.vert { border-left-color: var(--accent3); }
+.res-link-card.vert h4 { color: var(--accent3); }
+.res-link-card.vert:hover { box-shadow: 0 4px 16px rgba(58,138,110,0.18); }
 
 .accord-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 14px 18px; background: #EEF5FB; border: 2px solid #B8D4EC; border-radius: 8px; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.90rem; font-weight: 800; color: var(--accent1); margin: 20px 0 0; }
 .accord-btn:hover { background: var(--accent1xl); }
@@ -1846,17 +1852,21 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
       <h4>▶ La datation par le carbone-14</h4>
       <p>CEA · Vidéo — Physique-Chimie</p>
     </a>
-    <a class="res-link-card" href="https://youtu.be/a7c9v7VFncs" target="_blank" rel="noopener">
+    <a class="res-link-card" href="https://www.pearltrees.com/private/id105377258/item807274344?paccess=47d8d3b090f.301e0768.09bca1edd2ef11f8885703330a684d56" target="_blank" rel="noopener">
       <h4>▶ Radioactivité : transformation nucléaire</h4>
-      <p>Isotopes, diagramme (N ; Z), lois de conservation — alpha, bêta, gamma</p>
+      <p>Paul Olivier · Isotopes, diagramme (N ; Z), lois de conservation — alpha, bêta, gamma</p>
     </a>
-    <a class="res-link-card" href="https://youtu.be/uvBHwaZ3reg" target="_blank" rel="noopener">
+    <a class="res-link-card" href="https://www.pearltrees.com/private/id105377258/item807274420?paccess=47d8d3bf9dc.301e07b4.ada4fcf1f1fba2cfe33dfe3e705aeebe" target="_blank" rel="noopener">
       <h4>▶ Décroissance radioactive, demi-vie, datation carbone 14</h4>
       <p>pccl.fr · Cours + exercice corrigé</p>
     </a>
-    <a class="res-link-card" href="https://youtu.be/VsSlgOa6MQg" target="_blank" rel="noopener">
+    <a class="res-link-card" href="https://www.pearltrees.com/private/id105377258/item807278440?paccess=47d8d3f8839.301e1768.49fdd31a3401356a7b4b5f4c4726b51a" target="_blank" rel="noopener">
       <h4>▶ Décroissance radioactive (exponentielle) — équation différentielle</h4>
       <p>pccl.fr · Cours + exercice corrigé, datation carbone 14</p>
+    </a>
+    <a class="res-link-card" href="https://www.pearltrees.com/private/id105377258/item804916977?paccess=47d8d408641.2ffa0ef1.658b8a76ecffb0aafabad433b31e74fe" target="_blank" rel="noopener">
+      <h4>▶ Équation de réaction nucléaire</h4>
+      <p>Hachette</p>
     </a>
     <a class="res-link-card" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/05_schema_anime.mp4" target="_blank" rel="noopener">
       <h4>▶ Schéma animé — Radioactivité</h4>
@@ -1866,7 +1876,7 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
 
   <div class="section-title" style="margin-top:30px;">🔬 Simulations</div>
   <div class="bilan-grid">
-    <a class="res-link-card" href="https://physique.ostralo.net/diagramme_NZ/" target="_blank" rel="noopener">
+    <a class="res-link-card orange" href="https://physique.ostralo.net/diagramme_NZ/" target="_blank" rel="noopener">
       <h4>🔗 Diagramme de Ségré interactif</h4>
       <p>Ostralo · Explorer la vallée de stabilité et les zones d'instabilité α/β⁻/β⁺</p>
     </a>
@@ -1874,11 +1884,11 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
 
   <div class="section-title" style="margin-top:30px;">📝 QCM</div>
   <div class="bilan-grid">
-    <a class="res-link-card" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/05_QCM_prerequis/index.html" target="_blank" rel="noopener">
+    <a class="res-link-card vert" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/05_QCM_prerequis/index.html" target="_blank" rel="noopener">
       <h4>📝 QCM prérequis</h4>
       <p>Hatier-clic</p>
     </a>
-    <a class="res-link-card" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_05/index.html" target="_blank" rel="noopener">
+    <a class="res-link-card vert" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_05/index.html" target="_blank" rel="noopener">
       <h4>📝 QCM de maîtrise des notions</h4>
       <p>Hatier-clic</p>
     </a>
