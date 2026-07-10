@@ -849,6 +849,7 @@
   .bac-card {
     background: var(--blanc);
     border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--violet);
     border-radius: 12px;
     padding: 16px 18px;
     margin-bottom: 14px;
@@ -909,8 +910,10 @@
     transition: opacity 0.15s, transform 0.1s;
   }
   .pastille:hover { opacity: 0.88; transform: translateY(-1px); }
-  .pastille-sujet   { background: var(--orange); color: white; }
-  .pastille-corrige { background: var(--vert); color: white; }
+  .pastille-sujet   { color: var(--bleu); border: 1.5px solid var(--bleu); background: transparent; }
+  .pastille-sujet:hover { background: var(--bleu-clair); }
+  .pastille-corrige { color: var(--vert); border: 1.5px solid var(--vert); background: transparent; }
+  .pastille-corrige:hover { background: var(--vert-clair); }
   .pastille-disabled {
     background: var(--gris-fond);
     color: var(--texte-leger);
@@ -2403,8 +2406,8 @@
         <li>Substitution : un groupe sortant remplacé par un groupe entrant</li>
         <li>Polymère = motifs répétés (N fois) issus de monomères</li>
       </ul>
-      <a class="bilan-video-link" href="https://www.youtube.com/watch?v=SX89g3r57O0" target="_blank" rel="noopener">▶ Vidéo — La synthèse du nylon (C'est pas sorcier)</a>
-      <a class="bilan-video-link" href="https://youtu.be/BUA7lbchuAA" target="_blank" rel="noopener">▶ Vidéo — Polymérisation (Les Bons Profs)</a>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id105648215/item806559562?paccess=47d8d2d793e.30131f4a.06be931de442bab0e8bc88451a2e145f" target="_blank" rel="noopener">▶ Vidéo — La synthèse du nylon (C'est pas sorcier)</a>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id105648215/item806559572?paccess=47d8d2dd553.30131f54.b00e970f33a28b7083a079c1cd3a5c65" target="_blank" rel="noopener">▶ Vidéo — Polymérisation (Les Bons Profs)</a>
     </div>
     <div class="bilan-card">
       <h4>Partie B.4/B.5 – Protection & chimie verte</h4>
@@ -2414,12 +2417,12 @@
         <li>12 principes de la chimie verte (Anastas & Warner, 1998)</li>
         <li>Catalyseurs, réactifs et solvants moins toxiques : synthèse écoresponsable</li>
       </ul>
-      <a class="bilan-video-link" href="https://youtu.be/2NJTYWIf7BY" target="_blank" rel="noopener">▶ Vidéo — Exercice : protection/déprotection (Florence Raffin)</a>
+      <a class="bilan-video-link" href="https://www.pearltrees.com/private/id105648215/item806559551?paccess=47d8d2e34f2.30131f3f.4928aa447b7db3a84c024315744cf20d" target="_blank" rel="noopener">▶ Vidéo — Exercice : protection/déprotection (Florence Raffin)</a>
     </div>
   </div>
 
   <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▼</span>
+    <span>📖 Glossaire de la séquence</span><span>▾</span>
   </button>
   <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
@@ -2451,10 +2454,10 @@
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
 
-    <a href="https://www.youtube.com/watch?v=_ZKJu78COCU" target="_blank" rel="noopener" style="text-decoration:none;">
+    <a href="https://www.pearltrees.com/private/id105648215/item806559306?paccess=47d8d2a74a8.30131e4a.f163785e83896e0376d2daba1cb43cef" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
         <h4 style="color:var(--bleu);">▶ Vidéo — Capsule Stratégie de synthèse</h4>
-        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Physique Chimie · Introduction à l'optimisation d'une synthèse</p>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Introduction à l'optimisation d'une synthèse</p>
       </div>
     </a>
 
@@ -2465,17 +2468,17 @@
       </div>
     </a>
 
-    <a href="https://www.youtube.com/watch?v=VycmSMY5-cw" target="_blank" rel="noopener" style="text-decoration:none;">
+    <a href="https://www.pearltrees.com/private/id105648215/item806559330?paccess=47d8d2b343d.30131e62.b4ba5e40f9947644298f1c9bffe653ab" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
         <h4 style="color:var(--bleu);">▶ Vidéo — Synthèse organique : cours complet</h4>
-        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Nomenclature, familles fonctionnelles, formules topologiques, polymères, rendement, reflux, stratégie de synthèse — révision globale de la séquence.</p>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Paul Olivier · Nomenclature, familles fonctionnelles, formules topologiques, polymères, rendement, reflux, stratégie de synthèse — révision globale de la séquence.</p>
       </div>
     </a>
 
-    <a href="https://www.youtube.com/watch?v=k5L-gGmQbPc" target="_blank" rel="noopener" style="text-decoration:none;">
+    <a href="https://www.pearltrees.com/private/id105648215/item806559352?paccess=47d8d2be92a.30131e78.c7106097493d7fa478a9777e1e796217" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
         <h4 style="color:var(--bleu);">▶ Vidéo — Stratégie de synthèse organique</h4>
-        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Synthèse multi-étapes, banque de réactions, addition/élimination/substitution, protection — révision globale de la partie B.</p>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Florence Raffin · Synthèse multi-étapes, banque de réactions, addition/élimination/substitution, protection — révision globale de la partie B.</p>
       </div>
     </a>
 
