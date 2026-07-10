@@ -17,6 +17,8 @@
   --orange-clair: #FDF0E8;
   --vert: #3A8A6E;
   --vert-clair: #E8F5F0;
+  --vert-exo: #F0FAF6;
+  --vert-exo-bord: #B2DDD0;
   --gris-fond: #F5F7FA;
   --gris-bord: #DDE3EC;
   --texte: #1A2A3A;
@@ -76,7 +78,7 @@ button.cap-toggle:hover{background:#1e4466}
 .panel{display:none;background:var(--blanc);border:1.5px solid var(--gris-bord);border-radius:0 0 12px 12px;padding:20px}
 .panel.on{display:block;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.main{max-width:1300px;margin:0 auto;padding:0 0 40px}
+.main{max-width:1300px;margin:0 auto;padding:28px 20px 60px}
 
 /* ── Sous-onglets (Bilan / Ressources) ── */
 .sub-tabs-nav{display:flex;gap:6px;padding:0 0 0;margin-bottom:18px;flex-wrap:nowrap;overflow-x:auto}
@@ -335,8 +337,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
     <div class="tab"     onclick="showTab('gros')">Grossissement</div>
     <div class="tab"     onclick="showTab('exo')">Exercices guidés</div>
     <div class="tab"     onclick="showTab('lun')">Autres lunettes</div>
-    <div class="tab"     onclick="showTab('ref')">Sites</div>
-    <div class="tab"     onclick="showTab('bilan')">✓ Bilan &amp; Ressources</div>
+    <div class="tab"     onclick="showTab('bilan')">✓ Ressources</div>
   </nav>
 
   <div class="cap-panel" id="capPanelLun">
@@ -1073,7 +1074,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
           f₁' = 18 m, diamètre objectif = 83 cm. Construite en 1891.<br>
           L'une des plus grandes lunettes réfracteurs du monde.<br>
           <a href="http://350ans.obspm.fr/fr/exposition-virtuelle/revivre-notre-histoire"
-             target="_blank" style="color:#1a5aaa;font-size:11px">▶ Exposition virtuelle Observatoire de Paris</a>
+             target="_blank" style="color:var(--orange);font-size:11px">▶ Exposition virtuelle Observatoire de Paris</a>
         </p>
         <div class="feats">
           <span class="feat">f₁' = 18 m</span><span class="feat">D = 83 cm</span><span class="feat">G jusqu'à 1800×</span>
@@ -1142,84 +1143,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
     </div>
   </div>
 </div>
-<div class="panel" id="tab-ref">
 
-  <!-- SIMULATION PHET : image intermédiaire -->
-  <div style="background:#f0f8ff;border:2px solid #1a5aaa;border-radius:10px;padding:14px 18px;margin-bottom:16px">
-    <h2 style="font-size:16px;font-weight:700;color:#1a3a6a;margin-bottom:4px">🔭 Simulation PhET — Vérifier la position de l'image intermédiaire</h2>
-    <p style="font-size:12px;color:#334;line-height:1.7;margin-bottom:10px">
-      <b>Capacité expérimentale :</b> vérifier que l'image intermédiaire A₁B₁ se forme bien dans le plan focal image de l'objectif (F₁'), qui coïncide avec le plan focal objet de l'oculaire (F₂).<br>
-      <b>Protocole :</b>
-      <span style="display:block;margin-left:10px;margin-top:4px">
-        ① Placer l'objet <b>à l'infini</b> (déplacer l'objet très loin à gauche).<br>
-        ② Régler la distance focale de la lentille 1 (objectif) : noter f₁'.<br>
-        ③ Observer où se forme l'image — elle doit coïncider avec F₁'.<br>
-        ④ Ajouter une deuxième lentille (oculaire) avec f₂' et vérifier que F₁' ≡ F₂.<br>
-        ⑤ Constater que le rayon émergeant est parallèle à l'axe : <b>système afocal</b>.
-      </span>
-    </p>
-    <div class="feats" style="margin-bottom:10px">
-      <span class="feat">Objet déplaçable</span>
-      <span class="feat">f' réglable</span>
-      <span class="feat">Image réelle / virtuelle</span>
-      <span class="feat">Rayons remarquables</span>
-    </div>
-    <a class="ext-btn" href="https://phet.colorado.edu/sims/html/geometric-optics/latest/geometric-optics_fr.html" target="_blank">▶ Ouvrir la simulation PhET</a>
-    <p style="font-size:11px;color:#667;margin-top:8px">
-      PhET Interactive Simulations — University of Colorado Boulder — licence CC-BY 4.0
-    </p>
-  </div>
-
-  <div class="ext-box">
-    <h2>🔬 Animation Unisciel — Cercle oculaire &amp; Lunette</h2>
-    <p class="ext-note">Cours interactif (unisciel.fr) :</p>
-    <div class="feats"><span class="feat">Faisceaux lumineux</span><span class="feat">Cercle oculaire</span><span class="feat">Grossissement</span></div>
-    <a class="ext-btn" href="https://uel.unisciel.fr/physique/optigeo/optigeo_ch15/co/apprendre_ch15_03.html" target="_blank">▶ Ouvrir — Unisciel Lunette</a>
-  </div>
-  <div class="ext-box">
-    <h2>🔭 Animation Clichatier — Lunette afocale</h2>
-    <p class="ext-note">phyanim.sciences.univ-nantes.fr :</p>
-    <div class="feats"><span class="feat">Rayons interactifs</span><span class="feat">Cercle oculaire</span><span class="feat">f₁' et f₂' réglables</span></div>
-    <a class="ext-btn" href="https://phyanim.sciences.univ-nantes.fr/optiqueGeo/instruments/lunette_astro.php" target="_blank">▶ Ouvrir — Lunette afocale</a>
-  </div>
-  <div class="ext-box">
-    <h2>🔎 Animation Clichatier — Lentille mince</h2>
-    <p class="ext-note">phyanim.sciences.univ-nantes.fr :</p>
-    <div class="feats"><span class="feat">Objet déplaçable</span><span class="feat">3 rayons remarquables</span><span class="feat">Image réelle/virtuelle</span></div>
-    <a class="ext-btn" href="https://phyanim.sciences.univ-nantes.fr/optiqueGeo/lentilles/lentille_mince.php" target="_blank">▶ Ouvrir — Lentille mince</a>
-  </div>
-  <!-- Astronaute adieu -->
-  <div style="position:relative;height:110px;margin-top:10px">
-    <div class="astro-fig" style="bottom:10px;animation-delay:0.3s">
-      <div class="bubble" style="animation-delay:0.3s;font-size:10px">👋 Merci et à bientôt !</div>
-      <svg width="64" height="90" viewBox="0 0 64 90" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="32" cy="82" rx="28" ry="7" fill="#c8c070" opacity="0.5"/>
-        <ellipse cx="32" cy="80" rx="26" ry="6" fill="#ddd080"/>
-        <circle cx="20" cy="78" r="2.5" fill="#bbb060" opacity="0.6"/>
-        <circle cx="38" cy="76" r="1.8" fill="#bbb060" opacity="0.5"/>
-        <rect x="18" y="46" width="28" height="26" rx="8" fill="#e8eef8" stroke="#9aaac8" stroke-width="1.5"/>
-        <circle cx="32" cy="34" r="16" fill="#c8d8f0" stroke="#9aaac8" stroke-width="2"/>
-        <circle cx="32" cy="34" r="12" fill="#1a2a4a" stroke="#7090c0" stroke-width="1.5"/>
-        <ellipse cx="28" cy="29" rx="4" ry="3" fill="rgba(255,255,255,0.3)" transform="rotate(-20,28,29)"/>
-        <circle cx="30" cy="33" r="1.5" fill="#f0c060"/>
-        <circle cx="34" cy="33" r="1.5" fill="#f0c060"/>
-        <path d="M29 37 Q32 40 35 37" stroke="#f0c060" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-        <!-- Bras gauche levé pour saluer -->
-        <rect x="4" y="40" width="11" height="8" rx="4" fill="#d8e4f4" stroke="#9aaac8" stroke-width="1.2" transform="rotate(-60,9,44)"/>
-        <rect x="45" y="50" width="11" height="8" rx="4" fill="#d8e4f4" stroke="#9aaac8" stroke-width="1.2" transform="rotate(10,50,54)"/>
-        <rect x="22" y="69" width="9" height="14" rx="4" fill="#d0d8ec" stroke="#9aaac8" stroke-width="1.2"/>
-        <rect x="33" y="69" width="9" height="14" rx="4" fill="#d0d8ec" stroke="#9aaac8" stroke-width="1.2"/>
-        <ellipse cx="26" cy="83" rx="7" ry="3.5" fill="#334"/>
-        <ellipse cx="37" cy="83" rx="7" ry="3.5" fill="#334"/>
-        <line x1="26" y1="48" x2="26" y2="68" stroke="#9aaac8" stroke-width="1"/>
-        <line x1="38" y1="48" x2="38" y2="68" stroke="#9aaac8" stroke-width="1"/>
-        <rect x="28" y="55" width="8" height="6" rx="2" fill="#aabbdd" stroke="#8899bb" stroke-width="1"/>
-        <line x1="38" y1="19" x2="42" y2="10" stroke="#9aaac8" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="42" cy="9" r="2.5" fill="#f0c060"/>
-      </svg>
-    </div>
-  </div>
-</div>
 
 <!-- ONGLET 7 : Bilan & Ressources -->
 <div class="panel" id="tab-bilan">
@@ -1229,7 +1153,13 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
       <span class="sub-tab-num">📋</span> Bilan
     </button>
     <button class="sub-tab-btn" data-sub="bilan2" onclick="switchSubTabLun(1)">
-      <span class="sub-tab-num">🔗</span> Ressources
+      <span class="sub-tab-num">🎬</span> Vidéos &amp; QCM
+    </button>
+    <button class="sub-tab-btn" data-sub="bilan3" onclick="switchSubTabLun(2)">
+      <span class="sub-tab-num">🔭</span> Sites &amp; simulations
+    </button>
+    <button class="sub-tab-btn" data-sub="bilan4" onclick="switchSubTabLun(3)">
+      <span class="sub-tab-num">🎓</span> Sujets de bac
     </button>
   </nav>
 
@@ -1301,49 +1231,145 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
 
     <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
-      <a href="https://www.youtube.com/watch?v=_WYMU7UQFmQ" target="_blank" rel="noopener" style="text-decoration:none;">
+      <a href="https://www.pearltrees.com/private/id105760446/item807256283?paccess=47d8cde43dc.301dc0db.a85ecb725dd9fd254ced8788c87eba2e" target="_blank" rel="noopener" style="text-decoration:none;">
         <div class="bilan-card" style="cursor:pointer;transition:box-shadow .2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
           <h4 style="color:var(--bleu);">▶ Vidéo — Cours : la lunette astronomique</h4>
           <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Cours n°5 · Partie « Ondes et signaux » · Principe et grossissement</p>
         </div>
       </a>
-      <a href="https://www.youtube.com/watch?v=IBjyS-Lm1HQ" target="_blank" rel="noopener" style="text-decoration:none;">
+      <a href="https://www.pearltrees.com/private/id105760446/item807257073?paccess=47d8cdd7552.301dc3f1.5cc7795210a1789fb37b9af98275e1f2" target="_blank" rel="noopener" style="text-decoration:none;">
         <div class="bilan-card" style="cursor:pointer;transition:box-shadow .2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
           <h4 style="color:var(--bleu);">▶ Vidéo — Lentilles minces &amp; lunette afocale</h4>
           <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Rappels sur les lentilles convergentes et construction de l'image</p>
         </div>
       </a>
-      <a href="https://www.youtube.com/watch?v=FoSe_--sXEk" target="_blank" rel="noopener" style="text-decoration:none;">
+      <a href="https://www.pearltrees.com/private/id105760446/item807257154?paccess=47d8cdf4a0e.301dc442.0caad2c0364408aca8c418be797b533e" target="_blank" rel="noopener" style="text-decoration:none;">
         <div class="bilan-card" style="cursor:pointer;transition:box-shadow .2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
           <h4 style="color:var(--vert);">▶ Vidéo — Méthode : tracer les rayons</h4>
           <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Exercice guidé · Construction à travers une lunette afocale</p>
         </div>
       </a>
+      <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/17_schema_anime.mp4" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow .2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--bleu);">▶ Schéma animé — Lunette astronomique</h4>
+          <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 17</p>
+        </div>
+      </a>
     </div>
 
-    <div class="section-title" style="margin-top:28px;"><span class="icon">🔬</span> Simulations &amp; animations</div>
+    <div class="section-title" style="margin-top:28px;"><span class="icon">📝</span> QCM</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
-      <a href="https://phet.colorado.edu/sims/html/geometric-optics/latest/geometric-optics_fr.html" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div class="bilan-card" style="cursor:pointer;transition:box-shadow .2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
-          <h4 style="color:var(--orange);">🔭 Simulation PhET — Optique géométrique</h4>
-          <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET · Vérifier la position de l'image intermédiaire et le caractère afocal</p>
-        </div>
-      </a>
-      <a href="https://uel.unisciel.fr/physique/optigeo/optigeo_ch15/co/apprendre_ch15_03.html" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div class="bilan-card" style="cursor:pointer;transition:box-shadow .2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
-          <h4 style="color:var(--orange);">🔬 Animation Unisciel — Cercle oculaire &amp; lunette</h4>
-          <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">unisciel.fr · Faisceaux lumineux, cercle oculaire, grossissement</p>
-        </div>
-      </a>
-      <a href="https://phyanim.sciences.univ-nantes.fr/optiqueGeo/instruments/lunette_astro.php" target="_blank" rel="noopener" style="text-decoration:none;">
+      <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/17_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
         <div class="bilan-card" style="cursor:pointer;transition:box-shadow .2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
-          <h4 style="color:var(--vert);">🔭 Animation Phyanim — Lunette afocale</h4>
-          <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">phyanim.sciences.univ-nantes.fr · Rayons interactifs, f₁' et f₂' réglables</p>
+          <h4 style="color:var(--vert);">📝 QCM — Prérequis</h4>
+          <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 17</p>
+        </div>
+      </a>
+      <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_17/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="bilan-card" style="cursor:pointer;transition:box-shadow .2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+          <h4 style="color:var(--vert);">📝 QCM — Maîtrise des notions</h4>
+          <p style="font-size:.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Chapitre 17</p>
         </div>
       </a>
     </div>
 
-    <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
+  </div>
+
+  <!-- Sous-onglet : SITES & SIMULATIONS -->
+  <div class="sub-tab-content" id="sub-bilan-2">
+
+    <div style="background:#f0f8ff;border:2px solid #1a5aaa;border-radius:10px;padding:14px 18px;margin-bottom:16px">
+      <h2 style="font-size:16px;font-weight:700;color:#1a3a6a;margin-bottom:4px">🔭 Simulation PhET — Vérifier la position de l'image intermédiaire</h2>
+      <p style="font-size:12px;color:#334;line-height:1.7;margin-bottom:10px">
+        <b>Capacité expérimentale :</b> vérifier que l'image intermédiaire A₁B₁ se forme bien dans le plan focal image de l'objectif (F₁'), qui coïncide avec le plan focal objet de l'oculaire (F₂).<br>
+        <b>Protocole :</b>
+        <span style="display:block;margin-left:10px;margin-top:4px">
+          ① Placer l'objet <b>à l'infini</b> (déplacer l'objet très loin à gauche).<br>
+          ② Régler la distance focale de la lentille 1 (objectif) : noter f₁'.<br>
+          ③ Observer où se forme l'image — elle doit coïncider avec F₁'.<br>
+          ④ Ajouter une deuxième lentille (oculaire) avec f₂' et vérifier que F₁' ≡ F₂.<br>
+          ⑤ Constater que le rayon émergeant est parallèle à l'axe : <b>système afocal</b>.
+        </span>
+      </p>
+      <div class="feats" style="margin-bottom:10px">
+        <span class="feat">Objet déplaçable</span>
+        <span class="feat">f' réglable</span>
+        <span class="feat">Image réelle / virtuelle</span>
+        <span class="feat">Rayons remarquables</span>
+      </div>
+      <a class="ext-btn" href="https://phet.colorado.edu/sims/html/geometric-optics/latest/geometric-optics_fr.html" target="_blank">▶ Ouvrir la simulation PhET</a>
+      <p style="font-size:11px;color:#667;margin-top:8px">
+        PhET Interactive Simulations — University of Colorado Boulder — licence CC-BY 4.0
+      </p>
+    </div>
+
+    <div class="ext-box">
+      <h2>🔬 Animation Unisciel — Cercle oculaire &amp; Lunette</h2>
+      <p class="ext-note">Cours interactif (unisciel.fr) :</p>
+      <div class="feats"><span class="feat">Faisceaux lumineux</span><span class="feat">Cercle oculaire</span><span class="feat">Grossissement</span></div>
+      <a class="ext-btn" href="https://uel.unisciel.fr/physique/optigeo/optigeo_ch15/co/apprendre_ch15_03.html" target="_blank">▶ Ouvrir — Unisciel Lunette</a>
+    </div>
+    <div class="ext-box">
+      <h2>🔭 Animation Clichatier — Lunette afocale</h2>
+      <p class="ext-note">phyanim.sciences.univ-nantes.fr :</p>
+      <div class="feats"><span class="feat">Rayons interactifs</span><span class="feat">Cercle oculaire</span><span class="feat">f₁' et f₂' réglables</span></div>
+      <a class="ext-btn" href="https://phyanim.sciences.univ-nantes.fr/optiqueGeo/instruments/lunette_astro.php" target="_blank">▶ Ouvrir — Lunette afocale</a>
+    </div>
+    <div class="ext-box">
+      <h2>🔎 Animation Clichatier — Lentille mince</h2>
+      <p class="ext-note">phyanim.sciences.univ-nantes.fr :</p>
+      <div class="feats"><span class="feat">Objet déplaçable</span><span class="feat">3 rayons remarquables</span><span class="feat">Image réelle/virtuelle</span></div>
+      <a class="ext-btn" href="https://phyanim.sciences.univ-nantes.fr/optiqueGeo/lentilles/lentille_mince.php" target="_blank">▶ Ouvrir — Lentille mince</a>
+    </div>
+      <div class="ext-box" style="border-left:4px solid var(--orange);">
+        <h2 style="color:var(--orange);">🏛️ 350 ans de l'Observatoire de Paris</h2>
+      <p class="ext-note">Exposition virtuelle — revivre l'histoire de l'astronomie (obspm.fr) :</p>
+      <div class="feats"><span class="feat">Histoire des sciences</span><span class="feat">Exposition interactive</span></div>
+      <a class="ext-btn" href="http://350ans.obspm.fr/fr/exposition-virtuelle/revivre-notre-histoire" target="_blank" style="background:var(--orange);">▶ Ouvrir — Exposition virtuelle</a>
+    </div>
+    <div class="ext-box" style="border-left:4px solid var(--orange);">
+      <h2 style="color:var(--orange);">🌌 WorldWide Telescope</h2>
+      <p class="ext-note">Explorateur du ciel en ligne (worldwidetelescope.org) :</p>
+      <div class="feats"><span class="feat">Ciel interactif 3D</span><span class="feat">Observation virtuelle</span></div>
+      <a class="ext-btn" href="https://worldwidetelescope.org/webclient/" target="_blank" style="background:var(--orange);">▶ Ouvrir — WorldWide Telescope</a>
+    </div>
+    <!-- Astronaute adieu -->
+    <div style="position:relative;height:110px;margin-top:10px">
+      <div class="astro-fig" style="bottom:10px;animation-delay:0.3s">
+        <div class="bubble" style="animation-delay:0.3s;font-size:10px">👋 Merci et à bientôt !</div>
+        <svg width="64" height="90" viewBox="0 0 64 90" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="32" cy="82" rx="28" ry="7" fill="#c8c070" opacity="0.5"/>
+          <ellipse cx="32" cy="80" rx="26" ry="6" fill="#ddd080"/>
+          <circle cx="20" cy="78" r="2.5" fill="#bbb060" opacity="0.6"/>
+          <circle cx="38" cy="76" r="1.8" fill="#bbb060" opacity="0.5"/>
+          <rect x="18" y="46" width="28" height="26" rx="8" fill="#e8eef8" stroke="#9aaac8" stroke-width="1.5"/>
+          <circle cx="32" cy="34" r="16" fill="#c8d8f0" stroke="#9aaac8" stroke-width="2"/>
+          <circle cx="32" cy="34" r="12" fill="#1a2a4a" stroke="#7090c0" stroke-width="1.5"/>
+          <ellipse cx="28" cy="29" rx="4" ry="3" fill="rgba(255,255,255,0.3)" transform="rotate(-20,28,29)"/>
+          <circle cx="30" cy="33" r="1.5" fill="#f0c060"/>
+          <circle cx="34" cy="33" r="1.5" fill="#f0c060"/>
+          <path d="M29 37 Q32 40 35 37" stroke="#f0c060" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <rect x="4" y="40" width="11" height="8" rx="4" fill="#d8e4f4" stroke="#9aaac8" stroke-width="1.2" transform="rotate(-60,9,44)"/>
+          <rect x="45" y="50" width="11" height="8" rx="4" fill="#d8e4f4" stroke="#9aaac8" stroke-width="1.2" transform="rotate(10,50,54)"/>
+          <rect x="22" y="69" width="9" height="14" rx="4" fill="#d0d8ec" stroke="#9aaac8" stroke-width="1.2"/>
+          <rect x="33" y="69" width="9" height="14" rx="4" fill="#d0d8ec" stroke="#9aaac8" stroke-width="1.2"/>
+          <ellipse cx="26" cy="83" rx="7" ry="3.5" fill="#334"/>
+          <ellipse cx="37" cy="83" rx="7" ry="3.5" fill="#334"/>
+          <line x1="26" y1="48" x2="26" y2="68" stroke="#9aaac8" stroke-width="1"/>
+          <line x1="38" y1="48" x2="38" y2="68" stroke="#9aaac8" stroke-width="1"/>
+          <rect x="28" y="55" width="8" height="6" rx="2" fill="#aabbdd" stroke="#8899bb" stroke-width="1"/>
+          <line x1="38" y1="19" x2="42" y2="10" stroke="#9aaac8" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="42" cy="9" r="2.5" fill="#f0c060"/>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sous-onglet : SUJETS DE BAC -->
+  <div class="sub-tab-content" id="sub-bilan-3">
+
+    <div class="section-title"><span class="icon">🎓</span> Sujets de bac</div>
 
     <div class="bac-card">
       <div class="bac-card-head">
@@ -2747,7 +2773,7 @@ function showTab(id){
   // Arrêter l'audio de l'astronaute et annuler tout son en attente
   if(window._vfAudio){ window._vfAudio.pause(); window._vfAudio.currentTime=0; }
   window._vfPendingSrc = null;
-  const ids=['anim','gross','gros','exo','lun','ref','bilan'];
+  const ids=['anim','gross','gros','exo','lun','bilan'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('on',ids[i]===id));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.getElementById('tab-'+id).classList.add('on');
@@ -2759,7 +2785,7 @@ function showTab(id){
 // ═══ SOUS-ONGLETS BILAN & RESSOURCES ══════════════════════════════════════
 function switchSubTabLun(idx){
   var btns = document.querySelectorAll('#sub-nav-bilan .sub-tab-btn');
-  var contents = [document.getElementById('sub-bilan-0'), document.getElementById('sub-bilan-1')];
+  var contents = [document.getElementById('sub-bilan-0'), document.getElementById('sub-bilan-1'), document.getElementById('sub-bilan-2'), document.getElementById('sub-bilan-3')];
   btns.forEach((b,i)=>b.classList.toggle('active', i===idx));
   contents.forEach((c,i)=>{ if(c) c.classList.toggle('active', i===idx); });
 }
