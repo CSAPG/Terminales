@@ -10,8 +10,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;font-size:14.5px}
 
-.header{background:var(--panel);border:1px solid #E3E8EE;border-bottom:3px solid var(--bleu);border-radius:14px;max-width:1200px;margin:0 auto 24px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(45,95,138,0.10)}
-.header-inner{max-width:1200px;margin:0 auto;padding:18px 24px 0}
+.header{background:var(--panel);border:1px solid #E3E8EE;border-bottom:3px solid var(--bleu);border-radius:14px;max-width:1300px;margin:0 auto 24px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(45,95,138,0.10)}
+.header-inner{max-width:1300px;margin:0 auto;padding:18px 24px 0}
 .header-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
 .header-left{display:flex;flex-direction:column;align-items:flex-start;gap:7px;flex-shrink:0;margin-top:2px}
 .header-badge{display:inline-block;background:var(--bleu);color:#fff;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;white-space:nowrap}
@@ -36,7 +36,7 @@ button.cap-toggle:hover{background:#1e4466}
 .tab.active .tab-num{background:var(--bleu);color:white}
 .tab.active{color:var(--orange);border-bottom-color:var(--orange);background:#FDF0E8;border-radius:6px 6px 0 0}
 
-.page{display:none;padding:28px 24px 60px;max-width:1200px;margin:0 auto;animation:fi .25s ease}
+.page{display:none;padding:28px 24px 60px;max-width:1300px;margin:0 auto;animation:fi .25s ease}
 .page.active{display:block;animation:fi .3s ease}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
@@ -173,6 +173,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 .res-link-card:hover{box-shadow:0 4px 16px rgba(45,95,138,0.18)}
 .res-link-card h4{font-family:'Outfit',sans-serif;font-size:0.92rem;font-weight:700;color:var(--bleu);margin:0}
 .res-link-card p{font-size:0.8rem;color:var(--dim);margin-top:4px}
+.res-link-card.orange{border-left-color:var(--orange)}
+.res-link-card.orange h4{color:var(--orange)}
+.res-link-card.orange:hover{box-shadow:0 4px 16px rgba(232,120,58,0.18)}
+.res-link-card.vert{border-left-color:var(--vert)}
+.res-link-card.vert h4{color:var(--vert)}
+.res-link-card.vert:hover{box-shadow:0 4px 16px rgba(58,138,110,0.18)}
 
 .sub-tabs-nav{display:flex;gap:6px;padding:6px 0 0;margin-bottom:22px;flex-wrap:nowrap;overflow-x:auto}
 .sub-tab-btn{display:flex;align-items:center;gap:8px;padding:8px 18px;border:none;background:#b8cfe0;font-family:'Nunito',sans-serif;font-size:0.84rem;font-weight:700;color:var(--bleu);cursor:pointer;border-radius:999px;transition:all 0.2s;white-space:nowrap}
@@ -1227,15 +1233,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 
   <div class="section-title" style="font-family:'Outfit',sans-serif;font-size:1.18rem;font-weight:800;color:var(--bleu);margin:0 0 14px;display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:2px solid var(--bleu-clair);">🔬 Simulations</div>
   <div class="bilan-grid">
-    <a class="res-link-card" href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/terminale_TS/facteur_cinetique_temperature_flash.htm" target="_blank" rel="noopener">
+    <a class="res-link-card orange" href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/terminale_TS/facteur_cinetique_temperature_flash.htm" target="_blank" rel="noopener">
       <h4>⚗ Facteur cinétique — Température</h4>
       <p>PCCL · Animation (nécessite Flash Player — non fonctionnelle dans les navigateurs actuels)</p>
     </a>
-    <a class="res-link-card" href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/terminale_TS/facteur_cinetique_concentration_flash.htm" target="_blank" rel="noopener">
+    <a class="res-link-card orange" href="https://www.pccl.fr/physique_chimie_college_lycee/lycee/terminale_TS/facteur_cinetique_concentration_flash.htm" target="_blank" rel="noopener">
       <h4>⚗ Facteur cinétique — Concentration</h4>
       <p>PCCL · Animation (nécessite Flash Player — non fonctionnelle dans les navigateurs actuels)</p>
     </a>
-    <a class="res-link-card" href="https://chimie.ostralo.net/avancement/" target="_blank" rel="noopener">
+    <a class="res-link-card orange" href="https://chimie.ostralo.net/avancement/" target="_blank" rel="noopener">
       <h4>⚗ Avancement d'une réaction chimique</h4>
       <p>Ostralo · Simulation interactive pour construire le tableau d'avancement et visualiser l'évolution des quantités de matière</p>
     </a>
@@ -1247,31 +1253,31 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
       <h4>🎬 Schéma animé — Cinétique chimique</h4>
       <p>Hatier Clic · Animation du cours (fichier vidéo mp4)</p>
     </a>
-    <a class="res-link-card" href="https://youtu.be/mJtSODJ0nj8?si=4TDdcP3GblNhX3Oq" target="_blank" rel="noopener">
+    <a class="res-link-card" href="https://www.pearltrees.com/private/id105762240/item807270540?paccess=47d8d1f4dd5.301df88c.484220abd8009da977e36e2604cd7395" target="_blank" rel="noopener">
       <h4>▶ Cinétique chimique — Cours complet</h4>
-      <p>YouTube · Vitesse volumique, temps de demi-réaction, facteurs cinétiques, catalyseurs</p>
+      <p>Paul Olivier · Vitesse volumique, temps de demi-réaction, facteurs cinétiques, catalyseurs</p>
     </a>
-    <a class="res-link-card" href="https://youtu.be/KaGpBpZKB6o?si=J5zgsa5P_nx9b_4v" target="_blank" rel="noopener">
+    <a class="res-link-card" href="https://www.pearltrees.com/private/id105762240/item807270603?paccess=47d8d20c6bb.301df8cb.2b170450e56a5bc8a7808c5bc9e2ad7c" target="_blank" rel="noopener">
       <h4>▶ Loi de vitesse d'ordre 1 ? — Exercice bac</h4>
-      <p>YouTube · Identifier si l'évolution d'une concentration suit une loi d'ordre 1</p>
+      <p>Paul Olivier · Identifier si l'évolution d'une concentration suit une loi d'ordre 1</p>
     </a>
-    <a class="res-link-card" href="https://youtu.be/Jsnwg6SmWC8?si=ldTcrFH6WQpUTgeK" target="_blank" rel="noopener">
+    <a class="res-link-card" href="https://www.pearltrees.com/private/id105762240/item807270696?paccess=47d8d21a57c.301df928.808b21433fbcf00efd36e33ee8eb3b28" target="_blank" rel="noopener">
       <h4>▶ Cours 4 — Cinétique chimique</h4>
-      <p>YouTube · Constitution et transformations de la matière, programme Terminale spé</p>
+      <p>Stella · Constitution et transformations de la matière, programme Terminale spé</p>
     </a>
-    <a class="res-link-card" href="https://youtu.be/55p4A1IGGpA?si=CxWEDG9tjbrnEnvh" target="_blank" rel="noopener">
+    <a class="res-link-card" href="https://www.pearltrees.com/private/id105762240/item807270737?paccess=47d8d226c06.301df951.8e1245ff5d721ed324e5c42e8d1f07f8" target="_blank" rel="noopener">
       <h4>▶ Cours 6 — Cinétique chimique</h4>
-      <p>YouTube · Le temps en chimie</p>
+      <p>Stella · Le temps en chimie</p>
     </a>
   </div>
 
   <div class="section-title" style="font-family:'Outfit',sans-serif;font-size:1.18rem;font-weight:800;color:var(--bleu);margin:26px 0 14px;display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:2px solid var(--bleu-clair);">❓ QCM</div>
   <div class="bilan-grid">
-    <a class="res-link-card" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/04_QCM_prerequis/index.html" target="_blank" rel="noopener">
+    <a class="res-link-card vert" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/04_QCM_prerequis/index.html" target="_blank" rel="noopener">
       <h4>✅ QCM — Prérequis</h4>
       <p>Hatier Clic · Vérifier les acquis avant d'aborder le chapitre</p>
     </a>
-    <a class="res-link-card" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_04/index.html" target="_blank" rel="noopener">
+    <a class="res-link-card vert" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_04/index.html" target="_blank" rel="noopener">
       <h4>✅ QCM — Maîtrise des notions</h4>
       <p>Hatier Clic · Auto-évaluation sur les notions du chapitre</p>
     </a>
