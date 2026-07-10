@@ -612,8 +612,6 @@
     transition: opacity 0.15s ease;
   }
   .pastille-link:hover { opacity: 0.8; }
-  .pastille-sujet { background: var(--bleu-clair); color: #2D5F8A; }
-  .pastille-corrige { background: #d7f0e6; color: #1e6b4d; }
   .bilan-exo-card h3 {
     font-family: 'Outfit', sans-serif;
     font-size: 1.02rem;
@@ -627,7 +625,6 @@
     margin-bottom: 12px;
     line-height: 1.5;
   }
-  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
   .btn-sujet, .btn-correction {
     padding: 8px 16px;
     border: none;
@@ -1912,35 +1909,86 @@
 
   <!-- ───────── R2 : RESSOURCES COMPLÉMENTAIRES ───────── -->
   <div class="sub-tab-content" id="sub-R-1">
-  <div class="section-title"><span class="icon">🔗</span> Ressources complémentaires</div>
 
-  <div class="bilan-grid">
-    <div class="bilan-card">
-      <h4>🎬 Vidéos</h4>
-      <ul class="ke-list">
-        <li><a href="https://www.pearltrees.com/private/id105374371/item804904105?paccess=47d63fad60c.2ff9dca9.5c08fda8c7197d41f9d60aa5fda2bfe1" target="_blank" rel="noopener">Vidéo débat — Comment expliquer la trajectoire du ballon ?</a></li>
-        <li><a href="https://www.pearltrees.com/private/id105374371/item804889774?paccess=47d63fc5875.2ff9a4ae.17bab6d95e520f24da34ecb1aaa783a6" target="_blank" rel="noopener">Cours complet — Mécanique des fluides (Paul Olivier)</a></li>
-        <li><a href="https://www.pearltrees.com/private/id105374371/item804889431?paccess=47d63fcc984.2ff9a357.05fb8ce4941b001bfed4175780d881ff" target="_blank" rel="noopener">Débit volumique (Paul Olivier)</a></li>
-        <li><a href="https://www.pearltrees.com/private/id105374371/item804889589?paccess=47d63fd1d03.2ff9a3f5.7189b24d9796da712811c09e458d3f39" target="_blank" rel="noopener">Effet Venturi (Paul Olivier)</a></li>
-        <li><a href="http://phymain.unisciel.fr/le-tonneau-perce/" target="_blank" rel="noopener">Le tonneau percé (phymain.unisciel.fr)</a></li>
-      </ul>
-    </div>
-    <div class="bilan-card">
-      <h4>🎧 Bilans audio &amp; cours</h4>
-      <ul class="ke-list">
-        <li><a href="https://www.pearltrees.com/private/id105374371/item804895286?paccess=47d63fb463d.2ff9ba36.323568e3bf7a3244a8f714ed3639a46c" target="_blank" rel="noopener">Bilan audio Hatier (fiche de cours)</a></li>
-        <li><a href="https://www.pearltrees.com/private/id105374371/item804895285?paccess=47d63fb967f.2ff9ba35.b9f7447acc7e857c0d1111c551b5d522" target="_blank" rel="noopener">Bilan audio Hachette (fiche de cours)</a></li>
-        <li><a href="https://www.pearltrees.com/private/id105374371/item804894856?paccess=47d6407dd6c.2ff9b888.1f4f3ac8536aebdf718356a3af206823" target="_blank" rel="noopener">Cours 6 — Mécanique des fluides (Stella)</a></li>
-      </ul>
-    </div>
-    <div class="bilan-card">
-      <h4>✅ QCM &amp; simulation</h4>
-      <ul class="ke-list">
-        <li><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/14_QCM_prerequis/index.html" target="_blank" rel="noopener">QCM prérequis (Hatier)</a></li>
-        <li><a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_14/index.html" target="_blank" rel="noopener">QCM de maîtrise des notions (Hatier)</a></li>
-        <li><a href="https://phet.colorado.edu/fr/simulation/legacy/fluid-pressure-and-flow" target="_blank" rel="noopener">Simulation PhET — Pression et écoulement des fluides</a></li>
-      </ul>
-    </div>
+  <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <a href="https://www.pearltrees.com/private/id105374371/item804904105?paccess=47d63fad60c.2ff9dca9.5c08fda8c7197d41f9d60aa5fda2bfe1" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Vidéo débat — Comment expliquer la trajectoire du ballon ?</h4>
+      </div>
+    </a>
+    <a href="https://www.pearltrees.com/private/id105374371/item804889774?paccess=47d63fc5875.2ff9a4ae.17bab6d95e520f24da34ecb1aaa783a6" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Cours complet — Mécanique des fluides</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Paul Olivier</p>
+      </div>
+    </a>
+    <a href="https://www.pearltrees.com/private/id105374371/item804889431?paccess=47d63fcc984.2ff9a357.05fb8ce4941b001bfed4175780d881ff" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Débit volumique</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Paul Olivier</p>
+      </div>
+    </a>
+    <a href="https://www.pearltrees.com/private/id105374371/item804889589?paccess=47d63fd1d03.2ff9a3f5.7189b24d9796da712811c09e458d3f39" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Effet Venturi</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Paul Olivier</p>
+      </div>
+    </a>
+    <a href="http://phymain.unisciel.fr/le-tonneau-perce/" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--bleu);">▶ Le tonneau percé</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">phymain.unisciel.fr</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🎧</span> Bilans audio &amp; cours</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <a href="https://www.pearltrees.com/private/id105374371/item804895286?paccess=47d63fb463d.2ff9ba36.323568e3bf7a3244a8f714ed3639a46c" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--violet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(123,79,166,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--violet);">🎧 Bilan audio — Fiche de cours</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier</p>
+      </div>
+    </a>
+    <a href="https://www.pearltrees.com/private/id105374371/item804895285?paccess=47d63fb967f.2ff9ba35.b9f7447acc7e857c0d1111c551b5d522" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--violet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(123,79,166,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--violet);">🎧 Bilan audio — Fiche de cours</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hachette</p>
+      </div>
+    </a>
+    <a href="https://www.pearltrees.com/private/id105374371/item804894856?paccess=47d6407dd6c.2ff9b888.1f4f3ac8536aebdf718356a3af206823" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--violet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(123,79,166,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--violet);">🎧 Cours 6 — Mécanique des fluides</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Stella</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">📝</span> QCM</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/14_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM — Prérequis</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+      </div>
+    </a>
+    <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_14/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--vert);">📝 QCM — Maîtrise des notions</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="section-title" style="margin-top:28px;"><span class="icon">🔬</span> Simulation</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+    <a href="https://phet.colorado.edu/fr/simulation/legacy/fluid-pressure-and-flow" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
+        <h4 style="color:var(--orange);">🔬 Simulation — Pression et écoulement des fluides</h4>
+        <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET Colorado</p>
+      </div>
+    </a>
   </div>
 
   <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
