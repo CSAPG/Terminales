@@ -1096,7 +1096,7 @@ body {
 
       <div class="enigme-box">
         <h3>🔍 Situation</h3>
-        <p>En fouillant le bureau du responsable technique, vous trouvez un relevé de mesures sur le bassin. Le système de traitement est verrouillé par un <strong>code à 2 chiffres égal au pH de la solution C exprimé à 2 chiffres significatifs, sans virgule</strong>. Résolvez les questions pour le trouver.</p>
+        <p>En fouillant le bureau du responsable technique, vous trouvez un relevé de mesures sur le bassin. Le système de traitement est verrouillé par un <strong>code égal au pH de la solution C exprimé à 2 chiffres significatifs, avec la virgule</strong>. Résolvez les questions pour le trouver.</p>
       </div>
 
       <div class="info-box">
@@ -1202,7 +1202,7 @@ On connaît [HO⁻]. Utilisez Kₑ = [H₃O⁺]·[HO⁻]/(C°)² = 10⁻¹⁴ po
 <div class="correction-inline" id="nc-p1-q3">
           <div class="calc-step">K<sub>e</sub> = [H₃O⁺]·[HO⁻]/(C°)² → [H₃O⁺] = 10⁻¹⁴ / (4,0 × 10⁻⁷) = 2,5 × 10⁻⁸ mol·L⁻¹</div>
           <div class="calc-step">pH = –log(2,5 × 10⁻⁸) = 8 – log(2,5) = 8 – 0,40 = <strong>7,60</strong></div>
-          À 2 chiffres significatifs : pH = <strong>7,6</strong> → le code est <strong>76</strong>
+          À 2 chiffres significatifs : pH = <strong>7,6</strong> → le code est <strong>7,6</strong>
         </div>
       </div>
 
@@ -1505,12 +1505,12 @@ Valeur tabulée : <strong>d = 1,19</strong> pour l'acide chlorhydrique commercia
       </div>
 
       <div class="question-block">
-        <div class="question-label">Q2 — Calculez le pourcentage massique w(HCl) avec la formule approximative (en %).</div>
+        <div class="question-label">Q2 — Relevez le pourcentage massique w(HCl) pour cet acide (en %).</div>
         <div class="dq-row">
           <label style="font-size:0.88rem;font-weight:600;">w =</label>
           <input type="number" step="0.1" class="num-input" id="p3-q2" placeholder="…">
           <span class="num-unit">%</span>
-          <button class="btn-verif" onclick="verifNum('p3-q2', 32.5, 0.5, 'fb-p3-q2', 'nc-p3-q2')">Vérifier</button>
+          <button class="btn-verif" onclick="verifNum('p3-q2', 36.0, 0.5, 'fb-p3-q2', 'nc-p3-q2')">Vérifier</button>
           <button class="btn-indice" id="btn-indice-p3-q2" onclick="demanderIndice('p3-q2')" disabled>💡 Indice</button>
           <button class="btn-reset" onclick="resetNum('p3-q2','fb-p3-q2','nc-p3-q2')">Recommencer</button>
         </div>
@@ -1531,7 +1531,7 @@ Cela signifie : 36,0 g de HCl pour 100 g de solution.
 </div>
 </div>
 <div class="correction-inline" id="nc-p3-q2">
-          <div class="calc-step">w = 38 × 0,54 + 12 = 20,52 + 12 = <strong>32,5 %</strong></div>
+          <div class="calc-step">Valeur tabulée (donnée constructeur) pour HCl à 38°Bé : <strong>w = 36,0 %</strong></div>
         </div>
       </div>
 
@@ -1596,7 +1596,7 @@ V_i = (0,100 × 500) / 11,7 = 50 / 11,7 ≈ <strong>4,3 mL</strong>.
 </div>
 <div class="correction-inline" id="nc-p3-q4">
           <div class="calc-step">V_i = (0,100 × 500) / 11,7 = 50 / 11,7 ≈ <strong>4,3 mL</strong></div>
-          <div class="calc-step">Protocole : verser 4,7 mL d'acide commercial dans une fiole jaugée de 500 mL contenant déjà environ 300 mL d'eau distillée, puis compléter à 500 mL.</div>
+          <div class="calc-step">Protocole : verser 4,3 mL d'acide commercial dans une fiole jaugée de 500 mL contenant déjà environ 300 mL d'eau distillée, puis compléter à 500 mL.</div>
         </div>
       </div>
 
@@ -1977,7 +1977,7 @@ pH (7,2) < pKa (7,5) → <strong>HClO (forme acide) prédomine</strong> dans le 
           <label style="font-size:0.88rem;font-weight:600;">x ≈ √(Ka·C) =</label>
           <input type="number" step="0.00001" class="num-input" id="p5-q2" placeholder="…" style="width:160px;">
           <span class="num-unit">mol·L⁻¹</span>
-          <button class="btn-verif" onclick="verifNum('p5-q2', 0.0000566, 0.000005, 'fb-p5-q2', 'nc-p5-q2')">Vérifier</button>
+          <button class="btn-verif" onclick="verifNum('p5-q2', 0.0000179, 0.000002, 'fb-p5-q2', 'nc-p5-q2')">Vérifier</button>
           <button class="btn-indice" id="btn-indice-p5-q2" onclick="demanderIndice('p5-q2')" disabled>💡 Indice</button>
           <button class="btn-reset" onclick="resetNum('p5-q2','fb-p5-q2','nc-p5-q2')">Recommencer</button>
         </div>

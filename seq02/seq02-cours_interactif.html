@@ -1400,10 +1400,10 @@ updateSimAvancement();
         <select id="pred-couple" class="dq-select" onchange="drawPreddom()" style="min-width:230px;">
           <option value="4.75">CH₃CO₂H / CH₃CO₂⁻ (pKa = 4,75)</option>
           <option value="9.25">NH₄⁺ / NH₃ (pKa = 9,25)</option>
-          <option value="3.75">HF / F⁻ (pKa = 3,75)</option>
+          <option value="3.2">HF / F⁻ (pKa = 3,2)</option>
           <option value="6.35">H₂CO₃ / HCO₃⁻ (pKa = 6,35)</option>
           <option value="10.33">HCO₃⁻ / CO₃²⁻ (pKa = 10,33)</option>
-          <option value="3.17">HCO₂H / HCO₂⁻ (pKa = 3,17)</option>
+          <option value="3.75">HCO₂H / HCO₂⁻ (pKa = 3,75)</option>
         </select>
       </div>
       <div>
@@ -1607,7 +1607,7 @@ updateSimAvancement();
             <option value="acide_fort">Acide fort (HCl, HNO₃…)</option>
             <option value="base_forte">Base forte (NaOH, KOH…)</option>
             <option value="acide_faible_4.75">Acide faible – CH₃CO₂H (pKa 4,75)</option>
-            <option value="acide_faible_3.17">Acide faible – HCO₂H (pKa 3,17)</option>
+            <option value="acide_faible_3.75">Acide faible – HCO₂H (pKa 3,75)</option>
             <option value="acide_faible_9.25">Acide faible – NH₄⁺ (pKa 9,25)</option>
           </select>
         </div>
@@ -1782,7 +1782,7 @@ updateSimAvancement();
           <div class="qcm-feedback" id="fb-tamp1"></div>
         </div>
         <div class="qcm-item">
-          <span class="substance">Une solution tampon est déstabilisée par une dilution importante.</span>
+          <span class="substance">Une solution tampon est déstabilisée par une dilution modérée.</span>
           <div class="qcm-choices">
             <button class="qcm-btn" onclick="repondreQCM('tamp2','Faux','Vrai','Faux. Le pH d\'un tampon varie très peu lors d\'une dilution modérée.','fb-tamp2')">Vrai</button>
             <button class="qcm-btn" onclick="repondreQCM('tamp2','Faux','Faux','Correct ! Le pH varie très peu lors d\'une dilution modérée.','fb-tamp2')">Faux</button>
@@ -2379,19 +2379,19 @@ function toggleAccord(btn) {
 function repondreQCM(id, bonne, choix, explication, fbId) {
   const fb = document.getElementById(fbId);
   const btns = fb.closest('.qcm-item').querySelectorAll('.qcm-btn');
-  btns.forEach(b => b.disabled = true);
+  btns.forEach(b => b.classList.remove('correct','wrong'));
   if (choix === bonne) {
-    fb.textContent = '✓ ' + explication;
-    fb.className = 'qcm-feedback';
+    // Bonne réponse : on verrouille et on propose de recommencer
+    btns.forEach(b => { b.disabled = true; });
     btns.forEach(b => { if (b.textContent.trim().replace(/\s+/g,'') === choix.replace(/\s+/g,'')) b.classList.add('correct'); });
+    fb.innerHTML = '✓ ' + explication +
+      ' <button type="button" class="btn-reset" style="margin-left:10px;padding:3px 12px;font-size:0.78rem;" onclick="resetQCM(\'' + fbId + '\')">↺ Recommencer</button>';
+    fb.className = 'qcm-feedback';
   } else {
+    // Mauvaise réponse : on NE verrouille PAS — l'élève peut cliquer un autre choix
+    btns.forEach(b => { if (b.textContent.trim().replace(/\s+/g,'') === choix.replace(/\s+/g,'')) b.classList.add('wrong'); });
     fb.textContent = '✗ ' + explication;
     fb.className = 'qcm-feedback wrong';
-    btns.forEach(b => {
-      const t = b.textContent.trim().replace(/\s+/g,'');
-      if (t === choix.replace(/\s+/g,'')) b.classList.add('wrong');
-      if (t === bonne.replace(/\s+/g,'')) b.classList.add('correct');
-    });
   }
 }
 
@@ -2438,8 +2438,8 @@ function corrigerSelect(selId, bonneValeur, fbId, ncId) {
 function resetQCM(fbId) {
   const fb = document.getElementById(fbId);
   if (!fb) return;
-  const btns = fb.closest('.question-block').querySelectorAll('.qcm-btn');
-  btns.forEach(b => { b.disabled = false; b.className = 'qcm-btn'; });
+  const btns = fb.closest('.qcm-item').querySelectorAll('.qcm-btn');
+  btns.forEach(b => { b.disabled = false; b.classList.remove('correct','wrong'); });
   fb.textContent = ''; fb.className = 'qcm-feedback';
 }
 
