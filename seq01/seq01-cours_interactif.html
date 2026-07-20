@@ -4001,19 +4001,29 @@ function toggleAccord(btn) {
 function repondreQCM(id, bonne, choix, explication, fbId) {
   const fb = document.getElementById(fbId);
   const btns = fb.parentElement.parentElement.querySelectorAll('.qcm-btn');
-  btns.forEach(b => b.disabled = true);
+  btns.forEach(b => b.classList.remove('correct', 'wrong'));
   if (choix === bonne) {
-    fb.textContent = '✓ ' + explication;
-    fb.className = 'qcm-feedback';
+    // Bonne réponse : on verrouille et on propose de recommencer
+    btns.forEach(b => { b.disabled = true; });
     btns.forEach(b => { if (b.textContent.trim() === choix) b.classList.add('correct'); });
+    fb.innerHTML = '✓ ' + explication +
+      ' <button type="button" class="btn-reset" style="margin-left:10px;padding:3px 12px;font-size:0.78rem;" onclick="resetQCM(\'' + fbId + '\')">↺ Recommencer</button>';
+    fb.className = 'qcm-feedback';
   } else {
+    // Mauvaise réponse : on NE verrouille PAS — l'élève peut cliquer un autre choix
+    btns.forEach(b => { if (b.textContent.trim() === choix) b.classList.add('wrong'); });
     fb.textContent = '✗ ' + explication;
     fb.className = 'qcm-feedback wrong';
-    btns.forEach(b => {
-      if (b.textContent.trim() === choix) b.classList.add('wrong');
-      if (b.textContent.trim() === bonne) b.classList.add('correct');
-    });
   }
+}
+
+function resetQCM(fbId) {
+  const fb = document.getElementById(fbId);
+  if (!fb) return;
+  const btns = fb.parentElement.parentElement.querySelectorAll('.qcm-btn');
+  btns.forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+  fb.textContent = '';
+  fb.className = 'qcm-feedback';
 }
 
 // ──────────────────────────────────────────────────────
