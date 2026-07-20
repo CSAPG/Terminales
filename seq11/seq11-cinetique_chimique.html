@@ -629,7 +629,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
             </div>
             <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:1px solid var(--border);background:#fff">
               <div style="padding:6px 10px;color:var(--dim)">t = 0</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--rouge)">0,1000</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--rouge)">0,5000</div>
               <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--orange)">0,0500</div>
               <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--bleu)">0</div>
             </div>
@@ -641,7 +641,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
             </div>
             <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:2px solid var(--bleu);background:#E8F1F8">
               <div style="padding:6px 10px;color:var(--bleu);font-weight:700" id="x-t-label">t = 0 min</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--rouge);font-weight:700" id="x-cI">0,1000</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--rouge);font-weight:700" id="x-cI">0,5000</div>
               <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--orange);font-weight:700" id="x-cS">0,0500</div>
               <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--bleu);font-weight:700" id="x-cI2">0</div>
             </div>
@@ -776,7 +776,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
             <div class="field" style="min-width:110px">
               <label style="font-size:.62rem;color:var(--dim2)">[I⁻]₀ (mol/L)</label>
-              <input type="number" id="st-I" value="0.100" min="0.001" max="2" step="0.001" style="background:#fff;border:1px solid var(--border);color:var(--text);font-family:'Nunito',sans-serif;font-size:.72rem;padding:6px 8px;border-radius:5px;width:100%" oninput="updStoech()">
+              <input type="number" id="st-I" value="0.500" min="0.001" max="2" step="0.001" style="background:#fff;border:1px solid var(--border);color:var(--text);font-family:'Nunito',sans-serif;font-size:.72rem;padding:6px 8px;border-radius:5px;width:100%" oninput="updStoech()">
             </div>
             <div class="field" style="min-width:110px">
               <label style="font-size:.62rem;color:var(--dim2)">[S₂O₈²⁻]₀ (mol/L)</label>
@@ -1778,11 +1778,11 @@ function togCat(){
 // ─────────────────────────────────────────────
 // PAGE 3 — SUIVI TEMPOREL
 // Réaction : 2 I⁻ + S₂O₈²⁻ → I₂ + 2 SO₄²⁻
-// [I⁻]₀ = 0,100 mol/L · [S₂O₈²⁻]₀ = 0,050 mol/L
-// Pseudo-ordre 1 en S₂O₈²⁻ (I⁻ en excès)
+// [I⁻]₀ = 0,500 mol/L · [S₂O₈²⁻]₀ = 0,050 mol/L
+// Pseudo-ordre 1 en S₂O₈²⁻ (I⁻ en excès, ratio [I⁻]₀/(2×[S₂O₈²⁻]₀) = 5)
 // k_obs = 0,0327 min⁻¹  — données fichiers Python
 // ─────────────────────────────────────────────
-const SV_I0   = 0.100;   // [I⁻]₀  mol/L
+const SV_I0   = 0.500;   // [I⁻]₀  mol/L (en excès : 5x la quantité stœchiométrique)
 const SV_S0   = 0.050;   // [S₂O₈²⁻]₀  mol/L
 const SV_K    = 0.0327;  // min⁻¹
 const SV_TM   = 100;     // min affiché
