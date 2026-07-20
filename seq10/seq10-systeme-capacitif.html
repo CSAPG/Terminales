@@ -1525,7 +1525,7 @@
               Pendant le régime <b style="color:var(--transitoire)">transitoire</b>,
               comment évolue U<sub>C</sub>(t) ?
             </div>
-<select class="rq-select" data-qi="0" onchange="onRegimeSelect(0)">
+<select class="rq-select" data-qi="0" data-set="r" onchange="onRegimeSelect(0)">
 <option value="">— choisir —</option>
 <option value="a">U<sub>C</sub> = E (constante)</option>
 <option value="b">U<sub>C</sub>(t) = E(1 − e<sup>−t/τ</sup>) (croissante)</option>
@@ -1541,7 +1541,7 @@
               En régime <b style="color:var(--permanent)">permanent</b> (t ≫ 5τ),
               quelle est la valeur de U<sub>C</sub> ?
             </div>
-<select class="rq-select" data-qi="1" onchange="onRegimeSelect(1)">
+<select class="rq-select" data-qi="1" data-set="r" onchange="onRegimeSelect(1)">
 <option value="">— choisir —</option>
 <option value="a">U<sub>C</sub> = 0</option>
 <option value="b">U<sub>C</sub> = E/2</option>
@@ -1557,7 +1557,7 @@
               Pendant le régime <b style="color:var(--transitoire)">transitoire</b>,
               quelle est l'expression de l'intensité i(t) ?
             </div>
-<select class="rq-select" data-qi="2" onchange="onRegimeSelect(2)">
+<select class="rq-select" data-qi="2" data-set="r" onchange="onRegimeSelect(2)">
 <option value="">— choisir —</option>
 <option value="a">i(t) = 0</option>
 <option value="b">i(t) = E/R (constante)</option>
@@ -1573,7 +1573,7 @@
               En régime <b style="color:var(--permanent)">permanent</b>,
               comment se comporte le condensateur dans le circuit ?
             </div>
-<select class="rq-select" data-qi="3" onchange="onRegimeSelect(3)">
+<select class="rq-select" data-qi="3" data-set="r" onchange="onRegimeSelect(3)">
 <option value="">— choisir —</option>
 <option value="a">Comme un court-circuit (i maximum)</option>
 <option value="b">Comme un circuit ouvert (i = 0)</option>
@@ -1589,7 +1589,7 @@
               À partir de quel instant considère-t-on
               que le régime <b style="color:var(--permanent)">permanent</b> est atteint ?
             </div>
-<select class="rq-select" data-qi="4" onchange="onRegimeSelect(4)">
+<select class="rq-select" data-qi="4" data-set="r" onchange="onRegimeSelect(4)">
 <option value="">— choisir —</option>
 <option value="a">t = τ</option>
 <option value="b">t = 2τ</option>
@@ -2729,7 +2729,7 @@ const REGIME_QA = [
 
 function onRegimeSelect(qi) {
   // Feedback immédiat question par question
-  const sel = document.querySelector('.rq-select[data-qi="'+qi+'"]');
+  const sel = document.querySelector('.rq-select[data-set="r"][data-qi="'+qi+'"]');
   const fb  = document.getElementById('rf-'+qi);
   if (!sel || !fb || sel.value === '') return;
   const qa = REGIME_QA[qi];
@@ -2742,7 +2742,7 @@ function onRegimeSelect(qi) {
 function checkRegimeQuestions() {
   let correct = 0, answered = 0;
   REGIME_QA.forEach((qa, qi) => {
-    const sel = document.querySelector('.rq-select[data-qi="'+qi+'"]');
+    const sel = document.querySelector('.rq-select[data-set="r"][data-qi="'+qi+'"]');
     const fb  = document.getElementById('rf-'+qi);
     if (!sel || !fb) return;
     if (sel.value === '') {
@@ -2771,7 +2771,7 @@ function checkRegimeQuestions() {
 
 function resetRegimeQuestions() {
   REGIME_QA.forEach((_, qi) => {
-    const sel = document.querySelector('.rq-select[data-qi="'+qi+'"]');
+    const sel = document.querySelector('.rq-select[data-set="r"][data-qi="'+qi+'"]');
     const fb  = document.getElementById('rf-'+qi);
     if (sel) { sel.value = ''; sel.className = 'rq-select'; sel.style.borderColor = ''; }
     if (fb)  { fb.textContent = ''; fb.className = 'rq-feedback'; }
