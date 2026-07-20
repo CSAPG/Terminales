@@ -872,12 +872,12 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
         <tr style="background:#d8f0d8">
           <td style="padding:4px 9px;border:1px solid #5aaa5a"><span class="ol">O&#8322;A'</span> (cercle oculaire)</td>
           <td style="padding:4px 9px;border:1px solid #5aaa5a">1/<span class="ol">O&#8322;A'</span> = 1/f&#8322;' + 1/<span class="ol">O&#8322;A</span></td>
-          <td style="padding:4px 9px;border:1px solid #5aaa5a;font-weight:700;color:#1a5a1a">+79 mm</td>
+          <td style="padding:4px 9px;border:1px solid #5aaa5a;font-weight:700;color:#1a5a1a">+85 mm</td>
         </tr>
         <tr>
           <td style="padding:4px 9px;border:1px solid #5aaa5a">d (Thal&#232;s)</td>
           <td style="padding:4px 9px;border:1px solid #5aaa5a">d = D &times; |<span class="ol">O&#8322;A'</span>| / |<span class="ol">O&#8322;A</span>|</td>
-          <td style="padding:4px 9px;border:1px solid #5aaa5a;font-weight:700;color:#1a5a1a">17,2 mm</td>
+          <td style="padding:4px 9px;border:1px solid #5aaa5a;font-weight:700;color:#1a5a1a">18,5 mm</td>
         </tr>
         <tr style="background:#d8f0d8">
           <td style="padding:4px 9px;border:1px solid #5aaa5a">d (formule directe)</td>
@@ -2912,11 +2912,11 @@ function switchSubTabLun(idx){
         },
         {
           label: "Question 3 — Position du cercle oculaire",
-          enonce: "Le cercle oculaire se forme &#224; une distance d&#233;finie apr&#232;s l'oculaire. En utilisant la relation de conjugaison pour l'oculaire (objet en F&#8322;, soit &#257; distance f&#8322;' de L&#8322;), quelle est la distance oculaire-cercle oculaire ?",
+          enonce: "Le cercle oculaire se forme &#224; une distance d&#233;finie apr&#232;s l'oculaire. L'objectif L&#8321; (l'objet pour l'oculaire) se trouve &#224; une distance L = f&#8321;' + f&#8322;' de L&#8322;, tr&#232;s grande devant f&#8322;'. En utilisant la relation de conjugaison pour l'oculaire, &#224; quelle distance approximative de L&#8322; se forme le cercle oculaire ?",
           type:"qcm",
           choices:["&#224; l'infini","&#224; f&#8322;' = 25 mm de L&#8322;","&#224; f&#8321;' = 660 mm de L&#8322;","Au niveau de L&#8322;"],
-          val:0,
-          formule:"L'objet (objectif) est &#224; l'infini pour l'oculaire : son image (cercle oculaire) se forme au foyer image de l'oculaire, soit <b>&#224; l'infini</b>. En pratique on parle de la distance oculaire (&laquo;&thinsp;eye relief&thinsp;&raquo;, ici ~15-20 mm selon la conception)."
+          val:1,
+          formule:"L'objet (l'objectif L&#8321;) est &#224; une distance finie L = f&#8321;'+f&#8322;' = 685 mm de l'oculaire, pas &#224; l'infini. Comme L &#8811; f&#8322;', la relation de conjugaison ram&#232;ne l'image (cercle oculaire) au <b>voisinage du foyer image de l'oculaire, soit environ &#224; f&#8322;' = 25 mm de L&#8322;</b> (c'est le principe du d&#233;gagement oculaire, ou &laquo;&thinsp;eye relief&thinsp;&raquo;)."
         },
         {
           label: "Question 4 — Observation confortable",
@@ -3184,8 +3184,8 @@ function switchSubTabLun(idx){
   var D    = 60;
   var f1   = 210;
   var inv  = 1/f2 + 1/O2A;          // 1/O2A'
-  var O2Ap = Math.round(1/inv);      // ≈ 79 mm
-  var dThales = Math.round(D * Math.abs(O2Ap) / Math.abs(O2A) * 10)/10;  // ≈ 17.2
+  var O2Ap = Math.round(1/inv);      // ≈ 85 mm
+  var dThales = Math.round(D * Math.abs(O2Ap) / Math.abs(O2A) * 10)/10;  // ≈ 18.5
   var dDirect = Math.round(D * f2 / f1 * 10)/10;                          // ≈ 18.6
 
   var cqDone = 0;
