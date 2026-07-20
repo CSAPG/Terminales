@@ -33,7 +33,7 @@
 
   body {
     font-family: 'Nunito', sans-serif;
-    background: #DDE6F0;
+    background: #F0F4F8;
     color: var(--texte);
     min-height: 100vh;
   }
@@ -44,7 +44,7 @@
     border: 1px solid #E3E8EE;
     border-bottom: 3px solid var(--bleu);
     border-radius: 14px;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto 24px;
     position: sticky;
     top: 0;
@@ -145,12 +145,12 @@
   .tab-btn {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 8px 13px 10px;
+    gap: 8px;
+    padding: 10px 20px 12px;
     border: none;
     background: transparent;
     font-family: 'Nunito', sans-serif;
-    font-size: 0.80rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--texte-leger);
     cursor: pointer;
@@ -171,7 +171,7 @@
     border-radius: 6px 6px 0 0;
   }
   .tab-num {
-    width: 20px; height: 20px;
+    width: 22px; height: 22px;
     border-radius: 50%;
     background: var(--gris-bord);
     color: var(--texte-leger);
@@ -228,7 +228,7 @@
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
   /* ── CONTENU ── */
-  .main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 28px 32px 60px; }
+  .main { max-width: 1300px; margin: 0 auto; padding: 28px 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -616,8 +616,7 @@
     margin-bottom: 12px;
     line-height: 1.5;
   }
-  .bilan-links { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn-sujet, .btn-correction {
+  .btn-correction {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
@@ -631,9 +630,8 @@
     gap: 6px;
     transition: filter 0.15s;
   }
-  .btn-sujet { background: var(--bleu); color: white; }
   .btn-correction { background: var(--vert); color: white; }
-  .btn-sujet:hover, .btn-correction:hover { filter: brightness(0.9); }
+  .btn-correction:hover { filter: brightness(0.9); }
   .btn-corriger {
     padding: 7px 16px;
     background: var(--vert);
@@ -1132,44 +1130,7 @@
     flex-shrink: 0;
   }
 
-  /* ── PASTILLES CLIQUABLES (ressources externes) — style canonique séq07 ── */
-  .pastille {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 18px;
-    border-radius: 999px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.84rem;
-    font-weight: 700;
-    text-decoration: none;
-    color: white;
-    white-space: nowrap;
-    transition: filter 0.15s, transform 0.12s;
-  }
-  .pastille:hover { filter: brightness(0.90); transform: translateY(-1px); }
-  .pastille-qcm   { background: #BFDCF0; color: var(--bleu); }
-  .pastille-video { background: #DECBF0; color: var(--violet); }
-  .pastille-simu  { background: var(--vert); }
-  .pastille-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
-  .pastille-row .pastille-source { font-size: 0.82rem; color: var(--texte-leger); }
-  .pastille-list { display: flex; flex-direction: column; gap: 12px; }
-  .pastille-list-2col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 16px;
-  }
-  .pastille-list-2col .pastille-row { margin-top: 0; }
-  @media (max-width: 560px) {
-    .pastille-list-2col { grid-template-columns: 1fr; }
-  }
-
+  /* ── PASTILLES CLIQUABLES : voir .pastille-sujet / .pastille-corrige plus haut ── */
   @media (max-width: 600px) {
     .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
@@ -2583,12 +2544,12 @@ print("ecart relatif =", round(ecart_relatif, 1), "%")</textarea>
         <label>T<sub>serre</sub> =</label>
         <input type="text" class="num-input" id="b3-ex3">
         <span class="num-unit">K</span>
-        <button class="btn-verif" onclick="checkNum('b3-ex3', 310, 3)">Vérifier</button>
+        <button class="btn-verif" onclick="checkNum('b3-ex3', 305, 3)">Vérifier</button>
       </div>
       <div class="num-feedback" id="b3-ex3-fb"></div>
       <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
       <div class="correction">
-        <div class="calc-step">φ<sub>ext</sub> = σ×T<sub>serre</sub>⁴ ⟹ T<sub>serre</sub> = (φ<sub>ext</sub>/σ)<sup>1/4</sup> = (492 / 5,67×10⁻⁸)<sup>1/4</sup> ≈ 310 K (≈ 37 °C)</div>
+        <div class="calc-step">φ<sub>ext</sub> = σ×T<sub>serre</sub>⁴ ⟹ T<sub>serre</sub> = (φ<sub>ext</sub>/σ)<sup>1/4</sup> = (492 / 5,67×10⁻⁸)<sup>1/4</sup> ≈ 305 K (≈ 32 °C)</div>
         <div class="calc-step">Le véritable phénomène responsable de l'échauffement sous la serre est donc la <strong>suppression de la convection</strong>, et non l'effet de serre radiatif au sens atmosphérique.</div>
       </div>
     </div>
@@ -3867,6 +3828,30 @@ function resetRth() {
   window.resetNewtonAnim = function() { t = 0; draw(); };
   requestAnimationFrame(loop);
 })();
+
+/* ════════ QCM — BOUTON "RECOMMENCER" AJOUTÉ AUTOMATIQUEMENT À CHAQUE BLOC qcm-grid ════════ */
+document.querySelectorAll('.qcm-grid').forEach(function(grid) {
+  if (!grid.querySelector('.qcm-btn')) return;
+  var wrap = document.createElement('div');
+  wrap.style.textAlign = 'center';
+  wrap.style.margin = '4px 0 14px';
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn-reset';
+  btn.textContent = '⟲ Recommencer ce QCM';
+  btn.onclick = function() {
+    grid.querySelectorAll('.qcm-btn').forEach(function(b) {
+      b.disabled = false;
+      b.classList.remove('correct', 'wrong');
+    });
+    grid.querySelectorAll('.qcm-feedback').forEach(function(fb) {
+      fb.textContent = '';
+      fb.className = 'qcm-feedback';
+    });
+  };
+  wrap.appendChild(btn);
+  grid.insertAdjacentElement('afterend', wrap);
+});
 </script>
 
 </body>
