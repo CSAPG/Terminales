@@ -863,6 +863,7 @@
       <div class="qcm-opt" onclick="selectOpt(1,this,'wrong')"><span class="qcm-letter">D</span> M = 34 g·mol⁻¹</div>
     </div>
     <button class="btn-valider" id="btn-1" onclick="validerQcm(1)" disabled>Valider</button>
+    <button class="btn-reset-small" onclick="resetQcm(1)" style="margin-left:8px;">↺ Recommencer</button>
     <div class="explication-box" id="exp-1">
       <strong>✅ Bonne réponse : C — M(H₂SO₄) = 98 g·mol⁻¹</strong>
       <div class="calc-step">M = 2 × M(H) + M(S) + 4 × M(O)</div>
@@ -885,6 +886,7 @@
       <div class="qcm-opt" onclick="selectOpt(2,this,'wrong')"><span class="qcm-letter">D</span> n = 0,200 mol</div>
     </div>
     <button class="btn-valider" id="btn-2" onclick="validerQcm(2)" disabled>Valider</button>
+    <button class="btn-reset-small" onclick="resetQcm(2)" style="margin-left:8px;">↺ Recommencer</button>
     <div class="explication-box" id="exp-2">
       <strong>✅ Bonne réponse : B — n = 0,100 mol</strong>
       <div class="calc-step">M(NaCl) = 23 + 35,5 = 58,5 g·mol⁻¹</div>
@@ -907,6 +909,7 @@
       <div class="qcm-opt" onclick="selectOpt(3,this,'wrong')"><span class="qcm-letter">D</span> c = 8,00 mol·L⁻¹</div>
     </div>
     <button class="btn-valider" id="btn-3" onclick="validerQcm(3)" disabled>Valider</button>
+    <button class="btn-reset-small" onclick="resetQcm(3)" style="margin-left:8px;">↺ Recommencer</button>
     <div class="explication-box" id="exp-3">
       <strong>✅ Bonne réponse : C — c = 0,200 mol·L⁻¹</strong>
       <div class="calc-step">n(NaOH) = m / M = 4,00 / 40,0 = 0,100 mol</div>
@@ -930,6 +933,7 @@
       <div class="qcm-opt" onclick="selectOpt(4,this,'wrong')"><span class="qcm-letter">D</span> V₁ = 50,0 mL</div>
     </div>
     <button class="btn-valider" id="btn-4" onclick="validerQcm(4)" disabled>Valider</button>
+    <button class="btn-reset-small" onclick="resetQcm(4)" style="margin-left:8px;">↺ Recommencer</button>
     <div class="explication-box" id="exp-4">
       <strong>✅ Bonne réponse : C — V₁ = 12,5 mL</strong>
       <div class="calc-step">Relation de dilution : c₁ × V₁ = c₂ × V₂</div>
@@ -954,6 +958,7 @@
       <div class="qcm-opt" onclick="selectOpt(5,this,'wrong')"><span class="qcm-letter">D</span> n = 125 mol</div>
     </div>
     <button class="btn-valider" id="btn-5" onclick="validerQcm(5)" disabled>Valider</button>
+    <button class="btn-reset-small" onclick="resetQcm(5)" style="margin-left:8px;">↺ Recommencer</button>
     <div class="explication-box" id="exp-5">
       <strong>✅ Bonne réponse : B — n = 0,250 mol</strong>
       <div class="calc-step">n = V / Vm = 5,60 / 22,4 = <strong>0,250 mol</strong></div>
@@ -976,6 +981,7 @@
       <div class="qcm-opt" onclick="selectOpt(6,this,'wrong')"><span class="qcm-letter">D</span> c ≈ 0,135 mol·L⁻¹</div>
     </div>
     <button class="btn-valider" id="btn-6" onclick="validerQcm(6)" disabled>Valider</button>
+    <button class="btn-reset-small" onclick="resetQcm(6)" style="margin-left:8px;">↺ Recommencer</button>
     <div class="explication-box" id="exp-6">
       <strong>✅ Bonne réponse : B — c ≈ 1,35 mol·L⁻¹</strong>
       <div class="calc-step">c = (%M × ρ) / (100 × M)</div>
@@ -989,6 +995,11 @@
     <div class="big-num" id="bilan-num">—</div>
     <p>exercices réussis sur 6</p>
     <div class="msg" id="bilan-msg"></div>
+    <button class="btn-reset-small" onclick="resetAllQcm()" style="margin-top:14px;">↺ Recommencer tous les exercices</button>
+  </div>
+
+  <div class="check-row" style="margin-top:12px;">
+    <button class="btn-reset-small" onclick="resetAllQcm()">↺ Recommencer tous les exercices</button>
   </div>
 
 </div><!-- fin tab-2 -->
@@ -1345,7 +1356,7 @@ const ACCEPT = {
   'b-note-n': ['n'],
   'b-unite-mol': ['mole','moles'],
   'b-symbole-mol': ['mol'],
-  'b-n-NA': ['n=n/na','n=na÷na'],
+  'b-n-NA': ['n=n/na'],
   'b-M-note': ['m','ma'],
   'b-M-unite': ['g/mol','g.mol-1','g·mol⁻¹','g mol-1','g.mol⁻¹'],
   'b-SI-masse-nom': ['kilogramme','kilogrammes'],
@@ -1521,6 +1532,30 @@ function updateProgress() {
   document.getElementById('prog-count').textContent = validatedCount;
   document.getElementById('prog-fill').style.width = (validatedCount / 6 * 100) + '%';
   if(validatedCount === 6) showBilan();
+}
+
+function resetQcm(num) {
+  if(qcmState[num] && qcmState[num].validated && qcmState[num].correct) {
+    validatedCount = Math.max(0, validatedCount - 1);
+  }
+  qcmState[num] = {};
+  document.querySelectorAll('#opts-' + num + ' .qcm-opt').forEach(o => {
+    o.classList.remove('selected', 'correct', 'wrong', 'show-correct');
+    o.style.pointerEvents = '';
+  });
+  const exp = document.getElementById('exp-' + num);
+  if(exp) exp.classList.remove('visible');
+  const btn = document.getElementById('btn-' + num);
+  if(btn) btn.disabled = true;
+  document.getElementById('bilan-score').classList.remove('visible');
+  updateProgress();
+}
+
+function resetAllQcm() {
+  for(let i = 1; i <= 6; i++) resetQcm(i);
+  validatedCount = 0;
+  document.getElementById('bilan-score').classList.remove('visible');
+  updateProgress();
 }
 
 function showBilan() {
