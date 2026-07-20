@@ -1619,7 +1619,7 @@
         <button class="btn-verif" onclick="calcKepler3()">Calculer T₂</button>
         <button class="btn-reset" onclick="resetKepler3()">↺ Valeurs par défaut (Terre / Mars)</button>
       </div>
-      <div class="calc-result" id="k3-result">T₂ = (2π/a₁^1,5) × a₂^1,5 × T₁ / a₁^1,5 — remplis les champs puis clique sur « Calculer »</div>
+      <div class="calc-result" id="k3-result">T₂ = T₁ × (a₂/a₁)<sup>3/2</sup> — remplis les champs puis clique sur « Calculer »</div>
     </div>
 
     <div class="exo-card">
@@ -1635,6 +1635,9 @@
         </div>
       </div>
       <div class="qcm-feedback" id="k3-qcm-fb"></div>
+      <div style="text-align:center;margin-top:10px;">
+        <button class="btn-reset" onclick="resetQcmK3()">⟲ Recommencer ce QCM</button>
+      </div>
     </div>
 
   </div>
@@ -1663,7 +1666,7 @@
   <div class="bilan-grid">
     <div class="bilan-card">
       <h4>Accélération d'un satellite</h4>
-      <p style="font-size:0.86rem;line-height:1.6;">Force exercée par l'astre (masse M, centre O) sur le satellite (masse m, centre P) : <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = m<span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> avec <span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = −G·M/r² · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span>.</p>
+      <p style="font-size:0.86rem;line-height:1.6;">Force exercée par l'astre (masse M, centre O) sur le satellite (masse m, centre P) : <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = m<span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> avec <span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = −G·M/r² · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>OP</sub> (<span class="vecsym">u<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span><sub>OP</sub> dirigé de O vers P ; on retrouve <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = G·M/r² · <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub> de la section A1, <span class="vecsym">u<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>n</sub> étant orienté vers O, donc opposé à <span class="vecsym">u<svg viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="10,5 5,1.5 5,8.5" fill="currentColor"/></svg></span><sub>OP</sub>).</p>
       <p style="font-size:0.86rem;line-height:1.6;margin-top:6px;">2<sup>e</sup> loi de Newton : m<span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = <span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> ⟹ <span class="vecsym">a<svg viewBox="0 0 13 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="9,5 4,1.5 4,8.5" fill="currentColor"/></svg></span> = <span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> : l'accélération ne dépend pas de la masse du satellite.</p>
     </div>
     <div class="bilan-card">
@@ -1932,6 +1935,15 @@ function checkQcmK3(btn, isCorrect) {
     fb.className = 'qcm-feedback wrong';
   }
 }
+function resetQcmK3() {
+  document.querySelectorAll('#k3-qcm .qcm-btn').forEach(b => {
+    b.disabled = false;
+    b.classList.remove('correct', 'wrong');
+  });
+  var fb = document.getElementById('k3-qcm-fb');
+  fb.textContent = '';
+  fb.className = 'qcm-feedback';
+}
 
 /* ════════ CALCULATRICE — 3E LOI DE KEPLER ════════ */
 function parseFR(str) { return parseFloat(String(str).replace(',', '.')); }
@@ -1955,7 +1967,7 @@ function resetKepler3() {
   document.getElementById('k3-t1').value = '365';
   document.getElementById('k3-a2').value = '2,28';
   document.getElementById('k3-t2').value = '';
-  document.getElementById('k3-result').textContent = 'T₂ = (2π/a₁^1,5) × a₂^1,5 × T₁ / a₁^1,5 — remplis les champs puis clique sur « Calculer »';
+  document.getElementById('k3-result').innerHTML = 'T₂ = T₁ × (a₂/a₁)<sup>3/2</sup> — remplis les champs puis clique sur « Calculer »';
 }
 
 /* ════════ SIMULATEUR — SATELLITE EN ORBITE CIRCULAIRE ════════ */
