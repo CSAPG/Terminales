@@ -1465,7 +1465,7 @@
       Q = V / Δt
       <div class="legend">Q : débit volumique (m³.s⁻¹) &nbsp;•&nbsp; V : volume de fluide écoulé (m³) &nbsp;•&nbsp; Δt : durée de l'écoulement (s)</div>
     </div>
-    <div class="exemple-box"><strong>Exemple :</strong> chaque jour, la Loire rejette près de 8,0.10⁸ m³ d'eau dans l'océan. Son débit volumique moyen vaut Q = 8,0.10⁸ / (24×3600) ≈ <strong>9,3.10² m³.s⁻¹</strong>.</div>
+    <div class="exemple-box"><strong>Exemple :</strong> chaque jour, la Loire rejette près de 8,0.10⁷ m³ d'eau dans l'océan. Son débit volumique moyen vaut Q = 8,0.10⁷ / (24×3600) ≈ <strong>9,3.10² m³.s⁻¹</strong>.</div>
 
     <div class="def-card">
       <h3>Relation entre débit et vitesse</h3>
@@ -2799,6 +2799,34 @@ function checkVentEx() {
   else { inp.classList.add('wrong'); inp.classList.remove('correct'); fb.textContent='✗ Voir la correction.'; fb.className='num-feedback ko'; }
   corr.classList.add('visible');
 }
+
+/* ════════ QCM — BOUTON "RECOMMENCER" AJOUTÉ AUTOMATIQUEMENT À CHAQUE BLOC qcm-grid ════════ */
+document.querySelectorAll('.qcm-grid').forEach(function(grid) {
+  if (!grid.querySelector('.qcm-btn')) return;
+  var wrap = document.createElement('div');
+  wrap.style.textAlign = 'center';
+  wrap.style.margin = '4px 0 14px';
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn-reset';
+  btn.textContent = '⟲ Recommencer ce QCM';
+  btn.onclick = function() {
+    grid.querySelectorAll('.qcm-btn').forEach(function(b) {
+      b.disabled = false;
+      b.classList.remove('correct', 'wrong');
+    });
+    grid.querySelectorAll('.qcm-feedback').forEach(function(fb) {
+      fb.textContent = '';
+      fb.classList.remove('wrong');
+    });
+    if (grid.id === 'qcmBilan') {
+      bilanCorrectCount = 0;
+      updateBilanProgress();
+    }
+  };
+  wrap.appendChild(btn);
+  grid.insertAdjacentElement('afterend', wrap);
+});
 </script>
 </body>
 </html>
