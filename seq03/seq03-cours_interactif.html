@@ -2106,7 +2106,7 @@
 
     <div class="def-card">
       <h3>Mouvement dans un champ de pesanteur uniforme</h3>
-      <p>Système : une bille de masse m, lancée avec une vitesse <span class="vecsym">v<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>0</sub> faisant un angle α avec l'horizontale, dans le champ de pesanteur uniforme <span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> (poids négligé devant les frottements de l'air, eux-mêmes négligés).</p>
+      <p>Système : une bille de masse m, lancée avec une vitesse <span class="vecsym">v<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>0</sub> faisant un angle α avec l'horizontale, dans le champ de pesanteur uniforme <span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> (frottements de l'air négligés devant le poids).</p>
       <p style="margin-top:8px;">Seul le poids s'applique : Σ<span class="vecsym">F<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span><sub>ext</sub> = <span class="vecsym">P<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = m·<span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span>, donc <span class="vecsym">a<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> = <span class="vecsym">g<svg viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="1.6"/><polygon points="16,5 11,1.5 11,8.5" fill="currentColor"/></svg></span> (indépendant de m). En projetant sur (Ox horizontal, Oy vertical vers le haut) :</p>
       <div class="formule-box">
         a<sub>x</sub> = 0 ; a<sub>y</sub> = − g
@@ -3653,6 +3653,11 @@ function buildQCM(containerId, items, scoreCallback) {
     div.innerHTML = `<span class="substance">${it.q}</span><div class="qcm-choices">${choicesHtml}</div><div class="qcm-feedback" id="${containerId}-fb-${idx}"></div>`;
     c.appendChild(div);
   });
+  const resetWrap = document.createElement('div');
+  resetWrap.style.textAlign = 'center';
+  resetWrap.style.marginTop = '10px';
+  resetWrap.innerHTML = `<button class="btn-reset" onclick="resetQCM('${containerId}')">⟲ Recommencer ce QCM</button>`;
+  c.appendChild(resetWrap);
   window['QCM_' + containerId] = items;
 }
 let bilanCorrectCount = 0;
@@ -3678,6 +3683,21 @@ function updateBilanProgress() {
   const pct = (bilanCorrectCount/6)*100;
   document.getElementById('bilanProgress').style.width = pct+'%';
   document.getElementById('bilanScore').textContent = bilanCorrectCount + ' / 6 bonnes réponses';
+}
+function resetQCM(containerId) {
+  const c = document.getElementById(containerId);
+  c.querySelectorAll('.qcm-btn').forEach(b => {
+    b.disabled = false;
+    b.classList.remove('correct', 'wrong');
+  });
+  c.querySelectorAll('.qcm-feedback').forEach(fb => {
+    fb.textContent = '';
+    fb.classList.remove('wrong');
+  });
+  if (containerId === 'qcmBilan') {
+    bilanCorrectCount = 0;
+    updateBilanProgress();
+  }
 }
 
 buildQCM('qcmPesanteur', [
