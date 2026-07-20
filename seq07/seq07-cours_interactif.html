@@ -2224,6 +2224,30 @@ function checkDQ(sel, correctValue, rowId) {
   draw();
   requestAnimationFrame(tick);
 })();
+
+/* ════════ QCM — BOUTON "RECOMMENCER" AJOUTÉ AUTOMATIQUEMENT À CHAQUE BLOC DE QUESTION ════════ */
+document.querySelectorAll('.question-block').forEach(function(block) {
+  if (!block.querySelector('.qcm-btn')) return;
+  var wrap = document.createElement('div');
+  wrap.style.textAlign = 'center';
+  wrap.style.marginTop = '8px';
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn-reset';
+  btn.textContent = '⟲ Recommencer ce QCM';
+  btn.onclick = function() {
+    block.querySelectorAll('.qcm-btn').forEach(function(b) {
+      b.disabled = false;
+      b.classList.remove('correct', 'wrong');
+    });
+    block.querySelectorAll('.qcm-feedback').forEach(function(fb) {
+      fb.textContent = '';
+      fb.className = 'qcm-feedback';
+    });
+  };
+  wrap.appendChild(btn);
+  block.appendChild(wrap);
+});
 </script>
 
 </body>
