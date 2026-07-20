@@ -3354,13 +3354,13 @@ function checkIRRow(id, minWn, maxWn, expectedLiaison, expectedGroupe) {
     var V = parseFloat(slider.value);
     valLabel.textContent = V.toFixed(1).replace('.',',') + ' mL';
     document.getElementById('conductoDispV').textContent = V.toFixed(1).replace('.',',') + ' mL';
-    document.getElementById('conductoDispSigma').textContent = sigma(V).toFixed(2).replace('.',',') + ' mS·cm⁻¹';
+    document.getElementById('conductoDispSigma').textContent = sigma(V).toFixed(2).replace('.',',') + ' mS·m⁻¹';
     ctx.clearRect(0,0,W,H);
     ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.2;
     ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(padL+plotW,H-padB); ctx.stroke();
     ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
     ctx.fillText('V (mL)', padL+plotW/2, H-8);
-    ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('σ (mS·cm⁻¹)',0,0); ctx.restore();
+    ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('σ (mS·m⁻¹)',0,0); ctx.restore();
 
     ctx.strokeStyle='#DDE3EC'; ctx.fillStyle='#5A6B7A'; ctx.font='9px Nunito'; ctx.textAlign='center';
     for (var vv=0; vv<=VMAX; vv+=5) {
@@ -3832,6 +3832,30 @@ function checkIRRow(id, minWn, maxWn, expectedLiaison, expectedGroupe) {
     animate();
   }
 })();
+
+/* ════════ QCM — BOUTON "RECOMMENCER" AJOUTÉ AUTOMATIQUEMENT À CHAQUE BLOC qcm-grid ════════ */
+document.querySelectorAll('.qcm-grid').forEach(function(grid) {
+  if (!grid.querySelector('.qcm-btn')) return;
+  var wrap = document.createElement('div');
+  wrap.style.textAlign = 'center';
+  wrap.style.margin = '4px 0 14px';
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn-reset';
+  btn.textContent = '⟲ Recommencer ce QCM';
+  btn.onclick = function() {
+    grid.querySelectorAll('.qcm-btn').forEach(function(b) {
+      b.disabled = false;
+      b.classList.remove('correct', 'wrong');
+    });
+    grid.querySelectorAll('.qcm-feedback').forEach(function(fb) {
+      fb.textContent = '';
+      fb.className = 'qcm-feedback';
+    });
+  };
+  wrap.appendChild(btn);
+  grid.insertAdjacentElement('afterend', wrap);
+});
 </script>
 
 </body>
