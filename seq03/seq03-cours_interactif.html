@@ -227,6 +227,38 @@
   .sub-tab-content { display: none; }
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
+
   /* ── CONTENU ── */
   .main { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
   .tab-content { display: none; }
@@ -2675,6 +2707,9 @@
       <span class="sub-tab-num">📋</span> Bilan
     </button>
     <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+      <span class="sub-tab-num">📖</span> Glossaire
+    </button>
+    <button class="sub-tab-btn" data-sub="C3" onclick="switchSubTab('C',2)">
       <span class="sub-tab-num">🔗</span> Ressources
     </button>
   </div>
@@ -2729,40 +2764,36 @@
     <div style="text-align:center; font-size:0.82rem; color:var(--texte-leger); margin-top:6px;" id="bilanScore">0 / 6 bonnes réponses</div>
   </div>
 
-  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▼</span>
-  </button>
-  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--bleu);">Référentiel galiléen</strong><br>Référentiel dans lequel le principe d'inertie (1<sup>re</sup> loi de Newton) est vérifié ; les référentiels terrestre, géocentrique et héliocentrique sont considérés galiléens selon l'échelle de temps et de mouvement étudiée.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Vecteur vitesse</strong><br>Dérivée par rapport au temps du vecteur position ; tangent à la trajectoire, il indique la direction et le sens du mouvement.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Vecteur accélération</strong><br>Dérivée par rapport au temps du vecteur vitesse (dérivée seconde du vecteur position) ; traduit la variation de vitesse (en norme et/ou en direction).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Principe d'inertie (1<sup>re</sup> loi de Newton)</strong><br>Dans un référentiel galiléen, un système isolé ou pseudo-isolé est soit au repos, soit en mouvement rectiligne uniforme.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Principe fondamental de la dynamique (2<sup>e</sup> loi de Newton)</strong><br>Dans un référentiel galiléen, la somme des forces extérieures appliquées à un système est égale au produit de sa masse par son vecteur accélération.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Repère cartésien</strong><br>Repère (O ; <em>i</em>, <em>j</em>, <em>k</em>) fixe lié à un référentiel, d'origine O et de vecteurs unitaires constants, utilisé pour repérer la position d'un point mobile par ses coordonnées x(t), y(t), z(t).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Repère de Frenet</strong><br>Repère mobile lié au point en mouvement G, formé des vecteurs unitaires <em>u<sub>t</sub></em> (tangent à la trajectoire, dans le sens du mouvement) et <em>u<sub>n</sub></em> (perpendiculaire à <em>u<sub>t</sub></em>, orienté vers l'intérieur de la trajectoire) ; utilisé pour un mouvement circulaire ou curviligne.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Équations horaires</strong><br>Expressions donnant, en fonction du temps t, les coordonnées de la position (ou de la vitesse, de l'accélération) d'un point mobile dans un repère donné ; elles s'obtiennent par intégrations successives du vecteur accélération.</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--bleu);">Principe des actions réciproques (3<sup>e</sup> loi de Newton)</strong><br>Si un système A exerce une force sur un système B, alors B exerce sur A une force de même valeur, même direction et de sens opposé.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Mouvement dans un champ uniforme</strong><br>Mouvement d'un système soumis à une force constante (poids ou force électrique) ; sa trajectoire est parabolique si la vitesse initiale n'est pas colinéaire au champ.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Champ de pesanteur</strong><br>Champ vectoriel <em>g</em>, uniforme à l'échelle de quelques kilomètres à la surface de la Terre (même direction, sens et valeur g ≈ 9,8 N·kg⁻¹ en tout point) ; le poids d'un système est P = m·g.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Champ électrique</strong><br>Champ vectoriel <em>E</em>, créé par exemple entre les armatures d'un condensateur plan, uniforme entre celles-ci ; il exerce sur une particule de charge q une force F = q·E, dans le sens de E si q &gt; 0.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Travail d'une force</strong><br>Grandeur qui mesure le transfert d'énergie associé au déplacement du point d'application d'une force ; moteur si W &gt; 0, résistant si W &lt; 0, nul si la force est perpendiculaire au déplacement.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Force conservative</strong><br>Force dont le travail ne dépend pas du chemin suivi mais seulement des positions initiale et finale (ex. poids) ; s'oppose aux forces de frottement, non conservatives.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Théorème de l'énergie cinétique (TEC)</strong><br>La variation d'énergie cinétique d'un système entre deux instants est égale à la somme des travaux des forces qui s'exercent sur lui.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Théorème de l'énergie potentielle</strong><br>Pour une force conservative (poids, force électrostatique, force de rappel élastique...), le travail ne dépend pas du chemin suivi mais seulement des positions de départ et d'arrivée ; on lui associe une énergie potentielle E<sub>p</sub>, telle que <span style="white-space:nowrap;">W(A→B) = −ΔE<sub>p</sub> = E<sub>p</sub>(A) − E<sub>p</sub>(B)</span>.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Énergie potentielle de pesanteur</strong><br>Cas particulier du théorème de l'énergie potentielle pour le poids : E<sub>pp</sub> = m·g·z (z : altitude sur un axe vertical ascendant, avec E<sub>pp</sub> = 0 choisie en z = 0).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Énergie mécanique</strong><br>Somme de l'énergie cinétique et de l'énergie potentielle d'un système ; elle se conserve en l'absence de frottement.</p>
-      </div>
-    </div>
-  </div>
-
   </div><!-- /sub-C-0 (Bilan) -->
 
-  <!-- ══ Sous-onglet Ressources ══ -->
+  <!-- ══ Sous-onglet Glossaire ══ -->
   <div class="sub-tab-content" id="sub-C-1">
+    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+    <dl class="gloss-grid" id="glossGrid">
+      <div class="gloss-item" data-term="referentiel galileen"><dt>Référentiel galiléen</dt><dd>Référentiel dans lequel le principe d'inertie (1<sup>re</sup> loi de Newton) est vérifié ; les référentiels terrestre, géocentrique et héliocentrique sont considérés galiléens selon l'échelle de temps et de mouvement étudiée.</dd></div>
+      <div class="gloss-item" data-term="vecteur vitesse"><dt>Vecteur vitesse</dt><dd>Dérivée par rapport au temps du vecteur position ; tangent à la trajectoire, il indique la direction et le sens du mouvement.</dd></div>
+      <div class="gloss-item" data-term="vecteur acceleration"><dt>Vecteur accélération</dt><dd>Dérivée par rapport au temps du vecteur vitesse (dérivée seconde du vecteur position) ; traduit la variation de vitesse (en norme et/ou en direction).</dd></div>
+      <div class="gloss-item" data-term="principe d'inertie 1re loi de newton"><dt>Principe d'inertie (1<sup>re</sup> loi de Newton)</dt><dd>Dans un référentiel galiléen, un système isolé ou pseudo-isolé est soit au repos, soit en mouvement rectiligne uniforme.</dd></div>
+      <div class="gloss-item" data-term="principe fondamental de la dynamique pfd 2e loi de newton"><dt>Principe fondamental de la dynamique (2<sup>e</sup> loi de Newton)</dt><dd>Dans un référentiel galiléen, la somme des forces extérieures appliquées à un système est égale au produit de sa masse par son vecteur accélération.</dd></div>
+      <div class="gloss-item" data-term="repere cartesien"><dt>Repère cartésien</dt><dd>Repère (O ; <em>i</em>, <em>j</em>, <em>k</em>) fixe lié à un référentiel, d'origine O et de vecteurs unitaires constants, utilisé pour repérer la position d'un point mobile par ses coordonnées x(t), y(t), z(t).</dd></div>
+      <div class="gloss-item" data-term="repere de frenet"><dt>Repère de Frenet</dt><dd>Repère mobile lié au point en mouvement G, formé des vecteurs unitaires <em>u<sub>t</sub></em> (tangent à la trajectoire, dans le sens du mouvement) et <em>u<sub>n</sub></em> (perpendiculaire à <em>u<sub>t</sub></em>, orienté vers l'intérieur de la trajectoire) ; utilisé pour un mouvement circulaire ou curviligne.</dd></div>
+      <div class="gloss-item" data-term="equations horaires"><dt>Équations horaires</dt><dd>Expressions donnant, en fonction du temps t, les coordonnées de la position (ou de la vitesse, de l'accélération) d'un point mobile dans un repère donné ; elles s'obtiennent par intégrations successives du vecteur accélération.</dd></div>
+      <div class="gloss-item" data-term="principe des actions reciproques 3e loi de newton"><dt>Principe des actions réciproques (3<sup>e</sup> loi de Newton)</dt><dd>Si un système A exerce une force sur un système B, alors B exerce sur A une force de même valeur, même direction et de sens opposé.</dd></div>
+      <div class="gloss-item" data-term="mouvement dans un champ uniforme"><dt>Mouvement dans un champ uniforme</dt><dd>Mouvement d'un système soumis à une force constante (poids ou force électrique) ; sa trajectoire est parabolique si la vitesse initiale n'est pas colinéaire au champ.</dd></div>
+      <div class="gloss-item" data-term="champ de pesanteur"><dt>Champ de pesanteur</dt><dd>Champ vectoriel <em>g</em>, uniforme à l'échelle de quelques kilomètres à la surface de la Terre (même direction, sens et valeur g ≈ 9,8 N·kg⁻¹ en tout point) ; le poids d'un système est P = m·g.</dd></div>
+      <div class="gloss-item" data-term="champ electrique"><dt>Champ électrique</dt><dd>Champ vectoriel <em>E</em>, créé par exemple entre les armatures d'un condensateur plan, uniforme entre celles-ci ; il exerce sur une particule de charge q une force F = q·E, dans le sens de E si q &gt; 0.</dd></div>
+      <div class="gloss-item" data-term="travail d'une force"><dt>Travail d'une force</dt><dd>Grandeur qui mesure le transfert d'énergie associé au déplacement du point d'application d'une force ; moteur si W &gt; 0, résistant si W &lt; 0, nul si la force est perpendiculaire au déplacement.</dd></div>
+      <div class="gloss-item" data-term="force conservative"><dt>Force conservative</dt><dd>Force dont le travail ne dépend pas du chemin suivi mais seulement des positions initiale et finale (ex. poids) ; s'oppose aux forces de frottement, non conservatives.</dd></div>
+      <div class="gloss-item" data-term="theoreme de l'energie cinetique tec"><dt>Théorème de l'énergie cinétique (TEC)</dt><dd>La variation d'énergie cinétique d'un système entre deux instants est égale à la somme des travaux des forces qui s'exercent sur lui.</dd></div>
+      <div class="gloss-item" data-term="theoreme de l'energie potentielle"><dt>Théorème de l'énergie potentielle</dt><dd>Pour une force conservative (poids, force électrostatique, force de rappel élastique...), le travail ne dépend pas du chemin suivi mais seulement des positions de départ et d'arrivée ; on lui associe une énergie potentielle E<sub>p</sub>, telle que W(A→B) = −ΔE<sub>p</sub> = E<sub>p</sub>(A) − E<sub>p</sub>(B).</dd></div>
+      <div class="gloss-item" data-term="energie potentielle de pesanteur"><dt>Énergie potentielle de pesanteur</dt><dd>Cas particulier du théorème de l'énergie potentielle pour le poids : E<sub>pp</sub> = m·g·z (z : altitude sur un axe vertical ascendant, avec E<sub>pp</sub> = 0 choisie en z = 0).</dd></div>
+      <div class="gloss-item" data-term="energie mecanique"><dt>Énergie mécanique</dt><dd>Somme de l'énergie cinétique et de l'énergie potentielle d'un système ; elle se conserve en l'absence de frottement.</dd></div>
+    </dl>
+  </div><!-- /sub-C-1 (Glossaire) -->
+
+  <!-- ══ Sous-onglet Ressources ══ -->
+  <div class="sub-tab-content" id="sub-C-2">
 
   <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
 
@@ -3000,7 +3031,7 @@
     </div>
   </div>
 
-  </div><!-- /sub-C-1 (Ressources) -->
+  </div><!-- /sub-C-2 (Ressources) -->
 
 </div>
 <!-- FIN ONGLET BILAN & RESSOURCES -->
@@ -3023,6 +3054,15 @@ function switchSubTab(group, i) {
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
   document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
   window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 document.getElementById('capToggle').addEventListener('click', () => {
   document.getElementById('capPanel').classList.toggle('open');
