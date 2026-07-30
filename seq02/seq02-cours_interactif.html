@@ -352,6 +352,38 @@
 
   .sub-content { display:none; }
   .sub-content.active { display:block; animation:fadeIn 0.25s ease; }
+
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
 </style>
         </defs>
         <circle cx="40" cy="40" r="32" fill="white"/>
@@ -2053,6 +2085,9 @@ updateSimAvancement();
       📋 Bilan
     </button>
     <button class="sub-btn" onclick="switchSubTab('tab-5',1)">
+      📖 Glossaire
+    </button>
+    <button class="sub-btn" onclick="switchSubTab('tab-5',2)">
       🔗 Ressources
     </button>
   </nav>
@@ -2131,34 +2166,30 @@ updateSimAvancement();
     </div>
   </div>
 
-  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▼</span>
-  </button>
-  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--bleu);">pH</strong><br>Grandeur sans unité qui mesure l'acidité d'une solution aqueuse : pH = –log([H<sub>3</sub>O<sup>+</sup>]/C°).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Couple acide/base</strong><br>Couple de deux espèces HA/A<sup>–</sup> reliées par un échange de H<sup>+</sup> : HA ⇌ A<sup>–</sup> + H<sup>+</sup>.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Espèce amphotère</strong><br>Espèce chimique qui est à la fois acide d'un couple et base d'un autre couple acide/base.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Autoprotolyse de l'eau</strong><br>Réaction entre deux molécules d'eau : 2 H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + HO<sup>–</sup>.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Produit ionique de l'eau K<sub>e</sub></strong><br>Constante d'équilibre de l'autoprotolyse de l'eau, K<sub>e</sub> = 10<sup>–14</sup> à 25 °C (pK<sub>e</sub> = 14,0).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Acide fort / Base forte</strong><br>Acide (base) dont la réaction avec l'eau est totale : il ne reste plus de forme HA (BOH) en solution à l'état final.</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--bleu);">Acide faible / Base faible</strong><br>Acide (base) dont la réaction avec l'eau est limitée : les deux espèces du couple coexistent à l'état final.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Constante d'acidité K<sub>a</sub></strong><br>Constante d'équilibre de la réaction d'un acide HA avec l'eau ; pK<sub>a</sub> = –log K<sub>a</sub>, caractéristique du couple acide/base.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Diagramme de prédominance</strong><br>Représentation qui indique, selon le pH comparé au pK<sub>a</sub>, quelle espèce du couple (HA ou A<sup>–</sup>) est majoritaire en solution.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Diagramme de distribution</strong><br>Représentation graphique donnant, pour chaque pH, la proportion de chaque espèce du couple acide/base.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Zone de virage</strong><br>Intervalle de pH, centré sur le pK<sub>a</sub> de l'indicateur coloré (± 1 unité), dans lequel sa couleur change.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Solution tampon</strong><br>Mélange d'un acide HA et de sa base conjuguée A<sup>–</sup> à concentrations voisines, dont le pH varie peu par ajout modéré d'acide, de base ou par dilution.</p>
-      </div>
-    </div>
-  </div>
-
   </div><!-- /sub-5-0 (Bilan) -->
 
-  <!-- ══ Sous-onglet Ressources ══ -->
+  <!-- ══ Sous-onglet Glossaire ══ -->
   <div class="sub-content" id="sub-5-1">
+    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+    <dl class="gloss-grid" id="glossGrid">
+      <div class="gloss-item" data-term="ph"><dt>pH</dt><dd>Grandeur sans unité qui mesure l'acidité d'une solution aqueuse : pH = –log([H<sub>3</sub>O<sup>+</sup>]/C°).</dd></div>
+      <div class="gloss-item" data-term="couple acide base"><dt>Couple acide/base</dt><dd>Couple de deux espèces HA/A<sup>–</sup> reliées par un échange de H<sup>+</sup> : HA ⇌ A<sup>–</sup> + H<sup>+</sup>.</dd></div>
+      <div class="gloss-item" data-term="espece amphotere"><dt>Espèce amphotère</dt><dd>Espèce chimique qui est à la fois acide d'un couple et base d'un autre couple acide/base.</dd></div>
+      <div class="gloss-item" data-term="autoprotolyse de l'eau"><dt>Autoprotolyse de l'eau</dt><dd>Réaction entre deux molécules d'eau : 2 H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + HO<sup>–</sup>.</dd></div>
+      <div class="gloss-item" data-term="produit ionique de l'eau"><dt>Produit ionique de l'eau K<sub>e</sub></dt><dd>Constante d'équilibre de l'autoprotolyse de l'eau, K<sub>e</sub> = 10<sup>–14</sup> à 25 °C (pK<sub>e</sub> = 14,0).</dd></div>
+      <div class="gloss-item" data-term="acide fort base forte"><dt>Acide fort / Base forte</dt><dd>Acide (base) dont la réaction avec l'eau est totale : il ne reste plus de forme HA (BOH) en solution à l'état final.</dd></div>
+      <div class="gloss-item" data-term="acide faible base faible"><dt>Acide faible / Base faible</dt><dd>Acide (base) dont la réaction avec l'eau est limitée : les deux espèces du couple coexistent à l'état final.</dd></div>
+      <div class="gloss-item" data-term="constante d'acidite"><dt>Constante d'acidité K<sub>a</sub></dt><dd>Constante d'équilibre de la réaction d'un acide HA avec l'eau ; pK<sub>a</sub> = –log K<sub>a</sub>, caractéristique du couple acide/base.</dd></div>
+      <div class="gloss-item" data-term="diagramme de predominance"><dt>Diagramme de prédominance</dt><dd>Représentation qui indique, selon le pH comparé au pK<sub>a</sub>, quelle espèce du couple (HA ou A<sup>–</sup>) est majoritaire en solution.</dd></div>
+      <div class="gloss-item" data-term="diagramme de distribution"><dt>Diagramme de distribution</dt><dd>Représentation graphique donnant, pour chaque pH, la proportion de chaque espèce du couple acide/base.</dd></div>
+      <div class="gloss-item" data-term="zone de virage"><dt>Zone de virage</dt><dd>Intervalle de pH, centré sur le pK<sub>a</sub> de l'indicateur coloré (± 1 unité), dans lequel sa couleur change.</dd></div>
+      <div class="gloss-item" data-term="solution tampon"><dt>Solution tampon</dt><dd>Mélange d'un acide HA et de sa base conjuguée A<sup>–</sup> à concentrations voisines, dont le pH varie peu par ajout modéré d'acide, de base ou par dilution.</dd></div>
+    </dl>
+  </div><!-- /sub-5-1 (Glossaire) -->
+
+  <!-- ══ Sous-onglet Ressources ══ -->
+  <div class="sub-content" id="sub-5-2">
 
   <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
 
@@ -2339,7 +2370,7 @@ updateSimAvancement();
     </div>
   </div>
 
-  </div><!-- /sub-5-1 (Ressources) -->
+  </div><!-- /sub-5-2 (Ressources) -->
 
 </div><!-- /tab-5 -->
 
@@ -2886,6 +2917,15 @@ function switchSubTab(parentId, n) {
   const parent = document.getElementById(parentId);
   parent.querySelectorAll('.sub-btn').forEach((b,i) => b.classList.toggle('active', i===n));
   parent.querySelectorAll('.sub-content').forEach((c,i) => c.classList.toggle('active', i===n));
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 
 </script>
