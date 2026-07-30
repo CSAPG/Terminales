@@ -29,13 +29,13 @@ const TER_SEQUENCES = [
       id: 'fiches-revision', label: 'Fiches de révision', cardIcon: '📖',
       actif: true,
       items: [
-        { type:'link', icon:'📖', label:'Fiche de révision — Les grandeurs en chimie', href:'seq00/fiche1/Fiche1-calcul-grandeurs-en-chimie.pdf' },
-        { type:'link', icon:'📖', label:"Fiche de révision — Ecriture d'un résultat numérique et incertitudes", href:'seq00/fiche2/Fiche2-mesure-et-incertitudes.pdf' },
-        { type:'link', icon:'📖', label:'Fiche de révision — Analyse dimensionnelle', href:'seq00/Fiche3-analyse-dimensionnelle.pdf' },
-        { type:'link', icon:'📖', label:'Fiche de révision — Les logarithmes', href:'seq00/Fiche4-logarithme.pdf' },
-        { type:'link', icon:'📖', label:'Fiche de révision — Nomenclature', href:'seq00/Fiche5-Nomenclature.pdf' },
-        { type:'link', icon:'📖', label:'Fiche de révision — Equations différentielles', href:'seq00/Fiche6-equadiff.pdf' },
-        { type:'link', icon:'📖', label:'Fiche de révision — Les bases en électricité', href:'seq00/Fiche7-electricite.pdf' },
+        { type:'link', icon:'📖', label:'Fiche de révision 1 — Les grandeurs en chimie', href:'seq00/fiche1/Fiche1-calcul-grandeurs-en-chimie.pdf' },
+        { type:'link', icon:'📖', label:"Fiche de révision 2 — Ecriture d'un résultat numérique et incertitudes", href:'seq00/fiche2/Fiche2-mesure-et-incertitudes.pdf' },
+        { type:'link', icon:'📖', label:'Fiche de révision 3 — Analyse dimensionnelle', href:'seq00/Fiche3-analyse-dimensionnelle.pdf' },
+        { type:'link', icon:'📖', label:'Fiche de révision 4 — Les logarithmes', href:'seq00/Fiche4-logarithme.pdf' },
+        { type:'link', icon:'📖', label:'Fiche de révision 5 — Nomenclature', href:'seq00/Fiche5-Nomenclature.pdf' },
+        { type:'link', icon:'📖', label:'Fiche de révision 6 — Equations différentielles', href:'seq00/Fiche6-equadiff.pdf' },
+        { type:'link', icon:'📖', label:'Fiche de révision 7 — Les bases en électricité', href:'seq00/Fiche7-electricite.pdf' },
       ]
     },
     {
@@ -49,24 +49,24 @@ const TER_SEQUENCES = [
     {
       id: 'fiches-methodes', label: 'Fiches méthodes', cardIcon: '📄',
       items: [
-        { type:'link', icon:'📄', label:"Fiche méthode — Préparation d'une solution par dilution", sub:"d'un liquide pur ou d'une solution", href:'seq00/Fiche-methode1_dilution.pdf' },
-        { type:'link', icon:'📄', label:'Fiche méthode — Tracer des courbes en Python avec Pyplot', href:'seq00/Fiche-methode2-python_methode_tracer_une_courbe.pdf' },
-        { type:'link', icon:'📄', label:"Fiche méthode — Tutoriel d'utilisation de Python", href:'seq00/Fiche-methode3-python.pdf' },
-        { type:'link', icon:'📄', label:'Fiche méthode — Comment activer le mode examen de ma calculatrice', href:'seq00/Fiche-methode4-calculatrices-mode-examen.pdf' },
+        { type:'link', icon:'📄', label:"Fiche méthode 1 — Préparation d'une solution par dilution", sub:"d'un liquide pur ou d'une solution", href:'seq00/Fiche-methode1_dilution.pdf' },
+        { type:'link', icon:'📄', label:'Fiche méthode 2 — Tracer des courbes en Python avec Pyplot', href:'seq00/Fiche-methode2-python_methode_tracer_une_courbe.pdf' },
+        { type:'link', icon:'📄', label:"Fiche méthode 3 — Tutoriel d'utilisation de Python", href:'seq00/Fiche-methode3-python.pdf' },
+        { type:'link', icon:'📄', label:'Fiche méthode 4 — Comment activer le mode examen de ma calculatrice', href:'seq00/Fiche-methode4-calculatrices-mode-examen.pdf' },
       ]
     },
     {
       id: 'notices', label: 'Notices', cardIcon: '📋',
       items: [
-        { type:'link', icon:'📋', label:"Notice — Notice simplifiée pour l'étalonnage du pH-mètre portable", sub:'Modèle pH208-LUTRON', href:'seq00/Notice1_etalonnage-du-pH-metre.pdf' },
-        { type:'link', icon:'📋', label:'Notice — Notice SpectroVio II', href:'seq00/Notice2-spectovio 2.pdf' },
-        { type:'link', icon:'📋', label:"Notice — Guide pour l'utilisation du spectrophotomètre", sub:'OVIO', href:'seq00/Notice3-visualspectra.pdf' },
-        { type:'link', icon:'📋', label:'Notice — Notice simplifiée du logiciel SalsaJ', href:'seq00/Notice4-SalsaJ.pdf' },
-        { type:'link', icon:'📋', label:'Notice — Notice simplifiée pour le logiciel Regressi', href:'seq00/Notice5-regressi.pdf' },
-        { type:'link', icon:'📋', label:'Notice — Notice simplifiée de LatisPro', href:'seq00/Notice6-Latispro.pdf' },
-        { type:'link', icon:'📋', label:'Notice — Notice simplifiée de Excel', href:'seq00/Notice7-Excel.pdf' },
-        { type:'link', icon:'📋', label:'Notice — Utilisation du microcontroleur Arduino', sub:'UNO', href:'seq00/Notice8-arduino.pdf' },
-        { type:'link', icon:'📋', label:"Notice — Comment calculer l'écart-type expérimental et la moyenne d'une série de mesures ?", sub:'Calculatrice TI 83 Premium CE', href:'seq00/Notice9-Utilisation-calculatrice-TI83-incertitudes.pdf' },
+        { type:'link', icon:'📋', label:"Notice 1 — Notice simplifiée pour l'étalonnage du pH-mètre portable", sub:'Modèle pH208-LUTRON', href:'seq00/Notice1_etalonnage-du-pH-metre.pdf' },
+        { type:'link', icon:'📋', label:'Notice 2 — Notice SpectroVio II', href:'seq00/Notice2-spectovio 2.pdf' },
+        { type:'link', icon:'📋', label:"Notice 3 — Guide pour l'utilisation du spectrophotomètre", sub:'OVIO', href:'seq00/Notice3-visualspectra.pdf' },
+        { type:'link', icon:'📋', label:'Notice 4 — Notice simplifiée du logiciel SalsaJ', href:'seq00/Notice4-SalsaJ.pdf' },
+        { type:'link', icon:'📋', label:'Notice 5 — Notice simplifiée pour le logiciel Regressi', href:'seq00/Notice5-regressi.pdf' },
+        { type:'link', icon:'📋', label:'Notice 6 — Notice simplifiée de LatisPro', href:'seq00/Notice6-Latispro.pdf' },
+        { type:'link', icon:'📋', label:'Notice 7 — Notice simplifiée de Excel', href:'seq00/Notice7-Excel.pdf' },
+        { type:'link', icon:'📋', label:'Notice 8 — Utilisation du microcontroleur Arduino', sub:'UNO', href:'seq00/Notice8-arduino.pdf' },
+        { type:'link', icon:'📋', label:"Notice 9 — Comment calculer l'écart-type expérimental et la moyenne d'une série de mesures ?", sub:'Calculatrice TI 83 Premium CE', href:'seq00/Notice9-Utilisation-calculatrice-TI83-incertitudes.pdf' },
       ]
     },
     {
