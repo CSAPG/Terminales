@@ -872,6 +872,38 @@
   }
   .bilan-video-link:hover { color: #1e4466; text-decoration: underline; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
+
   /* ── SUJETS DE BAC ── */
   .bac-card {
     background: var(--blanc);
@@ -3683,6 +3715,9 @@
     <span class="sub-tab-num">📋</span> Bilan
   </button>
   <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+    <span class="sub-tab-num">📖</span> Glossaire
+  </button>
+  <button class="sub-tab-btn" data-sub="C3" onclick="switchSubTab('C',2)">
     <span class="sub-tab-num">🔗</span> Ressources
   </button>
 </nav>
@@ -3747,34 +3782,30 @@
     </div>
   </div>
 
-  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▼</span>
-  </button>
-  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--bleu);">Transformation non totale</strong><br>Transformation pour laquelle, à l'état final, réactifs et produits coexistent (x<sub>f</sub> &lt; x<sub>max</sub>).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Taux d'avancement final τ</strong><br>Rapport τ = x<sub>f</sub> / x<sub>max</sub>, compris entre 0 et 1, qui mesure le degré d'avancement d'une réaction à l'état final.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Quotient de réaction Q<sub>r</sub></strong><br>Grandeur sans unité construite à partir des concentrations des espèces dissoutes (solides et solvant exclus), qui permet de prévoir le sens d'évolution d'un système par comparaison à K.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Constante d'équilibre K</strong><br>Valeur du quotient de réaction à l'état d'équilibre, à une température donnée ; elle ne dépend que de la réaction et de la température.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Équilibre dynamique</strong><br>État final d'un système non totalement transformé, où les réactions directe et inverse se poursuivent à la même vitesse, sans évolution macroscopique des quantités de matière.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Pile électrochimique</strong><br>Dispositif qui convertit spontanément de l'énergie chimique en énergie électrique grâce à une réaction d'oxydoréduction séparée en deux demi-piles.</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--bleu);">Anode / Cathode</strong><br>Anode : électrode où a lieu l'oxydation. Cathode : électrode où a lieu la réduction. Dans une pile, l'anode est la borne négative ; dans un électrolyseur, elle est reliée au pôle + du générateur.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Pont salin</strong><br>Dispositif reliant les deux demi-piles, qui ferme le circuit électrique et assure l'électroneutralité des solutions sans les mélanger.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Capacité électrique Q<sub>max</sub></strong><br>Quantité maximale d'électricité que peut débiter une pile, Q<sub>max</sub> = n(e<sup>–</sup>)<sub>max</sub> × F, avec F la constante de Faraday.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Électrolyse</strong><br>Transformation chimique forcée, imposée par le passage d'un courant électrique, dans le sens opposé à l'évolution spontanée du système (Q<sub>r</sub> évolue à l'opposé du sens spontané).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Électrolyseur</strong><br>Dispositif dans lequel un générateur impose un courant électrique pour forcer une transformation chimique non spontanée.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Accumulateur</strong><br>Générateur électrochimique rechargeable : il fonctionne comme une pile lors de la décharge (chimique → électrique) et comme un électrolyseur lors de la charge (électrique → chimique).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Pile à combustible</strong><br>Générateur électrochimique qui convertit en continu l'énergie chimique d'un combustible (H<sub>2</sub>) en énergie électrique, sans combustion ; non rechargeable, à ne pas confondre avec un accumulateur.</p>
-      </div>
-    </div>
-  </div>
 
 </div><!-- /sub-C-0 (Bilan) -->
   <!-- Sous-onglet C2 -->
   <div class="sub-tab-content" id="sub-C-1">
+    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+    <dl class="gloss-grid" id="glossGrid">
+      <div class="gloss-item" data-term="transformation non totale"><dt>Transformation non totale</dt><dd>Transformation pour laquelle, à l'état final, réactifs et produits coexistent (x<sub>f</sub> &lt; x<sub>max</sub>).</dd></div>
+      <div class="gloss-item" data-term="taux d'avancement final"><dt>Taux d'avancement final τ</dt><dd>Rapport τ = x<sub>f</sub> / x<sub>max</sub>, compris entre 0 et 1, qui mesure le degré d'avancement d'une réaction à l'état final.</dd></div>
+      <div class="gloss-item" data-term="quotient de reaction"><dt>Quotient de réaction Q<sub>r</sub></dt><dd>Grandeur sans unité construite à partir des concentrations des espèces dissoutes (solides et solvant exclus), qui permet de prévoir le sens d'évolution d'un système par comparaison à K.</dd></div>
+      <div class="gloss-item" data-term="constante d'equilibre"><dt>Constante d'équilibre K</dt><dd>Valeur du quotient de réaction à l'état d'équilibre, à une température donnée ; elle ne dépend que de la réaction et de la température.</dd></div>
+      <div class="gloss-item" data-term="equilibre dynamique"><dt>Équilibre dynamique</dt><dd>État final d'un système non totalement transformé, où les réactions directe et inverse se poursuivent à la même vitesse, sans évolution macroscopique des quantités de matière.</dd></div>
+      <div class="gloss-item" data-term="pile electrochimique"><dt>Pile électrochimique</dt><dd>Dispositif qui convertit spontanément de l'énergie chimique en énergie électrique grâce à une réaction d'oxydoréduction séparée en deux demi-piles.</dd></div>
+      <div class="gloss-item" data-term="anode cathode"><dt>Anode / Cathode</dt><dd>Anode : électrode où a lieu l'oxydation. Cathode : électrode où a lieu la réduction. Dans une pile, l'anode est la borne négative ; dans un électrolyseur, elle est reliée au pôle + du générateur.</dd></div>
+      <div class="gloss-item" data-term="pont salin"><dt>Pont salin</dt><dd>Dispositif reliant les deux demi-piles, qui ferme le circuit électrique et assure l'électroneutralité des solutions sans les mélanger.</dd></div>
+      <div class="gloss-item" data-term="capacite electrique"><dt>Capacité électrique Q<sub>max</sub></dt><dd>Quantité maximale d'électricité que peut débiter une pile, Q<sub>max</sub> = n(e<sup>–</sup>)<sub>max</sub> × F, avec F la constante de Faraday.</dd></div>
+      <div class="gloss-item" data-term="electrolyse"><dt>Électrolyse</dt><dd>Transformation chimique forcée, imposée par le passage d'un courant électrique, dans le sens opposé à l'évolution spontanée du système (Q<sub>r</sub> évolue à l'opposé du sens spontané).</dd></div>
+      <div class="gloss-item" data-term="electrolyseur"><dt>Électrolyseur</dt><dd>Dispositif dans lequel un générateur impose un courant électrique pour forcer une transformation chimique non spontanée.</dd></div>
+      <div class="gloss-item" data-term="accumulateur"><dt>Accumulateur</dt><dd>Générateur électrochimique rechargeable : il fonctionne comme une pile lors de la décharge (chimique → électrique) et comme un électrolyseur lors de la charge (électrique → chimique).</dd></div>
+      <div class="gloss-item" data-term="pile a combustible"><dt>Pile à combustible</dt><dd>Générateur électrochimique qui convertit en continu l'énergie chimique d'un combustible (H<sub>2</sub>) en énergie électrique, sans combustion ; non rechargeable, à ne pas confondre avec un accumulateur.</dd></div>
+    </dl>
+  </div><!-- /sub-C-1 (Glossaire) -->
+  <!-- Sous-onglet C3 -->
+  <div class="sub-tab-content" id="sub-C-2">
   <!-- Vidéos -->
   <div class="section-title" style="margin-top:32px;"><span class="icon">🎬</span> Vidéos</div>
 
@@ -3940,7 +3971,7 @@
     </div>
   </div>
 
-  </div><!-- /sub-C-1 (Ressources) -->
+  </div><!-- /sub-C-2 (Ressources) -->
 
 </div><!-- /tab-2 (Bilan) -->
 
@@ -3975,6 +4006,15 @@ function switchSubTab(group, n) {
   });
   // Activer initApp3 si on ouvre A3 (group A, index 2)
   if (group === 'A' && n === 2) initApp3();
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 
 // ── TOGGLE CAPACITÉS
