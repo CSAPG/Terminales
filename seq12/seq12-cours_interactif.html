@@ -632,6 +632,38 @@
   }
   .bilan-video-link:hover { color: #1e4466; text-decoration: underline; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
+
   /* ── EXERCICE INTERACTIF (énoncé, questions, boutons, correction) ── */
   .exo-enonce {
     background: var(--blanc);
@@ -936,7 +968,8 @@
   sub { font-size: 0.65em; }
   .math { font-family: 'Outfit', sans-serif; font-style: italic; }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    body { padding: 6px; }
     .header { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
@@ -2348,6 +2381,9 @@
       <span class="sub-tab-num">📋</span> Bilan
     </button>
     <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+      <span class="sub-tab-num">📖</span> Glossaire
+    </button>
+    <button class="sub-tab-btn" data-sub="C3" onclick="switchSubTab('C',2)">
       <span class="sub-tab-num">🔗</span> Ressources
     </button>
   </nav>
@@ -2421,34 +2457,30 @@
     </div>
   </div>
 
-  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▾</span>
-  </button>
-  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--bleu);">Rendement (r)</strong><br>Quotient entre la quantité de matière finale de produit obtenu et la quantité maximale théorique (r = n<sub>f</sub>/n<sub>max</sub>).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Catalyseur</strong><br>Espèce chimique consommée puis régénérée au cours d'un mécanisme réactionnel ; elle accélère la transformation sans modifier l'état final.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Intermédiaire réactionnel</strong><br>Espèce chimique formée puis consommée au cours d'un mécanisme réactionnel ; elle n'apparaît pas dans l'équation bilan.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Mécanisme réactionnel</strong><br>Suite d'étapes (actes) élémentaires qui décrit, au niveau moléculaire, comment se déroule une réaction complexe.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Acte élémentaire</strong><br>Étape unique d'un mécanisme réactionnel, au cours de laquelle un ou plusieurs doublets d'électrons se déplacent.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Site donneur / accepteur de doublet</strong><br>Site de forte densité électronique (δ<sup>−</sup>) qui cède un doublet, ou site de faible densité électronique (δ<sup>+</sup>) qui l'accueille ; relié par une flèche courbe.</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--bleu);">Chimiosélectif</strong><br>Se dit d'un réactif qui ne réagit que sur une seule fonction d'un composé polyfonctionnel, sans affecter les autres.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Groupe protecteur</strong><br>Groupe formé sur une fonction pour bloquer temporairement sa réactivité ; il doit être sélectif, stable, et facile à enlever (déprotection).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Addition / Élimination / Substitution</strong><br>Trois types de réactions caractérisés par la comparaison du nombre de liaisons simples (addition : plus ; élimination : moins) ou par le remplacement d'un groupe (substitution).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Polymère / Monomère</strong><br>Macromolécule formée par répétition d'un motif (polymère), issue de l'assemblage de petites molécules appelées monomères.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Chimie verte</strong><br>Ensemble de 12 principes (Anastas & Warner, 1998) visant à réduire l'impact environnemental d'une synthèse chimique.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Montage à reflux</strong><br>Dispositif permettant de chauffer un milieu réactionnel à ébullition sans perte de matière, grâce à la condensation des vapeurs par un réfrigérant.</p>
-      </div>
-    </div>
-  </div>
-
   </div><!-- /sub-C-0 (Bilan) -->
 
-  <!-- ══ Sous-onglet Ressources ══ -->
+  <!-- ══ Sous-onglet Glossaire ══ -->
   <div class="sub-tab-content" id="sub-C-1">
+  <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+  <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+  <dl class="gloss-grid" id="glossGrid">
+    <div class="gloss-item" data-term="rendement"><dt>Rendement (r)</dt><dd>Quotient entre la quantité de matière finale de produit obtenu et la quantité maximale théorique (r = n<sub>f</sub>/n<sub>max</sub>).</dd></div>
+    <div class="gloss-item" data-term="catalyseur"><dt>Catalyseur</dt><dd>Espèce chimique consommée puis régénérée au cours d'un mécanisme réactionnel ; elle accélère la transformation sans modifier l'état final.</dd></div>
+    <div class="gloss-item" data-term="intermediaire reactionnel"><dt>Intermédiaire réactionnel</dt><dd>Espèce chimique formée puis consommée au cours d'un mécanisme réactionnel ; elle n'apparaît pas dans l'équation bilan.</dd></div>
+    <div class="gloss-item" data-term="mecanisme reactionnel"><dt>Mécanisme réactionnel</dt><dd>Suite d'étapes (actes) élémentaires qui décrit, au niveau moléculaire, comment se déroule une réaction complexe.</dd></div>
+    <div class="gloss-item" data-term="acte elementaire"><dt>Acte élémentaire</dt><dd>Étape unique d'un mécanisme réactionnel, au cours de laquelle un ou plusieurs doublets d'électrons se déplacent.</dd></div>
+    <div class="gloss-item" data-term="site donneur accepteur de doublet"><dt>Site donneur / accepteur de doublet</dt><dd>Site de forte densité électronique (δ<sup>−</sup>) qui cède un doublet, ou site de faible densité électronique (δ<sup>+</sup>) qui l'accueille ; relié par une flèche courbe.</dd></div>
+    <div class="gloss-item" data-term="chimioselectif"><dt>Chimiosélectif</dt><dd>Se dit d'un réactif qui ne réagit que sur une seule fonction d'un composé polyfonctionnel, sans affecter les autres.</dd></div>
+    <div class="gloss-item" data-term="groupe protecteur"><dt>Groupe protecteur</dt><dd>Groupe formé sur une fonction pour bloquer temporairement sa réactivité ; il doit être sélectif, stable, et facile à enlever (déprotection).</dd></div>
+    <div class="gloss-item" data-term="addition elimination substitution"><dt>Addition / Élimination / Substitution</dt><dd>Trois types de réactions caractérisés par la comparaison du nombre de liaisons simples (addition : plus ; élimination : moins) ou par le remplacement d'un groupe (substitution).</dd></div>
+    <div class="gloss-item" data-term="polymere monomere"><dt>Polymère / Monomère</dt><dd>Macromolécule formée par répétition d'un motif (polymère), issue de l'assemblage de petites molécules appelées monomères.</dd></div>
+    <div class="gloss-item" data-term="chimie verte"><dt>Chimie verte</dt><dd>Ensemble de 12 principes (Anastas & Warner, 1998) visant à réduire l'impact environnemental d'une synthèse chimique.</dd></div>
+    <div class="gloss-item" data-term="montage a reflux"><dt>Montage à reflux</dt><dd>Dispositif permettant de chauffer un milieu réactionnel à ébullition sans perte de matière, grâce à la condensation des vapeurs par un réfrigérant.</dd></div>
+  </dl>
+  </div><!-- /sub-C-1 (Glossaire) -->
+
+  <!-- ══ Sous-onglet Ressources ══ -->
+  <div class="sub-tab-content" id="sub-C-2">
 
   <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
 
@@ -2634,7 +2666,7 @@
     </div>
   </div>
 
-  </div><!-- /sub-C-1 (Ressources) -->
+  </div><!-- /sub-C-2 (Ressources) -->
 
 </div><!-- /tab-2 (Bilan & Ressources) -->
 
@@ -2665,6 +2697,15 @@ function switchSubTab(group, n) {
   });
   document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b, i) => {
     b.classList.toggle('active', i === n);
+  });
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
   });
 }
 
