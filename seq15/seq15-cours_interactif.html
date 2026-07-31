@@ -234,7 +234,7 @@
     background: rgba(45,95,138,0.2);
   }
   #h-sub-nav-wrap { padding: 0 1rem; }
-  @media(max-width:600px){ #h-sub-nav-wrap{ padding:0 .5rem; } }
+  @media(max-width:640px){ #h-sub-nav-wrap{ padding:0 .5rem; } }
 
   .content { max-width:960px; margin:0 auto; padding: 2rem 1.5rem 4rem; }
   .slide { display:none; animation: fadeUp .35s ease; }
@@ -389,6 +389,14 @@
   .formula-card .eq { font-family:var(--lora); font-size:1.2rem; font-weight:700; color:var(--bleu); margin-bottom:.35rem; }
   .formula-card small { font-size:.78rem; color:var(--gris-cl); line-height:1.5; display:block; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search { width:100%; padding:.7rem 1rem; border:1.5px solid #E5E7EB; border-radius:20px; font-family:var(--sans); font-size:.88rem; margin-bottom:1rem; }
+  .gloss-grid { display:grid; grid-template-columns:1fr 1fr; gap:.9rem; margin:1rem 0; }
+  @media (max-width:700px) { .gloss-grid { grid-template-columns:1fr; } }
+  .gloss-item { background:var(--blanc); border:1.5px solid #E5E7EB; border-radius:10px; padding:.9rem 1.1rem; }
+  .gloss-item dt { font-family:var(--lora); font-weight:800; color:var(--bleu); font-size:.9rem; margin-bottom:.3rem; }
+  .gloss-item dd { font-size:.84rem; color:var(--txt); line-height:1.55; }
+
   /* ── PHOTO INTRO ── */
   .photo-hero {
     position:relative; border-radius:16px; overflow:hidden;
@@ -489,7 +497,8 @@
   .mat-card .mat-eg { font-size:.78rem; color:var(--bleu); font-weight:600; }
   .mat-card .mat-eff { font-size:.75rem; color:var(--gris-cl); margin-top:.2rem; }
 
-  @media(max-width:600px) {
+  @media(max-width:640px) {
+    body { padding: 6px; }
     .h-header-inner { padding: 14px 16px 0; }
     .h-icon-wrap { width: 46px; height: 40px; }
     .content { padding:1.5rem 1rem 3rem; }
@@ -1512,45 +1521,36 @@ const SLIDES = [
       <div class="info-box vert">
         <b>Lien effet PE ↔ jonction PN :</b> Dans les deux cas, un photon arrache un électron d'un état lié (métal → vide / bande de valence → bande de conduction). Dans la jonction PN, le champ électrique interne collecte ces porteurs avant qu'ils ne se recombinent, permettant un courant continu utilisable.
       </div>
-
-      <div class="accordion-item" style="border:1.5px solid #2D5F8A;border-radius:10px;overflow:hidden;margin-top:1.2rem">
-        <button onclick="toggleAccordion('acc-glossaire')"
-          style="width:100%;display:flex;justify-content:space-between;align-items:center;
-                 padding:.75rem 1.1rem;background:#E8F1F8;border:none;cursor:pointer;
-                 font-family:var(--sans);font-size:.9rem;font-weight:700;color:#2D5F8A;text-align:left">
-          <span>📖 Glossaire de la séquence</span>
-          <span id="acc-glossaire-icon" style="font-size:1rem;transition:transform .25s">▾</span>
-        </button>
-        <div id="acc-glossaire" style="display:none;padding:.9rem 1.1rem;background:#fff;
-             font-size:.86rem;line-height:1.75;color:#1A2A3A;border-top:1px solid #E8F1F8">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-            <div>
-              <p><b style="color:#2D5F8A">Photon</b><br>Grain de lumière, particule élémentaire porteuse d'énergie E = h·ν, sans masse, se déplaçant à la vitesse c.</p>
-              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Effet photoélectrique</b><br>Émission d'électrons par un matériau (souvent un métal) sous l'effet de l'absorption de photons suffisamment énergétiques.</p>
-              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Travail d'extraction W</b><br>Énergie minimale nécessaire pour arracher un électron du matériau ; caractéristique de chaque matériau.</p>
-              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Fréquence seuil ν₀</b><br>Fréquence minimale du rayonnement en dessous de laquelle aucun électron n'est éjecté, quelle que soit l'intensité lumineuse ; ν₀ = W/h.</p>
-            </div>
-            <div>
-              <p><b style="color:#2D5F8A">Jonction PN</b><br>Interface entre un semi-conducteur dopé P (excès de trous) et un semi-conducteur dopé N (excès d'électrons), à la base des cellules photovoltaïques.</p>
-              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Zone de déplétion</b><br>Zone dépourvue de porteurs de charge libres au voisinage de la jonction PN, siège d'un champ électrique interne.</p>
-              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Dopage (P / N)</b><br>Introduction d'impuretés dans un semi-conducteur pour créer un excès de trous (dopage P) ou d'électrons libres (dopage N).</p>
-              <p style="margin-top:.6rem"><b style="color:#2D5F8A">Rendement photovoltaïque</b><br>Rapport entre la puissance électrique produite par la cellule et la puissance lumineuse reçue.</p>
-            </div>
-          </div>
-        </div>
-      </div>
     `}
   },
 
-  /* ── 9 ── Quiz */
-  { label:'Quiz', icon:'✅', isQuiz:true,
-    render(){return `<div class="slide-title"><span class="num">9</span>Quiz — vérification des acquis</div><div id="quiz-root"></div>`}
+  /* ── 9 ── Glossaire */
+  { label:'Glossaire', icon:'📖',
+    render(){return `
+      <div class="slide-title"><span class="num">9</span>Glossaire de la séquence</div>
+      <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+      <dl class="gloss-grid" id="glossGrid">
+        <div class="gloss-item" data-term="photon"><dt>Photon</dt><dd>Grain de lumière, particule élémentaire porteuse d'énergie E = h·ν, sans masse, se déplaçant à la vitesse c.</dd></div>
+        <div class="gloss-item" data-term="effet photoelectrique"><dt>Effet photoélectrique</dt><dd>Émission d'électrons par un matériau (souvent un métal) sous l'effet de l'absorption de photons suffisamment énergétiques.</dd></div>
+        <div class="gloss-item" data-term="travail d'extraction"><dt>Travail d'extraction W</dt><dd>Énergie minimale nécessaire pour arracher un électron du matériau ; caractéristique de chaque matériau.</dd></div>
+        <div class="gloss-item" data-term="frequence seuil"><dt>Fréquence seuil ν₀</dt><dd>Fréquence minimale du rayonnement en dessous de laquelle aucun électron n'est éjecté, quelle que soit l'intensité lumineuse ; ν₀ = W/h.</dd></div>
+        <div class="gloss-item" data-term="jonction pn"><dt>Jonction PN</dt><dd>Interface entre un semi-conducteur dopé P (excès de trous) et un semi-conducteur dopé N (excès d'électrons), à la base des cellules photovoltaïques.</dd></div>
+        <div class="gloss-item" data-term="zone de depletion"><dt>Zone de déplétion</dt><dd>Zone dépourvue de porteurs de charge libres au voisinage de la jonction PN, siège d'un champ électrique interne.</dd></div>
+        <div class="gloss-item" data-term="dopage p n"><dt>Dopage (P / N)</dt><dd>Introduction d'impuretés dans un semi-conducteur pour créer un excès de trous (dopage P) ou d'électrons libres (dopage N).</dd></div>
+        <div class="gloss-item" data-term="rendement photovoltaique"><dt>Rendement photovoltaïque</dt><dd>Rapport entre la puissance électrique produite par la cellule et la puissance lumineuse reçue.</dd></div>
+      </dl>
+    `}
   },
 
-  /* ── 10 ── Exercice type Bac : carte annale (liens) + exercice original avec correction */
+  /* ── 10 ── Quiz */
+  { label:'Quiz', icon:'✅', isQuiz:true,
+    render(){return `<div class="slide-title"><span class="num">10</span>Quiz — vérification des acquis</div><div id="quiz-root"></div>`}
+  },
+
+  /* ── 11 ── Exercice type Bac : carte annale (liens) + exercice original avec correction */
   { label:'Exercice bac', icon:'📝',
     render(){return `
-      <div class="slide-title"><span class="num">10</span>S'entraîner : exercice type Bac</div>
+      <div class="slide-title"><span class="num">11</span>S'entraîner : exercice type Bac</div>
 
       <div class="info-box bleu">
         Pour vous entraîner dans les conditions de l'épreuve, deux ressources vous sont proposées ci-dessous :
@@ -1631,10 +1631,10 @@ const SLIDES = [
     `}
   },
 
-  /* ── 11 ── Ressources complémentaires : QCM Hatier + vidéos ── */
+  /* ── 12 ── Ressources complémentaires : QCM Hatier + vidéos ── */
   { label:'Ressources', icon:'🔗',
     render(){return `
-      <div class="slide-title"><span class="num">11</span>Ressources complémentaires</div>
+      <div class="slide-title"><span class="num">12</span>Ressources complémentaires</div>
 
       <div class="info-box bleu">
         Retrouvez ci-dessous des ressources externes pour vous auto-évaluer et revoir les notions clés en vidéo.
@@ -3541,6 +3541,17 @@ function toggleAccordion(id){
   if(icon) icon.style.transform = open ? '' : 'rotate(180deg)';
 }
 
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var input = document.getElementById('glossSearch');
+  if(!input) return;
+  var q = input.value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
+}
+
 const MAT_EXPLAIN = {
   'si-mono': `
     <b>🔷 Silicium monocristallin (Si mono-c)</b><br><br>
@@ -3618,7 +3629,7 @@ function showMatExplain(){
 const NAV_GROUPS = [
   { num:'1', label:'Effet photoélectrique',              slides:[0,1,2] },
   { num:'2', label:'Semi-conducteurs & jonction PN',      slides:[3,4,5,6] },
-  { num:'✓', label:'Bilan, Quiz & Ressources',            slides:[7,8,9,10] },
+  { num:'✓', label:'Bilan, Quiz & Ressources',            slides:[7,8,9,10,11] },
 ];
 
 function groupIndexOf(slideIdx){
