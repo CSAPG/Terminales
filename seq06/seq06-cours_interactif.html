@@ -835,6 +835,38 @@
   }
   .ke-list li:last-child { border-bottom: none; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
+
   /* ── SUJETS DE BAC ── */
   .bac-card {
     background: var(--blanc);
@@ -1026,7 +1058,8 @@
     overflow: visible;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    body { padding: 6px; }
     .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
@@ -1941,7 +1974,10 @@ else:
       <span class="sub-tab-num">1</span> Bilan et points clés
     </button>
     <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
-      <span class="sub-tab-num">2</span> Ressources
+      <span class="sub-tab-num">📖</span> Glossaire
+    </button>
+    <button class="sub-tab-btn" data-sub="R3" onclick="switchSubTab('R',2)">
+      <span class="sub-tab-num">3</span> Ressources
     </button>
   </div>
 
@@ -1996,31 +2032,28 @@ else:
       </ul>
     </div>
 
-    <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-      <span>📖 Glossaire de la séquence</span><span>▾</span>
-    </button>
-    <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <div>
-          <p><strong style="color:var(--bleu);">Diffraction</strong><br>Modification de la direction de propagation d'une onde au passage d'une ouverture ou d'un obstacle de petite taille (voisine ou inférieure à λ) ; ne modifie ni la fréquence ni la longueur d'onde.</p>
-          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Angle caractéristique de diffraction θ</strong><br>Écart angulaire entre l'axe de propagation et le milieu de la première extinction de la figure de diffraction : θ = λ/a, avec a la taille de l'ouverture ou de l'obstacle.</p>
-          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Sources synchrones</strong><br>Deux sources d'ondes de même fréquence.</p>
-          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Sources cohérentes</strong><br>Deux sources d'ondes dont le déphasage est constant au cours du temps ; condition nécessaire, avec la synchronisation, pour observer une figure d'interférences stable.</p>
-        </div>
-        <div>
-          <p><strong style="color:var(--bleu);">Différence de marche δ</strong><br>Différence des distances parcourues par les ondes issues de deux sources pour atteindre un même point P : δ = S₂P − S₁P.</p>
-          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Interférence constructive</strong><br>Amplification de l'onde résultante en un point où la différence de marche est un multiple entier de la longueur d'onde : δ = n·λ.</p>
-          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Interférence destructive</strong><br>Atténuation (ou annulation) de l'onde résultante en un point où la différence de marche est un multiple demi-entier de la longueur d'onde : δ = (n + 1/2)·λ.</p>
-          <p style="margin-top:10px;"><strong style="color:var(--bleu);">Interfrange i</strong><br>Distance séparant deux franges brillantes (ou sombres) consécutives dans une figure d'interférences ; pour le dispositif des trous d'Young : i = λ·D/a.</p>
-        </div>
-      </div>
-    </div>
-
   </div>
   <!-- /sub-R-0 -->
 
-  <!-- ───────── R2 : RESSOURCES ───────── -->
+  <!-- ───────── R2 : GLOSSAIRE ───────── -->
   <div class="sub-tab-content" id="sub-R-1">
+    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+    <dl class="gloss-grid" id="glossGrid">
+      <div class="gloss-item" data-term="diffraction"><dt>Diffraction</dt><dd>Modification de la direction de propagation d'une onde au passage d'une ouverture ou d'un obstacle de petite taille (voisine ou inférieure à λ) ; ne modifie ni la fréquence ni la longueur d'onde.</dd></div>
+      <div class="gloss-item" data-term="angle caracteristique de diffraction"><dt>Angle caractéristique de diffraction θ</dt><dd>Écart angulaire entre l'axe de propagation et le milieu de la première extinction de la figure de diffraction : θ = λ/a, avec a la taille de l'ouverture ou de l'obstacle.</dd></div>
+      <div class="gloss-item" data-term="sources synchrones"><dt>Sources synchrones</dt><dd>Deux sources d'ondes de même fréquence.</dd></div>
+      <div class="gloss-item" data-term="sources coherentes"><dt>Sources cohérentes</dt><dd>Deux sources d'ondes dont le déphasage est constant au cours du temps ; condition nécessaire, avec la synchronisation, pour observer une figure d'interférences stable.</dd></div>
+      <div class="gloss-item" data-term="difference de marche"><dt>Différence de marche δ</dt><dd>Différence des distances parcourues par les ondes issues de deux sources pour atteindre un même point P : δ = S₂P − S₁P.</dd></div>
+      <div class="gloss-item" data-term="interference constructive"><dt>Interférence constructive</dt><dd>Amplification de l'onde résultante en un point où la différence de marche est un multiple entier de la longueur d'onde : δ = n·λ.</dd></div>
+      <div class="gloss-item" data-term="interference destructive"><dt>Interférence destructive</dt><dd>Atténuation (ou annulation) de l'onde résultante en un point où la différence de marche est un multiple demi-entier de la longueur d'onde : δ = (n + 1/2)·λ.</dd></div>
+      <div class="gloss-item" data-term="interfrange"><dt>Interfrange i</dt><dd>Distance séparant deux franges brillantes (ou sombres) consécutives dans une figure d'interférences ; pour le dispositif des trous d'Young : i = λ·D/a.</dd></div>
+    </dl>
+  </div>
+  <!-- /sub-R-1 (Glossaire) -->
+
+  <!-- ───────── R3 : RESSOURCES ───────── -->
+  <div class="sub-tab-content" id="sub-R-2">
 
     <div class="section-title"><span class="icon">🎬</span> Vidéos du cours</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
@@ -2191,7 +2224,7 @@ else:
     </div>
 
   </div>
-  <!-- /sub-R-1 -->
+  <!-- /sub-R-2 (Ressources) -->
 
 </div>
 <!-- /tab-2 -->
@@ -2210,6 +2243,15 @@ function switchSubTab(group, i) {
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
   document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
   window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 document.getElementById('capToggle').addEventListener('click', () => {
   document.getElementById('capPanel').classList.toggle('open');
