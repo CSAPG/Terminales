@@ -809,6 +809,38 @@
   .ke-list li:last-child { border-bottom: none; }
   .ke-list li::before { content: "✓"; position: absolute; left: 8px; color: var(--vert); font-weight: 800; font-size: 0.90rem; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
+
   /* ── CANVAS ANIMATION ── */
   .anim-canvas-wrap {
     background: #F8FAFC;
@@ -992,7 +1024,8 @@
     overflow: visible;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    body { padding: 6px; }
     .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
@@ -1654,7 +1687,10 @@
       <span class="sub-tab-num">1</span> Bilan et points clés
     </button>
     <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
-      <span class="sub-tab-num">2</span> Ressources
+      <span class="sub-tab-num">📖</span> Glossaire
+    </button>
+    <button class="sub-tab-btn" data-sub="R3" onclick="switchSubTab('R',2)">
+      <span class="sub-tab-num">3</span> Ressources
     </button>
   </div>
 
@@ -1710,34 +1746,31 @@
     </ul>
   </div>
 
-  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▾</span>
-  </button>
-  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--bleu);">Loi d'attraction universelle</strong><br>Deux corps A et B, de masses m<sub>A</sub> et m<sub>B</sub> séparés d'une distance d, exercent l'un sur l'autre une force d'attraction gravitationnelle F = G·m<sub>A</sub>·m<sub>B</sub>/d², avec G = 6,67×10⁻¹¹ N·m²·kg⁻² la constante de gravitation universelle.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Repère de Frenet</strong><br>Repère mobile lié au point en mouvement, formé des vecteurs unitaires <em>u<sub>t</sub></em> (tangent à la trajectoire, dans le sens du mouvement) et <em>u<sub>n</sub></em> (perpendiculaire à <em>u<sub>t</sub></em>, dirigé vers le centre de la trajectoire) ; adapté à la description d'un mouvement circulaire.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Accélération centripète</strong><br>Composante de l'accélération dirigée vers le centre de la trajectoire (selon <em>u<sub>n</sub></em>) ; pour un mouvement circulaire, elle vaut a = v²/r.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Mouvement circulaire uniforme</strong><br>Mouvement sur une trajectoire circulaire à vitesse constante (dv/dt = 0) ; l'accélération est alors purement centripète, dirigée vers le centre du cercle.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Période de révolution</strong><br>Durée d'un tour complet effectué par un astre ou un satellite sur son orbite ; pour une orbite circulaire de rayon r parcourue à la vitesse v, T = 2πr/v.</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--bleu);">Référentiel héliocentrique</strong><br>Référentiel dont l'origine est le centre du Soleil et les axes dirigés vers des étoiles lointaines fixes ; adapté à l'étude du mouvement des planètes autour du Soleil.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Satellite géostationnaire</strong><br>Satellite dont la période de révolution est égale à la période de rotation de la Terre sur elle-même ; il paraît donc fixe dans le référentiel terrestre.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Périhélie / Aphélie</strong><br>Sur une orbite elliptique, position la plus proche du Soleil (périhélie) ou la plus éloignée (aphélie) — on parle de périgée/apogée pour un satellite terrestre. D'après la loi des aires, la vitesse est maximale au périhélie et minimale à l'aphélie.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">1<sup>ère</sup> loi de Kepler — loi des orbites</strong><br>Dans le référentiel héliocentrique, l'orbite de chaque planète est une ellipse dont le Soleil occupe l'un des foyers.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">2<sup>e</sup> loi de Kepler — loi des aires</strong><br>Le segment reliant le Soleil à une planète balaie des aires égales pendant des durées égales ; la vitesse n'est donc pas constante sur une orbite elliptique.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">3<sup>e</sup> loi de Kepler — loi des périodes</strong><br>Pour un même astre attracteur central, le rapport T²/a³ est constant, quelle que soit la planète ou le satellite considéré (a : demi-grand axe de l'orbite).</p>
-      </div>
-    </div>
-  </div>
-
   </div>
   <!-- /sub-R-0 -->
 
-  <!-- ───────── R2 : RESSOURCES ───────── -->
+  <!-- ───────── R2 : GLOSSAIRE ───────── -->
   <div class="sub-tab-content" id="sub-R-1">
+    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+    <dl class="gloss-grid" id="glossGrid">
+      <div class="gloss-item" data-term="loi d'attraction universelle"><dt>Loi d'attraction universelle</dt><dd>Deux corps A et B, de masses m<sub>A</sub> et m<sub>B</sub> séparés d'une distance d, exercent l'un sur l'autre une force d'attraction gravitationnelle F = G·m<sub>A</sub>·m<sub>B</sub>/d², avec G = 6,67×10⁻¹¹ N·m²·kg⁻² la constante de gravitation universelle.</dd></div>
+      <div class="gloss-item" data-term="repere de frenet"><dt>Repère de Frenet</dt><dd>Repère mobile lié au point en mouvement, formé des vecteurs unitaires <em>u<sub>t</sub></em> (tangent à la trajectoire, dans le sens du mouvement) et <em>u<sub>n</sub></em> (perpendiculaire à <em>u<sub>t</sub></em>, dirigé vers le centre de la trajectoire) ; adapté à la description d'un mouvement circulaire.</dd></div>
+      <div class="gloss-item" data-term="acceleration centripete"><dt>Accélération centripète</dt><dd>Composante de l'accélération dirigée vers le centre de la trajectoire (selon <em>u<sub>n</sub></em>) ; pour un mouvement circulaire, elle vaut a = v²/r.</dd></div>
+      <div class="gloss-item" data-term="mouvement circulaire uniforme"><dt>Mouvement circulaire uniforme</dt><dd>Mouvement sur une trajectoire circulaire à vitesse constante (dv/dt = 0) ; l'accélération est alors purement centripète, dirigée vers le centre du cercle.</dd></div>
+      <div class="gloss-item" data-term="periode de revolution"><dt>Période de révolution</dt><dd>Durée d'un tour complet effectué par un astre ou un satellite sur son orbite ; pour une orbite circulaire de rayon r parcourue à la vitesse v, T = 2πr/v.</dd></div>
+      <div class="gloss-item" data-term="referentiel heliocentrique"><dt>Référentiel héliocentrique</dt><dd>Référentiel dont l'origine est le centre du Soleil et les axes dirigés vers des étoiles lointaines fixes ; adapté à l'étude du mouvement des planètes autour du Soleil.</dd></div>
+      <div class="gloss-item" data-term="satellite geostationnaire"><dt>Satellite géostationnaire</dt><dd>Satellite dont la période de révolution est égale à la période de rotation de la Terre sur elle-même ; il paraît donc fixe dans le référentiel terrestre.</dd></div>
+      <div class="gloss-item" data-term="perihelie aphelie"><dt>Périhélie / Aphélie</dt><dd>Sur une orbite elliptique, position la plus proche du Soleil (périhélie) ou la plus éloignée (aphélie) — on parle de périgée/apogée pour un satellite terrestre. D'après la loi des aires, la vitesse est maximale au périhélie et minimale à l'aphélie.</dd></div>
+      <div class="gloss-item" data-term="1re loi de kepler loi des orbites"><dt>1<sup>ère</sup> loi de Kepler — loi des orbites</dt><dd>Dans le référentiel héliocentrique, l'orbite de chaque planète est une ellipse dont le Soleil occupe l'un des foyers.</dd></div>
+      <div class="gloss-item" data-term="2e loi de kepler loi des aires"><dt>2<sup>e</sup> loi de Kepler — loi des aires</dt><dd>Le segment reliant le Soleil à une planète balaie des aires égales pendant des durées égales ; la vitesse n'est donc pas constante sur une orbite elliptique.</dd></div>
+      <div class="gloss-item" data-term="3e loi de kepler loi des periodes"><dt>3<sup>e</sup> loi de Kepler — loi des périodes</dt><dd>Pour un même astre attracteur central, le rapport T²/a³ est constant, quelle que soit la planète ou le satellite considéré (a : demi-grand axe de l'orbite).</dd></div>
+    </dl>
+  </div>
+  <!-- /sub-R-1 (Glossaire) -->
+
+  <!-- ───────── R3 : RESSOURCES ───────── -->
+  <div class="sub-tab-content" id="sub-R-2">
 
     <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
     <div class="bilan-grid" style="grid-template-columns:1fr 1fr;">
@@ -1867,7 +1900,7 @@
     </div>
 
   </div>
-  <!-- /sub-R-1 -->
+  <!-- /sub-R-2 (Ressources) -->
 
 </div>
 <!-- /tab-3 -->
@@ -1887,6 +1920,15 @@ function switchSubTab(group, i) {
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
   document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
   window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 document.getElementById('capToggle').addEventListener('click', () => {
   document.getElementById('capPanel').classList.toggle('open');
