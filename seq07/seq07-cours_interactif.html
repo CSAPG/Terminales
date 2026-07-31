@@ -766,6 +766,38 @@
   }
   .ke-list li:last-child { border-bottom: none; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
+
   /* ── SUJETS DE BAC ── */
   .bac-card {
     background: var(--blanc);
@@ -983,7 +1015,8 @@
     overflow: visible;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    body { padding: 6px; }
     .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
@@ -1723,7 +1756,10 @@
       <span class="sub-tab-num">1</span> Bilan et points clés
     </button>
     <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
-      <span class="sub-tab-num">2</span> Ressources
+      <span class="sub-tab-num">📖</span> Glossaire
+    </button>
+    <button class="sub-tab-btn" data-sub="R3" onclick="switchSubTab('R',2)">
+      <span class="sub-tab-num">3</span> Ressources
     </button>
   </div>
 
@@ -1774,31 +1810,28 @@
     </ul>
   </div>
 
-  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▾</span>
-  </button>
-  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--bleu);">Intensité sonore I</strong><br>Puissance sonore reçue par unité de surface : I = P/S, exprimée en W·m⁻².</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Niveau d'intensité sonore L</strong><br>Grandeur logarithmique adaptée à l'étendue de sensibilité de l'oreille humaine : L = 10·log(I/I₀), avec I₀ = 10⁻¹² W·m⁻² le seuil d'audibilité ; mesuré à l'aide d'un sonomètre.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Atténuation géométrique</strong><br>Diminution du niveau sonore due à la répartition de l'énergie sur une surface croissante à mesure que l'on s'éloigne de la source : A = L<sub>proche</sub> − L<sub>éloigné</sub>, toujours positive.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Atténuation par absorption</strong><br>Diminution du niveau sonore due à une perte d'énergie lors de la traversée d'un milieu matériel : A = L<sub>incident</sub> − L<sub>transmis</sub>, toujours positive.</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--bleu);">Effet Doppler</strong><br>Modification de la fréquence perçue par un récepteur lorsque la distance qui le sépare de la source varie au cours du temps ; propriété générale des ondes (sonores ou électromagnétiques).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Décalage Doppler Δf</strong><br>Différence entre la fréquence reçue et la fréquence émise : Δf = f<sub>R</sub> − f<sub>E</sub> ; positif si la source se rapproche (son plus aigu), négatif si elle s'éloigne (son plus grave).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Fréquence émise f<sub>E</sub></strong><br>Fréquence de l'onde produite par la source, telle qu'elle serait perçue si la distance source-récepteur restait constante.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Fréquence reçue f<sub>R</sub></strong><br>Fréquence de l'onde effectivement perçue par le récepteur, modifiée par l'effet Doppler lorsque la source est en mouvement relatif par rapport à lui.</p>
-      </div>
-    </div>
-  </div>
-
   </div>
   <!-- /sub-R-0 -->
 
-  <!-- ───────── R2 : RESSOURCES ───────── -->
+  <!-- ───────── R2 : GLOSSAIRE ───────── -->
   <div class="sub-tab-content" id="sub-R-1">
+    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+    <dl class="gloss-grid" id="glossGrid">
+      <div class="gloss-item" data-term="intensite sonore"><dt>Intensité sonore I</dt><dd>Puissance sonore reçue par unité de surface : I = P/S, exprimée en W·m⁻².</dd></div>
+      <div class="gloss-item" data-term="niveau d'intensite sonore"><dt>Niveau d'intensité sonore L</dt><dd>Grandeur logarithmique adaptée à l'étendue de sensibilité de l'oreille humaine : L = 10·log(I/I₀), avec I₀ = 10⁻¹² W·m⁻² le seuil d'audibilité ; mesuré à l'aide d'un sonomètre.</dd></div>
+      <div class="gloss-item" data-term="attenuation geometrique"><dt>Atténuation géométrique</dt><dd>Diminution du niveau sonore due à la répartition de l'énergie sur une surface croissante à mesure que l'on s'éloigne de la source : A = L<sub>proche</sub> − L<sub>éloigné</sub>, toujours positive.</dd></div>
+      <div class="gloss-item" data-term="attenuation par absorption"><dt>Atténuation par absorption</dt><dd>Diminution du niveau sonore due à une perte d'énergie lors de la traversée d'un milieu matériel : A = L<sub>incident</sub> − L<sub>transmis</sub>, toujours positive.</dd></div>
+      <div class="gloss-item" data-term="effet doppler"><dt>Effet Doppler</dt><dd>Modification de la fréquence perçue par un récepteur lorsque la distance qui le sépare de la source varie au cours du temps ; propriété générale des ondes (sonores ou électromagnétiques).</dd></div>
+      <div class="gloss-item" data-term="decalage doppler"><dt>Décalage Doppler Δf</dt><dd>Différence entre la fréquence reçue et la fréquence émise : Δf = f<sub>R</sub> − f<sub>E</sub> ; positif si la source se rapproche (son plus aigu), négatif si elle s'éloigne (son plus grave).</dd></div>
+      <div class="gloss-item" data-term="frequence emise"><dt>Fréquence émise f<sub>E</sub></dt><dd>Fréquence de l'onde produite par la source, telle qu'elle serait perçue si la distance source-récepteur restait constante.</dd></div>
+      <div class="gloss-item" data-term="frequence recue"><dt>Fréquence reçue f<sub>R</sub></dt><dd>Fréquence de l'onde effectivement perçue par le récepteur, modifiée par l'effet Doppler lorsque la source est en mouvement relatif par rapport à lui.</dd></div>
+    </dl>
+  </div>
+  <!-- /sub-R-1 (Glossaire) -->
+
+  <!-- ───────── R3 : RESSOURCES ───────── -->
+  <div class="sub-tab-content" id="sub-R-2">
 
     <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
@@ -1910,7 +1943,7 @@
     </div>
 
   </div>
-  <!-- /sub-R-1 -->
+  <!-- /sub-R-2 (Ressources) -->
 
 </div>
 <!-- /tab-5 -->
@@ -1930,6 +1963,15 @@ function switchSubTab(group, i) {
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
   document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
   window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 document.getElementById('capToggle').addEventListener('click', () => {
   document.getElementById('capPanel').classList.toggle('open');
