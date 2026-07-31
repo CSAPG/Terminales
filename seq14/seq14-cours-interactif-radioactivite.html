@@ -272,6 +272,14 @@ button.cap-toggle:hover { background: #1e4466; }
 .accord-body { display: none; padding: 14px; background: var(--bg3); border: 1.5px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; font-size: 0.88rem; line-height: 1.7; margin-top: -10px; margin-bottom: 10px; }
 .accord-body.open { display: block; }
 
+/* ── GLOSSAIRE ── */
+.gloss-search { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 20px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; margin-bottom: 16px; }
+.gloss-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+.gloss-item { background: var(--bg3); border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+.gloss-item dt { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--accent1); font-size: 0.9rem; margin-bottom: 4px; }
+.gloss-item dd { font-size: 0.84rem; color: var(--text); line-height: 1.55; }
+
 /* ── SOUS-ONGLETS BILAN/RESSOURCES ── */
 .sub-tabs-nav { display: flex; gap: 6px; padding: 6px 0 0; margin-bottom: 22px; flex-wrap: nowrap; overflow-x: auto; }
 .sub-tab-btn { display: flex; align-items: center; gap: 8px; padding: 8px 18px; border: none; background: #b8cfe0; font-family: 'Nunito', sans-serif; font-size: 0.84rem; font-weight: 700; color: var(--accent1); cursor: pointer; border-radius: 999px; transition: all 0.2s; white-space: nowrap; }
@@ -349,6 +357,7 @@ button.cap-toggle:hover { background: #1e4466; }
 /* ── GRIDS ── */
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
 @media (max-width: 640px) {
+  body { padding: 6px; }
   .grid2 { grid-template-columns: 1fr; }
   .header-inner { padding: 12px 14px 10px; }
   .header-titles h1 { font-size: 1.15rem; }
@@ -1750,7 +1759,8 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
 
   <div class="sub-tabs-nav" id="sub-nav-Z">
     <button class="sub-tab-btn active" onclick="switchSubTab('Z',0)">📋 Bilan</button>
-    <button class="sub-tab-btn" onclick="switchSubTab('Z',1)">🔗 Ressources</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('Z',1)">📖 Glossaire</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('Z',2)">🔗 Ressources</button>
   </div>
 
   <div class="sub-tab-content active" id="sub-Z-0">
@@ -1803,28 +1813,6 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
     </div>
   </div>
 
-  <button class="accord-btn" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▾</span>
-  </button>
-  <div class="accord-body">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--accent1);">Nucléide</strong><br>Espèce nucléaire caractérisée par son nombre de protons Z et son nombre de neutrons N (ou son nombre de nucléons A = Z + N), représenté par le symbole <sup>A</sup><sub>Z</sub>X.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--accent1);">Noyau stable / instable (radioactif)</strong><br>Un noyau stable ne se transforme jamais spontanément ; un noyau instable (radioactif) se désintègre spontanément en émettant un rayonnement, pour former un noyau plus stable.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--accent1);">Diagramme (N,Z) [diagramme de Ségré]</strong><br>Représentation graphique des nucléides selon leur nombre de neutrons N (ordonnée) et de protons Z (abscisse), qui fait apparaître la vallée de stabilité et les zones d'instabilité α, β⁻, β⁺.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--accent1);">Radioactivité α</strong><br>Émission spontanée d'un noyau d'hélium <sup>4</sup><sub>2</sub>He par un noyau lourd (A &gt; 200 environ), qui perd 2 protons et 2 neutrons.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--accent1);">Radioactivité β⁻ / β⁺</strong><br>Émission spontanée d'un électron (β⁻) ou d'un positon (β⁺) par un noyau instable, respectivement trop riche en neutrons ou en protons ; un neutron (ou proton) se transforme alors en proton (ou neutron).</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--accent1);">Émission γ</strong><br>Émission d'un photon très énergétique par un noyau fils formé dans un état excité, qui se désexcite sans modification de A ni de Z.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--accent1);">Activité A(t)</strong><br>Nombre de désintégrations radioactives par seconde au sein d'un échantillon : A(t) = −dN(t)/dt = λ·N(t), exprimée en becquerel (Bq).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--accent1);">Constante radioactive λ</strong><br>Probabilité de désintégration par unité de temps d'un noyau radioactif donné ; caractéristique du nucléide, elle apparaît dans la loi de décroissance N(t) = N₀·e<sup>−λt</sup>.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--accent1);">Temps de demi-vie t<sub>1/2</sub></strong><br>Durée au bout de laquelle la moitié des noyaux radioactifs initialement présents dans un échantillon se sont désintégrés : t₁/₂ = ln(2)/λ.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--accent1);">Datation radioactive</strong><br>Méthode de détermination de l'âge d'un échantillon à partir de la mesure de son activité résiduelle (ou du rapport isotopique restant) et de la connaissance de la loi de décroissance du nucléide utilisé.</p>
-      </div>
-    </div>
-  </div>
-
   <div class="section-title" style="margin-top:30px;">🕰️ Repères historiques</div>
   <div class="timeline">
     <div class="timeline-item"><div class="timeline-year">1896</div><div class="timeline-text"><strong>Henri Becquerel</strong> découvre la radioactivité lors d'expériences sur la fluorescence des sels d'uranium.</div></div>
@@ -1837,6 +1825,24 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
   <!-- /sub-Z-0 -->
 
   <div class="sub-tab-content" id="sub-Z-1">
+  <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+  <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+  <dl class="gloss-grid" id="glossGrid">
+    <div class="gloss-item" data-term="nucleide"><dt>Nucléide</dt><dd>Espèce nucléaire caractérisée par son nombre de protons Z et son nombre de neutrons N (ou son nombre de nucléons A = Z + N), représenté par le symbole <sup>A</sup><sub>Z</sub>X.</dd></div>
+    <div class="gloss-item" data-term="noyau stable instable radioactif"><dt>Noyau stable / instable (radioactif)</dt><dd>Un noyau stable ne se transforme jamais spontanément ; un noyau instable (radioactif) se désintègre spontanément en émettant un rayonnement, pour former un noyau plus stable.</dd></div>
+    <div class="gloss-item" data-term="diagramme n z segre"><dt>Diagramme (N,Z) [diagramme de Ségré]</dt><dd>Représentation graphique des nucléides selon leur nombre de neutrons N (ordonnée) et de protons Z (abscisse), qui fait apparaître la vallée de stabilité et les zones d'instabilité α, β⁻, β⁺.</dd></div>
+    <div class="gloss-item" data-term="radioactivite alpha"><dt>Radioactivité α</dt><dd>Émission spontanée d'un noyau d'hélium <sup>4</sup><sub>2</sub>He par un noyau lourd (A &gt; 200 environ), qui perd 2 protons et 2 neutrons.</dd></div>
+    <div class="gloss-item" data-term="radioactivite beta"><dt>Radioactivité β⁻ / β⁺</dt><dd>Émission spontanée d'un électron (β⁻) ou d'un positon (β⁺) par un noyau instable, respectivement trop riche en neutrons ou en protons ; un neutron (ou proton) se transforme alors en proton (ou neutron).</dd></div>
+    <div class="gloss-item" data-term="emission gamma"><dt>Émission γ</dt><dd>Émission d'un photon très énergétique par un noyau fils formé dans un état excité, qui se désexcite sans modification de A ni de Z.</dd></div>
+    <div class="gloss-item" data-term="activite"><dt>Activité A(t)</dt><dd>Nombre de désintégrations radioactives par seconde au sein d'un échantillon : A(t) = −dN(t)/dt = λ·N(t), exprimée en becquerel (Bq).</dd></div>
+    <div class="gloss-item" data-term="constante radioactive"><dt>Constante radioactive λ</dt><dd>Probabilité de désintégration par unité de temps d'un noyau radioactif donné ; caractéristique du nucléide, elle apparaît dans la loi de décroissance N(t) = N₀·e<sup>−λt</sup>.</dd></div>
+    <div class="gloss-item" data-term="temps de demi-vie"><dt>Temps de demi-vie t<sub>1/2</sub></dt><dd>Durée au bout de laquelle la moitié des noyaux radioactifs initialement présents dans un échantillon se sont désintégrés : t₁/₂ = ln(2)/λ.</dd></div>
+    <div class="gloss-item" data-term="datation radioactive"><dt>Datation radioactive</dt><dd>Méthode de détermination de l'âge d'un échantillon à partir de la mesure de son activité résiduelle (ou du rapport isotopique restant) et de la connaissance de la loi de décroissance du nucléide utilisé.</dd></div>
+  </dl>
+  </div>
+  <!-- /sub-Z-1 (Glossaire) -->
+
+  <div class="sub-tab-content" id="sub-Z-2">
 
   <div class="section-title" style="margin-top:30px;">🎬 Vidéos</div>
   <div class="bilan-grid">
@@ -1972,7 +1978,7 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
   </div>
 
   </div>
-  <!-- /sub-Z-1 -->
+  <!-- /sub-Z-2 (Ressources) -->
 
 </div>
 
@@ -2099,6 +2105,15 @@ function toggleAccord(btn) {
 function switchSubTab(group, i) {
   document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 
 document.getElementById('capToggle').addEventListener('click', () => {
@@ -3076,5 +3091,6 @@ window.addEventListener('load',()=>{
   drawInstant();
 });
 </script>
+</div><!-- /page-wrapper -->
 </body>
 </html>
