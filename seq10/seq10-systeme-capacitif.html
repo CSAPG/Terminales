@@ -976,6 +976,14 @@
 .ke-list li:last-child { border-bottom:none; }
 .ke-list li::before { content:"✓"; position:absolute; left:8px; color:var(--vert); font-weight:800; font-size:.90rem; }
 
+/* ── GLOSSAIRE ── */
+.gloss-search { width:100%; padding:10px 14px; border:1.5px solid var(--gris-bord); border-radius:20px; font-family:'Nunito',sans-serif; font-size:.88rem; margin-bottom:16px; }
+.gloss-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+@media (max-width:700px) { .gloss-grid { grid-template-columns:1fr; } }
+.gloss-item { background:var(--blanc); border:1.5px solid var(--gris-bord); border-radius:10px; padding:12px 16px; }
+.gloss-item dt { font-family:'Outfit',sans-serif; font-weight:800; color:var(--bleu); font-size:.9rem; margin-bottom:4px; }
+.gloss-item dd { font-size:.84rem; color:var(--texte); line-height:1.55; }
+
 .bac-card { background:var(--blanc); border:1.5px solid var(--gris-bord); border-left:4px solid var(--violet); border-radius:12px; padding:16px; margin-bottom:14px; }
 .bac-card-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; font-size:.78rem; color:var(--texte-leger); margin-bottom:6px; }
 .bac-lieu { font-weight:700; color:var(--violet); }
@@ -992,7 +1000,7 @@
 
 .footer-note { text-align:center; font-size:.78rem; color:var(--texte-leger); padding:20px; border-top:1px solid var(--gris-bord); margin-top:30px; }
 
-@media (max-width:600px) {
+@media (max-width:640px) {
   .tab-btn { padding:8px 12px 10px; font-size:.80rem; }
 }
 </style>
@@ -1947,6 +1955,9 @@
 <span class="sub-tab-num">📋</span> Bilan
     </button>
 <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+<span class="sub-tab-num">📖</span> Glossaire
+    </button>
+<button class="sub-tab-btn" data-sub="C3" onclick="switchSubTab('C',2)">
 <span class="sub-tab-num">🔗</span> Ressources
     </button>
 </nav>
@@ -2001,29 +2012,25 @@
 </ul>
 </div>
 </div>
-<button class="accord-btn" onclick="toggleAccord(this)" style="background:var(--bleu-clair);border:2px solid var(--bleu-clair);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;">
-<span>📖 Glossaire de la séquence</span><span>▼</span>
-</button>
-<div class="accord-body" style="border-color:var(--bleu-clair);background:var(--blanc);">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-<div>
-<p><strong style="color:var(--bleu);">Condensateur</strong><br/>Dipôle constitué de deux armatures conductrices séparées par un isolant, capable de stocker des charges électriques de signes opposés.</p>
-<p style="margin-top:10px;"><strong style="color:var(--bleu);">Capacité C</strong><br/>Grandeur caractérisant l'aptitude d'un condensateur à stocker des charges, en farads (F) ; C = ε₀·εᵣ·S/d pour un condensateur plan.</p>
-<p style="margin-top:10px;"><strong style="color:var(--bleu);">Comportement capacitif</strong><br/>Propriété d'un dipôle à accumuler des charges de signes opposés sur des surfaces en regard lorsqu'il est soumis à une tension.</p>
-<p style="margin-top:10px;"><strong style="color:var(--bleu);">Régime transitoire</strong><br/>Phase d'évolution d'un système entre son état initial et son état final, ici la charge ou la décharge du condensateur.</p>
-<p style="margin-top:10px;"><strong style="color:var(--bleu);">Régime permanent</strong><br/>État atteint après un temps suffisamment long (t ≥ 5τ), où les grandeurs électriques n'évoluent plus (ou quasiment plus).</p>
 </div>
-<div>
-<p><strong style="color:var(--bleu);">Temps caractéristique τ</strong><br/>Constante de temps du circuit RC, τ = R·C (en secondes), qui fixe la rapidité de la charge ou de la décharge.</p>
-<p style="margin-top:10px;"><strong style="color:var(--bleu);">Énergie stockée</strong><br/>Énergie électrique emmagasinée dans le condensateur, E = ½·C·U² (en joules).</p>
-<p style="margin-top:10px;"><strong style="color:var(--bleu);">Capteur capacitif</strong><br/>Dispositif exploitant la variation de capacité C d'un condensateur (due à S, d ou εᵣ) pour mesurer une grandeur physique.</p>
-<p style="margin-top:10px;"><strong style="color:var(--bleu);">Méthode de la tangente</strong><br/>Méthode graphique de détermination de τ : la tangente à l'origine de U<sub>C</sub>(t) coupe l'asymptote horizontale en t = τ.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- C2 : Ressources -->
+<!-- C2 : Glossaire -->
 <div class="sub-tab-content" id="sub-C-1">
+<div class="section-title"><span class="icon">📖</span> Glossaire</div>
+<input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+<dl class="gloss-grid" id="glossGrid">
+<div class="gloss-item" data-term="condensateur"><dt>Condensateur</dt><dd>Dipôle constitué de deux armatures conductrices séparées par un isolant, capable de stocker des charges électriques de signes opposés.</dd></div>
+<div class="gloss-item" data-term="capacite"><dt>Capacité C</dt><dd>Grandeur caractérisant l'aptitude d'un condensateur à stocker des charges, en farads (F) ; C = ε₀·εᵣ·S/d pour un condensateur plan.</dd></div>
+<div class="gloss-item" data-term="comportement capacitif"><dt>Comportement capacitif</dt><dd>Propriété d'un dipôle à accumuler des charges de signes opposés sur des surfaces en regard lorsqu'il est soumis à une tension.</dd></div>
+<div class="gloss-item" data-term="regime transitoire"><dt>Régime transitoire</dt><dd>Phase d'évolution d'un système entre son état initial et son état final, ici la charge ou la décharge du condensateur.</dd></div>
+<div class="gloss-item" data-term="regime permanent"><dt>Régime permanent</dt><dd>État atteint après un temps suffisamment long (t ≥ 5τ), où les grandeurs électriques n'évoluent plus (ou quasiment plus).</dd></div>
+<div class="gloss-item" data-term="temps caracteristique"><dt>Temps caractéristique τ</dt><dd>Constante de temps du circuit RC, τ = R·C (en secondes), qui fixe la rapidité de la charge ou de la décharge.</dd></div>
+<div class="gloss-item" data-term="energie stockee"><dt>Énergie stockée</dt><dd>Énergie électrique emmagasinée dans le condensateur, E = ½·C·U² (en joules).</dd></div>
+<div class="gloss-item" data-term="capteur capacitif"><dt>Capteur capacitif</dt><dd>Dispositif exploitant la variation de capacité C d'un condensateur (due à S, d ou εᵣ) pour mesurer une grandeur physique.</dd></div>
+<div class="gloss-item" data-term="methode de la tangente"><dt>Méthode de la tangente</dt><dd>Méthode graphique de détermination de τ : la tangente à l'origine de U<sub>C</sub>(t) coupe l'asymptote horizontale en t = τ.</dd></div>
+</dl>
+</div>
+<!-- C3 : Ressources -->
+<div class="sub-tab-content" id="sub-C-2">
 <div class="section-title" style="margin-top:32px;"><span class="icon">🎬</span> Vidéos</div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
@@ -3544,6 +3551,15 @@ function switchSubTab(group, n) {
   document.querySelectorAll('[id^="' + prefix + '"]').forEach((el,i) => el.classList.toggle('active', i===n));
   document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,i) => b.classList.toggle('active', i===n));
   refreshCanvasesSoon();
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 
 // Les canvas sont dimensionnés via offsetWidth/clientWidth : si leur onglet est
