@@ -107,6 +107,12 @@ button.cap-toggle:hover{background:#1e4466}
 .ke-list li::before{content:"✓";position:absolute;left:8px;color:var(--vert);font-weight:800;font-size:.9rem}
 .bilan-video-link{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed var(--gris-bord);font-size:.82rem;font-weight:700;color:var(--bleu);text-decoration:none}
 .bilan-video-link:hover{color:#1e4466;text-decoration:underline}
+.gloss-search{width:100%;padding:10px 14px;border:1.5px solid var(--gris-bord);border-radius:20px;font-family:'Nunito',sans-serif;font-size:.88rem;margin-bottom:16px}
+.gloss-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:700px){.gloss-grid{grid-template-columns:1fr}}
+.gloss-item{background:var(--blanc);border:1.5px solid var(--gris-bord);border-radius:10px;padding:12px 16px}
+.gloss-item dt{font-family:'Outfit',sans-serif;font-weight:800;color:var(--bleu);font-size:.9rem;margin-bottom:4px}
+.gloss-item dd{font-size:.84rem;color:var(--texte);line-height:1.55}
 .bac-card{background:var(--blanc);border:1.5px solid var(--gris-bord);border-left:4px solid var(--violet);border-radius:12px;padding:16px;margin-bottom:14px}
 .bac-card-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:.78rem;color:var(--texte-leger);margin-bottom:6px}
 .bac-lieu{font-weight:700;color:var(--violet)}
@@ -215,7 +221,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
 .pdf-footer{margin-top:20px;font-size:10px;color:#888;border-top:1px solid #ddd;padding-top:7px;display:flex;justify-content:space-between}
 
 /* ── Responsive mobile ── */
-@media(max-width:600px){
+@media(max-width:640px){
   body{padding:6px}
   .header{padding:12px 16px 10px}
   .header-titles h1{font-size:1.05rem}
@@ -1153,12 +1159,15 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
       <span class="sub-tab-num">📋</span> Bilan
     </button>
     <button class="sub-tab-btn" data-sub="bilan2" onclick="switchSubTabLun(1)">
-      <span class="sub-tab-num">🎬</span> Vidéos &amp; QCM
+      <span class="sub-tab-num">📖</span> Glossaire
     </button>
     <button class="sub-tab-btn" data-sub="bilan3" onclick="switchSubTabLun(2)">
-      <span class="sub-tab-num">🔭</span> Sites &amp; simulations
+      <span class="sub-tab-num">🎬</span> Vidéos &amp; QCM
     </button>
     <button class="sub-tab-btn" data-sub="bilan4" onclick="switchSubTabLun(3)">
+      <span class="sub-tab-num">🔭</span> Sites &amp; simulations
+    </button>
+    <button class="sub-tab-btn" data-sub="bilan5" onclick="switchSubTabLun(4)">
       <span class="sub-tab-num">🎓</span> Sujets de bac
     </button>
   </nav>
@@ -1211,23 +1220,22 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
       </div>
     </div>
 
-    <div class="section-title" style="margin-top:28px;"><span class="icon">📖</span> Glossaire</div>
+  </div>
 
-    <button class="accord-btn" onclick="this.nextElementSibling.classList.toggle('open')">Système afocal <span>▾</span></button>
-    <div class="accord-body">Système optique qui donne d'un objet à l'infini une image également à l'infini. L'œil, au repos, observe alors sans effort d'accommodation.</div>
-
-    <button class="accord-btn" onclick="this.nextElementSibling.classList.toggle('open')">Objectif / Oculaire <span>▾</span></button>
-    <div class="accord-body"><b>Objectif :</b> lentille convergente tournée vers l'objet observé, de grande distance focale f₁', qui forme l'image intermédiaire.<br><b>Oculaire :</b> lentille convergente proche de l'œil, de courte distance focale f₂', qui reporte l'image intermédiaire à l'infini.</div>
-
-    <button class="accord-btn" onclick="this.nextElementSibling.classList.toggle('open')">Diamètre apparent <span>▾</span></button>
-    <div class="accord-body">Angle sous lequel un observateur voit un objet, avec ou sans instrument. C'est ce diamètre apparent — et non la taille réelle de l'objet — que multiplie le grossissement de la lunette.</div>
-
-    <button class="accord-btn" onclick="this.nextElementSibling.classList.toggle('open')">Cercle oculaire <span>▾</span></button>
-    <div class="accord-body">Image de la monture de l'objectif donnée par l'oculaire. C'est la zone la plus lumineuse en sortie de l'instrument : il faut y placer l'œil pour recueillir tout le faisceau lumineux.</div>
+  <!-- Sous-onglet : GLOSSAIRE -->
+  <div class="sub-tab-content" id="sub-bilan-1">
+    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+    <dl class="gloss-grid" id="glossGrid">
+      <div class="gloss-item" data-term="systeme afocal"><dt>Système afocal</dt><dd>Système optique qui donne d'un objet à l'infini une image également à l'infini. L'œil, au repos, observe alors sans effort d'accommodation.</dd></div>
+      <div class="gloss-item" data-term="objectif oculaire"><dt>Objectif / Oculaire</dt><dd><b>Objectif :</b> lentille convergente tournée vers l'objet observé, de grande distance focale f₁', qui forme l'image intermédiaire.<br><b>Oculaire :</b> lentille convergente proche de l'œil, de courte distance focale f₂', qui reporte l'image intermédiaire à l'infini.</dd></div>
+      <div class="gloss-item" data-term="diametre apparent"><dt>Diamètre apparent</dt><dd>Angle sous lequel un observateur voit un objet, avec ou sans instrument. C'est ce diamètre apparent — et non la taille réelle de l'objet — que multiplie le grossissement de la lunette.</dd></div>
+      <div class="gloss-item" data-term="cercle oculaire"><dt>Cercle oculaire</dt><dd>Image de la monture de l'objectif donnée par l'oculaire. C'est la zone la plus lumineuse en sortie de l'instrument : il faut y placer l'œil pour recueillir tout le faisceau lumineux.</dd></div>
+    </dl>
   </div>
 
   <!-- Sous-onglet : RESSOURCES -->
-  <div class="sub-tab-content" id="sub-bilan-1">
+  <div class="sub-tab-content" id="sub-bilan-2">
 
     <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
@@ -1276,7 +1284,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
   </div>
 
   <!-- Sous-onglet : SITES & SIMULATIONS -->
-  <div class="sub-tab-content" id="sub-bilan-2">
+  <div class="sub-tab-content" id="sub-bilan-3">
 
     <div style="background:#f0f8ff;border:2px solid #1a5aaa;border-radius:10px;padding:14px 18px;margin-bottom:16px">
       <h2 style="font-size:16px;font-weight:700;color:#1a3a6a;margin-bottom:4px">🔭 Simulation PhET — Vérifier la position de l'image intermédiaire</h2>
@@ -1367,7 +1375,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
   </div>
 
   <!-- Sous-onglet : SUJETS DE BAC -->
-  <div class="sub-tab-content" id="sub-bilan-3">
+  <div class="sub-tab-content" id="sub-bilan-4">
 
     <div class="section-title"><span class="icon">🎓</span> Sujets de bac</div>
 
@@ -2785,9 +2793,18 @@ function showTab(id){
 // ═══ SOUS-ONGLETS BILAN & RESSOURCES ══════════════════════════════════════
 function switchSubTabLun(idx){
   var btns = document.querySelectorAll('#sub-nav-bilan .sub-tab-btn');
-  var contents = [document.getElementById('sub-bilan-0'), document.getElementById('sub-bilan-1'), document.getElementById('sub-bilan-2'), document.getElementById('sub-bilan-3')];
+  var contents = [document.getElementById('sub-bilan-0'), document.getElementById('sub-bilan-1'), document.getElementById('sub-bilan-2'), document.getElementById('sub-bilan-3'), document.getElementById('sub-bilan-4')];
   btns.forEach((b,i)=>b.classList.toggle('active', i===idx));
   contents.forEach((c,i)=>{ if(c) c.classList.toggle('active', i===idx); });
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 
 // ═══ EXERCICES GUIDÉS ════════════════════════════════════════════════════
