@@ -161,7 +161,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 .cv-tooltip .tt-P{color:var(--vert)}
 .cv-tooltip .tt-v{color:var(--violet)}
 
-@media(max-width:768px){.g2{grid-template-columns:1fr}.page{padding-left:16px;padding-right:16px}.header-inner{padding-left:16px;padding-right:16px}.header-icon-wrap{width:50px;height:44px}.header-titles h1{font-size:1.15rem}.tab{padding:8px 12px 10px;font-size:.80rem}}
+@media(max-width:768px){.g2{grid-template-columns:1fr}}
+@media(max-width:640px){body{padding:6px}.page{padding-left:16px;padding-right:16px}.header-inner{padding-left:16px;padding-right:16px}.header-icon-wrap{width:50px;height:44px}.header-titles h1{font-size:1.15rem}.tab{padding:8px 12px 10px;font-size:.80rem}}
 /* ── BILAN & RESSOURCES (harmonisation) ── */
 .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
 @media(max-width:560px){.bilan-grid{grid-template-columns:1fr}}
@@ -169,6 +170,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 .bilan-card h4{font-family:'Outfit',sans-serif;font-size:0.95rem;font-weight:700;color:var(--bleu);margin-bottom:8px;padding-bottom:8px;border-bottom:1.5px solid var(--border)}
 .bilan-card ul{padding-left:18px}
 .bilan-card ul li{font-size:0.84rem;margin-bottom:5px;line-height:1.6;color:var(--text)}
+
+/* ── GLOSSAIRE ── */
+.gloss-search{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:20px;font-family:'Nunito',sans-serif;font-size:0.88rem;margin-bottom:16px}
+.gloss-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:700px){.gloss-grid{grid-template-columns:1fr}}
+.gloss-item{background:var(--panel);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px}
+.gloss-item dt{font-family:'Outfit',sans-serif;font-weight:800;color:var(--bleu);font-size:0.9rem;margin-bottom:4px}
+.gloss-item dd{font-size:0.84rem;color:var(--text);line-height:1.55}
 .res-link-card{background:var(--panel);border:1.5px solid var(--border);border-left:4px solid var(--bleu);border-radius:12px;padding:14px 16px;text-decoration:none;display:block;transition:box-shadow 0.2s}
 .res-link-card:hover{box-shadow:0 4px 16px rgba(45,95,138,0.18)}
 .res-link-card h4{font-family:'Outfit',sans-serif;font-size:0.92rem;font-weight:700;color:var(--bleu);margin:0}
@@ -1161,7 +1170,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 
   <div class="sub-tabs-nav" id="sub-nav-Z">
     <button class="sub-tab-btn active" onclick="switchSubTab('Z',0)">📋 Bilan</button>
-    <button class="sub-tab-btn" onclick="switchSubTab('Z',1)">🔗 Ressources</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('Z',1)">📖 Glossaire</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('Z',2)">🔗 Ressources</button>
   </div>
 
   <div class="sub-tab-content active" id="sub-Z-0">
@@ -1206,30 +1216,26 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     </div>
   </div>
 
-  <button class="accord-btn" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▾</span>
-  </button>
-  <div class="accord-body">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--bleu);">Transformation lente / rapide</strong><br>Une transformation lente peut être suivie à l'œil nu ou à l'aide d'un dispositif de mesure ; une transformation rapide semble instantanée (durée inférieure à la seconde).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Facteur cinétique</strong><br>Paramètre physico-chimique (température, concentration, état de division) qui influence la vitesse à laquelle une transformation chimique se déroule, sans changer son état final.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Catalyseur</strong><br>Espèce chimique qui augmente la vitesse d'une réaction sans apparaître dans son équation-bilan ni être consommée ; elle ne modifie ni la constante d'équilibre K, ni l'état final du système.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Catalyse homogène / hétérogène / enzymatique</strong><br>Homogène : catalyseur dans la même phase que les réactifs. Hétérogène : catalyseur dans une phase différente. Enzymatique : catalyseur biologique (enzyme), très sélectif.</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--bleu);">Vitesse volumique de disparition / d'apparition</strong><br>Dérivée par rapport au temps de la concentration d'un réactif (avec un signe −) ou d'un produit ; s'obtient graphiquement par la pente de la tangente à la courbe c = f(t).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Loi de vitesse d'ordre 1</strong><br>Loi selon laquelle la vitesse de disparition d'un réactif est proportionnelle à sa concentration ; se traduit graphiquement par une évolution affine de ln(c) en fonction du temps.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Temps de demi-réaction t<sub>1/2</sub></strong><br>Durée au bout de laquelle l'avancement de la réaction est égal à la moitié de l'avancement final ; se détermine graphiquement à partir de c = f(t) ou x = f(t).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Intermédiaire réactionnel</strong><br>Espèce chimique formée puis consommée au cours d'une transformation, absente de l'équation-bilan globale (ex. : le catalyseur régénéré en catalyse homogène).</p>
-      </div>
-    </div>
-  </div>
-
   </div>
   <!-- /sub-Z-0 -->
 
   <div class="sub-tab-content" id="sub-Z-1">
+  <div class="section-title" style="font-family:'Outfit',sans-serif;font-size:1.18rem;font-weight:800;color:var(--bleu);margin:0 0 14px;display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:2px solid var(--bleu-clair);">📖 Glossaire</div>
+  <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+  <dl class="gloss-grid" id="glossGrid">
+    <div class="gloss-item" data-term="transformation lente rapide"><dt>Transformation lente / rapide</dt><dd>Une transformation lente peut être suivie à l'œil nu ou à l'aide d'un dispositif de mesure ; une transformation rapide semble instantanée (durée inférieure à la seconde).</dd></div>
+    <div class="gloss-item" data-term="facteur cinetique"><dt>Facteur cinétique</dt><dd>Paramètre physico-chimique (température, concentration, état de division) qui influence la vitesse à laquelle une transformation chimique se déroule, sans changer son état final.</dd></div>
+    <div class="gloss-item" data-term="catalyseur"><dt>Catalyseur</dt><dd>Espèce chimique qui augmente la vitesse d'une réaction sans apparaître dans son équation-bilan ni être consommée ; elle ne modifie ni la constante d'équilibre K, ni l'état final du système.</dd></div>
+    <div class="gloss-item" data-term="catalyse homogene heterogene enzymatique"><dt>Catalyse homogène / hétérogène / enzymatique</dt><dd>Homogène : catalyseur dans la même phase que les réactifs. Hétérogène : catalyseur dans une phase différente. Enzymatique : catalyseur biologique (enzyme), très sélectif.</dd></div>
+    <div class="gloss-item" data-term="vitesse volumique"><dt>Vitesse volumique de disparition / d'apparition</dt><dd>Dérivée par rapport au temps de la concentration d'un réactif (avec un signe −) ou d'un produit ; s'obtient graphiquement par la pente de la tangente à la courbe c = f(t).</dd></div>
+    <div class="gloss-item" data-term="loi de vitesse d'ordre 1"><dt>Loi de vitesse d'ordre 1</dt><dd>Loi selon laquelle la vitesse de disparition d'un réactif est proportionnelle à sa concentration ; se traduit graphiquement par une évolution affine de ln(c) en fonction du temps.</dd></div>
+    <div class="gloss-item" data-term="temps de demi-reaction"><dt>Temps de demi-réaction t<sub>1/2</sub></dt><dd>Durée au bout de laquelle l'avancement de la réaction est égal à la moitié de l'avancement final ; se détermine graphiquement à partir de c = f(t) ou x = f(t).</dd></div>
+    <div class="gloss-item" data-term="intermediaire reactionnel"><dt>Intermédiaire réactionnel</dt><dd>Espèce chimique formée puis consommée au cours d'une transformation, absente de l'équation-bilan globale (ex. : le catalyseur régénéré en catalyse homogène).</dd></div>
+  </dl>
+  </div>
+  <!-- /sub-Z-1 (Glossaire) -->
+
+  <div class="sub-tab-content" id="sub-Z-2">
 
   <div class="section-title" style="font-family:'Outfit',sans-serif;font-size:1.18rem;font-weight:800;color:var(--bleu);margin:0 0 14px;display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:2px solid var(--bleu-clair);">🔬 Simulations</div>
   <div class="bilan-grid">
@@ -1351,7 +1357,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
   </div>
 
   </div>
-  <!-- /sub-Z-1 -->
+  <!-- /sub-Z-2 (Ressources) -->
 
 </div>
 
@@ -2434,6 +2440,15 @@ function toggleAccord(btn){
 function switchSubTab(group,i){
   document.querySelectorAll('#sub-nav-'+group+' .sub-tab-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));
   document.querySelectorAll('[id^="sub-'+group+'-"]').forEach((t,idx)=>t.classList.toggle('active',idx===i));
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 function goTab(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
