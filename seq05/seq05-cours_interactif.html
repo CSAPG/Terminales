@@ -792,6 +792,38 @@
   }
   .ke-list li:last-child { border-bottom: none; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
+
   /* ── SUJETS DE BAC ── */
   .bac-card {
     background: var(--blanc);
@@ -1026,7 +1058,8 @@
   .qcm-grid-4col .fig-box { overflow: hidden; }
   .qcm-grid-4col .fig-box img { max-width: 100%; width: 100%; height: auto; display: block; }
   @media (max-width: 800px) { .qcm-grid-4col { grid-template-columns: repeat(2,1fr); } }
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    body { padding: 6px; }
     .header-inner { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
@@ -2570,7 +2603,10 @@ print("Virage entre V =", V_virage_debut, "mL et V =", V_virage_fin, "mL")</text
       <span class="sub-tab-num">1</span> Bilan et révision
     </button>
     <button class="sub-tab-btn" data-sub="Z2" onclick="switchSubTab('Z',1)">
-      <span class="sub-tab-num">2</span> Ressources numériques
+      <span class="sub-tab-num">📖</span> Glossaire
+    </button>
+    <button class="sub-tab-btn" data-sub="Z3" onclick="switchSubTab('Z',2)">
+      <span class="sub-tab-num">3</span> Ressources numériques
     </button>
   </div>
 
@@ -2678,37 +2714,33 @@ print("Virage entre V =", V_virage_debut, "mL et V =", V_virage_fin, "mL")</text
     </div>
   </div>
 
-  <button class="accord-btn" style="background:var(--bleu-activite);border:2px solid var(--bleu-activite-bord);color:var(--bleu);font-weight:800;padding:14px 18px;margin-top:20px;" onclick="toggleAccord(this)">
-    <span>📖 Glossaire de la séquence</span><span>▾</span>
-  </button>
-  <div class="accord-body" style="border-color:var(--bleu-activite-bord);background:var(--blanc);">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <p><strong style="color:var(--bleu);">Absorbance A</strong><br>Grandeur sans unité qui mesure l'atténuation d'un rayonnement traversant une solution : A = −log(I/I₀), avec I₀ l'intensité incidente et I l'intensité transmise.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Transmittance T</strong><br>Rapport T = I/I₀ entre l'intensité transmise et l'intensité incidente d'un rayonnement traversant une solution.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Loi de Beer-Lambert</strong><br>Relation de proportionnalité entre l'absorbance d'une solution et la concentration de l'espèce colorée qui absorbe : A = ε·l·C, valable pour des solutions suffisamment diluées (C &lt; 0,1 mol·L⁻¹).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Spectre infrarouge (IR)</strong><br>Représentation de la transmittance T en fonction du nombre d'onde σ = 1/λ ; les bandes d'absorption au-delà de 1500 cm⁻¹ permettent d'identifier les groupes caractéristiques d'une molécule.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Spectre UV-visible</strong><br>Représentation de l'absorbance en fonction de la longueur d'onde, entre 200 et 800 nm ; présente une ou plusieurs bandes d'absorption assez larges passant par un maximum d'absorption λ<sub>max</sub>.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Loi de Kohlrausch</strong><br>Relation de proportionnalité entre la conductivité σ d'une solution ionique diluée et la concentration C d'un unique soluté apporté : σ = k·C.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Conductimètre</strong><br>Appareil qui mesure la conductance (ou la conductivité) d'une solution en appliquant une tension entre deux électrodes immergées ; les cations migrent vers l'électrode négative, les anions vers l'électrode positive.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Conductance G</strong><br>Grandeur mesurée directement par le conductimètre (en siemens, S) ; reliée à la conductivité σ de la solution par la géométrie de la cellule de mesure (constante de cellule).</p>
-      </div>
-      <div>
-        <p><strong style="color:var(--bleu);">Dosage par étalonnage</strong><br>Méthode de détermination d'une concentration inconnue à partir d'une courbe d'étalonnage (A = f(C) ou σ = f(C)), tracée à partir de solutions de concentrations connues.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Mélange stœchiométrique</strong><br>Mélange dans lequel les réactifs sont introduits dans les proportions exactes des coefficients stœchiométriques de l'équation de la réaction : aucun réactif n'est en excès, tous sont consommés simultanément.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Titrage</strong><br>Technique quantitative utilisant une réaction chimique support (totale, rapide et unique) entre l'espèce à doser et une solution titrante de concentration connue.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Équivalence</strong><br>Instant d'un titrage où les réactifs ont été mélangés dans les proportions stœchiométriques ; correspond à un changement de réactif limitant.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Volume équivalent V<sub>E</sub></strong><br>Volume de solution titrante qu'il faut ajouter à la solution titrée pour atteindre l'équivalence, c'est-à-dire pour que le réactif titrant et le réactif titré soient dans les proportions stœchiométriques de la réaction support de titrage.</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Suivi conductimétrique</strong><br>Méthode de repérage de l'équivalence d'un titrage par mesure de la conductivité σ ; l'équivalence correspond à une rupture de pente sur la courbe σ = f(V).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Suivi pH-métrique</strong><br>Méthode de repérage de l'équivalence d'un titrage par mesure du pH ; l'équivalence correspond au point d'inflexion de la courbe pH = f(V) (méthode des tangentes ou de la dérivée).</p>
-        <p style="margin-top:10px;"><strong style="color:var(--bleu);">Suivi colorimétrique</strong><br>Méthode de repérage de l'équivalence d'un titrage par changement de teinte de la solution, à l'aide d'un indicateur coloré adapté au saut de pH de l'équivalence.</p>
-      </div>
-    </div>
-  </div>
-
   </div><!-- /sub-Z-0 -->
 
+  <!-- Sous-onglet Glossaire -->
   <div class="sub-tab-content" id="sub-Z-1">
+    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+    <dl class="gloss-grid" id="glossGrid">
+      <div class="gloss-item" data-term="absorbance"><dt>Absorbance A</dt><dd>Grandeur sans unité qui mesure l'atténuation d'un rayonnement traversant une solution : A = −log(I/I₀), avec I₀ l'intensité incidente et I l'intensité transmise.</dd></div>
+      <div class="gloss-item" data-term="transmittance"><dt>Transmittance T</dt><dd>Rapport T = I/I₀ entre l'intensité transmise et l'intensité incidente d'un rayonnement traversant une solution.</dd></div>
+      <div class="gloss-item" data-term="loi de beer-lambert"><dt>Loi de Beer-Lambert</dt><dd>Relation de proportionnalité entre l'absorbance d'une solution et la concentration de l'espèce colorée qui absorbe : A = ε·l·C, valable pour des solutions suffisamment diluées (C &lt; 0,1 mol·L⁻¹).</dd></div>
+      <div class="gloss-item" data-term="spectre infrarouge ir"><dt>Spectre infrarouge (IR)</dt><dd>Représentation de la transmittance T en fonction du nombre d'onde σ = 1/λ ; les bandes d'absorption au-delà de 1500 cm⁻¹ permettent d'identifier les groupes caractéristiques d'une molécule.</dd></div>
+      <div class="gloss-item" data-term="spectre uv-visible"><dt>Spectre UV-visible</dt><dd>Représentation de l'absorbance en fonction de la longueur d'onde, entre 200 et 800 nm ; présente une ou plusieurs bandes d'absorption assez larges passant par un maximum d'absorption λ<sub>max</sub>.</dd></div>
+      <div class="gloss-item" data-term="loi de kohlrausch"><dt>Loi de Kohlrausch</dt><dd>Relation de proportionnalité entre la conductivité σ d'une solution ionique diluée et la concentration C d'un unique soluté apporté : σ = k·C.</dd></div>
+      <div class="gloss-item" data-term="conductimetre"><dt>Conductimètre</dt><dd>Appareil qui mesure la conductance (ou la conductivité) d'une solution en appliquant une tension entre deux électrodes immergées ; les cations migrent vers l'électrode négative, les anions vers l'électrode positive.</dd></div>
+      <div class="gloss-item" data-term="conductance"><dt>Conductance G</dt><dd>Grandeur mesurée directement par le conductimètre (en siemens, S) ; reliée à la conductivité σ de la solution par la géométrie de la cellule de mesure (constante de cellule).</dd></div>
+      <div class="gloss-item" data-term="dosage par etalonnage"><dt>Dosage par étalonnage</dt><dd>Méthode de détermination d'une concentration inconnue à partir d'une courbe d'étalonnage (A = f(C) ou σ = f(C)), tracée à partir de solutions de concentrations connues.</dd></div>
+      <div class="gloss-item" data-term="melange stoechiometrique"><dt>Mélange stœchiométrique</dt><dd>Mélange dans lequel les réactifs sont introduits dans les proportions exactes des coefficients stœchiométriques de l'équation de la réaction : aucun réactif n'est en excès, tous sont consommés simultanément.</dd></div>
+      <div class="gloss-item" data-term="titrage"><dt>Titrage</dt><dd>Technique quantitative utilisant une réaction chimique support (totale, rapide et unique) entre l'espèce à doser et une solution titrante de concentration connue.</dd></div>
+      <div class="gloss-item" data-term="equivalence"><dt>Équivalence</dt><dd>Instant d'un titrage où les réactifs ont été mélangés dans les proportions stœchiométriques ; correspond à un changement de réactif limitant.</dd></div>
+      <div class="gloss-item" data-term="volume equivalent"><dt>Volume équivalent V<sub>E</sub></dt><dd>Volume de solution titrante qu'il faut ajouter à la solution titrée pour atteindre l'équivalence, c'est-à-dire pour que le réactif titrant et le réactif titré soient dans les proportions stœchiométriques de la réaction support de titrage.</dd></div>
+      <div class="gloss-item" data-term="suivi conductimetrique"><dt>Suivi conductimétrique</dt><dd>Méthode de repérage de l'équivalence d'un titrage par mesure de la conductivité σ ; l'équivalence correspond à une rupture de pente sur la courbe σ = f(V).</dd></div>
+      <div class="gloss-item" data-term="suivi ph-metrique"><dt>Suivi pH-métrique</dt><dd>Méthode de repérage de l'équivalence d'un titrage par mesure du pH ; l'équivalence correspond au point d'inflexion de la courbe pH = f(V) (méthode des tangentes ou de la dérivée).</dd></div>
+      <div class="gloss-item" data-term="suivi colorimetrique"><dt>Suivi colorimétrique</dt><dd>Méthode de repérage de l'équivalence d'un titrage par changement de teinte de la solution, à l'aide d'un indicateur coloré adapté au saut de pH de l'équivalence.</dd></div>
+    </dl>
+  </div><!-- /sub-Z-1 (Glossaire) -->
+
+  <div class="sub-tab-content" id="sub-Z-2">
 
   <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
@@ -2896,7 +2928,7 @@ print("Virage entre V =", V_virage_debut, "mL et V =", V_virage_fin, "mL")</text
     </div>
   </div>
 
-  </div><!-- /sub-Z-1 -->
+  </div><!-- /sub-Z-2 (Ressources) -->
 
 </div>
 
@@ -3115,6 +3147,15 @@ function switchSubTab(group, i) {
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
   document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
   window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ===== Glossaire recherchable ===== */
+function glossFilter(){
+  var q = document.getElementById('glossSearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossGrid .gloss-item').forEach(function(item){
+    var term = item.getAttribute('data-term') + ' ' + item.querySelector('dt').textContent.toLowerCase();
+    item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
 }
 document.getElementById('capToggle').addEventListener('click', () => {
   document.getElementById('capPanel').classList.toggle('open');
