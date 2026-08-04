@@ -780,6 +780,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 13px;
     <button class="sub-tab-btn" onclick="switchSubTab('C',1)">🧮 Loi de vitesse</button>
     <button class="sub-tab-btn" onclick="switchSubTab('C',2)">⚖️ Stœchiométrie</button>
     <button class="sub-tab-btn" onclick="switchSubTab('C',3)">🧪 TP Cinétique — Phénolphtaléine</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('C',4)">💻 Activité numérique — Python</button>
   </div>
 
   <!-- ══ C1 : SUIVI GRAPHIQUE ══ -->
@@ -864,12 +865,14 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 13px;
 
     <div class="card">
       <div class="card-label">Évolution des concentrations — c = f(t)</div>
-      <canvas id="c-sv" height="270"></canvas>
-      <div class="ctrl">
-        <button class="btn on" id="b-svplay" onclick="togSv()">▶ Tracer</button>
-        <button class="btn red" onclick="resetSv()">↺ Reset</button>
-        <button class="btn on" id="b-sv-pts" onclick="togSvPts()">Points exp. : ON</button>
-        <button class="btn" id="b-sv-tan" onclick="togSvTan()">Tangente : OFF</button>
+      <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+        <canvas id="c-sv" height="320" style="flex:1;min-width:300px;max-width:750px;display:block;"></canvas>
+        <div class="ctrl" style="flex-direction:column;align-items:stretch;width:170px;flex-shrink:0;margin-top:0;">
+          <button class="btn on" id="b-svplay" onclick="togSv()">▶ Tracer</button>
+          <button class="btn red" onclick="resetSv()">↺ Reset</button>
+          <button class="btn on" id="b-sv-pts" onclick="togSvPts()">Points exp. : ON</button>
+          <button class="btn" id="b-sv-tan" onclick="togSvTan()">Tangente : OFF</button>
+        </div>
       </div>
       <div class="leg">
         <div class="leg-i"><div class="dot" style="background:var(--rouge)"></div>[I⁻] réactif</div>
@@ -1290,6 +1293,227 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 13px;
 
   </div>
   <!-- /sub-C-3 -->
+
+  <!-- ══ C4 : ACTIVITÉ NUMÉRIQUE — PYTHON (TEST D'ORDRE 1) ══ -->
+  <div class="sub-tab-content" id="sub-C-4">
+
+    <div class="card">
+      <div class="card-label">💻 Activité numérique — Tracé de suivi cinétique, test d'ordre 1</div>
+      <p style="font-size:.88rem;line-height:1.7;color:var(--texte);margin-bottom:8px;">
+        <strong>Objectif :</strong> à partir d'un tableau de mesures (t, c), utiliser un programme Python pour tracer la courbe de suivi cinétique, déterminer graphiquement la vitesse volumique et le temps de demi-réaction, puis tester l'hypothèse d'une réaction d'ordre 1 par régression linéaire de ln(c) = f(t).
+      </p>
+      <p style="font-size:.76rem;color:var(--texte-leger2)">Activité inspirée du manuel Hatier, Spécialité Physique-Chimie Terminale (chap. 4 p. 120).</p>
+    </div>
+
+    <!-- ── Exercice A : tracecinetique.py ── -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-label">1a-c. Programme <code>tracecinetique.py</code> — tracé de c = f(t) et repérage de t₁/₂</div>
+      <p style="font-size:.82rem;color:var(--texte-leger);margin-bottom:8px">Complétez la ligne créant la liste <code>c0sur2</code> (tous ses termes valent c₀/2) afin de tracer la droite horizontale c = c₀/2 sur le même graphique, ce qui permet de repérer t₁/₂ à l'intersection avec la courbe.</p>
+      <div class="py-editor-wrap">
+        <textarea class="py-editor" id="py-tc" spellcheck="false">
+from math import *
+# NB : ici, le graphique s'affiche automatiquement ci-dessous après exécution
+# (sur votre ordinateur avec Anaconda, on utiliserait en plus matplotlib.pyplot pour l'afficher)
+
+listet = [0.0, 10.0, 20.0, 30.0, 60.0, 90.0]   # dates t (min)
+listec = [124.0, 92.0, 68.0, 50.0, 20.0, 8.0]  # concentrations c (mmol/L)
+
+c0 = listec[0]
+c0sur2 = [_____ for i in range(len(listec))]   # à compléter : tous les termes valent c0/2</textarea>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 14px 12px;">
+          <button class="btn-run" id="py-tc-btn" onclick="runPySnippetTC('py-tc','py-tc-output','tcChart')">▶ Exécuter</button>
+          <button class="btn" onclick="loadQ2('py-tc')">🔄 Charger les données de la question 2</button>
+        </div>
+        <div class="canvas-wrap" style="margin:0 14px 12px;">
+          <canvas id="tcChart" height="240"></canvas>
+        </div>
+        <div class="py-output" id="py-tc-output" style="margin:0 14px 14px;">// Le graphique et les éventuels messages s'afficheront ici.</div>
+      </div>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="showPyCorrTC()">✓ Correction</button>
+        <button class="btn" onclick="resetPyTC()">↺ Recommencer</button>
+      </div>
+      <div class="py-corr" id="py-tc-corr">
+        <div class="py-corr-label">✓ Code complet attendu — exécutable</div>
+        <div class="py-corr-code" id="py-tc-corr-code"></div>
+        <button class="btn-run" onclick="runPySnippetTC('__CORR_TC__','py-tc-corr-output','tcChartCorr')">▶ Exécuter la correction</button>
+        <div class="canvas-wrap" style="margin-top:10px;">
+          <canvas id="tcChartCorr" height="240"></canvas>
+        </div>
+        <div class="py-output" id="py-tc-corr-output">// Le graphique de la correction s'affichera ici.</div>
+      </div>
+    </div>
+
+    <div class="qexo" id="tpPy1b">
+      <div class="q-txt">1b. En traçant les tangentes à la courbe c = f(t) aux instants t = 0, 10 et 30 min, comment évolue la vitesse volumique de disparition v = −dc/dt au cours du temps ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpPy1b" value="good"> Elle diminue continûment (v(0) > v(10) > v(30), d'environ 3,8 à moins de 2 mmol·L⁻¹·min⁻¹)</label>
+      <label class="q-opt"><input type="radio" name="tpPy1b" value="bad"> Elle reste constante à chaque instant</label>
+      <label class="q-opt"><input type="radio" name="tpPy1b" value="bad"> Elle augmente au cours du temps</label>
+      <label class="q-opt"><input type="radio" name="tpPy1b" value="bad"> Elle est nulle à tout instant</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpPy1b')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpPy1b')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpPy1b-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpPy1c">
+      <div class="q-txt">1c. Quelle est la valeur du temps de demi-réaction lue à l'intersection entre c = f(t) et la droite c = c₀/2 = 62 mmol/L ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpPy1c" value="good"> t₁/₂ ≈ 23 min</label>
+      <label class="q-opt"><input type="radio" name="tpPy1c" value="bad"> t₁/₂ ≈ 62 min</label>
+      <label class="q-opt"><input type="radio" name="tpPy1c" value="bad"> t₁/₂ ≈ 90 min</label>
+      <label class="q-opt"><input type="radio" name="tpPy1c" value="bad"> t₁/₂ ≈ 10 min</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpPy1c')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpPy1c')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpPy1c-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpPy1d">
+      <div class="q-txt">1d. Si la réaction est d'ordre 1, alors c(t) = c₀×e⁻ᵏᵗ. Quelle est alors l'expression de ln(c(t)) ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpPy1d" value="good"> ln(c) = ln(c₀) − k×t</label>
+      <label class="q-opt"><input type="radio" name="tpPy1d" value="bad"> ln(c) = ln(c₀) + k×t</label>
+      <label class="q-opt"><input type="radio" name="tpPy1d" value="bad"> ln(c) = k × ln(c₀) × t</label>
+      <label class="q-opt"><input type="radio" name="tpPy1d" value="bad"> ln(c) = c₀ − k×t</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpPy1d')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpPy1d')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpPy1d-fb"></div>
+    </div>
+
+    <!-- ── Exercice B : cinetiqueordre1.py ── -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-label">1e-f. Programme <code>cinetiqueordre1.py</code> — test de l'ordre 1 par régression linéaire</div>
+      <p style="font-size:.82rem;color:var(--texte-leger);margin-bottom:8px">Ce programme calcule ln(c), affiche les points ln(c) = f(t) (rouge) et la droite de régression (bleue), grâce à une fonction de régression linéaire écrite « à la main » (mêmes résultats que <code>scipy.stats.linregress</code> : coefficient directeur a, ordonnée b, coefficient de corrélation ρ).</p>
+      <div class="py-editor-wrap">
+        <textarea class="py-editor" id="py-ord1" spellcheck="false">
+from math import *
+
+listet = [0.0, 10.0, 20.0, 30.0, 60.0, 90.0]
+listec = [124.0, 92.0, 68.0, 50.0, 20.0, 8.0]
+listelnc = [0.0]*len(listec)
+
+for i in range(len(listec)):
+    listelnc[i] = log(listec[i])   # log = logarithme népérien (ln)
+
+# NB : ici, le graphique s'affiche automatiquement ci-dessous après exécution
+# (sur votre ordinateur avec Anaconda, on utiliserait en plus matplotlib.pyplot pour l'afficher)
+
+# régression linéaire "maison" (mêmes résultats que scipy.stats.linregress)
+def regression_lineaire(x, y):
+    n = len(x)
+    moy_x = sum(x)/n
+    moy_y = sum(y)/n
+    num = 0
+    den = 0
+    for i in range(n):
+        num += (x[i]-moy_x)*(y[i]-moy_y)
+        den += (x[i]-moy_x)**2
+    a = num/den
+    b = moy_y - a*moy_x
+    som_y2 = 0
+    for i in range(n):
+        som_y2 += (y[i]-moy_y)**2
+    rho = num/sqrt(den*som_y2)
+    return a, b, rho
+
+a, b, rho = regression_lineaire(listet, listelnc)
+print("ln(c) =", a, "* t +", b)
+print("coefficient de correlation rho =", rho)
+
+modelelinY = [0.0]*len(listet)
+for i in range(len(listet)):
+    modelelinY[i] = a*listet[i] + b</textarea>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 14px 12px;">
+          <button class="btn-run" id="py-ord1-btn" onclick="runOrdre1('py-ord1','py-ord1-output','ord1Chart')">▶ Exécuter</button>
+          <button class="btn" onclick="loadQ2('py-ord1')">🔄 Charger les données de la question 2</button>
+          <button class="btn" onclick="resetPyOrdre1()">↺ Recommencer</button>
+        </div>
+        <div class="canvas-wrap" style="margin:0 14px 12px;">
+          <canvas id="ord1Chart" height="240"></canvas>
+        </div>
+        <div class="py-output" id="py-ord1-output" style="margin:0 14px 14px;">// Le graphique et les résultats (a, b, ρ) s'afficheront ici.</div>
+      </div>
+    </div>
+
+    <div class="qexo" id="tpPy1e">
+      <div class="q-txt">1e. En comparant la droite de régression et la courbe ln(c) = f(t), et à l'aide de la valeur de a obtenue, que peut-on conclure ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpPy1e" value="good"> Les points sont quasiment alignés sur la droite (ρ ≈ −1) : l'ordre 1 est validé, avec k = −a ≈ 3,0×10⁻² min⁻¹</label>
+      <label class="q-opt"><input type="radio" name="tpPy1e" value="bad"> Les points ne sont pas alignés : la réaction n'est pas d'ordre 1</label>
+      <label class="q-opt"><input type="radio" name="tpPy1e" value="bad"> L'alignement des points prouve un ordre 2, avec k = a</label>
+      <label class="q-opt"><input type="radio" name="tpPy1e" value="bad"> On ne peut rien conclure sans connaître c₀</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpPy1e')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpPy1e')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpPy1e-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpPy1f">
+      <div class="q-txt">1f. Pourquoi le coefficient de corrélation linéaire ρ est-il un bon indicateur pour valider l'hypothèse d'ordre 1 ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpPy1f" value="good"> Plus |ρ| est proche de 1, plus les points sont alignés sur la droite de régression : cela renforce la validité de l'hypothèse d'ordre 1</label>
+      <label class="q-opt"><input type="radio" name="tpPy1f" value="bad"> Plus |ρ| est proche de 0, plus la réaction est rapide</label>
+      <label class="q-opt"><input type="radio" name="tpPy1f" value="bad"> ρ donne directement la valeur du temps de demi-réaction</label>
+      <label class="q-opt"><input type="radio" name="tpPy1f" value="bad"> ρ n'a aucun lien avec la qualité de la modélisation</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpPy1f')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpPy1f')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpPy1f-fb"></div>
+    </div>
+
+    <!-- ── Question 2 : nouveau jeu de données ── -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-label">2. Nouveau jeu de données — cette réaction est-elle d'ordre 1 ?</div>
+      <p style="font-size:.82rem;color:var(--texte-leger);margin-bottom:10px">Utilisez le bouton <strong>🔄 Charger les données de la question 2</strong> sur les deux programmes ci-dessus, puis relancez-les pour observer le résultat avec ce nouveau tableau :</p>
+      <table style="width:100%;border-collapse:collapse;font-size:.78rem;margin-bottom:6px;">
+        <thead><tr style="background:var(--gris-fond);">
+          <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">t (s)</th>
+          <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">0</th>
+          <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">50</th>
+          <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">100</th>
+          <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">150</th>
+          <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">200</th>
+          <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">250</th>
+        </tr></thead>
+        <tbody><tr>
+          <td style="padding:6px 10px;font-weight:700;">c (mmol/L)</td>
+          <td style="padding:6px 10px;">1,80</td><td style="padding:6px 10px;">1,75</td><td style="padding:6px 10px;">1,60</td>
+          <td style="padding:6px 10px;">1,04</td><td style="padding:6px 10px;">0,31</td><td style="padding:6px 10px;">0,10</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div class="qexo" id="tpPy2a">
+      <div class="q-txt">2a. Pour traiter ce nouveau jeu de données avec <code>tracecinetique.py</code>, que faut-il modifier ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpPy2a" value="good"> Remplacer les listes listet et listec par les nouvelles valeurs du tableau</label>
+      <label class="q-opt"><input type="radio" name="tpPy2a" value="bad"> Réécrire toutes les commandes plt.plot</label>
+      <label class="q-opt"><input type="radio" name="tpPy2a" value="bad"> Changer le nom des variables t et c dans tout le programme</label>
+      <label class="q-opt"><input type="radio" name="tpPy2a" value="bad"> Rien, le programme s'adapte automatiquement</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpPy2a')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpPy2a')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpPy2a-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpPy2b">
+      <div class="q-txt">2b. En exécutant <code>cinetiqueordre1.py</code> avec ce nouveau jeu de données, que peut-on conclure sur l'ordre de cette réaction ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpPy2b" value="good"> Les points ln(c) = f(t) s'écartent visiblement de la droite de régression (ρ ≈ −0,91, nettement plus loin de −1 que dans l'exemple précédent) : l'ordre 1 n'est pas clairement validé</label>
+      <label class="q-opt"><input type="radio" name="tpPy2b" value="bad"> Les points sont parfaitement alignés : la réaction est clairement d'ordre 1</label>
+      <label class="q-opt"><input type="radio" name="tpPy2b" value="bad"> On ne peut pas calculer ln(c) car certaines valeurs sont négatives</label>
+      <label class="q-opt"><input type="radio" name="tpPy2b" value="bad"> Le programme affiche une erreur avec ces nouvelles données</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpPy2b')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpPy2b')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpPy2b-fb"></div>
+    </div>
+
+  </div>
+  <!-- /sub-C-4 -->
 
 </div>
 
@@ -1745,7 +1969,17 @@ print("t1/2 estimé par interpolation =", round(t_half, 1), "min")</textarea>
 t = [0, 5, 10, 15, 20, 25, 30, 40, 50, 60]                                    # temps en minutes
 A = [1.00, 0.779, 0.607, 0.472, 0.368, 0.287, 0.223, 0.135, 0.0821, 0.0498]   # [H2O2] en mol/L
 
-import matplotlib.pyplot as plt
+# Compatibilité navigateur : si matplotlib n'est pas installé, on utilise un module de secours
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    class _Plt:
+        def plot(self,*a,**k): pass
+        def xlabel(self,*a,**k): pass
+        def ylabel(self,*a,**k): pass
+        def title(self,*a,**k): pass
+        def show(self,*a,**k): pass
+    plt = _Plt()
 
 plt.plot(_____, _____, 'o-')     # à compléter : abscisses puis ordonnées
 plt.xlabel("_____")               # nom et unité de la grandeur en abscisse
@@ -2167,6 +2401,24 @@ function flashCheck(btn, correct, msgOk, msgNo){
 // ─────────────────────────────────────────────
 function mkCtx(id,w,h){const c=document.getElementById(id);if(!c)return null;c.width=w;c.height=h;return c.getContext('2d');}
 
+// Petite pointe de flèche triangulaire au bout d'un axe, dans la direction (dirX,dirY)
+function drawArrowHead(ctx, tipX, tipY, dirX, dirY, color){
+  var len = Math.sqrt(dirX*dirX + dirY*dirY) || 1;
+  dirX /= len; dirY /= len;
+  var size = 6.5, spread = 0.45;
+  var cosS = Math.cos(spread), sinS = Math.sin(spread);
+  var leftX  = tipX - size*(dirX*cosS - dirY*sinS);
+  var leftY  = tipY - size*(dirY*cosS + dirX*sinS);
+  var rightX = tipX - size*(dirX*cosS + dirY*sinS);
+  var rightY = tipY - size*(dirY*cosS - dirX*sinS);
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(tipX, tipY);
+  ctx.lineTo(leftX, leftY);
+  ctx.lineTo(rightX, rightY);
+  ctx.closePath();
+  ctx.fill();
+}
 function drawBase(ctx,p,cw,ch,W,H,tMax,xtxt,ytxt,yMax){
   yMax=yMax||1;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
@@ -2175,6 +2427,7 @@ function drawBase(ctx,p,cw,ch,W,H,tMax,xtxt,ytxt,yMax){
   for(let i=0;i<=4;i++){const y=p.t+ch*i/4;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+cw,y);ctx.stroke();}
   ctx.strokeStyle='#B8D4EC';ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,p.t+ch);ctx.lineTo(p.l+cw,p.t+ch);ctx.stroke();
+  drawArrowHead(ctx,p.l,p.t,0,-1,'#B8D4EC');drawArrowHead(ctx,p.l+cw,p.t+ch,1,0,'#B8D4EC');
   ctx.fillStyle='#7A8CA0';ctx.font='9px Nunito,sans-serif';ctx.textAlign='center';
   for(let i=0;i<=5;i++)ctx.fillText((tMax*i/5).toFixed(tMax<5?1:0),p.l+cw*i/5,p.t+ch+13);
   ctx.textAlign='right';
@@ -2228,6 +2481,7 @@ function drawLR(t){
   for(let i=0;i<=4;i++){const y=p.t+ch*i/4;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+cw,y);ctx.stroke();}
   ctx.strokeStyle='#B8D4EC';ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,p.t+ch);ctx.lineTo(p.l+cw,p.t+ch);ctx.stroke();
+  drawArrowHead(ctx,p.l,p.t,0,-1,'#B8D4EC');drawArrowHead(ctx,p.l+cw,p.t+ch,1,0,'#B8D4EC');
 
   // labels axes — axe X
   ctx.fillStyle='#7A8CA0';ctx.font='9px Nunito,sans-serif';ctx.textAlign='center';
@@ -2325,6 +2579,7 @@ function drawFact(){
   for(let i=0;i<=4;i++){const y=p.t+ch*i/4;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+cw,y);ctx.stroke();}
   ctx.strokeStyle='#B8D4EC';ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,p.t+ch);ctx.lineTo(p.l+cw,p.t+ch);ctx.stroke();
+  drawArrowHead(ctx,p.l,p.t,0,-1,'#B8D4EC');drawArrowHead(ctx,p.l+cw,p.t+ch,1,0,'#B8D4EC');
 
   // labels axes X
   ctx.fillStyle='#7A8CA0';ctx.font='9px Nunito,sans-serif';ctx.textAlign='center';
@@ -2532,7 +2787,7 @@ function selCat(t) {
 
 function drawCatCmp(){
   const ctx=mkCtx('c-catcmp',560,210);if(!ctx)return;
-  const W=560,H=210,p={l:14,r:14,t:14,b:30},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const W=560,H=210,p={l:56,r:14,t:14,b:30},cw=W-p.l-p.r,ch=H-p.t-p.b;
   drawBase(ctx,p,cw,ch,W,H,70,'t (s)','[A]');
   const tM=70;
   // sans cat
@@ -2737,14 +2992,15 @@ function stepSv(){
 }
 
 function drawSvCanvas(){
-  const ctx=mkCtx('c-sv',600,270); if(!ctx) return;
-  const W=600,H=270,p={l:62,r:14,t:14,b:30},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const ctx=mkCtx('c-sv',750,320); if(!ctx) return;
+  const W=750,H=320,p={l:62,r:14,t:14,b:30},cw=W-p.l-p.r,ch=H-p.t-p.b;
   ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
   ctx.strokeStyle='#E8EDF2'; ctx.lineWidth=1;
   for(let i=0;i<=5;i++){const x=p.l+cw*i/5;ctx.beginPath();ctx.moveTo(x,p.t);ctx.lineTo(x,p.t+ch);ctx.stroke();}
   for(let i=0;i<=4;i++){const y=p.t+ch*i/4;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+cw,y);ctx.stroke();}
   ctx.strokeStyle='#B8D4EC'; ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,p.t+ch);ctx.lineTo(p.l+cw,p.t+ch);ctx.stroke();
+  drawArrowHead(ctx,p.l,p.t,0,-1,'#B8D4EC');drawArrowHead(ctx,p.l+cw,p.t+ch,1,0,'#B8D4EC');
   const yMax=SV_I0;
   ctx.fillStyle='#7A8CA0'; ctx.font='9px Nunito,sans-serif'; ctx.textAlign='center';
   for(let i=0;i<=5;i++) ctx.fillText((SV_TM*i/5).toFixed(0),p.l+cw*i/5,p.t+ch+13);
@@ -2840,6 +3096,7 @@ function drawSvLnCanvas(ts,cs){
   for(let i=0;i<=4;i++){const y=p.t+ch*i/4;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+cw,y);ctx.stroke();}
   ctx.strokeStyle='#B8D4EC';ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,p.t+ch);ctx.lineTo(p.l+cw,p.t+ch);ctx.stroke();
+  drawArrowHead(ctx,p.l,p.t,0,-1,'#B8D4EC');drawArrowHead(ctx,p.l+cw,p.t+ch,1,0,'#B8D4EC');
   const lnMax=Math.log(SV_S0)+0.15,lnMin=Math.log(SV_S0)-SV_K*SV_TM-0.2,lnRange=lnMax-lnMin;
   ctx.fillStyle='#7A8CA0';ctx.font='8px Nunito,sans-serif';ctx.textAlign='center';
   for(let i=0;i<=5;i++) ctx.fillText((SV_TM*i/5).toFixed(0),p.l+cw*i/5,p.t+ch+11);
@@ -3263,7 +3520,21 @@ var EXO_EXPL = {
   tpQ62:{ok:"La loi d'ordre 1 s'écrit ln[PP] = ln[PP]₀ − k·t, une fonction affine du temps. Puisque ln[PP] = f(t) est effectivement une droite, cela confirme l'ordre 1, avec k ≈ 7,5×10⁻³ s⁻¹.",
          ko:"Une loi d'ordre 1 se traduit par ln[PP] affine en t ; c'est exactement ce qu'on observe, ce qui confirme l'ordre 1 (et non un ordre 0 ou 2)."},
   tpQ63:{ok:"t₁/₂ = ln2/k = 0,693/7,5×10⁻³ ≈ 92 s, cohérent avec la lecture graphique directe (≈ 88,5 s).",
-         ko:"À partir de ln[PP] = −k·t + ln[PP]₀, on obtient −ln2 = −k·t1/2, donc t1/2 = ln2/k = 0,693/7,5×10⁻³ ≈ 92 s."}
+         ko:"À partir de ln[PP] = −k·t + ln[PP]₀, on obtient −ln2 = −k·t1/2, donc t1/2 = ln2/k = 0,693/7,5×10⁻³ ≈ 92 s."},
+  tpPy1b:{ok:"À mesure que la réaction avance, c diminue donc v = k×c (loi d'ordre 1) diminue elle aussi : la pente de la tangente à c=f(t) s'adoucit progressivement au cours du temps.",
+          ko:"La vitesse volumique de disparition est donnée par la pente de la tangente à c = f(t) ; pour une réaction d'ordre 1, cette pente diminue en valeur absolue à mesure que c diminue."},
+  tpPy1c:{ok:"En lisant l'intersection entre c=f(t) et la droite c=c0/2=62 mmol/L, on trouve t1/2≈23 min (cohérent avec le calcul t1/2=ln2/k≈23 min à partir de la régression).",
+          ko:"Il faut lire l'abscisse du point où la courbe c=f(t) croise la droite horizontale c=c0/2=62 mmol/L : on trouve t1/2≈23 min."},
+  tpPy1d:{ok:"En prenant le logarithme népérien des deux membres de c(t) = c0×e⁻ᵏᵗ, on obtient ln(c) = ln(c0) + ln(e⁻ᵏᵗ) = ln(c0) − k×t (car ln(eˣ) = x).",
+          ko:"ln(c0×e⁻ᵏᵗ) = ln(c0) + ln(e⁻ᵏᵗ) = ln(c0) − k×t : le signe du terme en t est négatif."},
+  tpPy1e:{ok:"Le programme calcule et affiche ρ très proche de −1 (alignement quasi parfait) : l'ordre 1 est validé, avec k = −a ≈ 3,0×10⁻² min⁻¹.",
+          ko:"Exécutez le programme : il affiche a, b et ρ. Ici ρ est très proche de −1, ce qui valide l'ordre 1, avec k = −a."},
+  tpPy1f:{ok:"ρ mesure l'alignement des points sur la droite de régression : |ρ| proche de 1 signifie un excellent alignement, ce qui conforte l'hypothèse d'ordre 1 (modèle ln(c)=−kt+ln(c0) affine).",
+          ko:"ρ est un indicateur d'alignement des points sur une droite : plus |ρ| est proche de 1, plus la modélisation affine (donc l'hypothèse d'ordre 1) est fiable."},
+  tpPy2a:{ok:"Seules les valeurs des listes listet et listec doivent être remplacées par celles du nouveau tableau ; le reste du programme (tracé, mise en forme) reste inchangé.",
+          ko:"Le programme est déjà écrit pour n'importe quel jeu de données : il suffit de remplacer les valeurs de listet et listec."},
+  tpPy2b:{ok:"Avec ce jeu de données, ρ ≈ −0,91 (nettement moins proche de −1 que pour le premier exemple) : les points ln(c)=f(t) s'écartent visiblement de la droite, l'ordre 1 n'est pas clairement validé.",
+          ko:"Exécutez le programme avec les nouvelles données : ρ est ici bien plus éloigné de −1 (≈ −0,91) que pour l'exemple précédent (≈ −1,00), ce qui remet en cause l'hypothèse d'ordre 1."}
 };
 function checkExo(name){
   var sel = document.querySelector('input[name="'+name+'"]:checked');
@@ -3513,7 +3784,16 @@ var PY_KIN_CORRECTED2 =
 "# Décomposition de l'eau oxygénée H2O2 — tracé de la courbe [H2O2] = f(t)\n"+
 "t = [0, 5, 10, 15, 20, 25, 30, 40, 50, 60]                                    # temps en minutes\n"+
 "A = [1.00, 0.779, 0.607, 0.472, 0.368, 0.287, 0.223, 0.135, 0.0821, 0.0498]   # [H2O2] en mol/L\n\n"+
-"import matplotlib.pyplot as plt\n\n"+
+"try:\n"+
+"    import matplotlib.pyplot as plt\n"+
+"except ImportError:\n"+
+"    class _Plt:\n"+
+"        def plot(self,*a,**k): pass\n"+
+"        def xlabel(self,*a,**k): pass\n"+
+"        def ylabel(self,*a,**k): pass\n"+
+"        def title(self,*a,**k): pass\n"+
+"        def show(self,*a,**k): pass\n"+
+"    plt = _Plt()\n\n"+
 "plt.plot(t, A, 'o-')\n"+
 "plt.xlabel(\"t (min)\")\n"+
 "plt.ylabel(\"[H2O2] (mol/L)\")\n"+
@@ -3577,6 +3857,7 @@ function drawKinPyCourbe(canvasId, xList, yList, xLabel, yLabel, color){
 
   ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
   ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+  drawArrowHead(ctx,padL,padT,0,-1,'#5A6B7A');drawArrowHead(ctx,canvas.width-padR,canvas.height-padB,1,0,'#5A6B7A');
   ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif'; ctx.textAlign='center';
   ctx.fillText(xLabel, padL+plotW/2, canvas.height-8);
   ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
@@ -3597,6 +3878,239 @@ function drawKinPyCourbe(canvasId, xList, yList, xLabel, yLabel, color){
     ctx.beginPath(); ctx.arc(xOf(xList[j]), yOf(yList[j]), 3.5, 0, 2*Math.PI); ctx.fill();
   }
 }
+
+/* ════════════════════════════════════════════════════
+   ACTIVITÉ NUMÉRIQUE PYTHON — tracecinetique.py / cinetiqueordre1.py
+   (adaptés sans numpy/scipy pour s'exécuter dans Skulpt,
+    même méthode de régression linéaire — mêmes capacités exigibles)
+   ════════════════════════════════════════════════════ */
+var PY_TC_TEMPLATE = null;
+var PY_ORD1_TEMPLATE = null;
+
+var PY_TC_CORRECTED =
+"from math import *\n"+
+"# NB : ici, le graphique s'affiche automatiquement ci-dessous après exécution\n"+
+"# (sur votre ordinateur avec Anaconda, on utiliserait en plus matplotlib.pyplot pour l'afficher)\n\n"+
+"listet = [0.0, 10.0, 20.0, 30.0, 60.0, 90.0]   # dates t (min)\n"+
+"listec = [124.0, 92.0, 68.0, 50.0, 20.0, 8.0]  # concentrations c (mmol/L)\n\n"+
+"c0 = listec[0]\n"+
+"c0sur2 = [c0/2 for i in range(len(listec))]";
+
+var PY_TC_Q2 =
+"from math import *\n"+
+"# NB : ici, le graphique s'affiche automatiquement ci-dessous après exécution\n"+
+"# (sur votre ordinateur avec Anaconda, on utiliserait en plus matplotlib.pyplot pour l'afficher)\n\n"+
+"listet = [0.0, 50.0, 100.0, 150.0, 200.0, 250.0]   # dates t (s)\n"+
+"listec = [1.80, 1.75, 1.60, 1.04, 0.31, 0.10]      # concentrations c (mmol/L)\n\n"+
+"c0 = listec[0]\n"+
+"c0sur2 = [_____ for i in range(len(listec))]   # à compléter : tous les termes valent c0/2";
+
+var PY_ORD1_Q2 =
+"from math import *\n\n"+
+"listet = [0.0, 50.0, 100.0, 150.0, 200.0, 250.0]\n"+
+"listec = [1.80, 1.75, 1.60, 1.04, 0.31, 0.10]\n"+
+"listelnc = [0.0]*len(listec)\n\n"+
+"for i in range(len(listec)):\n"+
+"    listelnc[i] = log(listec[i])   # log = logarithme népérien (ln)\n\n"+
+"# NB : ici, le graphique s'affiche automatiquement ci-dessous après exécution\n"+
+"# (sur votre ordinateur avec Anaconda, on utiliserait en plus matplotlib.pyplot pour l'afficher)\n\n"+
+"# régression linéaire \"maison\" (mêmes résultats que scipy.stats.linregress)\n"+
+"def regression_lineaire(x, y):\n"+
+"    n = len(x)\n"+
+"    moy_x = sum(x)/n\n"+
+"    moy_y = sum(y)/n\n"+
+"    num = 0\n"+
+"    den = 0\n"+
+"    for i in range(n):\n"+
+"        num += (x[i]-moy_x)*(y[i]-moy_y)\n"+
+"        den += (x[i]-moy_x)**2\n"+
+"    a = num/den\n"+
+"    b = moy_y - a*moy_x\n"+
+"    som_y2 = 0\n"+
+"    for i in range(n):\n"+
+"        som_y2 += (y[i]-moy_y)**2\n"+
+"    rho = num/sqrt(den*som_y2)\n"+
+"    return a, b, rho\n\n"+
+"a, b, rho = regression_lineaire(listet, listelnc)\n"+
+"print(\"ln(c) =\", a, \"* t +\", b)\n"+
+"print(\"coefficient de correlation rho =\", rho)\n\n"+
+"modelelinY = [0.0]*len(listet)\n"+
+"for i in range(len(listet)):\n"+
+"    modelelinY[i] = a*listet[i] + b";
+
+function pySkulptRun(code, outputEl, onSuccess){
+  outputEl.textContent = '';
+  if(typeof Sk === 'undefined'){
+    outputEl.textContent = "⏳ Le module Python (Skulpt) est en cours de chargement, réessaie dans quelques secondes...";
+    return;
+  }
+  function outf(text){ outputEl.textContent += text; }
+  function builtinRead(x){
+    if(Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined){
+      throw "Fichier non trouvé : '" + x + "'";
+    }
+    return Sk.builtinFiles["files"][x];
+  }
+  Sk.configure({ output: outf, read: builtinRead, python3: true });
+  var myPromise = Sk.misceval.asyncToPromise(function(){
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  });
+  myPromise.then(
+    function(mod){ if(onSuccess){ try{ onSuccess(mod); }catch(e){} } },
+    function(err){ outputEl.textContent += '\n❌ ' + err.toString(); }
+  );
+}
+
+function runPySnippetTC(editorIdOrCode, outputId, canvasId){
+  var code = (editorIdOrCode === '__CORR_TC__') ? PY_TC_CORRECTED : document.getElementById(editorIdOrCode).value;
+  var outputEl = document.getElementById(outputId);
+  var canvas0 = document.getElementById(canvasId);
+  if(canvas0) canvas0.getContext('2d').clearRect(0,0,canvas0.width,canvas0.height);
+  pySkulptRun(code, outputEl, function(mod){
+    var tList = mod.$d['listet'].v.map(function(item){ return item.v; });
+    var cList = mod.$d['listec'].v.map(function(item){ return item.v; });
+    var halfList = null;
+    if(mod.$d['c0sur2']){
+      try{ halfList = mod.$d['c0sur2'].v.map(function(item){ return item.v; }); }catch(e){ halfList = null; }
+    }
+    drawTCChart(canvasId, tList, cList, halfList);
+  });
+}
+function showPyCorrTC(){
+  var box = document.getElementById('py-tc-corr');
+  document.getElementById('py-tc-corr-code').textContent = PY_TC_CORRECTED;
+  document.getElementById('py-tc-corr-output').textContent = "// Le graphique de la correction s'affichera ici.";
+  box.style.display = 'block';
+}
+function resetPyTC(){
+  if(PY_TC_TEMPLATE === null){
+    PY_TC_TEMPLATE = document.getElementById('py-tc').defaultValue;
+  }
+  document.getElementById('py-tc').value = PY_TC_TEMPLATE;
+  document.getElementById('py-tc-output').textContent = "// Le graphique et les éventuels messages s'afficheront ici.";
+  var c = document.getElementById('tcChart');
+  if(c) c.getContext('2d').clearRect(0,0,c.width,c.height);
+  var box = document.getElementById('py-tc-corr');
+  if(box) box.style.display = 'none';
+}
+
+function runOrdre1(editorId, outputId, canvasId){
+  var code = document.getElementById(editorId).value;
+  var outputEl = document.getElementById(outputId);
+  var canvas0 = document.getElementById(canvasId);
+  if(canvas0) canvas0.getContext('2d').clearRect(0,0,canvas0.width,canvas0.height);
+  pySkulptRun(code, outputEl, function(mod){
+    var tList = mod.$d['listet'].v.map(function(item){ return item.v; });
+    var lnList = mod.$d['listelnc'].v.map(function(item){ return item.v; });
+    var modelList = mod.$d['modelelinY'].v.map(function(item){ return item.v; });
+    drawOrdre1Chart(canvasId, tList, lnList, modelList);
+  });
+}
+function resetPyOrdre1(){
+  if(PY_ORD1_TEMPLATE === null){
+    PY_ORD1_TEMPLATE = document.getElementById('py-ord1').defaultValue;
+  }
+  document.getElementById('py-ord1').value = PY_ORD1_TEMPLATE;
+  document.getElementById('py-ord1-output').textContent = "// Le graphique et les résultats (a, b, ρ) s'afficheront ici.";
+  var c = document.getElementById('ord1Chart');
+  if(c) c.getContext('2d').clearRect(0,0,c.width,c.height);
+}
+
+function loadQ2(editorId){
+  if(editorId === 'py-tc'){
+    document.getElementById('py-tc').value = PY_TC_Q2;
+    document.getElementById('py-tc-output').textContent = "// Le graphique et les éventuels messages s'afficheront ici.";
+    var c = document.getElementById('tcChart');
+    if(c) c.getContext('2d').clearRect(0,0,c.width,c.height);
+  } else if(editorId === 'py-ord1'){
+    document.getElementById('py-ord1').value = PY_ORD1_Q2;
+    document.getElementById('py-ord1-output').textContent = "// Le graphique et les résultats (a, b, ρ) s'afficheront ici.";
+    var c2 = document.getElementById('ord1Chart');
+    if(c2) c2.getContext('2d').clearRect(0,0,c2.width,c2.height);
+  }
+}
+
+/* Tracé c=f(t) + éventuelle droite c0/2 (tracecinetique.py) */
+function drawTCChart(canvasId, tList, cList, halfList){
+  var canvas = document.getElementById(canvasId);
+  if(!canvas || !tList || tList.length===0) return;
+  var ctx = canvas.getContext('2d');
+  canvas.width = canvas.clientWidth || canvas.width;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  var padL=48, padB=36, padT=16, padR=16;
+  var plotW = canvas.width-padL-padR, plotH = canvas.height-padT-padB;
+  var xMax = Math.max.apply(null, tList) * 1.05 || 1;
+  var yAll = cList.slice();
+  if(halfList) yAll = yAll.concat(halfList);
+  var yMin = Math.min.apply(null, yAll); if(yMin>0) yMin=0;
+  var yMax = Math.max.apply(null, yAll);
+  var ySpan = (yMax-yMin)*1.1 || 1;
+
+  ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+  drawArrowHead(ctx,padL,padT,0,-1,'#5A6B7A');drawArrowHead(ctx,canvas.width-padR,canvas.height-padB,1,0,'#5A6B7A');
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif'; ctx.textAlign='center';
+  ctx.fillText('t', padL+plotW/2, canvas.height-8);
+  ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText('c', 0, 0); ctx.restore();
+
+  function xOf(x){ return padL+(x/xMax)*plotW; }
+  function yOf(y){ return canvas.height-padB-((y-yMin)/ySpan)*plotH; }
+
+  ctx.strokeStyle = '#2D5F8A'; ctx.lineWidth = 2.2; ctx.beginPath();
+  for(var i=0;i<tList.length;i++){ var x=xOf(tList[i]), y=yOf(cList[i]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
+  ctx.stroke();
+  ctx.fillStyle='#2D5F8A';
+  for(var j=0;j<tList.length;j++){ ctx.beginPath(); ctx.arc(xOf(tList[j]),yOf(cList[j]),3.5,0,2*Math.PI); ctx.fill(); }
+
+  if(halfList && halfList.length===tList.length){
+    ctx.strokeStyle = '#3A8A6E'; ctx.lineWidth = 1.6; ctx.setLineDash([5,4]); ctx.beginPath();
+    for(var k=0;k<tList.length;k++){ var x2=xOf(tList[k]), y2=yOf(halfList[k]); if(k===0) ctx.moveTo(x2,y2); else ctx.lineTo(x2,y2); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+}
+
+/* Tracé ln(c)=f(t) (points rouges) + droite de régression (bleue) — cinetiqueordre1.py */
+function drawOrdre1Chart(canvasId, tList, lnList, modelList){
+  var canvas = document.getElementById(canvasId);
+  if(!canvas || !tList || tList.length===0) return;
+  var ctx = canvas.getContext('2d');
+  canvas.width = canvas.clientWidth || canvas.width;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  var padL=48, padB=36, padT=16, padR=16;
+  var plotW = canvas.width-padL-padR, plotH = canvas.height-padT-padB;
+  var xMax = Math.max.apply(null, tList) * 1.05 || 1;
+  var yAll = lnList.concat(modelList);
+  var yMin = Math.min.apply(null, yAll);
+  var yMax = Math.max.apply(null, yAll);
+  var ySpan = (yMax-yMin)*1.15 || 1;
+  yMin -= (yMax-yMin)*0.075;
+
+  ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+  drawArrowHead(ctx,padL,padT,0,-1,'#5A6B7A');drawArrowHead(ctx,canvas.width-padR,canvas.height-padB,1,0,'#5A6B7A');
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif'; ctx.textAlign='center';
+  ctx.fillText('t', padL+plotW/2, canvas.height-8);
+  ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText('ln(c)', 0, 0); ctx.restore();
+
+  function xOf(x){ return padL+(x/xMax)*plotW; }
+  function yOf(y){ return canvas.height-padB-((y-yMin)/ySpan)*plotH; }
+
+  ctx.strokeStyle = '#2D5F8A'; ctx.lineWidth = 2; ctx.beginPath();
+  for(var i=0;i<tList.length;i++){ var x=xOf(tList[i]), y=yOf(modelList[i]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
+  ctx.stroke();
+
+  ctx.fillStyle = '#C0392B';
+  ctx.strokeStyle = '#C0392B'; ctx.lineWidth = 1.6;
+  for(var j=0;j<tList.length;j++){
+    var xr=xOf(tList[j]), yr=yOf(lnList[j]);
+    ctx.beginPath(); ctx.moveTo(xr-4,yr); ctx.lineTo(xr+4,yr); ctx.moveTo(xr,yr-4); ctx.lineTo(xr,yr+4); ctx.stroke();
+  }
+}
+
 function showPyCorr2(){
   var box = document.getElementById('py-kin2-corr');
   document.getElementById('py-kin2-corr-code').textContent = PY_KIN_CORRECTED2;
