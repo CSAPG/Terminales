@@ -6,224 +6,504 @@
 <title>Séquence 11 – Cinétique chimique – Terminale Spé PC</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F0F4F8;--panel:#FFFFFF;--panel2:#F5F7FA;--border:#DDE3EC;--rouge:#C0392B;--bleu:#2D5F8A;--vert:#3A8A6E;--orange:#E8783A;--violet:#7B4FA6;--text:#1A2A3A;--dim:#5A6B7A;--dim2:#7A8CA0;--bleu-moyen:#5B8FB9;--bleu-clair:#E8F1F8}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;font-size:14.5px}
+:root {
+  --bleu: #2D5F8A;
+  --bleu-clair: #E8F1F8;
+  --bleu-moyen: #5B8FB9;
+  --orange: #E8783A;
+  --orange-clair: #FDF0E8;
+  --vert: #3A8A6E;
+  --vert-clair: #E8F5F0;
+  --gris-fond: #F5F7FA;
+  --gris-bord: #DDE3EC;
+  --texte: #1A2A3A;
+  --texte-leger: #5A6B7A;
+  --texte-leger2: #7A8CA0;
+  --blanc: #FFFFFF;
+  --rouge: #C0392B;
+  --rouge-clair: #FDEDEC;
+  --violet: #7B4FA6;
+  --violet-clair: #F3EDF9;
+}
 
-.header{background:var(--panel);border:1px solid #E3E8EE;border-bottom:3px solid var(--bleu);border-radius:14px;max-width:1300px;margin:0 auto 24px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(45,95,138,0.10)}
-.header-inner{max-width:1300px;margin:0 auto;padding:18px 24px 0}
-.header-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.header-left{display:flex;flex-direction:column;align-items:flex-start;gap:7px;flex-shrink:0;margin-top:2px}
-.header-badge{display:inline-block;background:var(--bleu);color:#fff;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;white-space:nowrap}
-button.cap-toggle{background:var(--bleu);color:#fff;border:none;padding:5px 12px;border-radius:999px;font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:700;cursor:pointer;white-space:nowrap}
-button.cap-toggle:hover{background:#1e4466}
-.cap-panel{display:none;margin:0 0 14px;background:#fff;border:1px solid #B8D4EC;border-radius:12px;padding:16px 20px;text-align:left;font-size:.88rem;color:var(--text);line-height:1.7}
-.cap-panel.open{display:block}
-.cap-panel ul{list-style:none;margin:0;padding:0}
-.cap-panel li{margin-bottom:9px}
-.cap-panel li:last-child{margin-bottom:0}
-.cap-panel li strong{color:var(--orange);font-family:'Outfit',sans-serif;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:3px}
-.header-titles h1{font-family:'Outfit',sans-serif;font-size:1.35rem;font-weight:800;color:var(--bleu);letter-spacing:-.01em;line-height:1.2}
-.header-titles p{font-size:.82rem;color:var(--dim);margin-top:2px;letter-spacing:.02em}
-.header-titles p span{color:var(--orange);font-weight:700}
-.header-icon-wrap{flex-shrink:0;width:72px;height:63px;margin-left:auto}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-.tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 24px}
-.tabs::-webkit-scrollbar{display:none}
-.tab{display:flex;align-items:center;gap:8px;padding:10px 20px 12px;font-size:.88rem;color:var(--dim);cursor:pointer;border:none;background:none;font-weight:600;border-bottom:3px solid transparent;white-space:nowrap;font-family:'Nunito',sans-serif;transition:all .2s;position:relative;bottom:-3px}
-.tab:hover{color:var(--orange)}
-.tab-num{width:22px;height:22px;border-radius:50%;background:var(--border);color:var(--dim);font-size:0.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0}
-.tab.active .tab-num{background:var(--bleu);color:white}
-.tab.active{color:var(--orange);border-bottom-color:var(--orange);background:#FDF0E8;border-radius:6px 6px 0 0}
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #F0F4F8;
+  color: var(--texte);
+  min-height: 100vh;
+  font-size: 14.5px;
+}
 
-.page{display:none;padding:28px 24px 60px;max-width:1300px;margin:0 auto;animation:fi .25s ease}
-.page.active{display:block;animation:fi .3s ease}
-@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* ── HEADER ── */
+.header {
+  background: var(--blanc);
+  border: 1px solid #E3E8EE;
+  border-bottom: 3px solid var(--bleu);
+  border-radius: 14px;
+  max-width: 1300px;
+  margin: 0 auto 24px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 12px rgba(45,95,138,0.10);
+}
+.header-inner { max-width: 1300px; margin: 0 auto; padding: 18px 24px 0; }
+.header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.header-left { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; flex-shrink: 0; margin-top: 2px; }
+.header-badge {
+  display: inline-block;
+  background: var(--bleu);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+button.cap-toggle {
+  background: var(--bleu);
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+button.cap-toggle:hover { background: #1e4466; }
+.cap-panel {
+  display: none;
+  margin: 0 0 14px;
+  background: #fff;
+  border: 1px solid #B8D4EC;
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 0.88rem;
+  color: var(--texte);
+  line-height: 1.7;
+}
+.cap-panel.open { display: block; }
+.cap-panel ul { list-style: none; margin: 0; padding: 0; }
+.cap-panel li { margin-bottom: 9px; }
+.cap-panel li:last-child { margin-bottom: 0; }
+.cap-panel li strong {
+  color: var(--orange);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 3px;
+}
+.header-titles h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--bleu);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.header-titles p { font-size: 0.82rem; color: var(--texte-leger); margin-top: 2px; letter-spacing: 0.02em; }
+.header-titles p span { color: var(--orange); font-weight: 700; }
+.header-icon-wrap { flex-shrink: 0; width: 72px; height: 63px; margin-left: auto; }
 
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:12px}
-@media(max-width:768px){.g3{grid-template-columns:1fr}}
+/* ── ONGLETS PRINCIPAUX ── */
+.tabs-nav {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-wrap: nowrap;
+  padding: 0 24px;
+}
+.tabs-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px 12px;
+  border: none;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--texte-leger);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  position: relative;
+  bottom: -3px;
+  flex: 1;
+  justify-content: center;
+  text-align: center;
+}
+.tab-btn:hover { color: var(--orange); }
+.tab-btn.active {
+  color: var(--orange);
+  border-bottom-color: var(--orange);
+  background: var(--orange-clair);
+  border-radius: 6px 6px 0 0;
+}
+.tab-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--gris-bord);
+  color: var(--texte-leger);
+  font-size: 0.70rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.tab-btn.active .tab-num { background: var(--bleu); color: white; }
 
-.card{background:var(--panel);border:1.5px solid var(--border);border-radius:10px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
-.card-label{font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--bleu-moyen);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+/* ── CONTENU DES ONGLETS ── */
+.main { max-width: 1300px; margin: 0 auto; padding: 28px 20px 60px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-canvas{display:block;width:100%;border-radius:4px;background:#fff;border:1px solid var(--border)}
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 12px; }
+@media(max-width:768px){ .g3{ grid-template-columns: 1fr; } }
 
-.ctrl{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;align-items:center}
-.slg{display:flex;flex-direction:column;gap:5px;flex:1;min-width:120px}
-.slg label{font-size:.62rem;color:var(--dim2);display:flex;justify-content:space-between}
-.slg label b{color:var(--bleu)}
-input[type=range]{width:100%;height:3px;-webkit-appearance:none;background:var(--border);border-radius:2px;cursor:pointer;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--bleu);cursor:pointer;border:2px solid #fff}
+.card { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-radius: 10px; padding: 18px; box-shadow: 0 1px 6px rgba(0,0,0,.06); }
+.card-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bleu-moyen);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gris-bord);
+}
 
-.btn{padding:8px 16px;border:1.5px solid var(--border);background:#fff;color:var(--text);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:600;border-radius:8px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.btn:hover{border-color:var(--bleu);color:var(--bleu)}
-.btn.on{background:var(--bleu);border-color:var(--bleu);color:#fff;font-weight:700}
-.btn-blue{background:var(--bleu);border-color:var(--bleu);color:#fff;font-weight:700}
-.btn-blue:hover{background:#1e4466;border-color:#1e4466;color:#fff}
-.btn.red{border-color:var(--rouge);color:var(--rouge)}.btn.red:hover,.btn.red.on{background:var(--rouge);color:#fff;border-color:var(--rouge)}
-.btn.grn{border-color:var(--vert);color:var(--vert)}.btn.grn:hover,.btn.grn.on{background:var(--vert);color:#fff}
-.btn.pur{border-color:var(--violet);color:var(--violet)}.btn.pur:hover,.btn.pur.on{background:var(--violet);color:#fff}
-.btn.orn{border-color:var(--orange);color:var(--orange)}.btn.orn:hover,.btn.orn.on{background:var(--orange);color:#fff}
+canvas { display: block; width: 100%; border-radius: 4px; background: #fff; border: 1px solid var(--gris-bord); }
 
-.ibox{padding:11px 16px;border-left:4px solid var(--bleu);background:var(--bleu-clair);border-radius:0 10px 10px 0;font-size:.85rem;line-height:1.7;margin-top:10px}
-.ibox.r{border-left-color:var(--rouge);background:#FDEDEC}
-.ibox.g{border-left-color:var(--vert);background:#E8F5F0}
-.ibox.p{border-left-color:var(--violet);background:#F3EDF9}
-.ibox.o{border-left-color:var(--orange);background:#FDF0E8}
-.ibox strong{display:block;font-family:'Outfit',sans-serif;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.ctrl { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; align-items: center; }
+.slg { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 120px; }
+.slg label { font-size: 0.62rem; color: var(--texte-leger2); display: flex; justify-content: space-between; }
+.slg label b { color: var(--bleu); }
+input[type=range] { width: 100%; height: 3px; -webkit-appearance: none; background: var(--gris-bord); border-radius: 2px; cursor: pointer; outline: none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px; border-radius: 50%; background: var(--bleu); cursor: pointer; border: 2px solid #fff; }
 
-.fml{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.85rem;line-height:2;margin-top:10px}
-.fml .r{color:var(--rouge)}.fml .b{color:var(--bleu)}.fml .g{color:var(--vert)}.fml .o{color:var(--orange)}.fml .p{color:var(--violet)}
+.btn {
+  padding: 8px 16px;
+  border: 1.5px solid var(--gris-bord);
+  background: #fff;
+  color: var(--texte);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--bleu); color: var(--bleu); }
+.btn.on { background: var(--bleu); border-color: var(--bleu); color: #fff; font-weight: 700; }
+.btn-blue { background: var(--bleu); border-color: var(--bleu); color: #fff; font-weight: 700; }
+.btn-blue:hover { background: #1e4466; border-color: #1e4466; color: #fff; }
+.btn.red { border-color: var(--rouge); color: var(--rouge); }
+.btn.red:hover, .btn.red.on { background: var(--rouge); color: #fff; border-color: var(--rouge); }
+.btn.grn { border-color: var(--vert); color: var(--vert); }
+.btn.grn:hover, .btn.grn.on { background: var(--vert); color: #fff; }
+.btn.pur { border-color: var(--violet); color: var(--violet); }
+.btn.pur:hover, .btn.pur.on { background: var(--violet); color: #fff; }
+.btn.orn { border-color: var(--orange); color: var(--orange); }
+.btn.orn:hover, .btn.orn.on { background: var(--orange); color: #fff; }
 
-.lrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.lbox{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center}
-.lbox .n{font-size:1.2rem;font-weight:700;font-family:'Outfit',sans-serif}
-.lbox .l{font-size:.68rem;color:var(--dim);margin-top:2px;letter-spacing:.04em;text-transform:uppercase}
+.ibox {
+  padding: 11px 16px;
+  border-left: 4px solid var(--bleu);
+  background: var(--bleu-clair);
+  border-radius: 0 10px 10px 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  margin-top: 10px;
+}
+.ibox.r { border-left-color: var(--rouge); background: var(--rouge-clair); }
+.ibox.g { border-left-color: var(--vert); background: var(--vert-clair); }
+.ibox.p { border-left-color: var(--violet); background: var(--violet-clair); }
+.ibox.o { border-left-color: var(--orange); background: var(--orange-clair); }
+.ibox strong {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texte-leger);
+  margin-bottom: 3px;
+}
 
-.pbar{height:5px;background:var(--border);border-radius:3px;margin-top:5px;overflow:hidden}
-.pfill{height:100%;border-radius:3px;background:linear-gradient(to right,var(--rouge),var(--bleu));transition:width .1s}
+.fml { background: var(--gris-fond); border: 1px solid var(--gris-bord); border-radius: 10px; padding: 14px 16px; font-size: 0.85rem; line-height: 2; margin-top: 10px; }
+.fml .r { color: var(--rouge); } .fml .b { color: var(--bleu); } .fml .g { color: var(--vert); } .fml .o { color: var(--orange); } .fml .p { color: var(--violet); }
 
-.leg{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
-.leg-i{display:flex;align-items:center;gap:6px;font-size:.62rem;color:var(--dim)}
-.dot{width:9px;height:9px;border-radius:50%}
-.lin{width:16px;height:3px;border-radius:2px}
+.lrow { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 10px; }
+.lbox { background: var(--gris-fond); border: 1px solid var(--gris-bord); border-radius: 8px; padding: 10px; text-align: center; }
+.lbox .n { font-size: 1.2rem; font-weight: 700; font-family: 'Outfit', sans-serif; }
+.lbox .l { font-size: 0.68rem; color: var(--texte-leger); margin-top: 2px; letter-spacing: 0.04em; text-transform: uppercase; }
 
+.pbar { height: 5px; background: var(--gris-bord); border-radius: 3px; margin-top: 5px; overflow: hidden; }
+.pfill { height: 100%; border-radius: 3px; background: linear-gradient(to right, var(--rouge), var(--bleu)); transition: width 0.1s; }
+
+.leg { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
+.leg-i { display: flex; align-items: center; gap: 6px; font-size: 0.62rem; color: var(--texte-leger); }
+.dot { width: 9px; height: 9px; border-radius: 50%; }
+.lin { width: 16px; height: 3px; border-radius: 2px; }
 
 /* ── PAGE LABO ── */
-.labo-wrap{display:flex;flex-direction:column;gap:20px}
+.labo-wrap { display: flex; flex-direction: column; gap: 20px; }
 
-.setup-card{background:linear-gradient(135deg,#fff,var(--bleu-clair));border:1.5px solid var(--bleu-moyen);border-radius:12px;padding:22px;box-shadow:0 2px 8px rgba(45,95,138,.10)}
-.setup-card h2{font-family:'Outfit',sans-serif;font-size:1.15rem;font-weight:700;color:var(--bleu);margin-bottom:6px}
-.setup-card p{font-size:.85rem;color:var(--dim2);line-height:1.6;margin-bottom:18px}
+.setup-card {
+  background: linear-gradient(135deg, #fff, var(--bleu-clair));
+  border: 1.5px solid var(--bleu-moyen);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 2px 8px rgba(45,95,138,.10);
+}
+.setup-card h2 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--bleu); margin-bottom: 6px; }
+.setup-card p { font-size: 0.85rem; color: var(--texte-leger2); line-height: 1.6; margin-bottom: 18px; }
 
-.field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;align-items:flex-end}
-.field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:130px}
-.field label{font-size:.78rem;color:var(--dim2)}
-.field input[type=number],.field select{background:#fff;border:1.5px solid var(--border);color:var(--text);font-family:'Nunito',sans-serif;font-size:.85rem;padding:8px 10px;border-radius:7px;outline:none;width:100%}
-.field input:focus,.field select:focus{border-color:var(--bleu)}
-.field select option{background:#fff}
+.field-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 130px; }
+.field label { font-size: 0.78rem; color: var(--texte-leger2); }
+.field input[type=number], .field select {
+  background: #fff;
+  border: 1.5px solid var(--gris-bord);
+  color: var(--texte);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  padding: 8px 10px;
+  border-radius: 7px;
+  outline: none;
+  width: 100%;
+}
+.field input:focus, .field select:focus { border-color: var(--bleu); }
+.field select option { background: #fff; }
 
-.toggle-row{display:flex;align-items:center;gap:10px;margin:10px 0}
-.tgl{position:relative;width:36px;height:20px;cursor:pointer;flex-shrink:0}
-.tgl input{opacity:0;width:0;height:0;position:absolute}
-.tgl-sl{position:absolute;inset:0;background:var(--border);border-radius:10px;transition:.2s}
-.tgl-sl:before{content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
-.tgl input:checked+.tgl-sl{background:var(--violet)}
-.tgl input:checked+.tgl-sl:before{transform:translateX(16px)}
-.tgl-label{font-size:.82rem;color:var(--dim2)}
+.toggle-row { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+.tgl { position: relative; width: 36px; height: 20px; cursor: pointer; flex-shrink: 0; }
+.tgl input { opacity: 0; width: 0; height: 0; position: absolute; }
+.tgl-sl { position: absolute; inset: 0; background: var(--gris-bord); border-radius: 10px; transition: 0.2s; }
+.tgl-sl:before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.2s; }
+.tgl input:checked + .tgl-sl { background: var(--violet); }
+.tgl input:checked + .tgl-sl:before { transform: translateX(16px); }
+.tgl-label { font-size: 0.82rem; color: var(--texte-leger2); }
 
-.cond-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.cond{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;border:1px solid var(--border);color:var(--dim)}
-.cond.cr{border-color:var(--rouge);color:var(--rouge);background:#FDEDEC}
-.cond.cb{border-color:var(--bleu);color:var(--bleu);background:var(--bleu-clair)}
-.cond.cp{border-color:var(--violet);color:var(--violet);background:#F3EDF9}
-.cond.co{border-color:var(--orange);color:var(--orange);background:#FDF0E8}
+.cond-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+.cond { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid var(--gris-bord); color: var(--texte-leger); }
+.cond.cr { border-color: var(--rouge); color: var(--rouge); background: var(--rouge-clair); }
+.cond.cb { border-color: var(--bleu); color: var(--bleu); background: var(--bleu-clair); }
+.cond.cp { border-color: var(--violet); color: var(--violet); background: var(--violet-clair); }
+.cond.co { border-color: var(--orange); color: var(--orange); background: var(--orange-clair); }
 
 /* Résultats toujours visibles */
-.result-section{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
-.result-section h3{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;color:var(--vert);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.result-section { background: #fff; border: 1.5px solid var(--gris-bord); border-radius: 12px; padding: 20px; box-shadow: 0 1px 6px rgba(0,0,0,.06); }
+.result-section h3 { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--vert); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 
 /* Calcul guidé */
-.guided{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:14px}
-.guided-title{font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:700;color:var(--orange);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.step{display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.step:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
-.step-n{width:24px;height:24px;border-radius:50%;background:var(--orange);color:#fff;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.step-body{flex:1}
-.step-q{font-size:.82rem;color:var(--dim2);line-height:1.6;margin-bottom:8px}
-.step-q b{color:var(--text)}
-.step-inp-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.step-inp{background:#fff;border:1.5px solid var(--border);color:var(--text);font-family:'Nunito',sans-serif;font-size:.85rem;padding:7px 11px;border-radius:7px;width:110px;outline:none}
-.step-inp:focus{border-color:var(--orange)}
-.step-unit{font-size:.78rem;color:var(--dim2)}
-.step-fb{font-size:.8rem;font-weight:600;padding:6px 11px;border-radius:6px;margin-top:6px;display:none}
-.step-fb.ok{background:#E8F5F0;color:var(--vert);border:1px solid var(--vert)}
-.step-fb.ko{background:#FDEDEC;color:var(--rouge);border:1px solid var(--rouge)}
+.guided { background: var(--gris-fond); border: 1px solid var(--gris-bord); border-radius: 10px; padding: 16px; margin-top: 14px; }
+.guided-title { font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.step { display: flex; gap: 12px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--gris-bord); }
+.step:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.step-n { width: 24px; height: 24px; border-radius: 50%; background: var(--orange); color: #fff; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.step-body { flex: 1; }
+.step-q { font-size: 0.82rem; color: var(--texte-leger2); line-height: 1.6; margin-bottom: 8px; }
+.step-q b { color: var(--texte); }
+.step-inp-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.step-inp { background: #fff; border: 1.5px solid var(--gris-bord); color: var(--texte); font-family: 'Nunito', sans-serif; font-size: 0.85rem; padding: 7px 11px; border-radius: 7px; width: 110px; outline: none; }
+.step-inp:focus { border-color: var(--orange); }
+.step-unit { font-size: 0.78rem; color: var(--texte-leger2); }
+.step-fb { font-size: 0.8rem; font-weight: 600; padding: 6px 11px; border-radius: 6px; margin-top: 6px; display: none; }
+.step-fb.ok { background: var(--vert-clair); color: var(--vert); border: 1px solid var(--vert); }
+.step-fb.ko { background: var(--rouge-clair); color: var(--rouge); border: 1px solid var(--rouge); }
 
 /* Placeholder état vide */
-.empty-state{text-align:center;padding:40px 20px;color:var(--dim);font-size:.88rem;line-height:1.8}
-.empty-state .icon{font-size:2.5rem;display:block;margin-bottom:12px;opacity:.3}
+.empty-state { text-align: center; padding: 40px 20px; color: var(--texte-leger); font-size: 0.88rem; line-height: 1.8; }
+.empty-state .icon { font-size: 2.5rem; display: block; margin-bottom: 12px; opacity: 0.3; }
 
 /* ── TOOLTIP CANVAS ── */
-.canvas-wrap{position:relative;display:block}
-.cv-tooltip{
-  position:absolute;pointer-events:none;display:none;
-  background:rgba(255,255,255,.95);border:1px solid var(--border);border-radius:4px;
-  padding:4px 8px;font-size:.6rem;line-height:1.6;white-space:nowrap;
-  box-shadow:0 2px 8px rgba(0,0,0,.12);z-index:50;
-  transform:translateX(-50%);
+.canvas-wrap { position: relative; display: block; }
+.cv-tooltip {
+  position: absolute; pointer-events: none; display: none;
+  background: rgba(255,255,255,.95); border: 1px solid var(--gris-bord); border-radius: 4px;
+  padding: 4px 8px; font-size: 0.6rem; line-height: 1.6; white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12); z-index: 50;
+  transform: translateX(-50%);
 }
-.cv-tooltip.right{transform:translateX(-100%) translateX(-8px)}
-.cv-tooltip b{color:var(--bleu)}
-.cv-tooltip .tt-t{color:var(--orange)}
-.cv-tooltip .tt-A{color:var(--rouge)}
-.cv-tooltip .tt-P{color:var(--vert)}
-.cv-tooltip .tt-v{color:var(--violet)}
+.cv-tooltip.right { transform: translateX(-100%) translateX(-8px); }
+.cv-tooltip b { color: var(--bleu); }
+.cv-tooltip .tt-t { color: var(--orange); }
+.cv-tooltip .tt-A { color: var(--rouge); }
+.cv-tooltip .tt-P { color: var(--vert); }
+.cv-tooltip .tt-v { color: var(--violet); }
 
-@media(max-width:768px){.g2{grid-template-columns:1fr}}
-@media(max-width:640px){body{padding:6px}.page{padding-left:16px;padding-right:16px}.header-inner{padding-left:16px;padding-right:16px}.header-icon-wrap{width:50px;height:44px}.header-titles h1{font-size:1.15rem}.tab{padding:8px 12px 10px;font-size:.80rem}}
-/* ── BILAN & RESSOURCES (harmonisation) ── */
-.bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
-@media(max-width:560px){.bilan-grid{grid-template-columns:1fr}}
-.bilan-card{background:var(--panel);border:1.5px solid var(--border);border-radius:12px;padding:16px}
-.bilan-card h4{font-family:'Outfit',sans-serif;font-size:0.95rem;font-weight:700;color:var(--bleu);margin-bottom:8px;padding-bottom:8px;border-bottom:1.5px solid var(--border)}
-.bilan-card ul{padding-left:18px}
-.bilan-card ul li{font-size:0.84rem;margin-bottom:5px;line-height:1.6;color:var(--text)}
+@media(max-width:768px){ .g2{ grid-template-columns: 1fr; } }
+@media(max-width:640px){
+  body{ padding: 6px; }
+  .main{ padding-left: 16px; padding-right: 16px; }
+  .header-inner{ padding-left: 16px; padding-right: 16px; }
+  .header-icon-wrap{ width: 50px; height: 44px; }
+  .header-titles h1{ font-size: 1.15rem; }
+  .tab-btn{ padding: 8px 12px 10px; font-size: 0.80rem; }
+}
+
+/* ── BILAN & RESSOURCES ── */
+.bilan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+@media(max-width:560px){ .bilan-grid{ grid-template-columns: 1fr; } }
+.bilan-card { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-radius: 12px; padding: 16px; }
+.bilan-card h4 { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--bleu); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1.5px solid var(--gris-bord); }
+.bilan-card ul { padding-left: 18px; }
+.bilan-card ul li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.6; color: var(--texte); }
 
 /* ── GLOSSAIRE ── */
-.gloss-search{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:20px;font-family:'Nunito',sans-serif;font-size:0.88rem;margin-bottom:16px}
-.gloss-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-@media(max-width:700px){.gloss-grid{grid-template-columns:1fr}}
-.gloss-item{background:var(--panel);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px}
-.gloss-item dt{font-family:'Outfit',sans-serif;font-weight:800;color:var(--bleu);font-size:0.9rem;margin-bottom:4px}
-.gloss-item dd{font-size:0.84rem;color:var(--text);line-height:1.55}
-.res-link-card{background:var(--panel);border:1.5px solid var(--border);border-left:4px solid var(--bleu);border-radius:12px;padding:14px 16px;text-decoration:none;display:block;transition:box-shadow 0.2s}
-.res-link-card:hover{box-shadow:0 4px 16px rgba(45,95,138,0.18)}
-.res-link-card h4{font-family:'Outfit',sans-serif;font-size:0.92rem;font-weight:700;color:var(--bleu);margin:0}
-.res-link-card p{font-size:0.8rem;color:var(--dim);margin-top:4px}
-.res-link-card.orange{border-left-color:var(--orange)}
-.res-link-card.orange h4{color:var(--orange)}
-.res-link-card.orange:hover{box-shadow:0 4px 16px rgba(232,120,58,0.18)}
-.res-link-card.vert{border-left-color:var(--vert)}
-.res-link-card.vert h4{color:var(--vert)}
-.res-link-card.vert:hover{box-shadow:0 4px 16px rgba(58,138,110,0.18)}
+.gloss-search { width: 100%; padding: 10px 14px; border: 1.5px solid var(--gris-bord); border-radius: 20px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; margin-bottom: 16px; }
+.gloss-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media(max-width:700px){ .gloss-grid{ grid-template-columns: 1fr; } }
+.gloss-item { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-radius: 10px; padding: 12px 16px; }
+.gloss-item dt { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--bleu); font-size: 0.9rem; margin-bottom: 4px; }
+.gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
 
-.sub-tabs-nav{display:flex;gap:6px;padding:6px 0 0;margin-bottom:22px;flex-wrap:nowrap;overflow-x:auto}
-.sub-tab-btn{display:flex;align-items:center;gap:8px;padding:8px 18px;border:none;background:#b8cfe0;font-family:'Nunito',sans-serif;font-size:0.84rem;font-weight:700;color:var(--bleu);cursor:pointer;border-radius:999px;transition:all 0.2s;white-space:nowrap}
-.sub-tab-btn:hover{background:var(--bleu);color:white}
-.sub-tab-btn.active{background:#1e4466;color:white}
-.sub-tab-content{display:none}
-.sub-tab-content.active{display:block}
+.res-link-card { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-left: 4px solid var(--bleu); border-radius: 12px; padding: 14px 16px; text-decoration: none; display: block; transition: box-shadow 0.2s; }
+.res-link-card:hover { box-shadow: 0 4px 16px rgba(45,95,138,0.18); }
+.res-link-card h4 { font-family: 'Outfit', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--bleu); margin: 0; }
+.res-link-card p { font-size: 0.8rem; color: var(--texte-leger); margin-top: 4px; }
+.res-link-card.orange { border-left-color: var(--orange); }
+.res-link-card.orange h4 { color: var(--orange); }
+.res-link-card.orange:hover { box-shadow: 0 4px 16px rgba(232,120,58,0.18); }
+.res-link-card.vert { border-left-color: var(--vert); }
+.res-link-card.vert h4 { color: var(--vert); }
+.res-link-card.vert:hover { box-shadow: 0 4px 16px rgba(58,138,110,0.18); }
 
-.accord-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 18px;background:#EEF5FB;border:2px solid #B8D4EC;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:0.90rem;font-weight:800;color:var(--bleu);margin:20px 0 0}
-.accord-btn:hover{background:var(--bleu-clair)}
-.accord-body{display:none;padding:14px;background:var(--panel);border:1.5px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:0.88rem;line-height:1.7;margin-top:-10px;margin-bottom:10px}
-.accord-body.open{display:block}
+/* ── SOUS-ONGLETS ── */
+.sub-tabs-nav { display: flex; gap: 6px; padding: 18px 0 0; margin-bottom: 22px; flex-wrap: nowrap; overflow-x: auto; }
+.sub-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border: none;
+  background: #b8cfe0;
+  color: var(--bleu);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.sub-tab-btn:hover { background: var(--bleu); color: white; }
+.sub-tab-btn.active { background: #1e4466; color: white; }
+.sub-tab-content { display: none; }
+.sub-tab-content.active { display: block; }
+
+.accord-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px;
+  background: #EEF5FB;
+  border: 2px solid #B8D4EC;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.90rem;
+  font-weight: 800;
+  color: var(--bleu);
+  margin: 20px 0 0;
+}
+.accord-btn:hover { background: var(--bleu-clair); }
+.accord-body { display: none; padding: 14px; background: var(--blanc); border: 1.5px solid var(--gris-bord); border-top: none; border-radius: 0 0 8px 8px; font-size: 0.88rem; line-height: 1.7; margin-top: -10px; margin-bottom: 10px; }
+.accord-body.open { display: block; }
 
 /* ── SUJETS DE BAC ── */
-.bac-card{background:var(--panel);border:1.5px solid var(--border);border-left:4px solid var(--violet);border-radius:12px;padding:16px;margin-bottom:14px}
-.bac-card-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.78rem;color:var(--dim);margin-bottom:6px}
-.bac-lieu{font-weight:700;color:var(--violet)}
-.bac-card h4{font-family:'Outfit',sans-serif;font-size:0.98rem;font-weight:700;color:var(--text);margin:4px 0 6px}
-.bac-theme{font-size:0.82rem;color:var(--dim);margin-bottom:10px}
-.bac-notions{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.bac-tag{background:#F3EDF9;color:var(--violet);font-size:0.72rem;font-weight:600;padding:3px 10px;border-radius:20px}
-.bac-pastilles{display:flex;gap:10px;flex-wrap:wrap}
-.pastille{text-decoration:none;font-size:0.82rem;font-weight:700;padding:7px 14px;border-radius:20px;border:1.5px solid var(--bleu);color:var(--bleu);background:transparent;transition:box-shadow 0.2s,background 0.2s}
-.pastille-sujet{color:var(--bleu);border-color:var(--bleu)}
-.pastille-sujet:hover{background:var(--bleu-clair)}
-.pastille-corrige{color:var(--vert);border-color:var(--vert)}
-.pastille-corrige:hover{background:#E8F5F0}
-.footer-note{text-align:center;font-size:0.78rem;color:var(--dim);padding:20px;border-top:1px solid var(--border);margin-top:30px}
+.bac-card { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-left: 4px solid var(--violet); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+.bac-card-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 0.78rem; color: var(--texte-leger); margin-bottom: 6px; }
+.bac-lieu { font-weight: 700; color: var(--violet); }
+.bac-card h4 { font-family: 'Outfit', sans-serif; font-size: 0.98rem; font-weight: 700; color: var(--texte); margin: 4px 0 6px; }
+.bac-theme { font-size: 0.82rem; color: var(--texte-leger); margin-bottom: 10px; }
+.bac-notions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.bac-tag { background: var(--violet-clair); color: var(--violet); font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+.bac-pastilles { display: flex; gap: 10px; flex-wrap: wrap; }
+.pastille { text-decoration: none; font-size: 0.82rem; font-weight: 700; padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--bleu); color: var(--bleu); background: transparent; transition: box-shadow 0.2s, background 0.2s; }
+.pastille-sujet { color: var(--bleu); border-color: var(--bleu); }
+.pastille-sujet:hover { background: var(--bleu-clair); }
+.pastille-corrige { color: var(--vert); border-color: var(--vert); }
+.pastille-corrige:hover { background: var(--vert-clair); }
+.footer-note { text-align: center; font-size: 0.78rem; color: var(--texte-leger); padding: 20px; border-top: 1px solid var(--gris-bord); margin-top: 30px; }
 
-.qexo{background:var(--panel);border:1.5px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:14px}
-.qexo .q-txt{font-size:.85rem;color:var(--text);font-weight:600;margin-bottom:10px;line-height:1.5}
-.qexo .q-opt{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text2);padding:6px 4px;cursor:pointer;border-radius:6px}
-.qexo .q-opt:hover{background:var(--panel2)}
-.qexo .q-fb{margin-top:8px;font-size:.8rem;font-weight:700;padding:8px 10px;border-radius:6px;display:none}
-.qexo .q-fb.ok{display:block;background:#E8F5F0;color:#245c46}
-.qexo .q-fb.ko{display:block;background:#fdeaea;color:#a13a3a}
+.qexo { background: var(--blanc); border: 1.5px solid var(--gris-bord); border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+.qexo .q-txt { font-size: 0.85rem; color: var(--texte); font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+.qexo .q-opt { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--texte); padding: 6px 4px; cursor: pointer; border-radius: 6px; }
+.qexo .q-opt:hover { background: var(--gris-fond); }
+.qexo .q-fb { margin-top: 8px; font-size: 0.8rem; font-weight: 700; padding: 8px 10px; border-radius: 6px; display: none; }
+.qexo .q-fb.ok { display: block; background: var(--vert-clair); color: #245c46; }
+.qexo .q-fb.ko { display: block; background: var(--rouge-clair); color: #a13a3a; }
+
+/* ── EXERCICES E — sous-onglets, boutons communs ── */
+.diff-intro { font-size: 0.85rem; color: var(--texte-leger); line-height: 1.6; margin-bottom: 16px; padding: 12px 16px; background: var(--gris-fond); border-radius: 10px; border-left: 4px solid var(--bleu); }
+.exo-type { display: inline-block; font-family: 'Outfit', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 9px; border-radius: 20px; margin-left: 8px; vertical-align: 2px; }
+.exo-type.qcm { background: var(--bleu-clair); color: var(--bleu); }
+.exo-type.fcr { background: var(--orange-clair); color: var(--orange); }
+.exo-type.dnd { background: var(--vert-clair); color: var(--vert); }
+.exo-type.py { background: var(--violet-clair); color: var(--violet); }
+.exo-btns { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+
+/* FCR (Formule → Calcul → Résultat) */
+.fcr-row { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.fcr-field { display: flex; flex-direction: column; gap: 5px; }
+.fcr-field label { font-family: 'Outfit', sans-serif; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--texte-leger2); }
+.fcr-field input[type=text] { background: #fff; border: 1.5px solid var(--gris-bord); color: var(--texte); font-family: 'Nunito', sans-serif; font-size: 0.85rem; padding: 9px 12px; border-radius: 7px; outline: none; }
+.fcr-field input[type=text]:focus { border-color: var(--orange); }
+.fcr-field textarea { background: #fff; border: 1.5px solid var(--gris-bord); color: var(--texte); font-family: 'Nunito', sans-serif; font-size: 0.85rem; padding: 9px 12px; border-radius: 7px; outline: none; min-height: 64px; resize: vertical; line-height: 1.5; width: 100%; box-sizing: border-box; }
+.fcr-field textarea:focus { border-color: var(--orange); }
+.fcr-corr { display: none; margin-top: 12px; padding: 12px 16px; background: var(--vert-clair); border-left: 4px solid var(--vert); border-radius: 0 10px 10px 0; font-size: 0.84rem; line-height: 1.8; color: var(--texte); }
+.fcr-corr strong { color: var(--vert); font-family: 'Outfit', sans-serif; font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+
+/* Drag & drop */
+.dnd-tray { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; padding: 12px; background: var(--gris-fond); border-radius: 10px; border: 1.5px dashed var(--gris-bord); min-height: 46px; }
+.dnd-chip { background: var(--bleu); color: #fff; font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 600; padding: 8px 16px; border-radius: 20px; cursor: grab; user-select: none; transition: all 0.15s; border: 2px solid var(--bleu); }
+.dnd-chip:hover { box-shadow: 0 2px 8px rgba(45,95,138,0.25); }
+.dnd-chip.sel { background: var(--orange); border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-clair); }
+.dnd-chip.used { display: none; }
+.dnd-slots { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.dnd-slot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dnd-slot-label { font-size: 0.84rem; color: var(--texte); font-weight: 600; min-width: 220px; }
+.dnd-drop { flex: 1; min-width: 160px; min-height: 38px; border: 2px dashed var(--gris-bord); border-radius: 8px; background: #fff; display: flex; align-items: center; padding: 0 12px; font-size: 0.82rem; color: var(--texte-leger2); font-style: italic; transition: all 0.15s; }
+.dnd-drop:empty:before { content: '— déposer ici —'; }
+.dnd-drop.filled { border-style: solid; border-color: var(--bleu); color: var(--texte); font-style: normal; font-weight: 600; }
+.dnd-drop.over { border-color: var(--orange); background: var(--orange-clair); }
+.dnd-drop.correct { border-color: var(--vert); background: var(--vert-clair); color: var(--vert); }
+.dnd-drop.incorrect { border-color: var(--rouge); background: var(--rouge-clair); color: var(--rouge); }
+
+/* Éditeur Python (fond clair, pas de thème sombre) */
+.py-editor-wrap { border: 1.5px solid var(--gris-bord); border-radius: 8px; overflow: hidden; background: #fff; margin-top: 10px; }
+.py-editor-wrap:focus-within { border-color: var(--bleu); }
+.py-editor { width: 100%; min-height: 230px; padding: 12px 14px; background: #fff; color: var(--texte); border: none; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.82rem; line-height: 1.55; resize: vertical; box-sizing: border-box; tab-size: 4; white-space: pre; overflow-x: auto; display: block; }
+.py-editor:focus { outline: none; }
+.py-output { margin-top: 10px; min-height: 40px; padding: 10px 14px; background: var(--gris-fond); color: var(--texte); border: 1px solid var(--gris-bord); border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.82rem; white-space: pre-wrap; word-break: break-word; }
+.btn-run { padding: 10px 20px; background: var(--bleu); color: #fff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.15s; }
+.btn-run:hover { background: #1E4A72; }
+.btn-run:disabled { background: #94a3b8; cursor: wait; }
+.py-corr { display: none; margin-top: 10px; padding: 14px 16px; background: var(--vert-clair); border: 1px solid var(--vert); border-radius: 8px; color: #245c46; }
+.py-corr-label { font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--vert); margin-bottom: 8px; }
+.py-corr-code { background: #fff; border: 1px solid var(--vert); border-radius: 6px; padding: 10px 12px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.78rem; white-space: pre-wrap; word-break: break-word; color: var(--texte); line-height: 1.5; }
+.py-corr .btn-run { margin-top: 10px; }
+.py-corr .py-output { margin-top: 10px; }
 </style>
 </head>
 <body>
@@ -250,22 +530,24 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
         <li><strong>Loi de vitesse d'ordre 1</strong>Identifier, à partir de données expérimentales, si l'évolution d'une concentration suit ou non une loi de vitesse d'ordre 1.</li>
         <li><strong>Temps de demi-réaction</strong>Définir t₁/₂. Le déterminer graphiquement. Relier t₁/₂ à la rapidité d'une transformation.</li>
       </ul>
-      <p style="margin-top:10px;font-size:0.78rem;color:var(--dim);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
+      <p style="margin-top:10px;font-size:0.78rem;color:var(--texte-leger);font-style:italic;">D'après le B.O. spécial n° 8 du 25 juillet 2019.</p>
     </div>
 
-    <div class="tabs">
-      <button class="tab active" onclick="goTab('facteurs',this)"><span class="tab-num">A</span>Facteurs cinétiques</button>
-      <button class="tab" onclick="goTab('catalyse',this)"><span class="tab-num">B</span>Catalyse</button>
-      <button class="tab" onclick="goTab('suivi',this)"><span class="tab-num">C</span>Suivi temporel</button>
-      <button class="tab" onclick="goTab('t12',this)"><span class="tab-num">D</span>Temps de demi-réaction</button>
-      <button class="tab" onclick="goTab('labo',this)"><span class="tab-num">E</span>🔬 Exercice interactif</button>
-      <button class="tab" onclick="goTab('bilan',this)"><span class="tab-num">✓</span>Bilan &amp; Ressources</button>
-    </div>
+    <nav class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">A</span>Facteurs cinétiques</button>
+      <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">B</span>Catalyse</button>
+      <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">C</span>Suivi temporel</button>
+      <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">D</span>Temps de demi-réaction</button>
+      <button class="tab-btn" onclick="switchTab(4)"><span class="tab-num">E</span>Exercices</button>
+      <button class="tab-btn" onclick="switchTab(5)"><span class="tab-num">✓</span>Bilan &amp; Ressources</button>
+    </nav>
   </div>
 </div>
 
+<div class="main">
+
 <!-- ═══════════════════════════ PAGE 1 : FACTEURS ═══════════════════════════ -->
-<div id="facteurs" class="page active">
+<div id="facteurs" class="tab-content active">
   <div class="g2">
     <div>
       <div class="card">
@@ -296,7 +578,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
           <div class="cv-tooltip" id="tt-fact">
             <div><b>t</b> = <span class="tt-t" id="tt-fact-t">—</span></div>
             <div class="tt-A">[I⁻] modifié = <span id="tt-fact-Am">—</span></div>
-            <div style="color:var(--dim2)">[I⁻] réf. = <span id="tt-fact-Ar">—</span></div>
+            <div style="color:var(--texte-leger2)">[I⁻] réf. = <span id="tt-fact-Ar">—</span></div>
             <div class="tt-v">v = <span id="tt-fact-v">—</span> ×10⁻³ mol/L/s</div>
           </div>
         </div>
@@ -317,7 +599,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <label class="q-opt"><input type="radio" name="qA1" value="bad"> Il augmente : la réaction est plus lente</label>
     <label class="q-opt"><input type="radio" name="qA1" value="good"> Il diminue : la réaction est plus rapide</label>
     <label class="q-opt"><input type="radio" name="qA1" value="bad2"> Il ne change pas</label>
-    <div><button class="btn grn" style="margin-top:8px" onclick="checkQA(1)">Vérifier</button></div>
+    <div class="exo-btns"><button class="btn grn" onclick="checkQA(1)">✓ Correction</button><button class="btn" onclick="resetQA(1)">↺ Recommencer</button></div>
     <div class="q-fb" id="qA1-fb"></div>
   </div>
 
@@ -326,7 +608,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <label class="q-opt"><input type="radio" name="qA2" value="good"> Elle augmente</label>
     <label class="q-opt"><input type="radio" name="qA2" value="bad"> Elle diminue</label>
     <label class="q-opt"><input type="radio" name="qA2" value="bad2"> Elle reste identique</label>
-    <div><button class="btn grn" style="margin-top:8px" onclick="checkQA(2)">Vérifier</button></div>
+    <div class="exo-btns"><button class="btn grn" onclick="checkQA(2)">✓ Correction</button><button class="btn" onclick="resetQA(2)">↺ Recommencer</button></div>
     <div class="q-fb" id="qA2-fb"></div>
   </div>
 
@@ -335,14 +617,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <label class="q-opt"><input type="radio" name="qA3" value="good"> Beaucoup plus courte (quasi nulle)</label>
     <label class="q-opt"><input type="radio" name="qA3" value="bad"> Identique</label>
     <label class="q-opt"><input type="radio" name="qA3" value="bad2"> Plus longue</label>
-    <div><button class="btn grn" style="margin-top:8px" onclick="checkQA(3)">Vérifier</button></div>
+    <div class="exo-btns"><button class="btn grn" onclick="checkQA(3)">✓ Correction</button><button class="btn" onclick="resetQA(3)">↺ Recommencer</button></div>
     <div class="q-fb" id="qA3-fb"></div>
   </div>
 
 </div>
 
 <!-- ═══════════════════════════ PAGE 2 : CATALYSE ═══════════════════════════ -->
-<div id="catalyse" class="page">
+<div id="catalyse" class="tab-content">
   <div class="g2">
     <div>
       <div class="card">
@@ -457,7 +739,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <label class="q-opt"><input type="radio" name="qB1" value="good"> Car la couleur revient au jaune initial : Fe³⁺ est régénéré en fin de réaction</label>
     <label class="q-opt"><input type="radio" name="qB1" value="bad"> Car Fe³⁺ apparaît dans l'équation-bilan de la réaction</label>
     <label class="q-opt"><input type="radio" name="qB1" value="bad2"> Car la réaction est plus lente en présence de Fe³⁺</label>
-    <div><button class="btn grn" style="margin-top:8px" onclick="checkQB(1)">Vérifier</button></div>
+    <div class="exo-btns"><button class="btn grn" onclick="checkQB(1)">✓ Correction</button><button class="btn" onclick="resetQB(1)">↺ Recommencer</button></div>
     <div class="q-fb" id="qB1-fb"></div>
   </div>
 
@@ -466,7 +748,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <label class="q-opt"><input type="radio" name="qB2" value="bad"> Car la réaction est plus rapide qu'en catalyse homogène</label>
     <label class="q-opt"><input type="radio" name="qB2" value="good"> Car le platine (solide) et H₂O₂ (liquide) ne sont pas dans la même phase</label>
     <label class="q-opt"><input type="radio" name="qB2" value="bad2"> Car le platine change de couleur au cours de la réaction</label>
-    <div><button class="btn grn" style="margin-top:8px" onclick="checkQB(2)">Vérifier</button></div>
+    <div class="exo-btns"><button class="btn grn" onclick="checkQB(2)">✓ Correction</button><button class="btn" onclick="resetQB(2)">↺ Recommencer</button></div>
     <div class="q-fb" id="qB2-fb"></div>
   </div>
 
@@ -475,20 +757,20 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <label class="q-opt"><input type="radio" name="qB3" value="good"> L'état final [A] est identique avec ou sans catalyseur, seule la vitesse pour l'atteindre change</label>
     <label class="q-opt"><input type="radio" name="qB3" value="bad"> L'état final est atteint pour une concentration plus faible avec le catalyseur</label>
     <label class="q-opt"><input type="radio" name="qB3" value="bad2"> Sans catalyseur, la réaction n'atteint jamais son état final</label>
-    <div><button class="btn grn" style="margin-top:8px" onclick="checkQB(3)">Vérifier</button></div>
+    <div class="exo-btns"><button class="btn grn" onclick="checkQB(3)">✓ Correction</button><button class="btn" onclick="resetQB(3)">↺ Recommencer</button></div>
     <div class="q-fb" id="qB3-fb"></div>
   </div>
 
 </div>
 
 <!-- ═══════════════════════════ PAGE 3 : SUIVI ═══════════════════════════ -->
-<div id="suivi" class="page">
+<div id="suivi" class="tab-content">
 
   <!-- Équation bilan -->
   <div class="fml" style="margin-bottom:16px;font-size:.78rem;line-height:2.2;text-align:center">
     <span class="r">2 I⁻</span><sub>(aq)</sub> + <span style="color:var(--orange)">S₂O₈²⁻</span><sub>(aq)</sub>
-    → <span class="b">I₂</span><sub>(aq)</sub> + <span style="color:var(--dim2)">2 SO₄²⁻</span><sub>(aq)</sub><br>
-    <span style="font-size:.68rem;color:var(--dim2)">
+    → <span class="b">I₂</span><sub>(aq)</sub> + <span style="color:var(--texte-leger2)">2 SO₄²⁻</span><sub>(aq)</sub><br>
+    <span style="font-size:.68rem;color:var(--texte-leger2)">
       Conditions : [I⁻]₀ = 0,100 mol/L · [S₂O₈²⁻]₀ = 0,050 mol/L · T = 20°C · suivi par dosage de I₂
     </span>
   </div>
@@ -497,6 +779,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <button class="sub-tab-btn active" onclick="switchSubTab('C',0)">📈 Suivi graphique</button>
     <button class="sub-tab-btn" onclick="switchSubTab('C',1)">🧮 Loi de vitesse</button>
     <button class="sub-tab-btn" onclick="switchSubTab('C',2)">⚖️ Stœchiométrie</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('C',3)">🧪 TP Cinétique — Phénolphtaléine</button>
   </div>
 
   <!-- ══ C1 : SUIVI GRAPHIQUE ══ -->
@@ -504,7 +787,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 
     <div class="card">
       <div class="card-label">🧪 Protocole expérimental — Suivi cinétique par spectrophotométrie</div>
-      <p style="font-size:.88rem;line-height:1.7;color:var(--text);margin-bottom:14px;">
+      <p style="font-size:.88rem;line-height:1.7;color:var(--texte);margin-bottom:14px;">
         <strong>Objectif :</strong> suivre l'évolution de la réaction entre les ions peroxodisulfate S₂O₈²⁻ et iodure I⁻ (I⁻ en excès) par mesure de l'absorbance du diiode I₂ formé, afin de tracer [S₂O₈²⁻](t) et de tester la loi d'ordre 1.
       </p>
 
@@ -517,7 +800,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
         <div>
           <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:.8rem;color:var(--bleu);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">📋 Matériel</div>
-          <ul style="font-size:.85rem;line-height:1.7;padding-left:18px;color:var(--text);">
+          <ul style="font-size:.85rem;line-height:1.7;padding-left:18px;color:var(--texte);">
             <li>Spectrophotomètre (λ = 350 nm)</li>
             <li>Cuve, chronomètre</li>
             <li>Solutions S₂O₈²⁻ (0,020 mol/L) et KI (0,10 mol/L)</li>
@@ -526,7 +809,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
         </div>
         <div>
           <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:.8rem;color:var(--bleu);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">📝 Mode opératoire</div>
-          <ol style="font-size:.85rem;line-height:1.7;padding-left:18px;color:var(--text);">
+          <ol style="font-size:.85rem;line-height:1.7;padding-left:18px;color:var(--texte);">
             <li>Régler le zéro du spectrophotomètre à λ = 350 nm avec de l'eau distillée.</li>
             <li>Mélanger les volumes de S₂O₈²⁻ et de KI ; déclencher le chronomètre au mélange.</li>
             <li>Transvaser rapidement dans la cuve et relever A(t) toutes les 30 s.</li>
@@ -543,38 +826,38 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
         <table style="width:100%;min-width:500px;border-collapse:collapse;font-size:13px;text-align:center;font-family:'Outfit',sans-serif;">
           <thead>
             <tr style="background:var(--bleu-clair);color:var(--bleu);">
-              <th style="padding:8px;border:1px solid var(--border);">t (s)</th>
-              <td style="padding:8px;border:1px solid var(--border);font-weight:bold;">0</td>
-              <td style="padding:8px;border:1px solid var(--border);font-weight:bold;">30</td>
-              <td style="padding:8px;border:1px solid var(--border);font-weight:bold;">60</td>
-              <td style="padding:8px;border:1px solid var(--border);font-weight:bold;">90</td>
-              <td style="padding:8px;border:1px solid var(--border);font-weight:bold;">120</td>
-              <td style="padding:8px;border:1px solid var(--border);font-weight:bold;">150</td>
+              <th style="padding:8px;border:1px solid var(--gris-bord);">t (s)</th>
+              <td style="padding:8px;border:1px solid var(--gris-bord);font-weight:bold;">0</td>
+              <td style="padding:8px;border:1px solid var(--gris-bord);font-weight:bold;">30</td>
+              <td style="padding:8px;border:1px solid var(--gris-bord);font-weight:bold;">60</td>
+              <td style="padding:8px;border:1px solid var(--gris-bord);font-weight:bold;">90</td>
+              <td style="padding:8px;border:1px solid var(--gris-bord);font-weight:bold;">120</td>
+              <td style="padding:8px;border:1px solid var(--gris-bord);font-weight:bold;">150</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th style="padding:8px;border:1px solid var(--border);background:var(--panel2);">A ± 0,002</th>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <th style="padding:8px;border:1px solid var(--gris-bord);background:var(--gris-fond);">A ± 0,002</th>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
             </tr>
             <tr>
-              <th style="padding:8px;border:1px solid var(--border);background:var(--panel2);">[S₂O₈²⁻] (mol/L)</th>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
-              <td style="padding:2px;border:1px solid var(--border);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <th style="padding:8px;border:1px solid var(--gris-bord);background:var(--gris-fond);">[S₂O₈²⁻] (mol/L)</th>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
+              <td style="padding:2px;border:1px solid var(--gris-bord);"><input type="text" placeholder="…" style="width:100%;border:none;text-align:center;font-size:13px;background:transparent;"></td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p style="font-size:.78rem;color:var(--dim);font-style:italic;margin-top:8px;">
+      <p style="font-size:.78rem;color:var(--texte-leger);font-style:italic;margin-top:8px;">
         À exploiter ensuite avec le graphique interactif ci-dessous et le sous-onglet "Loi de vitesse".
       </p>
     </div>
@@ -629,30 +912,30 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
             <input type="range" id="x-slider" min="0" max="100" value="0" step="0.5" oninput="updAvancement()">
           </div>
           <!-- Tableau d'avancement -->
-          <div id="x-table" style="font-family:'Nunito',sans-serif;font-size:.68rem;border:1px solid var(--border);border-radius:6px;overflow:hidden">
-            <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;background:var(--panel2)">
-              <div style="padding:6px 10px;font-weight:700;color:var(--dim);font-size:.6rem;letter-spacing:.06em">ESPÈCE</div>
-              <div style="padding:6px 8px;font-weight:700;color:var(--rouge);text-align:center;border-left:1px solid var(--border)">I⁻</div>
-              <div style="padding:6px 8px;font-weight:700;color:var(--orange);text-align:center;border-left:1px solid var(--border)">S₂O₈²⁻</div>
-              <div style="padding:6px 8px;font-weight:700;color:var(--bleu);text-align:center;border-left:1px solid var(--border)">I₂</div>
+          <div id="x-table" style="font-family:'Nunito',sans-serif;font-size:.68rem;border:1px solid var(--gris-bord);border-radius:6px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;background:var(--gris-fond)">
+              <div style="padding:6px 10px;font-weight:700;color:var(--texte-leger);font-size:.6rem;letter-spacing:.06em">ESPÈCE</div>
+              <div style="padding:6px 8px;font-weight:700;color:var(--rouge);text-align:center;border-left:1px solid var(--gris-bord)">I⁻</div>
+              <div style="padding:6px 8px;font-weight:700;color:var(--orange);text-align:center;border-left:1px solid var(--gris-bord)">S₂O₈²⁻</div>
+              <div style="padding:6px 8px;font-weight:700;color:var(--bleu);text-align:center;border-left:1px solid var(--gris-bord)">I₂</div>
             </div>
-            <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:1px solid var(--border);background:#fff">
-              <div style="padding:6px 10px;color:var(--dim)">t = 0</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--rouge)">0,5000</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--orange)">0,0500</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--bleu)">0</div>
+            <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:1px solid var(--gris-bord);background:#fff">
+              <div style="padding:6px 10px;color:var(--texte-leger)">t = 0</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--rouge)">0,5000</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--orange)">0,0500</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--bleu)">0</div>
             </div>
-            <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:1px solid var(--border);background:#F0F4F8">
-              <div style="padding:6px 10px;color:var(--dim)">Variation</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--rouge)" id="x-dI">−2x</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--orange)" id="x-dS">−x</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--bleu)" id="x-dI2">+x</div>
+            <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:1px solid var(--gris-bord);background:#F0F4F8">
+              <div style="padding:6px 10px;color:var(--texte-leger)">Variation</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--rouge)" id="x-dI">−2x</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--orange)" id="x-dS">−x</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--bleu)" id="x-dI2">+x</div>
             </div>
             <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:2px solid var(--bleu);background:#E8F1F8">
               <div style="padding:6px 10px;color:var(--bleu);font-weight:700" id="x-t-label">t = 0 min</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--rouge);font-weight:700" id="x-cI">0,5000</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--orange);font-weight:700" id="x-cS">0,0500</div>
-              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--border);color:var(--bleu);font-weight:700" id="x-cI2">0</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--rouge);font-weight:700" id="x-cI">0,5000</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--orange);font-weight:700" id="x-cS">0,0500</div>
+              <div style="padding:6px 8px;text-align:center;border-left:1px solid var(--gris-bord);color:var(--bleu);font-weight:700" id="x-cI2">0</div>
             </div>
           </div>
         </div>
@@ -708,7 +991,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
             <div class="fml" style="margin-top:0;flex:1;background:#fff;border-color:#c8dff5">
               En excès de I⁻ (<span style="background:#fff3cd;color:#a85a2a;padding:1px 5px;border-radius:3px;font-size:.6rem">⚠ pseudo-ordre 1</span> en S₂O₈²⁻) :<br>
               <span style="color:var(--orange)">v = −d[S₂O₈²⁻]/dt = k · [S₂O₈²⁻]</span><br>
-              <span style="color:var(--dim2);font-size:.65rem">k = 0,0327 min⁻¹ (déterminé expérimentalement)</span>
+              <span style="color:var(--texte-leger2);font-size:.65rem">k = 0,0327 min⁻¹ (déterminé expérimentalement)</span>
             </div>
           </div>
 
@@ -717,7 +1000,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
             <div style="background:#1a5a9a;color:#fff;font-family:'Nunito',sans-serif;font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:3px;white-space:nowrap;margin-top:2px">② Séparation</div>
             <div class="fml" style="margin-top:0;flex:1;background:#fff;border-color:#c8dff5">
               <span style="color:var(--orange)">d[S₂O₈²⁻] / [S₂O₈²⁻] = −k · dt</span><br>
-              <span style="color:var(--dim2);font-size:.65rem">On sépare la variable de concentration de la variable de temps</span>
+              <span style="color:var(--texte-leger2);font-size:.65rem">On sépare la variable de concentration de la variable de temps</span>
             </div>
           </div>
 
@@ -728,7 +1011,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
               La primitive de 1/u est ln(u), donc :<br>
               <span style="color:var(--orange)">ln [S₂O₈²⁻](t) − ln [S₂O₈²⁻]₀ = −k·t</span><br>
               soit : <span style="color:var(--orange)">ln([S₂O₈²⁻](t) / [S₂O₈²⁻]₀) = −k·t</span><br>
-              <span style="color:var(--dim2);font-size:.65rem">→ vérifié par la linéarité de ln([S₂O₈²⁻]) = f(t), onglet Stœchiométrie</span>
+              <span style="color:var(--texte-leger2);font-size:.65rem">→ vérifié par la linéarité de ln([S₂O₈²⁻]) = f(t), onglet Stœchiométrie</span>
             </div>
           </div>
 
@@ -780,25 +1063,25 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
         </div>
 
         <!-- Outil interactif réactif limitant -->
-        <div style="background:#F0F4F8;border:1px solid var(--border);border-radius:8px;padding:14px">
-          <div style="font-family:'Nunito',sans-serif;font-size:.65rem;color:var(--dim);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Tester avec vos concentrations</div>
+        <div style="background:#F0F4F8;border:1px solid var(--gris-bord);border-radius:8px;padding:14px">
+          <div style="font-family:'Nunito',sans-serif;font-size:.65rem;color:var(--texte-leger);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Tester avec vos concentrations</div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
             <div class="field" style="min-width:110px">
-              <label style="font-size:.62rem;color:var(--dim2)">[I⁻]₀ (mol/L)</label>
-              <input type="number" id="st-I" value="0.500" min="0.001" max="2" step="0.001" style="background:#fff;border:1px solid var(--border);color:var(--text);font-family:'Nunito',sans-serif;font-size:.72rem;padding:6px 8px;border-radius:5px;width:100%" oninput="updStoech()">
+              <label style="font-size:.62rem;color:var(--texte-leger2)">[I⁻]₀ (mol/L)</label>
+              <input type="number" id="st-I" value="0.500" min="0.001" max="2" step="0.001" style="background:#fff;border:1px solid var(--gris-bord);color:var(--texte);font-family:'Nunito',sans-serif;font-size:.72rem;padding:6px 8px;border-radius:5px;width:100%" oninput="updStoech()">
             </div>
             <div class="field" style="min-width:110px">
-              <label style="font-size:.62rem;color:var(--dim2)">[S₂O₈²⁻]₀ (mol/L)</label>
-              <input type="number" id="st-S" value="0.050" min="0.001" max="2" step="0.001" style="background:#fff;border:1px solid var(--border);color:var(--text);font-family:'Nunito',sans-serif;font-size:.72rem;padding:6px 8px;border-radius:5px;width:100%" oninput="updStoech()">
+              <label style="font-size:.62rem;color:var(--texte-leger2)">[S₂O₈²⁻]₀ (mol/L)</label>
+              <input type="number" id="st-S" value="0.050" min="0.001" max="2" step="0.001" style="background:#fff;border:1px solid var(--gris-bord);color:var(--texte);font-family:'Nunito',sans-serif;font-size:.72rem;padding:6px 8px;border-radius:5px;width:100%" oninput="updStoech()">
             </div>
           </div>
 
           <!-- Résultat visuel -->
-          <div id="st-result" style="font-family:'Nunito',sans-serif;font-size:.72rem;line-height:1.9;padding:10px 12px;border-radius:6px;background:#fff;border:2px solid var(--border)" ></div>
+          <div id="st-result" style="font-family:'Nunito',sans-serif;font-size:.72rem;line-height:1.9;padding:10px 12px;border-radius:6px;background:#fff;border:2px solid var(--gris-bord)" ></div>
 
           <!-- Barre visuelle des proportions -->
           <div style="margin-top:10px">
-            <div style="font-size:.6rem;color:var(--dim);margin-bottom:4px;font-family:'Nunito',sans-serif">[I⁻]₀/2 vs [S₂O₈²⁻]₀</div>
+            <div style="font-size:.6rem;color:var(--texte-leger);margin-bottom:4px;font-family:'Nunito',sans-serif">[I⁻]₀/2 vs [S₂O₈²⁻]₀</div>
             <div style="display:flex;gap:4px;align-items:center">
               <div style="font-size:.6rem;color:var(--rouge);font-family:'Nunito',sans-serif;width:60px;text-align:right" id="st-bar-l">I⁻</div>
               <div style="flex:1;height:14px;background:#F5F7FA;border-radius:7px;overflow:hidden;position:relative">
@@ -836,10 +1119,182 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
   </div>
   <!-- /sub-C-2 -->
 
+  <!-- ══ C3 : TP N°15 — DÉCOLORATION DE LA PHÉNOLPHTALÉINE ══ -->
+  <div class="sub-tab-content" id="sub-C-3">
+
+    <div class="card">
+      <div class="card-label">🧪 TP Cinétique — Décoloration de la phénolphtaléine (suivi spectrophotométrique)</div>
+      <p style="font-size:.88rem;line-height:1.7;color:var(--texte);margin-bottom:12px;">
+        <strong>Objectif :</strong> mettre en œuvre une méthode physique (spectrophotométrie) pour suivre l'évolution d'une concentration au cours du temps et déterminer la vitesse volumique de disparition d'un réactif.
+      </p>
+      <div class="fml" style="margin-bottom:12px;font-size:.8rem;line-height:2">
+        La phénolphtaléine (notée PP, rose en milieu basique) se décompose lentement en milieu fortement basique selon :<br>
+        <span class="r">PP</span><sub>(aq)</sub> + <span style="color:var(--orange)">HO⁻</span><sub>(aq)</sub> → <span class="b">PP⁻</span><sub>(aq)</sub> &nbsp;(PP⁻ incolore)<br>
+        <span style="font-size:.72rem;color:var(--texte-leger2)">PP est ici le réactif limitant · λ<sub>max</sub> = 553 nm · ε = 2500 L·mol⁻¹·cm⁻¹</span>
+      </div>
+
+      <video controls preload="metadata" style="width:100%;max-width:640px;display:block;margin:0 auto 14px;border-radius:10px;border:1.5px solid var(--gris-bord);background:var(--gris-fond);">
+        <source src="TPpp.mp4" type="video/mp4">
+        Votre navigateur ne prend pas en charge la lecture vidéo.
+      </video>
+
+      <div class="ibox" style="margin-top:0">
+        <strong>Protocole résumé</strong>
+        Étalonner le spectrophotomètre (Visual Spectra) puis faire le blanc et le noir. Verser environ 5 mL de soude à 0,5 mol/L, ajouter 1 goutte de phénolphtaléine, agiter. Remplir une cuve, la placer dans le boîtier et déclencher le chronomètre. Mesurer A₅₅₃ toutes les 15 s jusqu'à ce que A ne varie presque plus. Saisir les valeurs sur Regressi.
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-label">Résultats de mesure et courbe [PP] = f(t)</div>
+      <p style="font-size:.82rem;color:var(--texte-leger);margin-bottom:10px">
+        [PP] se calcule à partir de la loi de Beer-Lambert : A = ε·l·[PP], soit <strong>[PP] = A / (ε×l)</strong> avec l = 1 cm (largeur de cuve), donc [PP] = A / 2500.
+      </p>
+      <div class="canvas-wrap">
+        <canvas id="tp15Chart" height="240"></canvas>
+      </div>
+      <div style="max-height:220px;overflow-y:auto;margin-top:12px;border:1px solid var(--gris-bord);border-radius:8px;">
+        <table style="width:100%;border-collapse:collapse;font-size:.72rem;">
+          <thead style="position:sticky;top:0;background:var(--gris-fond);">
+            <tr>
+              <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">t (s)</th>
+              <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">A (553 nm)</th>
+              <th style="padding:6px 10px;text-align:left;border-bottom:1.5px solid var(--gris-bord);">[PP] (mol/L)</th>
+            </tr>
+          </thead>
+          <tbody id="tp15TableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-label">✏️ Exploitation du TP — répondez aux questions</div>
+      <p style="font-size:.82rem;color:var(--texte-leger);margin-bottom:4px">Appuyez-vous sur la vidéo, le protocole et vos propres mesures (ou le tableau de référence ci-dessus) pour répondre. Vous pouvez changer vos réponses à tout moment avant de consulter la correction.</p>
+    </div>
+
+    <div class="qexo" id="tpQ2">
+      <div class="q-txt">2. D'après la loi de Beer-Lambert (A = ε×l×[PP]), quelle expression faut-il utiliser pour créer la grandeur calculée [PP] sur Regressi ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ2" value="good"> PP = A / 2500</label>
+      <label class="q-opt"><input type="radio" name="tpQ2" value="bad"> PP = A × 2500</label>
+      <label class="q-opt"><input type="radio" name="tpQ2" value="bad"> PP = 2500 / A</label>
+      <label class="q-opt"><input type="radio" name="tpQ2" value="bad"> PP = A / 553</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ2')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ2')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ2-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpQ31">
+      <div class="q-txt">3.1. Tracer [PP] = f(t) puis essayer de modéliser cette fonction. Quelle modélisation correspond aux mesures ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ31" value="good"> Exponentielle décroissante : [PP](t) = [PP]₀×e⁻ᵗ/ᵗᵃᵘ avec [PP]₀ ≈ 6,08×10⁻⁴ mol/L et τ ≈ 128 s</label>
+      <label class="q-opt"><input type="radio" name="tpQ31" value="bad"> Affine décroissante : [PP](t) = −a×t + [PP]₀</label>
+      <label class="q-opt"><input type="radio" name="tpQ31" value="bad"> Exponentielle décroissante avec [PP]₀ ≈ 1,53×10⁻³ mol/L et τ ≈ 350 s</label>
+      <label class="q-opt"><input type="radio" name="tpQ31" value="bad"> Fonction constante : [PP](t) = [PP]₀</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ31')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ31')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ31-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpQ32">
+      <div class="q-txt">3.2. D'après la forme de l'équation trouvée en 3.1, quel est l'ordre de la loi de vitesse de cette réaction ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ32" value="bad"> Ordre 0 (vitesse constante)</label>
+      <label class="q-opt"><input type="radio" name="tpQ32" value="good"> Ordre 1 (vitesse proportionnelle à [PP])</label>
+      <label class="q-opt"><input type="radio" name="tpQ32" value="bad"> Ordre 2 (vitesse proportionnelle à [PP]²)</label>
+      <label class="q-opt"><input type="radio" name="tpQ32" value="bad"> On ne peut pas conclure à ce stade</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ32')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ32')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ32-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpQ4">
+      <div class="q-txt">4. À t₁/₂, [PP] = [PP]₀/2 = 3,04×10⁻⁴ mol/L. Quelle est la valeur de t₁/₂ déterminée graphiquement (valeur modélisée ou réticule) ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ4" value="good"> t₁/₂ ≈ 88,5 s</label>
+      <label class="q-opt"><input type="radio" name="tpQ4" value="bad"> t₁/₂ ≈ 128 s (= τ)</label>
+      <label class="q-opt"><input type="radio" name="tpQ4" value="bad"> t₁/₂ ≈ 350 s</label>
+      <label class="q-opt"><input type="radio" name="tpQ4" value="bad"> t₁/₂ ≈ 15 s</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ4')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ4')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ4-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpQ51">
+      <div class="q-txt">5.1. La vitesse volumique de consommation de PP s'exprime v<sub>PP</sub>(t) = −d[PP]/dt. Par analyse dimensionnelle, quelle est son unité ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ51" value="good"> mol·L⁻¹·s⁻¹</label>
+      <label class="q-opt"><input type="radio" name="tpQ51" value="bad"> mol·s⁻¹</label>
+      <label class="q-opt"><input type="radio" name="tpQ51" value="bad"> L·mol⁻¹·s⁻¹</label>
+      <label class="q-opt"><input type="radio" name="tpQ51" value="bad"> s⁻¹</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ51')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ51')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ51-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpQ52">
+      <div class="q-txt">5.2. Par la méthode des tangentes, quelles vitesses obtient-on aux dates t₀ = 60 s et t₁ = 1000 s ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ52" value="good"> v(60) ≈ 3,28 µmol·L⁻¹·s⁻¹ ; v(1000) = 0 µmol·L⁻¹·s⁻¹</label>
+      <label class="q-opt"><input type="radio" name="tpQ52" value="bad"> v(60) = 0 ; v(1000) ≈ 3,28 µmol·L⁻¹·s⁻¹</label>
+      <label class="q-opt"><input type="radio" name="tpQ52" value="bad"> v(60) ≈ 3,28 µmol·L⁻¹·s⁻¹ ; v(1000) ≈ 3,28 µmol·L⁻¹·s⁻¹</label>
+      <label class="q-opt"><input type="radio" name="tpQ52" value="bad"> v(60) et v(1000) sont toutes deux non mesurables</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ52')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ52')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ52-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpQ61">
+      <div class="q-txt">6.1. Tracer ln[PP] = f(t) et modéliser la fonction. Quelle équation obtient-on ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ61" value="good"> ln[PP](t) = −7,5×10⁻³×t − 7,46 (fonction affine décroissante)</label>
+      <label class="q-opt"><input type="radio" name="tpQ61" value="bad"> ln[PP](t) = +7,5×10⁻³×t + 7,46 (fonction affine croissante)</label>
+      <label class="q-opt"><input type="radio" name="tpQ61" value="bad"> ln[PP](t) = −7,5×10⁻³×t² − 7,46 (fonction quadratique)</label>
+      <label class="q-opt"><input type="radio" name="tpQ61" value="bad"> ln[PP](t) est constante</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ61')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ61')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ61-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpQ62">
+      <div class="q-txt">6.2. Que peut-on conclure de la forme affine de ln[PP] = f(t) sur la loi de vitesse ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ62" value="good"> Elle confirme une loi de vitesse d'ordre 1, avec k ≈ 7,5×10⁻³ s⁻¹ (opposé de la pente)</label>
+      <label class="q-opt"><input type="radio" name="tpQ62" value="bad"> Elle confirme un ordre 0, car [PP] varie linéairement</label>
+      <label class="q-opt"><input type="radio" name="tpQ62" value="bad"> Elle ne permet pas de conclure sur l'ordre de la réaction</label>
+      <label class="q-opt"><input type="radio" name="tpQ62" value="bad"> Elle indique un ordre 2</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ62')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ62')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ62-fb"></div>
+    </div>
+
+    <div class="qexo" id="tpQ63">
+      <div class="q-txt">6.3. En utilisant t₁/₂ = ln2 / k avec k ≈ 7,5×10⁻³ s⁻¹ (tiré de l'équation de ln[PP] = f(t)), quelle valeur retrouve-t-on pour t₁/₂ ?<span class="exo-type qcm">QCM</span></div>
+      <label class="q-opt"><input type="radio" name="tpQ63" value="good"> t₁/₂ ≈ 92 s</label>
+      <label class="q-opt"><input type="radio" name="tpQ63" value="bad"> t₁/₂ ≈ 7,5×10⁻³ s</label>
+      <label class="q-opt"><input type="radio" name="tpQ63" value="bad"> t₁/₂ ≈ 350 s</label>
+      <label class="q-opt"><input type="radio" name="tpQ63" value="bad"> t₁/₂ ≈ 0,69 s</label>
+      <div class="exo-btns">
+        <button class="btn grn" onclick="checkExo('tpQ63')">✓ Correction</button>
+        <button class="btn" onclick="resetExo('tpQ63')">↺ Recommencer</button>
+      </div>
+      <div class="q-fb" id="tpQ63-fb"></div>
+    </div>
+
+  </div>
+  <!-- /sub-C-3 -->
+
 </div>
 
 <!-- ═══════════════════════════ PAGE 4 : t½ ═══════════════════════════ -->
-<div id="t12" class="page">
+<div id="t12" class="tab-content">
 
   <div class="sub-tabs-nav" id="sub-nav-D">
     <button class="sub-tab-btn active" onclick="switchSubTab('D',0)">📈 Construction graphique</button>
@@ -913,9 +1368,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
   <!-- ══ D2 : APPLICATION PYTHON ══ -->
   <div class="sub-tab-content" id="sub-D-1">
 
-  <div class="card-py" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--panel);">
+  <div class="card-py" style="border: 1px solid var(--gris-bord); border-radius: 8px; overflow: hidden; background: var(--blanc);">
 
-    <div style="background: var(--panel2); padding: 14px 18px; font-weight: 700; font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 8px; color: var(--bleu); border-bottom: 1px solid var(--border);">
+    <div style="background: var(--gris-fond); padding: 14px 18px; font-weight: 700; font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 8px; color: var(--bleu); border-bottom: 1px solid var(--gris-bord);">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
       Application : script Python de recherche du temps de demi-réaction
     </div>
@@ -928,37 +1383,37 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
       <div style="overflow-x: auto; margin-bottom: 20px;">
         <table style="width: 100%; min-width: 450px; border-collapse: collapse; font-size: 13px; text-align: center; font-family: 'Outfit', sans-serif;">
           <thead>
-            <tr style="background: var(--bleu-clair); color: var(--bleu); border: 1px solid var(--border);">
-              <th style="padding: 8px; border: 1px solid var(--border);">Temps t (min)</th>
-              <td style="padding: 8px; border: 1px solid var(--border); font-weight:bold;">0</td>
-              <td style="padding: 8px; border: 1px solid var(--border); font-weight:bold;">10</td>
-              <td style="padding: 8px; border: 1px solid var(--border); font-weight:bold;">20</td>
-              <td style="padding: 8px; border: 1px solid var(--border); font-weight:bold; background: #FFF3CD;">30</td>
-              <td style="padding: 8px; border: 1px solid var(--border); font-weight:bold;">40</td>
-              <td style="padding: 8px; border: 1px solid var(--border); font-weight:bold;">50</td>
-              <td style="padding: 8px; border: 1px solid var(--border); font-weight:bold;">60</td>
+            <tr style="background: var(--bleu-clair); color: var(--bleu); border: 1px solid var(--gris-bord);">
+              <th style="padding: 8px; border: 1px solid var(--gris-bord);">Temps t (min)</th>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord); font-weight:bold;">0</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord); font-weight:bold;">10</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord); font-weight:bold;">20</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord); font-weight:bold; background: #FFF3CD;">30</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord); font-weight:bold;">40</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord); font-weight:bold;">50</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord); font-weight:bold;">60</td>
             </tr>
           </thead>
           <tbody>
-            <tr style="border: 1px solid var(--border);">
-              <th style="padding: 8px; border: 1px solid var(--border); background: var(--panel2);">Concentration C (mol/L)</th>
-              <td style="padding: 8px; border: 1px solid var(--border);">0,0500</td>
-              <td style="padding: 8px; border: 1px solid var(--border);">0,0365</td>
-              <td style="padding: 8px; border: 1px solid var(--border);">0,0268</td>
-              <td style="padding: 8px; border: 1px solid var(--border); background: #FFF3CD; font-weight: bold; color: var(--rouge);">0,0202</td>
-              <td style="padding: 8px; border: 1px solid var(--border);">0,0152</td>
-              <td style="padding: 8px; border: 1px solid var(--border);">0,0114</td>
-              <td style="padding: 8px; border: 1px solid var(--border);">0,0085</td>
+            <tr style="border: 1px solid var(--gris-bord);">
+              <th style="padding: 8px; border: 1px solid var(--gris-bord); background: var(--gris-fond);">Concentration C (mol/L)</th>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord);">0,0500</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord);">0,0365</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord);">0,0268</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord); background: #FFF3CD; font-weight: bold; color: var(--rouge);">0,0202</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord);">0,0152</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord);">0,0114</td>
+              <td style="padding: 8px; border: 1px solid var(--gris-bord);">0,0085</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div style="background: #F8FAFC; border: 1px solid var(--border); padding: 15px; border-radius: 6px; margin-bottom: 20px; font-size: 13.5px;">
+      <div style="background: #F8FAFC; border: 1px solid var(--gris-bord); padding: 15px; border-radius: 6px; margin-bottom: 20px; font-size: 13.5px;">
         <span style="font-weight: 700; color: var(--bleu); display: block; margin-bottom: 10px;">🧠 Questions préliminaires</span>
         <p style="margin-bottom:8px;">1. D'après le tableau, la concentration initiale est C₀ = 0,0500 mol/L. Quelle est la valeur de C₀/2 ?</p>
         <p style="margin-bottom:8px;">2. À quel instant t la concentration C[i] devient-elle, pour la première fois, inférieure ou égale à cette valeur ?</p>
-        <p style="margin:0;color:var(--dim);font-size:12.5px;">→ Reportez vos réponses directement dans le script ci-dessous (lignes surlignées), puis cliquez sur « Exécuter ».</p>
+        <p style="margin:0;color:var(--texte-leger);font-size:12.5px;">→ Reportez vos réponses directement dans le script ci-dessous (lignes surlignées), puis cliquez sur « Exécuter ».</p>
       </div>
 
       <div style="border:1px solid #CFCFCF;border-radius:4px;overflow:hidden;margin-bottom:15px;background:#fff;">
@@ -1013,16 +1468,325 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 </div>
 
 <!-- ═══════════════════════════ PAGE 5 : EXERCICE INTERACTIF ═══════════════════════════ -->
-<div id="labo" class="page">
+<div id="labo" class="tab-content">
+
+  <div class="sub-tabs-nav" id="sub-nav-E">
+    <button class="sub-tab-btn active" onclick="switchSubTab('E',0)">🟢 Faciles</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('E',1)">🟡 Intermédiaires</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('E',2)">🔴 Difficiles</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('E',3)">🔬 Exercice avec simulation</button>
+  </div>
+
+  <!-- ═══════ E0 — FACILES ═══════ -->
+  <div class="sub-tab-content active" id="sub-E-0">
+  <div class="diff-intro">🟢 <strong>Exercices faciles</strong> — restitution directe du cours, lecture graphique simple, associations. Vous pouvez changer vos réponses autant de fois que nécessaire avant de consulter la correction.</div>
+
+  <div class="qexo" id="exoF1">
+    <div class="q-txt">1. Parmi les paramètres suivants, lequel n'est <u>pas</u> un facteur cinétique ?<span class="exo-type qcm">QCM</span></div>
+    <label class="q-opt"><input type="radio" name="exoF1" value="bad"> La température</label>
+    <label class="q-opt"><input type="radio" name="exoF1" value="bad"> La concentration des réactifs</label>
+    <label class="q-opt"><input type="radio" name="exoF1" value="bad"> L'état de division d'un solide</label>
+    <label class="q-opt"><input type="radio" name="exoF1" value="good"> La couleur du bécher utilisé</label>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="checkExo('exoF1')">✓ Correction</button>
+      <button class="btn" onclick="resetExo('exoF1')">↺ Recommencer</button>
+    </div>
+    <div class="q-fb" id="exoF1-fb"></div>
+  </div>
+
+  <div class="qexo" id="exoF2">
+    <div class="q-txt">2. Quelle affirmation sur un catalyseur est correcte ?<span class="exo-type qcm">QCM</span></div>
+    <label class="q-opt"><input type="radio" name="exoF2" value="bad"> Il est consommé au cours de la réaction</label>
+    <label class="q-opt"><input type="radio" name="exoF2" value="good"> Il augmente la vitesse de la réaction sans modifier l'état final du système</label>
+    <label class="q-opt"><input type="radio" name="exoF2" value="bad"> Il déplace l'équilibre vers les produits</label>
+    <label class="q-opt"><input type="radio" name="exoF2" value="bad"> Il modifie la constante d'équilibre K</label>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="checkExo('exoF2')">✓ Correction</button>
+      <button class="btn" onclick="resetExo('exoF2')">↺ Recommencer</button>
+    </div>
+    <div class="q-fb" id="exoF2-fb"></div>
+  </div>
+
+  <div class="qexo" id="exoF3">
+    <div class="q-txt">3. Associez chaque capteur à la grandeur qu'il permet de suivre au cours du temps.<span class="exo-type dnd">DRAG &amp; DROP</span></div>
+    <div class="dnd-tray" id="exoF3-tray">
+      <div class="dnd-chip" draggable="true" data-val="absorbance">Absorbance A</div>
+      <div class="dnd-chip" draggable="true" data-val="conductivite">Conductivité σ</div>
+      <div class="dnd-chip" draggable="true" data-val="ph">pH</div>
+    </div>
+    <div class="dnd-slots">
+      <div class="dnd-slot" data-answer="absorbance"><span class="dnd-slot-label">Spectrophotomètre →</span><div class="dnd-drop"></div></div>
+      <div class="dnd-slot" data-answer="conductivite"><span class="dnd-slot-label">Conductimètre →</span><div class="dnd-drop"></div></div>
+      <div class="dnd-slot" data-answer="ph"><span class="dnd-slot-label">pH-mètre →</span><div class="dnd-drop"></div></div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="checkDnd('exoF3')">✓ Correction</button>
+      <button class="btn" onclick="resetDnd('exoF3')">↺ Recommencer</button>
+    </div>
+    <div class="q-fb" id="exoF3-fb"></div>
+  </div>
+
+  <div class="qexo" id="exoF4">
+    <div class="q-txt">4. Sur une courbe [A] = f(t), que représente la valeur absolue de la pente de la tangente à l'origine (t = 0) ?<span class="exo-type qcm">QCM</span></div>
+    <label class="q-opt"><input type="radio" name="exoF4" value="good"> La vitesse volumique de disparition initiale de A</label>
+    <label class="q-opt"><input type="radio" name="exoF4" value="bad"> Le temps de demi-réaction</label>
+    <label class="q-opt"><input type="radio" name="exoF4" value="bad"> La concentration finale de A</label>
+    <label class="q-opt"><input type="radio" name="exoF4" value="bad"> La constante d'équilibre</label>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="checkExo('exoF4')">✓ Correction</button>
+      <button class="btn" onclick="resetExo('exoF4')">↺ Recommencer</button>
+    </div>
+    <div class="q-fb" id="exoF4-fb"></div>
+  </div>
+
+  <div class="qexo" id="exoF5">
+    <div class="q-txt">5. Le temps de demi-réaction t₁/₂ est…<span class="exo-type qcm">QCM</span></div>
+    <label class="q-opt"><input type="radio" name="exoF5" value="good"> la durée au bout de laquelle l'avancement de la réaction atteint la moitié de sa valeur finale</label>
+    <label class="q-opt"><input type="radio" name="exoF5" value="bad"> la durée totale de la réaction</label>
+    <label class="q-opt"><input type="radio" name="exoF5" value="bad"> le temps au bout duquel la réaction est terminée à 100 %</label>
+    <label class="q-opt"><input type="radio" name="exoF5" value="bad"> la durée entre deux mesures expérimentales</label>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="checkExo('exoF5')">✓ Correction</button>
+      <button class="btn" onclick="resetExo('exoF5')">↺ Recommencer</button>
+    </div>
+    <div class="q-fb" id="exoF5-fb"></div>
+  </div>
+
+  </div>
+  <!-- /sub-E-0 -->
+
+  <!-- ═══════ E1 — INTERMÉDIAIRES ═══════ -->
+  <div class="sub-tab-content" id="sub-E-1">
+  <div class="diff-intro">🟡 <strong>Exercices intermédiaires</strong> — calcul direct à partir de données numériques. Formule, calcul détaillé puis résultat (structure FCR).</div>
+
+  <div class="qexo" id="exoI1">
+    <div class="q-txt">1. Entre t = 0 s et t = 120 s, la concentration en réactif A passe de [A] = 0,60 mol/L à [A] = 0,35 mol/L. Calculer la vitesse volumique moyenne de disparition de A sur cet intervalle.<span class="exo-type fcr">FCR</span></div>
+    <div class="fcr-row">
+      <div class="fcr-field"><label>Formule</label><input type="text" id="exoI1-f" placeholder="v = ..."></div>
+      <div class="fcr-field"><label>Calcul (remplacer les valeurs)</label><textarea id="exoI1-c" placeholder="Détaillez le calcul avec les valeurs numériques"></textarea></div>
+      <div class="fcr-field"><label>Résultat</label><input type="text" id="exoI1-r" placeholder="Valeur + unité"></div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="showCorrFCR('exoI1')">✓ Correction</button>
+      <button class="btn" onclick="resetFCR('exoI1')">↺ Recommencer</button>
+    </div>
+    <div class="fcr-corr" id="exoI1-corr"></div>
+  </div>
+
+  <div class="qexo" id="exoI2">
+    <div class="q-txt">2. Classez chaque exemple selon le type de catalyse mis en jeu.<span class="exo-type dnd">DRAG &amp; DROP</span></div>
+    <div class="dnd-tray" id="exoI2-tray">
+      <div class="dnd-chip" draggable="true" data-val="hetero">Platine solide dans un gaz</div>
+      <div class="dnd-chip" draggable="true" data-val="homo">Ion Fe³⁺ dissous dans la solution</div>
+      <div class="dnd-chip" draggable="true" data-val="enzy">Amylase salivaire</div>
+    </div>
+    <div class="dnd-slots">
+      <div class="dnd-slot" data-answer="homo"><span class="dnd-slot-label">Catalyse homogène →</span><div class="dnd-drop"></div></div>
+      <div class="dnd-slot" data-answer="hetero"><span class="dnd-slot-label">Catalyse hétérogène →</span><div class="dnd-drop"></div></div>
+      <div class="dnd-slot" data-answer="enzy"><span class="dnd-slot-label">Catalyse enzymatique →</span><div class="dnd-drop"></div></div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="checkDnd('exoI2')">✓ Correction</button>
+      <button class="btn" onclick="resetDnd('exoI2')">↺ Recommencer</button>
+    </div>
+    <div class="q-fb" id="exoI2-fb"></div>
+  </div>
+
+  <div class="qexo" id="exoI3">
+    <div class="q-txt">3. Un suivi donne [A]₀ = 0,80 mol/L. On repère graphiquement que [A] = 0,40 mol/L à t = 45 s. Donner la valeur de t₁/₂ et justifier.<span class="exo-type fcr">FCR</span></div>
+    <div class="fcr-row">
+      <div class="fcr-field"><label>Formule / condition</label><input type="text" id="exoI3-f" placeholder="t1/2 correspond à [A] = ..."></div>
+      <div class="fcr-field"><label>Calcul / justification</label><textarea id="exoI3-c" placeholder="Justifiez à partir de [A]0"></textarea></div>
+      <div class="fcr-field"><label>Résultat</label><input type="text" id="exoI3-r" placeholder="t1/2 = ..."></div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="showCorrFCR('exoI3')">✓ Correction</button>
+      <button class="btn" onclick="resetFCR('exoI3')">↺ Recommencer</button>
+    </div>
+    <div class="fcr-corr" id="exoI3-corr"></div>
+  </div>
+
+  <div class="qexo" id="exoI4">
+    <div class="q-txt">4. Un tableau donne : t = 0 s, ln[A] = −0,22 ; t = 60 s, ln[A] = −0,51 ; t = 120 s, ln[A] = −0,80 ; t = 180 s, ln[A] = −1,09. Cette réaction suit-elle une loi de vitesse d'ordre 1 ? Justifiez à partir des écarts successifs.<span class="exo-type fcr">FCR</span></div>
+    <div class="fcr-row">
+      <div class="fcr-field"><label>Critère (formule)</label><input type="text" id="exoI4-f" placeholder="Condition sur ln[A] pour un ordre 1"></div>
+      <div class="fcr-field"><label>Calcul des écarts</label><textarea id="exoI4-c" placeholder="Calculez les écarts successifs de ln[A]"></textarea></div>
+      <div class="fcr-field"><label>Conclusion</label><input type="text" id="exoI4-r" placeholder="Ordre 1 ou non, pourquoi ?"></div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="showCorrFCR('exoI4')">✓ Correction</button>
+      <button class="btn" onclick="resetFCR('exoI4')">↺ Recommencer</button>
+    </div>
+    <div class="fcr-corr" id="exoI4-corr"></div>
+  </div>
+
+  <div class="qexo" id="exoI5">
+    <div class="q-txt">5. On double la concentration initiale <u>et</u> on augmente la température de 20 °C à 60 °C pour une même réaction. Quel est l'effet global attendu sur la vitesse initiale ?<span class="exo-type qcm">QCM</span></div>
+    <label class="q-opt"><input type="radio" name="exoI5" value="bad"> Elle diminue</label>
+    <label class="q-opt"><input type="radio" name="exoI5" value="good"> Elle augmente fortement (effet cumulé des deux facteurs)</label>
+    <label class="q-opt"><input type="radio" name="exoI5" value="bad"> Elle reste inchangée</label>
+    <label class="q-opt"><input type="radio" name="exoI5" value="bad"> Seule la température a un effet, la concentration est sans influence</label>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="checkExo('exoI5')">✓ Correction</button>
+      <button class="btn" onclick="resetExo('exoI5')">↺ Recommencer</button>
+    </div>
+    <div class="q-fb" id="exoI5-fb"></div>
+  </div>
+
+  </div>
+  <!-- /sub-E-1 -->
+
+  <!-- ═══════ E2 — DIFFICILES ═══════ -->
+  <div class="sub-tab-content" id="sub-E-2">
+  <div class="diff-intro">🔴 <strong>Exercices difficiles</strong> — raisonnement multi-étapes, type épreuve écrite. Le dernier exercice comporte un script Python à compléter.</div>
+
+  <div class="qexo" id="exoD1">
+    <div class="q-txt">1. Un suivi cinétique donne le tableau : t (s) = 0, 20, 40, 60, 80, 100 ; [A] (mol/L) = 1,00 ; 0,74 ; 0,55 ; 0,41 ; 0,30 ; 0,22.<br>a) Déterminer t₁/₂ par interpolation entre les deux valeurs encadrantes.<br>b) La tangente à la courbe en t = 40 s passe approximativement par les points (20 s ; 0,70 mol/L) et (60 s ; 0,38 mol/L). Estimer la vitesse instantanée de disparition de A à t = 40 s.<span class="exo-type fcr">FCR</span></div>
+    <div class="fcr-row">
+      <div class="fcr-field"><label>Formules</label><input type="text" id="exoD1-f" placeholder="t1/2 : [A]=[A]0/2 ; v = -Δ[A]/Δt le long de la tangente"></div>
+      <div class="fcr-field"><label>Calculs détaillés (a puis b)</label><textarea id="exoD1-c" placeholder="a) interpolation... / b) pente de la tangente..."></textarea></div>
+      <div class="fcr-field"><label>Résultats</label><input type="text" id="exoD1-r" placeholder="t1/2 ≈ ... ; v ≈ ..."></div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="showCorrFCR('exoD1')">✓ Correction</button>
+      <button class="btn" onclick="resetFCR('exoD1')">↺ Recommencer</button>
+    </div>
+    <div class="fcr-corr" id="exoD1-corr"></div>
+  </div>
+
+  <div class="qexo" id="exoD2">
+    <div class="q-txt">2. Réaction d'équation A → P. À l'instant initial, [A]₀ = 0,50 mol/L, aucun produit n'est encore formé (volume constant). Exprimer littéralement [P](t) en fonction de [A]₀ et [A](t), puis calculer [P] à l'instant où [A] = 0,32 mol/L.<span class="exo-type fcr">FCR</span></div>
+    <div class="fcr-row">
+      <div class="fcr-field"><label>Formule littérale</label><input type="text" id="exoD2-f" placeholder="[P](t) = ..."></div>
+      <div class="fcr-field"><label>Calcul</label><textarea id="exoD2-c" placeholder="Justifiez avec la stœchiométrie puis appliquez les valeurs"></textarea></div>
+      <div class="fcr-field"><label>Résultat</label><input type="text" id="exoD2-r" placeholder="[P] = ..."></div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="showCorrFCR('exoD2')">✓ Correction</button>
+      <button class="btn" onclick="resetFCR('exoD2')">↺ Recommencer</button>
+    </div>
+    <div class="fcr-corr" id="exoD2-corr"></div>
+  </div>
+
+  <div class="qexo" id="exoD3">
+    <div class="q-txt">3. Un tableau donne [A] (mol/L) pour t = 0, 30, 60, 90 s : 0,90 ; 0,61 ; 0,41 ; 0,28. Calculer ln[A] à chaque instant et conclure sur l'ordre de la réaction.<span class="exo-type fcr">FCR</span></div>
+    <div class="fcr-row">
+      <div class="fcr-field"><label>Critère (formule)</label><input type="text" id="exoD3-f" placeholder="Condition sur ln[A] pour un ordre 1"></div>
+      <div class="fcr-field"><label>Calcul de ln[A] et des écarts</label><textarea id="exoD3-c" placeholder="Calculez ln[A] pour chaque t puis les écarts successifs"></textarea></div>
+      <div class="fcr-field"><label>Conclusion</label><input type="text" id="exoD3-r" placeholder="Ordre 1 ? valeur de k ?"></div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="showCorrFCR('exoD3')">✓ Correction</button>
+      <button class="btn" onclick="resetFCR('exoD3')">↺ Recommencer</button>
+    </div>
+    <div class="fcr-corr" id="exoD3-corr"></div>
+  </div>
+
+  <div class="qexo" id="exoD4">
+    <div class="q-txt">4. Un binôme étudie la réaction entre l'ion iodure et le peroxodisulfate. <b>Protocole 1</b> : ils doublent [I⁻]₀ à température constante. <b>Protocole 2</b> : ils augmentent la température de 10 °C à [I⁻]₀ constante. Dans les deux cas, ils observent un temps de demi-réaction plus court. Quelle affirmation est correcte ?<span class="exo-type qcm">QCM</span></div>
+    <label class="q-opt"><input type="radio" name="exoD4" value="bad"> Les deux protocoles modifient la même grandeur physique responsable de l'accélération</label>
+    <label class="q-opt"><input type="radio" name="exoD4" value="good"> Le protocole 1 augmente la fréquence des chocs efficaces via la concentration, le protocole 2 via l'agitation thermique des entités : ce sont deux facteurs cinétiques distincts, qui accélèrent tous deux la réaction</label>
+    <label class="q-opt"><input type="radio" name="exoD4" value="bad"> Seul le protocole 2 constitue un facteur cinétique valide</label>
+    <label class="q-opt"><input type="radio" name="exoD4" value="bad"> Le protocole 1 ne modifie pas la vitesse, seul t₁/₂ varie</label>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="checkExo('exoD4')">✓ Correction</button>
+      <button class="btn" onclick="resetExo('exoD4')">↺ Recommencer</button>
+    </div>
+    <div class="q-fb" id="exoD4-fb"></div>
+  </div>
+
+  <div class="qexo" id="exoD5">
+    <div class="q-txt">5. Décomposition de l'eau oxygénée H₂O₂ : on dispose des listes <code>t</code> (min) et <code>A</code> ([H₂O₂] en mol/L).<span class="exo-type py">PYTHON</span></div>
+
+    <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--violet);margin:6px 0 4px;">Partie 1 — Calcul de t₁/₂</div>
+    <p style="font-size:0.82rem;color:var(--texte-leger);margin-bottom:8px;">Complétez le script pour calculer [H₂O₂]₀/2, encadrer puis estimer t₁/₂ par interpolation linéaire.</p>
+    <div class="py-editor-wrap">
+      <textarea class="py-editor" id="py-kin" spellcheck="false">
+# Décomposition de l'eau oxygénée H2O2 — suivi de [H2O2] au cours du temps
+t = [0, 5, 10, 15, 20, 25, 30, 40, 50, 60]                                    # temps en minutes
+A = [1.00, 0.779, 0.607, 0.472, 0.368, 0.287, 0.223, 0.135, 0.0821, 0.0498]   # [H2O2] en mol/L
+
+A0 = A[0]
+demi = _____          # à compléter : exprimer [H2O2] à t1/2 en fonction de A0
+
+# Recherche des deux points qui encadrent [A] = A0/2
+i = 0
+while A[i] _____ demi:   # à compléter : quel test faut-il écrire ici ?
+    i = i + 1
+
+t1, t2 = t[i-1], t[i]
+A1, A2 = A[i-1], A[i]
+
+# Interpolation linéaire entre (t1, A1) et (t2, A2)
+t_half = t1 + (demi - A1) * (t2 - t1) / (_____ - A1)   # à compléter
+
+print("[H2O2]0 / 2 =", demi, "mol/L")
+print("t1/2 encadré entre", t1, "min et", t2, "min")
+print("t1/2 estimé par interpolation =", round(t_half, 1), "min")</textarea>
+      <button class="btn-run" id="py-kin-btn" onclick="runKinPython()" style="margin:10px 14px 12px;">▶ Exécuter</button>
+      <div class="py-output" id="py-kin-output" style="margin:0 14px 14px;">// Le résultat de ton programme s'affichera ici.</div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="showPyCorr()">✓ Correction</button>
+      <button class="btn" onclick="resetPy()">↺ Recommencer</button>
+    </div>
+    <div class="py-corr" id="py-kin-corr">
+      <div class="py-corr-label">✓ Code complet attendu — exécutable</div>
+      <div class="py-corr-code" id="py-kin-corr-code"></div>
+      <button class="btn-run" onclick="runKinCorrection()">▶ Exécuter la correction</button>
+      <div class="py-output" id="py-kin-corr-output">// Le résultat de la correction s'affichera ici.</div>
+    </div>
+
+    <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--violet);margin:22px 0 4px;">Partie 2 — Tracer la courbe [H₂O₂] = f(t)</div>
+    <p style="font-size:0.82rem;color:var(--texte-leger);margin-bottom:8px;">À partir des mêmes données, complétez l'appel à <code>matplotlib</code> pour tracer la courbe [H₂O₂] = f(t).</p>
+    <div class="py-editor-wrap">
+      <textarea class="py-editor" id="py-kin2" spellcheck="false">
+# Décomposition de l'eau oxygénée H2O2 — tracé de la courbe [H2O2] = f(t)
+t = [0, 5, 10, 15, 20, 25, 30, 40, 50, 60]                                    # temps en minutes
+A = [1.00, 0.779, 0.607, 0.472, 0.368, 0.287, 0.223, 0.135, 0.0821, 0.0498]   # [H2O2] en mol/L
+
+import matplotlib.pyplot as plt
+
+plt.plot(_____, _____, 'o-')     # à compléter : abscisses puis ordonnées
+plt.xlabel("_____")               # nom et unité de la grandeur en abscisse
+plt.ylabel("_____")               # nom et unité de la grandeur en ordonnée
+plt.title("Décomposition de H2O2 : [H2O2] = f(t)")
+plt.show()</textarea>
+      <button class="btn-run" id="py-kin2-btn" onclick="runKinPython2()" style="margin:10px 14px 12px;">▶ Exécuter</button>
+      <div class="canvas-wrap" style="margin:0 14px 12px;">
+        <canvas id="kinPyChart" height="240"></canvas>
+      </div>
+      <div class="py-output" id="py-kin2-output" style="margin:0 14px 14px;">// Le graphique et les éventuels messages s'afficheront ici.</div>
+    </div>
+    <div class="exo-btns">
+      <button class="btn grn" onclick="showPyCorr2()">✓ Correction</button>
+      <button class="btn" onclick="resetPy2()">↺ Recommencer</button>
+    </div>
+    <div class="py-corr" id="py-kin2-corr">
+      <div class="py-corr-label">✓ Code complet attendu — exécutable</div>
+      <div class="py-corr-code" id="py-kin2-corr-code"></div>
+      <button class="btn-run" onclick="runKinCorrection2()">▶ Exécuter la correction</button>
+      <div class="canvas-wrap" style="margin-top:10px;">
+        <canvas id="kinPyChartCorr" height="240"></canvas>
+      </div>
+      <div class="py-output" id="py-kin2-corr-output">// Le graphique de la correction s'affichera ici.</div>
+    </div>
+  </div>
+
+  </div>
+  <!-- /sub-E-2 -->
+
+  <!-- ═══════ E3 — EXERCICE AVEC SIMULATION ═══════ -->
+  <div class="sub-tab-content" id="sub-E-3">
   <div class="labo-wrap">
 
     <!-- SETUP -->
     <div class="setup-card">
-      <h2>🔬 Exercice interactif — Simulation cinétique</h2>
+      <h2>🔬 Exercice avec simulation — Simulation cinétique</h2>
       <p>Choisissez une réaction, entrez les conditions expérimentales, lancez la simulation. Vous obtiendrez les courbes [A](t) et [P](t), le calcul automatique de t₁/₂, puis une vérification guidée étape par étape.</p>
 
       <div style="margin-bottom:14px">
-        <div style="font-size:.6rem;color:var(--dim2);margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase">① Réaction</div>
+        <div style="font-size:.6rem;color:var(--texte-leger2);margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase">① Réaction</div>
         <div class="field-row">
           <div class="field" style="flex:2">
             <label>Choisir la réaction</label>
@@ -1043,7 +1807,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
       </div>
 
       <div style="margin-bottom:14px">
-        <div style="font-size:.6rem;color:var(--dim2);margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase">② Conditions expérimentales</div>
+        <div style="font-size:.6rem;color:var(--texte-leger2);margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase">② Conditions expérimentales</div>
         <div class="field-row">
           <div class="field"><label>[A]₀ — Concentration initiale (mol/L)</label><input type="number" id="rz-a0" value="1.0" min="0.1" max="5" step="0.1" oninput="onRzChange()"></div>
           <div class="field"><label>Température (°C)</label><input type="number" id="rz-temp" value="20" min="0" max="80" step="5" oninput="onRzChange()"></div>
@@ -1053,7 +1817,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
           <label class="tgl"><input type="checkbox" id="rz-cat" onchange="onRzChange()"><div class="tgl-sl"></div></label>
           <span class="tgl-label">Présence d'un catalyseur</span>
           <span id="rz-cat-sel" style="display:none">
-            <select id="rz-cat-type" style="background:var(--panel2);border:1px solid var(--violet);color:var(--violet);font-family:'Nunito',sans-serif;font-size:.65rem;padding:4px 8px;border-radius:4px;margin-left:10px" onchange="onRzChange()">
+            <select id="rz-cat-type" style="background:var(--gris-fond);border:1px solid var(--violet);color:var(--violet);font-family:'Nunito',sans-serif;font-size:.65rem;padding:4px 8px;border-radius:4px;margin-left:10px" onchange="onRzChange()">
               <option value="homo">Homogène (×5)</option>
               <option value="hetero">Hétérogène (×3)</option>
               <option value="enzy">Enzymatique (×8)</option>
@@ -1072,7 +1836,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 
     <!-- RÉSULTATS — toujours visibles après lancement -->
     <div id="rz-results" class="result-section" style="display:none">
-      <h3>📈 Résultats — <span id="rz-res-title" style="color:var(--text);font-weight:400;font-size:.9rem"></span></h3>
+      <h3>📈 Résultats — <span id="rz-res-title" style="color:var(--texte);font-weight:400;font-size:.9rem"></span></h3>
 
       <div class="g2">
         <!-- Graphique -->
@@ -1163,10 +1927,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     </div>
 
   </div><!-- /labo-wrap -->
+  </div>
+  <!-- /sub-E-3 -->
+
 </div>
 
 <!-- ══════════════ ONGLET ✓ — BILAN & RESSOURCES ══════════════ -->
-<div id="bilan" class="page">
+<div id="bilan" class="tab-content">
 
   <div class="sub-tabs-nav" id="sub-nav-Z">
     <button class="sub-tab-btn active" onclick="switchSubTab('Z',0)">📋 Bilan</button>
@@ -1231,6 +1998,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <div class="gloss-item" data-term="loi de vitesse d'ordre 1"><dt>Loi de vitesse d'ordre 1</dt><dd>Loi selon laquelle la vitesse de disparition d'un réactif est proportionnelle à sa concentration ; se traduit graphiquement par une évolution affine de ln(c) en fonction du temps.</dd></div>
     <div class="gloss-item" data-term="temps de demi-reaction"><dt>Temps de demi-réaction t<sub>1/2</sub></dt><dd>Durée au bout de laquelle l'avancement de la réaction est égal à la moitié de l'avancement final ; se détermine graphiquement à partir de c = f(t) ou x = f(t).</dd></div>
     <div class="gloss-item" data-term="intermediaire reactionnel"><dt>Intermédiaire réactionnel</dt><dd>Espèce chimique formée puis consommée au cours d'une transformation, absente de l'équation-bilan globale (ex. : le catalyseur régénéré en catalyse homogène).</dd></div>
+    <div class="gloss-item" data-term="etat de division"><dt>État de division</dt><dd>Degré de fragmentation d'un solide (morceau, poudre, copeaux…) : plus il est divisé, plus la surface de contact avec les autres réactifs est grande, ce qui accélère la réaction.</dd></div>
+    <div class="gloss-item" data-term="chocs efficaces theorie des collisions"><dt>Choc efficace</dt><dd>Choc entre deux entités réactives qui, du fait d'une orientation favorable et d'une énergie suffisante, aboutit effectivement à une transformation chimique. La concentration augmente leur fréquence, la température augmente leur fréquence et la proportion de chocs suffisamment énergétiques.</dd></div>
+    <div class="gloss-item" data-term="vitesse instantanee"><dt>Vitesse instantanée</dt><dd>Valeur de la vitesse volumique à un instant t précis, donnée par la pente de la tangente à la courbe c = f(t) en ce point (à distinguer de la vitesse moyenne, calculée entre deux instants).</dd></div>
+    <div class="gloss-item" data-term="tangente a une courbe"><dt>Tangente à une courbe</dt><dd>Droite qui touche localement la courbe en un point sans la traverser ; sa pente en un point donne la vitesse instantanée à l'instant correspondant.</dd></div>
+    <div class="gloss-item" data-term="avancement de la reaction avancement volumique"><dt>Avancement (x) / avancement volumique (y)</dt><dd>Grandeur qui mesure la progression d'une réaction chimique ; relié aux concentrations des espèces par les nombres stœchiométriques de l'équation-bilan (tableau d'avancement).</dd></div>
+    <div class="gloss-item" data-term="ordre d'une reaction"><dt>Ordre d'une réaction</dt><dd>Exposant(s) auxquels sont élevées les concentrations dans la loi de vitesse expérimentale d'une réaction. Pour une réaction d'ordre 1 par rapport à un réactif A, la vitesse est proportionnelle à [A].</dd></div>
+    <div class="gloss-item" data-term="constante de vitesse k"><dt>Constante de vitesse k</dt><dd>Coefficient de proportionnalité de la loi de vitesse (par exemple v = k×[A] pour un ordre 1) ; son unité dépend de l'ordre de la réaction (s⁻¹ pour un ordre 1).</dd></div>
+    <div class="gloss-item" data-term="interpolation lineaire"><dt>Interpolation linéaire</dt><dd>Méthode qui estime une valeur intermédiaire entre deux points de mesure encadrants, en supposant une évolution proportionnelle (affine) entre ces deux points.</dd></div>
   </dl>
   </div>
   <!-- /sub-Z-1 (Glossaire) -->
@@ -1360,6 +2135,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
   <!-- /sub-Z-2 (Ressources) -->
 
 </div>
+
+</div><!-- /main -->
 
 <div class="footer-note">
   Séquence 11 — Cinétique chimique · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin
@@ -2416,6 +3193,11 @@ function checkQA(n){
   fb.textContent = msgs[n];
   fb.className = 'q-fb ' + (ok ? 'ok' : 'ko');
 }
+function resetQA(n){
+  document.querySelectorAll(`input[name="qA${n}"]`).forEach(r => r.checked = false);
+  const fb = document.getElementById(`qA${n}-fb`);
+  fb.textContent = ''; fb.className = 'q-fb';
+}
 
 function checkQB(n){
   const sel = document.querySelector(`input[name="qB${n}"]:checked`);
@@ -2433,6 +3215,11 @@ function checkQB(n){
   fb.textContent = msgs[n];
   fb.className = 'q-fb ' + (ok ? 'ok' : 'ko');
 }
+function resetQB(n){
+  document.querySelectorAll(`input[name="qB${n}"]`).forEach(r => r.checked = false);
+  const fb = document.getElementById(`qB${n}-fb`);
+  fb.textContent = ''; fb.className = 'q-fb';
+}
 
 function toggleAccord(btn){
   btn.nextElementSibling.classList.toggle('open');
@@ -2440,6 +3227,392 @@ function toggleAccord(btn){
 function switchSubTab(group,i){
   document.querySelectorAll('#sub-nav-'+group+' .sub-tab-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));
   document.querySelectorAll('[id^="sub-'+group+'-"]').forEach((t,idx)=>t.classList.toggle('active',idx===i));
+  if(group==='C' && i===3 && typeof initTP15==='function'){ initTP15(); }
+}
+
+/* ════════════════════════════════════════════════════
+   EXERCICES ONGLET E — QCM génériques (Faciles/Inter/Diff)
+   ════════════════════════════════════════════════════ */
+var EXO_EXPL = {
+  exoF1:{ok:"La couleur du bécher n'a aucune influence sur la vitesse de la réaction : ce n'est pas un facteur cinétique.",
+         ko:"Les facteurs cinétiques sont la température, la concentration des réactifs et l'état de division. La couleur du bécher n'en fait pas partie."},
+  exoF2:{ok:"Un catalyseur accélère la réaction sans être consommé ; il ne modifie ni K, ni l'état final du système.",
+         ko:"Un catalyseur n'est pas consommé, ne déplace pas l'équilibre et ne modifie pas K : il accélère seulement la cinétique."},
+  exoF4:{ok:"La pente de la tangente à l'origine donne la vitesse volumique de disparition (ou d'apparition) à l'instant initial.",
+         ko:"La pente d'une tangente à c = f(t) donne toujours une vitesse, pas un temps ni une concentration finale."},
+  exoF5:{ok:"t1/2 est bien la durée nécessaire pour que l'avancement atteigne la moitié de sa valeur finale.",
+         ko:"t1/2 ne correspond ni à la fin de la réaction, ni à un intervalle de mesure : c'est la moitié de l'avancement final."},
+  exoI5:{ok:"Augmenter à la fois la concentration et la température cumule deux facteurs cinétiques qui accélèrent tous deux la réaction.",
+         ko:"Concentration et température sont deux facteurs cinétiques indépendants qui, combinés, accélèrent fortement la réaction."},
+  exoD4:{ok:"Concentration et température agissent chacune sur la fréquence des chocs efficaces, mais par des mécanismes différents (nombre d'entités par unité de volume / agitation thermique) : ce sont deux facteurs cinétiques distincts.",
+         ko:"Revoyez la définition de chaque facteur cinétique : concentration et température agissent toutes deux sur la vitesse, mais via des mécanismes différents."},
+  tpQ32:{ok:"[PP](t) = [PP]₀ × e⁻ᵏᵗ est bien la solution d'une équation différentielle d'ordre 1 (v = k×[PP]) : la loi de vitesse est donc d'ordre 1 par rapport à PP.",
+         ko:"Une décroissance exponentielle de la forme [PP]₀×e⁻ᵏᵗ est la signature d'une loi de vitesse d'ordre 1 (v proportionnelle à [PP])."},
+  tpQ2:{ok:"D'après Beer-Lambert, A = ε×l×[PP], donc [PP] = A/(ε×l). Avec l = 1 cm et ε = 2500 L·mol⁻¹·cm⁻¹, on a bien [PP] = A/2500.",
+        ko:"D'après Beer-Lambert, A = ε×l×[PP], donc [PP] = A/(ε×l) = A/2500 (avec l = 1 cm et ε = 2500 L·mol⁻¹·cm⁻¹)."},
+  tpQ31:{ok:"Regressi ajuste le modèle [PP](t) = [PP]₀×e⁻ᵗ/ᵗᵃᵘ sur les points mesurés, avec [PP]₀ ≈ 6,08×10⁻⁴ mol/L et τ ≈ 128 s.",
+         ko:"La courbe [PP] = f(t) se modélise par une exponentielle décroissante [PP](t) = [PP]₀×e⁻ᵗ/ᵗᵃᵘ, avec [PP]₀ ≈ 6,08×10⁻⁴ mol/L et τ ≈ 128 s (valeurs données par Regressi)."},
+  tpQ4:{ok:"[PP]₀/2 = 3,04×10⁻⁴ mol/L est atteint à t ≈ 88,5 s d'après l'outil « valeur modélisée » (ou le réticule libre).",
+        ko:"En lisant sur la courbe modélisée l'instant où [PP] = [PP]₀/2 = 3,04×10⁻⁴ mol/L, on trouve t₁/₂ ≈ 88,5 s."},
+  tpQ51:{ok:"d[PP] a la dimension d'une concentration [C] = N·L⁻³ ; dt a la dimension d'un temps T. Donc [v] = [C]/T = mol·L⁻¹·s⁻¹.",
+         ko:"[v] = [C]/T avec [C] en mol/L et T en s, donc l'unité est le mol·L⁻¹·s⁻¹."},
+  tpQ52:{ok:"À 60 s, la tangente donne d[PP]/dt = −3,28 µmol·L⁻¹·s⁻¹ donc v(60) ≈ 3,28 µmol·L⁻¹·s⁻¹. À 1000 s, [PP] est constante (réaction terminée) donc v(1000) = 0.",
+         ko:"À t₀ = 60 s la réaction avance encore (pente non nulle, v ≈ 3,28 µmol·L⁻¹·s⁻¹) ; à t₁ = 1000 s la réaction est terminée, [PP] est constante donc v = 0."},
+  tpQ61:{ok:"En écartant les derniers points constants, Regressi ajuste ln[PP] = a×t + b, avec a ≈ −7,5×10⁻³ s⁻¹ et b ≈ −7,46.",
+         ko:"ln[PP] décroît avec t (PP disparaît) : la fonction affine a une pente négative, ln[PP](t) = −7,5×10⁻³×t − 7,46."},
+  tpQ62:{ok:"La loi d'ordre 1 s'écrit ln[PP] = ln[PP]₀ − k·t, une fonction affine du temps. Puisque ln[PP] = f(t) est effectivement une droite, cela confirme l'ordre 1, avec k ≈ 7,5×10⁻³ s⁻¹.",
+         ko:"Une loi d'ordre 1 se traduit par ln[PP] affine en t ; c'est exactement ce qu'on observe, ce qui confirme l'ordre 1 (et non un ordre 0 ou 2)."},
+  tpQ63:{ok:"t₁/₂ = ln2/k = 0,693/7,5×10⁻³ ≈ 92 s, cohérent avec la lecture graphique directe (≈ 88,5 s).",
+         ko:"À partir de ln[PP] = −k·t + ln[PP]₀, on obtient −ln2 = −k·t1/2, donc t1/2 = ln2/k = 0,693/7,5×10⁻³ ≈ 92 s."}
+};
+function checkExo(name){
+  var sel = document.querySelector('input[name="'+name+'"]:checked');
+  var fb = document.getElementById(name+'-fb');
+  var expl = EXO_EXPL[name] || {};
+  if(!sel){
+    fb.className = 'q-fb ko'; fb.style.display = 'block';
+    fb.textContent = 'Sélectionnez une réponse avant de consulter la correction.';
+    return;
+  }
+  if(sel.value === 'good'){
+    fb.className = 'q-fb ok';
+    fb.textContent = '✓ Correct ! ' + (expl.ok || '');
+  } else {
+    fb.className = 'q-fb ko';
+    fb.textContent = '✗ Ce n\'est pas la bonne réponse. ' + (expl.ko || '');
+  }
+  fb.style.display = 'block';
+}
+function resetExo(name){
+  document.querySelectorAll('input[name="'+name+'"]').forEach(r=>r.checked = false);
+  var fb = document.getElementById(name+'-fb');
+  if(fb){ fb.style.display = 'none'; fb.textContent = ''; }
+}
+
+/* ════════════════════════════════════════════════════
+   EXERCICES ONGLET E — FCR (Formule → Calcul → Résultat)
+   ════════════════════════════════════════════════════ */
+var FCR_CORR = {
+  exoI1:{
+    f:"v = −Δ[A]/Δt = −([A]<sub>f</sub> − [A]<sub>i</sub>)/(t<sub>f</sub> − t<sub>i</sub>)",
+    c:"v = −(0,35 − 0,60)/(120 − 0) = −(−0,25)/120",
+    r:"v ≈ 2,1 × 10⁻³ mol·L⁻¹·s⁻¹"
+  },
+  exoI3:{
+    f:"t1/2 est l'instant où [A] = [A]0 / 2",
+    c:"[A]0 / 2 = 0,80 / 2 = 0,40 mol/L, valeur atteinte (par lecture graphique) à t = 45 s",
+    r:"t1/2 = 45 s"
+  },
+  exoI4:{
+    f:"Si la réaction suit une loi d'ordre 1, ln[A] est une fonction affine du temps (écarts constants pour des intervalles de temps égaux)",
+    c:"Écarts successifs : (−0,51)−(−0,22) = −0,29 ; (−0,80)−(−0,51) = −0,29 ; (−1,09)−(−0,80) = −0,29",
+    r:"Les écarts sont constants (−0,29 toutes les 60 s) → la réaction suit bien une loi de vitesse d'ordre 1 (k ≈ 0,29/60 ≈ 4,8 × 10⁻³ s⁻¹)"
+  },
+  exoD1:{
+    f:"a) t1/2 : [A] = [A]0/2, par interpolation linéaire entre les deux points encadrants.<br>b) v = −Δ[A]/Δt évaluée le long de la tangente en t = 40 s",
+    c:"a) [A]0/2 = 0,50 mol/L, encadré entre t = 40 s ([A]=0,55) et t = 60 s ([A]=0,41) :<br>t1/2 = 40 + (0,50−0,55)×(60−40)/(0,41−0,55) = 40 + 7,1 ≈ 47 s<br>b) pente = (0,38−0,70)/(60−20) = −0,32/40 = −8,0×10⁻³ mol·L⁻¹·s⁻¹, donc v = −pente",
+    r:"t1/2 ≈ 47 s ; v(40 s) ≈ 8,0 × 10⁻³ mol·L⁻¹·s⁻¹"
+  },
+  exoD2:{
+    f:"[P](t) = [A]0 − [A](t) (stœchiométrie 1:1, un produit P formé pour un A consommé)",
+    c:"[P] = [A]0 − [A] = 0,50 − 0,32",
+    r:"[P] = 0,18 mol/L"
+  },
+  exoD3:{
+    f:"Si ordre 1 : ln[A] fonction affine de t → écarts de ln[A] constants pour des Δt égaux",
+    c:"ln(0,90) = −0,105 ; ln(0,61) = −0,494 ; ln(0,41) = −0,892 ; ln(0,28) = −1,273<br>Écarts (par 30 s) : −0,389 ; −0,398 ; −0,381 → quasi constants",
+    r:"Les écarts sont pratiquement constants (≈ −0,39 toutes les 30 s) → la réaction suit une loi de vitesse d'ordre 1, avec k ≈ 0,39/30 ≈ 1,3 × 10⁻² s⁻¹"
+  }
+};
+function showCorrFCR(id){
+  var d = FCR_CORR[id];
+  var box = document.getElementById(id+'-corr');
+  if(!d || !box) return;
+  if(d.txt){
+    box.innerHTML = '<strong>Correction</strong>' + d.txt;
+    box.style.display = 'block';
+    return;
+  }
+  var parts = [];
+  if(d.f) parts.push('<strong>Formule attendue</strong>'+d.f);
+  if(d.c) parts.push('<strong>Calcul attendu</strong>'+d.c);
+  if(d.r) parts.push('<strong>Résultat attendu</strong>'+d.r);
+  box.innerHTML = parts.join('<br><br>');
+  box.style.display = 'block';
+}
+function resetFCR(id){
+  var f = document.getElementById(id+'-f'); if(f) f.value = '';
+  var c = document.getElementById(id+'-c'); if(c) c.value = '';
+  var r = document.getElementById(id+'-r'); if(r) r.value = '';
+  var box = document.getElementById(id+'-corr');
+  if(box){ box.style.display = 'none'; box.innerHTML = ''; }
+}
+
+/* ════════════════════════════════════════════════════
+   EXERCICES ONGLET E — DRAG & DROP (clic + glisser-déposer)
+   ════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.dnd-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('.dnd-chip.sel').forEach(c=>c.classList.remove('sel'));
+      chip.classList.add('sel');
+    });
+    chip.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', chip.dataset.val);
+      chip.classList.add('sel');
+    });
+  });
+  document.querySelectorAll('.dnd-drop').forEach(function(drop){
+    drop.addEventListener('click', function(){
+      var wrap = drop.closest('.qexo');
+      var sel = wrap.querySelector('.dnd-chip.sel');
+      if(sel){ placeDndChip(drop, sel); return; }
+      // pas d'étiquette sélectionnée : un clic sur une case déjà remplie la libère
+      if(drop.dataset.val){ clearDndDrop(drop); }
+    });
+    drop.addEventListener('dragover', function(e){ e.preventDefault(); drop.classList.add('over'); });
+    drop.addEventListener('dragleave', function(){ drop.classList.remove('over'); });
+    drop.addEventListener('drop', function(e){
+      e.preventDefault();
+      drop.classList.remove('over');
+      var wrap = drop.closest('.qexo');
+      var val = e.dataTransfer.getData('text/plain');
+      var sel = wrap.querySelector('.dnd-chip[data-val="'+val+'"]');
+      if(sel) placeDndChip(drop, sel);
+    });
+  });
+});
+function placeDndChip(drop, chip){
+  // si la case contenait déjà une étiquette, la remettre dans le plateau
+  if(drop.dataset.val){ clearDndDrop(drop); }
+  drop.textContent = chip.textContent;
+  drop.dataset.val = chip.dataset.val;
+  drop.classList.add('filled');
+  drop.classList.remove('correct','incorrect');
+  chip.classList.remove('sel');
+  chip.classList.add('used');
+}
+function clearDndDrop(drop){
+  var wrap = drop.closest('.qexo');
+  var prevChip = wrap.querySelector('.dnd-chip[data-val="'+drop.dataset.val+'"]');
+  if(prevChip){ prevChip.classList.remove('used'); prevChip.style.display=''; }
+  drop.textContent = '';
+  delete drop.dataset.val;
+  drop.classList.remove('filled','correct','incorrect');
+}
+function checkDnd(wrapId){
+  var wrap = document.getElementById(wrapId);
+  var fb = document.getElementById(wrapId+'-fb');
+  var allFilled = true, allCorrect = true;
+  wrap.querySelectorAll('.dnd-slot').forEach(function(slot){
+    var drop = slot.querySelector('.dnd-drop');
+    var expected = slot.dataset.answer;
+    if(!drop.dataset.val){ allFilled = false; drop.classList.remove('correct','incorrect'); return; }
+    if(drop.dataset.val === expected){
+      drop.classList.add('correct'); drop.classList.remove('incorrect');
+    } else {
+      drop.classList.add('incorrect'); drop.classList.remove('correct');
+      allCorrect = false;
+    }
+  });
+  if(!allFilled){
+    fb.className = 'q-fb ko'; fb.style.display = 'block';
+    fb.textContent = 'Complétez toutes les cases avant de vérifier.';
+  } else if(allCorrect){
+    fb.className = 'q-fb ok'; fb.style.display = 'block';
+    fb.textContent = '✓ Toutes les associations sont correctes !';
+  } else {
+    fb.className = 'q-fb ko'; fb.style.display = 'block';
+    fb.textContent = '✗ Certaines cases (en rouge) sont incorrectes. Corrigez-les puis vérifiez à nouveau.';
+  }
+}
+function resetDnd(wrapId){
+  var wrap = document.getElementById(wrapId);
+  wrap.querySelectorAll('.dnd-drop').forEach(function(drop){
+    drop.textContent = '';
+    delete drop.dataset.val;
+    drop.classList.remove('filled','correct','incorrect','over');
+  });
+  wrap.querySelectorAll('.dnd-chip').forEach(function(chip){
+    chip.classList.remove('used','sel');
+    chip.style.display = '';
+  });
+  var fb = document.getElementById(wrapId+'-fb');
+  if(fb){ fb.style.display = 'none'; fb.textContent=''; }
+}
+
+/* ════════════════════════════════════════════════════
+   EXERCICE ONGLET E — PYTHON À TROUS (Skulpt)
+   ════════════════════════════════════════════════════ */
+var PY_KIN_TEMPLATE = null; // mémorise le texte initial (avec les blancs) pour "Recommencer"
+var PY_KIN_CORRECTED =
+"# Décomposition de l'eau oxygénée H2O2 — suivi de [H2O2] au cours du temps\n"+
+"t = [0, 5, 10, 15, 20, 25, 30, 40, 50, 60]                                    # temps en minutes\n"+
+"A = [1.00, 0.779, 0.607, 0.472, 0.368, 0.287, 0.223, 0.135, 0.0821, 0.0498]   # [H2O2] en mol/L\n\n"+
+"A0 = A[0]\n"+
+"demi = A0 / 2\n\n"+
+"# Recherche des deux points qui encadrent [A] = A0/2\n"+
+"i = 0\n"+
+"while A[i] > demi:\n"+
+"    i = i + 1\n\n"+
+"t1, t2 = t[i-1], t[i]\n"+
+"A1, A2 = A[i-1], A[i]\n\n"+
+"# Interpolation linéaire entre (t1, A1) et (t2, A2)\n"+
+"t_half = t1 + (demi - A1) * (t2 - t1) / (A2 - A1)\n\n"+
+"print(\"[H2O2]0 / 2 =\", demi, \"mol/L\")\n"+
+"print(\"t1/2 encadré entre\", t1, \"min et\", t2, \"min\")\n"+
+"print(\"t1/2 estimé par interpolation =\", round(t_half, 1), \"min\")";
+function runKinPython(){
+  runPySnippet(document.getElementById('py-kin').value, 'py-kin-output');
+}
+function runKinCorrection(){
+  runPySnippet(PY_KIN_CORRECTED, 'py-kin-corr-output');
+}
+function runPySnippet(code, outputId){
+  var outputEl = document.getElementById(outputId);
+  outputEl.textContent = '';
+  if(typeof Sk === 'undefined'){
+    outputEl.textContent = "⏳ Le module Python (Skulpt) est en cours de chargement, réessaie dans quelques secondes...";
+    return;
+  }
+  function outf(text){ outputEl.textContent += text; }
+  function builtinRead(x){
+    if(Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined){
+      throw "Fichier non trouvé : '" + x + "'";
+    }
+    return Sk.builtinFiles["files"][x];
+  }
+  Sk.configure({ output: outf, read: builtinRead, python3: true });
+  var myPromise = Sk.misceval.asyncToPromise(function(){
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  });
+  myPromise.then(
+    function(){ /* ok */ },
+    function(err){ outputEl.textContent += '\n❌ ' + err.toString(); }
+  );
+}
+function showPyCorr(){
+  var box = document.getElementById('py-kin-corr');
+  document.getElementById('py-kin-corr-code').textContent = PY_KIN_CORRECTED;
+  document.getElementById('py-kin-corr-output').textContent = "// Le résultat de la correction s'affichera ici.";
+  box.style.display = 'block';
+}
+function resetPy(){
+  if(PY_KIN_TEMPLATE === null){
+    PY_KIN_TEMPLATE = document.getElementById('py-kin').defaultValue;
+  }
+  document.getElementById('py-kin').value = PY_KIN_TEMPLATE;
+  document.getElementById('py-kin-output').textContent = "// Le résultat de ton programme s'affichera ici.";
+  var box = document.getElementById('py-kin-corr');
+  box.style.display = 'none';
+}
+
+/* ── PYTHON — PARTIE 2 : TRACÉ [H2O2] = f(t) ── */
+var PY_KIN_TEMPLATE2 = null;
+var PY_KIN_CORRECTED2 =
+"# Décomposition de l'eau oxygénée H2O2 — tracé de la courbe [H2O2] = f(t)\n"+
+"t = [0, 5, 10, 15, 20, 25, 30, 40, 50, 60]                                    # temps en minutes\n"+
+"A = [1.00, 0.779, 0.607, 0.472, 0.368, 0.287, 0.223, 0.135, 0.0821, 0.0498]   # [H2O2] en mol/L\n\n"+
+"import matplotlib.pyplot as plt\n\n"+
+"plt.plot(t, A, 'o-')\n"+
+"plt.xlabel(\"t (min)\")\n"+
+"plt.ylabel(\"[H2O2] (mol/L)\")\n"+
+"plt.title(\"Décomposition de H2O2 : [H2O2] = f(t)\")\n"+
+"plt.show()";
+function runKinPython2(){
+  runKinPlotSnippet(document.getElementById('py-kin2').value, 'py-kin2-output', 'kinPyChart');
+}
+function runKinCorrection2(){
+  runKinPlotSnippet(PY_KIN_CORRECTED2, 'py-kin2-corr-output', 'kinPyChartCorr');
+}
+function runKinPlotSnippet(code, outputId, canvasId){
+  var outputEl = document.getElementById(outputId);
+  outputEl.textContent = '';
+  var canvas0 = document.getElementById(canvasId);
+  if(canvas0) canvas0.getContext('2d').clearRect(0,0,canvas0.width,canvas0.height);
+  if(typeof Sk === 'undefined'){
+    outputEl.textContent = "⏳ Le module Python (Skulpt) est en cours de chargement, réessaie dans quelques secondes...";
+    return;
+  }
+  function outf(text){ outputEl.textContent += text; }
+  function builtinRead(x){
+    if(Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined){
+      throw "Fichier non trouvé : '" + x + "'";
+    }
+    return Sk.builtinFiles["files"][x];
+  }
+  Sk.configure({ output: outf, read: builtinRead, python3: true });
+  var myPromise = Sk.misceval.asyncToPromise(function(){
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  });
+  myPromise.then(
+    function(mod){
+      try {
+        var tList = mod.$d['t'].v.map(function(item){ return item.v; });
+        var aList = mod.$d['A'].v.map(function(item){ return item.v; });
+        if(tList.length > 0 && tList.every(function(x){ return typeof x === 'number'; })
+            && aList.length === tList.length && aList.every(function(x){ return typeof x === 'number'; })){
+          drawKinPyCourbe(canvasId, tList, aList, 't (min)', '[H2O2] (mol/L)', '#2D5F8A');
+        }
+      } catch(e) { /* listes absentes ou incomplètes : pas de graphique, ce n'est pas bloquant */ }
+    },
+    function(err){ outputEl.textContent += '\n❌ ' + err.toString(); }
+  );
+}
+/* Tracé générique (x, y) — même principe que les activités Python des autres séquences */
+function drawKinPyCourbe(canvasId, xList, yList, xLabel, yLabel, color){
+  var canvas = document.getElementById(canvasId);
+  if(!canvas || xList.length === 0) return;
+  var ctx = canvas.getContext('2d');
+  canvas.width = canvas.clientWidth || canvas.width;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  var padL=48, padB=36, padT=16, padR=16;
+  var plotW = canvas.width-padL-padR, plotH = canvas.height-padT-padB;
+  var xMax = Math.max.apply(null, xList) * 1.05 || 1;
+  var yMin = Math.min.apply(null, yList);
+  var yMax = Math.max.apply(null, yList);
+  if(yMin > 0) yMin = 0;
+  var ySpan = (yMax - yMin) * 1.1 || 1;
+
+  ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif'; ctx.textAlign='center';
+  ctx.fillText(xLabel, padL+plotW/2, canvas.height-8);
+  ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText(yLabel, 0, 0); ctx.restore();
+
+  function xOf(x){ return padL + (x/xMax)*plotW; }
+  function yOf(y){ return canvas.height-padB - ((y-yMin)/ySpan)*plotH; }
+
+  ctx.strokeStyle = color; ctx.lineWidth = 2.2; ctx.beginPath();
+  for(var i=0;i<xList.length;i++){
+    var x = xOf(xList[i]), y = yOf(yList[i]);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+
+  ctx.fillStyle = color;
+  for(var j=0;j<xList.length;j++){
+    ctx.beginPath(); ctx.arc(xOf(xList[j]), yOf(yList[j]), 3.5, 0, 2*Math.PI); ctx.fill();
+  }
+}
+function showPyCorr2(){
+  var box = document.getElementById('py-kin2-corr');
+  document.getElementById('py-kin2-corr-code').textContent = PY_KIN_CORRECTED2;
+  document.getElementById('py-kin2-corr-output').textContent = "// Le graphique de la correction s'affichera ici.";
+  box.style.display = 'block';
+}
+function resetPy2(){
+  if(PY_KIN_TEMPLATE2 === null){
+    PY_KIN_TEMPLATE2 = document.getElementById('py-kin2').defaultValue;
+  }
+  document.getElementById('py-kin2').value = PY_KIN_TEMPLATE2;
+  document.getElementById('py-kin2-output').textContent = "// Le graphique et les éventuels messages s'afficheront ici.";
+  var c = document.getElementById('kinPyChart');
+  if(c) c.getContext('2d').clearRect(0,0,c.width,c.height);
+  var box = document.getElementById('py-kin2-corr');
+  box.style.display = 'none';
 }
 
 /* ===== Glossaire recherchable ===== */
@@ -2450,13 +3623,15 @@ function glossFilter(){
     item.style.display = term.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
   });
 }
-function goTab(id,el){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  el.classList.add('active');
+var TAB_IDS = ['facteurs','catalyse','suivi','t12','labo','bilan'];
+function switchTab(n){
+  var id = TAB_IDS[n];
+  document.querySelectorAll('.tab-content').forEach((p,idx)=>p.classList.toggle('active', idx===n));
+  document.querySelectorAll('.tabs-nav .tab-btn').forEach((t,idx)=>t.classList.toggle('active', idx===n));
+  window.scrollTo({ top: 0, behavior: 'auto' });
   if(id==='suivi'){resetSv();}
-  if(id==='catalyse'){catType='homo';['homo','hetero','enzy'].forEach(i=>{document.getElementById('photo-'+i).style.display=i==='homo'?'block':'none';document.getElementById('d-'+i).style.display=i==='homo'?'block':'none';});drawCatCmp();}  if(id==='t12')updT12();
+  if(id==='catalyse'){catType='homo';['homo','hetero','enzy'].forEach(i=>{document.getElementById('photo-'+i).style.display=i==='homo'?'block':'none';document.getElementById('d-'+i).style.display=i==='homo'?'block':'none';});drawCatCmp();}
+  if(id==='t12')updT12();
   if(id==='facteurs'){drawLR('lente');drawFact();}
 }
 
@@ -2502,6 +3677,23 @@ document.getElementById('capToggle').addEventListener('click', () => {
 // ─────────────────────────────────────────────
 drawLR('lente');
 drawFact();
+/* ── TP Cinétique — Décoloration de la phénolphtaléine (données réelles) ── */
+var TP15_T = [0,15,30,45,60,75,90,105,120,135,150,165,180,195,210,225,240,255,270,285,300,315,330,345,360,375,390,405,420,435,450,465,480,495,510,525,540,555,570,585,600,615,630,645,660,675,690];
+var TP15_A = [1.530,1.380,1.230,1.080,0.9400,0.8300,0.7400,0.6400,0.5600,0.4900,0.4300,0.3900,0.3400,0.3000,0.2700,0.2400,0.2210,0.2000,0.1840,0.1690,0.1570,0.1440,0.1320,0.1240,0.1180,0.1110,0.1090,0.1010,0.1000,0.0960,0.0940,0.0910,0.0880,0.0870,0.0840,0.0830,0.0830,0.0820,0.0820,0.0820,0.0820,0.0820,0.0810,0.0810,0.0810,0.0810,0.0810];
+function initTP15(){
+  var tbody = document.getElementById('tp15TableBody');
+  if(!tbody) return;
+  var PP = TP15_A.map(function(a){ return a/2500; });
+  var rows = '';
+  for(var i=0;i<TP15_T.length;i++){
+    rows += '<tr><td style="padding:4px 10px;border-bottom:1px solid var(--gris-bord);">'+TP15_T[i]+'</td>'+
+            '<td style="padding:4px 10px;border-bottom:1px solid var(--gris-bord);">'+TP15_A[i].toFixed(4)+'</td>'+
+            '<td style="padding:4px 10px;border-bottom:1px solid var(--gris-bord);">'+PP[i].toExponential(2)+'</td></tr>';
+  }
+  tbody.innerHTML = rows;
+  drawKinPyCourbe('tp15Chart', TP15_T, PP, 't (s)', '[PP] (mol/L)', '#7B4FA6');
+}
+
 drawSvCanvas();
 drawSvLnCanvas([],[]);
 updT12();
@@ -2511,6 +3703,11 @@ updAvancement();
 initSvTanMouse();
 initTTLR();
 initTTFact();
+initTP15();
 </script>
+
+<!-- Skulpt : exécution de code Python directement dans le navigateur (nécessite une connexion internet) -->
+<script src="https://cdn.jsdelivr.net/gh/Tezumie/Skulpt-CDN@latest/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Tezumie/Skulpt-CDN@latest/skulpt-stdlib.js"></script>
 </body>
 </html>
