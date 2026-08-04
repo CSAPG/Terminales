@@ -214,6 +214,38 @@
   }
   .bilan-video-link:hover { color: #1e4466; text-decoration: underline; }
 
+  /* ── GLOSSAIRE ── */
+  .gloss-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
+  .gloss-item {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .gloss-item dt {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--bleu);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
+
   /* ── SUJETS DE BAC ── */
   .bac-card {
     background: var(--blanc);
@@ -310,6 +342,23 @@
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
     .main { padding: 18px 12px 50px; }
   }
+
+  /* ── Sous-onglets : style pastille harmonisé (séq. 01/12) ── */
+  .sub-nav { display:flex; gap:6px; padding:18px 0 0; margin-bottom:22px; flex-wrap:nowrap; overflow-x:auto; }
+  .sub-nav::-webkit-scrollbar { display:none; }
+  .sub-btn {
+    display:flex; align-items:center; gap:8px;
+    padding:8px 18px; border:none; background:#b8cfe0;
+    font-family:'Nunito',sans-serif; font-size:0.84rem; font-weight:700;
+    color:var(--bleu); cursor:pointer;
+    border-radius:999px; transition:all 0.2s;
+    white-space:nowrap;
+  }
+  .sub-btn:hover { background:var(--bleu); color:white; }
+  .sub-btn.active { background:#1e4466; color:white; }
+
+  .sub-content { display:none; }
+  .sub-content.active { display:block; animation:fadeIn 0.25s ease; }
 </style>
 </head>
 <body>
@@ -335,56 +384,7 @@
             @keyframes ph-spin-seq02 { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
             .ph-disc-seq02 { animation: ph-spin-seq02 16s linear infinite; transform-origin: 40px 40px; }
             @media(prefers-reduced-motion:reduce){ .ph-disc-seq02{animation:none;} }
-          
-  /* ── Sous-onglets : style pastille harmonisé (séq. 01/12) ── */
-  .sub-nav { display:flex; gap:6px; padding:18px 0 0; margin-bottom:22px; flex-wrap:nowrap; overflow-x:auto; }
-  .sub-nav::-webkit-scrollbar { display:none; }
-  .sub-btn {
-    display:flex; align-items:center; gap:8px;
-    padding:8px 18px; border:none; background:#b8cfe0;
-    font-family:'Nunito',sans-serif; font-size:0.84rem; font-weight:700;
-    color:var(--bleu); cursor:pointer;
-    border-radius:999px; transition:all 0.2s;
-    white-space:nowrap;
-  }
-  .sub-btn:hover { background:var(--bleu); color:white; }
-  .sub-btn.active { background:#1e4466; color:white; }
-
-  .sub-content { display:none; }
-  .sub-content.active { display:block; animation:fadeIn 0.25s ease; }
-
-  /* ── GLOSSAIRE ── */
-  .gloss-search {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1.5px solid var(--gris-bord);
-    border-radius: 20px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.88rem;
-    margin-bottom: 16px;
-  }
-  .gloss-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 14px 0;
-  }
-  @media (max-width: 700px) { .gloss-grid { grid-template-columns: 1fr; } }
-  .gloss-item {
-    background: var(--blanc);
-    border: 1.5px solid var(--gris-bord);
-    border-radius: 10px;
-    padding: 12px 16px;
-  }
-  .gloss-item dt {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 800;
-    color: var(--bleu);
-    font-size: 0.9rem;
-    margin-bottom: 4px;
-  }
-  .gloss-item dd { font-size: 0.84rem; color: var(--texte); line-height: 1.55; }
-</style>
+          </style>
         </defs>
         <circle cx="40" cy="40" r="32" fill="white"/>
         <g class="ph-disc-seq02" clip-path="url(#ph-clip-seq02)">
@@ -1944,7 +1944,7 @@ updateSimAvancement();
     </div>
     <div class="formule-box" style="font-size:0.88rem;margin-top:10px;">
       Diagramme de prédominance d'un acide α-aminé :<br><br>
-      <img src="images/acidealphaamine.png" alt="Diagramme de prédominance acide α-aminé" style="max-width:100%;border-radius:8px;display:block;margin:0 auto 8px;">
+      <img src="acidealphaamine.png" alt="Diagramme de prédominance acide α-aminé" style="max-width:100%;border-radius:8px;display:block;margin:0 auto 8px;">
       <div class="legend">Le pH du point isoélectrique : pH<sub>I</sub> = (pK<sub>a1</sub> + pK<sub>a2</sub>) / 2</div>
     </div>
   </div>
@@ -2170,22 +2170,28 @@ updateSimAvancement();
 
   <!-- ══ Sous-onglet Glossaire ══ -->
   <div class="sub-content" id="sub-5-1">
-    <div class="section-title"><span class="icon">📖</span> Glossaire</div>
-    <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
-    <dl class="gloss-grid" id="glossGrid">
-      <div class="gloss-item" data-term="ph"><dt>pH</dt><dd>Grandeur sans unité qui mesure l'acidité d'une solution aqueuse : pH = –log([H<sub>3</sub>O<sup>+</sup>]/C°).</dd></div>
-      <div class="gloss-item" data-term="couple acide base"><dt>Couple acide/base</dt><dd>Couple de deux espèces HA/A<sup>–</sup> reliées par un échange de H<sup>+</sup> : HA ⇌ A<sup>–</sup> + H<sup>+</sup>.</dd></div>
-      <div class="gloss-item" data-term="espece amphotere"><dt>Espèce amphotère</dt><dd>Espèce chimique qui est à la fois acide d'un couple et base d'un autre couple acide/base.</dd></div>
-      <div class="gloss-item" data-term="autoprotolyse de l'eau"><dt>Autoprotolyse de l'eau</dt><dd>Réaction entre deux molécules d'eau : 2 H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + HO<sup>–</sup>.</dd></div>
-      <div class="gloss-item" data-term="produit ionique de l'eau"><dt>Produit ionique de l'eau K<sub>e</sub></dt><dd>Constante d'équilibre de l'autoprotolyse de l'eau, K<sub>e</sub> = 10<sup>–14</sup> à 25 °C (pK<sub>e</sub> = 14,0).</dd></div>
-      <div class="gloss-item" data-term="acide fort base forte"><dt>Acide fort / Base forte</dt><dd>Acide (base) dont la réaction avec l'eau est totale : il ne reste plus de forme HA (BOH) en solution à l'état final.</dd></div>
-      <div class="gloss-item" data-term="acide faible base faible"><dt>Acide faible / Base faible</dt><dd>Acide (base) dont la réaction avec l'eau est limitée : les deux espèces du couple coexistent à l'état final.</dd></div>
-      <div class="gloss-item" data-term="constante d'acidite"><dt>Constante d'acidité K<sub>a</sub></dt><dd>Constante d'équilibre de la réaction d'un acide HA avec l'eau ; pK<sub>a</sub> = –log K<sub>a</sub>, caractéristique du couple acide/base.</dd></div>
-      <div class="gloss-item" data-term="diagramme de predominance"><dt>Diagramme de prédominance</dt><dd>Représentation qui indique, selon le pH comparé au pK<sub>a</sub>, quelle espèce du couple (HA ou A<sup>–</sup>) est majoritaire en solution.</dd></div>
-      <div class="gloss-item" data-term="diagramme de distribution"><dt>Diagramme de distribution</dt><dd>Représentation graphique donnant, pour chaque pH, la proportion de chaque espèce du couple acide/base.</dd></div>
-      <div class="gloss-item" data-term="zone de virage"><dt>Zone de virage</dt><dd>Intervalle de pH, centré sur le pK<sub>a</sub> de l'indicateur coloré (± 1 unité), dans lequel sa couleur change.</dd></div>
-      <div class="gloss-item" data-term="solution tampon"><dt>Solution tampon</dt><dd>Mélange d'un acide HA et de sa base conjuguée A<sup>–</sup> à concentrations voisines, dont le pH varie peu par ajout modéré d'acide, de base ou par dilution.</dd></div>
-    </dl>
+  <div class="section-title"><span class="icon">📖</span> Glossaire</div>
+  <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
+  <dl class="gloss-grid" id="glossGrid">
+    <div class="gloss-item" data-term="ph"><dt>pH</dt><dd>Grandeur sans unité qui mesure l'acidité d'une solution aqueuse : pH = –log([H<sub>3</sub>O<sup>+</sup>]/C°).</dd></div>
+    <div class="gloss-item" data-term="concentration standard"><dt>Concentration standard C°</dt><dd>Concentration de référence, C° = 1 mol·L<sup>–1</sup>, utilisée pour rendre pH, K<sub>e</sub> et K<sub>a</sub> sans unité.</dd></div>
+    <div class="gloss-item" data-term="couple acide base bronsted lowry theorie transfert proton"><dt>Théorie de Brønsted-Lowry</dt><dd>Modèle selon lequel un acide est une espèce capable de céder un proton H<sup>+</sup>, et une base une espèce capable d'en capter un.</dd></div>
+    <div class="gloss-item" data-term="couple acide base"><dt>Couple acide/base</dt><dd>Couple de deux espèces HA/A<sup>–</sup> reliées par un échange de H<sup>+</sup> : HA ⇌ A<sup>–</sup> + H<sup>+</sup>.</dd></div>
+    <div class="gloss-item" data-term="espece amphotere"><dt>Espèce amphotère</dt><dd>Espèce chimique qui est à la fois acide d'un couple et base d'un autre couple acide/base.</dd></div>
+    <div class="gloss-item" data-term="autoprotolyse"><dt>Autoprotolyse de l'eau</dt><dd>Réaction entre deux molécules d'eau : 2 H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + HO<sup>–</sup>.</dd></div>
+    <div class="gloss-item" data-term="produit ionique"><dt>Produit ionique de l'eau K<sub>e</sub></dt><dd>Constante d'équilibre de l'autoprotolyse de l'eau, K<sub>e</sub> = 10<sup>–14</sup> à 25 °C (pK<sub>e</sub> = 14,0).</dd></div>
+    <div class="gloss-item" data-term="taux d'avancement tau"><dt>Taux d'avancement <span class="tau">τ</span></dt><dd><span class="tau">τ</span> = x<sub>f</sub>/x<sub>max</sub> : indique si une réaction est totale (<span class="tau">τ</span> = 1) ou limitée à un équilibre (<span class="tau">τ</span> &lt; 1).</dd></div>
+    <div class="gloss-item" data-term="acide fort base forte"><dt>Acide fort / Base forte</dt><dd>Acide (base) dont la réaction avec l'eau est totale : il ne reste plus de forme HA (BOH) en solution à l'état final.</dd></div>
+    <div class="gloss-item" data-term="acide faible base faible"><dt>Acide faible / Base faible</dt><dd>Acide (base) dont la réaction avec l'eau est limitée : les deux espèces du couple coexistent à l'état final.</dd></div>
+    <div class="gloss-item" data-term="constante d'acidite"><dt>Constante d'acidité K<sub>a</sub></dt><dd>Constante d'équilibre de la réaction d'un acide HA avec l'eau ; pK<sub>a</sub> = –log K<sub>a</sub>, caractéristique du couple acide/base.</dd></div>
+    <div class="gloss-item" data-term="relation de henderson hasselbalch"><dt>Relation de Henderson-Hasselbalch</dt><dd>Relation reliant pH, pK<sub>a</sub> et concentrations à l'équilibre d'un couple acide/base : pH = pK<sub>a</sub> + log([A<sup>–</sup>]<sub>éq</sub>/[HA]<sub>éq</sub>).</dd></div>
+    <div class="gloss-item" data-term="diagramme de predominance"><dt>Diagramme de prédominance</dt><dd>Représentation qui indique, selon le pH comparé au pK<sub>a</sub>, quelle espèce du couple (HA ou A<sup>–</sup>) est majoritaire en solution.</dd></div>
+    <div class="gloss-item" data-term="diagramme de distribution"><dt>Diagramme de distribution</dt><dd>Représentation graphique donnant, pour chaque pH, la proportion de chaque espèce du couple acide/base.</dd></div>
+    <div class="gloss-item" data-term="indicateur colore"><dt>Indicateur coloré</dt><dd>Couple acide/base AH<sub>ind</sub>/A<sub>ind</sub><sup>–</sup> dont les deux formes ont des couleurs différentes, utilisé pour repérer un pH ou une équivalence.</dd></div>
+    <div class="gloss-item" data-term="zone de virage"><dt>Zone de virage</dt><dd>Intervalle de pH, centré sur le pK<sub>a</sub> de l'indicateur coloré (± 1 unité), dans lequel sa couleur change.</dd></div>
+    <div class="gloss-item" data-term="solution tampon"><dt>Solution tampon</dt><dd>Mélange d'un acide HA et de sa base conjuguée A<sup>–</sup> à concentrations voisines, dont le pH varie peu par ajout modéré d'acide, de base ou par dilution.</dd></div>
+    <div class="gloss-item" data-term="zwitterion amphion point isoelectrique acide alpha amine"><dt>Zwitterion (point isoélectrique)</dt><dd>Forme d'un acide α-aminé portant à la fois une charge + (–NH<sub>3</sub><sup>+</sup>) et une charge – (–COO<sup>–</sup>) ; prédomine pour pK<sub>a1</sub> &lt; pH &lt; pK<sub>a2</sub>, autour du pH<sub>I</sub> = (pK<sub>a1</sub>+pK<sub>a2</sub>)/2.</dd></div>
+  </dl>
   </div><!-- /sub-5-1 (Glossaire) -->
 
   <!-- ══ Sous-onglet Ressources ══ -->
