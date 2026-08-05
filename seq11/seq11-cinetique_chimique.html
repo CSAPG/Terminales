@@ -24,6 +24,10 @@
   --rouge-clair: #FDEDEC;
   --violet: #7B4FA6;
   --violet-clair: #F3EDF9;
+  --rose: #C2477E;
+  --rose-clair: #FBEAF1;
+  --jaune: #B8901A;
+  --jaune-clair: #FBF3DC;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -386,6 +390,18 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 13px;
 .res-link-card.vert { border-left-color: var(--vert); }
 .res-link-card.vert h4 { color: var(--vert); }
 .res-link-card.vert:hover { box-shadow: 0 4px 16px rgba(58,138,110,0.18); }
+.res-link-card.rouge { border-left-color: var(--rouge); }
+.res-link-card.rouge h4 { color: var(--rouge); }
+.res-link-card.rouge:hover { box-shadow: 0 4px 16px rgba(192,57,43,0.18); }
+.res-link-card.violet { border-left-color: var(--violet); }
+.res-link-card.violet h4 { color: var(--violet); }
+.res-link-card.violet:hover { box-shadow: 0 4px 16px rgba(123,79,166,0.18); }
+.res-link-card.rose { border-left-color: var(--rose); }
+.res-link-card.rose h4 { color: var(--rose); }
+.res-link-card.rose:hover { box-shadow: 0 4px 16px rgba(194,71,126,0.18); }
+.res-link-card.jaune { border-left-color: var(--jaune); }
+.res-link-card.jaune h4 { color: var(--jaune); }
+.res-link-card.jaune:hover { box-shadow: 0 4px 16px rgba(184,144,26,0.18); }
 
 /* ── SOUS-ONGLETS ── */
 .sub-tabs-nav { display: flex; gap: 6px; padding: 18px 0 0; margin-bottom: 22px; flex-wrap: nowrap; overflow-x: auto; }
@@ -2264,23 +2280,23 @@ plt.show()</textarea>
 
   <div class="section-title" style="font-family:'Outfit',sans-serif;font-size:1.18rem;font-weight:800;color:var(--bleu);margin:26px 0 14px;display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:2px solid var(--bleu-clair);">🎥 Vidéos</div>
   <div class="bilan-grid">
-    <a class="res-link-card" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/04_schema_anime.mp4" target="_blank" rel="noopener">
+    <a class="res-link-card rouge" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/04_schema_anime.mp4" target="_blank" rel="noopener">
       <h4>🎬 Schéma animé — Cinétique chimique</h4>
       <p>Hatier Clic · Animation du cours (fichier vidéo mp4)</p>
     </a>
-    <a class="res-link-card" href="https://www.pearltrees.com/private/id105762240/item807270540?paccess=47d8d1f4dd5.301df88c.484220abd8009da977e36e2604cd7395" target="_blank" rel="noopener">
+    <a class="res-link-card vert" href="https://www.pearltrees.com/private/id105762240/item807270540?paccess=47d8d1f4dd5.301df88c.484220abd8009da977e36e2604cd7395" target="_blank" rel="noopener">
       <h4>▶ Cinétique chimique — Cours complet</h4>
       <p>Paul Olivier · Vitesse volumique, temps de demi-réaction, facteurs cinétiques, catalyseurs</p>
     </a>
-    <a class="res-link-card" href="https://www.pearltrees.com/private/id105762240/item807270603?paccess=47d8d20c6bb.301df8cb.2b170450e56a5bc8a7808c5bc9e2ad7c" target="_blank" rel="noopener">
+    <a class="res-link-card vert" href="https://www.pearltrees.com/private/id105762240/item807270603?paccess=47d8d20c6bb.301df8cb.2b170450e56a5bc8a7808c5bc9e2ad7c" target="_blank" rel="noopener">
       <h4>▶ Loi de vitesse d'ordre 1 ? — Exercice bac</h4>
       <p>Paul Olivier · Identifier si l'évolution d'une concentration suit une loi d'ordre 1</p>
     </a>
-    <a class="res-link-card" href="https://www.pearltrees.com/private/id105762240/item807270696?paccess=47d8d21a57c.301df928.808b21433fbcf00efd36e33ee8eb3b28" target="_blank" rel="noopener">
+    <a class="res-link-card jaune" href="https://www.pearltrees.com/private/id105762240/item807270696?paccess=47d8d21a57c.301df928.808b21433fbcf00efd36e33ee8eb3b28" target="_blank" rel="noopener">
       <h4>▶ Cours 4 — Cinétique chimique</h4>
       <p>Stella · Constitution et transformations de la matière, programme Terminale spé</p>
     </a>
-    <a class="res-link-card" href="https://www.pearltrees.com/private/id105762240/item807270737?paccess=47d8d226c06.301df951.8e1245ff5d721ed324e5c42e8d1f07f8" target="_blank" rel="noopener">
+    <a class="res-link-card jaune" href="https://www.pearltrees.com/private/id105762240/item807270737?paccess=47d8d226c06.301df951.8e1245ff5d721ed324e5c42e8d1f07f8" target="_blank" rel="noopener">
       <h4>▶ Cours 6 — Cinétique chimique</h4>
       <p>Stella · Le temps en chimie</p>
     </a>
@@ -2288,11 +2304,11 @@ plt.show()</textarea>
 
   <div class="section-title" style="font-family:'Outfit',sans-serif;font-size:1.18rem;font-weight:800;color:var(--bleu);margin:26px 0 14px;display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:2px solid var(--bleu-clair);">❓ QCM</div>
   <div class="bilan-grid">
-    <a class="res-link-card vert" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/04_QCM_prerequis/index.html" target="_blank" rel="noopener">
+    <a class="res-link-card rouge" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/04_QCM_prerequis/index.html" target="_blank" rel="noopener">
       <h4>✅ QCM — Prérequis</h4>
       <p>Hatier Clic · Vérifier les acquis avant d'aborder le chapitre</p>
     </a>
-    <a class="res-link-card vert" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_04/index.html" target="_blank" rel="noopener">
+    <a class="res-link-card rouge" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/QCM_04/index.html" target="_blank" rel="noopener">
       <h4>✅ QCM — Maîtrise des notions</h4>
       <p>Hatier Clic · Auto-évaluation sur les notions du chapitre</p>
     </a>
