@@ -1858,6 +1858,16 @@
             <strong>Observations :</strong> Dépôt gris argenté sur Cu(s) → Ag(s) se forme · Solution bleue → Cu²⁺(aq) apparaît · Lame de cuivre qui se dissout.
           </div>
         </div>
+
+        <!-- Photo : cas où il ne se passe rien (Ag + Cu2+) -->
+        <div id="photo-pas-reaction" style="display:none;margin-top:14px;">
+          <div style="font-size:0.78rem;font-weight:700;color:var(--orange);margin-bottom:6px;">📸 Observation expérimentale</div>
+          <img src="fil-argent-dans-cu.jpg" alt="Fil d'argent dans une solution de Cu²⁺ : aucune réaction" style="width:100%;max-width:260px;border-radius:8px;border:1.5px solid #ddd;display:block;margin:0 auto;"/>
+          <div style="font-size:0.68rem;color:var(--texte-leger);text-align:center;margin-top:3px;">Fil d'argent plongé dans une solution de Cu²⁺</div>
+          <div class="remarque-box" style="margin-top:10px;font-size:0.78rem;">
+            <strong>Observations :</strong> Aucun changement visible · le fil d'argent reste intact · la solution reste bleue (Cu²⁺ non consommé). Conforme au sens indirect quasi-total (K = 10⁻¹⁵).
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1902,6 +1912,7 @@
         couleur_solution: 'rgba(200,200,200,0.15)',
         depot: null,
         arbre_diane: false,
+        pas_de_reaction: true,
         message: 'Q<sub>r,i</sub> ≫ K = 10⁻¹⁵ → sens <strong>indirect</strong>. La réaction n\'a pratiquement pas lieu dans ce sens : Ag(s) ne se dissout pas dans une solution de Cu²⁺.',
       },
       'Cu|Cu2': {
@@ -1943,6 +1954,7 @@
       document.getElementById('resultat-box').style.background = '#fafafa';
       document.getElementById('curseurs-conc').style.display = 'none';
       document.getElementById('photos-diane').style.display = 'none';
+      document.getElementById('photo-pas-reaction').style.display = 'none';
     };
 
     function evaluerReaction() {
@@ -1979,6 +1991,7 @@
       }
       // Photos
       document.getElementById('photos-diane').style.display = r.arbre_diane ? 'block' : 'none';
+      document.getElementById('photo-pas-reaction').style.display = r.pas_de_reaction ? 'block' : 'none';
 
       // Couleur box résultat
       let borderColor = '#ddd', bgColor = '#fafafa';
