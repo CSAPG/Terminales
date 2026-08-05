@@ -500,6 +500,7 @@
     margin: 14px 0;
   }
   @media (max-width: 560px) { .critere-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .curseurs-A1-grid { grid-template-columns: 1fr !important; } }
   .critere-item {
     border-radius: 10px;
     padding: 14px;
@@ -1182,6 +1183,56 @@
     </div>
   </div>
 
+  <!-- ── RAPPEL DE PREMIÈRE — TABLEAU D'AVANCEMENT THÉORIQUE (accordéon) ── -->
+  <button class="accord-btn" onclick="toggleAccord(this)">
+    <span>📖 Rappel de Première — Tableau d'avancement théorique</span>
+    <span>▼</span>
+  </button>
+  <div class="accord-body">
+    <p style="font-size:0.85rem;margin-bottom:10px;">Pour une transformation modélisée par la réaction générale <strong>a A + b B → c C + d D</strong> :</p>
+    <div style="overflow-x:auto;">
+    <table class="tableau-avancement" style="font-size:0.82rem;min-width:480px;">
+      <tr>
+        <th style="text-align:left;">Équation de la réaction</th>
+        <th colspan="4">a A + b B → c C + d D</th>
+      </tr>
+      <tr>
+        <th style="text-align:left;">État du système</th>
+        <th>Avancement (mol)</th>
+        <th colspan="4" style="font-weight:600;">Quantité de matière (en mol)</th>
+      </tr>
+      <tr>
+        <td style="text-align:left;">État initial</td>
+        <td>x = 0</td>
+        <td>n<sub>iA</sub></td>
+        <td>n<sub>iB</sub></td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td style="text-align:left;">En cours</td>
+        <td>x</td>
+        <td>n<sub>iA</sub> − a x</td>
+        <td>n<sub>iB</sub> − b x</td>
+        <td>c x</td>
+        <td>d x</td>
+      </tr>
+      <tr>
+        <td style="text-align:left;">État final</td>
+        <td>x<sub>max</sub></td>
+        <td>n<sub>iA</sub> − a x<sub>max</sub></td>
+        <td>n<sub>iB</sub> − b x<sub>max</sub></td>
+        <td>c x<sub>max</sub></td>
+        <td>d x<sub>max</sub></td>
+      </tr>
+    </table>
+    </div>
+    <div class="remarque-box" style="margin-top:12px;font-size:0.8rem;">
+      <strong>Méthode :</strong> x<sub>max</sub> est déterminé en écrivant que chaque quantité de réactif reste positive ou nulle. Le réactif limitant est celui qui impose la plus petite valeur de x<sub>max</sub>.<br>
+      Dans l'application ci-dessous, les coefficients stœchiométriques valent tous 1 (a = b = c = d = 1) : le tableau se simplifie donc à n<sub>i</sub> − x et x.
+    </div>
+  </div>
+
   <!-- ── ANIMATION INTERACTIVE – TAUX D'AVANCEMENT ── -->
   <div class="activite-card" style="padding:24px;">
     <h3 style="margin-bottom:16px;">🎛️ Animation – Taux d'avancement final τ</h3>
@@ -1245,22 +1296,32 @@
     </div>
     <div id="xmax-note" style="font-size:0.78rem;color:#c9691f;margin-top:-16px;margin-bottom:20px;font-style:italic;"></div>
 
-    <!-- Curseurs -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
+    <!-- Curseurs : n0(acide), n0(éthanol), x_f — côte à côte -->
+    <div class="curseurs-A1-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;">
 
       <div style="background:#f8fbff;border-radius:10px;padding:16px;border:1.5px solid var(--bleu-activite-bord);">
         <label style="font-size:0.85rem;font-weight:700;color:var(--bleu);display:block;margin-bottom:6px;">
-          x<sub>max</sub> — avancement maximal
+          n<sub>0</sub>(CH₃COOH)
         </label>
-        <input type="range" id="slider-xmax" min="0.2" max="2.0" step="0.05" value="1.0"
+        <input type="range" id="slider-n0a" min="0.2" max="2.0" step="0.05" value="1.0"
                style="width:100%;accent-color:var(--bleu);cursor:pointer;"
                oninput="updateTau()">
         <div style="text-align:center;margin-top:8px;">
-          <span style="font-size:1.3rem;font-weight:800;color:var(--bleu);" id="val-xmax">1,00</span>
+          <span style="font-size:1.3rem;font-weight:800;color:var(--bleu);" id="val-n0a">1,00</span>
           <span style="font-size:0.8rem;color:var(--texte-leger);"> mol</span>
         </div>
-        <div style="font-size:0.75rem;color:var(--texte-leger);margin-top:4px;text-align:center;">
-          Fixé par le réactif limitant (coefficients stœchio.)
+      </div>
+
+      <div style="background:#f8fbff;border-radius:10px;padding:16px;border:1.5px solid var(--bleu-activite-bord);">
+        <label style="font-size:0.85rem;font-weight:700;color:var(--bleu);display:block;margin-bottom:6px;">
+          n<sub>0</sub>(C₂H₅OH)
+        </label>
+        <input type="range" id="slider-n0b" min="0.2" max="2.0" step="0.05" value="1.0"
+               style="width:100%;accent-color:var(--bleu);cursor:pointer;"
+               oninput="updateTau()">
+        <div style="text-align:center;margin-top:8px;">
+          <span style="font-size:1.3rem;font-weight:800;color:var(--bleu);" id="val-n0b">1,00</span>
+          <span style="font-size:0.8rem;color:var(--texte-leger);"> mol</span>
         </div>
       </div>
 
@@ -1275,9 +1336,15 @@
           <span style="font-size:1.3rem;font-weight:800;color:#E8783A;" id="val-xf">0,67</span>
           <span style="font-size:0.8rem;color:var(--texte-leger);"> mol</span>
         </div>
-        <div style="font-size:0.75rem;color:var(--texte-leger);margin-top:4px;text-align:center;">
-          Déterminé expérimentalement à l'état final
-        </div>
+      </div>
+    </div>
+
+    <!-- Réactif limitant / x_max calculé -->
+    <div id="limitant-box" style="background:#fdf4e7;border:1.5px solid #E8783A;border-radius:10px;padding:12px 16px;margin-bottom:24px;text-align:center;font-size:0.85rem;">
+      <span style="font-weight:700;color:#c9691f;">x<sub>max</sub> = min(n<sub>0</sub>(acide), n<sub>0</sub>(éthanol)) = <span id="val-xmax">1,00</span> mol</span>
+      <div id="limitant-txt" style="margin-top:4px;color:#c9691f;"></div>
+      <div style="font-size:0.75rem;color:var(--texte-leger);margin-top:6px;">
+        x<sub>f</sub> déterminé expérimentalement à l'état final (ne peut pas dépasser x<sub>max</sub>)
       </div>
     </div>
 
@@ -1309,7 +1376,11 @@
 
   <script>
   function updateTau() {
-    const xmax = parseFloat(document.getElementById('slider-xmax').value);
+    const n0a = parseFloat(document.getElementById('slider-n0a').value);
+    const n0b = parseFloat(document.getElementById('slider-n0b').value);
+    // Coefficients stœchiométriques tous égaux à 1 dans cette réaction
+    // → réactif limitant = celui introduit en plus faible quantité
+    const xmax = Math.min(n0a, n0b);
     let xf = parseFloat(document.getElementById('slider-xf').value);
 
     // xf ne peut pas dépasser xmax
@@ -1321,8 +1392,20 @@
     const pct = Math.round(tau * 100);
 
     // Affichage valeurs curseurs
+    document.getElementById('val-n0a').textContent = n0a.toFixed(2).replace('.', ',');
+    document.getElementById('val-n0b').textContent = n0b.toFixed(2).replace('.', ',');
     document.getElementById('val-xmax').textContent = xmax.toFixed(2).replace('.', ',');
     document.getElementById('val-xf').textContent   = xf.toFixed(2).replace('.', ',');
+
+    // Réactif limitant
+    const limEl = document.getElementById('limitant-txt');
+    if (Math.abs(n0a - n0b) < 0.001) {
+      limEl.textContent = 'Les deux réactifs sont introduits en quantités égales (mélange stœchiométrique) : aucun n\'est en excès.';
+    } else if (n0a < n0b) {
+      limEl.textContent = 'Réactif limitant : CH₃COOH (introduit en plus faible quantité) — C₂H₅OH est en excès de ' + (n0b - n0a).toFixed(2).replace('.', ',') + ' mol.';
+    } else {
+      limEl.textContent = 'Réactif limitant : C₂H₅OH (introduit en plus faible quantité) — CH₃COOH est en excès de ' + (n0a - n0b).toFixed(2).replace('.', ',') + ' mol.';
+    }
 
     // Résultat τ
     document.getElementById('tau-value').textContent    = 'τ = ' + tau.toFixed(2).replace('.', ',');
@@ -1352,32 +1435,36 @@
     document.getElementById('tau-badge').style.background   = badgeColor;
     document.getElementById('tau-badge').textContent        = badgeTxt;
 
-    // Tableau d'avancement classique — on suppose n0 = xmax pour chaque réactif (stœchio 1:1)
-    const n0 = xmax.toFixed(2).replace('.', ',');
-    const nf_reactif = (xmax - xf).toFixed(2).replace('.', ',');
+    // Tableau d'avancement classique — n0a et n0b indépendants, xmax = min(n0a, n0b)
+    const n0a_txt = n0a.toFixed(2).replace('.', ',');
+    const n0b_txt = n0b.toFixed(2).replace('.', ',');
+    const nf_a = (n0a - xf).toFixed(2).replace('.', ',');
+    const nf_b = (n0b - xf).toFixed(2).replace('.', ',');
     const nf_produit = xf.toFixed(2).replace('.', ',');
     const xf_txt = xf.toFixed(2).replace('.', ',');
 
     // État initial
-    document.getElementById('t-init-a').textContent = n0;
-    document.getElementById('t-init-b').textContent = n0;
+    document.getElementById('t-init-a').textContent = n0a_txt;
+    document.getElementById('t-init-b').textContent = n0b_txt;
 
     // État intermédiaire (formule littérale, avec n0 numérique substitué)
-    document.getElementById('t-inter-a').textContent = n0 + ' − x';
-    document.getElementById('t-inter-b').textContent = n0 + ' − x';
+    document.getElementById('t-inter-a').textContent = n0a_txt + ' − x';
+    document.getElementById('t-inter-b').textContent = n0b_txt + ' − x';
 
     // Ligne x = xmax (hypothèse : et si la transformation était totale ?)
     const xmax_txt = xmax.toFixed(2).replace('.', ',');
+    const exces_a = (n0a - xmax).toFixed(2).replace('.', ',');
+    const exces_b = (n0b - xmax).toFixed(2).replace('.', ',');
     document.getElementById('t-xmax-label').innerHTML = 'x = x<sub>max</sub> = ' + xmax_txt;
-    document.getElementById('t-xmax-a').textContent = '0';
-    document.getElementById('t-xmax-b').textContent = '0';
+    document.getElementById('t-xmax-a').textContent = exces_a;
+    document.getElementById('t-xmax-b').textContent = exces_b;
     document.getElementById('t-xmax-c').textContent = xmax_txt;
     document.getElementById('t-xmax-d').textContent = xmax_txt;
 
     // État final (x = xf, valeurs numériques)
     document.getElementById('t-xf-label').innerHTML = 'x = x<sub>f</sub> = ' + xf_txt;
-    document.getElementById('t-final-a').textContent = nf_reactif;
-    document.getElementById('t-final-b').textContent = nf_reactif;
+    document.getElementById('t-final-a').textContent = nf_a;
+    document.getElementById('t-final-b').textContent = nf_b;
     document.getElementById('t-final-c').textContent = nf_produit;
     document.getElementById('t-final-d').textContent = nf_produit;
 
@@ -1386,7 +1473,7 @@
     if (tau >= 0.99) {
       noteEl.innerHTML = '👉 Ici x<sub>f</sub> = x<sub>max</sub> : la ligne « état final » rejoint la ligne « si transformation totale ». Le réactif limitant a bien totalement disparu.';
     } else {
-      noteEl.innerHTML = '👉 Comparer les deux lignes orange et bleue : contrairement à l\'hypothèse « x = x<sub>max</sub> », à l\'état final réel il reste ' + nf_reactif + ' mol de réactifs non consommés — la transformation s\'est arrêtée avant x<sub>max</sub>.';
+      noteEl.innerHTML = '👉 Comparer les deux lignes orange et bleue : contrairement à l\'hypothèse « x = x<sub>max</sub> », à l\'état final réel il reste ' + nf_a + ' mol de CH₃COOH et ' + nf_b + ' mol de C₂H₅OH non consommés — la transformation s\'est arrêtée avant x<sub>max</sub>.';
     }
 
     // Animation "flash" pour bien montrer que le tableau se met à jour
@@ -1453,6 +1540,7 @@
           <option value="1,5 mol">1,5 mol</option>
         </select>
         <button class="btn-reset" onclick="resetSelect('sel-xmax','fb-xmax-sel','nc-xmax-sel')">Recommencer</button>
+        <button class="btn-corriger" onclick="corrigerSelect('sel-xmax','1,0 mol','fb-xmax-sel','nc-xmax-sel')">Corriger</button>
       </div>
       <div class="dq-feedback" id="fb-xmax-sel"></div>
       <div class="num-correction-inline" id="nc-xmax-sel">
@@ -1474,6 +1562,7 @@
           <option value="2,0 mol">2,0 mol</option>
         </select>
         <button class="btn-reset" onclick="resetSelect('sel-xf','fb-xf-sel','nc-xf-sel')">Recommencer</button>
+        <button class="btn-corriger" onclick="corrigerSelect('sel-xf','0,67 mol','fb-xf-sel','nc-xf-sel')">Corriger</button>
       </div>
       <div class="dq-feedback" id="fb-xf-sel"></div>
       <div class="num-correction-inline" id="nc-xf-sel">
@@ -1495,6 +1584,7 @@
           <option value="1,0">1,0</option>
         </select>
         <button class="btn-reset" onclick="resetSelect('sel-tau','fb-tau-sel','nc-tau-sel')">Recommencer</button>
+        <button class="btn-corriger" onclick="corrigerSelect('sel-tau','0,67','fb-tau-sel','nc-tau-sel')">Corriger</button>
       </div>
       <div class="dq-feedback" id="fb-tau-sel"></div>
       <div class="num-correction-inline" id="nc-tau-sel">
@@ -2177,6 +2267,7 @@
           <option value="1,9 × 10³⁷">1,9 × 10<sup>37</sup></option>
         </select>
         <button class="btn-reset" onclick="resetSelect('sel-qri2','fb-qri2-sel','nc-qri2-sel')">Recommencer</button>
+        <button class="btn-corriger" onclick="corrigerSelect('sel-qri2','1,75','fb-qri2-sel','nc-qri2-sel')">Corriger</button>
       </div>
       <div class="dq-feedback" id="fb-qri2-sel"></div>
       <div class="num-correction-inline" id="nc-qri2-sel">
@@ -2196,6 +2287,7 @@
           <option value="Qr,i ≪ K(T)">Q<sub>r,i</sub> ≪ K(T)</option>
         </select>
         <button class="btn-reset" onclick="resetSelect('sel-comp2','fb-comp2-sel','nc-comp2-sel')">Recommencer</button>
+        <button class="btn-corriger" onclick="corrigerSelect('sel-comp2','Qr,i ≪ K(T)','fb-comp2-sel','nc-comp2-sel')">Corriger</button>
       </div>
       <div class="dq-feedback" id="fb-comp2-sel"></div>
       <div class="num-correction-inline" id="nc-comp2-sel">
@@ -2274,6 +2366,7 @@
           <option value="indirect">Sens indirect (←)</option>
         </select>
         <button class="btn-reset" onclick="resetRxSens()">Recommencer</button>
+        <button class="btn-corriger" onclick="corrigerRxSens()">Corriger</button>
       </div>
       <div class="dq-feedback" id="fb-rx-sens"></div>
       <div class="num-correction-inline" id="nc-rx-sens"></div>
@@ -4183,6 +4276,18 @@ function resetSelect(selId, fbId, ncId) {
   if (nc) nc.classList.remove('visible');
 }
 
+function corrigerSelect(selId, bonneValeur, fbId, ncId) {
+  const sel = document.getElementById(selId);
+  const fb  = document.getElementById(fbId);
+  const nc  = document.getElementById(ncId);
+  sel.value = bonneValeur;
+  sel.className = 'dq-select correct';
+  sel.disabled  = true;
+  fb.textContent = '';
+  fb.className = 'dq-feedback';
+  if (nc) nc.classList.add('visible');
+}
+
 // ────────────────────────────────────────────────────── — Vérifier / Corriger / Recommencer
 // ──────────────────────────────────────────────────────
 function verifierNum(inputId, valeur, tolerance, fbId, ncId) {
@@ -4374,6 +4479,20 @@ function resetRxSens() {
   if (sel) { sel.value=''; sel.className='dq-select'; sel.disabled=false; }
   if (fb)  { fb.textContent=''; fb.className='dq-feedback'; }
   if (nc)  { nc.innerHTML=''; nc.classList.remove('visible'); }
+}
+
+function corrigerRxSens() {
+  const sel = document.getElementById('sel-rx-sens');
+  const fb  = document.getElementById('fb-rx-sens');
+  const nc  = document.getElementById('nc-rx-sens');
+  const bonneReponse = currentConc().sens;
+  sel.value = bonneReponse;
+  sel.className = 'dq-select correct';
+  sel.disabled = true;
+  fb.textContent = '';
+  fb.className = 'dq-feedback';
+  nc.innerHTML = '<div class="calc-step">' + currentConc().explication + '</div>';
+  nc.classList.add('visible');
 }
 
 function lancerAnim() {
