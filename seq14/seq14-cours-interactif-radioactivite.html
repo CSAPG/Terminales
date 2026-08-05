@@ -2794,6 +2794,9 @@ function runSimulation() { drawInstant(); }
     ctx.strokeStyle=COLORS.axisCol; ctx.lineWidth=1.5;
     ctx.beginPath();ctx.moveTo(PAD.l,PLOT_TOP+PAD.t);ctx.lineTo(PAD.l,PLOT_TOP+PAD.t+PH+4);ctx.stroke();
     ctx.beginPath();ctx.moveTo(PAD.l-4,PLOT_TOP+PAD.t+PH);ctx.lineTo(PAD.l+PW,PLOT_TOP+PAD.t+PH);ctx.stroke();
+    ctx.fillStyle=COLORS.axisCol;
+    ctx.beginPath();ctx.moveTo(PAD.l,PLOT_TOP+PAD.t);ctx.lineTo(PAD.l-4,PLOT_TOP+PAD.t+9);ctx.lineTo(PAD.l+4,PLOT_TOP+PAD.t+9);ctx.closePath();ctx.fill();
+    ctx.beginPath();ctx.moveTo(PAD.l+PW,PLOT_TOP+PAD.t+PH);ctx.lineTo(PAD.l+PW-9,PLOT_TOP+PAD.t+PH-4);ctx.lineTo(PAD.l+PW-9,PLOT_TOP+PAD.t+PH+4);ctx.closePath();ctx.fill();
 
     // Theoretical curve (dashed)
     ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(129,194,132,0.3)'; ctx.lineWidth=1.2;
