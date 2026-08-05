@@ -3170,6 +3170,9 @@ function drawPos(tNorm) {
   ctxPos.strokeStyle = '#DDE3EC'; ctxPos.lineWidth = 1;
   ctxPos.beginPath(); ctxPos.moveTo(POS_OX,POS_OY); ctxPos.lineTo(POS_W-10,POS_OY); ctxPos.stroke();
   ctxPos.beginPath(); ctxPos.moveTo(POS_OX,POS_OY); ctxPos.lineTo(POS_OX,10); ctxPos.stroke();
+  ctxPos.fillStyle = '#DDE3EC';
+  ctxPos.beginPath(); ctxPos.moveTo(POS_W-10,POS_OY); ctxPos.lineTo(POS_W-18,POS_OY-4); ctxPos.lineTo(POS_W-18,POS_OY+4); ctxPos.closePath(); ctxPos.fill();
+  ctxPos.beginPath(); ctxPos.moveTo(POS_OX,10); ctxPos.lineTo(POS_OX-4,18); ctxPos.lineTo(POS_OX+4,18); ctxPos.closePath(); ctxPos.fill();
   ctxPos.fillStyle = '#5A6B7A'; ctxPos.font = '11px Nunito';
   ctxPos.fillText('O', POS_OX-18, POS_OY+12);
   ctxPos.fillText('x (m)', POS_W-38, POS_OY+14);
