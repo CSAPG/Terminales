@@ -4358,6 +4358,10 @@ function drawQrAnim() {
   ctx.beginPath();
   ctx.moveTo(padL, padT); ctx.lineTo(padL, padT+gH); ctx.lineTo(padL+gW, padT+gH);
   ctx.strokeStyle='#AAB5C0'; ctx.lineWidth=1.5; ctx.stroke();
+  // Flèches d'axes
+  ctx.fillStyle='#AAB5C0';
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL-4,padT+8); ctx.lineTo(padL+4,padT+8); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(padL+gW,padT+gH); ctx.lineTo(padL+gW-8,padT+gH-4); ctx.lineTo(padL+gW-8,padT+gH+4); ctx.closePath(); ctx.fill();
 
   // Étiquettes axe Y (log scale)
   ctx.font='10px Nunito,sans-serif'; ctx.fillStyle='#AAB5C0'; ctx.textAlign='right';
