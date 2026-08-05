@@ -2922,6 +2922,10 @@ function resetPolymeres() {
     ctx.beginPath();
     ctx.moveTo(marginL, marginT); ctx.lineTo(marginL, marginT + plotH); ctx.lineTo(marginL + plotW, marginT + plotH);
     ctx.stroke();
+    // Flèches d'axes
+    ctx.fillStyle = '#DDE3EC';
+    ctx.beginPath(); ctx.moveTo(marginL,marginT); ctx.lineTo(marginL-4,marginT+9); ctx.lineTo(marginL+4,marginT+9); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(marginL+plotW,marginT+plotH); ctx.lineTo(marginL+plotW-9,marginT+plotH-4); ctx.lineTo(marginL+plotW-9,marginT+plotH+4); ctx.closePath(); ctx.fill();
 
     ctx.fillStyle = '#5A6B7A';
     ctx.font = '11px Nunito, sans-serif';
