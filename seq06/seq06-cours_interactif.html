@@ -2555,7 +2555,12 @@ function checkQcmEtape2(btn, isCorrect) {
 
     // Courbe d'intensité (bas)
     var gx = stripX, gy = 75, gw = stripW, gh = 120;
-    ctx.strokeStyle = '#DDE3EC'; ctx.strokeRect(gx, gy, gw, gh);
+    // Axes fléchés (x : position, y : intensité)
+    ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx, gy + gh + 8); ctx.lineTo(gx + gw + 8, gy + gh); ctx.stroke();
+    ctx.fillStyle = '#5A6B7A';
+    ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx - 4, gy + 9); ctx.lineTo(gx + 4, gy + 9); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(gx + gw + 8, gy + gh); ctx.lineTo(gx + gw - 1, gy + gh - 4); ctx.lineTo(gx + gw - 1, gy + gh + 4); ctx.closePath(); ctx.fill();
     ctx.beginPath();
     ctx.strokeStyle = '#E8783A'; ctx.lineWidth = 2;
     for (var px2 = 0; px2 <= gw; px2++) {
@@ -2567,10 +2572,12 @@ function checkQcmEtape2(btn, isCorrect) {
     }
     ctx.stroke();
     ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif';
-    ctx.fillText('Intensité I(x) sur l\'écran (x en cm, D = 2 m)', gx + 6, gy + 14);
+    ctx.fillText('I(x)', gx + 6, gy + 14);
+    ctx.fillText('x (D = 2 m)', gx + gw - 62, gy + gh + 22);
     ctx.fillText('-5 cm', gx + 2, gy + gh + 12);
     ctx.fillText('0', gx + gw/2 - 3, gy + gh + 12);
     ctx.fillText('+5 cm', gx + gw - 30, gy + gh + 12);
+
 
     resultBox.innerHTML = 'θ = λ/a = ' + (theta*1000).toFixed(2).replace('.', ',') + '×10⁻³ rad &nbsp;|&nbsp; Largeur tache centrale L = 2Dλ/a ≈ ' + (L*100).toFixed(1).replace('.', ',') + ' cm (D = 2 m)';
   }
