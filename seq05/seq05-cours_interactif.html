@@ -1904,9 +1904,14 @@ print("Coefficient d'absorption molaire epsilon =", epsilon, "L.mol^-1.cm^-1")</
 
       <div class="anim-canvas-wrap" style="margin-top:12px;">
         <div class="anim-canvas-title">Comparaison à concentration égale (1 mol·m⁻³)</div>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:0 auto;">
-          <line x1="70" y1="10" x2="70" y2="110" stroke="#5A6B7A" stroke-width="1.2"/>
-          <line x1="70" y1="110" x2="320" y2="110" stroke="#5A6B7A" stroke-width="1.2"/>
+        <svg viewBox="0 0 340 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:0 auto;">
+          <defs>
+            <marker id="seq05-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#5A6B7A"/>
+            </marker>
+          </defs>
+          <line x1="70" y1="18" x2="70" y2="110" stroke="#5A6B7A" stroke-width="1.2" marker-end="url(#seq05-arrow)"/>
+          <line x1="70" y1="110" x2="312" y2="110" stroke="#5A6B7A" stroke-width="1.2" marker-end="url(#seq05-arrow)"/>
           <rect x="80"  y="15"  width="24" height="95" fill="var(--orange)"/>
           <text x="92" y="128" text-anchor="middle" font-size="10" font-weight="700" fill="#1A2A3A" font-family="Nunito">H₃O⁺</text>
           <text x="92" y="12" text-anchor="middle" font-size="9" font-weight="700" fill="var(--orange)" font-family="Outfit">35,0</text>
@@ -1916,7 +1921,7 @@ print("Coefficient d'absorption molaire epsilon =", epsilon, "L.mol^-1.cm^-1")</
           <rect x="220" y="92"  width="24" height="18" fill="#22c55e"/>
           <text x="232" y="128" text-anchor="middle" font-size="10" font-weight="700" fill="#1A2A3A" font-family="Nunito">Na⁺</text>
           <text x="232" y="89" text-anchor="middle" font-size="9" font-weight="700" fill="#22c55e" font-family="Outfit">5,0</text>
-          <text x="10" y="16" font-size="8" fill="var(--texte-leger)" font-family="Nunito">λ</text>
+          <text x="16" y="20" font-size="9" font-weight="700" fill="var(--texte-leger)" font-family="Outfit">λ (mS·m²·mol⁻¹)</text>
         </svg>
         <div class="etape-msg-box">À concentration égale, l'ion <strong>H₃O⁺</strong> conduit environ <strong>7 fois mieux</strong> le courant que Na⁺ : c'est pour cela qu'un acide, même dilué, rend une solution nettement conductrice.</div>
       </div>
@@ -2998,6 +3003,25 @@ function runBeerPython() {
 }
 
 /* Trace le nuage de points (C ; A) rentré par l'élève + la droite de régression passant par l'origine (moyenne de A/C) */
+/* ════════ Flèche standard pour axes de graphiques ════════ */
+function drawAxisArrow(ctx, tipX, tipY, dirX, dirY, color) {
+  var len = Math.sqrt(dirX*dirX + dirY*dirY) || 1;
+  dirX /= len; dirY /= len;
+  var size = 7, spread = 0.45;
+  var cosS = Math.cos(spread), sinS = Math.sin(spread);
+  var leftX  = tipX - size*(dirX*cosS - dirY*sinS);
+  var leftY  = tipY - size*(dirY*cosS + dirX*sinS);
+  var rightX = tipX - size*(dirX*cosS + dirY*sinS);
+  var rightY = tipY - size*(dirY*cosS - dirX*sinS);
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(tipX, tipY);
+  ctx.lineTo(leftX, leftY);
+  ctx.lineTo(rightX, rightY);
+  ctx.closePath();
+  ctx.fill();
+}
+
 function drawBeerCourbe(cList, aList) {
   var canvas = document.getElementById('beerPyChart');
   if (!canvas) return;
@@ -3011,6 +3035,8 @@ function drawBeerCourbe(cList, aList) {
 
   ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
   ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+  drawAxisArrow(ctx, padL, padT, 0, -1, '#5A6B7A');
+  drawAxisArrow(ctx, canvas.width-padR, canvas.height-padB, 1, 0, '#5A6B7A');
   ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif'; ctx.textAlign='center';
   ctx.fillText('C (mol·L⁻¹)', padL+plotW/2, canvas.height-8);
   ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
@@ -3106,6 +3132,8 @@ function drawTitragePyCourbe(canvasId, xList, yList, xLabel, yLabel, color) {
 
   ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.1;
   ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,canvas.height-padB); ctx.lineTo(canvas.width-padR,canvas.height-padB); ctx.stroke();
+  drawAxisArrow(ctx, padL, padT, 0, -1, '#5A6B7A');
+  drawAxisArrow(ctx, canvas.width-padR, canvas.height-padB, 1, 0, '#5A6B7A');
   ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Nunito, Arial, sans-serif'; ctx.textAlign='center';
   ctx.fillText(xLabel, padL+plotW/2, canvas.height-8);
   ctx.save(); ctx.translate(14, padT+plotH/2); ctx.rotate(-Math.PI/2);
@@ -3300,6 +3328,8 @@ function checkIRRow(id, minWn, maxWn, expectedLiaison, expectedGroupe) {
     ctx.clearRect(0,0,W,H);
     ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth=1.2;
     ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(W-padR,H-padB); ctx.stroke();
+    drawAxisArrow(ctx, padL, padT, 0, -1, '#5A6B7A');
+    drawAxisArrow(ctx, W-padR, H-padB, 1, 0, '#5A6B7A');
     ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
     ctx.fillText('nombre d\'onde σ (cm⁻¹)', padL+plotW/2, H-8);
     ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('T (%)',0,0); ctx.restore();
@@ -3358,6 +3388,8 @@ function checkIRRow(id, minWn, maxWn, expectedLiaison, expectedGroupe) {
     ctx.clearRect(0,0,W,H);
     ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.2;
     ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(padL+plotW,H-padB); ctx.stroke();
+    drawAxisArrow(ctx, padL, padT, 0, -1, '#5A6B7A');
+    drawAxisArrow(ctx, padL+plotW, H-padB, 1, 0, '#5A6B7A');
     ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
     ctx.fillText('C (mol·L⁻¹)', padL+plotW/2, H-8);
     ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('Absorbance A',0,0); ctx.restore();
@@ -3410,6 +3442,8 @@ function checkIRRow(id, minWn, maxWn, expectedLiaison, expectedGroupe) {
     ctx.clearRect(0,0,W,H);
     ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.2;
     ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(padL+plotW,H-padB); ctx.stroke();
+    drawAxisArrow(ctx, padL, padT, 0, -1, '#5A6B7A');
+    drawAxisArrow(ctx, padL+plotW, H-padB, 1, 0, '#5A6B7A');
     ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
     ctx.fillText('V (mL)', padL+plotW/2, H-8);
     ctx.save(); ctx.translate(14,padT+plotH/2); ctx.rotate(-Math.PI/2); ctx.fillText('σ (mS·m⁻¹)',0,0); ctx.restore();
@@ -3483,6 +3517,8 @@ function checkIRRow(id, minWn, maxWn, expectedLiaison, expectedGroupe) {
     ctx.clearRect(0,0,W,H);
     ctx.strokeStyle='#5A6B7A'; ctx.lineWidth=1.2;
     ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,H-padB); ctx.lineTo(padL+plotW,H-padB); ctx.stroke();
+    drawAxisArrow(ctx, padL, padT, 0, -1, '#5A6B7A');
+    drawAxisArrow(ctx, padL+plotW, H-padB, 1, 0, '#5A6B7A');
     ctx.fillStyle='#5A6B7A'; ctx.font='11px Nunito'; ctx.textAlign='center';
     ctx.fillText('V (mL)', padL+plotW/2, H-8);
 
