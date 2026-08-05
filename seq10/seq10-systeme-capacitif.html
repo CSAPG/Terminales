@@ -25,6 +25,10 @@
     --rouge-clair: #FDEDEC;
     --violet: #7B4FA6;
     --violet-clair: #F3EDF9;
+    --rose: #C2477E;
+    --rose-clair: #FBEAF1;
+    --jaune: #B8901A;
+    --jaune-clair: #FBF3DC;
 
     --bg: var(--blanc);
     --surface: var(--gris-fond);
@@ -2027,6 +2031,12 @@
 <div class="gloss-item" data-term="energie stockee"><dt>Énergie stockée</dt><dd>Énergie électrique emmagasinée dans le condensateur, E = ½·C·U² (en joules).</dd></div>
 <div class="gloss-item" data-term="capteur capacitif"><dt>Capteur capacitif</dt><dd>Dispositif exploitant la variation de capacité C d'un condensateur (due à S, d ou εᵣ) pour mesurer une grandeur physique.</dd></div>
 <div class="gloss-item" data-term="methode de la tangente"><dt>Méthode de la tangente</dt><dd>Méthode graphique de détermination de τ : la tangente à l'origine de U<sub>C</sub>(t) coupe l'asymptote horizontale en t = τ.</dd></div>
+<div class="gloss-item" data-term="dipole rc"><dt>Dipôle RC</dt><dd>Association en série d'un conducteur ohmique de résistance R et d'un condensateur de capacité C, dont l'étude permet de caractériser les phénomènes de charge et de décharge.</dd></div>
+<div class="gloss-item" data-term="echelon de tension"><dt>Échelon de tension</dt><dd>Signal de tension qui passe brusquement d'une valeur constante à une autre (par exemple de 0 à E à la fermeture d'un interrupteur), utilisé pour étudier la réponse d'un circuit RC.</dd></div>
+<div class="gloss-item" data-term="intensite debit de charges"><dt>Intensité électrique (débit de charges)</dt><dd>Grandeur, en ampère (A), égale au débit de charges électriques à travers une section de circuit : i = dq/dt.</dd></div>
+<div class="gloss-item" data-term="dielectrique"><dt>Diélectrique</dt><dd>Matériau isolant placé entre les armatures d'un condensateur, caractérisé par sa permittivité relative ε<sub>r</sub>, qui augmente la capacité par rapport au vide ou à l'air (ε<sub>r</sub> = 1).</dd></div>
+<div class="gloss-item" data-term="loi des mailles"><dt>Loi des mailles (additivité des tensions)</dt><dd>Dans une maille d'un circuit électrique, la somme algébrique des tensions aux bornes de chaque dipôle est nulle ; elle permet d'établir l'équation différentielle du circuit RC.</dd></div>
+<div class="gloss-item" data-term="equation differentielle lineaire"><dt>Équation différentielle linéaire du 1<sup>er</sup> ordre</dt><dd>Équation du type τ·dy/dt + y = constante, dont la solution générale s'écrit y(t) = A·e<sup>−t/τ</sup> + B, les constantes A et B étant déterminées par les conditions initiales et finales.</dd></div>
 </dl>
 </div>
 <!-- C3 : Ressources -->
@@ -2036,29 +2046,29 @@
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
 
 <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/19_schema_anime.mp4" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--bleu);">▶ Vidéo — Schéma animé du circuit RC</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--rouge);" onmouseover="this.style.boxShadow='0 4px 16px rgba(192,57,43,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--rouge);">▶ Vidéo — Schéma animé du circuit RC</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Animation du schéma de charge/décharge d'un condensateur</p>
 </div>
 </a>
 
 <a href="https://www.pearltrees.com/private/id105762109/item807269571?paccess=47d8d1119af.301df4c3.e76219086f1b1da19797a0998f1bd09c" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--orange);">▶ Vidéo — Exercice guidé sur le circuit RC série</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--vert);">▶ Vidéo — Exercice guidé sur le circuit RC série</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Paul Olivier</p>
 </div>
 </a>
 
 <a href="https://www.pearltrees.com/private/id105762109/item807269643?paccess=47d8d12fe0b.301df50b.c0d1b3b523a0ab318de0f7940a2cc534" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--vert);">▶ Vidéo — Cours 6 : Les condensateurs</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--jaune);" onmouseover="this.style.boxShadow='0 4px 16px rgba(184,144,26,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--jaune);">▶ Vidéo — Cours 6 : Les condensateurs</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Stella · Intensité en régime variable, charge et décharge</p>
 </div>
 </a>
 
 <a href="https://www.pearltrees.com/private/id105762109/item807269673?paccess=47d8d141d81.301df529.f524f28bd1bb5a5227dcf7f857ad125c" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--violet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(123,79,166,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--violet);">▶ Vidéo — Établir l'équation différentielle de la tension du condensateur</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--rose);" onmouseover="this.style.boxShadow='0 4px 16px rgba(194,71,126,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--rose);">▶ Vidéo — Établir l'équation différentielle de la tension du condensateur</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Florence Raffin · Série « Automatismes du bac »</p>
 </div>
 </a>
@@ -2070,15 +2080,15 @@
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
 
 <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/19_QCM_prerequis/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--bleu);">📝 QCM — Prérequis</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--rouge);" onmouseover="this.style.boxShadow='0 4px 16px rgba(192,57,43,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--rouge);">📝 QCM — Prérequis</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · Vérifier les notions nécessaires avant d'aborder la séquence</p>
 </div>
 </a>
 
 <a href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/19_QCM/index.html" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--vert);">📝 QCM — Maîtrise des notions</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--rouge);" onmouseover="this.style.boxShadow='0 4px 16px rgba(192,57,43,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--rouge);">📝 QCM — Maîtrise des notions</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">Hatier-clic · S'auto-évaluer sur les notions de la séquence</p>
 </div>
 </a>
@@ -2098,15 +2108,15 @@
 </a>
 
 <a href="https://phet.colorado.edu/fr/simulations/circuit-construction-kit-dc-virtual-lab" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange);" onmouseover="this.style.boxShadow='0 4px 16px rgba(232,120,58,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--orange);">🔌 Simulation — Kit de construction de circuit : CC</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--bleu);">🔌 Simulation — Kit de construction de circuit : CC</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET · Construire un circuit avec générateurs, résistances, ampoules et interrupteurs, mesurer avec ampèremètre et voltmètre virtuels</p>
 </div>
 </a>
 
 <a href="https://phet.colorado.edu/fr/simulations/circuit-construction-kit-ac-virtual-lab" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--vert);" onmouseover="this.style.boxShadow='0 4px 16px rgba(58,138,110,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--vert);">📈 Simulation — Construire un circuit (CA/CC), avec condensateurs</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--bleu);">📈 Simulation — Construire un circuit (CA/CC), avec condensateurs</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET · Circuit RC complet avec condensateurs, ampèremètre et voltmètre virtuels, graphe de U(t) et i(t) — idéal pour vérifier τ = RC expérimentalement</p>
 </div>
 </a>
