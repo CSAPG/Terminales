@@ -272,6 +272,9 @@
   #sub-nav-P { margin-bottom: 12px; }
   .sub-tab-content > .sub3-tabs-nav:first-child { padding-top: 0; }
 
+  /* Espace réduit entre une pastille niveau 3 et le .section-title qui la suit directement (harmonisation avec le gabarit sans section-title, ex. séq.02) */
+  .sub3-tabs-nav + .sub-tab-content > .section-title:first-child { margin-top: 0; }
+
   /* ── ONGLETS INDIVIDUELS D'EXERCICES + ÉTOILES (charte §17.2) ── */
   .exo-tabs-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
   .exo-tab-btn { flex-shrink: 0; white-space: nowrap; display: flex; align-items: center; gap: 7px; padding: 8px 16px; border: 1.5px solid var(--gris-bord); background: #fff; color: var(--bleu); font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; border-radius: 999px; transition: all 0.2s; }
