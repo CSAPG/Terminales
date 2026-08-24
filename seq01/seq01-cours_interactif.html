@@ -33,6 +33,8 @@
     --rose-clair: #FBEAF1;
     --jaune: #B8901A;
     --jaune-clair: #FBF3DC;
+    --indice: #C98A00;
+    --indice-clair: #FFF6E0;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,7 +54,7 @@
     border-radius: 14px;
     padding: 18px 24px 14px;
     max-width: 1200px;
-    margin: 0 auto 24px;
+    margin: 0 auto 10px;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -188,8 +190,8 @@
   .sub-tabs-nav {
     display: flex;
     gap: 6px;
-    padding: 18px 0 0;
-    margin-bottom: 22px;
+    padding: 0;
+    margin-bottom: 12px;
     flex-wrap: nowrap;
     overflow-x: auto;
   }
@@ -228,8 +230,58 @@
   .sub-tab-content { display: none; }
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
+  /* ── SOUS-ONGLETS NIVEAU 3 (orange) ── */
+  .sub3-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 12px 0 0;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub3-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border: none;
+    background: var(--orange-clair);
+    color: var(--orange);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub3-tab-btn:hover { background: var(--orange); color: white; }
+  .sub3-tab-btn.active { background: var(--orange); color: white; }
+  .sub3-tab-btn .sub-tab-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.3);
+  }
+  .sub3-tab-btn:not(.active) .sub-tab-num { background: rgba(232,120,58,0.15); }
+
+  /* Espace réduit à 10px quand un sous-onglet niveau 3 suit directement un sous-onglet niveau 2, sans contenu entre les deux */
+  #sub-nav-P { margin-bottom: 12px; }
+  .sub-tab-content > .sub3-tabs-nav:first-child { padding-top: 0; }
+
+  /* ── ONGLETS INDIVIDUELS D'EXERCICES + ÉTOILES (charte §17.2) ── */
+  .exo-tabs-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .exo-tab-btn { flex-shrink: 0; white-space: nowrap; display: flex; align-items: center; gap: 7px; padding: 8px 16px; border: 1.5px solid var(--gris-bord); background: #fff; color: var(--bleu); font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; border-radius: 999px; transition: all 0.2s; }
+  .exo-tab-btn:hover { border-color: var(--bleu); }
+  .exo-tab-btn.active { background: var(--bleu); color: #fff; border-color: var(--bleu); }
+  .exo-tab-btn .exo-tab-stars { font-size: 0.76rem; color: var(--orange); font-weight: 400; }
+  .exo-tab-btn.active .exo-tab-stars { color: #FFD9B3; }
+
   /* ── CONTENU ── */
-  .main { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -278,17 +330,6 @@
     margin-bottom: 16px;
     position: relative;
   }
-  .activite-card::before {
-    content: 'ACTIVITÉ';
-    position: absolute;
-    top: 12px; right: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--bleu-moyen);
-    opacity: 0.8;
-  }
   .activite-card h3 {
     font-family: 'Outfit', sans-serif;
     font-size: 1.0rem;
@@ -297,6 +338,152 @@
     margin-bottom: 8px;
   }
   .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
+
+  /* Bouton Indice — référence charte §2.2 */
+  .btn-indice {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 8px;
+    padding: 3px 12px;
+    background: var(--indice-clair);
+    color: var(--indice);
+    border: 1.5px solid var(--indice);
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    vertical-align: middle;
+  }
+  .btn-indice:hover { background: var(--indice); color: #fff; }
+  .indice-box {
+    display: none;
+    background: var(--indice-clair);
+    border: 1.5px solid var(--indice);
+    border-left: 4px solid var(--indice);
+    border-radius: 0 10px 10px 0;
+    padding: 10px 16px;
+    margin: 8px 0 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--texte);
+  }
+  .indice-box.visible { display: block; animation: fadeIn 0.2s ease; }
+
+  /* Bouton Correction par question — référence charte §2.3 */
+  .btn-correction2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 8px;
+    padding: 6px 16px;
+    background: #1f6b47;
+    color: #fff;
+    border: 1.5px solid #1f6b47;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    vertical-align: middle;
+  }
+  .btn-correction2:hover { background: #3ea873; border-color: #3ea873; }
+  .correction-box {
+    display: none;
+    background: #eef8f2;
+    border: 1.5px solid #1f6b47;
+    border-left: 4px solid #1f6b47;
+    border-radius: 0 10px 10px 0;
+    padding: 10px 16px;
+    margin: 8px 0 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--texte);
+  }
+  .correction-box.visible { display: block; animation: fadeIn 0.2s ease; }
+
+  /* Zone de réponse libre (textarea) */
+  .exo textarea {
+    width: 100%;
+    min-height: 55px;
+    font-family: 'Nunito', sans-serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--texte);
+    padding: 10px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    resize: vertical;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* Bouton Correction globale + Recommencer — référence charte §2.4 / §2.1 */
+  .exo-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .btn-corr-dark {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    background: #2b6b52;
+    color: #fff;
+    border: 1px solid #2b6b52;
+    border-radius: 20px;
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-corr-dark:hover { background: #4fa082; border-color: #4fa082; }
+  .correction-dark {
+    display: none;
+    background: #EAF4EF;
+    border-left: 4px solid #2b6b52;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--texte);
+  }
+  .correction-dark.show { display: block; }
+  .btn-recommencer2 {
+    background: #4a4a4a;
+    color: #fff;
+    border: 1.5px solid #4a4a4a;
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-recommencer2:hover { background: #6c6c6c; border-color: #6c6c6c; }
+
+  /* Bouton Vérifier (présence de réponse) — activités corrigées à correction finale */
+  .check-btn {
+    background: var(--bleu);
+    color: #fff;
+    border: 1.5px solid var(--bleu);
+    border-radius: 999px;
+    padding: 7px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .check-btn:hover { background: #1E4A72; border-color: #1E4A72; }
+  .fb-check {
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-top: 6px;
+    min-height: 18px;
+  }
+  .fb-check.ok { color: var(--vert); }
+  .fb-check.empty { color: var(--rouge); }
 
   /* ── BLOCS EXERCICE ── */
   .exo-card {
@@ -308,17 +495,6 @@
     margin-bottom: 16px;
     position: relative;
   }
-  .exo-card::before {
-    content: 'EXERCICE';
-    position: absolute;
-    top: 12px; right: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--vert);
-    opacity: 0.7;
-  }
   .exo-card h3 {
     font-family: 'Outfit', sans-serif;
     font-size: 1.0rem;
@@ -326,6 +502,29 @@
     color: var(--vert);
     margin-bottom: 10px;
   }
+
+  /* ── EXERCICES PAR NIVEAU DE DIFFICULTÉ (Entraînements > Exercices) : bordure + titre colorés, sans fond ── */
+  .exo-tier-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-left: 4px solid var(--gris-bord);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .exo-tier-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .exo-tier-card.tier-facile { border-color: var(--vert-exo-bord); border-left-color: var(--vert); }
+  .exo-tier-card.tier-facile h3 { color: var(--vert); }
+  .exo-tier-card.tier-inter { border-color: var(--orange-clair); border-left-color: var(--orange); }
+  .exo-tier-card.tier-inter h3 { color: var(--orange); }
+  .exo-tier-card.tier-difficile { border-color: var(--rouge-clair); border-left-color: var(--rouge); }
+  .exo-tier-card.tier-difficile h3 { color: var(--rouge); }
 
   .section-title {
     font-family: 'Outfit', sans-serif;
@@ -1027,7 +1226,7 @@
     .header { padding: 12px 16px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
-    .main { padding: 18px 12px 50px; }
+    .main { padding: 0 12px 50px; }
     .pile-icon-wrap { width: 32px; height: 56px; }
   }
 </style>
@@ -1089,13 +1288,13 @@
   </div>
   <nav class="tabs-nav">
     <button class="tab-btn active" onclick="switchTab(0)">
-      <span class="tab-num">A</span> Évolution spontanée (voir A1, A2, A3)
+      <span class="tab-num">1</span> Cours
     </button>
     <button class="tab-btn" onclick="switchTab(1)">
-      <span class="tab-num">B</span> Forcer l'évolution (voir B1, B2, B3)
+      <span class="tab-num">2</span> Entraînements
     </button>
     <button class="tab-btn" onclick="switchTab(2)">
-      <span class="tab-num">✓</span> Bilan & Ressources
+      <span class="tab-num">3</span> Bilan & Ressources
     </button>
   </nav>
   <div class="cap-panel" id="capPanel">
@@ -1122,17 +1321,34 @@
 <!-- ══════════════════════════════════
      ONGLET A – Évolution spontanée
 ══════════════════════════════════════ -->
+<!-- ══════════════════════════════════
+     ONGLET 1 – COURS
+══════════════════════════════════════ -->
 <div class="tab-content active" id="tab-0">
 
+  <!-- Sous-onglets niveau 2 : Parties du cours -->
+  <nav class="sub-tabs-nav" id="sub-nav-P">
+    <button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+      Partie A — Évolution spontanée
+    </button>
+    <button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+      Partie B — Forcer l'évolution
+    </button>
+  </nav>
+
+  <!-- Sous-onglet P1 : Partie A -->
+  <div class="sub-tab-content active" id="sub-P-0">
+
+
   <!-- Sous-onglets A -->
-  <nav class="sub-tabs-nav" id="sub-nav-A">
-    <button class="sub-tab-btn active" data-sub="A1" onclick="switchSubTab('A',0)">
+  <nav class="sub3-tabs-nav" id="sub-nav-A">
+    <button class="sub3-tab-btn active" data-sub="A1" onclick="switchSubTab('A',0)">
       <span class="sub-tab-num">A1</span> État final — Transformation non totale
     </button>
-    <button class="sub-tab-btn" data-sub="A2" onclick="switchSubTab('A',1)">
+    <button class="sub3-tab-btn" data-sub="A2" onclick="switchSubTab('A',1)">
       <span class="sub-tab-num">A2</span> Critère d'évolution spontanée
     </button>
-    <button class="sub-tab-btn" data-sub="A3" onclick="switchSubTab('A',2)">
+    <button class="sub3-tab-btn" data-sub="A3" onclick="switchSubTab('A',2)">
       <span class="sub-tab-num">A3</span> Transformation spontanée & Piles
     </button>
   </nav>
@@ -3056,23 +3272,22 @@
 
   </div><!-- /sub-A-2 -->
 
-</div><!-- /tab-0 (Partie A) -->
 
+  </div><!-- /sub-P-0 (Partie A) -->
 
-<!-- ══════════════════════════════════
-     ONGLET B – Forcer l'évolution
-══════════════════════════════════════ -->
-<div class="tab-content" id="tab-1">
+  <!-- Sous-onglet P2 : Partie B -->
+  <div class="sub-tab-content" id="sub-P-1">
+
 
   <!-- Sous-onglets B -->
-  <nav class="sub-tabs-nav" id="sub-nav-B">
-    <button class="sub-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
+  <nav class="sub3-tabs-nav" id="sub-nav-B">
+    <button class="sub3-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
       <span class="sub-tab-num">B1</span> Passage forcé d'un courant
     </button>
-    <button class="sub-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
+    <button class="sub3-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
       <span class="sub-tab-num">B2</span> Constitution d'un électrolyseur
     </button>
-    <button class="sub-tab-btn" data-sub="B3" onclick="switchSubTab('B',2)">
+    <button class="sub3-tab-btn" data-sub="B3" onclick="switchSubTab('B',2)">
       <span class="sub-tab-num">B3</span> Stockage & conversion d'énergie
     </button>
   </nav>
@@ -3743,11 +3958,11 @@
           <li>Non rechargeable</li>
           <li>Exemples : pile Daniell, pile alcaline, pile à combustible</li>
         </ul>
-        <a href="http://www.ampere.cnrs.fr/histoire/items/show/356" target="_blank" rel="noopener"
+        <a href="https://www.lelivrescolaire.fr/page/6590097" target="_blank" rel="noopener"
            style="display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 14px;background:var(--bleu-clair);border:1.5px solid var(--bleu-activite-bord);border-radius:8px;text-decoration:none;color:var(--bleu);font-size:0.85rem;font-weight:700;transition:background 0.2s;"
            onmouseover="this.style.background='#d0e6f5'" onmouseout="this.style.background='var(--bleu-clair)'">
           <span style="font-size:1.2rem;">🔋</span>
-          <span>Ressource – Histoire de la pile<br><span style="font-weight:400;font-size:0.76rem;color:var(--texte-leger);">ampere.cnrs.fr · s'ouvre dans un nouvel onglet</span></span>
+          <span>Ressource – Une brève histoire des piles <br><span style="font-weight:400;font-size:0.76rem;color:var(--texte-leger);">Une brève histoire des piles du Livre Scolaire s'ouvre dans un autre onglet</span></span>
           <span style="margin-left:auto;font-size:0.9rem;">↗</span>
         </a>
       </div>
@@ -3839,12 +4054,1443 @@
 
   </div><!-- /sub-B-2 (B3) -->
 
-</div><!-- /tab-1 (Partie B) -->
 
+  </div><!-- /sub-P-1 (Partie B) -->
+
+</div><!-- /tab-0 (Cours) -->
 
 <!-- ══════════════════════════════════
-     ONGLET 3 – BILAN & RESSOURCES
+     ONGLET 2 – ENTRAÎNEMENTS
 ══════════════════════════════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <!-- Sous-onglets niveau 2 -->
+  <nav class="sub-tabs-nav" id="sub-nav-E">
+    <button class="sub-tab-btn active" data-sub="E1" onclick="switchSubTab('E',0)">
+      <span class="sub-tab-num">📚</span> Activités
+    </button>
+    <button class="sub-tab-btn" data-sub="E2" onclick="switchSubTab('E',1)">
+      <span class="sub-tab-num">✏️</span> Exercices
+    </button>
+    <button class="sub-tab-btn" data-sub="E3" onclick="switchSubTab('E',2)">
+      <span class="sub-tab-num">🎓</span> Sujets de bac
+    </button>
+  </nav>
+
+  <!-- Sous-onglet E1 : Activités -->
+  <div class="sub-tab-content active" id="sub-E-0">
+    <div class="section-title"><span class="icon">📚</span> Activités</div>
+    <div class="intro-box">
+      Activités documentaires, expérimentales ou numériques de la séquence. Le type de chaque activité (📋 documentaire, 🧪 expérimentale ou 🔗 numérique) est indiqué à côté du nom de son onglet.
+    </div>
+
+    <!-- Sous-onglets niveau 3 : activités individuelles -->
+    <nav class="sub3-tabs-nav" id="sub-nav-EA">
+      <button class="sub3-tab-btn active" data-sub="EA1" onclick="switchSubTab('EA',0)">📋 Activité 1</button>
+      <button class="sub3-tab-btn" data-sub="EA2" onclick="switchSubTab('EA',1)">📋 Activité 2</button>
+      <button class="sub3-tab-btn" data-sub="EA3" onclick="switchSubTab('EA',2)">🧪 Activité 3</button>
+      <button class="sub3-tab-btn" data-sub="EA4" onclick="switchSubTab('EA',3)">🔗 Activité 4</button>
+      <button class="sub3-tab-btn" data-sub="EA5" onclick="switchSubTab('EA',4)">📋 Activité 5</button>
+    </nav>
+
+    <!-- Activité 1 : Totale ou non totale ? (p.134) -->
+    <div class="sub-tab-content active" id="sub-EA-0">
+    <div class="activite-card" id="activite-1-p134">
+      <h3>Activité 1 : Totale ou non totale ?</h3>
+      <p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Notions : Transformation non totale · Équilibre chimique (§1 p. 139)</em></p>
+
+      <p>La présence d'ion thiocyanate SCN⁻ dans le sang et les urines révèle une intoxication à l'ion cyanure (provenant d'un incendie, d'une eau contaminée, etc.). Pour détecter la présence de l'ion thiocyanate dans un échantillon d'urine, un test simple consiste à y ajouter, après acidification, l'ion fer (III) Fe³⁺. Le test est positif si l'échantillon prend une teinte rouge.</p>
+
+      <p style="font-weight:700;color:var(--bleu);margin:10px 0;">La transformation mise en jeu dans ce test de cyanure est-elle totale ?</p>
+
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 18px;">
+        <div style="flex:1;min-width:220px;">
+          <p style="font-weight:700;margin-bottom:8px;">Protocole &amp; données</p>
+          <img src="Entrainements/p134-doc.png" alt="Protocole et données — test à l'ion thiocyanate" style="max-width:100%;border-radius:10px;border:1px solid var(--gris-bord);display:block;">
+        </div>
+        <div style="flex:1;min-width:220px;">
+          <p style="font-weight:700;margin-bottom:8px;">Résultats expérimentaux</p>
+          <img src="Entrainements/p134-photo.png" alt="Photo des 4 tubes à essais après le test" style="max-width:100%;border-radius:10px;border:1px solid var(--gris-bord);display:block;">
+        </div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">1. Réaliser</p>
+      <p class="q-text">a. Mettre en œuvre le protocole.</p>
+      <p class="q-text">b. Calculer les quantités de matière initiales n(Fe³⁺)ᵢ et n(SCN⁻)ᵢ de chacun des deux réactifs présents dans chaque tube à essais, à l'issue de l'étape 1.
+        <button class="btn-indice" onclick="toggleIndice('ind-p134-1b')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p134-1b">n = C × V ; attention aux dilutions liées à l'ajout de S₂, S₁' ou S₃' à l'étape 2.</div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">2. Analyser-Raisonner</p>
+      <p class="q-text">a. Si la transformation étudiée est totale, indiquer la présence ou non des réactifs dans le milieu à l'issue de l'étape 1.
+        <button class="btn-indice" onclick="toggleIndice('ind-p134-2a')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p134-2a">Écris l'équation de la réaction entre les ions Fe³⁺ et SCN⁻ (voir les données), puis compare les quantités de matière initiales n(SCN⁻)ᵢ et n(Fe³⁺)ᵢ calculées en 1.b : sont-elles dans les proportions de l'équation ?</div>
+
+      <p class="q-text">b. Préciser l'espèce chimique mise en évidence par l'ajout de la solution S₁' de thiocyanate de potassium dans le tube n° 3, lors de l'étape 2.
+        <button class="btn-indice" onclick="toggleIndice('ind-p134-2b')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p134-2b">Observe la photo des résultats ci-dessus : la teinte s'intensifie-t-elle dans le tube n° 3 par rapport au tube témoin n° 2 ?</div>
+
+      <p class="q-text">c. Préciser l'espèce chimique mise en évidence par l'ajout de la solution S₃' de nitrate de fer (III) dans le tube n° 4, lors de l'étape 2.
+        <button class="btn-indice" onclick="toggleIndice('ind-p134-2c')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p134-2c">Même raisonnement qu'en 2.b, en observant cette fois l'intensification de la teinte dans le tube n° 4.</div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">3. Valider</p>
+      <p class="q-text">Déterminer le caractère total ou non de la transformation qui a eu lieu à l'issue de l'étape 1.
+        <button class="btn-indice" onclick="toggleIndice('ind-p134-3')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p134-3">Une transformation est non totale si, à l'état final, on peut encore détecter la présence des deux réactifs initiaux dans le milieu.</div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">4. Communiquer <span style="background:#C0392B;color:#fff;font-size:0.68rem;font-weight:800;padding:2px 8px;border-radius:6px;vertical-align:middle;">GRAND ORAL</span></p>
+      <p class="q-text">Préparer une présentation orale afin d'expliquer à l'ensemble de la classe comment identifier rapidement le caractère total ou non d'une transformation chimique.
+        <button class="btn-indice" onclick="toggleIndice('ind-p134-4')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p134-4">Ta présentation doit expliquer : pourquoi il faut connaître les quantités de matière initiales des réactifs (calculées en 1.b) pour savoir s'ils ont été introduits en proportions stœchiométriques ; comment l'ajout d'un réactif en excès dans les tubes 3 et 4 permet de détecter s'il restait de l'autre réactif dans le milieu ; et la conclusion que cela permet de tirer sur le caractère total ou non de la transformation.</div>
+    </div><!-- /activite-1-p134 -->
+    </div><!-- /sub-EA-0 (Activité 1) -->
+
+    <!-- Activité 2 : Hémoglobine et dioxygène (p.136) -->
+    <div class="sub-tab-content" id="sub-EA-1">
+    <div class="activite-card" id="activite-2-p136">
+      <h3>Activité 2 : Hémoglobine et dioxygène — une histoire d'équilibre</h3>
+      <p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Notions : Critère d'évolution spontanée · Équilibre dynamique (§1 p. 139 et 2 p. 140)</em></p>
+
+      <p style="font-weight:700;color:var(--bleu);margin:10px 0;">Comment prévoir le sens d'évolution spontanée d'un système chimique ?</p>
+
+      <p style="font-weight:700;margin-top:16px;">Document — Rôle de l'hémoglobine</p>
+      <img src="Entrainements/p136-doc.png" alt="Document — Rôle de l'hémoglobine" style="max-width:100%;width:700px;border-radius:10px;border:1px solid var(--gris-bord);margin:8px auto 18px;display:block;">
+
+      <p style="font-weight:700;margin-top:16px;">Données</p>
+      <img src="Entrainements/p136-donnees.png" alt="Données — équation, constante d'équilibre, taux d'avancement et modélisation de la circulation sanguine" style="max-width:100%;width:700px;border-radius:10px;border:1px solid var(--gris-bord);margin:8px auto 18px;display:block;">
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">1. S'approprier</p>
+      <p class="q-text">Indiquer dans quel sens ① ou ② évolue le système chimique {<em>Hb</em> ; O₂ ; <em>HbO₂</em>} :
+        <button class="btn-indice" onclick="toggleIndice('ind-p136-1')">💡 Indice</button>
+      </p>
+      <p class="q-text">a. au niveau des poumons ;</p>
+      <p class="q-text">b. au niveau des organes.</p>
+      <div class="indice-box" id="ind-p136-1">Relis le Document : au niveau des poumons, le dioxygène se fixe sur l'hémoglobine pour former l'oxyhémoglobine ; au niveau des cellules/organes, c'est l'inverse, l'oxyhémoglobine se dissocie pour libérer le dioxygène. Regarde l'équation de la réaction fournie dans les Données pour identifier quel sens correspond à ① et lequel correspond à ②.</div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">2. Réaliser</p>
+      <p class="q-text">a. Calculer la concentration en quantité d'oxyhémoglobine [<em>HbO₂</em>]₁ formée au niveau des poumons.
+        <button class="btn-indice" onclick="toggleIndice('ind-p136-2a')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p136-2a">Le taux d'avancement final τ = 0,97 est donné dans les Données. Au niveau des poumons, l'hémoglobine est le réactif limitant : [HbO₂]₁ = τ × [Hb]ᵢ, avec [Hb]ᵢ = 9,4 mmol·L⁻¹.</div>
+
+      <p class="q-text">b. En déduire la valeur de la concentration en hémoglobine [<em>Hb</em>]₁ restante après fixation du dioxygène.
+        <button class="btn-indice" onclick="toggleIndice('ind-p136-2b')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p136-2b">Utilise un bilan de matière : [Hb]₁ = [Hb]ᵢ − [Hb]réagi, et la quantité d'hémoglobine ayant réagi est égale à la quantité d'oxyhémoglobine formée [HbO₂]₁ calculée en 2.a (stœchiométrie 1:1 de l'équation).</div>
+
+      <p class="q-text">c. Calculer le quotient de réaction Q<sub>r,i</sub> à l'état initial : au niveau des poumons (avant la formation d'oxyhémoglobine) ; au niveau des organes (avant libération du dioxygène).
+        <button class="btn-indice" onclick="toggleIndice('ind-p136-2c')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p136-2c">Utilise l'expression de Q<sub>r</sub> donnée dans les Données. Au niveau des poumons, avant réaction, il n'y a pas encore d'oxyhémoglobine ([HbO₂]ᵢ = 0), ce qui simplifie beaucoup le calcul. Au niveau des organes, le sang arrive avec la composition calculée en 2.a/2.b ([Hb]₁ et [HbO₂]₁), et [O₂] au niveau des organes est donné dans le schéma de circulation sanguine.</div>
+
+      <p class="q-text">d. Comparer les valeurs de Q<sub>r,i</sub> à celle de K(T).
+        <button class="btn-indice" onclick="toggleIndice('ind-p136-2d')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p136-2d">K(T) est donné dans les Données. Compare simplement chaque valeur de Q<sub>r,i</sub> calculée en 2.c à cette valeur de K(T) : est-elle plus petite ou plus grande ?</div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">3. Valider</p>
+      <p class="q-text">Proposer un critère utilisant les valeurs de Q<sub>r,i</sub> et de K(T) pour déterminer le sens d'évolution spontanée du système chimique {<em>Hb</em> ; O₂ ; <em>HbO₂</em>}.
+        <button class="btn-indice" onclick="toggleIndice('ind-p136-3')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p136-3">Reprends le critère d'évolution spontanée vu en cours : si Q<sub>r,i</sub> &lt; K(T), le système évolue dans le sens de formation des produits (ici l'oxyhémoglobine) ; si Q<sub>r,i</sub> &gt; K(T), il évolue dans le sens inverse (ici la dissociation de l'oxyhémoglobine).</div>
+    </div><!-- /activite-2-p136 -->
+    </div><!-- /sub-EA-1 (Activité 2) -->
+
+    <!-- Activité 3 : Sur les pas d'Alessandro Volta (p.137) -->
+    <div class="sub-tab-content" id="sub-EA-2">
+    <div class="activite-card" id="activite-3-p137">
+      <h3>Activité 3 : Sur les pas d'Alessandro Volta</h3>
+      <p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Notions : Demi-pile, pont salin, pile · Tension à vide (§4 p. 142)</em></p>
+
+      <p style="font-weight:700;color:var(--bleu);margin:10px 0;">Quel est le principe de fonctionnement d'une pile ?</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:16px;">
+        <div style="flex:1 1 260px;min-width:220px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <p style="font-weight:700;margin:0;">Protocole</p>
+            <a class="pastille pastille-sujet" href="https://www.pearltrees.com/private/id81585729/item812088791?paccess=47e7268106d.30677dd7.6e6f6fa6736bc3af7871c941dc6f9655" target="_blank" rel="noopener">▶ Vidéo du protocole</a>
+          </div>
+          <img src="Entrainements/p137-protocole.png" alt="Protocole — construction de la pile" style="max-width:100%;border-radius:10px;border:1px solid var(--gris-bord);margin:8px 0 0;display:block;">
+        </div>
+        <div style="flex:1 1 260px;min-width:220px;">
+          <p style="font-weight:700;margin:0;">Document — Matériel pour construire une pile</p>
+          <img src="Entrainements/p137-doc.png" alt="Document — matériel pour construire une pile" style="max-width:100%;border-radius:10px;border:1px solid var(--gris-bord);margin:8px 0 0;display:block;">
+        </div>
+        <div style="flex:1 1 260px;min-width:220px;">
+          <p style="font-weight:700;margin:0;">Données</p>
+          <img src="Entrainements/p137-donnees.png" alt="Données — équation, constante d'équilibre et tension à vide" style="max-width:100%;border-radius:10px;border:1px solid var(--gris-bord);margin:8px 0 0;display:block;">
+        </div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">1. Réaliser</p>
+      <p class="q-text">a. Mettre en œuvre le protocole et observer.</p>
+      <p class="q-text">b. Exprimer puis calculer le quotient de réaction à l'état initial (Données).
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-1b')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-1b">Utilise l'expression du quotient de réaction Q<sub>r</sub> = [Zn²⁺]/[Cu²⁺] (les activités des solides Cu(s) et Zn(s) valent 1). À l'état initial, les concentrations sont celles du mélange réalisé dans le bécher : attention à ne pas oublier la dilution liée au mélange à volumes égaux.</div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">2. Analyser-Raisonner</p>
+      <p class="q-text">a. Montrer que les observations sont en accord avec le critère d'évolution spontanée du système.
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-2a')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-2a">Compare la valeur de Q<sub>r,i</sub> calculée en 1.b à la constante d'équilibre K(T) donnée dans les Données : le sens d'évolution spontanée est celui qui rapproche Q<sub>r</sub> de K(T). Vérifie ensuite que ce sens correspond bien à ce que tu observes sur les deux lames.</div>
+
+      <p class="q-text">b. Indiquer de quelle espèce chimique à quelle autre les électrons ont été transférés.
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-2b')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-2b">Décompose l'équation globale de la réaction en deux demi-équations électroniques (une par couple oxydant/réducteur) pour repérer laquelle des deux espèces perd des électrons (oxydation) et laquelle en gagne (réduction).</div>
+
+      <p class="q-text">c. Proposer un protocole utilisant le matériel disponible afin de réaliser la même transformation chimique, mais en réalisant et en mettant en évidence le transfert d'électrons à travers des fils électriques.
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-2c')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-2c">Pour observer un transfert d'électrons par les fils (et non directement entre les deux réactifs en solution), il faut séparer physiquement les deux couples oxydant/réducteur dans deux béchers distincts, les relier par un pont salin, puis fermer un circuit extérieur (fils, ampèremètre) entre les deux lames.</div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">3. Réaliser</p>
+      <p class="q-text">a. Mettre en œuvre le protocole proposé après validation par le professeur.</p>
+      <p class="q-text">b. Retirer le pont salin. Interpréter les observations.
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-3b')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-3b">Un courant électrique ne peut circuler que dans un circuit fermé. Le pont salin assure la fermeture du circuit à l'intérieur des béchers (circulation des ions) : que devient donc le courant mesuré par l'ampèremètre lorsqu'on le retire ?</div>
+
+      <p class="q-text">c. Mesurer la tension à vide.
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-3c')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-3c">La tension à vide se mesure au voltmètre, circuit ouvert : seul le voltmètre doit être branché aux bornes de la pile, sans que le courant ne puisse circuler (résistance interne du voltmètre très élevée).</div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">4. Valider</p>
+      <p class="q-text">a. Montrer que le signe de l'intensité électrique lue sur l'ampèremètre est cohérent avec le sens d'évolution spontanée du système chimique.
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-4a')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-4a">Relie le signe affiché par l'ampèremètre au sens réel du courant électrique dans le circuit extérieur, puis au sens de déplacement des électrons dans les fils (sens opposé à celui du courant). Ce sens doit correspondre à l'électrode identifiée en 2.b comme cédant des électrons.</div>
+
+      <p class="q-text">b. Montrer que la polarité observée est cohérente avec le sens de circulation des électrons dans les fils.
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-4b')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-4b">L'électrode qui cède des électrons (oxydation) constitue le pôle − de la pile ; celle qui en reçoit (réduction) constitue le pôle +. Compare cette conclusion à la polarité indiquée par le voltmètre en 3.c.</div>
+
+      <p class="q-text">c. <button class="btn-indice" style="margin-left:0;margin-right:8px;" onclick="toggleIndice('ind-p137-4c')">💡 Indice</button>Compléter le schéma fourni et le légender.</p>
+      <div class="indice-box" id="ind-p137-4c">Sur le schéma, indique dans l'ordre : le sens du courant électrique dans le circuit extérieur ; le sens de déplacement des électrons dans les fils ; le sens de déplacement des ions dans le pont salin (anions vers l'électrode où a lieu l'oxydation, cations vers celle où a lieu la réduction) ; et la demi-équation électronique à chaque électrode.</div>
+      <img src="Entrainements/p137-4c.png" alt="Schéma de la pile à compléter et légender" style="max-width:100%;width:480px;border-radius:10px;border:1px solid var(--gris-bord);margin:10px auto 18px;display:block;">
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">5. Communiquer <span style="background:#C0392B;color:#fff;font-size:0.68rem;font-weight:800;padding:2px 8px;border-radius:6px;vertical-align:middle;">GRAND ORAL</span></p>
+      <p class="q-text">Préparer un exposé oral expliquant comment, à partir du signe de l'intensité mesurée, il est possible de trouver le sens d'évolution spontanée du système chimique.
+        <button class="btn-indice" onclick="toggleIndice('ind-p137-5')">💡 Indice</button>
+      </p>
+      <div class="indice-box" id="ind-p137-5">Ton exposé doit relier, dans l'ordre : le signe affiché par l'ampèremètre → le sens réel du courant dans le circuit → le sens de déplacement des électrons dans les fils → l'identification de l'électrode qui s'oxyde et de celle qui se réduit → la conclusion sur le sens d'évolution spontanée du système chimique.</div>
+    </div><!-- /activite-3-p137 -->
+    </div><!-- /sub-EA-2 (Activité 3) -->
+
+    <!-- Activité 4 : Forcer une transformation non spontanée — l'électrolyse (numérique) -->
+    <div class="sub-tab-content" id="sub-EA-3">
+    <div class="activite-card" id="activite-4-electrolyse">
+      <h3>Activité 4 : Pile et électrolyse — évolution spontanée ou forcée ?</h3>
+      <p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Notions : Pile Daniell, pont salin, transformation forcée, électrolyse, générateur</em></p>
+
+      <p style="font-weight:700;color:var(--bleu);margin:10px 0;">Peut-on inverser le sens d'évolution spontané d'un système chimique ?</p>
+
+      <!-- ═══ PARTIE A ═══ -->
+      <div style="background:var(--bleu-activite);border:1px solid var(--bleu-activite-bord);border-radius:12px;padding:14px 18px;margin:18px 0 8px;">
+        <p style="font-weight:800;color:var(--bleu);margin:0;">Partie A — Observer le fonctionnement d'une pile Daniell (Ostralo)</p>
+      </div>
+
+      <div style="text-align:center;margin:18px 0 22px;">
+        <a href="https://chimie.ostralo.net/pile/"
+           target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:10px;padding:12px 28px;
+                  background:var(--bleu);color:white;border-radius:10px;text-decoration:none;
+                  font-family:'Nunito',sans-serif;font-size:0.92rem;font-weight:700;
+                  box-shadow:0 3px 12px rgba(45,95,138,0.28);transition:background 0.2s,transform 0.1s;"
+           onmouseover="this.style.background='#1E4A72';this.style.transform='translateY(-2px)'"
+           onmouseout="this.style.background='var(--bleu)';this.style.transform=''">
+          🔋 Ouvrir l'animation — Pile Daniell (Ostralo)
+        </a>
+        <p style="font-size:0.80rem;color:var(--texte-leger);margin-top:8px;">L'animation s'ouvre dans un nouvel onglet · chimie.ostralo.net · Utiliser dans l'ordre les 3 boutons : Légende → Caractéristiques → Animation.</p>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">A.1 Réaliser</p>
+      <div class="exo">
+        <p class="q-text">a. Cliquer sur le bouton <strong>Légende</strong> : identifier la plaque de cuivre, la plaque de zinc, le pont salin et les deux solutions (sulfate de cuivre, sulfate de zinc).</p>
+        <textarea id="ta-e4a-1a" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4a-1a','fb-e4a-1a')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4a-1a"></div>
+      </div>
+      <div class="exo">
+        <p class="q-text">b. Cliquer sur le bouton <strong>Caractéristiques</strong> : relever le pôle + et le pôle –, le sens du courant électrique <em>i</em> indiqué dans le circuit, ainsi que les deux demi-équations affichées à chaque électrode.
+          <button class="btn-indice" onclick="toggleIndice('ind-e4a-1b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e4a-1b">Les deux demi-équations affichées sont Cu²⁺ + 2e⁻ = Cu (côté +) et Zn = Zn²⁺ + 2e⁻ (côté –).</div>
+        <textarea id="ta-e4a-1b" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4a-1b','fb-e4a-1b')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4a-1b"></div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">A.2 Analyser-Raisonner</p>
+      <div class="question-block">
+        <div class="question-label">a. Cliquer sur le bouton <strong>Animation</strong> : dans quel sens se déplacent les électrons dans le circuit extérieur (les fils) ? Ce sens est-il cohérent avec le sens du courant <em>i</em> relevé en A.1.b ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+            <div class="qcm-feedback" id="fb-e4a-2a"></div>
+            <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e4a-2a','A','A','✓ Correct ! Les électrons partent de l\'électrode de zinc (pôle –) et circulent dans les fils jusqu\'à l\'électrode de cuivre (pôle +). Le courant électrique i, conventionnellement orienté du + vers le – dans le circuit extérieur, circule donc bien en sens inverse du déplacement réel des électrons.','fb-e4a-2a')">
+                A. Les électrons se déplacent du pôle – (zinc) vers le pôle + (cuivre) : c'est bien le sens opposé au sens conventionnel du courant i.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e4a-2a','A','B','✗ Non : les électrons, chargés négativement, sont repoussés par l\'électrode où ils sont produits (Zn) et attirés par celle où ils sont consommés (Cu) — ils vont donc du – vers le +.','fb-e4a-2a')">
+                B. Les électrons se déplacent du pôle + (cuivre) vers le pôle – (zinc), dans le même sens que i.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e4a-2a','A','C','✗ Non : l\'animation montre bien un déplacement des électrons dans les fils, du pôle – vers le pôle +.','fb-e4a-2a')">
+                C. Les électrons ne se déplacent pas dans les fils, seuls les ions se déplacent en solution.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e4a-2a','A','D','✗ Non : le sens du courant i est une convention historique, opposée au sens réel de déplacement des électrons (particules chargées négativement).','fb-e4a-2a')">
+                D. Le sens du courant i et le sens de déplacement des électrons sont toujours identiques, quel que soit le circuit.
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="exo">
+        <p class="q-text">b. Observer le déplacement des ions K⁺ et Cl⁻ dans le pont salin. Dans quel sens circule chaque ion ? Quel est le rôle du pont salin ?
+          <button class="btn-indice" onclick="toggleIndice('ind-e4a-2b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e4a-2b">Chaque compartiment doit rester électriquement neutre : un compartiment qui produit des cations Zn²⁺ a besoin d'anions supplémentaires ; un compartiment qui consomme des cations Cu²⁺ a besoin de cations supplémentaires.</div>
+        <textarea id="ta-e4a-2b" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4a-2b','fb-e4a-2b')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4a-2b"></div>
+      </div>
+      <div class="exo">
+        <p class="q-text">c. À partir des deux demi-équations relevées en A.1.b, identifier l'électrode siège d'une oxydation et celle siège d'une réduction.</p>
+        <textarea id="ta-e4a-2c" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4a-2c','fb-e4a-2c')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4a-2c"></div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">A.3 Valider</p>
+      <div class="exo">
+        <p class="q-text">Écrire l'équation de la réaction associée au fonctionnement de cette pile et vérifier sa cohérence avec le sens d'évolution spontané déterminé en Activité 3.</p>
+        <textarea id="ta-e4a-3" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4a-3','fb-e4a-3')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4a-3"></div>
+      </div>
+
+      <!-- ═══ PARTIE B ═══ -->
+      <div style="background:var(--orange-clair);border:1px solid #F0C7A8;border-radius:12px;padding:14px 18px;margin:28px 0 8px;">
+        <p style="font-weight:800;color:var(--orange);margin:0;">Partie B — Forcer une transformation non spontanée : l'électrolyse (PCCL)</p>
+      </div>
+
+      <div style="text-align:center;margin:18px 0 22px;">
+        <a href="https://www.physics-chemistry-interactive-flash-animation.com/chemistry_interactive/electrolysis_flash.htm"
+           target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:10px;padding:12px 28px;
+                  background:var(--bleu);color:white;border-radius:10px;text-decoration:none;
+                  font-family:'Nunito',sans-serif;font-size:0.92rem;font-weight:700;
+                  box-shadow:0 3px 12px rgba(45,95,138,0.28);transition:background 0.2s,transform 0.1s;"
+           onmouseover="this.style.background='#1E4A72';this.style.transform='translateY(-2px)'"
+           onmouseout="this.style.background='var(--bleu)';this.style.transform=''">
+          ⚡ Ouvrir l'animation — Électrolyse (PCCL)
+        </a>
+        <p style="font-size:0.80rem;color:var(--texte-leger);margin-top:8px;">L'animation s'ouvre dans un nouvel onglet · physics-chemistry-interactive-flash-animation.com</p>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">B.1 Réaliser</p>
+      <div class="exo">
+        <p class="q-text">a. Lancer l'animation et retrouver les deux électrodes (cuivre, zinc) et le pont salin — la même pile qu'en Partie A. Que se passe-t-il si le générateur n'est pas activé ?
+          <button class="btn-indice" onclick="toggleIndice('ind-e4-1a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e4-1a">Sans générateur activé, le système évolue-t-il, ou reste-t-il dans son état initial ? Repense au critère Q<sub>r,i</sub>/K(T) vu en Activité 3.</div>
+        <textarea id="ta-e4-1a" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4-1a','fb-e4-1a')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4-1a"></div>
+      </div>
+      <div class="exo">
+        <p class="q-text">b. Rappeler le sens d'évolution spontané de ce système (cf. Partie A et Activité 3).</p>
+        <textarea id="ta-e4-1b" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4-1b','fb-e4-1b')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4-1b"></div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">B.2 Analyser-Raisonner</p>
+      <div class="exo">
+        <p class="q-text">a. Activer le générateur. Que se passe-t-il à chaque électrode ?
+          <button class="btn-indice" onclick="toggleIndice('ind-e4-2a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e4-2a">Observe l'aspect de chaque lame après activation du générateur : laquelle se dépose-t-on dessus (dépôt métallique), laquelle se dissout ?</div>
+        <textarea id="ta-e4-2a" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4-2a','fb-e4-2a')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4-2a"></div>
+      </div>
+      <div class="exo">
+        <p class="q-text">b. Comparer le sens du courant imposé par le générateur à celui qui circulait spontanément dans la pile.</p>
+        <textarea id="ta-e4-2b" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4-2b','fb-e4-2b')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4-2b"></div>
+      </div>
+      <div class="exo">
+        <p class="q-text">c. En déduire l'origine du mot « électrolyse ».
+          <button class="btn-indice" onclick="toggleIndice('ind-e4-2c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e4-2c">Le mot est formé de deux racines grecques : l'une liée au courant électrique, l'autre à l'idée de « rupture/décomposition ».</div>
+        <textarea id="ta-e4-2c" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4-2c','fb-e4-2c')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4-2c"></div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">B.3 Valider</p>
+      <div class="exo">
+        <p class="q-text">a. Écrire les réactions à chaque électrode lors de l'électrolyse et les comparer à celles de la pile (Partie A et Activité 3).
+          <button class="btn-indice" onclick="toggleIndice('ind-e4-3a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e4-3a">Réutilise les demi-équations électroniques identifiées en Activité 3 (question 2.b) : lors de l'électrolyse, chaque demi-équation a-t-elle lieu dans le même sens que dans la pile, ou dans le sens inverse ?</div>
+        <textarea id="ta-e4-3a" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4-3a','fb-e4-3a')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4-3a"></div>
+      </div>
+      <div class="exo">
+        <p class="q-text">b. Expliquer pourquoi le critère Q<sub>r,i</sub>/K(T) seul ne suffit plus à prédire le sens d'évolution ici : quel est le rôle du générateur ?
+          <button class="btn-indice" onclick="toggleIndice('ind-e4-3b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e4-3b">Le critère Q<sub>r,i</sub>/K(T) ne prédit que l'évolution spontanée d'un système livré à lui-même. Que fait un générateur électrique sur un système chimique ?</div>
+        <textarea id="ta-e4-3b" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4-3b','fb-e4-3b')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4-3b"></div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">B.4 Communiquer</p>
+      <div class="exo">
+        <p class="q-text">Rédiger une phrase de synthèse distinguant transformation spontanée (pile) et transformation forcée (électrolyse).</p>
+        <textarea id="ta-e4-4" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e4-4','fb-e4-4')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e4-4"></div>
+      </div>
+
+      <div class="exo-box" id="box-e4">
+        <div class="exo-actions">
+          <button class="btn-corr-dark" onclick="toggleCorrDark(this)">▶ Voir la correction</button>
+          <button class="btn-recommencer2" onclick="recommencerActivite('activite-4-electrolyse')">↺ Recommencer</button>
+        </div>
+        <div class="correction-dark">
+          <p style="margin:0 0 10px;font-weight:700;">Partie A — Pile Daniell</p>
+          <p style="margin:0 0 8px;"><strong>A.1.a</strong> Plaque de cuivre plongée dans la solution de sulfate de cuivre (à gauche) ; plaque de zinc plongée dans la solution de sulfate de zinc (à droite) ; pont salin (solution de chlorure de potassium K⁺ + Cl⁻) reliant les deux compartiments.</p>
+          <p style="margin:0 0 8px;"><strong>A.1.b</strong> Pôle + : électrode de cuivre — demi-équation Cu²⁺(aq) + 2e⁻ = Cu(s). Pôle – : électrode de zinc — demi-équation Zn(s) = Zn²⁺(aq) + 2e⁻. Le courant i sort du pôle + dans le circuit extérieur.</p>
+          <p style="margin:0 0 8px;"><strong>A.2.a</strong> Voir correction dans le QCM ci-dessus : les électrons vont du – (Zn) vers le + (Cu), en sens inverse du courant conventionnel i.</p>
+          <p style="margin:0 0 8px;"><strong>A.2.b</strong> Les K⁺ migrent vers le compartiment cuivre (où des cations Cu²⁺ sont consommés, donc où la solution s'appauvrit en charges +) ; les Cl⁻ migrent vers le compartiment zinc (où des cations Zn²⁺ sont produits, donc où la solution s'enrichit en charges +). Le pont salin assure la neutralité électrique de chaque compartiment et ferme le circuit électrique.</p>
+          <p style="margin:0 0 8px;"><strong>A.2.c</strong> Oxydation à l'électrode de zinc (Zn perd des électrons) ; réduction à l'électrode de cuivre (Cu²⁺ gagne des électrons).</p>
+          <p style="margin:0 0 12px;"><strong>A.3</strong> Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s) — c'est bien le sens spontané déterminé en Activité 3.</p>
+          <p style="margin:0 0 10px;font-weight:700;">Partie B — Électrolyse</p>
+          <p style="margin:0 0 8px;"><strong>B.1.a</strong> Sans générateur, rien ne se passe (le système n'évolue pas dans ce sens).</p>
+          <p style="margin:0 0 8px;"><strong>B.1.b</strong> Sens spontané (Partie A et Activité 3) : Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s).</p>
+          <p style="margin:0 0 8px;"><strong>B.2.a</strong> Dépôt de cuivre à une électrode, dissolution du zinc à l'autre.</p>
+          <p style="margin:0 0 8px;"><strong>B.2.b</strong> Le générateur impose un courant de sens opposé à celui de la pile.</p>
+          <p style="margin:0 0 8px;"><strong>B.2.c</strong> « Électro- » (courant) + « lysis » (décomposition) = décomposition par le courant électrique.</p>
+          <p style="margin:0 0 8px;"><strong>B.3.a</strong> Électrolyse : Cu²⁺(aq) + Zn(s) → Cu(s) + Zn²⁺(aq) — sens inverse de la pile.</p>
+          <p style="margin:0 0 8px;"><strong>B.3.b</strong> Le générateur force le sens d'évolution, indépendamment du critère Q<sub>r,i</sub>/K(T).</p>
+          <p style="margin:0;"><strong>B.4.</strong> Pile = transformation spontanée productrice d'énergie électrique ; électrolyse = transformation forcée par un générateur, consommatrice d'énergie électrique.</p>
+        </div>
+      </div>
+    </div><!-- /activite-4-electrolyse -->
+    </div><!-- /sub-EA-3 (Activité 4) -->
+
+    <!-- Activité 5 : Le dihydrogène, vecteur énergétique du futur (documentaire) -->
+    <div class="sub-tab-content" id="sub-EA-4">
+    <div class="activite-card" id="activite-5-hydrogene">
+      <h3>Activité 5 : Le dihydrogène, vecteur énergétique du futur</h3>
+      <p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Notions : Vecteur énergétique, électrolyseur, pile à combustible, conversion d'énergie (p. 187)</em></p>
+
+      <p style="font-weight:700;color:var(--bleu);margin:10px 0;">En quoi le dihydrogène est-il une source d'énergie chimique propre ?</p>
+
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 22px;">
+        <div style="flex:1;min-width:220px;">
+          <p style="font-weight:700;margin-bottom:8px;">DOC.1 — Le dihydrogène comme vecteur d'énergie</p>
+          <img src="Entrainements/p187-doc.png" alt="DOC.1 — Le dihydrogène comme vecteur d'énergie" style="max-width:100%;border-radius:10px;border:1px solid var(--gris-bord);display:block;">
+          <a class="pastille pastille-sujet" style="display:inline-block;margin-top:8px;" href="https://www.pearltrees.com/private/id81585729/item812106761?paccess=47e740215ae.3067c409.4fe6776ca548dca9ba65093fbd655521" target="_blank" rel="noopener">▶ Vidéo — DOC.1</a>
+        </div>
+        <div style="flex:1;min-width:220px;">
+          <p style="font-weight:700;margin-bottom:8px;">DONNÉES — Couples oxydant-réducteur</p>
+          <img src="Entrainements/p187-donnees.png" alt="Données — couples H2O(l)/H2(g) et O2(g)/H2O(l)" style="max-width:100%;border-radius:10px;border:1px solid var(--gris-bord);display:block;">
+          <a class="pastille pastille-sujet" style="display:inline-block;margin-top:8px;" href="https://www.pearltrees.com/private/id81585729/item812106769?paccess=47e7401bf21.3067c411.7a537caa72c6a81a92f59322d0f0dafb" target="_blank" rel="noopener">▶ Vidéo — Données</a>
+        </div>
+      </div>
+
+      <div style="margin:8px 0 22px;">
+        <p style="font-weight:700;margin-bottom:8px;">DOC.2 — La plateforme MYRTE (Université de Corse / CNRS, Ajaccio)</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;">
+          <img src="Entrainements/p187-photo.png" alt="La plateforme MYRTE — panneaux photovoltaïques, électrolyseur et pile à combustible, stockage du dihydrogène et du dioxygène" style="max-width:340px;width:100%;border-radius:10px;border:1px solid var(--gris-bord);display:block;">
+          <p style="flex:1;min-width:220px;font-size:0.88rem;">Le 9 janvier 2012, la plateforme Myrte (Mission hydrogène renouvelable pour l'intégration au réseau électrique) a été inaugurée. Son objectif est de produire et stocker l'énergie <em>via</em> une « chaîne hydrogène ». Cette dernière est composée d'un électrolyseur, qui produit, pendant les heures de faible consommation électrique, du dihydrogène et du dioxygène à partir d'eau. Cette énergie est ensuite restituée <em>via</em> une pile à combustible (PAC), qui recombine le dihydrogène et le dioxygène en eau et produit de l'électricité sur le réseau, par exemple pendant les heures de fortes consommations ou le soir lorsque les panneaux photovoltaïques sont inactifs.</p>
+        </div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">1. Réaliser</p>
+      <div class="exo">
+        <p class="q-text">a. Visionner la vidéo des données, puis écrire les équations des réactions électrochimiques aux électrodes qui se produisent lors de l'électrolyse de l'eau.
+          <button class="btn-indice" onclick="toggleIndice('ind-e5-1a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e5-1a">Utilise les couples fournis dans les données : H₂O(ℓ)/H₂(g) à la cathode (réduction) et O₂(g)/H₂O(ℓ) à l'anode (oxydation).</div>
+        <textarea id="ta-e5-1a" rows="3" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e5-1a','fb-e5-1a')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e5-1a"></div>
+      </div>
+      <div class="exo">
+        <p class="q-text">b. En déduire l'équation de la réaction modélisant la transformation chimique qui a lieu dans l'électrolyseur. Préciser la conversion d'énergie qui lui est associée.</p>
+        <textarea id="ta-e5-1b" rows="3" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e5-1b','fb-e5-1b')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e5-1b"></div>
+      </div>
+      <div class="exo">
+        <p class="q-text">c. Répondre aux questions précédentes pour la pile à combustible.
+          <button class="btn-indice" onclick="toggleIndice('ind-e5-1c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e5-1c">Dans la pile à combustible, les deux demi-équations ont lieu dans le sens inverse de celles de l'électrolyseur.</div>
+        <textarea id="ta-e5-1c" rows="3" placeholder="Écris ta réponse ici..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e5-1c','fb-e5-1c')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e5-1c"></div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">2. Analyser-Raisonner</p>
+
+      <div class="question-block">
+        <div class="question-label">a. Visionner la vidéo du DOC.1, puis choisir l'explication correcte : pourquoi le dihydrogène est-il qualifié de « vecteur énergétique » ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+            <div class="qcm-feedback" id="fb-e5-2a"></div>
+            <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e5-2a','A','A','✓ Correct ! Le dihydrogène est produit à partir d\'une autre forme d\'énergie (électrique, elle-même issue du solaire, de l\'éolien...), stocké, puis reconverti en énergie électrique à la demande, sur place ou après transport. L\'énergie stockée via ce vecteur est de l\'énergie chimique.','fb-e5-2a')">
+                A. Il est produit à partir d'une autre forme d'énergie, stocké puis reconverti en énergie électrique à la demande : c'est un réservoir mobile d'énergie chimique.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e5-2a','A','B','✗ Non : contrairement au pétrole ou au charbon, le dihydrogène n\'existe pas à l\'état naturel disponible en grande quantité ; il doit être produit.','fb-e5-2a')">
+                B. Parce que c'est une source d'énergie primaire, comme le pétrole ou le charbon.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e5-2a','A','C','✗ Non : le dihydrogène pur ne se trouve pas naturellement en grande quantité sur Terre, il doit être synthétisé (ici par électrolyse de l\'eau).','fb-e5-2a')">
+                C. Parce qu'il se trouve à l'état naturel en grande quantité sur Terre.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e5-2a','A','D','✗ Non : c\'est justement tout l\'intérêt du vecteur énergétique que de pouvoir stocker cette énergie chimique avant de la restituer.','fb-e5-2a')">
+                D. Parce qu'il permet de produire de l'électricité sans jamais être stocké.
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label">b. Quel est l'intérêt du dihydrogène par rapport aux sources d'énergie fossiles ?</div>
+        <div class="qcm-grid">
+          <div class="qcm-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+            <div class="qcm-feedback" id="fb-e5-2b"></div>
+            <div class="qcm-choices" style="flex-direction:column;gap:8px;width:100%;">
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e5-2b','A','A','✓ Correct ! Dans la pile à combustible, seule de l\'eau est produite : contrairement aux énergies fossiles, l\'utilisation du dihydrogène n\'émet ni gaz à effet de serre ni polluant. C\'est une méthode de production d\'énergie propre à l\'usage.','fb-e5-2b')">
+                A. Utilisé dans une pile à combustible, il ne produit que de l'eau : c'est une énergie propre à l'usage, sans émission de gaz à effet de serre.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e5-2b','A','B','✗ Non : produire du dihydrogène par électrolyse consomme de l\'énergie électrique, ce n\'est pas gratuit.','fb-e5-2b')">
+                B. Il est gratuit à produire, sans consommer d'énergie.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e5-2b','A','C','✗ Non : c\'est au contraire une difficulté majeure — le stockage et le transport du dihydrogène restent des sujets de recherche actuels.','fb-e5-2b')">
+                C. Il se stocke et se transporte plus facilement que n'importe quelle autre forme d'énergie.
+              </button>
+              <button class="qcm-btn" style="text-align:left;border-radius:8px;padding:9px 14px;"
+                onclick="repondreQCM('e5-2b','A','D','✗ Non : cela nécessite des infrastructures et des véhicules adaptés (piles à combustible), il ne se substitue pas directement aux moteurs thermiques actuels.','fb-e5-2b')">
+                D. Il remplace directement le pétrole dans tous les moteurs actuels, sans aucune modification.
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-weight:700;color:var(--bleu);margin-top:18px;">3. Communiquer 🎤 Grand Oral</p>
+      <div class="exo">
+        <p class="q-text">En s'appuyant sur l'ensemble des documents, préparer un exposé oral de trois minutes expliquant comment et pourquoi la plateforme Myrte répond parfaitement aux enjeux énergétiques et sociétaux contemporains.
+          <button class="btn-indice" onclick="toggleIndice('ind-e5-3')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-e5-3">Pense à relier : l'origine renouvelable de l'électricité produite (solaire), le rôle de stockage du dihydrogène (intermittence des énergies renouvelables), la restitution propre de l'énergie via la pile à combustible, et le contexte insulaire (indépendance énergétique de la Corse).</div>
+        <textarea id="ta-e5-3" rows="4" placeholder="Note ici le plan de ton exposé..."></textarea>
+        <div class="exo-actions">
+          <button class="check-btn" onclick="checkAnswered('ta-e5-3','fb-e5-3')">✓ Vérifier</button>
+        </div>
+        <div class="fb-check" id="fb-e5-3"></div>
+      </div>
+
+      <div class="exo-box" id="box-e5">
+        <div class="exo-actions">
+          <button class="btn-corr-dark" onclick="toggleCorrDark(this)">▶ Voir la correction</button>
+          <button class="btn-recommencer2" onclick="recommencerActivite('activite-5-hydrogene')">↺ Recommencer</button>
+        </div>
+        <div class="correction-dark">
+          <p style="margin:0 0 8px;"><strong>1.a</strong> Électrolyseur — anode (+), oxydation : 2 H₂O(ℓ) → O₂(g) + 4H⁺(aq) + 4e⁻ ; cathode (–), réduction : 2H⁺(aq) + 2e⁻ → H₂(g).</p>
+          <p style="margin:0 0 8px;"><strong>1.b</strong> Équation bilan (× 2 la réduction) : 2 H₂O(ℓ) → O₂(g) + 2 H₂(g). Conversion d'énergie électrique en énergie chimique.</p>
+          <p style="margin:0 0 8px;"><strong>1.c</strong> Pile à combustible (sens inverse) — O₂(g) + 4H⁺(aq) + 4e⁻ → 2H₂O(ℓ) et H₂(g) → 2H⁺(aq) + 2e⁻ ; bilan : O₂(g) + 2H₂(g) → 2H₂O(ℓ). Conversion d'énergie chimique en énergie électrique.</p>
+          <p style="margin:0 0 8px;"><strong>2.a et 2.b</strong> Voir corrections dans les QCM ci-dessus.</p>
+          <p style="margin:0;"><strong>3.</strong> Pistes pour l'exposé : indépendance énergétique d'un territoire insulaire, stockage d'une énergie renouvelable intermittente (solaire), restitution propre via la pile à combustible (seule l'eau est produite), limites actuelles (rendement de l'électrolyse et de la pile, coût, difficulté de stockage et de transport du dihydrogène).</p>
+        </div>
+      </div>
+    </div><!-- /activite-5-hydrogene -->
+    </div><!-- /sub-EA-4 (Activité 5) -->
+
+  </div><!-- /sub-E-0 (Activités) -->
+
+  <!-- Sous-onglet E2 : Exercices -->
+  <div class="sub-tab-content" id="sub-E-1">
+    <div class="section-title"><span class="icon">✏️</span> Exercices</div>
+
+    <!-- Sous-onglets niveau de difficulté (pastille bleue standard + emoji dédié, charte §17.1) -->
+    <nav class="sub-tabs-nav" id="sub-nav-EX">
+      <button class="sub-tab-btn active" data-sub="EX1" onclick="switchSubTab('EX',0)">🟢 Faciles</button>
+      <button class="sub-tab-btn" data-sub="EX2" onclick="switchSubTab('EX',1)">🟠 Intermédiaires</button>
+      <button class="sub-tab-btn" data-sub="EX3" onclick="switchSubTab('EX',2)">🔴 Difficiles</button>
+      <button class="sub-tab-btn" data-sub="EX4" onclick="switchSubTab('EX',3)">🎮 Escape Game</button>
+    </nav>
+
+    <div class="sub-tab-content active" id="sub-EX-0">
+      <nav class="exo-tabs-nav">
+        <button type="button" class="exo-tab-btn active" onclick="showExoItem(this,'exo-facile-14')">Exercice 14 <span class="exo-tab-stars">★☆☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-19')">Exercice 19 <span class="exo-tab-stars">★☆☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-25')">Exercice 25 <span class="exo-tab-stars">★★☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-26')">Exercice 26 <span class="exo-tab-stars">★★☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-13b')">Exercice 13 <span class="exo-tab-stars">★★☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-17b')">Exercice 17 <span class="exo-tab-stars">★★★</span></button>
+      </nav>
+
+      <div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-14">
+        <h3>Exercice 14 — Exploiter une valeur de pH</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <p>Le fluorure d'hydrogène HF réagit avec l'eau selon la réaction d'équation :</p>
+        <p style="text-align:center;font-weight:700;margin:10px 0;">HF(aq) + H₂O(ℓ) ⇌ F⁻(aq) + H₃O⁺(aq)</p>
+        <p>Une solution d'acide fluorhydrique est préparée en ajoutant du fluorure d'hydrogène (<em>n</em> = 10,0 mmol) dans un échantillon d'eau. Le volume de la solution obtenue est <em>V</em> = 1,00 L et son pH est de 2,65.</p>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Calculer l'avancement final <em>x</em><sub>f</sub> de la transformation. En déduire le caractère total ou non total de la transformation.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex14-a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex14-a">pH = −log[H₃O⁺] permet de calculer [H₃O⁺]<sub>f</sub>, puis <em>x</em><sub>f</sub> = n(H₃O⁺)<sub>f</sub> = [H₃O⁺]<sub>f</sub> × <em>V</em> (l'eau étant très largement en excès, HF est le réactif limitant : comparer <em>x</em><sub>f</sub> à <em>x</em><sub>max</sub> = <em>n</em>(HF)<sub>i</sub>).</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> En déduire le taux d'avancement final τ de cette transformation.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex14-b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex14-b">τ = <em>x</em><sub>f</sub> / <em>x</em><sub>max</sub></div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex14')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex14">
+          <p style="margin:0 0 8px;"><strong>a.</strong> [H₃O⁺]<sub>f</sub> = 10<sup>−pH</sup> = 10<sup>−2,65</sup> = 2,24 × 10⁻³ mol·L⁻¹.<br>
+          <em>x</em><sub>f</sub> = n(H₃O⁺)<sub>f</sub> = [H₃O⁺]<sub>f</sub> × <em>V</em> = 2,24 × 10⁻³ × 1,00 = 2,24 × 10⁻³ mol = 2,24 mmol.<br>
+          <em>x</em><sub>max</sub> = n(HF)<sub>i</sub> = 10,0 mmol (l'eau est le solvant, en large excès : HF est le réactif limitant).<br>
+          Comme <em>x</em><sub>f</sub> = 2,24 mmol &lt; <em>x</em><sub>max</sub> = 10,0 mmol, la transformation est <strong>non totale</strong>.</p>
+          <p style="margin:0;"><strong>b.</strong> τ = <em>x</em><sub>f</sub> / <em>x</em><sub>max</sub> = 2,24 / 10,0 ≈ <strong>0,22</strong> (soit 22 %).</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-19" style="display:none;">
+        <h3>Exercice 19 — Calculer un quotient de réaction</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+          <div style="flex:1;min-width:240px;">
+            <p>L'ion cuivre (II) Cu²⁺(aq) réagit avec l'ion hydroxyde HO⁻(aq) pour former un solide bleu d'hydroxyde de cuivre Cu(OH)₂(s). À l'état initial, les concentrations en quantité d'ions Cu²⁺ et HO⁻ dans le mélange sont respectivement <em>c</em><sub>1,i</sub> = 20 mmol·L⁻¹ et <em>c</em><sub>2,i</sub> = 40 mmol·L⁻¹, et le système contient une quantité de Cu(OH)₂(s) <em>n</em><sub>3,i</sub> = 10 mmol.</p>
+
+            <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Écrire l'équation de la réaction modélisant cette transformation avec les nombres entiers les plus petits possibles. La constante d'équilibre de cette réaction vaut <em>K</em>(<em>T</em>) = 1 × 10²⁰ à 25 °C.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex19-a')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex19-a">Un ion Cu²⁺ réagit avec deux ions HO⁻ pour former une unité Cu(OH)₂.</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Exprimer puis calculer le quotient de réaction Q<sub>r,i</sub> à l'état initial afin de confirmer le sens d'évolution du système.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex19-b')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex19-b">Cu(OH)₂(s) est un solide : il n'apparaît pas dans l'expression de Q<sub>r</sub>. Pense à convertir les concentrations en mol·L⁻¹.</div>
+
+            <button class="btn-correction2" onclick="toggleCorrection('corr-ex19')">▶ Voir la correction</button>
+            <div class="correction-box" id="corr-ex19">
+              <p style="margin:0 0 8px;"><strong>a.</strong> Cu²⁺(aq) + 2 HO⁻(aq) → Cu(OH)₂(s)</p>
+              <p style="margin:0;"><strong>b.</strong> Q<sub>r,i</sub> = 1 / ([Cu²⁺]<sub>i</sub> × [HO⁻]<sub>i</sub>²) (Cu(OH)₂(s), solide, n'intervient pas).<br>
+              Avec [Cu²⁺]<sub>i</sub> = 0,020 mol·L⁻¹ et [HO⁻]<sub>i</sub> = 0,040 mol·L⁻¹ :<br>
+              Q<sub>r,i</sub> = 1 / (0,020 × 0,040²) = 1 / (3,2 × 10⁻⁵) ≈ 3,1 × 10⁴.<br>
+              Q<sub>r,i</sub> (≈ 3,1 × 10⁴) est très inférieur à <em>K</em>(<em>T</em>) = 1 × 10²⁰ : le système évolue donc dans le <strong>sens direct</strong> (formation de Cu(OH)₂(s) supplémentaire), ce qui est cohérent avec la présence déjà observée de précipité (<em>n</em><sub>3,i</sub> = 10 mmol).</p>
+            </div>
+          </div>
+          <img src="Entrainements/ex19.png" alt="Tube à essai contenant le précipité bleu d'hydroxyde de cuivre Cu(OH)2" style="width:160px;flex-shrink:0;border-radius:10px;border:1px solid var(--gris-bord);">
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-25" style="display:none;">
+        <h3>Exercice 25 — Analyser un transfert indirect</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <p>Un transfert indirect d'électrons est réalisé entre les contenus d'un bécher contenant l'ion Pb²⁺(aq) en solution et une lame de plomb Pb(s) et d'un bécher contenant l'ion Ag⁺(aq) en solution et un fil d'argent Ag(s).</p>
+        <p>Pb(s) est un des réactifs de la transformation. Les deux béchers sont reliés par un pont salin.</p>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Indiquer de quel bécher vers quel bécher sont transférés les électrons.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex25-a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex25-a">Pb(s) est un réactif : il est donc consommé, c'est-à-dire oxydé (il cède des électrons). À l'inverse, l'espèce réduite consomme des électrons.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Il se forme un métal. Donner sa nature et préciser le lieu où il se forme.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex25-b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex25-b">Le métal qui se forme provient de la réduction du cation métallique en solution dans l'autre bécher.</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex25')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex25">
+          <p style="margin:0 0 8px;"><strong>a.</strong> Pb(s) est un réactif : il est oxydé selon Pb(s) → Pb²⁺(aq) + 2e⁻, il cède donc des électrons. Ces électrons sont transférés, via le circuit extérieur, jusqu'au bécher contenant Ag⁺(aq), où ils sont consommés par la réduction Ag⁺(aq) + e⁻ → Ag(s). Les électrons sont donc transférés <strong>du bécher Pb²⁺/Pb vers le bécher Ag⁺/Ag</strong>.</p>
+          <p style="margin:0;"><strong>b.</strong> Le métal qui se forme est <strong>l'argent Ag(s)</strong> (par réduction de Ag⁺(aq)) ; il se forme <strong>dans le bécher contenant Ag⁺(aq)</strong>, sur le fil d'argent.</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-26" style="display:none;">
+        <h3>Exercice 26 — Schématiser une pile</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <p>Les couples Zn²⁺(aq)/Zn(s) et Fe³⁺(aq)/Fe²⁺(aq) sont mis en jeu dans une pile zinc-fer. Des ions Fe²⁺(aq) et Fe³⁺(aq) sont présents dans une solution où est plongée une électrode de platine.</p>
+
+        <p class="q-text" style="margin-top:14px;">• Représenter schématiquement cette pile.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex26')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex26">Fe³⁺(aq) et Fe²⁺(aq) sont tous deux en solution : aucun des deux n'est solide, il faut donc une électrode inerte (ici en platine) pour ce couple. Comparer la « force » oxydante des deux couples pour déterminer qui s'oxyde et qui se réduit.</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex26')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex26">
+          <p style="margin:0 0 8px;">Le couple Fe³⁺(aq)/Fe²⁺(aq) est un oxydant plus fort que le couple Zn²⁺(aq)/Zn(s) : Fe³⁺(aq) se réduit et Zn(s) s'oxyde.</p>
+          <p style="margin:0 0 8px;"><strong>Bécher 1 — pôle − (anode, oxydation) :</strong> une lame de zinc Zn(s) plongée dans une solution contenant des ions Zn²⁺(aq). Demi-équation : Zn(s) → Zn²⁺(aq) + 2 e⁻.</p>
+          <p style="margin:0 0 8px;"><strong>Bécher 2 — pôle + (cathode, réduction) :</strong> une électrode inerte de platine Pt plongée dans une solution contenant les ions Fe³⁺(aq) et Fe²⁺(aq). Demi-équation : Fe³⁺(aq) + e⁻ → Fe²⁺(aq) (× 2 pour équilibrer les électrons échangés).</p>
+          <p style="margin:0 0 8px;">Les deux béchers sont reliés par un <strong>pont salin</strong> assurant la neutralité électrique de chaque compartiment, et les deux électrodes sont reliées par un fil conducteur (éventuellement via un ampèremètre/une lampe) formant le circuit extérieur.</p>
+          <p style="margin:0 0 8px;">Dans le circuit extérieur, les <strong>électrons circulent de l'électrode de zinc (−) vers l'électrode de platine (+)</strong> ; le courant électrique <em>i</em>, conventionnellement orienté du pôle + vers le pôle −, circule donc en sens inverse.</p>
+          <p style="margin:0;"><strong>Équation globale de fonctionnement :</strong> Zn(s) + 2 Fe³⁺(aq) → Zn²⁺(aq) + 2 Fe²⁺(aq).</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-13b" style="display:none;">
+        <h3>Exercice 13 — Déterminer une quantité</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie B — Forcer l'évolution</p>
+        <p>Un carrossier souhaite déposer une quantité <em>n</em> = 5,0 mol de chrome Cr(s) sur une pièce de motocyclette grâce à une électrolyse au cours de laquelle il y a réduction des ions chrome (III) selon la réaction électrochimique d'équation :</p>
+        <p style="text-align:center;font-weight:700;margin:10px 0;">Cr³⁺(aq) + 3 e⁻(électrode) → Cr(s)</p>
+
+        <p class="q-text" style="margin-top:14px;">• Exprimer puis calculer la quantité d'électrons que le générateur doit débiter afin d'obtenir le dépôt désiré.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex13b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex13b">Utiliser les coefficients stœchiométriques de la demi-équation : 3 mol d'électrons sont nécessaires pour déposer 1 mol de chrome.</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex13b')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex13b">
+          <p style="margin:0;">D'après l'équation, 3 mol d'électrons sont nécessaires pour déposer 1 mol de Cr(s) : <em>n</em>(e⁻) = 3 × <em>n</em>(Cr) = 3 × 5,0 = <strong>15 mol</strong> d'électrons.</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-17b" style="display:none;">
+        <h3>Exercice 17 — Calculer une durée d'électrolyse</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie B — Forcer l'évolution</p>
+        <p>Lors du dépôt d'argent sur un bijou par électrolyse, des électrons (quantité <em>n</em> = 2,0 mmol) sont échangés entre les électrodes. L'intensité du courant électrique utilisé est constante et vaut <em>I</em> = 60 mA.</p>
+
+        <p class="q-text" style="margin-top:14px;">• Exprimer puis calculer la durée de cette électrolyse.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex17b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex17b">La quantité d'électricité échangée est Q = <em>n</em>(e⁻) × ℱ = <em>I</em> × <em>t</em>. En déduire <em>t</em> = <em>n</em>(e⁻) × ℱ / <em>I</em>, en veillant à convertir toutes les grandeurs en unités du Système international (mol, C, A, s).</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex17b')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex17b">
+          <p style="margin:0 0 8px;">Q = <em>n</em>(e⁻) × ℱ = <em>I</em> × <em>t</em>, donc <em>t</em> = <em>n</em>(e⁻) × ℱ / <em>I</em>.</p>
+          <p style="margin:0;"><em>n</em>(e⁻) = 2,0 mmol = 2,0 × 10⁻³ mol ; <em>I</em> = 60 mA = 0,060 A.<br>
+          <em>t</em> = (2,0 × 10⁻³ × 96 500) / 0,060 = 193 / 0,060 ≈ <strong>3,2 × 10³ s</strong> (soit environ 54 min).</p>
+        </div>
+      </div>
+    </div>
+    <div class="sub-tab-content" id="sub-EX-1">
+      <nav class="exo-tabs-nav">
+        <button type="button" class="exo-tab-btn active" onclick="showExoItem(this,'exo-inter-31')">Exercice 31 <span class="exo-tab-stars">★★☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-33')">Exercice 33 <span class="exo-tab-stars">★★★</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-35')">Exercice 35 <span class="exo-tab-stars">★★★</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-39')">Exercice 39 <span class="exo-tab-stars">★★★</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-30b')">Exercice 30 <span class="exo-tab-stars">★★★</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-33b')">Exercice 33 <span class="exo-tab-stars">★★★</span></button>
+      </nav>
+
+      <div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-31">
+        <h3>Exercice 31 — Déterminer des équations électrochimiques</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <p>Une pile étain-cuivre fait intervenir les couples Sn²⁺(aq)/Sn et Cu²⁺(aq)/Cu(s). Un pont salin au nitrate d'ammonium (NH₄⁺(aq), NO₃⁻(aq)) est utilisé. Lorsque cette pile fonctionne, une consommation d'ion Cu²⁺(aq) est observée.</p>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Déterminer les équations des réactions électrochimiques qui ont lieu à la surface des électrodes.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex31-a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex31-a">L'ion Cu²⁺(aq) est consommé : il est donc réduit à l'une des électrodes. L'autre espèce du couple (Sn ou Sn²⁺) subit alors nécessairement la transformation inverse.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> En déduire la polarité de la pile.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex31-b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex31-b">L'électrode siège d'une réduction est le pôle + (cathode) ; l'électrode siège d'une oxydation est le pôle − (anode).</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex31')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex31">
+          <p style="margin:0 0 8px;"><strong>a.</strong> L'ion Cu²⁺(aq) est consommé : il est réduit à l'électrode de cuivre — Cu²⁺(aq) + 2e⁻ → Cu(s). À l'autre électrode, l'étain est nécessairement oxydé — Sn(s) → Sn²⁺(aq) + 2e⁻.</p>
+          <p style="margin:0;"><strong>b.</strong> L'électrode de cuivre, siège d'une réduction, est le <strong>pôle +</strong> (cathode). L'électrode d'étain, siège d'une oxydation, est le <strong>pôle −</strong> (anode).</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-33" style="display:none;">
+        <h3>Exercice 33 — Hydroxyde de chrome (III)</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+          <div style="flex:1;min-width:240px;">
+            <p>L'ion chrome (III) Cr³⁺(aq) réagit avec l'ion hydroxyde HO⁻(aq) pour former de l'hydroxyde de chrome (III) solide (photo ci-contre).</p>
+            <p>Dans un bécher contenant une solution de chlorure de chrome (III) de concentration en quantité d'ion Cr³⁺(aq) <em>c</em><sub>1</sub> = 30 mmol·L⁻¹ et de volume <em>V</em><sub>1</sub> = 60 mL, est ajoutée une solution d'hydroxyde de sodium de concentration en quantité d'ion HO⁻(aq) <em>c</em><sub>2</sub> = 50 mmol·L⁻¹ et de volume <em>V</em><sub>2</sub> = 60 mL.</p>
+            <p>La constante d'équilibre de la réaction entre Cr³⁺(aq) et HO⁻(aq) vaut <em>K</em>(<em>T</em>) = 1,0 × 10³¹ à 25 °C.</p>
+
+            <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Calculer la valeur du quotient de réaction Q<sub>r,i</sub> à l'état initial.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex33-a')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex33-a">Écrire d'abord l'équation de la réaction (Cr³⁺ + 3 HO⁻ → Cr(OH)₃(s)). Ne pas oublier de recalculer les concentrations après mélange des deux solutions, en tenant compte du volume total <em>V</em> = <em>V</em><sub>1</sub> + <em>V</em><sub>2</sub>.</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Déterminer le sens d'évolution spontanée du système.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex33-b')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex33-b">Comparer Q<sub>r,i</sub> et <em>K</em>(<em>T</em>).</div>
+
+            <button class="btn-correction2" onclick="toggleCorrection('corr-ex33')">▶ Voir la correction</button>
+            <div class="correction-box" id="corr-ex33">
+              <p style="margin:0 0 8px;">Équation : Cr³⁺(aq) + 3 HO⁻(aq) → Cr(OH)₃(s)</p>
+              <p style="margin:0 0 8px;"><strong>a.</strong> Après mélange, <em>V</em> = <em>V</em><sub>1</sub> + <em>V</em><sub>2</sub> = 120 mL.<br>
+              n(Cr³⁺)<sub>i</sub> = <em>c</em><sub>1</sub> × <em>V</em><sub>1</sub> = 30 × 60 = 1800 μmol = 1,8 mmol → [Cr³⁺]<sub>i</sub> = 1,8 / 120 = 0,015 mol·L⁻¹.<br>
+              n(HO⁻)<sub>i</sub> = <em>c</em><sub>2</sub> × <em>V</em><sub>2</sub> = 50 × 60 = 3000 μmol = 3,0 mmol → [HO⁻]<sub>i</sub> = 3,0 / 120 = 0,025 mol·L⁻¹.<br>
+              Cr(OH)₃(s) est un solide, il n'apparaît pas dans l'expression de Q<sub>r</sub> : Q<sub>r,i</sub> = 1 / ([Cr³⁺]<sub>i</sub> × [HO⁻]<sub>i</sub>³) = 1 / (0,015 × 0,025³) = 1 / (2,34 × 10⁻⁷) ≈ <strong>4,3 × 10⁶</strong>.</p>
+              <p style="margin:0;"><strong>b.</strong> Q<sub>r,i</sub> (≈ 4,3 × 10⁶) est très inférieur à <em>K</em>(<em>T</em>) = 1,0 × 10³¹ : le système évolue donc dans le <strong>sens direct</strong>, c'est-à-dire dans le sens de formation de l'hydroxyde de chrome (III) solide.</p>
+            </div>
+          </div>
+          <img src="Entrainements/ex33.png" alt="Précipité vert d'hydroxyde de chrome (III) dans une coupelle" style="width:160px;flex-shrink:0;border-radius:10px;border:1px solid var(--gris-bord);">
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-35" style="display:none;">
+        <h3>Exercice 35 — Étude d'une pile bouton</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+          <div style="flex:1;min-width:240px;">
+            <p>Dans une pile bouton zinc-oxyde d'argent, les deux couples oxydant-réducteur mis en jeu sont : ZnO(s)/Zn(s) et Ag₂O(s)/Ag(s). Ag₂O(s) est le réactif limitant et sa masse initiale vaut 0,20 g.</p>
+
+            <div style="background:var(--violet-clair);border:1px solid #D9C3E8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:0.86rem;">
+              <p style="font-weight:700;color:var(--violet);margin-bottom:4px;">DONNÉES</p>
+              <p style="margin:0;">Masses molaires : <em>M</em>(Ag) = 108 g·mol⁻¹ ; <em>M</em>(Zn) = 65,4 g·mol⁻¹ ; <em>M</em>(O) = 16,0 g·mol⁻¹.</p>
+              <p style="margin:0;">Constante de Faraday ℱ = <em>N</em><sub>A</sub> × <em>e</em> = 96,5 × 10³ C·mol⁻¹.</p>
+            </div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Déterminer l'équation de la réaction ayant lieu au sein de la pile.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex35-a')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex35-a">Zn(s) est oxydé en ZnO(s) (perte de 2 e⁻) ; Ag₂O(s) est réduit en Ag(s) (gain de 2 e⁻ au total, pour les deux ions Ag⁺ de la formule).</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Exprimer puis calculer la valeur de la quantité de matière d'électrons échangés pendant la durée de vie de la pile.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex35-b')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex35-b">Calculer d'abord n(Ag₂O)<sub>i</sub> à partir de sa masse initiale, puis utiliser les coefficients stœchiométriques de l'équation de la réaction (Ag₂O étant le réactif limitant, la réaction s'arrête quand il est entièrement consommé).</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>c.</strong> En déduire la capacité électrique de la pile bouton.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex35-c')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex35-c">La capacité électrique Q est reliée à la quantité d'électrons échangés par Q = n(e⁻) × ℱ.</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>d.</strong> Déterminer la durée d'alimentation d'une calculatrice par cette pile débitant un courant d'intensité constante <em>I</em> = 0,40 mA.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex35-d')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex35-d">Utiliser la relation Q = <em>I</em> × <em>t</em>, avec <em>I</em> exprimée en ampères et Q en coulombs.</div>
+
+            <button class="btn-correction2" onclick="toggleCorrection('corr-ex35')">▶ Voir la correction</button>
+            <div class="correction-box" id="corr-ex35">
+              <p style="margin:0 0 8px;"><strong>a.</strong> Zn(s) + Ag₂O(s) → ZnO(s) + 2 Ag(s).</p>
+              <p style="margin:0 0 8px;"><strong>b.</strong> M(Ag₂O) = 2 × 108 + 16,0 = 232 g·mol⁻¹.<br>
+              n(Ag₂O)<sub>i</sub> = <em>m</em> / <em>M</em> = 0,20 / 232 = 8,62 × 10⁻⁴ mol.<br>
+              Ag₂O étant le réactif limitant, la réaction s'arrête quand n(Ag₂O) = 0 : d'après l'équation, 1 mol d'Ag₂O échange 2 mol d'électrons, donc n(e⁻) = 2 × n(Ag₂O)<sub>i</sub> = 2 × 8,62 × 10⁻⁴ ≈ <strong>1,72 × 10⁻³ mol</strong>.</p>
+              <p style="margin:0 0 8px;"><strong>c.</strong> Q = n(e⁻) × ℱ = 1,72 × 10⁻³ × 96,5 × 10³ ≈ <strong>1,66 × 10² C</strong> (166 C).</p>
+              <p style="margin:0;"><strong>d.</strong> Q = <em>I</em> × <em>t</em> ⇒ <em>t</em> = Q / <em>I</em> = 166 / (0,40 × 10⁻³) ≈ 4,2 × 10⁵ s, soit environ <strong>115 h</strong> (≈ 4,8 jours).</p>
+            </div>
+          </div>
+          <img src="Entrainements/ex35.png" alt="Ensemble de piles boutons de différentes tailles" style="width:160px;flex-shrink:0;border-radius:10px;border:1px solid var(--gris-bord);">
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-39" style="display:none;">
+        <h3>Exercice 39 — Caractérisation de l'ion fer (III)</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">ANA-RAI&nbsp; Exploiter un modèle</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">RÉA&nbsp; Effectuer un calcul littéral et numérique</span>
+        </div>
+        <p>La présence d'ion thiocyanate SCN⁻(aq) dans la salive est une des conséquences d'une exposition au tabagisme, même passif.</p>
+        <p>Cet ion, dont une solution est incolore, peut être dosé par colorimétrie après avoir réagi avec l'ion fer (III) Fe³⁺(aq). La réaction entre les ions Fe³⁺ et SCN⁻ produit une espèce colorée rouge, de formule FeSCN²⁺(aq).</p>
+        <p>Les ions Fe³⁺ et SCN⁻ sont introduits en même quantité initiale <em>n</em><sub>i</sub> = 10,0 mmol dans un bécher. En fin de réaction, il reste une quantité <em>n</em><sub>f</sub> = 5,4 mmol de chaque réactif.</p>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Écrire l'équation de la réaction modélisant la transformation étudiée.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex39-a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex39-a">Un ion Fe³⁺ réagit avec un ion SCN⁻ pour former une entité FeSCN²⁺ (vérifier la conservation de la charge).</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Exprimer puis calculer le taux d'avancement final τ.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex39-b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex39-b">Les deux réactifs sont introduits dans les proportions stœchiométriques (même quantité initiale, coefficients égaux) : <em>x</em><sub>max</sub> = <em>n</em><sub>i</sub>. L'avancement final se déduit de la quantité de réactif restant : <em>x</em><sub>f</sub> = <em>n</em><sub>i</sub> − <em>n</em><sub>f</sub>.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>c.</strong> En déduire le caractère total ou non de cette transformation.</p>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex39')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex39">
+          <p style="margin:0 0 8px;"><strong>a.</strong> Fe³⁺(aq) + SCN⁻(aq) → FeSCN²⁺(aq).</p>
+          <p style="margin:0 0 8px;"><strong>b.</strong> Les deux réactifs étant introduits en quantités stœchiométriques identiques, <em>x</em><sub>max</sub> = <em>n</em><sub>i</sub> = 10,0 mmol.<br>
+          <em>x</em><sub>f</sub> = <em>n</em><sub>i</sub> − <em>n</em><sub>f</sub> = 10,0 − 5,4 = 4,6 mmol.<br>
+          τ = <em>x</em><sub>f</sub> / <em>x</em><sub>max</sub> = 4,6 / 10,0 = <strong>0,46</strong> (soit 46 %).</p>
+          <p style="margin:0;"><strong>c.</strong> τ = 0,46 &lt; 1 : la transformation est <strong>non totale</strong> — à l'état final, les réactifs Fe³⁺ et SCN⁻ coexistent avec le produit FeSCN²⁺.</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-30b" style="display:none;">
+        <h3>Exercice 30 — Dorure</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie B — Forcer l'évolution</p>
+        <p>Une bague est recouverte d'or par électrolyse en la plongeant dans une solution contenant l'ion or (III) Au³⁺(aq) en quantité suffisante. La masse d'or ainsi déposé vaut <em>m</em> = 3,0 mg. Le courant électrique imposé par le générateur a une intensité constante <em>I</em> = 60 mA.</p>
+
+        <div style="background:var(--violet-clair);border:1px solid #D9C3E8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:0.86rem;">
+          <p style="font-weight:700;color:var(--violet);margin-bottom:4px;">DONNÉES</p>
+          <p style="margin:0;">Couple oxydant/réducteur : Au³⁺(aq)/Au(s). Masse molaire <em>M</em>(Au) = 197,0 g·mol⁻¹.</p>
+        </div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Expliquer à quel pôle du générateur extérieur la bague doit être reliée.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex30b-a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex30b-a">Pour qu'un dépôt de métal se forme sur la bague, il faut qu'une réduction (Au³⁺ + 3e⁻ → Au) s'y produise : la bague joue le rôle de cathode.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Exprimer puis calculer la quantité d'or déposé lors de l'électrolyse.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex30b-b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex30b-b">n(Au) = <em>m</em> / <em>M</em>(Au).</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>c.</strong> Exprimer puis calculer la durée nécessaire de cette électrolyse.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex30b-c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex30b-c">D'après la demi-équation, n(e⁻) = 3 × n(Au). Puis Q = n(e⁻) × ℱ = <em>I</em> × <em>t</em>.</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex30b')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex30b">
+          <p style="margin:0 0 8px;"><strong>a.</strong> Le dépôt d'or résulte de la réduction Au³⁺(aq) + 3 e⁻(électrode) → Au(s), qui doit avoir lieu sur la bague : la bague joue le rôle de <strong>cathode</strong>, elle doit donc être reliée au <strong>pôle négatif (−)</strong> du générateur (le pôle + étant relié à l'électrode où se produit l'oxydation).</p>
+          <p style="margin:0 0 8px;"><strong>b.</strong> n(Au) = <em>m</em> / <em>M</em>(Au) = 3,0 × 10⁻³ / 197,0 ≈ <strong>1,52 × 10⁻⁵ mol</strong>.</p>
+          <p style="margin:0;"><strong>c.</strong> n(e⁻) = 3 × n(Au) = 3 × 1,52 × 10⁻⁵ ≈ 4,57 × 10⁻⁵ mol.<br>
+          Q = n(e⁻) × ℱ = 4,57 × 10⁻⁵ × 96 500 ≈ 4,41 C.<br>
+          <em>t</em> = Q / <em>I</em> = 4,41 / 0,060 ≈ <strong>73 s</strong> (soit environ 1 min 13 s).</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-33b" style="display:none;">
+        <h3>Exercice 33 — Compteur électrique d'Edison</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie B — Forcer l'évolution</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">RÉA&nbsp; Effectuer un calcul</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">ANA-RAI&nbsp; Formuler une hypothèse</span>
+        </div>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+          <div style="flex:1;min-width:240px;">
+            <p>Entre 1882 et 1895, les habitations étaient alimentées en courant électrique continu. Le scientifique américain Thomas Edison (1847-1931) a mis en place un appareil permettant de mesurer « l'électricité consommée » : 10 % du courant de chaque habitation était dérivé vers une cellule électrolytique dont une des électrodes en zinc plongeait dans une solution de sulfate de zinc (Zn²⁺(aq), SO₄²⁻(aq)). Une fois par mois, l'électrode était débranchée, rincée, séchée, puis pesée.</p>
+            <p>Lors d'un relevé pour une maison, après une durée de consommation électrique Δ<em>t</em> = 30 jours, une masse <em>m</em> = 34 g de zinc avait été déposé sur l'électrode.</p>
+
+            <div style="background:var(--violet-clair);border:1px solid #D9C3E8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:0.86rem;">
+              <p style="font-weight:700;color:var(--violet);margin-bottom:4px;">DONNÉE</p>
+              <p style="margin:0;">Masse molaire <em>M</em>(Zn) = 65,4 g·mol⁻¹.</p>
+            </div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Exprimer puis calculer la quantité de matière <em>n</em><sub>Zn</sub> de zinc déposé pendant ces 30 jours.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex33b-a')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex33b-a"><em>n</em><sub>Zn</sub> = <em>m</em> / <em>M</em>(Zn).</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Exprimer puis calculer la charge électrique totale <em>q</em> ayant circulé dans la cellule pendant cette même durée. L'exprimer en A·h.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex33b-b')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex33b-b">Zn²⁺(aq) + 2 e⁻(électrode) → Zn(s), donc <em>n</em>(e⁻) = 2 × <em>n</em><sub>Zn</sub>. Puis <em>q</em> = <em>n</em>(e⁻) × ℱ, à convertir en A·h sachant que 1 A·h = 3600 C.</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>c.</strong> Exprimer puis calculer la « consommation d'électricité », en A·h, de la maison considérée.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex33b-c')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex33b-c">Seuls 10 % du courant total de la maison traversaient la cellule : la charge ayant circulé dans la maison est donc 10 fois plus grande que <em>q</em>.</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>d.</strong> Proposer un moyen permettant d'éviter de réalimenter la cellule électrolytique en ion Zn²⁺(aq) tous les mois.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex33b-d')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex33b-d">Que se passerait-il si la seconde électrode (actuellement inerte) était elle aussi en zinc ?</div>
+
+            <button class="btn-correction2" onclick="toggleCorrection('corr-ex33b')">▶ Voir la correction</button>
+            <div class="correction-box" id="corr-ex33b">
+              <p style="margin:0 0 8px;"><strong>a.</strong> <em>n</em><sub>Zn</sub> = <em>m</em> / <em>M</em>(Zn) = 34 / 65,4 ≈ <strong>0,520 mol</strong>.</p>
+              <p style="margin:0 0 8px;"><strong>b.</strong> <em>n</em>(e⁻) = 2 × <em>n</em><sub>Zn</sub> = 2 × 0,520 = 1,04 mol.<br>
+              <em>q</em> = <em>n</em>(e⁻) × ℱ = 1,04 × 96 500 ≈ 1,003 × 10⁵ C.<br>
+              <em>q</em> = 1,003 × 10⁵ / 3600 ≈ <strong>27,9 A·h</strong>.</p>
+              <p style="margin:0 0 8px;"><strong>c.</strong> La cellule ne reçoit que 10 % du courant total de la maison : la consommation totale de la maison est donc <em>q</em><sub>maison</sub> = <em>q</em> / 0,10 = 10 × 27,9 ≈ <strong>279 A·h</strong> sur les 30 jours.</p>
+              <p style="margin:0;"><strong>d.</strong> Il suffit de remplacer la seconde électrode (inerte) par une électrode en zinc également. À l'anode, cette électrode de zinc s'oxyderait alors (Zn(s) → Zn²⁺(aq) + 2 e⁻), régénérant exactement la quantité d'ions Zn²⁺ consommée par réduction à la cathode. La concentration en Zn²⁺(aq) de la solution resterait ainsi constante, sans qu'il soit nécessaire de la réalimenter chaque mois.</p>
+            </div>
+          </div>
+          <img src="Entrainements/ex33b.png" alt="Compteur électrique d'Edison — cellule électrolytique à électrodes de zinc" style="width:160px;flex-shrink:0;border-radius:10px;border:1px solid var(--gris-bord);">
+        </div>
+      </div>
+    </div>
+    <div class="sub-tab-content" id="sub-EX-2">
+      <nav class="exo-tabs-nav">
+        <button type="button" class="exo-tab-btn active" onclick="showExoItem(this,'exo-diff-38')">Exercice 38 <span class="exo-tab-stars">★☆☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-42')">Exercice 42 <span class="exo-tab-stars">★☆☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-43')">Exercice 43 <span class="exo-tab-stars">★☆☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-50')">Exercice 50 <span class="exo-tab-stars">★★☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-35b')">Exercice 35 <span class="exo-tab-stars">★★☆</span></button>
+        <button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-37b')">Exercice 37 <span class="exo-tab-stars">★★★</span></button>
+      </nav>
+
+      <div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-38">
+        <h3>Exercice 38 — Réactif en agroalimentation</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">ANA-RAI&nbsp; Exploiter un modèle</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">RÉA&nbsp; Effectuer un calcul numérique</span>
+        </div>
+        <p>L'hydroxyde de calcium, ou chaux éteinte, est un solide peu soluble dans l'eau. Il est utilisé, entre autres, dans l'industrie agroalimentaire pour purifier le jus de la betterave sucrière.</p>
+        <p>Une quantité initiale <em>n</em><sub>i</sub> = 50 mmol d'hydroxyde de calcium Ca(OH)₂(s) se dissout dans l'eau pour former des ions calcium Ca²⁺(aq) et hydroxyde HO⁻(aq). À l'état final, la quantité d'ion hydroxyde est <em>n</em><sub>HO⁻,f</sub> = 60 mmol.</p>
+
+        <p class="q-text" style="margin-top:14px;">• Calculer le taux d'avancement final τ de cette transformation.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex38')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex38">Écrire l'équation de dissolution Ca(OH)₂(s) → Ca²⁺(aq) + 2 HO⁻(aq). L'ion HO⁻ est absent à l'état initial : <em>n</em><sub>HO⁻,f</sub> = 2<em>x</em><sub>f</sub>. Le réactif limitant est Ca(OH)₂(s) (coefficient 1), donc <em>x</em><sub>max</sub> = <em>n</em><sub>i</sub>.</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex38')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex38">
+          <p style="margin:0 0 8px;">Équation : Ca(OH)₂(s) → Ca²⁺(aq) + 2 HO⁻(aq).</p>
+          <p style="margin:0 0 8px;"><em>n</em><sub>HO⁻,f</sub> = 2<em>x</em><sub>f</sub> ⇒ <em>x</em><sub>f</sub> = 60 / 2 = 30 mmol.</p>
+          <p style="margin:0 0 8px;"><em>x</em><sub>max</sub> = <em>n</em><sub>i</sub> = 50 mmol (Ca(OH)₂(s) est le réactif limitant, coefficient stœchiométrique 1).</p>
+          <p style="margin:0;">τ = <em>x</em><sub>f</sub> / <em>x</em><sub>max</sub> = 30 / 50 = <strong>0,60</strong> (soit 60 %).</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-42" style="display:none;">
+        <h3>Exercice 42 — Sens d'évolution</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">ANA-RAI&nbsp; Organiser et exploiter ses connaissances</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">RÉA&nbsp; Effectuer un calcul numérique</span>
+        </div>
+        <p>Dans un bécher sont introduits quatre échantillons de solutions de même volume <em>V</em> = 100 mL.</p>
+
+        <table class="tableau-avancement" style="font-size:0.88rem;margin:14px 0;">
+          <tr><th>Échantillon</th><th>Solution</th><th>Concentration en quantité de matière (mol·L⁻¹)</th></tr>
+          <tr><td>1</td><td>K⁺(aq), I⁻(aq)</td><td>0,050</td></tr>
+          <tr><td>2</td><td>Fe³⁺(aq), 3 Cl⁻(aq)</td><td>0,050</td></tr>
+          <tr><td>3</td><td>I₂(aq)</td><td>0,10</td></tr>
+          <tr><td>4</td><td>Fe²⁺(aq), SO₄²⁻(aq)</td><td>1,00</td></tr>
+        </table>
+
+        <div style="background:var(--violet-clair);border:1px solid #D9C3E8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:0.86rem;">
+          <p style="font-weight:700;color:var(--violet);margin-bottom:4px;">DONNÉES</p>
+          <p style="margin:0;">Couples oxydant-réducteur : I₂(aq)/I⁻(aq) et Fe³⁺(aq)/Fe²⁺(aq).</p>
+        </div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Écrire l'équation de la réaction d'oxydation de l'ion iodure par l'ion fer (III), avec les nombres stœchiométriques entiers les plus petits possibles. La constante d'équilibre de cette réaction d'oxydoréduction est <em>K</em>(<em>T</em>) = 5,0 × 10⁵ à 25 °C.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex42-a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex42-a">Combiner les deux demi-équations des couples I₂(aq)/I⁻(aq) et Fe³⁺(aq)/Fe²⁺(aq) de façon à éliminer les électrons échangés.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Exprimer puis calculer le quotient de réaction Q<sub>r,i</sub> à l'état initial.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex42-b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex42-b">Les quatre échantillons sont mélangés dans le même bécher : recalculer chaque concentration après mélange en tenant compte du volume total (4 × 100 mL = 400 mL), avant de calculer Q<sub>r,i</sub>.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>c.</strong> Déterminer le sens d'évolution spontanée du système chimique étudié.</p>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex42')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex42">
+          <p style="margin:0 0 8px;"><strong>a.</strong> 2 Fe³⁺(aq) + 2 I⁻(aq) → 2 Fe²⁺(aq) + I₂(aq).</p>
+          <p style="margin:0 0 8px;"><strong>b.</strong> Volume total après mélange : <em>V</em> = 4 × 100 = 400 mL. Chaque concentration initiale (après mélange) vaut le quart de la concentration du tableau :<br>
+          [I⁻]<sub>i</sub> = 0,050 / 4 = 1,25 × 10⁻² mol·L⁻¹ ; [Fe³⁺]<sub>i</sub> = 0,050 / 4 = 1,25 × 10⁻² mol·L⁻¹ ; [I₂]<sub>i</sub> = 0,10 / 4 = 2,5 × 10⁻² mol·L⁻¹ ; [Fe²⁺]<sub>i</sub> = 1,00 / 4 = 0,25 mol·L⁻¹.<br>
+          Q<sub>r,i</sub> = [Fe²⁺]<sub>i</sub>² × [I₂]<sub>i</sub> / ([Fe³⁺]<sub>i</sub>² × [I⁻]<sub>i</sub>²) = (0,25)² × 0,025 / ((1,25×10⁻²)² × (1,25×10⁻²)²) ≈ <strong>6,4 × 10⁴</strong>.</p>
+          <p style="margin:0;"><strong>c.</strong> Q<sub>r,i</sub> (≈ 6,4 × 10⁴) est inférieur à <em>K</em>(<em>T</em>) = 5,0 × 10⁵ : le système évolue donc dans le <strong>sens direct</strong> — les ions Fe³⁺ oxydent les ions I⁻, avec formation de Fe²⁺ et de I₂.</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-43" style="display:none;">
+        <h3>Exercice 43 — Protection du fourrage</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">ANA-RAI&nbsp; Exploiter un modèle</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">RÉA&nbsp; Effectuer un calcul littéral et numérique</span>
+        </div>
+        <p>L'acide propanoïque C₂H₅CO₂H est utilisé en agriculture pour traiter le foin et empêcher le développement de moisissures. Avant d'être appliqué sur le fourrage, l'acide propanoïque doit être dilué dans de l'eau.</p>
+        <p>Or, il réagit avec l'eau, suivant une transformation non totale, pour donner les ions propanoate C₂H₅CO₂⁻ et oxonium H₃O⁺.</p>
+        <p>Trois mélanges sont réalisés en introduisant des quantités différentes d'acide propanoïque dans trois échantillons d'eau de même volume <em>V</em>. La concentration en quantité d'acide propanoïque à l'état initial dans le mélange n° <em>j</em> est notée <em>c<sub>j</sub></em>. La conductivité σ<sub>f,j</sub> de chaque mélange est mesurée à l'état final. Les résultats sont regroupés dans le tableau suivant.</p>
+
+        <table class="tableau-avancement" style="font-size:0.88rem;margin:14px 0;">
+          <tr><th></th><th>1</th><th>2</th><th>3</th></tr>
+          <tr><td><em>c<sub>j</sub></em> (mmol·L⁻¹)</td><td>10,0</td><td>5,00</td><td>1,00</td></tr>
+          <tr><td>σ<sub>f,j</sub> (mS·m⁻¹)</td><td>13,9</td><td>9,76</td><td>4,23</td></tr>
+        </table>
+
+        <div style="background:var(--violet-clair);border:1px solid #D9C3E8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:0.86rem;">
+          <p style="font-weight:700;color:var(--violet);margin-bottom:4px;">DONNÉES</p>
+          <p style="margin:0;">Conductivités ioniques molaires : λ(C₂H₅CO₂⁻) = 3,58 mS·m²·mol⁻¹ ; λ(H₃O⁺) = 35,0 mS·m²·mol⁻¹.</p>
+        </div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Écrire l'équation de la réaction modélisant la transformation entre l'acide propanoïque et l'eau.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex43-a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex43-a">L'acide propanoïque cède un proton à l'eau : c'est une réaction acido-basique, non totale (⇌).</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> À l'aide de la loi de Kohlrausch, exprimer la conductivité σ<sub>f</sub> à l'état final d'un mélange en fonction notamment des concentrations en quantité des ions C₂H₅CO₂⁻ et H₃O⁺.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex43-b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex43-b">σ<sub>f</sub> = λ(C₂H₅CO₂⁻) × [C₂H₅CO₂⁻]<sub>f</sub> + λ(H₃O⁺) × [H₃O⁺]<sub>f</sub>. Les deux ions étant produits dans un rapport 1:1 à partir d'une quantité initiale nulle, [C₂H₅CO₂⁻]<sub>f</sub> = [H₃O⁺]<sub>f</sub>.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>c.</strong> Pour chaque mélange, calculer : la concentration en quantité de matière des différents ions à l'état final ; la concentration en quantité de matière d'acide propanoïque à l'état final.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex43-c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex43-c">[C₂H₅CO₂H]<sub>f</sub> = <em>c<sub>j</sub></em> − [H₃O⁺]<sub>f</sub> (l'acide consommé correspond à la quantité d'ions H₃O⁺ formée).</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>d.</strong> Exprimer puis calculer le quotient de réaction Q<sub>r,f</sub> à l'état final pour chaque mélange.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex43-d')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex43-d">L'eau est le solvant, elle n'apparaît pas dans l'expression de Q<sub>r</sub> : Q<sub>r,f</sub> = [C₂H₅CO₂⁻]<sub>f</sub> × [H₃O⁺]<sub>f</sub> / [C₂H₅CO₂H]<sub>f</sub> (concentrations exprimées en mol·L⁻¹).</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>e.</strong> Conclure sur l'influence de la concentration en quantité de soluté sur le quotient de réaction Q<sub>r,f</sub>.</p>
+
+        <p class="q-text" style="margin-top:14px;"><strong>f.</strong> Calculer la valeur de la constante d'équilibre <em>K</em>(<em>T</em>) de cette réaction.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex43-f')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex43-f">L'état final mesuré est l'état d'équilibre du système : à l'équilibre, Q<sub>r,f</sub> = <em>K</em>(<em>T</em>).</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex43')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex43">
+          <p style="margin:0 0 8px;"><strong>a.</strong> C₂H₅CO₂H(aq) + H₂O(ℓ) ⇌ C₂H₅CO₂⁻(aq) + H₃O⁺(aq).</p>
+          <p style="margin:0 0 8px;"><strong>b.</strong> σ<sub>f</sub> = λ(C₂H₅CO₂⁻) × [C₂H₅CO₂⁻]<sub>f</sub> + λ(H₃O⁺) × [H₃O⁺]<sub>f</sub>.<br>
+          Les ions C₂H₅CO₂⁻ et H₃O⁺ sont formés en quantités égales (stœchiométrie 1:1, absents à l'état initial) : [C₂H₅CO₂⁻]<sub>f</sub> = [H₃O⁺]<sub>f</sub>, notée [H₃O⁺]<sub>f</sub> ci-dessous.<br>
+          D'où σ<sub>f</sub> = (λ(C₂H₅CO₂⁻) + λ(H₃O⁺)) × [H₃O⁺]<sub>f</sub>, soit [H₃O⁺]<sub>f</sub> = σ<sub>f</sub> / (λ(C₂H₅CO₂⁻) + λ(H₃O⁺)) = σ<sub>f</sub> / 38,58.</p>
+          <p style="margin:0 0 8px;"><strong>c. et d.</strong> (concentrations en mmol·L⁻¹, Q<sub>r,f</sub> calculé en convertissant en mol·L⁻¹) :</p>
+          <table class="tableau-avancement" style="font-size:0.84rem;margin:8px 0;">
+            <tr><th></th><th>1</th><th>2</th><th>3</th></tr>
+            <tr><td>[C₂H₅CO₂⁻]<sub>f</sub> = [H₃O⁺]<sub>f</sub></td><td>0,360</td><td>0,253</td><td>0,110</td></tr>
+            <tr><td>[C₂H₅CO₂H]<sub>f</sub></td><td>9,64</td><td>4,75</td><td>0,890</td></tr>
+            <tr><td>Q<sub>r,f</sub></td><td>1,35 × 10⁻⁵</td><td>1,35 × 10⁻⁵</td><td>1,35 × 10⁻⁵</td></tr>
+          </table>
+          <p style="margin:0 0 8px;"><strong>e.</strong> Le quotient de réaction Q<sub>r,f</sub> obtenu est le même (≈ 1,35 × 10⁻⁵) pour les trois mélanges, quelle que soit la concentration initiale en acide propanoïque. Q<sub>r,f</sub> ne dépend donc pas de la concentration en soluté : cela confirme que l'état final mesuré est bien l'état d'équilibre du système.</p>
+          <p style="margin:0;"><strong>f.</strong> À l'équilibre, Q<sub>r,f</sub> = <em>K</em>(<em>T</em>), donc <em>K</em>(<em>T</em>) ≈ <strong>1,35 × 10⁻⁵</strong> (moyenne des trois valeurs).</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-50" style="display:none;">
+        <h3>Exercice 50 — Tension à vide d'une pile au cours de sa vie</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie A — Évolution spontanée</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">ANALYSER-RAISONNER</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">RÉALISER</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">VALIDER</span>
+        </div>
+        <p>Les piles vendues dans le commerce ont une certaine durée d'utilisation lorsqu'elles débitent du courant électrique. La valeur de la tension à vide d'une pile zinc-fer est ici étudiée en simulant plusieurs états successifs, de manière similaire à ce qu'on pourrait envisager sur les piles Leclanché, alcaline et à oxyde d'argent, constituées toutes les trois de l'élément zinc au pôle négatif.</p>
+
+        <div style="background:var(--violet-clair);border:1px solid #D9C3E8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:0.86rem;">
+          <p style="font-weight:700;color:var(--violet);margin-bottom:4px;">DONNÉES</p>
+          <p style="margin:0 0 4px;">L'équation de la réaction modélisant la transformation ayant lieu dans la pile zinc-fer s'écrit : Fe²⁺(aq) + Zn(s) → Fe(s) + Zn²⁺(aq)</p>
+          <p style="margin:0;">La constante d'équilibre de cette réaction à 25 °C vaut <em>K</em>(<em>T</em>) = 4 × 10¹⁰.</p>
+        </div>
+
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin:14px 0;">
+          <div style="flex:1;min-width:220px;">
+            <p style="font-weight:700;margin-bottom:8px;">DOC.1 — Schéma de la pile étudiée</p>
+            <img src="Entrainements/ex50-doc1.png" alt="Schéma de la pile zinc-fer : lame de zinc dans la solution S2, lame de fer dans la solution S1, reliées par un pont salin" style="max-width:100%;border-radius:10px;border:1px solid var(--gris-bord);display:block;">
+          </div>
+          <div style="flex:1;min-width:260px;">
+            <p style="font-weight:700;margin-bottom:8px;">DOC.2 — États de la pile</p>
+            <p style="font-size:0.86rem;margin-bottom:8px;">Trois états de la même pile sont indiqués dans le tableau suivant.</p>
+            <table class="tableau-avancement" style="font-size:0.82rem;">
+              <tr><th></th><th>État A<br>(état initial)</th><th>État B</th><th>État C</th></tr>
+              <tr><td>[Zn²⁺] (mmol·L⁻¹)</td><td>100</td><td>190</td><td>199</td></tr>
+              <tr><td>[Fe²⁺] (mmol·L⁻¹)</td><td>100</td><td>10</td><td>1,0</td></tr>
+              <tr><td>Quotient de réaction Q<sub>r</sub></td><td>?</td><td>?</td><td>?</td></tr>
+              <tr><td>Tension à vide <em>U</em></td><td>?</td><td>?</td><td>?</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:10px 14px;margin:14px 0;font-size:0.85rem;">
+          🧪 <strong>Manipulation 1 — Pile neuve :</strong> préparer la pile Zn-Fe dans son état initial, puis mesurer sa tension à vide. <em>Appeler le professeur pour présenter les résultats ou en cas de difficulté.</em>
+        </div>
+
+        <p style="font-weight:700;color:var(--bleu);margin-top:18px;">2. Pile au cours de sa vie</p>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Déterminer la valeur du quotient de réaction dans chacun des trois états décrits dans le DOC.2 et compléter la ligne correspondante du tableau.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex50-2a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex50-2a">Zn(s) et Fe(s) sont des solides, ils n'apparaissent pas dans l'expression de Q<sub>r</sub> : Q<sub>r</sub> = [Zn²⁺] / [Fe²⁺].</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Indiquer quelle succession d'états correspond au critère d'évolution spontanée.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex50-2b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex50-2b">Comparer chaque valeur de Q<sub>r</sub> à <em>K</em>(<em>T</em>) : dans quel sens le système évolue-t-il spontanément ?</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>c.</strong> Avec le matériel à disposition, proposer un protocole pour préparer une solution de concentration en quantité d'ion Fe²⁺(aq) <em>c</em><sub>4</sub> = 10 mmol·L⁻¹. <em>Appeler le professeur pour présenter le protocole ou en cas de difficulté.</em>
+          <button class="btn-indice" onclick="toggleIndice('ind-ex50-2c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex50-2c">La solution S₁ initiale a une concentration en Fe²⁺ de 100 mmol·L⁻¹ (état A). Calculer le facteur de dilution nécessaire pour atteindre 10 mmol·L⁻¹, puis penser au couple pipette jaugée / fiole jaugée.</div>
+
+        <div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:10px 14px;margin:14px 0;font-size:0.85rem;">
+          🧪 <strong>Manipulations 2 à 4 :</strong> d. mettre en œuvre le protocole de dilution ; e. préparer la pile Zn-Fe dans l'état B, puis mesurer sa tension à vide ; f. de façon similaire, mesurer la tension à vide de la pile dans l'état C.
+        </div>
+
+        <p style="font-weight:700;color:var(--bleu);margin-top:18px;">3. Évolution de la tension à vide de la pile au cours de sa vie</p>
+        <div class="exo">
+          <p class="q-text">Compléter la dernière ligne du tableau précédent. Conclure.
+            <button class="btn-indice" onclick="toggleIndice('ind-ex50-3')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex50-3">La tension à vide se relie au quotient de réaction et à la constante d'équilibre par <em>U</em> = (0,06/<em>n</em>) × log(<em>K</em>(<em>T</em>) / Q<sub>r</sub>), avec <em>n</em> = 2 électrons échangés pour ce couple.</div>
+        </div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex50')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex50">
+          <p style="margin:0 0 8px;"><strong>1.</strong> Manipulation expérimentale : préparation de la pile et mesure de la tension à vide de l'état A (valeur théorique attendue ≈ 0,32 V, voir question 3).</p>
+          <p style="margin:0 0 8px;"><strong>2.a</strong> Q<sub>r</sub> = [Zn²⁺] / [Fe²⁺] :<br>
+          État A : Q<sub>r,A</sub> = 100 / 100 = 1,0.<br>
+          État B : Q<sub>r,B</sub> = 190 / 10 = 19.<br>
+          État C : Q<sub>r,C</sub> = 199 / 1,0 = 1,99 × 10².</p>
+          <p style="margin:0 0 8px;"><strong>2.b</strong> Dans les trois états, Q<sub>r</sub> reste très inférieur à <em>K</em>(<em>T</em>) = 4 × 10¹⁰ : le système n'a pas atteint l'équilibre et continue d'évoluer dans le <strong>sens direct</strong> (Fe²⁺ consommé, Zn²⁺ formé). La succession <strong>A → B → C</strong> correspond bien à cette évolution spontanée : [Fe²⁺] diminue (100 → 10 → 1,0 mmol·L⁻¹) tandis que [Zn²⁺] augmente (100 → 190 → 199 mmol·L⁻¹), ce qui décrit l'autodécharge progressive de la pile au cours de sa vie.</p>
+          <p style="margin:0 0 8px;"><strong>2.c</strong> Facteur de dilution : <em>F</em> = <em>c</em><sub>1</sub> / <em>c</em><sub>4</sub> = 100 / 10 = 10.<br>
+          Protocole : prélever, à l'aide d'une pipette jaugée, <em>V</em><sub>mère</sub> = <em>V</em><sub>fille</sub> / <em>F</em> = 50 / 10 = 5,0 mL de la solution S₁ (Fe²⁺ à 100 mmol·L⁻¹) ; l'introduire dans une fiole jaugée de 50 mL ; compléter avec de l'eau distillée jusqu'au trait de jauge ; homogénéiser.</p>
+          <p style="margin:0 0 8px;"><strong>3.</strong> En utilisant <em>U</em> = (0,06/<em>n</em>) × log(<em>K</em>(<em>T</em>)/Q<sub>r</sub>) avec <em>n</em> = 2 :</p>
+          <table class="tableau-avancement" style="font-size:0.84rem;margin:8px 0;">
+            <tr><th></th><th>État A</th><th>État B</th><th>État C</th></tr>
+            <tr><td>Q<sub>r</sub></td><td>1,0</td><td>19</td><td>1,99 × 10²</td></tr>
+            <tr><td>Tension à vide <em>U</em></td><td>≈ 0,32 V</td><td>≈ 0,28 V</td><td>≈ 0,25 V</td></tr>
+          </table>
+          <p style="margin:0;"><strong>Conclusion :</strong> la tension à vide de la pile <strong>diminue progressivement</strong> au cours de sa vie, à mesure que Q<sub>r</sub> se rapproche (lentement) de <em>K</em>(<em>T</em>). Comme <em>K</em>(<em>T</em>) est très grand, Q<sub>r</sub> reste toujours très inférieur à <em>K</em>(<em>T</em>) sur la plage étudiée : la baisse de tension observée est donc faible, mais bien réelle — c'est ce vieillissement progressif qui explique la « pile usée » en fin de vie.</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-35b" style="display:none;">
+        <h3>Exercice 35 — Rails de chemin de fer</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie B — Forcer l'évolution</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">ANA-RAI&nbsp; Utiliser une analyse dimensionnelle</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">RÉA&nbsp; Effectuer un calcul</span>
+        </div>
+        <p>La préparation du manganèse métallique, utilisé pour la fabrication des rails de chemin de fer, se fait par électrolyse d'une solution de sulfate de manganèse (II) (Mn²⁺(aq), SO₄²⁻(aq)) acidifiée par du sulfate d'ammonium (2 NH₄⁺(aq), SO₄²⁻(aq)).</p>
+
+        <div style="background:var(--violet-clair);border:1px solid #D9C3E8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:0.86rem;">
+          <p style="font-weight:700;color:var(--violet);margin-bottom:4px;">DONNÉES</p>
+          <p style="margin:0 0 4px;">Couples oxydant-réducteur : H⁺(aq)/H₂(g) ; Mn²⁺(aq)/Mn(s) ; S₂O₈²⁻(aq)/SO₄²⁻(aq) ; O₂(g)/H₂O(ℓ).</p>
+          <p style="margin:0;">Masse molaire : <em>M</em>(Mn) = 54,9 g·mol⁻¹.</p>
+        </div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>1.</strong> Expliquer pourquoi le sulfate d'ammonium permet d'acidifier la solution.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex35b-1')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex35b-1">L'ion ammonium NH₄⁺(aq) est l'acide conjugué de la base NH₃(aq) : il réagit avec l'eau en lui cédant un proton.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>2.</strong> Dresser la liste des espèces chimiques présentes en solution afin de prévoir toutes les réactions électrochimiques susceptibles de se produire aux électrodes.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex35b-2')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex35b-2">Penser aux ions apportés par le sulfate de manganèse et le sulfate d'ammonium, à l'ion H⁺ formé lors de l'acidification (question 1), et au solvant H₂O(ℓ) — puis associer chaque espèce oxydable/réductible aux couples fournis dans les données.</div>
+
+        <p style="font-weight:700;color:var(--bleu);margin-top:18px;">3. En opérant sous une tension de 5,0 V pour une intensité <em>I</em> = 35,0 kA, seul du manganèse se forme et un dégagement de dioxygène est observé.</p>
+
+        <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Écrire l'équation de la réaction modélisant l'électrolyse.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex35b-3a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex35b-3a">Réduction à la cathode : Mn²⁺(aq) + 2 e⁻ → Mn(s). Oxydation à l'anode (dégagement de O₂) : 2 H₂O(ℓ) → O₂(g) + 4 H⁺(aq) + 4 e⁻. Équilibrer les électrons échangés.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Exprimer puis calculer la masse maximale <em>m</em><sub>max</sub> de métal qu'il est possible d'obtenir chaque jour.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex35b-3b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex35b-3b">Calculer d'abord la charge <em>Q</em> = <em>I</em> × Δ<em>t</em> échangée en une journée (Δ<em>t</em> = 24 × 3600 s), puis <em>n</em>(e⁻) = <em>Q</em> / ℱ, puis <em>n</em>(Mn) = <em>n</em>(e⁻) / 2.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>c.</strong> En réalité, la masse de métal obtenu est <em>m</em><sub>exp</sub> = 530 kg. Interpréter cette constatation expérimentale et calculer le rendement de la synthèse de manganèse.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex35b-3c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex35b-3c">Rendement = <em>m</em><sub>exp</sub> / <em>m</em><sub>max</sub>. Un rendement inférieur à 1 signifie qu'une partie du courant a servi à d'autres réactions que le dépôt de manganèse.</div>
+
+        <p class="q-text" style="margin-top:14px;"><strong>d.</strong> Exprimer puis calculer la consommation massique d'énergie (en J·kg⁻¹), c'est-à-dire l'énergie nécessaire pour déposer un kilogramme de manganèse.
+          <button class="btn-indice" onclick="toggleIndice('ind-ex35b-3d')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ex35b-3d">L'énergie électrique consommée en une journée est <em>E</em> = <em>U</em> × <em>I</em> × Δ<em>t</em> (indépendante du rendement, puisque tout le courant traverse la cellule). La consommation massique se calcule par rapport à la masse réellement obtenue <em>m</em><sub>exp</sub>.</div>
+
+        <button class="btn-correction2" onclick="toggleCorrection('corr-ex35b')">▶ Voir la correction</button>
+        <div class="correction-box" id="corr-ex35b">
+          <p style="margin:0 0 8px;"><strong>1.</strong> L'ion ammonium NH₄⁺(aq) est l'acide conjugué de la base NH₃(aq) : selon le couple NH₄⁺(aq)/NH₃(aq), il cède un proton à l'eau, NH₄⁺(aq) + H₂O(ℓ) → NH₃(aq) + H₃O⁺(aq), ce qui produit des ions H₃O⁺(aq) (notés H⁺(aq)) et acidifie la solution.</p>
+          <p style="margin:0 0 8px;"><strong>2.</strong> Espèces présentes en solution : Mn²⁺(aq), SO₄²⁻(aq), NH₄⁺(aq), H⁺(aq) et H₂O(ℓ) (solvant).<br>
+          À la cathode (réduction), espèces réductibles présentes : Mn²⁺(aq) (couple Mn²⁺/Mn) et H⁺(aq) (couple H⁺/H₂).<br>
+          À l'anode (oxydation), espèces oxydables présentes : SO₄²⁻(aq) (couple S₂O₈²⁻/SO₄²⁻) et H₂O(ℓ) (couple O₂/H₂O). (NH₄⁺(aq) n'est associé à aucun couple fourni : il ne participe à aucune réaction aux électrodes.)</p>
+          <p style="margin:0 0 8px;"><strong>3.a</strong> Cathode : Mn²⁺(aq) + 2 e⁻ → Mn(s) (× 2). Anode : 2 H₂O(ℓ) → O₂(g) + 4 H⁺(aq) + 4 e⁻ (× 1).<br>
+          Bilan : <strong>2 Mn²⁺(aq) + 2 H₂O(ℓ) → 2 Mn(s) + O₂(g) + 4 H⁺(aq)</strong>.</p>
+          <p style="margin:0 0 8px;"><strong>3.b</strong> Δ<em>t</em> = 1 jour = 24 × 3600 = 86 400 s.<br>
+          <em>Q</em> = <em>I</em> × Δ<em>t</em> = 35,0 × 10³ × 86 400 ≈ 3,02 × 10⁹ C.<br>
+          <em>n</em>(e⁻) = <em>Q</em> / ℱ = 3,02 × 10⁹ / 96 500 ≈ 3,13 × 10⁴ mol.<br>
+          <em>n</em>(Mn) = <em>n</em>(e⁻) / 2 ≈ 1,57 × 10⁴ mol.<br>
+          <em>m</em><sub>max</sub> = <em>n</em>(Mn) × <em>M</em>(Mn) = 1,57 × 10⁴ × 54,9 ≈ <strong>860 kg</strong>.</p>
+          <p style="margin:0 0 8px;"><strong>3.c</strong> <em>m</em><sub>exp</sub> = 530 kg &lt; <em>m</em><sub>max</sub> ≈ 860 kg : une partie du courant n'a pas servi au dépôt de manganèse, mais à d'autres réactions parasites aux électrodes (notamment la réduction de H⁺(aq) en H₂(g) à la cathode, en concurrence avec la réduction de Mn²⁺). Rendement η = <em>m</em><sub>exp</sub> / <em>m</em><sub>max</sub> = 530 / 860 ≈ <strong>0,62</strong> (soit 62 %).</p>
+          <p style="margin:0;"><strong>3.d</strong> <em>E</em> = <em>U</em> × <em>I</em> × Δ<em>t</em> = 5,0 × 35,0 × 10³ × 86 400 ≈ 1,51 × 10¹⁰ J.<br>
+          Consommation massique = <em>E</em> / <em>m</em><sub>exp</sub> = 1,51 × 10¹⁰ / 530 ≈ <strong>2,85 × 10⁷ J·kg⁻¹</strong> (soit environ 28,5 MJ par kg de manganèse déposé).</p>
+        </div>
+      </div>
+
+      <div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-37b" style="display:none;">
+        <h3>Exercice 37 — Constante de Faraday</h3>
+        <p style="font-size:0.78rem;color:var(--texte-leger);font-style:italic;margin-bottom:8px;">Partie B — Forcer l'évolution</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">RÉA&nbsp; Effectuer un calcul</span>
+          <span style="background:#FBDDB0;border-radius:6px;padding:5px 10px;font-size:0.78rem;font-weight:700;color:#1A2A3A;">VAL&nbsp; Comparer à une valeur de référence</span>
+        </div>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+          <div style="flex:1;min-width:260px;">
+            <p>La constante de Faraday correspond à la charge électrique d'une mole de charge élémentaire. Cette constante peut être déterminée expérimentalement par une expérience d'électrolyse.</p>
+            <p>L'électrolyse d'une solution d'iodure de potassium est ainsi réalisée dans un tube en U. L'électrolyse est maintenue pendant une durée Δ<em>t</em> = 10 min et le générateur extérieur délivre un courant électrique d'intensité constante <em>I</em> = 10 mA. À l'issue de cette électrolyse, le contenu du tube en U est versé dans un bécher. Les électrodes et le tube sont rincés et les eaux de rinçage sont ajoutées dans le bécher. Le diiode formé est alors titré par une solution de thiosulfate de sodium (Na⁺(aq), S₂O₃²⁻(aq)) de concentration en quantité de matière <em>c</em>′ = 10 mmol·L⁻¹. Le volume <em>V</em><sub>éqv</sub> versé à l'équivalence vaut 6,1 mL.</p>
+
+            <div style="background:var(--violet-clair);border:1px solid #D9C3E8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:0.86rem;">
+              <p style="font-weight:700;color:var(--violet);margin-bottom:4px;">DONNÉES</p>
+              <p style="margin:0;">Couples oxydant-réducteur : I₂(aq)/I⁻(aq) ; K⁺(aq)/K(s) ; H₂O(ℓ)/H₂(g) ; O₂(g)/H₂O(ℓ) ; S₄O₆²⁻(aq)/S₂O₃²⁻(aq).</p>
+            </div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>a.</strong> Déterminer l'équation de la réaction d'électrolyse.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex37b-a')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex37b-a">L'ion K⁺(aq) est très difficile à réduire (couple K⁺/K non favorisé en solution aqueuse) : c'est l'eau qui est réduite à la cathode. À l'anode, c'est l'ion I⁻(aq), plus facilement oxydable que l'eau, qui est oxydé.</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>b.</strong> Déterminer l'équation de la réaction support du titrage.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex37b-b')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex37b-b">Combiner les couples I₂(aq)/I⁻(aq) et S₄O₆²⁻(aq)/S₂O₃²⁻(aq) : c'est un titrage iodométrique classique.</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>c.</strong> À partir de la valeur du volume à l'équivalence obtenu, déterminer la quantité de diiode titré.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex37b-c')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex37b-c">À l'équivalence, <em>n</em>(S₂O₃²⁻) versé = <em>c</em>′ × <em>V</em><sub>éqv</sub>. Utiliser ensuite les coefficients stœchiométriques de l'équation de titrage (question b) pour en déduire <em>n</em>(I₂).</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>d.</strong> En déduire la valeur de la constante de Faraday.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex37b-d')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex37b-d">D'après l'équation d'électrolyse (question a), relier <em>n</em>(e⁻) à <em>n</em>(I₂) formé. La charge ayant circulé est <em>Q</em> = <em>I</em> × Δ<em>t</em> = <em>n</em>(e⁻) × ℱ.</div>
+
+            <p class="q-text" style="margin-top:14px;"><strong>e.</strong> Comparer à la valeur donnée dans les tables. Discuter des sources d'erreurs possibles.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex37b-e')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ex37b-e">Calculer l'écart relatif à la valeur tabulée ℱ = 96 500 C·mol⁻¹, puis penser aux incertitudes de mesure (volumes, durée, courant) et aux pertes de matière possibles (rinçage incomplet, volatilité du diiode…).</div>
+
+            <button class="btn-correction2" onclick="toggleCorrection('corr-ex37b')">▶ Voir la correction</button>
+            <div class="correction-box" id="corr-ex37b">
+              <p style="margin:0 0 8px;"><strong>a.</strong> Cathode (réduction de l'eau, K⁺ non réductible en solution aqueuse) : 2 H₂O(ℓ) + 2 e⁻ → H₂(g) + 2 HO⁻(aq).<br>
+              Anode (oxydation de I⁻, plus facile que celle de l'eau) : 2 I⁻(aq) → I₂(aq) + 2 e⁻.<br>
+              Bilan : <strong>2 I⁻(aq) + 2 H₂O(ℓ) → I₂(aq) + H₂(g) + 2 HO⁻(aq)</strong>.</p>
+              <p style="margin:0 0 8px;"><strong>b.</strong> I₂(aq) + 2 S₂O₃²⁻(aq) → 2 I⁻(aq) + S₄O₆²⁻(aq).</p>
+              <p style="margin:0 0 8px;"><strong>c.</strong> <em>n</em>(S₂O₃²⁻) = <em>c</em>′ × <em>V</em><sub>éqv</sub> = 10 × 10⁻³ × 6,1 × 10⁻³ = 6,1 × 10⁻⁵ mol.<br>
+              D'après l'équation de titrage, <em>n</em>(I₂) = <em>n</em>(S₂O₃²⁻) / 2 = 6,1 × 10⁻⁵ / 2 ≈ <strong>3,05 × 10⁻⁵ mol</strong>.</p>
+              <p style="margin:0 0 8px;"><strong>d.</strong> D'après l'équation d'électrolyse, <em>n</em>(e⁻) = 2 × <em>n</em>(I₂) = 2 × 3,05 × 10⁻⁵ ≈ 6,10 × 10⁻⁵ mol.<br>
+              <em>Q</em> = <em>I</em> × Δ<em>t</em> = 10 × 10⁻³ × 600 = 6,0 C (Δ<em>t</em> = 10 min = 600 s).<br>
+              ℱ = <em>Q</em> / <em>n</em>(e⁻) = 6,0 / 6,10 × 10⁻⁵ ≈ <strong>9,84 × 10⁴ C·mol⁻¹</strong>.</p>
+              <p style="margin:0;"><strong>e.</strong> Valeur tabulée : ℱ = 9,65 × 10⁴ C·mol⁻¹. Écart relatif ≈ (9,84 − 9,65)/9,65 ≈ 2 %, ce qui reste faible : le protocole est globalement validé.<br>
+              Sources d'erreurs possibles : imprécision sur la lecture des volumes (verrerie, ménisque, détection de l'équivalence) ; rinçage incomplet du tube et des électrodes (perte de diiode) ; légère volatilité du diiode (pertes par évaporation) ; variations de l'intensité du courant ou imprécision sur la durée Δ<em>t</em> ; éventuelles réactions parasites aux électrodes.</p>
+            </div>
+          </div>
+          <img src="Entrainements/ex37.png" alt="Montage d'électrolyse d'une solution d'iodure de potassium dans un tube en U, électrodes en graphite" style="width:200px;flex-shrink:0;border-radius:10px;border:1px solid var(--gris-bord);">
+        </div>
+      </div>
+    </div>
+    <div class="sub-tab-content" id="sub-EX-3">
+      <div style="text-align:right;margin-bottom:10px;">
+        <a href="seq01-escape-volta.html" target="_blank" rel="noopener" style="font-size:0.82rem;color:var(--bleu);font-weight:700;text-decoration:none;">↗ Ouvrir en plein écran dans un nouvel onglet</a>
+      </div>
+      <iframe src="seq01-escape-volta.html" title="L'Héritage de Volta — Escape Game" style="width:100%;height:850px;border:1px solid var(--gris-bord);border-radius:14px;display:block;"></iframe>
+    </div>
+  </div><!-- /sub-E-1 (Exercices) -->
+
+  <!-- Sous-onglet E3 : Sujets de bac -->
+  <div class="sub-tab-content" id="sub-E-2">
+    <div class="section-title"><span class="icon">🎓</span> Sujets de bac</div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2022 · Métropole · Jour 2</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Des piles historiques</h4>
+    <div class="bac-theme">Thème : Transformations chimiques · Piles et électrolyse</div>
+    <div class="bac-notions">
+      <span class="bac-tag">oxydo-réduction</span>
+      <span class="bac-tag">fonctionnement d'une pile</span>
+      <span class="bac-tag">calcul de réactif limitant</span>
+      <span class="bac-tag">durée d'utilisation maximale de la pile</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-06/2022-Metropole-J2-ExoC-Sujet-PilesHistoriques-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-05/2022-Metropole-J2-ExoC-Correction-PilesHistoriques-5pts_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2025 · Métropole (session sept.) · Jour 1</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>Traitement de surface d'une pièce de jeu d'échecs</h4>
+    <div class="bac-theme">Thème : Électrolyse · Anodisation de l'aluminium</div>
+    <div class="bac-notions">
+      <span class="bac-tag">oxydo-réduction</span>
+      <span class="bac-tag">électrolyse</span>
+      <span class="bac-tag">masse de dépôt métallique</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2025-09-Metropole-J1-Exo3-Sujet-ElectrolyseAnodisation-5pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
+      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-03/2025-09-Metropole-J1-Exo3-Correction-ElectrolyseAnodisation-5pts.docx" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+    </div>
+  </div>
+
+  <div class="bac-card">
+    <div class="bac-card-head">
+      <span class="bac-lieu">Bac 2026 · Amérique du Nord · Jour 2</span>
+      <span>5 points · 53 min</span>
+    </div>
+    <h4>HOPE, l'espoir du dihydrogène vert</h4>
+    <div class="bac-theme">Thème : Électrolyse · Production de dihydrogène</div>
+    <div class="bac-notions">
+      <span class="bac-tag">électrolyse</span>
+      <span class="bac-tag">production de dihydrogène</span>
+      <span class="bac-tag">étude quantitative</span>
+    </div>
+    <div class="bac-pastilles">
+      <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2026-05/2026-AmNord-J2-Exo2-Sujet-ElectrolyseH2-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+      <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2026-05/2026-AmNord-J2-Exo2-Correction-ElectrolyseH2-5pts_2.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+    </div>
+  </div>
+
+  </div><!-- /sub-E-2 (Sujets de bac) -->
+
+</div><!-- /tab-1 (Entraînements) -->
+
 <div class="tab-content" id="tab-2">
 
  <!-- Sous-onglets C -->
@@ -4061,63 +5707,6 @@
     </a>
 </div>
 
-<div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac 2022 · Métropole · Jour 2</span>
-      <span>5 points · 53 min</span>
-    </div>
-    <h4>Des piles historiques</h4>
-    <div class="bac-theme">Thème : Transformations chimiques · Piles et électrolyse</div>
-    <div class="bac-notions">
-      <span class="bac-tag">oxydo-réduction</span>
-      <span class="bac-tag">fonctionnement d'une pile</span>
-      <span class="bac-tag">calcul de réactif limitant</span>
-      <span class="bac-tag">durée d'utilisation maximale de la pile</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-06/2022-Metropole-J2-ExoC-Sujet-PilesHistoriques-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-05/2022-Metropole-J2-ExoC-Correction-PilesHistoriques-5pts_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-    </div>
-  </div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac 2025 · Métropole (session sept.) · Jour 1</span>
-      <span>5 points · 53 min</span>
-    </div>
-    <h4>Traitement de surface d'une pièce de jeu d'échecs</h4>
-    <div class="bac-theme">Thème : Électrolyse · Anodisation de l'aluminium</div>
-    <div class="bac-notions">
-      <span class="bac-tag">oxydo-réduction</span>
-      <span class="bac-tag">électrolyse</span>
-      <span class="bac-tag">masse de dépôt métallique</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-12/2025-09-Metropole-J1-Exo3-Sujet-ElectrolyseAnodisation-5pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
-      <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-03/2025-09-Metropole-J1-Exo3-Correction-ElectrolyseAnodisation-5pts.docx" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
-    </div>
-  </div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac 2026 · Amérique du Nord · Jour 2</span>
-      <span>5 points · 53 min</span>
-    </div>
-    <h4>HOPE, l'espoir du dihydrogène vert</h4>
-    <div class="bac-theme">Thème : Électrolyse · Production de dihydrogène</div>
-    <div class="bac-notions">
-      <span class="bac-tag">électrolyse</span>
-      <span class="bac-tag">production de dihydrogène</span>
-      <span class="bac-tag">étude quantitative</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="pastille pastille-sujet" href="https://prod.labolycee.org/sites/default/files/2026-05/2026-AmNord-J2-Exo2-Sujet-ElectrolyseH2-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-      <a class="pastille pastille-corrige" href="https://prod.labolycee.org/sites/default/files/2026-05/2026-AmNord-J2-Exo2-Correction-ElectrolyseH2-5pts_2.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-    </div>
-  </div>
-
   </div><!-- /sub-C-2 (Ressources) -->
 
 </div><!-- /tab-2 (Bilan) -->
@@ -4142,17 +5731,82 @@ function switchTab(n) {
 }
 
 function switchSubTab(group, n) {
-  // Sous-onglets du groupe (A ou B)
+  // Sous-onglets du groupe (le tiret final évite toute confusion entre groupes
+  // proches, ex: 'sub-E-' ne matche pas 'sub-EX-0/1/2')
   const prefix = 'sub-' + group + '-';
   document.querySelectorAll('[id^="' + prefix + '"]').forEach((el, i) => {
     el.classList.toggle('active', i === n);
   });
-  // Boutons du groupe
-  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b, i) => {
+  // Boutons du groupe (niveau 2 bleu ou niveau 3 orange, peu importe la classe exacte)
+  document.querySelectorAll('#sub-nav-' + group + ' button').forEach((b, i) => {
     b.classList.toggle('active', i === n);
   });
   // Activer initApp3 si on ouvre A3 (group A, index 2)
   if (group === 'A' && n === 2) initApp3();
+}
+
+/* ===== Indice (activités simples) ===== */
+function toggleIndice(id) {
+  const box = document.getElementById(id);
+  if (box) box.classList.toggle('visible');
+}
+
+/* ===== Correction par question (activités corrigées détaillées) ===== */
+function toggleCorrection(id) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  const wasVisible = box.classList.contains('visible');
+  box.classList.toggle('visible');
+  const btn = box.previousElementSibling && box.previousElementSibling.classList.contains('btn-correction2')
+    ? box.previousElementSibling
+    : (box.parentElement ? box.parentElement.querySelector('.btn-correction2') : null);
+  if (btn) btn.textContent = wasVisible ? '▶ Voir la correction' : '▼ Masquer la correction';
+}
+
+/* ===== Vérifier (présence de réponse) — activités corrigées à correction finale ===== */
+function checkAnswered(textareaId, feedbackId) {
+  const ta = document.getElementById(textareaId);
+  const fb = document.getElementById(feedbackId);
+  if (!ta || !fb) return;
+  if (ta.value.trim() === '') {
+    fb.textContent = '✗ Écris ta réponse avant de vérifier.';
+    fb.className = 'fb-check empty';
+  } else {
+    fb.textContent = '✓ Réponse notée — tu pourras vérifier avec la correction à la fin.';
+    fb.className = 'fb-check ok';
+  }
+}
+
+/* ===== Correction globale + Recommencer (activités corrigées détaillées) ===== */
+/* ===== Navigation entre exercices d'un même niveau de difficulté (charte §17.2) ===== */
+function showExoItem(btn, id) {
+  const nav = btn.closest('.exo-tabs-nav');
+  const container = nav ? nav.parentElement : null;
+  if (!container) return;
+  nav.querySelectorAll('.exo-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  container.querySelectorAll('[data-exo-item]').forEach(c => { c.style.display = 'none'; });
+  const card = document.getElementById(id);
+  if (card) card.style.display = 'block';
+}
+
+function toggleCorrDark(btn) {
+  const box = btn.closest('.exo-box');
+  const corr = box.querySelector('.correction-dark');
+  corr.classList.toggle('show');
+  btn.textContent = corr.classList.contains('show') ? '▼ Masquer la correction' : '▶ Voir la correction';
+}
+function recommencerActivite(cardId) {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  card.querySelectorAll('textarea').forEach(t => { t.value = ''; if (typeof autoGrowTextarea === 'function') autoGrowTextarea(t); });
+  card.querySelectorAll('.indice-box, .correction-box').forEach(b => b.classList.remove('visible'));
+  card.querySelectorAll('.btn-correction2').forEach(b => b.textContent = '▶ Voir la correction');
+  card.querySelectorAll('.fb-check').forEach(fb => { fb.textContent = ''; fb.className = 'fb-check'; });
+  const corrDark = card.querySelector('.correction-dark');
+  if (corrDark) corrDark.classList.remove('show');
+  const btnDark = card.querySelector('.btn-corr-dark');
+  if (btnDark) btnDark.textContent = '▶ Voir la correction';
 }
 
 /* ===== Glossaire recherchable ===== */
@@ -5011,6 +6665,18 @@ function elecAnimateElectrons() {
   }
   requestAnimationFrame(loop);
 }
+
+// Auto-agrandissement des zones de réponse libre (Activité 4)
+function autoGrowTextarea(t) {
+  t.style.height = 'auto';
+  t.style.height = t.scrollHeight + 'px';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.exo textarea').forEach(t => {
+    autoGrowTextarea(t);
+    t.addEventListener('input', () => autoGrowTextarea(t));
+  });
+});
 
 // Init au chargement
 window.addEventListener('DOMContentLoaded', () => {
