@@ -1,0 +1,7 @@
+# Caractéristiques des planètes du système solaire
+# Planète ; 
+# Demi grand axe a en au ;
+# Période sidérale T en années terrestres
+# Mercure ; Venus ; Terre ; Mars ; Jupiter ; Sature ; Uranus ; Neptune
+0.3871;0.7233;1.0000;1.5237;5.2026;9.5547;19.218;30.109
+0.2408;0.6152;1.0000;1.8808;11.862;29.457;84.020;164.77
