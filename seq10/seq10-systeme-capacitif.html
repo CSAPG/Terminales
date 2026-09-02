@@ -12,10 +12,16 @@
     --bleu: #2D5F8A;
     --bleu-clair: #E8F1F8;
     --bleu-moyen: #5B8FB9;
+    --bleu-activite: #EEF5FB;
+    --bleu-activite-bord: #B8D4EC;
     --orange: #E8783A;
-    --orange-clair: #FDF0E8;
+    --orange-clair: #fca93c27;
     --vert: #3A8A6E;
     --vert-clair: #E8F5F0;
+    --vert-exo: #F0FAF6;
+    --vert-exo-bord: #B2DDD0;
+    --indice: #C98A00;
+    --indice-clair: #FFF6E0;
     --gris-fond: #F5F7FA;
     --gris-bord: #DDE3EC;
     --texte: #1A2A3A;
@@ -25,10 +31,13 @@
     --rouge-clair: #FDEDEC;
     --violet: #7B4FA6;
     --violet-clair: #F3EDF9;
-    --rose: #C2477E;
-    --rose-clair: #FBEAF1;
-    --jaune: #B8901A;
-    --jaune-clair: #FBF3DC;
+    --rose: #c90f63;
+    --rose-clair: #fa7186;
+    --jaune: #eeb90a;
+    --jaune-clair: #e1e438;
+    --orange-phet: #ffa600;
+    --orange-phetfonce: #ff7300;
+    --orange-phetclair: #f1a008d5;
 
     --bg: var(--blanc);
     --surface: var(--gris-fond);
@@ -67,7 +76,7 @@
     border-bottom: 3px solid var(--charge-color);
     border-radius: 14px;
     max-width: 1200px;
-    margin: 0 auto 24px;
+    margin: 0 auto 10px;
     position: sticky;
     top: 0;
     z-index: 200;
@@ -918,7 +927,7 @@
 }
 .tab-btn.active .tab-num { background: var(--bleu); color:#fff; }
 
-.sub-tabs-nav { display:flex; gap:6px; padding:18px 0 0; margin-bottom:22px; flex-wrap:wrap; overflow-x:auto; }
+.sub-tabs-nav { display:flex; gap:6px; padding:0; margin-bottom:12px; flex-wrap:wrap; overflow-x:auto; }
 .sub-tab-btn {
   display:flex; align-items:center; gap:8px; padding:8px 18px; border:none; background:#b8cfe0;
   color:var(--bleu); font-family:'Nunito',sans-serif; font-size:.84rem; font-weight:700;
@@ -935,7 +944,30 @@
 
 .sub-tab-content { display:none; }
 .sub-tab-content.active { display:block; animation: fadeIn .2s ease; }
-.main { max-width:1200px; margin:0 auto; padding:28px 20px 60px; }
+
+/* ── SOUS-ONGLETS NIVEAU 3 (orange) ── */
+.sub3-tabs-nav { display:flex; gap:6px; padding:12px 0 0; margin-bottom:12px; flex-wrap:wrap; overflow-x:auto; }
+.sub3-tab-btn {
+  display:flex; align-items:center; gap:8px; padding:7px 16px; border:none; background:var(--orange-clair);
+  color:var(--orange); font-family:'Nunito',sans-serif; font-size:.82rem; font-weight:700;
+  cursor:pointer; border-radius:999px; transition:all .2s; white-space:nowrap;
+}
+.sub3-tab-btn:hover { background: var(--orange); color:#fff; }
+.sub3-tab-btn.active { background: var(--orange); color:#fff; }
+.sub3-tab-btn .sub-tab-num {
+  width:24px; height:24px; border-radius:50%; font-size:.72rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  background:rgba(255,255,255,.3);
+}
+.sub3-tab-btn:not(.active) .sub-tab-num { background: rgba(232,120,58,.15); }
+
+/* Espace réduit à 10px quand un sous-onglet niveau 3 suit directement un sous-onglet niveau 2, sans contenu entre les deux */
+#sub-nav-P { margin-bottom: 12px; }
+.sub-tab-content > .sub3-tabs-nav:first-child { padding-top: 0; }
+
+/* Espace réduit entre une pastille niveau 3 et le .section-title qui la suit directement */
+.sub3-tabs-nav + .sub-tab-content > .section-title:first-child { margin-top: 0; }
+.main { max-width:1200px; margin:0 auto; padding:0 20px 60px; }
 .tab-content { display:none; }
 .tab-content.active { display:block; animation: fadeIn .25s ease; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
@@ -1002,7 +1034,77 @@
 .pastille-corrige { color:var(--vert); border-color:var(--vert); }
 .pastille-corrige:hover { background: var(--vert-clair); }
 
+/* ── BLOCS ACTIVITÉ (repris tel quel de séq01) ── */
+.activite-card {
+  background:var(--blanc); border:1.5px solid var(--bleu-activite-bord);
+  border-left:4px solid var(--bleu-moyen); border-radius:0 12px 12px 0;
+  padding:16px 22px; margin-bottom:16px; position:relative;
+}
+.activite-card h3 { font-family:'Outfit',sans-serif; font-size:1.0rem; font-weight:700; color:var(--bleu); margin-bottom:8px; }
+.activite-card p, .activite-card ul { font-size:.92rem; line-height:1.65; color:var(--texte); }
+
+/* Mise en page doc + image (côte à côte) */
+.doc-flex { display:flex; gap:16px; flex-wrap:wrap; margin:8px 0 18px; }
+.doc-flex > div { flex:1; min-width:220px; }
+.doc-media img { max-width:100%; border-radius:10px; border:1px solid var(--gris-bord); display:block; }
+.doc-src { font-size:.76rem; color:var(--texte-leger); font-style:italic; margin-top:6px; text-align:right; }
+
+/* Bouton Indice — référence charte §2.2 (repris de séq01) */
+.btn-indice {
+  display:inline-flex; align-items:center; gap:5px; margin-left:8px; padding:3px 12px;
+  background:var(--indice-clair); color:var(--indice); border:1.5px solid var(--indice);
+  border-radius:999px; font-family:'Nunito',sans-serif; font-size:.78rem; font-weight:700;
+  cursor:pointer; transition:all .2s; vertical-align:middle;
+}
+.btn-indice:hover { background:var(--indice); color:#fff; }
+.indice-box {
+  display:none; background:var(--indice-clair); border:1.5px solid var(--indice); border-left:4px solid var(--indice);
+  border-radius:0 10px 10px 0; padding:10px 16px; margin:8px 0 0; font-size:.85rem; line-height:1.6; color:var(--texte);
+}
+.indice-box.visible { display:block; animation: fadeIn .2s ease; }
+
+/* ── EXERCICES PAR NIVEAU DE DIFFICULTÉ (repris tel quel de séq01) ── */
+.exo-tier-card {
+  background:var(--blanc); border:1.5px solid var(--gris-bord); border-left:4px solid var(--gris-bord);
+  border-radius:0 12px 12px 0; padding:16px 22px; margin-bottom:16px; position:relative;
+}
+.exo-tier-card h3 { font-family:'Outfit',sans-serif; font-size:1.0rem; font-weight:700; margin-bottom:10px; }
+.exo-tier-card.tier-facile { border-color:var(--vert-exo-bord); border-left-color:var(--vert); }
+.exo-tier-card.tier-facile h3 { color:var(--vert); }
+.exo-tier-card.tier-inter { border-color:var(--orange-clair); border-left-color:var(--orange); }
+.exo-tier-card.tier-inter h3 { color:var(--orange); }
+.exo-tier-card.tier-difficile { border-color:var(--rouge-clair); border-left-color:var(--rouge); }
+.exo-tier-card.tier-difficile h3 { color:var(--rouge); }
+
 .footer-note { text-align:center; font-size:.78rem; color:var(--texte-leger); padding:20px; border-top:1px solid var(--gris-bord); margin-top:30px; }
+.appel-box {
+  background:var(--orange-clair); border:1.5px solid var(--orange); border-radius:10px;
+  padding:10px 16px; margin:14px 0; font-size:.86rem; font-weight:700; color:var(--orange);
+  display:flex; align-items:center; gap:10px;
+}
+
+/* ── ONGLETS INDIVIDUELS D'EXERCICES + ÉTOILES (repris de séq01) ── */
+.exo-tabs-nav { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+.exo-tab-btn { flex-shrink:0; white-space:nowrap; display:flex; align-items:center; gap:7px; padding:8px 16px; border:1.5px solid var(--gris-bord); background:#fff; color:var(--bleu); font-family:'Nunito',sans-serif; font-size:.82rem; font-weight:700; cursor:pointer; border-radius:999px; transition:all .2s; }
+.exo-tab-btn:hover { border-color:var(--bleu); }
+.exo-tab-btn.active { background:var(--bleu); color:#fff; border-color:var(--bleu); }
+.exo-tab-btn .exo-tab-stars { font-size:.76rem; color:var(--orange); font-weight:400; }
+.exo-tab-btn.active .exo-tab-stars { color:#FFD9B3; }
+
+/* Bouton Correction par exercice (repris de séq01) */
+.btn-correction2 {
+  display:inline-flex; align-items:center; gap:5px; margin-top:14px; padding:6px 16px;
+  background:#1f6b47; color:#fff; border:1.5px solid #1f6b47; border-radius:999px;
+  font-family:'Nunito',sans-serif; font-size:.82rem; font-weight:700; cursor:pointer; transition:all .2s;
+}
+.btn-correction2:hover { background:#3ea873; border-color:#3ea873; }
+.correction-box {
+  display:none; background:#eef8f2; border:1.5px solid #1f6b47; border-left:4px solid #1f6b47;
+  border-radius:0 10px 10px 0; padding:10px 16px; margin:8px 0 0; font-size:.85rem; line-height:1.6; color:var(--texte);
+}
+.correction-box.visible { display:block; animation: fadeIn .2s ease; }
+
+
 
 @media (max-width:640px) {
   .tab-btn { padding:8px 12px 10px; font-size:.80rem; }
@@ -1025,13 +1127,13 @@
 
 <nav class="tabs-nav">
 <button class="tab-btn active" onclick="switchTab(0)">
-<span class="tab-num">A</span> Modéliser un condensateur (voir A1, A2)
+<span class="tab-num">1</span> Cours
   </button>
 <button class="tab-btn" onclick="switchTab(1)">
-<span class="tab-num">B</span> Circuit RC : charge et décharge (voir B1 à B4)
+<span class="tab-num">2</span> Entraînements
   </button>
 <button class="tab-btn" onclick="switchTab(2)">
-<span class="tab-num">✓</span> Bilan &amp; Ressources
+<span class="tab-num">3</span> Bilan &amp; Ressources
   </button>
 </nav>
 </div>
@@ -1053,11 +1155,22 @@
 <div class="cap-src">Source : programme de l'enseignement de spécialité de physique-chimie de terminale générale, BO spécial n° 8 du 25 juillet 2019.</div>
 </div>
 </div><main class="main"><div class="tab-content active" id="tab-0">
-<nav class="sub-tabs-nav" id="sub-nav-A">
-<button class="sub-tab-btn active" data-sub="A1" onclick="switchSubTab('A',0)">
+<nav class="sub-tabs-nav" id="sub-nav-P">
+<button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+<span class="sub-tab-num">1</span> Modéliser un condensateur
+  </button>
+<button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+<span class="sub-tab-num">2</span> Circuit RC : charge et décharge
+  </button>
+</nav>
+
+<!-- Sous-onglet P1 : Modéliser un condensateur -->
+<div class="sub-tab-content active" id="sub-P-0">
+<nav class="sub3-tabs-nav" id="sub-nav-A">
+<button class="sub3-tab-btn active" data-sub="A1" onclick="switchSubTab('A',0)">
 <span class="sub-tab-num">A1</span> Comportement capacitif &amp; géométrie
     </button>
-<button class="sub-tab-btn" data-sub="A2" onclick="switchSubTab('A',1)">
+<button class="sub3-tab-btn" data-sub="A2" onclick="switchSubTab('A',1)">
 <span class="sub-tab-num">A2</span> Énergie stockée
     </button>
 </nav>
@@ -1216,18 +1329,22 @@
 </div>
 </div>
 </div></div>
-</div><div class="tab-content" id="tab-1">
-<nav class="sub-tabs-nav" id="sub-nav-B">
-<button class="sub-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
+</div>
+<!-- /sub-P-0 (Modéliser un condensateur) -->
+
+<!-- Sous-onglet P2 : Circuit RC : charge et décharge -->
+<div class="sub-tab-content" id="sub-P-1">
+<nav class="sub3-tabs-nav" id="sub-nav-B">
+<button class="sub3-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
 <span class="sub-tab-num">B1</span> Équation différentielle
     </button>
-<button class="sub-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
+<button class="sub3-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
 <span class="sub-tab-num">B2</span> Simulation interactive
     </button>
-<button class="sub-tab-btn" data-sub="B3" onclick="switchSubTab('B',2)">
+<button class="sub3-tab-btn" data-sub="B3" onclick="switchSubTab('B',2)">
 <span class="sub-tab-num">B3</span> Régimes transitoire &amp; permanent
     </button>
-<button class="sub-tab-btn" data-sub="B4" onclick="switchSubTab('B',3)">
+<button class="sub3-tab-btn" data-sub="B4" onclick="switchSubTab('B',3)">
 <span class="sub-tab-num">B4</span> Déterminer τ
     </button>
 </nav>
@@ -1953,6 +2070,1672 @@
 </div>
 </div>
 </div>
+<!-- /sub-P-1 (Circuit RC : charge et décharge) -->
+
+</div>
+<!-- /tab-0 (Cours) -->
+
+<!-- ══════════════ ONGLET ENTRAÎNEMENTS ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+<nav class="sub-tabs-nav" id="sub-nav-E">
+<button class="sub-tab-btn active" data-sub="E1" onclick="switchSubTab('E',0)">
+<span class="sub-tab-num">1</span> Activités
+  </button>
+<button class="sub-tab-btn" data-sub="E2" onclick="switchSubTab('E',1)">
+<span class="sub-tab-num">2</span> Exercices
+  </button>
+<button class="sub-tab-btn" data-sub="E3" onclick="switchSubTab('E',2)">
+<span class="sub-tab-num">🎓</span> Sujets de bac
+  </button>
+</nav>
+
+<!-- Sous-onglet E1 : Activités -->
+<div class="sub-tab-content active" id="sub-E-0">
+
+<!-- Sous-onglets niveau 3 : activités individuelles -->
+<nav class="sub3-tabs-nav" id="sub-nav-EA">
+<button class="sub3-tab-btn active" data-sub="EA1" onclick="switchSubTab('EA',0)">📋 Activité 1</button>
+<button class="sub3-tab-btn" data-sub="EA2" onclick="switchSubTab('EA',1)">📋 Activité 2</button>
+<button class="sub3-tab-btn" data-sub="EA3" onclick="switchSubTab('EA',2)">🔬 Activité 3</button>
+<button class="sub3-tab-btn" data-sub="EA4" onclick="switchSubTab('EA',3)">💻 Activité 4</button>
+</nav>
+
+<!-- Activité 1 : Accumulation de charges électriques -->
+<div class="sub-tab-content active" id="sub-EA-0">
+<div class="activite-card" id="activite-1-foudre">
+<h3>Activité 1 : Accumulation de charges électriques</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Notions : Intensité d'un courant électrique · Comportement capacitif (§1.1 et 1.2 p. 487)</em></p>
+
+<p>Le phénomène d'accumulation de charges électriques est à l'origine de la foudre et de l'incendie du ballon dirigeable LZ 129 Hindenburg.</p>
+
+<p style="font-weight:700;color:var(--bleu);margin:10px 0;">● Comment expliquer les phénomènes d'accumulation de charges électriques ?</p>
+
+<div class="doc-flex">
+<div>
+<p style="font-weight:700;margin-bottom:8px;">Doc. 1 — Les nuages d'orage et la foudre</p>
+<p>Dans un nuage d'orage, les mouvements convectifs de l'air provoquent un phénomène d'électrisation par frottement : des charges électriques opposées apparaissent en différents endroits du nuage, généralement positives en haut et négatives à la base du nuage.<br/><br/>
+Lorsque le nuage arrive à la verticale d'un sol conducteur, un phénomène d'électrisation par influence, qui a pour effet d'électriser la surface du sol, se produit. L'accumulation de charges électriques de signes opposés entre le nuage et le sol peut ensuite entraîner une décharge électrique brutale, appelée foudre : une charge de 350 coulombs peut alors circuler du nuage vers le sol en 3 ms.</p>
+<div class="doc-src">D'après Wikipédia.</div>
+</div>
+<div class="doc-media">
+<img alt="Orage et éclair au-dessus d'une route" src="Entrainements/p482-1.png"/>
+</div>
+</div>
+
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:520px;margin:0 auto;">
+<p style="font-weight:700;margin-bottom:8px;">Doc. 2 — Accident du LZ 129 Hindenburg</p>
+<img alt="Accident du dirigeable LZ 129 Hindenburg" src="Entrainements/p482-2.png"/>
+<p style="margin-top:10px;"><a href="https://www.pearltrees.com/private/id105762109/item813658793?paccess=47e8b205a9c.307f72a9.209aeaee39f38271233b4e4a920908e0" target="_blank" rel="noopener">▶ Vidéo — Accident du LZ 129 Hindenburg</a></p>
+</div>
+</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">1. S'approprier</p>
+<p class="q-text">Réaliser un schéma représentant la situation décrite dans le Doc. 1 avant que la foudre ne se produise.
+  <button class="btn-indice" onclick="toggleIndice('ind-act1-q1')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act1-q1">Pensez à représenter le nuage (avec ses zones de charges opposées) et le sol comme deux « armatures » en regard, séparées par l'air qui joue le rôle d'isolant.</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">2. Analyser-Raisonner</p>
+<p style="font-size:0.85rem;color:var(--texte-leger);margin-bottom:8px;">Un comportement capacitif est caractérisé par une accumulation de charges électriques de signes opposés sur deux milieux conducteurs en regard l'un de l'autre, séparés par un isolant.</p>
+<p class="q-text">a. Expliquer comment l'accumulation de charges s'effectue au sol à la verticale du nuage.
+  <button class="btn-indice" onclick="toggleIndice('ind-act1-q2a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act1-q2a">Relisez le Doc. 1 : c'est un phénomène d'électrisation « par influence ». Quel est le signe des charges à la base du nuage ? Quel signe cela induit-il sur le sol juste en dessous ?</div>
+
+<p class="q-text">b. Identifier dans chaque situation des Docs 1 et 2 les milieux conducteurs et l'isolant.
+  <button class="btn-indice" onclick="toggleIndice('ind-act1-q2b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act1-q2b">Pour le Doc. 1, cherchez les deux surfaces qui portent des charges opposées, et ce qui les sépare. Pour le Doc. 2, ce sont les cordes d'ancrage mouillées qui donnent un indice sur les deux surfaces métalliques en jeu et ce qui les sépare habituellement.</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">3. Réaliser</p>
+<p class="q-text">À l'aide du Doc. 1, estimer l'ordre de grandeur de l'intensité du courant électrique lorsque la foudre se produit.
+  <button class="btn-indice" onclick="toggleIndice('ind-act1-q3')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act1-q3">L'intensité moyenne d'un courant électrique correspond à la quantité de charge transférée divisée par la durée du transfert : I = Q / Δt. Repérez ces deux valeurs dans le Doc. 1 et n'oubliez pas de convertir la durée en secondes.</div>
+
+</div><!-- /activite-1-foudre -->
+</div><!-- /sub-EA-0 -->
+
+<!-- Activité 2 : AD2 - Capteurs de déplacement -->
+<div class="sub-tab-content" id="sub-EA-1">
+<div class="activite-card" id="activite-2-ad2">
+<h3>Activité 2 : Capteurs de déplacement</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Notions : Capteur capacitif de déplacement · Sensibilité d'un capteur</em></p>
+
+<p>Les capteurs capacitifs de déplacement sont utilisés dans les domaines industriels, par exemple pour contrôler la position et le déplacement d'outils au sein de machineries complexes. Tous les capteurs ont des caractéristiques communes : ils doivent être étalonnés, ils ont une certaine sensibilité et une certaine gamme d'utilisation.</p>
+
+<p style="font-weight:700;color:var(--bleu);margin:10px 0;">● Objectif : Étudier les caractéristiques d'un capteur capacitif.</p>
+
+<div class="doc-media" style="max-width:640px;margin:0 auto 18px;">
+<img alt="Docs 1 à 4 — capteur de déplacement capacitif, principe de mesure, étalonnage, sensibilité" src="Entrainements/AD2.png"/>
+</div>
+
+<div class="doc-flex">
+<div>
+<p style="font-weight:700;margin-bottom:8px;">Doc. 1 — Capteur de déplacement capacitif</p>
+<p>On étudie un capteur de déplacement capacitif formé de deux condensateurs de capacités C₁ et C₂ en série ayant une armature commune et mobile.<br/><br/>
+Les condensateurs ont au repos une distance identique <em>d</em> entre leurs deux armatures. Lorsque l'armature centrale s'écarte de la position au repos d'une distance <em>x</em>, la capacité de chaque condensateur varie.</p>
+</div>
+</div>
+
+<div class="doc-flex">
+<div>
+<p style="font-weight:700;margin-bottom:8px;">Doc. 2 — Principe de mesure du capteur</p>
+<p>On soumet le capteur à une tension U<sub>g</sub> fixe et on mesure la tension U aux bornes du condensateur de capacité C₁.<br/><br/>
+Le lien entre ces tensions s'écrit : U = (d + x)/(2d) × U<sub>g</sub></p>
+</div>
+</div>
+
+<div class="doc-flex">
+<div>
+<p style="font-weight:700;margin-bottom:8px;">Doc. 3 — Étalonnage du capteur</p>
+<p>On a réalisé des mesures pour un capteur de déplacement capacitif, comme celui envisagé dans les Docs 1 et 2.</p>
+<div style="overflow-x:auto;margin-top:8px;">
+<table style="border-collapse:collapse;font-size:.85rem;min-width:420px;">
+<tr style="background:var(--vert-clair);">
+<td style="padding:6px 12px;font-weight:700;border:1px solid var(--gris-bord);">x (en µm)</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">1,0</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">3,0</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">5,0</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">10</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">20</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">30</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">50</td>
+</tr>
+<tr style="background:var(--vert-clair);">
+<td style="padding:6px 12px;font-weight:700;border:1px solid var(--gris-bord);">U (en V)</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">6,008</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">6,022</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">6,029</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">6,054</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">6,118</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">6,180</td>
+<td style="padding:6px 12px;border:1px solid var(--gris-bord);">6,290</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="doc-flex">
+<div>
+<p style="font-weight:700;margin-bottom:8px;">Doc. 4 — Sensibilité d'un capteur</p>
+<p>Soit un dispositif délivrant une tension U dépendant de la grandeur physique <em>x</em> que l'on cherche à mesurer.<br/><br/>
+La <b>sensibilité</b> s est une caractéristique de ce dispositif de mesure. Elle est définie comme la dérivée du signal U délivré par le dispositif par rapport à la grandeur <em>x</em> à mesurer : s = dU/dx<br/><br/>
+Plus la sensibilité s est élevée, plus le capteur est capable de mettre en évidence de petites variations de la grandeur mesurée.</p>
+</div>
+</div>
+
+<p style="font-size:0.85rem;color:var(--texte-leger);margin:14px 0 4px;">Pour l'étude d'un capteur capacitif de déplacement (Docs 1 et 2), on a réalisé des mesures d'étalonnage (Doc. 3).</p>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">1.</p>
+<p class="q-text">À l'aide du Doc. 3, placer les points d'étalonnage sur un graphique représentant U en fonction de x. Tracer la droite-modèle.
+  <button class="btn-indice" onclick="toggleIndice('ind-act2-q1')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act2-q1">Placez x en abscisse et U en ordonnée. Les points doivent être quasiment alignés : la droite-modèle est celle qui passe au mieux par l'ensemble des points (ajustement affine).</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">2.</p>
+<p class="q-text">Déterminer les valeurs des paramètres d et U<sub>g</sub> (Doc. 2).
+  <button class="btn-indice" onclick="toggleIndice('ind-act2-q2')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act2-q2">Réécrivez la relation U = (d+x)/(2d) × Ug sous forme affine U = a·x + b, avec a = Ug/(2d) et b = Ug/2. Identifiez a et b à partir du graphique (coefficient directeur et ordonnée à l'origine), puis remontez à d et Ug.</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">3.</p>
+<p class="q-text">Montrer que la sensibilité s du capteur décrit dans le Doc. 1 est la même pour toute valeur de l'écart x à la position de repos. Calculer la valeur de s.
+  <button class="btn-indice" onclick="toggleIndice('ind-act2-q3')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act2-q3">s = dU/dx. Dérivez l'expression U = (d+x)/(2d) × Ug par rapport à x : le résultat ne dépend-il de x ? Utilisez les valeurs de d et Ug trouvées en question 2 pour calculer s numériquement.</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">4.</p>
+<p class="q-text">Montrer que la sensibilité d'un tel capteur dépend de la distance d au repos. La sensibilité est-elle meilleure pour les petites ou les grandes valeurs de d ? Quelle limitation cela impose-t-il à la valeur de la sensibilité ?
+  <button class="btn-indice" onclick="toggleIndice('ind-act2-q4')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act2-q4">Regardez l'expression de s trouvée en question 3 : comment varie-t-elle quand d diminue ? Mais physiquement, d peut-il être réduit indéfiniment (pensez à l'écart x et au risque de contact entre armatures) ?</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">5.</p>
+<p class="q-text">Si le dispositif de mesure de la tension U est précis au millivolt près, quelle est la plus petite variation de x que l'on peut espérer mesurer ?
+  <button class="btn-indice" onclick="toggleIndice('ind-act2-q5')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act2-q5">La plus petite variation détectable ΔU vaut 1 mV. Utilisez s = ΔU/Δx pour en déduire Δx minimal détectable.</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">6.</p>
+<p class="q-text">Pour quelle gamme de déplacements l'utilisation du capteur proposé est-elle adaptée ?
+  <button class="btn-indice" onclick="toggleIndice('ind-act2-q6')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act2-q6">Repartez de la réponse à la question 5 (limite basse, résolution) et du Doc. 3 (limite haute, gamme des x testés à l'étalonnage où la relation reste linéaire).</div>
+
+<p style="font-weight:700;color:var(--bleu);margin-top:18px;">7.</p>
+<p class="q-text">Quels sont les avantages et les inconvénients d'une sensibilité élevée pour ce capteur ?
+  <button class="btn-indice" onclick="toggleIndice('ind-act2-q7')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act2-q7">Une sensibilité élevée améliore la détection des petites variations (question 5), mais rappelez-vous la limitation identifiée en question 4 sur la valeur de d.</div>
+
+</div><!-- /activite-2-ad2 -->
+</div><!-- /sub-EA-1 -->
+
+<!-- Activité 3 : TP Introduction à Arduino -->
+<div class="sub-tab-content" id="sub-EA-2">
+<div class="activite-card" id="activite-3-arduino">
+<h3>Activité 3 : TP — Introduction à Arduino</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Capacité expérimentale : utiliser un microcontrôleur.</em></p>
+
+<p style="font-weight:700;color:var(--bleu);margin:14px 0 8px;">I. Présentation de la carte Arduino</p>
+
+<p style="font-weight:700;margin-bottom:6px;">a. Constitution</p>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:640px;margin:0 auto 12px;">
+<img alt="Carte Arduino annotée : prise jack, USB, microcontrôleur, entrées analogiques, entrées/sorties numériques" src="Entrainements/AN1-1.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin:14px 0 6px;">b. Les entrées et sorties numériques : D0 à D13</p>
+<div class="doc-flex">
+<div>
+<p>Chacun des connecteurs D0 à D13 peut être <b>configuré par programmation en entrée ou en sortie</b>. Il est ainsi possible de connecter côte à côte des capteurs logiques (interrupteurs) et des actionneurs (LED, buzzer...).<br/><br/>
+Les signaux véhiculés sont des signaux logiques : HAUT (5 V) ou BAS (0 V) par rapport à la masse GND.<br/><br/>
+<b>Attention :</b> les connecteurs ne peuvent pas fournir en sortie un courant supérieur à 40 mA — il est donc interdit de brancher directement un moteur sur une sortie logique.</p>
+</div>
+<div class="doc-media" style="flex:0 1 140px;">
+<img alt="Connecteurs numériques D0 à D13" src="Entrainements/AN1-2.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin:14px 0 6px;">c. Les entrées analogiques A0 à A5</p>
+<div class="doc-flex">
+<div>
+<p>Contrairement aux entrées/sorties numériques (2 états), les six entrées analogiques A0 à A5 peuvent admettre 1024 valeurs comprises entre 0 et 5 V, soit une précision d'environ 5 mV (≈ 5 V / 1024).</p>
+</div>
+<div class="doc-media" style="flex:0 1 100px;">
+<img alt="Connecteurs analogiques A0 à A5" src="Entrainements/AN1-3.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin:14px 0 6px;">d. Comment y connecter des capteurs ?</p>
+<div class="doc-flex">
+<div>
+<p>Une <b>plaque d'essai</b> permet de réaliser des montages électroniques sans soudure, à l'aide de « straps » (fils de cuivre souples).<br/><br/>
+Les 5 trous d'une même ligne sont reliés par une barre métallique ; de même, les 25 trous des colonnes externes « + » et « − » sont reliés entre eux.</p>
+</div>
+<div class="doc-media" style="flex:1 1 260px;">
+<img alt="Plaque d'essai : lignes/colonnes reliées, vue de dessous" src="Entrainements/AN1-4.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">II. Prise en main</p>
+
+<p style="font-weight:700;margin-bottom:6px;">1. Tester la carte</p>
+<div class="doc-flex">
+<div>
+<p class="q-text">Pour vérifier que la carte fonctionne, faire clignoter la LED de test sur la carte Arduino.
+  <button class="btn-indice" onclick="toggleIndice('ind-act3-1')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act3-1">Étapes : ouvrir le logiciel Arduino → relier la carte à l'ordinateur par câble USB → dans le menu <em>Outils</em>, vérifier le type de carte (Arduino/Genuino Uno) et le port → dans le menu <em>Fichier</em>, choisir Exemples → Basics → « Blink » → cliquer sur « Téléverser ».</div>
+</div>
+<div class="doc-media" style="flex:0 1 200px;">
+<img alt="LED de test sur la carte Arduino" src="Entrainements/AN1-5.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin:14px 0 6px;">2. Allumer une LED</p>
+<div class="doc-flex">
+<div>
+<p class="q-text">Réaliser le montage ci-contre, relier la carte à l'ordinateur, vérifier le type de carte et le port, puis recopier et téléverser le programme ci-dessous.
+  <button class="btn-indice" onclick="toggleIndice('ind-act3-2')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act3-2">La LED a une <b>anode</b> (+, patte longue) et une <b>cathode</b> (−, patte courte) : respectez le sens de branchement. La résistance de 330 Ω (orange-orange-rouge) protège la LED en limitant le courant.</div>
+</div>
+<div class="doc-media" style="flex:0 1 260px;">
+<img alt="Montage pour allumer une LED : résistance 330 ohms, LED, code" src="Entrainements/AN1-6.png"/>
+</div>
+</div>
+
+<pre style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:8px;padding:12px 16px;font-size:.8rem;overflow-x:auto;margin-top:10px;">int LED = 8;                // la LED est branchée sur la broche 8
+
+void setup()
+{
+  pinMode(LED, OUTPUT);     // la broche 8 est une sortie
+}
+
+void loop()
+{
+  digitalWrite(LED, HIGH);  // la LED est allumée
+  delay(1000);               // délai d'attente de 1 s
+  digitalWrite(LED, LOW);   // la LED est éteinte
+  delay(1000);               // délai d'attente de 1 s
+}</pre>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">III. Produire un signal sonore</p>
+<p>On utilise un buzzer en série avec une résistance de 1 kΩ. Réaliser le montage, puis le programme en suivant les 3 mêmes étapes (int, void setup, void loop). Dans <code>void loop</code>, utiliser <code>tone(broche, fréquence)</code> suivi de <code>delay(durée)</code>, terminer par <code>noTone(broche)</code>.</p>
+
+<pre style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:8px;padding:12px 16px;font-size:.8rem;overflow-x:auto;margin:10px 0;">int LED = 8;  // la LED est branchée sur la broche 8
+int BUZ = 2;  // le BUZZER est branché sur la broche 2
+
+void setup()
+{
+  pinMode(LED, OUTPUT);      // la broche 8 est une sortie
+  pinMode(BUZ, OUTPUT);      // la broche 2 est une sortie
+}
+
+void loop()
+{
+  digitalWrite(LED, HIGH);   // la LED est allumée
+  delay(1000);                // délai d'attente de 1 s
+  digitalWrite(LED, LOW);    // la LED est éteinte
+  delay(100);                  // délai d'attente
+
+  tone(BUZ, 450);             // le BUZZER est allumé
+  delay(100);                  // délai d'attente
+  noTone(BUZ);                // le BUZZER est éteint
+  delay(100);                  // délai d'attente
+}</pre>
+
+<p style="font-weight:700;margin-top:14px;">1.</p>
+<p class="q-text">Pour une fréquence de 440 Hz, tester les limites basse et haute de votre audition.
+  <button class="btn-indice" onclick="toggleIndice('ind-act3-3-1')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act3-3-1">Modifiez la valeur de fréquence dans <code>tone(BUZ, ...)</code> et téléversez à chaque essai : diminuez progressivement jusqu'à ne plus entendre le son (limite basse), puis augmentez jusqu'à la limite haute. L'oreille humaine perçoit typiquement entre 20 Hz et 20 000 Hz.</div>
+
+<p style="font-weight:700;margin-top:14px;">2.</p>
+<p class="q-text">Faire sonner les partitions suivantes et reconnaître les chansons. Répartissez-vous le travail.
+  <button class="btn-indice" onclick="toggleIndice('ind-act3-3-2')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act3-3-2">Pour chaque note de la partition : repérez son nom (Do, Ré, Mi...) grâce à la clé de sol ou de fa (Doc. annexe), puis lisez sa fréquence dans le tableau selon l'octave indiquée. La durée en <code>delay()</code> se déduit de la valeur de la note (noire/croche/blanche...) et du tempo indiqué (ex. 800 ms pour 1 noire) — une croche vaut la moitié d'une noire, une blanche vaut 2 noires. N'oubliez pas une brève pause silencieuse (<code>noTone</code> + petit délai) entre deux notes répétées pour bien les séparer.</div>
+
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:600px;margin:0 auto;">
+<img alt="Partitions Morceau 1 et Morceau 2" src="Entrainements/AN1-7.png"/>
+</div>
+</div>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:600px;margin:0 auto;">
+<img alt="Partition Morceau 3" src="Entrainements/AN1-9.png"/>
+</div>
+</div>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:600px;margin:0 auto;">
+<img alt="Partition Morceau 4" src="Entrainements/AN1-10.png"/>
+</div>
+</div>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:600px;margin:0 auto;">
+<img alt="Partition Morceau 5" src="Entrainements/AN1-11.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin-top:18px;">Annexes</p>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 260px;">
+<img alt="Clé de sol et clé de fa : correspondance notes" src="Entrainements/AN1-13.png"/>
+</div>
+<div class="doc-media" style="flex:1 1 320px;">
+<img alt="Tableau des fréquences associées aux notes selon l'octave" src="Entrainements/AN1-14.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin-top:18px;">Coup de pouce — photos des montages</p>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:420px;margin:0 auto;">
+<img alt="Photos des montages : LED seule, puis LED + buzzer" src="Entrainements/AN1-15.png"/>
+</div>
+</div>
+
+</div><!-- /activite-3-arduino -->
+</div><!-- /sub-EA-2 -->
+
+<!-- Activité 4 : TP2 - Constante de temps d'un circuit RC -->
+<div class="sub-tab-content" id="sub-EA-3">
+<div class="activite-card" id="activite-4-tp2">
+<h3>Activité 4 : TP2 — Constante de temps τ d'un circuit RC</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Objectifs : étudier la réponse d'un dipôle RC · déterminer τ à l'aide d'un microcontrôleur et de Python, et retrouver la capacité du condensateur.</em></p>
+
+<p style="font-weight:700;margin:14px 0 6px;">Document 1 — Le condensateur</p>
+<div class="doc-flex">
+<div>
+<p>Un condensateur est un composant électronique capable de stocker (charge) et relâcher (décharge) de l'énergie électrique dans un circuit. Souvent positionné entre l'alimentation et la masse, il évite des fluctuations de tension (il se décharge lors des chutes de tension et se charge lors des pics de tension).<br/><br/>
+Un condensateur est caractérisé par sa <b>capacité électrique</b> notée C, exprimée en farads (F). Elle représente la quantité de charges électriques portées par le condensateur pour une tension donnée.</p>
+</div>
+<div class="doc-media" style="flex:0 1 220px;">
+<img alt="Symbole d'un condensateur polarisé" src="Entrainements/fig1-symbole-condensateur.svg"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin:14px 0 6px;">Document 2 — Le circuit RC série</p>
+<div class="doc-flex">
+<div>
+<p>Un circuit RC série est un circuit électrique, composé d'une résistance et d'un condensateur montés en série.</p>
+</div>
+<div class="doc-media" style="flex:1 1 320px;">
+<img alt="Schéma électrique d'un circuit RC série" src="Entrainements/fig2-circuit-rc-serie.svg"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin:14px 0 6px;">Document 3 — Réponse d'un circuit RC à un échelon de tension</p>
+<div class="doc-flex">
+<div>
+<p>On appelle <b>échelon de tension</b> le passage brutal de la tension appliquée à l'ensemble {R+C} d'une valeur nulle à une valeur non nulle : à t &lt; 0, la tension d'alimentation est nulle, et à partir de t = 0 elle est égale à une constante E.<br/><br/>
+Le condensateur initialement déchargé se charge. Au cours de sa charge, la tension V<sub>C</sub> à ses bornes s'écrit :</p>
+<p style="text-align:center;font-weight:700;color:var(--bleu);background:var(--bleu-clair);border-radius:10px;padding:10px;margin:10px 0;">V<sub>C</sub> = E × (1 − e<sup>−t/RC</sup>)</p>
+<p>Le produit RC est homogène à une durée appelée <b>constante de temps</b>, notée τ et exprimée en s.<br/><br/>
+Au cours de la charge d'un condensateur à travers une résistance R sous une tension E :</p>
+<ul style="padding-left:18px;">
+<li>à t = τ, V<sub>C</sub> ≈ 0,63×E (soit 63 % de E) ;</li>
+<li>à t = 3τ, V<sub>C</sub> ≈ 0,95×E (soit 95 % de E) ;</li>
+<li>à t = 5τ, V<sub>C</sub> ≈ 0,99×E (soit 99 % de E) — le condensateur est pratiquement chargé.</li>
+</ul>
+<p>La constante de temps donne donc un ordre de grandeur de la durée de charge d'un condensateur.</p>
+</div>
+<div class="doc-media" style="flex:0 1 260px;">
+<img alt="Courbe de charge Vc(t) d'un condensateur" src="Entrainements/fig3-courbe-charge.svg"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin:14px 0 6px;">Document 4 — Le montage</p>
+<div class="doc-flex">
+<div>
+<p>Le microcontrôleur alimente le circuit RC série (broche numérique 2) et relève la tension aux bornes du condensateur (broche analogique A0).<br/><br/>
+Un bouton poussoir en parallèle du condensateur permet une décharge instantanée avant de mesurer la durée de charge. Une fois le condensateur déchargé, la broche 2 passe de l'état BAS à l'état HAUT et alimente le circuit sous 5,0 V.</p>
+</div>
+<div class="doc-media" style="flex:1 1 320px;">
+<img alt="Schéma simplifié du montage Arduino + plaque d'essai" src="Entrainements/fig4-montage-schema.svg"/>
+</div>
+</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">A. Problématique et démarche expérimentale</p>
+<p style="font-weight:700;margin-top:14px;">1.</p>
+<p class="q-text">À l'aide des documents, proposer une démarche expérimentale permettant de trouver comment retrouver la valeur de la capacité du condensateur.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-1')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-1">Repartez de la relation liant τ, R et C (Doc. 3). Si vous mesurez τ expérimentalement et que vous connaissez R, quelle grandeur pouvez-vous en déduire ? Comment mesurer τ à partir de la courbe de charge (Doc. 3) ?</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">B. Étude préliminaire de la charge du condensateur</p>
+<p style="font-weight:700;margin-top:14px;">2.</p>
+<p class="q-text">Réaliser le câblage du montage présenté dans le Doc. 4.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-2')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-2">Respectez les 3 couleurs de fils du schéma : la broche D2 alimente le circuit RC, la broche A0 mesure la tension aux bornes du condensateur, GND relie la masse commune. Le bouton poussoir se place en parallèle du condensateur (mêmes deux nœuds).</div>
+
+<p style="font-weight:700;margin-top:14px;">3.</p>
+<p class="q-text">Compiler et téléverser le programme <code>charge_capa.ino</code>. Suivre la charge du condensateur à partir du moniteur série. Lorsque le message « Fin de la charge du condensateur » s'affiche, décocher le défilement automatique et copier les valeurs de V<sub>C</sub> et de temps. Coller ces valeurs dans Regressi et représenter V<sub>C</sub> = f(t).
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-3')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-3">Le moniteur série affiche deux colonnes séparées par une tabulation (V<sub>C</sub> puis temps). Sélectionnez uniquement les lignes de valeurs numériques (pas les en-têtes), copiez-collez-les directement dans Regissi via Édition → Coller, puis créez le graphe V<sub>C</sub> en fonction de temps.</div>
+
+<div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:12px 16px;margin:10px 0;">
+<p style="font-size:.78rem;font-weight:700;color:var(--texte-leger);margin-bottom:6px;">📄 Fichier fourni : charge_capa.ino (extrait)</p>
+<pre style="font-size:.78rem;overflow-x:auto;margin:0;">const int alimentation = 2;  // La broche numérique 2 alimente le circuit RC
+int Lecture = A0;            // La broche analogique A0 mesure la tension aux bornes du condensateur
+float temps;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(alimentation, OUTPUT);
+  digitalWrite(alimentation, LOW);
+  pinMode(Lecture, INPUT);
+}
+
+void loop() {
+  // décharge du condensateur, puis à t = 0 :
+  digitalWrite(alimentation, HIGH);   // on alimente le circuit RC sous 5 V
+  // ... mesure et affichage de Vc et temps via le moniteur série ...
+}</pre>
+</div>
+
+<p style="font-weight:700;margin-top:14px;">4.</p>
+<p class="q-text">Déterminer graphiquement la valeur de τ.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-4')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-4">Repartez du Doc. 3 : à t = τ, V<sub>C</sub> ≈ 0,63 × E, avec E = 5,0 V (tension d'alimentation). Repérez sur votre courbe l'ordonnée 0,63 × E, puis lisez l'abscisse t correspondante : c'est τ.</div>
+
+<div class="appel-box">📞 APPEL n°1 — Appeler le professeur pour présenter votre démarche expérimentale ou en cas de difficultés</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">C. Réponse à la problématique</p>
+<p style="font-weight:700;margin-top:14px;">5.</p>
+<p class="q-text">Ouvrir, compiler et téléverser dans la carte le programme <code>circuit_rc.ino</code>. Comparer la valeur de τ affichée à celle déterminée précédemment.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-5')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-5">Ce programme mesure directement la durée nécessaire pour que V<sub>C</sub> atteigne 63,2 % de la valeur numérique maximale (soit 0,632 × 5 V), ce qui correspond exactement à τ (Doc. 3). Comparez cette valeur à celle trouvée graphiquement en question 4 : sont-elles cohérentes ?</div>
+
+<div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:12px 16px;margin:10px 0;">
+<p style="font-size:.78rem;font-weight:700;color:var(--texte-leger);margin-bottom:6px;">📄 Fichier fourni : circuit_rc.ino (extrait — à compléter en question 7)</p>
+<pre style="font-size:.78rem;overflow-x:auto;margin:0;">const int alimentation = 2;
+int Lecture = A0;
+float tau;
+const int R = 5100;   // Valeur de la résistance R en Ohm
+
+void loop() {
+  // décharge, puis alimentation à 5 V et mesure du temps pour atteindre 63,2 % :
+  tau = (tempsFin - tempsDebut) * 1e-6;   // tau exprimé en s
+  Serial.print("La constante de temps du circuit RC est égale à : ");
+  Serial.print(tau, 3);
+  Serial.println(" s");
+
+  // Ajouter la partie de code pour calculer la capacité en microfarad
+  // en vous inspirant des lignes précédentes (question 7)
+}</pre>
+</div>
+
+<p style="font-weight:700;margin-top:14px;">6.</p>
+<p class="q-text">Enregistrer-sous le script avant toute modification, afin de répondre plus explicitement à la problématique.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-6')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-6">Menu Fichier → Enregistrer sous, en gardant une copie de l'original avant de le modifier — utile si vous devez repartir de zéro.</div>
+
+<p style="font-weight:700;margin-top:14px;">7.</p>
+<p class="q-text">Une fois vérifié par votre professeur, téléverser le programme modifié.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-7')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-7">Repartez de la relation reliant τ, R et C (Doc. 3) : C = τ/R. Créez une nouvelle variable décimale (<code>float capa;</code>), calculez-la à partir de <code>tau</code> et de <code>R</code> (déjà défini dans le programme), en pensant au facteur de conversion vers les microfarads (1 F = 10⁶ µF). Affichez le résultat avec <code>Serial.print()</code>, sur le même modèle que l'affichage de <code>tau</code> juste au-dessus.</div>
+
+<div class="appel-box">📞 APPEL n°2 — Appeler le professeur pour présenter votre travail ou en cas de difficultés</div>
+<div class="appel-box">📞 APPEL n°3 — Appeler le professeur pour présenter les modifications apportées au programme</div>
+
+<p style="font-weight:700;margin-top:14px;">8.</p>
+<p class="q-text">Répondre à la problématique.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-8')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-8">Votre réponse doit relier : la mesure de τ par le microcontrôleur, la relation C = τ/R, et la valeur de C ainsi obtenue — en la comparant à celle déduite graphiquement en question 4.</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">D. Prolongement : étude statistique</p>
+
+<p style="font-weight:700;margin-bottom:6px;">Document 5 — Extrait de la fiche technique du condensateur</p>
+<div style="overflow-x:auto;margin:8px 0 16px;">
+<table style="border-collapse:collapse;font-size:.85rem;min-width:360px;">
+<tr style="background:var(--vert-clair);"><td style="padding:6px 12px;font-weight:700;border:1px solid var(--gris-bord);">Plage de température</td><td style="padding:6px 12px;border:1px solid var(--gris-bord);">−40 °C à +85 °C</td></tr>
+<tr style="background:var(--vert-clair);"><td style="padding:6px 12px;font-weight:700;border:1px solid var(--gris-bord);">Capacité (Capacitance)</td><td style="padding:6px 12px;border:1px solid var(--gris-bord);">100 µF</td></tr>
+<tr style="background:var(--vert-clair);"><td style="padding:6px 12px;font-weight:700;border:1px solid var(--gris-bord);">Tolérance sur la capacité</td><td style="padding:6px 12px;border:1px solid var(--gris-bord);">± 5 %</td></tr>
+</table>
+</div>
+
+<p style="font-weight:700;margin-bottom:6px;">Document 6 — Protocole pour l'étude statistique de la mesure de C</p>
+<p>Ouvrir le programme <code>circuit_rc_stat.ino</code> (enregistrer-sous votre nom avant modification), l'exécuter pour réaliser des mesures consécutives de C, puis relever dans le moniteur série les valeurs numériques (n° de mesure et C en µF — sans les en-têtes), les copier dans un fichier texte, et l'enregistrer au format <code>.csv</code> (séparateur point-virgule) sous le nom « capa-nom élève.csv ».<br/><br/>
+Ouvrir ensuite <code>Etude_statistique.py</code> sous Anaconda/JupyterLab, l'enregistrer sous votre nom, remplacer le nom du fichier <code>capa.csv</code> par le vôtre, puis exécuter le programme.</p>
+
+<div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:12px 16px;margin:10px 0;">
+<p style="font-size:.78rem;font-weight:700;color:var(--texte-leger);margin-bottom:6px;">📄 Fichier fourni : circuit_rc_stat.ino (extrait)</p>
+<pre style="font-size:.78rem;overflow-x:auto;margin:0;">const int alimentation = 2;
+int Lecture = A0;
+float tau, capa;
+const int R = 5100;
+int compteur = 0;
+
+void loop() {
+  while (compteur < 30) {   // nombre de mesures consécutives à réaliser
+    // décharge, alimentation, mesure de tau, puis :
+    capa = (tau/R)*1e6;     // Calcul de C exprimé en microfarad
+    Serial.print(compteur);
+    Serial.print("\t");
+    Serial.println(capa, 4);
+  }
+}</pre>
+</div>
+
+<div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:12px 16px;margin:10px 0;">
+<p style="font-size:.78rem;font-weight:700;color:var(--texte-leger);margin-bottom:6px;">📄 Fichier fourni : Etude_statistique.py (extrait)</p>
+<pre style="font-size:.78rem;overflow-x:auto;margin:0;">import csv
+source = open('capa.csv','r')             # à remplacer par votre propre fichier
+lecteur = csv.reader(source, delimiter=";")
+capa = []
+for row in lecteur:
+    capa.append(float(row[1]))
+
+n = len(capa)
+print('Nombre de mesures :', n)
+print('Moyenne de C :', mean(capa), ' µF')
+s = std(capa, ddof=1)                      # écart-type non biaisé
+print('Ecart-type non biaisé :', s, 'µF')
+U = s/sqrt(n)                              # incertitude-type
+print('Incertitude-type sur C :', U, 'µF')
+
+hist([capa], bins=30, edgecolor='blue')    # histogramme des mesures</pre>
+</div>
+
+<p style="font-weight:700;margin-top:14px;">9.</p>
+<p class="q-text">Mettre en œuvre le protocole du Doc. 6. Relever la valeur moyenne de C et l'incertitude-type. Observer l'étendue des mesures grâce à l'histogramme.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-9')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-9">Conservez un nombre de décimales cohérent : l'incertitude-type ne doit avoir qu'un chiffre significatif (éventuellement deux), et la moyenne doit être arrondie au même rang décimal que l'incertitude.</div>
+
+<p style="font-weight:700;margin-top:14px;">10.</p>
+<p class="q-text">Renouveler les étapes du protocole pour 100 puis 200 mesures consécutives.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-10')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-10">Dans <code>circuit_rc_stat.ino</code>, modifiez uniquement la condition <code>while (compteur &lt; 30)</code> en remplaçant 30 par 100, puis par 200. Recommencez ensuite tout le protocole du Doc. 6 (nouveau fichier .csv, nouvelle exécution du script Python).</div>
+
+<p style="font-weight:700;margin-top:14px;">11.</p>
+<p class="q-text">Quelles observations portant sur l'incertitude-type et l'étendue de mesures peut-on réaliser lorsqu'on augmente le nombre de mesures ?
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-11')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-11">Comparez vos trois valeurs d'incertitude-type (30, 100, 200 mesures) : l'incertitude-type dépend de l'écart-type s et du nombre de mesures n via U = s/√n. Que devient U quand n augmente, même si s reste à peu près constant ?</div>
+
+<p style="font-weight:700;margin-top:14px;">12.</p>
+<p class="q-text">À l'aide de la fiche technique, donner un intervalle dans lequel se situe la valeur réelle de la capacité.
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-12')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-12">La tolérance du fabricant (± 5 % autour de 100 µF, Doc. 5) donne un encadrement du type [C₀ − 5%·C₀ ; C₀ + 5%·C₀]. Calculez les deux bornes.</div>
+
+<p style="font-weight:700;margin-top:14px;">13.</p>
+<p class="q-text">Le résultat de la mesure (valeur moyenne et incertitude-type) est-il cohérent avec les indications de la fiche technique ?
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-13')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-13">Un résultat de mesure s'écrit sous la forme C = C<sub>mesurée</sub> ± U. Il est cohérent avec la fiche technique si l'intervalle [C<sub>mesurée</sub> − U ; C<sub>mesurée</sub> + U] chevauche l'intervalle de tolérance trouvé en question 12.</div>
+
+<p style="font-weight:700;margin-top:14px;">14.</p>
+<p class="q-text">Quelle expression de la valeur de la capacité est la plus précise ?
+  <button class="btn-indice" onclick="toggleIndice('ind-act4-14')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-act4-14">La précision d'une mesure est d'autant meilleure que son incertitude relative (U/C<sub>mesurée</sub>) est faible. Comparez cette incertitude relative pour les trois séries (30, 100, 200 mesures).</div>
+
+</div><!-- /activite-4-tp2 -->
+</div><!-- /sub-EA-3 -->
+
+</div>
+<!-- /sub-E-0 -->
+
+<!-- Sous-onglet E2 : Exercices -->
+<div class="sub-tab-content" id="sub-E-1">
+
+<nav class="sub3-tabs-nav" id="sub-nav-EX">
+<button class="sub3-tab-btn active" data-sub="EX1" onclick="switchSubTab('EX',0)">🟢 Faciles</button>
+<button class="sub3-tab-btn" data-sub="EX2" onclick="switchSubTab('EX',1)">🟠 Intermédiaires</button>
+<button class="sub3-tab-btn" data-sub="EX3" onclick="switchSubTab('EX',2)">🔴 Difficiles</button>
+</nav>
+
+<div class="sub-tab-content active" id="sub-EX-0">
+
+<nav class="exo-tabs-nav">
+<button type="button" class="exo-tab-btn active" onclick="showExoItem(this,'exo-facile-15')">Exercice 1 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-16')">Exercice 2 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-20')">Exercice 3 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-21')">Exercice 4 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-25')">Exercice 5 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-27')">Exercice 6 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-facile-28')">Exercice 7 <span class="exo-tab-stars">★☆☆</span></button>
+</nav>
+
+<div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-15">
+<h3>Exercice 15 — Calculer l'intensité d'un courant électrique</h3>
+<p>L'évolution de la charge d'un condensateur par une source idéale de courant est décrite par la fonction <em>q</em>(<em>t</em>) = 2,3 × <em>t</em> pour <em>t</em> appartenant à l'intervalle [0, 10 s] et <em>q</em>(<em>t</em>) en µC.</p>
+<p class="q-text" style="margin-top:14px;">Déterminer la valeur <em>i</em>(<em>t</em>) de l'intensité du courant électrique aux dates 2,0 s, 5,0 s et 8,0 s. Conclure.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex15')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex15">L'intensité du courant électrique est définie par <em>i</em>(<em>t</em>) = d<em>q</em>/d<em>t</em>. Ici <em>q</em>(<em>t</em>) est une fonction affine de <em>t</em> : sa dérivée est donc une constante, indépendante de <em>t</em>.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex15')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex15">
+<p style="margin:0;"><em>q</em>(<em>t</em>) = 2,3 × <em>t</em> ⟹ <em>i</em>(<em>t</em>) = d<em>q</em>/d<em>t</em> = 2,3 µA, quelle que soit la date <em>t</em> considérée.<br/>
+Ainsi <em>i</em>(2,0 s) = <em>i</em>(5,0 s) = <em>i</em>(8,0 s) = <strong>2,3 µA</strong>.<br/><br/>
+<strong>Conclusion :</strong> l'intensité du courant électrique est constante au cours du temps, ce qui est cohérent avec l'énoncé : la charge est assurée par une <strong>source idéale de courant</strong>, qui délivre par définition un courant d'intensité constante.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-16" style="display:none;">
+<h3>Exercice 16 — Estimer l'intensité d'un courant de charge</h3>
+<p>Lors de la charge ultrarapide du bus <em>Watt system</em> à l'aéroport de Nice, une charge d'environ 200 kC est transférée dans les super condensateurs du bus pendant une durée record de 10 s.</p>
+<p class="q-text" style="margin-top:14px;">Estimer l'intensité <em>I</em> du courant électrique supposée constante pendant la charge.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex16')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex16">Pour un courant d'intensité constante, la charge transférée <em>Q</em> pendant une durée Δ<em>t</em> vérifie <em>Q</em> = <em>I</em> × Δ<em>t</em>. N'oubliez pas de convertir 200 kC en coulombs avant de calculer.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex16')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex16">
+<p style="margin:0;"><em>Q</em> = <em>I</em> × Δ<em>t</em> ⟹ <em>I</em> = <em>Q</em>/Δ<em>t</em><br/>
+<em>Q</em> = 200 kC = 2,00 × 10⁵ C et Δ<em>t</em> = 10 s<br/>
+<em>I</em> = (2,00 × 10⁵) / 10 = <strong>2,0 × 10⁴ A</strong> (soit 20 kA).</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-20" style="display:none;">
+<h3>Exercice 20 — Calculer une capacité sans calculatrice</h3>
+<p>La charge stockée dans un condensateur est de 0,24 nC lorsqu'il est chargé sous une tension de 3,0 V.</p>
+<p class="q-text" style="margin-top:14px;">Calculer, en pF, la valeur de sa capacité <em>C</em>.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex20')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex20">La capacité d'un condensateur relie la charge <em>Q</em> qu'il porte à la tension <em>U</em> à ses bornes : <em>Q</em> = <em>C</em> × <em>U</em>. Convertissez 0,24 nC en pF avant de diviser, cela évite les puissances de dix compliquées (1 nC = 1000 pF).</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex20')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex20">
+<p style="margin:0;"><em>Q</em> = <em>C</em> × <em>U</em> ⟹ <em>C</em> = <em>Q</em>/<em>U</em><br/>
+<em>Q</em> = 0,24 nC = 240 pC et <em>U</em> = 3,0 V<br/>
+<em>C</em> = 240 / 3,0 = <strong>80 pF</strong>.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-21" style="display:none;">
+<h3>Exercice 21 — Charger un condensateur à courant constant</h3>
+<div class="doc-flex">
+<div>
+<p>La charge d'un condensateur se fait avec un générateur de courant délivrant un courant d'intensité constante <em>I</em> = 0,010 mA. La représentation graphique de l'évolution de la tension <em>u</em><sub>C</sub> aux bornes du condensateur est donnée ci-contre.</p>
+</div>
+<div class="doc-media" style="flex:0 1 320px;">
+<img alt="Graphique de la tension uC en fonction du temps t" src="Entrainements/ex21.png"/>
+</div>
+</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>a.</strong> Donner l'expression de la charge <em>q</em>(<em>t</em>) stockée dans le condensateur à la date <em>t</em> en fonction de <em>t</em> et de <em>I</em>.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex21-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex21-a">Pour un courant d'intensité constante <em>I</em>, la charge accumulée depuis l'instant initial (condensateur déchargé) est proportionnelle au temps écoulé : <em>q</em>(<em>t</em>) = <em>I</em> × <em>t</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> En déduire l'expression de la tension <em>u</em><sub>C</sub>(<em>t</em>) en fonction de <em>I</em>, <em>t</em> et de la capacité <em>C</em> du condensateur.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex21-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex21-b">Utilisez la relation entre charge et tension aux bornes d'un condensateur : <em>q</em> = <em>C</em> × <em>u</em><sub>C</sub>, puis remplacez <em>q</em>(<em>t</em>) par l'expression trouvée en a.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> Déterminer la valeur de la capacité <em>C</em> du condensateur en µF.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex21-c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex21-c">L'expression de b. montre que <em>u</em><sub>C</sub>(<em>t</em>) est une fonction affine de <em>t</em>, de coefficient directeur <em>I</em>/<em>C</em>. Lisez ce coefficient directeur graphiquement (deux points bien choisis sur la droite, par exemple à t = 0 et t = 100 s), puis isolez <em>C</em>.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex21')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex21">
+<p style="margin:0 0 8px;"><strong>a.</strong> Le condensateur est initialement déchargé et chargé sous un courant d'intensité constante <em>I</em> : <em>q</em>(<em>t</em>) = <em>I</em> × <em>t</em>.</p>
+<p style="margin:0 0 8px;"><strong>b.</strong> Comme <em>q</em> = <em>C</em> × <em>u</em><sub>C</sub>, on a <em>u</em><sub>C</sub>(<em>t</em>) = <em>q</em>(<em>t</em>)/<em>C</em> = (<em>I</em>/<em>C</em>) × <em>t</em>.</p>
+<p style="margin:0;"><strong>c.</strong> Graphiquement, la droite passe par l'origine et par le point (100 s ; 5,0 V) : coefficient directeur = <em>I</em>/<em>C</em> = 5,0/100 = 0,050 V·s⁻¹.<br/>
+Avec <em>I</em> = 0,010 mA = 1,0 × 10⁻⁵ A :<br/>
+<em>C</em> = <em>I</em> / 0,050 = (1,0 × 10⁻⁵) / 0,050 = 2,0 × 10⁻⁴ F = <strong>200 µF</strong>.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-25" style="display:none;">
+<h3>Exercice 25 — Réaliser une analyse dimensionnelle</h3>
+<p>Pour un circuit RC série (charge ou décharge) :</p>
+
+<p class="q-text" style="margin-top:14px;"><strong>a.</strong> Définir et exprimer le temps caractéristique du circuit.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex25-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex25-a">Le temps caractéristique (ou constante de temps) d'un circuit RC est la durée qui donne l'ordre de grandeur de la charge ou de la décharge du condensateur ; elle s'exprime simplement à partir des deux composants du circuit.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> En utilisant la relation entre charge et tension, la relation entre charge et intensité, ainsi que la loi d'Ohm, vérifier que cette constante est homogène à une durée.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex25-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex25-b">Exprimez séparément l'unité de <em>C</em> à partir de <em>q</em> = <em>C</em> × <em>U</em>, et l'unité de <em>R</em> à partir de la loi d'Ohm <em>U</em> = <em>R</em> × <em>I</em>. Multipliez ensuite les deux unités obtenues, puis utilisez <em>q</em> = <em>I</em> × <em>t</em> pour faire apparaître une durée.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex25')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex25">
+<p style="margin:0 0 8px;"><strong>a.</strong> Le temps caractéristique (ou constante de temps) d'un circuit RC, noté τ, est la durée qui donne l'ordre de grandeur du temps de charge ou de décharge du condensateur. Il s'exprime par τ = <em>R</em> × <em>C</em>.</p>
+<p style="margin:0;"><strong>b.</strong> D'après <em>q</em> = <em>C</em> × <em>U</em>, on a [<em>C</em>] = [<em>q</em>]/[<em>U</em>].<br/>
+D'après la loi d'Ohm <em>U</em> = <em>R</em> × <em>I</em>, on a [<em>R</em>] = [<em>U</em>]/[<em>I</em>].<br/>
+Donc [<em>R</em> × <em>C</em>] = ([<em>U</em>]/[<em>I</em>]) × ([<em>q</em>]/[<em>U</em>]) = [<em>q</em>]/[<em>I</em>].<br/>
+Or <em>q</em> = <em>I</em> × <em>t</em>, donc [<em>q</em>]/[<em>I</em>] = [<em>t</em>].<br/>
+On a bien [<em>R</em> × <em>C</em>] = [<em>t</em>] : <strong>τ = RC est homogène à une durée</strong>.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-27" style="display:none;">
+<h3>Exercice 27 — Apprendre à rédiger</h3>
+<div class="doc-flex">
+<div>
+<p>Pour réaliser l'étude théorique de la charge d'un condensateur de capacité <em>C</em> par une source idéale de tension <em>E</em> à travers une résistance <em>R</em>, on considère le circuit schématisé ci-contre.</p>
+</div>
+<div class="doc-media" style="flex:1 1 320px;">
+<img alt="Circuit RC série : générateur E, interrupteur, résistance R, condensateur C entre les points A et B" src="Entrainements/ex27-circuit.svg"/>
+</div>
+</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>a.</strong> Reproduire le schéma du circuit et écrire la loi d'Ohm en prenant soin de représenter la flèche tension associée à la tension <em>u</em><sub>R</sub>.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex27-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex27-a">Orienter la flèche tension aux bornes de R dans le sens opposé à la flèche qui oriente le courant d'intensité <em>i</em>. Noter (2) la relation obtenue.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Écrire la loi des mailles.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex27-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex27-b">Représenter sur le schéma du circuit la maille comme étant une boucle fermée orientée suivant le tracé du circuit dans un sens donné, par exemple dans le sens inverse du sens courant. Dans ce cas, pour être dans le sens de la maille, retourner la flèche tension <em>E</em> et lui affecter la valeur −<em>E</em>. Noter (1) la relation obtenue.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> Donner la relation entre l'intensité <em>i</em> du courant électrique et la charge <em>q</em> portée par l'armature A du condensateur, ainsi que la relation entre <em>u</em><sub>C</sub>, <em>q</em> et <em>C</em>.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex27-c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex27-c">Noter (3) et (4) ces relations.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>d.</strong> Établir l'équation différentielle vérifiée par <em>u</em><sub>C</sub>.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex27-d')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex27-d">Utiliser les relations (2), (3) et (4) pour obtenir l'expression de <em>u</em><sub>R</sub> en fonction de <em>R</em>, <em>C</em> et de d<em>u</em><sub>C</sub>/d<em>t</em>, puis remplacer cette expression dans la relation (1).</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex27')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex27">
+<p style="margin:0 0 8px;"><strong>a.</strong> La flèche tension <em>u</em><sub>R</sub> est orientée en sens opposé à la flèche du courant <em>i</em> (convention récepteur). Loi d'Ohm : <em>u</em><sub>R</sub> = <em>R</em> × <em>i</em> (relation 2).</p>
+<p style="margin:0 0 8px;"><strong>b.</strong> En parcourant la maille dans le sens inverse du courant (la flèche <em>E</em> est alors retournée, valeur −<em>E</em>) : −<em>E</em> + <em>u</em><sub>R</sub> + <em>u</em><sub>C</sub> = 0, soit <strong><em>E</em> = <em>u</em><sub>R</sub> + <em>u</em><sub>C</sub></strong> (relation 1).</p>
+<p style="margin:0 0 8px;"><strong>c.</strong> <em>i</em> = d<em>q</em>/d<em>t</em> (relation 3) ; <em>u</em><sub>C</sub> = <em>q</em>/<em>C</em> (relation 4).</p>
+<p style="margin:0;"><strong>d.</strong> D'après (4) : <em>q</em> = <em>C</em> × <em>u</em><sub>C</sub>. En dérivant et en utilisant (3) : <em>i</em> = <em>C</em> × d<em>u</em><sub>C</sub>/d<em>t</em>.<br/>
+D'après (2) : <em>u</em><sub>R</sub> = <em>R</em> × <em>i</em> = <em>RC</em> × d<em>u</em><sub>C</sub>/d<em>t</em>.<br/>
+En remplaçant dans (1) : <em>E</em> = <em>RC</em> × d<em>u</em><sub>C</sub>/d<em>t</em> + <em>u</em><sub>C</sub>, soit :</p>
+<p style="text-align:center;font-weight:700;color:var(--bleu);background:var(--bleu-clair);border-radius:10px;padding:8px;margin-top:8px;"><em>RC</em> × d<em>u</em><sub>C</sub>/d<em>t</em> + <em>u</em><sub>C</sub> = <em>E</em></p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-facile" data-exo-item id="exo-facile-28" style="display:none;">
+<h3>Exercice 28 — Résoudre une équation différentielle</h3>
+<p>On considère l'équation différentielle suivante :</p>
+<p style="text-align:center;font-weight:700;color:var(--bleu);background:var(--bleu-clair);border-radius:10px;padding:8px;margin:10px 0;">d<em>u</em><sub>C</sub>/d<em>t</em> + (1/τ) × <em>u</em><sub>C</sub> = <em>E</em>/τ</p>
+<p>À l'instant initial, le condensateur est totalement déchargé.</p>
+
+<p class="q-text" style="margin-top:14px;"><strong>a.</strong> Vérifier que <em>u</em><sub>C</sub>(<em>t</em>) = <em>A</em>e<sup>−<em>t</em>/τ</sup> + <em>E</em> est solution de cette équation différentielle.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex28-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex28-a">Calculez d'abord d<em>u</em><sub>C</sub>/d<em>t</em> à partir de l'expression proposée, puis remplacez <em>u</em><sub>C</sub> et d<em>u</em><sub>C</sub>/d<em>t</em> dans le membre de gauche de l'équation différentielle : vous devez retrouver exactement le membre de droite, quelle que soit la valeur de <em>t</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Déterminer la constante <em>A</em>.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex28-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex28-b">Utilisez la condition initiale : le condensateur étant totalement déchargé à t = 0, on a <em>u</em><sub>C</sub>(0) = 0. Remplacez <em>t</em> par 0 dans l'expression de <em>u</em><sub>C</sub>(<em>t</em>) et résolvez.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex28')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex28">
+<p style="margin:0 0 8px;"><strong>a.</strong> En dérivant <em>u</em><sub>C</sub>(<em>t</em>) = <em>A</em>e<sup>−<em>t</em>/τ</sup> + <em>E</em> :<br/>
+d<em>u</em><sub>C</sub>/d<em>t</em> = −(<em>A</em>/τ) × e<sup>−<em>t</em>/τ</sup><br/><br/>
+En injectant dans le membre de gauche :<br/>
+d<em>u</em><sub>C</sub>/d<em>t</em> + (1/τ)×<em>u</em><sub>C</sub> = −(<em>A</em>/τ)e<sup>−<em>t</em>/τ</sup> + (1/τ)×(<em>A</em>e<sup>−<em>t</em>/τ</sup> + <em>E</em>) = −(<em>A</em>/τ)e<sup>−<em>t</em>/τ</sup> + (<em>A</em>/τ)e<sup>−<em>t</em>/τ</sup> + <em>E</em>/τ = <strong><em>E</em>/τ</strong><br/><br/>
+On retrouve bien le membre de droite : <em>u</em><sub>C</sub>(<em>t</em>) est solution de l'équation différentielle, quelle que soit la constante <em>A</em>.</p>
+<p style="margin:0;"><strong>b.</strong> Condensateur initialement déchargé : <em>u</em><sub>C</sub>(0) = 0.<br/>
+<em>u</em><sub>C</sub>(0) = <em>A</em>e⁰ + <em>E</em> = <em>A</em> + <em>E</em> = 0<br/>
+Donc <strong><em>A</em> = −<em>E</em></strong>.</p>
+</div>
+</div>
+
+</div>
+<div class="sub-tab-content" id="sub-EX-1">
+
+<nav class="exo-tabs-nav">
+<button type="button" class="exo-tab-btn active" onclick="showExoItem(this,'exo-inter-33')">Exercice 1 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-35')">Exercice 2 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-36')">Exercice 3 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-37')">Exercice 4 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-inter-39')">Exercice 5 <span class="exo-tab-stars">★★☆</span></button>
+</nav>
+
+<div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-33">
+<h3>Exercice 33 — Charge d'un condensateur</h3>
+<p>Le condensateur de capacité <em>C</em> = 1,0 F d'une lampe de poche dynamo se charge par l'intermédiaire d'un générateur réel, de résistance interne <em>r</em> = 6 Ω, que l'on actionne avec une manivelle. Lorsqu'il tourne à vitesse suffisamment élevée, ce générateur produit une tension à vide constante <em>U</em>₀ = 3,6 V.</p>
+
+<p class="q-text" style="margin-top:14px;"><strong>a.</strong> Établir l'équation différentielle vérifiée par <em>u</em><sub>C</sub>(<em>t</em>) pendant la charge et montrer qu'elle peut s'écrire sous la forme d<em>u</em><sub>C</sub>/d<em>t</em> + (1/τ)×<em>u</em><sub>C</sub> = <em>U</em>₀/τ où τ = <em>rC</em> est le temps caractéristique du circuit.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex33-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex33-a">Un générateur réel se modélise par une source idéale <em>U</em>₀ en série avec sa résistance interne <em>r</em>. Écrivez la loi des mailles sur ce circuit à une seule maille (générateur + condensateur), exprimez la tension aux bornes de <em>r</em> avec la loi d'Ohm (<em>u</em><sub>r</sub> = <em>r</em> × <em>i</em>), puis remplacez <em>i</em> par <em>C</em> × d<em>u</em><sub>C</sub>/d<em>t</em> (charge du condensateur). Divisez enfin toute l'équation par <em>rC</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Montrer que <em>u</em><sub>C</sub>(<em>t</em>) = <em>U</em>₀(1 − e<sup>−<em>t</em>/τ</sup>) est la solution de l'équation différentielle précédente.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex33-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex33-b">Calculez d<em>u</em><sub>C</sub>/d<em>t</em> à partir de l'expression proposée, remplacez <em>u</em><sub>C</sub> et d<em>u</em><sub>C</sub>/d<em>t</em> dans le membre de gauche de l'équation différentielle, et vérifiez que vous retrouvez bien <em>U</em>₀/τ. Vous pouvez aussi vérifier que cette expression est cohérente avec un condensateur initialement déchargé (<em>u</em><sub>C</sub>(0) = 0).</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex33')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex33">
+<p style="margin:0 0 8px;"><strong>a.</strong> Le générateur réel équivaut à une source idéale <em>U</em>₀ en série avec <em>r</em>. Loi des mailles sur l'unique maille : <em>U</em>₀ = <em>u</em><sub>r</sub> + <em>u</em><sub>C</sub>.<br/>
+Loi d'Ohm : <em>u</em><sub>r</sub> = <em>r</em> × <em>i</em>. Le condensateur se charge, donc <em>i</em> = d<em>q</em>/d<em>t</em> = <em>C</em> × d<em>u</em><sub>C</sub>/d<em>t</em>.<br/>
+D'où : <em>U</em>₀ = <em>rC</em> × d<em>u</em><sub>C</sub>/d<em>t</em> + <em>u</em><sub>C</sub>.<br/>
+En divisant par <em>rC</em> = τ : <strong>d<em>u</em><sub>C</sub>/d<em>t</em> + (1/τ)×<em>u</em><sub>C</sub> = <em>U</em>₀/τ</strong>.</p>
+<p style="margin:0;"><strong>b.</strong> En dérivant <em>u</em><sub>C</sub>(<em>t</em>) = <em>U</em>₀(1 − e<sup>−<em>t</em>/τ</sup>) :<br/>
+d<em>u</em><sub>C</sub>/d<em>t</em> = (<em>U</em>₀/τ) × e<sup>−<em>t</em>/τ</sup><br/><br/>
+En injectant dans le membre de gauche :<br/>
+d<em>u</em><sub>C</sub>/d<em>t</em> + (1/τ)×<em>u</em><sub>C</sub> = (<em>U</em>₀/τ)e<sup>−<em>t</em>/τ</sup> + (1/τ)×<em>U</em>₀(1 − e<sup>−<em>t</em>/τ</sup>) = (<em>U</em>₀/τ)e<sup>−<em>t</em>/τ</sup> + <em>U</em>₀/τ − (<em>U</em>₀/τ)e<sup>−<em>t</em>/τ</sup> = <strong><em>U</em>₀/τ</strong><br/><br/>
+On retrouve bien le membre de droite : l'expression proposée est solution de l'équation différentielle. De plus, <em>u</em><sub>C</sub>(0) = <em>U</em>₀(1 − 1) = 0, cohérent avec un condensateur initialement déchargé.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-35" style="display:none;">
+<h3>Exercice 35 — Étudier la charge d'un condensateur par des mesures manuelles</h3>
+<div class="doc-flex">
+<div>
+<p>Un étudiant en physique a récupéré plusieurs supercondensateurs sur une visseuse électrique à charge rapide défectueuse. Il cherche à savoir si l'un des condensateurs est encore utilisable pour réaliser une lampe USB expérimentale et si oui, quelle est la valeur de sa capacité <em>C</em>.<br/><br/>
+L'étudiant ne dispose que d'un simple multimètre, une pile de 4,5 V, une résistance de 100 Ω et du fil de cuivre pour réaliser un circuit et mesurer l'évolution de la tension <em>u</em><sub>C</sub> aux bornes du condensateur au cours du temps durant sa charge.<br/><br/>
+Il obtient le tableau de mesures suivant :</p>
+</div>
+<div class="doc-media" style="flex:0 1 160px;">
+<img alt="Photo de la lampe USB expérimentale à supercondensateur" src="Entrainements/ex35.png"/>
+</div>
+</div>
+
+<div style="overflow-x:auto;margin:8px 0 16px;">
+<table style="border-collapse:collapse;font-size:.78rem;min-width:640px;">
+<tr style="background:var(--vert-clair);">
+<td style="padding:5px 8px;font-weight:700;border:1px solid var(--gris-bord);">t (en s)</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">0</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">30</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">60</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">90</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">120</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">150</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">180</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">250</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">350</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">500</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">800</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">1100</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">1500</td>
+</tr>
+<tr style="background:var(--vert-clair);">
+<td style="padding:5px 8px;font-weight:700;border:1px solid var(--gris-bord);">u<sub>C</sub> (en V)</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">0</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">0,82</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">1,48</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">2,02</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">2,49</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">2,84</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">3,14</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">3,64</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">4,07</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">4,34</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">4,48</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">4,50</td>
+<td style="padding:5px 8px;border:1px solid var(--gris-bord);">4,50</td>
+</tr>
+</table>
+</div>
+
+<p class="q-text"><strong>a.</strong> Réaliser le schéma électrique du circuit utilisé par l'étudiant.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex35-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex35-a">Le multimètre, utilisé en voltmètre, se branche toujours en dérivation (en parallèle) aux bornes du composant dont on mesure la tension. Placez la pile, la résistance R et le composant étudié en série sur une seule maille, et le voltmètre en parallèle sur ce composant pour mesurer <em>u</em><sub>C</sub>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Justifier que le composant se comporte bien comme un condensateur.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex35-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex35-b">Observez l'allure du tableau de mesures : la tension croît-elle de façon linéaire, ou avec une pente qui diminue progressivement vers une valeur limite ? Comparez à la forme caractéristique de la courbe de charge d'un condensateur (Doc. 3, Activité 4). Comparez aussi la valeur limite atteinte à la tension de la pile.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> Donner deux méthodes utilisables pour déterminer la valeur de la capacité <em>C</em> de ce condensateur.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex35-c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex35-c">Repensez aux deux méthodes graphiques vues en cours pour déterminer τ à partir d'une courbe de charge exponentielle : l'une repose sur la tangente à la courbe à l'instant initial, l'autre sur le repérage d'un pourcentage caractéristique de la tension limite E. Dans les deux cas, τ permet ensuite de remonter à C via τ = RC.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>d.</strong> Mettre en œuvre l'une des méthodes graphiques pour déterminer <em>C</em>.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex35-d')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex35-d">Repérez d'abord dans le tableau la valeur asymptotique <em>E</em> atteinte par <em>u</em><sub>C</sub> pour les grandes valeurs de <em>t</em>. Calculez ensuite 0,63 × <em>E</em>, puis identifiez dans le tableau la date <em>t</em> pour laquelle <em>u</em><sub>C</sub> atteint (à peu près) cette valeur : c'est τ. Utilisez enfin τ = <em>RC</em> pour en déduire <em>C</em>.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex35')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex35">
+<p style="margin:0 0 10px;"><strong>a.</strong> Circuit série pile (E = 4,5 V) — résistance R — condensateur C, avec un voltmètre branché en dérivation aux bornes du condensateur :</p>
+<div style="text-align:center;margin:0 0 12px;"><img alt="Schéma du circuit de charge avec voltmètre en dérivation sur le condensateur" src="Entrainements/ex35-circuit.svg" style="max-width:360px;width:100%;"/></div>
+<p style="margin:0 0 8px;"><strong>b.</strong> La tension <em>u</em><sub>C</sub> croît de façon continue mais avec une pente qui diminue progressivement, tendant vers une valeur limite (≈ 4,50 V) : cette allure est caractéristique de la charge d'un condensateur à travers une résistance (Doc. 3, Activité 4). De plus, la valeur limite atteinte est cohérente avec la tension de la pile (E = 4,5 V) : en régime permanent, le condensateur ne laisse plus passer de courant, il n'y a donc plus de chute de tension aux bornes de R, et <em>u</em><sub>C</sub> = E. Ce comportement confirme qu'il s'agit bien d'un condensateur.</p>
+<p style="margin:0 0 8px;"><strong>c.</strong> Deux méthodes possibles :</p>
+<ul style="padding-left:18px;margin:0 0 8px;">
+<li><strong>Méthode de la tangente à l'origine :</strong> tracer la tangente à la courbe <em>u</em><sub>C</sub>(<em>t</em>) à t = 0 ; son intersection avec l'asymptote horizontale <em>u</em><sub>C</sub> = E donne l'abscisse τ.</li>
+<li><strong>Méthode des 63 % :</strong> repérer la date τ pour laquelle <em>u</em><sub>C</sub> atteint 63 % de la valeur limite E.</li>
+</ul>
+<p style="margin:0;"><strong>d.</strong> Méthode des 63 % : la valeur limite lue dans le tableau est <em>E</em> ≈ 4,50 V.<br/>
+0,63 × <em>E</em> = 0,63 × 4,50 ≈ 2,84 V.<br/>
+D'après le tableau, <em>u</em><sub>C</sub> = 2,84 V pour <em>t</em> = 150 s : donc τ ≈ 150 s.<br/>
+Or τ = <em>RC</em>, donc <em>C</em> = τ/<em>R</em> = 150/100 = <strong>1,5 F</strong> (valeur cohérente avec un supercondensateur).</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-36" style="display:none;">
+<h3>Exercice 36 — Machine de Wimshurst</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Compétences : utiliser un modèle · mettre en œuvre les étapes d'une démarche · effectuer des procédures courantes.</em></p>
+<div class="doc-flex">
+<div>
+<p>La machine de Wimshurst se comporte comme un condensateur de capacité de l'ordre de 200 pF. Lorsque sa charge électrique est de l'ordre de 2 µC et que l'écartement entre les boules de l'éclateur est d'environ 1 cm, il se produit une étincelle.</p>
+</div>
+<div class="doc-media" style="flex:0 1 220px;">
+<img alt="Machine de Wimshurst" src="Entrainements/ex36.png"/>
+</div>
+</div>
+
+<p class="q-text" style="margin-top:14px;">Calculer, en V, l'ordre de grandeur de la tension aux bornes de l'éclateur juste avant l'étincelle.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex36')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex36">Utilisez la relation entre la charge <em>Q</em> portée par un condensateur, sa capacité <em>C</em> et la tension <em>U</em> à ses bornes. Convertissez les données en unités du Système international (F et C) avant de calculer.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex36')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex36">
+<p style="margin:0;"><em>Q</em> = <em>C</em> × <em>U</em> ⟹ <em>U</em> = <em>Q</em>/<em>C</em><br/>
+<em>Q</em> = 2 µC = 2 × 10⁻⁶ C et <em>C</em> = 200 pF = 200 × 10⁻¹² F = 2,0 × 10⁻¹⁰ F<br/>
+<em>U</em> = (2 × 10⁻⁶) / (2,0 × 10⁻¹⁰) = <strong>1,0 × 10⁴ V</strong> (soit environ 10 kV).</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-37" style="display:none;">
+<h3>Exercice 37 — Défibrillateur cardiaque</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Compétences : mobiliser ses connaissances · mettre en œuvre les étapes d'une démarche · effectuer des procédures courantes (calculs).</em></p>
+<p>La tension aux bornes d'un condensateur dans un défibrillateur cardiaque est de 1,5 kV. Lors du choc électrique produit sur le thorax du patient, la charge transférée est 0,30 C. On supposera que le condensateur est totalement déchargé après ce choc.</p>
+
+<p class="q-text" style="margin-top:14px;"><strong>a.</strong> Calculer la capacité <em>C</em> du condensateur utilisé.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex37-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex37-a">Utilisez la relation entre la charge <em>Q</em> portée par un condensateur, sa capacité <em>C</em> et la tension <em>U</em> à ses bornes. Convertissez la tension en volts avant de calculer.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Sachant que le thorax peut être modélisé par un conducteur ohmique de résistance <em>R</em> = 75 Ω, estimer la durée du choc.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex37-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex37-b">La décharge du condensateur à travers le thorax (résistance R) suit une décroissance exponentielle caractérisée par le temps τ = RC, qui donne l'ordre de grandeur de la durée du phénomène. Utilisez la valeur de C trouvée en a.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex37')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex37">
+<p style="margin:0 0 8px;"><strong>a.</strong> <em>Q</em> = <em>C</em> × <em>U</em> ⟹ <em>C</em> = <em>Q</em>/<em>U</em><br/>
+<em>Q</em> = 0,30 C et <em>U</em> = 1,5 kV = 1,5 × 10³ V<br/>
+<em>C</em> = 0,30 / (1,5 × 10³) = <strong>2,0 × 10⁻⁴ F</strong> (soit 200 µF).</p>
+<p style="margin:0;"><strong>b.</strong> τ = <em>RC</em> = 75 × (2,0 × 10⁻⁴) = 1,5 × 10⁻² s = <strong>15 ms</strong>.<br/>
+Cet ordre de grandeur (quelques dizaines de millisecondes) est cohérent avec la durée réelle d'un choc de défibrillateur.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-inter" data-exo-item id="exo-inter-39" style="display:none;">
+<h3>Exercice 39 — Microphone électrostatique à condensateur</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Compétences : utiliser un modèle · mettre en œuvre les étapes d'une démarche · effectuer des procédures courantes (calculs).</em></p>
+<p>Un microphone électrostatique à condensateur est constitué d'une très fine membrane métallique ou de mylar métallisé qui constitue l'une des armatures d'un condensateur. Cette membrane peut se déplacer sous l'effet des variations de la pression acoustique engendrée par une onde sonore. Elle est située à 20,0 µm d'une plaque métallique fixe qui constitue l'autre armature du condensateur. L'air emprisonné entre les deux armatures joue le rôle d'isolant.</p>
+
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:420px;margin:0 auto;">
+<img alt="Schéma du microphone électrostatique : membrane, plaque arrière, alimentation 48 V, résistance R" src="Entrainements/ex39.png"/>
+</div>
+</div>
+
+<p>L'expression de la capacité <em>C</em> du condensateur constitué des deux armatures, séparées d'une distance <em>e</em> et dont les surfaces en regard ont chacune une aire <em>S</em>, est :</p>
+<p style="text-align:center;font-weight:700;color:var(--bleu);background:var(--bleu-clair);border-radius:10px;padding:8px;margin:10px 0;"><em>C</em> = <em>kS</em>/<em>e</em> avec <em>k</em> = 8,85 × 10⁻¹² F·m⁻¹</p>
+
+<p class="q-text" style="margin-top:14px;"><strong>a.</strong> Vérifier que la capacité <em>C</em> du condensateur est égale à 224 pF pour des armatures de diamètre égal à un pouce soit à 2,54 cm.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex39-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex39-a">Calculez d'abord l'aire <em>S</em> du disque à partir du diamètre donné (<em>S</em> = π<em>r</em>² avec <em>r</em> = diamètre/2), convertissez toutes les grandeurs en unités du Système international (mètres), puis appliquez la formule <em>C</em> = <em>kS</em>/<em>e</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Déterminer la variation de capacité lorsque la membrane s'enfonce de 0,01 µm sous l'effet d'une variation de pression due à une onde sonore.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex39-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex39-b">Comme <em>C</em> = <em>kS</em>/<em>e</em>, une petite variation de <em>e</em> entraîne une variation relative de <em>C</em> de même ampleur : Δ<em>C</em>/<em>C</em> ≈ −Δ<em>e</em>/<em>e</em>. Attention au signe : si la membrane se rapproche de la plaque (<em>e</em> diminue), la capacité augmente.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> En déduire la variation de charge portée par l'une des armatures du condensateur soumis à une tension constante <em>E</em> = 48 V.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex39-c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex39-c">La tension <em>E</em> étant maintenue constante par l'alimentation, utilisez la relation <em>Q</em> = <em>C</em> × <em>E</em> pour relier directement Δ<em>Q</em> à Δ<em>C</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>d.</strong> La variation de pression produite par l'onde émise par le chanteur se produit pendant une durée de l'ordre de 2 ms. Estimer l'ordre de grandeur de l'intensité <em>i</em> du courant électrique traversant le circuit.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex39-d')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex39-d">Une intensité moyenne de courant correspond à une quantité de charge transférée divisée par la durée de ce transfert : <em>i</em> ≈ Δ<em>Q</em>/Δ<em>t</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>e.</strong> En déduire l'ordre de grandeur de la tension aux bornes de la résistance <em>R</em> = 10 MΩ et justifier la nécessité d'un préamplificateur pour augmenter l'amplitude du signal produit par le microphone.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex39-e')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex39-e">Utilisez la loi d'Ohm <em>U</em><sub>R</sub> = <em>R</em> × <em>i</em>. Comparez ensuite la valeur obtenue à l'ordre de grandeur d'une tension « utile » en électronique audio (typiquement de l'ordre du volt).</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex39')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex39">
+<p style="margin:0 0 8px;"><strong>a.</strong> <em>S</em> = π(<em>d</em>/2)² = π × (0,0254/2)² = π × (0,0127)² = 5,07 × 10⁻⁴ m².<br/>
+<em>C</em> = <em>kS</em>/<em>e</em> = (8,85 × 10⁻¹² × 5,07 × 10⁻⁴) / (20,0 × 10⁻⁶) ≈ 2,24 × 10⁻¹⁰ F = <strong>224 pF</strong>. ✓</p>
+<p style="margin:0 0 8px;"><strong>b.</strong> Δ<em>C</em>/<em>C</em> ≈ −Δ<em>e</em>/<em>e</em>. La membrane s'enfonce : Δ<em>e</em> = −0,01 µm, donc Δ<em>e</em>/<em>e</em> = −0,01/20,0 = −5,0 × 10⁻⁴.<br/>
+Δ<em>C</em> = −(−5,0 × 10⁻⁴) × 224 pF ≈ <strong>+0,112 pF</strong> (la capacité augmente légèrement).</p>
+<p style="margin:0 0 8px;"><strong>c.</strong> <em>Q</em> = <em>C</em> × <em>E</em> (E constant) ⟹ Δ<em>Q</em> = Δ<em>C</em> × <em>E</em> = 0,112 × 10⁻¹² × 48 ≈ <strong>5,4 × 10⁻¹² C</strong> (5,4 pC).</p>
+<p style="margin:0 0 8px;"><strong>d.</strong> <em>i</em> ≈ Δ<em>Q</em>/Δ<em>t</em> = (5,4 × 10⁻¹²) / (2 × 10⁻³) ≈ <strong>2,7 × 10⁻⁹ A</strong> (quelques nA).</p>
+<p style="margin:0;"><strong>e.</strong> <em>U</em><sub>R</sub> = <em>R</em> × <em>i</em> = (10 × 10⁶) × (2,7 × 10⁻⁹) ≈ <strong>2,7 × 10⁻² V</strong> (environ 27 mV).<br/>
+Cette tension, de l'ordre de quelques dizaines de millivolts, est très faible comparée aux niveaux habituellement nécessaires pour traiter un signal audio (de l'ordre du volt). Un <strong>préamplificateur</strong> est donc indispensable pour amplifier ce signal avant tout traitement ultérieur (enregistrement, diffusion...).</p>
+</div>
+</div>
+
+</div>
+<div class="sub-tab-content" id="sub-EX-2">
+
+<nav class="exo-tabs-nav">
+<button type="button" class="exo-tab-btn active" onclick="showExoItem(this,'exo-diff-41')">Exercice 1 <span class="exo-tab-stars">★☆☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-42')">Exercice 2 <span class="exo-tab-stars">★★☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-43')">Exercice 3 <span class="exo-tab-stars">★★☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-44')">Exercice 4 <span class="exo-tab-stars">★★☆</span></button>
+<button type="button" class="exo-tab-btn" onclick="showExoItem(this,'exo-diff-45')">Exercice 5 <span class="exo-tab-stars">★★☆</span></button>
+</nav>
+
+<div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-41">
+<h3>Exercice 41 — Retour sur l'ouverture du chapitre</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Compétences : rechercher et organiser l'information · effectuer des procédures courantes (calculs) · mettre en œuvre les étapes d'une démarche · interpréter des résultats.</em></p>
+
+<div class="doc-flex">
+<div>
+<p>Dans un accéléromètre, l'accélération est mesurée par la différence Δ<em>C</em> de capacité entre les dents voisines des deux peignes, telle que :</p>
+<p style="text-align:center;font-weight:700;color:var(--bleu);background:var(--bleu-clair);border-radius:10px;padding:8px;margin:10px 0;">Δ<em>C</em> = <em>n</em> × (<em>C</em>₁ − <em>C</em>₂) = <em>n</em>ε₀<em>S</em> × (1/<em>d</em>₁ − 1/<em>d</em>₂)</p>
+<p>avec <em>n</em> le nombre de « dents » ; ε₀ = 8,85 × 10⁻¹² F·m⁻¹ : permittivité du vide ; <em>S</em> = 2,25 × 10⁻⁸ m² : aire de la surface des peignes en regard ; <em>d</em>₁ : distance entre les armatures de la capacité <em>C</em>₁ ; <em>d</em>₂ : distance entre les armatures de la capacité <em>C</em>₂.<br/><br/>
+Lorsque les peignes sont centrés l'un par rapport à l'autre : <em>d</em>₁ = <em>d</em>₂ = <em>d</em> = 5,0 µm.</p>
+</div>
+<div class="doc-media" style="flex:0 1 260px;">
+<img alt="Structure en peigne d'un accéléromètre MEMS : masse sismique mobile, électrodes fixes, paires de condensateurs différentiels" src="Entrainements/ex41-1.png"/>
+</div>
+</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>a.</strong> Déterminer la variation de capacité lorsque la masse sismique se déplace d'une distance égale à <em>x</em> = 3,0 µm vers la droite par rapport à sa position d'équilibre, et sachant que le nombre de dents vaut <em>n</em> = 50.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex41-a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex41-a">Lorsque la masse se déplace de <em>x</em> vers la droite, l'un des entrefers se resserre et l'autre s'élargit d'autant : <em>d</em>₁ = <em>d</em> − <em>x</em> et <em>d</em>₂ = <em>d</em> + <em>x</em>. Calculez ces deux valeurs numériques, puis appliquez directement la formule de Δ<em>C</em> donnée dans l'énoncé.</div>
+
+<p style="font-weight:700;margin:18px 0 6px;">b. Le montage électrique pour une cellule élémentaire de l'accéléromètre correspond au schéma suivant :</p>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:480px;margin:0 auto;">
+<img alt="Schéma électrique de la cellule élémentaire : condensateurs C1 et C2 avec armature commune A, sources E(t)" src="Entrainements/ex41-2.png"/>
+</div>
+</div>
+<p>Les condensateurs ayant une armature commune : <em>q</em>₁(<em>t</em>) = <em>q</em>₂(<em>t</em>) = <em>q</em>(<em>t</em>).<br/>
+En utilisant la loi des mailles et la relation <em>q</em> = <em>C</em> × <em>u</em><sub>C</sub>, montrer que l'on a :</p>
+<p style="text-align:center;font-weight:700;margin:10px 0;"><em>q</em>(<em>t</em>) = <em>C</em>₁ × (<em>E</em>(<em>t</em>) − <em>u</em>(<em>t</em>)) et <em>q</em>(<em>t</em>) = <em>C</em>₂ × (<em>E</em>(<em>t</em>) + <em>u</em>(<em>t</em>))
+  <button class="btn-indice" onclick="toggleIndice('ind-ex41-b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex41-b">Appliquez la loi des mailles séparément sur chacune des deux boucles du schéma : la boucle de gauche (source <em>E</em>(<em>t</em>), <em>C</em>₁, branche <em>u</em>(<em>t</em>)) et la boucle de droite (source <em>E</em>(<em>t</em>) de polarité inversée, <em>C</em>₂, branche <em>u</em>(<em>t</em>)). Remplacez ensuite <em>u</em><sub>C1</sub> par <em>q</em>/<em>C</em>₁ et <em>u</em><sub>C2</sub> par <em>q</em>/<em>C</em>₂ (même charge <em>q</em> sur l'armature commune A), puis isolez <em>q</em>(<em>t</em>) dans chaque équation.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> En déduire que <em>u</em>(<em>t</em>) = [(<em>C</em>₁ − <em>C</em>₂)/(<em>C</em>₁ + <em>C</em>₂)] × <em>E</em>(<em>t</em>).
+  <button class="btn-indice" onclick="toggleIndice('ind-ex41-c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex41-c">Les deux expressions de <em>q</em>(<em>t</em>) obtenues en b. sont égales (même charge <em>q</em>). Écrivez cette égalité, développez, regroupez les termes en <em>u</em>(<em>t</em>) d'un côté et les termes en <em>E</em>(<em>t</em>) de l'autre, puis isolez <em>u</em>(<em>t</em>).</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>d.</strong> Montrer que l'on a <em>u</em>(<em>t</em>) = (<em>x</em>/<em>d</em>) × <em>E</em>(<em>t</em>) et justifier que le système de peigne MEMS peut aussi être utilisé comme un capteur de déplacement de haute précision.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex41-d')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex41-d">Remplacez <em>C</em>₁ et <em>C</em>₂ par leurs expressions en fonction de ε₀, <em>S</em>, <em>d</em> et <em>x</em> (avec <em>d</em>₁ = <em>d</em> − <em>x</em> et <em>d</em>₂ = <em>d</em> + <em>x</em>) dans le résultat de c., puis simplifiez la fraction obtenue (mettez au même dénominateur numérateur et dénominateur séparément). Pour la justification, réfléchissez à ce que mesure directement u(t) une fois que E(t) est connu.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex41')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex41">
+<p style="margin:0 0 8px;"><strong>a.</strong> <em>d</em>₁ = <em>d</em> − <em>x</em> = 5,0 − 3,0 = 2,0 µm = 2,0 × 10⁻⁶ m ; <em>d</em>₂ = <em>d</em> + <em>x</em> = 5,0 + 3,0 = 8,0 µm = 8,0 × 10⁻⁶ m.<br/>
+1/<em>d</em>₁ − 1/<em>d</em>₂ = 1/(2,0×10⁻⁶) − 1/(8,0×10⁻⁶) = 5,0×10⁵ − 1,25×10⁵ = 3,75×10⁵ m⁻¹.<br/>
+Δ<em>C</em> = <em>n</em>ε₀<em>S</em>(1/<em>d</em>₁ − 1/<em>d</em>₂) = 50 × 8,85×10⁻¹² × 2,25×10⁻⁸ × 3,75×10⁵ ≈ <strong>3,7 × 10⁻¹² F</strong> (soit 3,7 pF).</p>
+<p style="margin:0 0 8px;"><strong>b.</strong> Boucle de gauche : <em>E</em>(<em>t</em>) = <em>u</em><sub>C1</sub>(<em>t</em>) + <em>u</em>(<em>t</em>), avec <em>u</em><sub>C1</sub> = <em>q</em>/<em>C</em>₁, d'où <em>E</em>(<em>t</em>) = <em>q</em>(<em>t</em>)/<em>C</em>₁ + <em>u</em>(<em>t</em>), soit <strong><em>q</em>(<em>t</em>) = <em>C</em>₁ × (<em>E</em>(<em>t</em>) − <em>u</em>(<em>t</em>))</strong>.<br/>
+Boucle de droite (source <em>E</em>(<em>t</em>) orientée en sens opposé) : <em>E</em>(<em>t</em>) = <em>u</em><sub>C2</sub>(<em>t</em>) − <em>u</em>(<em>t</em>), avec <em>u</em><sub>C2</sub> = <em>q</em>/<em>C</em>₂, d'où <strong><em>q</em>(<em>t</em>) = <em>C</em>₂ × (<em>E</em>(<em>t</em>) + <em>u</em>(<em>t</em>))</strong>.</p>
+<p style="margin:0 0 8px;"><strong>c.</strong> En égalant les deux expressions de <em>q</em>(<em>t</em>) : <em>C</em>₁(<em>E</em> − <em>u</em>) = <em>C</em>₂(<em>E</em> + <em>u</em>)<br/>
+⟹ <em>C</em>₁<em>E</em> − <em>C</em>₂<em>E</em> = <em>C</em>₁<em>u</em> + <em>C</em>₂<em>u</em> ⟹ <em>E</em>(<em>C</em>₁ − <em>C</em>₂) = <em>u</em>(<em>C</em>₁ + <em>C</em>₂)<br/>
+D'où <strong><em>u</em>(<em>t</em>) = [(<em>C</em>₁ − <em>C</em>₂)/(<em>C</em>₁ + <em>C</em>₂)] × <em>E</em>(<em>t</em>)</strong>.</p>
+<p style="margin:0;"><strong>d.</strong> Avec <em>C</em>₁ = ε₀<em>S</em>/(<em>d</em>−<em>x</em>) et <em>C</em>₂ = ε₀<em>S</em>/(<em>d</em>+<em>x</em>) :<br/>
+<em>C</em>₁ − <em>C</em>₂ = ε₀<em>S</em> × [2<em>x</em>/(<em>d</em>²−<em>x</em>²)] et <em>C</em>₁ + <em>C</em>₂ = ε₀<em>S</em> × [2<em>d</em>/(<em>d</em>²−<em>x</em>²)]<br/>
+Donc (<em>C</em>₁−<em>C</em>₂)/(<em>C</em>₁+<em>C</em>₂) = 2<em>x</em>/2<em>d</em> = <em>x</em>/<em>d</em>, d'où <strong><em>u</em>(<em>t</em>) = (<em>x</em>/<em>d</em>) × <em>E</em>(<em>t</em>)</strong> (ε₀ et <em>S</em> disparaissent : le résultat est exact, quel que soit <em>x</em>).<br/><br/>
+Cette relation montre que la tension mesurée <em>u</em>(<em>t</em>) est directement proportionnelle au déplacement <em>x</em> de la masse mobile (à <em>E</em>(<em>t</em>) connue) : en mesurant <em>u</em>(<em>t</em>), on remonte donc immédiatement à <em>x</em> = (<em>u</em>(<em>t</em>)/<em>E</em>(<em>t</em>)) × <em>d</em>, sans passer par l'accélération. Ce même système de peignes différentiels peut donc servir de <strong>capteur de déplacement</strong> de haute précision, indépendamment de son usage en accéléromètre.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-42" style="display:none;">
+<h3>Exercice 42 — Fabriquer un capacimètre avec un microcontrôleur</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Compétences : réaliser un schéma de la situation · formuler des hypothèses · mettre en œuvre les étapes d'une démarche · utiliser un modèle · interpréter des résultats.</em></p>
+
+<div class="doc-flex">
+<div>
+<p>La réalisation de la mesure de la capacité d'un condensateur peut se faire avec un microcontrôleur, en utilisant le montage ci-contre et le programme Python suivant.</p>
+</div>
+<div class="doc-media" style="flex:0 1 260px;">
+<img alt="Montage : microcontrôleur, résistance R=100 kΩ entre broches 0 et 2, condensateur C entre broche 2 et GND" src="Entrainements/ex42.png"/>
+</div>
+</div>
+
+<div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:12px 16px;margin:10px 0;">
+<p style="font-size:.78rem;font-weight:700;color:var(--texte-leger);margin-bottom:6px;">📄 Programme fourni : ch21_498_exo42.py</p>
+<pre style="font-size:.76rem;overflow-x:auto;margin:0;">from microbit import*
+x=0
+tau=0
+
+pin0.write_digital(0)      # décharge condensateur C, broche 0
+sleep(8000)                # temps décharge totale en ms
+print('Charge condensateur E=3,30 V R=100 kOhms')
+pin0.write_digital(1)      # charge de C sous E et R, broche 0
+t0=running_time()          # date de début de la charge
+while x&lt;1016:               # ligne 11 : condition d'arrêt des mesures
+    x=pin2.read_analog()   # mesure de x, broche 2
+    date=running_time()-t0 # mesure de la date courante
+    if x&lt;647:                # ligne 14
+        tau=date
+    uc=round(x*3.3/1023,2)
+    print('x =',x,' \t date =',date,'ms\t    uc=',uc,'V')
+    sleep(25)               # temporisation de 25 ms
+print('Resultats: tau =',round(int(tau)),'ms',end='')
+print(', C =',round(tau/100,2),'microFarads')</pre>
+</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:18px 0 8px;">1. Étude théorique du fonctionnement électrique du montage</p>
+<p>On modélise le microcontrôleur comme un générateur entre les broches 0 et GND, capable d'être dans deux états :</p>
+<ul style="padding-left:18px;">
+<li>état 1 : tension nulle, la broche 0 et la masse GND reliées directement ensemble ;</li>
+<li>état 2 : source idéale de tension constante <em>E</em> = 3,30 V.</li>
+</ul>
+
+<p class="q-text" style="margin-top:10px;"><strong>a.</strong> Proposer un schéma de montage électrique pouvant modéliser la charge du condensateur (état 2).
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-1a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-1a">En état 2, le microcontrôleur se comporte comme un générateur idéal de tension E constante. Le montage est alors un circuit RC série classique : générateur E, résistance R (entre les broches 0 et 2), condensateur C (entre la broche 2 et GND), identique au circuit déjà rencontré en cours (Doc. 2, Activité 4).</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Établir l'équation différentielle de l'évolution de la tension <em>u</em><sub>C</sub> en fonction du temps lors de la charge.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-1b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-1b">Utilisez la loi des mailles (E = u_R + u_C), la loi d'Ohm (u_R = R×i) et la relation entre charge et tension du condensateur, en remplaçant i par C×du_C/dt (comme dans l'Activité 4 ou l'exercice 27).</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> Le calcul du condensateur débute à partir de t = 0. Montrer que la solution de l'équation différentielle établie à la question 1.b. est <em>u</em><sub>C</sub>(<em>t</em>) = <em>E</em>(1 − e<sup>−<em>t</em>/τ</sup>) avec τ = <em>RC</em>.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-1c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-1c">Calculez d<em>u</em><sub>C</sub>/d<em>t</em> à partir de l'expression proposée, injectez-la dans l'équation différentielle établie en 1.b et vérifiez l'égalité. Vérifiez aussi que la condition initiale <em>u</em><sub>C</sub>(0) = 0 est satisfaite (condensateur totalement déchargé après les 8 secondes de décharge imposées par le programme).</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">2. Exploitation des mesures avec un tableur-grapheur</p>
+<p>Les mesures réalisées avec un microcontrôleur, pour un condensateur électrochimique étiqueté 1,0 µF et l'exécution du code source suivant, produisent les résultats suivants :</p>
+<div style="overflow-x:auto;margin:8px 0;">
+<pre style="font-size:.74rem;background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:10px 14px;">&gt;&gt;&gt; Charge condensateur E=3,30 V  R=100 kOhms
+x = 19    date = 1 ms    uc= 0.06 V        x = 903   date = 215 ms  uc= 2.89 V
+x = 286   date = 32 ms   uc= 0.92 V        x = 932   date = 247 ms  uc= 3.01 V
+x = 470   date = 62 ms   uc= 1.52 V        x = 956   date = 277 ms  uc= 3.08 V
+x = 608   date = 92 ms   uc= 1.96 V        x = 974   date = 307 ms  uc= 3.14 V
+x = 725   date = 125 ms  uc= 2.34 V        x = 989   date = 340 ms  uc= 3.19 V
+x = 797   date = 155 ms  uc= 2.57 V        x = 1000  date = 370 ms  uc= 3.23 V
+x = 854   date = 185 ms  uc= 2.75 V        x = 1007  date = 400 ms  uc= 3.25 V
+                                            x = 1014  date = 430 ms  uc= 3.27 V
+                                            x = 1019  date = 462 ms  uc= 3.29 V
+Resultats: tau = 92 ms, C = 0.92 microFarads</pre>
+</div>
+
+<p class="q-text"><strong>a.</strong> À l'aide du tableur-grapheur, représenter l'évolution de la tension <em>u</em><sub>C</sub> en fonction du temps.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-2a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-2a">Placez les valeurs de « date » dans une colonne et les valeurs de « uc » dans une autre, puis utilisez l'outil graphique du tableur (nuage de points) pour représenter <em>u</em><sub>C</sub> en fonction de <em>t</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> En utilisant les fonctionnalités du tableur-grapheur, proposer une fonction <em>u</em><sub>C</sub> = <em>f</em>(<em>t</em>) décrite par un modèle du type <em>u</em><sub>C</sub>(<em>t</em>) = <em>E</em>(1 − e<sup>−<em>t</em>/τ</sup>).
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-2b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-2b">Utilisez l'outil de modélisation/régression du tableur-grapheur (fonction exponentielle du type a×(1−exp(−t/b))) pour ajuster une courbe sur le nuage de points, en laissant le logiciel déterminer les paramètres qui correspondent à <em>E</em> et τ.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> Déterminer la valeur caractéristique τ et en déduire la valeur de la capacité du condensateur.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-2c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-2c">τ correspond au paramètre b de la modélisation en 2.b, ou peut être lu directement en repérant dans le tableau la date pour laquelle <em>u</em><sub>C</sub> atteint 63,2 % de <em>E</em> = 3,30 V (par interpolation entre deux valeurs du tableau si besoin). Utilisez ensuite τ = <em>RC</em> pour en déduire <em>C</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>d.</strong> Comparer les résultats avec les valeurs obtenues par l'exécution du code source Python et formuler des hypothèses pour expliquer les différences observées.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-2d')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-2d">Comparez votre valeur de τ (et de C) à celle affichée par le programme (92 ms, 0,92 µF). Réfléchissez à la façon dont le programme détermine tau dans la boucle <code>while</code> : capture-t-il exactement l'instant où <em>u</em><sub>C</sub> atteint 63,2 % de E, ou un instant légèrement différent ?</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">3. Analyse de l'algorithme de mesure</p>
+<p>La fonction <code>running_time()</code> renvoie le temps écoulé en millisecondes depuis le démarrage du microcontrôleur.</p>
+
+<p class="q-text"><strong>a.</strong> En utilisant le modèle proposé à la question 1.c, justifier la condition d'arrêt de la boucle <code>while</code> à la ligne 11, et pourquoi un nombre un peu plus petit que 1023 a été choisi.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-3a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-3a">D'après le modèle <em>u</em><sub>C</sub>(<em>t</em>) = <em>E</em>(1 − e<sup>−<em>t</em>/τ</sup>), au bout de combien de temps <em>u</em><sub>C</sub> atteint-elle exactement <em>E</em> (x = 1023) ? Que se passerait-il pour la durée de la boucle si la condition d'arrêt exigeait x = 1023 exactement ?</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Justifier la valeur de x choisie à la ligne 14 pour la mesure du temps caractéristique.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-3b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-3b">Calculez la fraction 647/1023 et comparez-la à la valeur numérique de 1 − e⁻¹. Que représente cette fraction particulière dans la définition du temps caractéristique τ ?</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> Montrer que la valeur obtenue par le programme pour le temps caractéristique sera toujours inférieure à la valeur réelle, et proposer une modification possible du code source pour obtenir un résultat plus proche de la valeur réelle.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex42-3c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex42-3c">Regardez précisément à quel moment la ligne <code>tau=date</code> s'exécute pour la dernière fois : est-ce au moment exact où x franchit 647, ou juste avant, lors du dernier échantillon où x était encore inférieur à 647 ? Entre cet échantillon et le suivant (25 ms plus tard), le seuil réel est franchi à un instant intermédiaire non mesuré directement.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex42')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex42">
+<p style="margin:0 0 10px;"><strong>1.a.</strong> Schéma identique au circuit RC série déjà rencontré (Doc. 2, Activité 4) : générateur <em>E</em>, résistance <em>R</em>, condensateur <em>C</em>, en série.</p>
+<div style="text-align:center;margin:0 0 12px;"><img alt="Circuit RC série équivalent" src="Entrainements/fig2-circuit-rc-serie.svg" style="max-width:320px;width:100%;"/></div>
+<p style="margin:0 0 8px;"><strong>1.b.</strong> Loi des mailles : <em>E</em> = <em>u</em><sub>R</sub> + <em>u</em><sub>C</sub>. Loi d'Ohm : <em>u</em><sub>R</sub> = <em>R</em> × <em>i</em>. Charge du condensateur : <em>i</em> = <em>C</em> × d<em>u</em><sub>C</sub>/d<em>t</em>.<br/>
+D'où <em>E</em> = <em>RC</em> × d<em>u</em><sub>C</sub>/d<em>t</em> + <em>u</em><sub>C</sub>, soit <strong>d<em>u</em><sub>C</sub>/d<em>t</em> + <em>u</em><sub>C</sub>/(<em>RC</em>) = <em>E</em>/(<em>RC</em>)</strong>.</p>
+<p style="margin:0 0 12px;"><strong>1.c.</strong> Avec <em>u</em><sub>C</sub>(<em>t</em>) = <em>E</em>(1−e<sup>−<em>t</em>/τ</sup>) : d<em>u</em><sub>C</sub>/d<em>t</em> = (<em>E</em>/τ)e<sup>−<em>t</em>/τ</sup>.<br/>
+En injectant : (<em>E</em>/τ)e<sup>−<em>t</em>/τ</sup> + (1/τ)×<em>E</em>(1−e<sup>−<em>t</em>/τ</sup>) = (<em>E</em>/τ)e<sup>−<em>t</em>/τ</sup> + <em>E</em>/τ − (<em>E</em>/τ)e<sup>−<em>t</em>/τ</sup> = <em>E</em>/τ, cohérent avec le membre de droite (car τ = <em>RC</em>). De plus <em>u</em><sub>C</sub>(0) = <em>E</em>(1−1) = 0 : la solution est valide.</p>
+
+<p style="margin:0 0 8px;"><strong>2.a-b-c.</strong> Le nuage de points (date ; uc) et son ajustement par un modèle exponentiel donnent le graphique suivant :</p>
+<div style="text-align:center;margin:0 0 12px;"><img alt="Graphique de la charge du condensateur avec modèle ajusté et lecture de τ" src="Entrainements/ex42-graphe.png" style="max-width:480px;width:100%;"/></div>
+<p style="margin:0 0 12px;">On lit (ou on ajuste) τ ≈ 100-103 ms. Avec <em>R</em> = 100 kΩ : <em>C</em> = τ/<em>R</em> ≈ 102/100 ≈ <strong>1,0 µF</strong>, en très bon accord avec la valeur étiquetée du condensateur (1,0 µF).</p>
+<p style="margin:0 0 12px;"><strong>2.d.</strong> Le programme affiche τ = 92 ms et C = 0,92 µF, une valeur <strong>inférieure</strong> à celle obtenue graphiquement (≈ 1,0 µF) et à la valeur étiquetée. Cet écart s'explique par la méthode de mesure du programme (voir 3.c) : il enregistre systématiquement une date légèrement antérieure au franchissement réel du seuil de 63,2 %, ce qui sous-estime τ. Une incertitude supplémentaire, plus faible, peut aussi provenir de la tolérance de fabrication du condensateur et de la résistance.</p>
+
+<p style="margin:0 0 8px;"><strong>3.a.</strong> D'après le modèle, <em>u</em><sub>C</sub> = <em>E</em> (x = 1023) correspond à e<sup>−<em>t</em>/τ</sup> = 0, ce qui n'est atteint que pour <em>t</em> → +∞ : la tension s'approche asymptotiquement de <em>E</em> sans jamais l'atteindre exactement en temps fini. Si la condition d'arrêt exigeait x = 1023 exactement, la boucle risquerait de ne jamais se terminer (ou de durer très longtemps). Choisir un seuil légèrement inférieur (1016) permet de garantir un arrêt en temps raisonnable, la tension étant alors « quasiment » chargée.</p>
+<p style="margin:0 0 8px;"><strong>3.b.</strong> 647/1023 ≈ 0,6325 ≈ 1 − e⁻¹ ≈ 0,632 : cette valeur correspond exactement à la fraction de <em>E</em> atteinte par <em>u</em><sub>C</sub> à l'instant <em>t</em> = τ (définition même du temps caractéristique). La valeur x = 647 est donc choisie pour repérer numériquement le passage à <em>u</em><sub>C</sub> ≈ 0,632×<em>E</em>, c'est-à-dire <em>t</em> = τ.</p>
+<p style="margin:0;"><strong>3.c.</strong> Dans la boucle, l'instruction <code>tau=date</code> ne s'exécute que tant que x &lt; 647 : sa dernière exécution correspond donc à la date du <strong>dernier échantillon encore inférieur au seuil</strong>, juste avant que celui-ci ne soit franchi. Le franchissement réel du seuil (x = 647, soit <em>u</em><sub>C</sub> = 0,632×E) se produit en réalité à un instant compris entre cette dernière date et la date de l'échantillon suivant (25 ms plus tard), qui n'est jamais mesuré directement. La valeur enregistrée par le programme est donc <strong>systématiquement inférieure ou égale</strong> à la valeur réelle de τ, jamais supérieure.<br/><br/>
+Une modification possible consiste à interpoler entre le dernier échantillon avant le seuil (<em>t</em>₁, <em>x</em>₁) et le premier échantillon après le seuil (<em>t</em>₂, <em>x</em>₂) pour estimer plus précisément l'instant de franchissement, par exemple :</p>
+<pre style="font-size:.76rem;overflow-x:auto;margin-top:8px;">while x&lt;1016:
+    x=pin2.read_analog()
+    date=running_time()-t0
+    if x&lt;647:
+        t1=date              # dernière date avant le seuil
+    elif tau==0:
+        tau=(date+t1)/2      # approximation par interpolation
+                             # autour du franchissement de 0,632×E
+    uc=round(x*3.3/1023,2)
+    sleep(25)</pre>
+</div>
+</div>
+
+<div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-43" style="display:none;">
+<h3>Exercice 43 — Détecteur de pluie capacitif et écran tactile</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Compétences : réaliser un schéma de la situation · effectuer des procédures courantes · mettre en œuvre les étapes d'une démarche · interpréter des résultats.</em></p>
+
+<div class="doc-flex">
+<div>
+<p>Les détecteurs de pluie capacitifs sont utilisés dans de nombreuses applications. Le principe de fonctionnement de ce capteur repose sur la variation de la capacité d'un condensateur en fonction du taux d'humidité relative de l'air (degré d'hygrométrie).<br/><br/>
+La présence d'un dispositif de chauffage intégré permet de maintenir le capteur sec en vaporisant les faibles quantités d'eau présentes sur sa surface. Ceci évite les erreurs de communication dues au brouillard ou à des phénomènes de condensation (rosée du matin).</p>
+</div>
+<div class="doc-media" style="flex:0 1 280px;">
+<img alt="Structure du capteur : électrodes, couche sensible poreuse, substrat, dispositif de chauffage, et réseau de doigts interdigités 22,5 mm × 32,0 mm" src="Entrainements/ex43-1.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:18px 0 8px;">1. Modélisation du capteur</p>
+<p class="q-text"><strong>a.</strong> Réaliser un schéma explicatif permettant de justifier que ce capteur puisse se modéliser par l'association de condensateurs en dérivation.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex43-1a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex43-1a">Représentez les doigts du peigne interdigité comme une succession d'électrodes alternées : chaque paire de doigts voisins (l'un relié à la borne A, l'autre à la borne B) forme un petit condensateur élémentaire. Comme tous les doigts reliés à A sont connectés entre eux (idem pour B), tous ces condensateurs élémentaires partagent les deux mêmes bornes A et B.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> La cellule capacitive est assimilée à une association de 80 condensateurs en dérivation dont les capacités s'ajoutent. Lorsque le capteur est en air sec à 0 % d'humidité relative, la capacité totale de l'ensemble vaut <em>C</em><sub>tot</sub> = 100 pF. La distance <em>d</em> entre les armatures vaut 0,1 mm et chaque condensateur est assimilable à un condensateur plan dont la capacité est donnée par l'expression <em>C</em> = <em>kS</em>/<em>d</em> avec <em>k</em> = 4,4 × 10⁻¹¹ SI et <em>S</em> l'aire de la surface des armatures en regard l'une de l'autre.<br/>
+Évaluer l'épaisseur <em>e</em> des armatures d'un condensateur de la cellule capacitive, de dimensions 22,5 mm par 32,0 mm.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex43-1b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex43-1b">Utilisez <em>C</em><sub>tot</sub> = <em>n</em> × <em>k</em> × <em>S</em>/<em>d</em> (association en dérivation de <em>n</em> = 80 condensateurs identiques) pour isoler l'aire <em>S</em> d'un doigt. Reliez ensuite <em>S</em> à l'épaisseur <em>e</em> recherchée via <em>S</em> = <em>L</em> × <em>e</em>, où <em>L</em> est la longueur des doigts en regard (prendre <em>L</em> = 32,0 mm, la dimension du peigne dans le sens de la longueur des doigts).</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">2. Évolution théorique lors de la charge</p>
+<p class="q-text"><strong>a.</strong> Lorsque le dispositif de chauffage n'est pas en fonction, la capacité du condensateur varie en fonction du taux d'humidité relative de l'air. Pour mesurer la capacité du condensateur, on le charge avec un générateur idéal de tension <em>E</em> = 5,0 V à travers une résistance <em>R</em> = 10,0 kΩ. Proposer le schéma d'un montage pour réaliser l'expérience.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex43-2a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex43-2a">Circuit RC série classique : générateur idéal <em>E</em>, résistance <em>R</em>, condensateur <em>C</em> (le capteur), comme déjà rencontré en cours et dans les exercices précédents.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Établir l'équation différentielle de l'évolution de la tension <em>u</em><sub>C</sub>(<em>t</em>) aux bornes du condensateur en fonction du temps, et établir l'expression de sa solution en supposant que le condensateur est déchargé au début de la charge.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex43-2b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex43-2b">Même démarche que dans l'Activité 4 ou les exercices 27/42 : loi des mailles (<em>E</em> = <em>u</em><sub>R</sub> + <em>u</em><sub>C</sub>), loi d'Ohm (<em>u</em><sub>R</sub> = <em>Ri</em>) et <em>i</em> = <em>C</em>×d<em>u</em><sub>C</sub>/d<em>t</em>.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>c.</strong> Tracer l'allure théorique du graphe de la tension <em>u</em><sub>C</sub>(<em>t</em>) aux bornes du condensateur en fonction du temps pour la valeur <em>C</em> = 100 pF du condensateur, correspondant à un taux d'humidité relative de 0 %.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex43-2c')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex43-2c">Calculez d'abord τ = <em>RC</em> avec <em>C</em> = 100 pF et <em>R</em> = 10,0 kΩ, puis tracez une courbe croissante partant de 0, atteignant environ 63 % de <em>E</em> à l'instant τ, et se rapprochant de <em>E</em> pour <em>t</em> ≥ 5τ.</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">3. Exploitation des résultats</p>
+<div class="doc-flex">
+<div>
+<p class="q-text"><strong>a.</strong> L'expérience décrite précédemment permet d'obtenir l'enregistrement ci-contre. À l'aide du tableau suivant, estimer le taux d'humidité relative régnant dans la salle au moment de l'expérience.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex43-3a')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex43-3a">Repérez sur le graphique l'instant τ pour lequel <em>u</em><sub>C</sub> atteint 63 % de la tension maximale <em>E</em> = 5,0 V, puis calculez <em>C</em> = τ/<em>R</em>. Comparez cette valeur au tableau fourni, en interpolant si nécessaire entre deux valeurs du tableau.</div>
+<div style="overflow-x:auto;margin:10px 0;">
+<table style="border-collapse:collapse;font-size:.8rem;min-width:340px;">
+<tr style="background:var(--vert-clair);"><td style="padding:5px 10px;font-weight:700;border:1px solid var(--gris-bord);">Capacité (en pF)</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">100</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">180</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">280</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">390</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">&gt; 550</td></tr>
+<tr style="background:var(--vert-clair);"><td style="padding:5px 10px;font-weight:700;border:1px solid var(--gris-bord);">Taux d'humidité relative (en %)</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">0</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">25</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">40</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">50</td><td style="padding:5px 10px;border:1px solid var(--gris-bord);">100</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>b.</strong> Le détecteur de pluie est aussi équipé d'un capteur de température. Le phénomène de rosée apparaît lorsque la température diminue et lorsque le taux d'humidité relative atteint 100 %. Le programme du microcontrôleur calcule le taux d'humidité à partir de la détermination du temps caractéristique au cours d'un cycle de charge. Indiquer comment le programme de gestion du capteur doit gérer l'élément chauffant pour différencier la pluie continue de la rosée qui pourrait se déposer sur le capteur.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex43-3b')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex43-3b">Réfléchissez à ce qui différencie physiquement la rosée (fine pellicule d'eau qui s'évapore facilement une fois chauffée) de la pluie continue (apport d'eau permanent qui persiste malgré le chauffage). Que devient la mesure de capacité juste après un cycle de chauffage dans chacun des deux cas ?</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">4. Détecteur de pluie et écran tactile</p>
+<div class="doc-flex">
+<div>
+<p>La technologie du capteur précédent est utilisée dans les écrans tactiles : le capteur capacitif est constitué d'un réseau bidimensionnel de fils très fins, invisibles à l'œil nu et intégrés dans le feuilletage de l'écran tactile.<br/><br/>
+À l'approche d'une couche d'eau ou d'un milieu conducteur comme un doigt, les lignes du champ électrique sont modifiées, ce qui provoque une modification de capacité locale entre fils voisins, qui est alors détectée par un microcontrôleur et convertie en une indication de position sur l'écran.</p>
+</div>
+<div class="doc-media" style="flex:0 1 220px;">
+<img alt="Lignes de champ électrique entre les fils A et B de l'écran tactile, avant et après approche d'un doigt" src="Entrainements/ex43-2.png"/>
+</div>
+</div>
+
+<p class="q-text"><strong>Question.</strong> Préciser comment varie le champ électrique entre les deux fils A et B lorsque le doigt touche l'écran, et en déduire comment varie la capacité <em>C</em><sub>x</sub> du condensateur entre A et B.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex43-4')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex43-4">Le doigt, conducteur relié à un potentiel de référence, capte une partie des lignes de champ électrique initialement dirigées entre A et B (à travers une capacité doigt-écran <em>C</em><sub>g</sub>). Que devient alors le nombre de lignes de champ reliant directement A à B, et donc le couplage capacitif direct entre ces deux fils ?</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex43')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex43">
+<p style="margin:0 0 8px;"><strong>1.a.</strong> Dans le peigne interdigité, les doigts sont alternativement reliés à la borne A et à la borne B. Chaque paire de doigts voisins (un doigt « A », un doigt « B ») constitue un petit condensateur plan élémentaire. Tous les doigts « A » étant reliés entre eux (idem pour les doigts « B »), tous ces condensateurs élémentaires ont leurs deux bornes communes à A et B : c'est exactement la configuration de condensateurs <strong>en dérivation</strong> (en parallèle).</p>
+<p style="margin:0 0 10px;"><strong>1.b.</strong> Association en dérivation de <em>n</em> = 80 condensateurs identiques : <em>C</em><sub>tot</sub> = <em>n</em> × <em>kS</em>/<em>d</em>, d'où <em>S</em> = <em>C</em><sub>tot</sub> × <em>d</em> / (<em>n</em> × <em>k</em>).<br/>
+En prenant <em>L</em> = 32,0 mm comme longueur des doigts en regard, <em>S</em> = <em>L</em> × <em>e</em>, donc :<br/>
+<em>e</em> = <em>C</em><sub>tot</sub> × <em>d</em> / (<em>n</em> × <em>k</em> × <em>L</em>) = (100×10⁻¹² × 1,0×10⁻⁴) / (80 × 4,4×10⁻¹¹ × 32,0×10⁻³) ≈ <strong>8,9 × 10⁻⁵ m</strong> (soit environ 89 µm).<br/>
+<span style="font-size:.78rem;color:var(--texte-leger);">(Épaisseur cohérente avec un film métallique déposé de quelques dizaines de micromètres. Si l'énoncé de votre édition attribue plutôt <em>L</em> = 22,5 mm à la longueur des doigts, remplacez cette valeur dans le calcul : le principe de la méthode reste identique.)</span></p>
+<p style="margin:0 0 8px;"><strong>2.a.</strong> Circuit RC série : générateur idéal <em>E</em>, résistance <em>R</em>, condensateur <em>C</em>, identique au schéma du Doc. 2 (Activité 4).</p>
+<div style="text-align:center;margin:0 0 12px;"><img alt="Circuit RC série équivalent" src="Entrainements/fig2-circuit-rc-serie.svg" style="max-width:300px;width:100%;"/></div>
+<p style="margin:0 0 8px;"><strong>2.b.</strong> Loi des mailles : <em>E</em> = <em>u</em><sub>R</sub> + <em>u</em><sub>C</sub> ; loi d'Ohm : <em>u</em><sub>R</sub> = <em>Ri</em> ; charge du condensateur : <em>i</em> = <em>C</em>×d<em>u</em><sub>C</sub>/d<em>t</em>.<br/>
+D'où <em>RC</em>×d<em>u</em><sub>C</sub>/d<em>t</em> + <em>u</em><sub>C</sub> = <em>E</em>, de solution (condensateur initialement déchargé) : <strong><em>u</em><sub>C</sub>(<em>t</em>) = <em>E</em>(1 − e<sup>−<em>t</em>/<em>RC</em></sup>)</strong>.</p>
+<p style="margin:0 0 10px;"><strong>2.c.</strong> τ = <em>RC</em> = (10,0×10³) × (100×10⁻¹²) = 1,0×10⁻⁶ s = 1,0 µs. Courbe théorique :</p>
+<div style="text-align:center;margin:0 0 12px;"><img alt="Allure théorique de la charge pour C=100 pF, τ=1,0 µs" src="Entrainements/ex43-graphe-theorique.svg" style="max-width:420px;width:100%;"/></div>
+<p style="margin:0 0 10px;"><strong>3.a.</strong> Sur l'enregistrement expérimental, on lit graphiquement τ ≈ 5 µs (date à laquelle <em>u</em><sub>C</sub> atteint 63 % × 5,0 V ≈ 3,15 V).<br/>
+<em>C</em> = τ/<em>R</em> = (5×10⁻⁶)/(10,0×10³) = 5,0×10⁻¹⁰ F = 500 pF.<br/>
+En interpolant dans le tableau entre 390 pF (50 %) et &gt; 550 pF (100 %) : taux d'humidité ≈ 50 + (500−390)/(550−390) × 50 ≈ <strong>85 %</strong>.<br/>
+<span style="font-size:.78rem;color:var(--texte-leger);">(Valeur à ajuster selon la lecture précise du graphique fourni par votre édition.)</span></p>
+<p style="margin:0 0 10px;"><strong>3.b.</strong> La rosée est une fine pellicule d'eau qui s'évapore rapidement dès que le chauffage est activé, alors que la pluie continue apporte de l'eau en permanence, qui persiste malgré le chauffage. Le programme doit donc activer périodiquement l'élément chauffant, puis mesurer à nouveau la capacité (via τ) juste après : si la capacité rechute rapidement vers sa valeur « sec » (basse), il s'agissait de rosée ; si elle reste élevée malgré le chauffage (l'eau continue d'arriver), c'est de la pluie continue.</p>
+<p style="margin:0;"><strong>4.</strong> Lorsque le doigt touche l'écran, il se comporte comme un conducteur relié à un potentiel de référence : il capte (dévie) une partie des lignes de champ électrique qui reliaient initialement les fils A et B. Le nombre de lignes de champ reliant directement A à B <strong>diminue</strong> donc, ce qui se traduit par une <strong>diminution de la capacité <em>C</em><sub>x</sub></strong> entre A et B. C'est cette baisse locale de <em>C</em><sub>x</sub> que le microcontrôleur détecte pour localiser la position du toucher.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-44" style="display:none;">
+<h3>Exercice 44 — Réaliser une communication avec un microcontrôleur pour effectuer des mesures</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Ressources : programmes Python.</em></p>
+<p>Un élève doit acquérir des données à l'aide d'un microcontrôleur pour déterminer le temps caractéristique d'un dipôle RC et le comparer au résultat qui s'en déduit à une valeur de référence.</p>
+
+<p style="font-weight:700;color:var(--bleu);margin:18px 0 8px;">Étape 1 — Communication via le port USB et un IDE spécifique au microcontrôleur</p>
+<p>Pour des phénomènes statiques ou lents, le programme d'acquisition de données peut être rudimentaire, avec déclenchement et arrêt manuel. La lecture des données écrites dans le port série se fait à l'aide du terminal « Moniteur série » de l'IDE Arduino.</p>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:480px;margin:0 auto;">
+<img alt="Exemple de code Arduino avec lecture au moniteur série" src="Entrainements/ex44-1.png"/>
+</div>
+</div>
+<p>Pour des phénomènes plus rapides comme la charge d'un condensateur, le nombre de données <em>N</em> à acquérir sera fonction de l'intervalle de temps Δ<em>t</em> pendant lequel on souhaite faire l'acquisition et de la période d'échantillonnage <em>T</em> : <em>T</em> = Δ<em>t</em>/<em>N</em>.</p>
+
+<div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:12px 16px;margin:10px 0;">
+<p style="font-size:.78rem;font-weight:700;color:var(--texte-leger);margin-bottom:6px;">📄 Exemple avec un microcontrôleur de type Microbit : ch21_500_exo44_1.py</p>
+<pre style="font-size:.76rem;overflow-x:auto;margin:0;">from microbit import*
+N=int(input("Entrer le nombre de mesures voulu: "))
+duree=int(input("Entrer la duree de l'acquisition en ms: "))
+
+pin1.write_digital(0)   # décharge condensateur C, broche 1
+sleep(5000)              # temps décharge totale en ms
+pin1.write_digital(1)   # charge de C sous E et R, broche 1
+print('t(ms)\t x')
+t0=running_time()        # date de début de la charge
+for i in range(N):       # boucle pour N mesures
+    x=pin2.read_analog() # mesure de x, broche 2
+    date=running_time()-t0
+    print(date,"\t",x)
+    sleep((duree/N)-1.5) # temporisation entre deux mesures</pre>
+</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">Étape 2 — Communication via le port USB et un IDE Python</p>
+<p>La bibliothèque <code>serial</code> permet la communication entre l'ordinateur exécutant un programme Python et un périphérique extérieur. Un microcontrôleur envoie des données dans le port série et l'exécution du programme Python ci-dessous se traduit par l'affichage des valeurs dans la console.</p>
+<div class="doc-flex">
+<div class="doc-media" style="flex:1 1 100%;max-width:480px;margin:0 auto;">
+<img alt="Exemple de code Python utilisant la bibliothèque serial" src="Entrainements/ex44-2.png"/>
+</div>
+</div>
+
+<div style="background:var(--gris-fond);border:1px solid var(--gris-bord);border-radius:10px;padding:12px 16px;margin:10px 0;">
+<p style="font-size:.78rem;font-weight:700;color:var(--texte-leger);margin-bottom:6px;">📄 Programme fourni : ch21_500_exo44_2.py (traitement statistique de 1000 mesures)</p>
+<pre style="font-size:.76rem;overflow-x:auto;margin:0;">import serial
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+
+serial_port=serial.Serial(port='COM22',baudrate=115200)
+serial_port.setDTR(False)
+time.sleep(0.1)
+serial_port.setDTR(True)
+serial_port.flushInput()
+C=[]
+for i in range(1000):
+    l=serial_port.readline()
+    valeur=float(chr(l[0])+chr(l[1])+chr(l[2])+chr(l[3]))
+    if i%100==0: print(i,'mesures')
+    C.append(round(valeur/100,2))
+serial_port.close()
+
+Cmoy=np.mean(C)
+u=np.std(C,ddof=1)
+print('C =',round(Cmoy,2),'nF')
+print('Incertitude-type u(C) =',round(u,2),'nF')
+plt.hist(C,bins=int((max(C)-min(C))*100),color='red',edgecolor='black')
+plt.title('Pour 1000 itérations')
+plt.xlabel('Valeur capacité C en nF')
+plt.ylabel('Nombre de mesures')
+plt.show()</pre>
+</div>
+
+<div class="intro-box">💡 <strong>Astuce :</strong> les données obtenues en suivant l'une des deux méthodes décrites à l'Étape 1 peuvent être copiées et collées dans un tableur généraliste comme OpenOffice Calc, ou scientifique comme Regressi.</div>
+
+<p style="font-weight:700;color:var(--bleu);margin:22px 0 8px;">Questions</p>
+<p class="q-text"><strong>1.</strong> Réaliser l'acquisition de 200 mesures de la tension aux bornes d'un condensateur lors de sa charge, puis représenter le graphe <em>u</em><sub>C</sub> = <em>f</em>(<em>t</em>) à l'aide d'un tableur-grapheur.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex44-1')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex44-1">Avant l'acquisition, estimez un ordre de grandeur de τ = <em>RC</em> à partir des valeurs nominales de vos composants, afin de choisir une durée totale Δ<em>t</em> d'acquisition suffisante (par exemple 5 à 10 fois τ, pour observer toute la charge jusqu'au plateau). Avec <em>N</em> = 200 mesures, vérifiez que la période d'échantillonnage <em>T</em> = Δ<em>t</em>/<em>N</em> reste petite devant τ (idéalement <em>T</em> ≤ τ/10) pour bien décrire la partie la plus rapide de la courbe. Utilisez ensuite l'un des deux programmes de l'Étape 1 ou 2 pour l'acquisition, puis copiez les couples (<em>t</em>, <em>u</em><sub>C</sub>) dans un tableur pour tracer le graphe.</div>
+
+<div style="background:var(--bleu-activite);border:1.5px solid var(--bleu-activite-bord);border-radius:12px;padding:14px 18px;margin:12px 0;">
+<p style="font-size:.8rem;color:var(--texte-leger);margin-bottom:10px;">🖥️ <strong>Simulation</strong> — reproduit le résultat d'une vraie acquisition sur microcontrôleur (E = 5,0 V, R = 10,0 kΩ, C ≈ 1,0 µF, bruit de quantification 10 bits inclus).</p>
+<button class="btn-indice" style="background:var(--bleu);color:#fff;border-color:var(--bleu);" onclick="ex44SimulateCharge()">▶ Lancer l'acquisition simulée (200 mesures)</button>
+<div style="overflow-x:auto;margin-top:12px;"><canvas id="ex44-charge-canvas" width="600" height="300" style="max-width:100%;background:#fff;border:1px solid var(--gris-bord);border-radius:8px;"></canvas></div>
+<p id="ex44-charge-result" style="font-size:.85rem;color:var(--texte);margin-top:8px;min-height:20px;"></p>
+</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>2.</strong> Réaliser 1000 mesures de la valeur de la capacité d'un condensateur pour tracer l'histogramme de la série de mesures, en évaluer la moyenne <em>C̄</em> et son incertitude associée <em>u</em>(<em>C̄</em>). Utiliser le quotient |<em>C̄</em> − <em>C</em><sub>réf</sub>|/<em>u</em>(<em>C̄</em>) pour comparer le résultat de la mesure à la valeur d'étiquetage <em>C</em><sub>réf</sub> de la capacité.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex44-2')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex44-2">Utilisez le programme fourni ch21_500_exo44_2.py (ou adaptez-le) pour récupérer 1000 valeurs de C mesurées par le microcontrôleur, calculer leur moyenne <em>C̄</em> (np.mean) et leur écart-type non biaisé (np.std avec ddof=1), puis en déduire l'incertitude-type <em>u</em>(<em>C̄</em>) = <em>s</em>/√<em>n</em> (attention : ce n'est pas directement l'écart-type affiché par le programme fourni, qui donne l'incertitude-type sur UNE mesure ; il faut diviser par √1000 pour obtenir l'incertitude sur la MOYENNE). Comparez ensuite l'écart |<em>C̄</em> − <em>C</em><sub>réf</sub>| au nombre d'incertitudes-types <em>u</em>(<em>C̄</em>) qu'il représente.</div>
+
+<div style="background:var(--bleu-activite);border:1.5px solid var(--bleu-activite-bord);border-radius:12px;padding:14px 18px;margin:12px 0;">
+<p style="font-size:.8rem;color:var(--texte-leger);margin-bottom:10px;">🖥️ <strong>Simulation</strong> — reproduit le résultat d'une vraie série de 1000 mesures sur un condensateur réel (dispersion de fabrication + bruit de mesure inclus). Chaque clic tire un condensateur légèrement différent, comme en vrai.</p>
+<button class="btn-indice" style="background:var(--bleu);color:#fff;border-color:var(--bleu);" onclick="ex44SimulateStats()">▶ Lancer 1000 mesures simulées de C</button>
+<div style="overflow-x:auto;margin-top:12px;"><canvas id="ex44-hist-canvas" width="600" height="300" style="max-width:100%;background:#fff;border:1px solid var(--gris-bord);border-radius:8px;"></canvas></div>
+<p id="ex44-hist-result" style="font-size:.85rem;color:var(--texte);margin-top:8px;line-height:1.6;"></p>
+</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex44')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex44">
+<p style="margin:0 0 10px;"><strong>1.</strong> Le graphe obtenu doit avoir l'allure caractéristique d'une charge de condensateur : une croissance rapide au début, qui ralentit progressivement pour tendre vers un plateau horizontal (valeur <em>E</em>) atteint pour <em>t</em> ≥ 5τ environ. Un choix cohérent de Δ<em>t</em> et de <em>N</em> = 200 doit permettre de voir clairement à la fois la montée initiale (pente forte près de <em>t</em> = 0) et le plateau final, sans qu'aucune des deux zones ne soit « écrasée » par un mauvais choix d'échelle de temps. La simulation ci-dessus reproduit ce comportement, bruit de quantification du microcontrôleur inclus.</p>
+<p style="margin:0 0 10px;"><strong>2.</strong> À partir des 1000 mesures de <em>C</em>, on calcule :</p>
+<ul style="padding-left:18px;margin:0 0 10px;">
+<li>la moyenne <em>C̄</em> (donnée directement par le programme, variable <code>Cmoy</code>) ;</li>
+<li>l'écart-type non biaisé <em>s</em> de la série (variable <code>u</code> dans le programme, qui représente l'incertitude-type sur <strong>une seule mesure</strong>, pas sur la moyenne) ;</li>
+<li>l'incertitude-type sur la moyenne : <em>u</em>(<em>C̄</em>) = <em>s</em>/√1000 (à recalculer, cette division n'est pas faite dans le script fourni).</li>
+</ul>
+<p style="margin:0 0 10px;">On compare ensuite l'écart normalisé <em>E</em><sub>n</sub> = |<em>C̄</em> − <em>C</em><sub>réf</sub>| / <em>u</em>(<em>C̄</em>) à la valeur seuil 2 :</p>
+<ul style="padding-left:18px;margin:0;">
+<li>si <em>E</em><sub>n</sub> &lt; 2 : le résultat de la mesure est jugé <strong>compatible</strong> avec la valeur d'étiquetage <em>C</em><sub>réf</sub>, aux incertitudes de mesure près ;</li>
+<li>si <em>E</em><sub>n</sub> ≥ 2 : le résultat est jugé <strong>incompatible</strong> avec <em>C</em><sub>réf</sub> ; il faut alors rechercher une cause d'erreur systématique (mauvais étalonnage, composant hors tolérance, défaut du montage...).</li>
+</ul>
+<p style="margin-top:10px;font-size:.8rem;color:var(--texte-leger);">La simulation ci-dessus affiche directement ces trois grandeurs (<em>C̄</em>, <em>u</em>(<em>C̄</em>), <em>E</em><sub>n</sub>) et la conclusion associée, pour un condensateur tiré aléatoirement à chaque clic.</p>
+</div>
+</div>
+
+<div class="exo-tier-card tier-difficile" data-exo-item id="exo-diff-45" style="display:none;">
+<h3>Exercice 45 — Principe d'un détecteur de position capacitif</h3>
+<p style="font-size:0.8rem;color:var(--texte-leger);margin-bottom:10px;"><em>Compétences : analyser-raisonner · réaliser · valider.</em></p>
+
+<p>Les capteurs capacitifs fonctionnent par détection de la variation de la capacité d'un condensateur en fonction de sa géométrie. Ce type de capteur permet d'effectuer des mesures de positions très précises dans des conditions expérimentales sévères, comme l'épaisseur des disques de frein en fonctionnement.</p>
+<p style="font-weight:700;color:var(--bleu);margin:10px 0;">● Comment expliquer le fonctionnement d'un détecteur de position capacitif ?</p>
+
+<div class="doc-flex">
+<div>
+<p style="font-weight:700;margin-bottom:8px;">Doc. 1 — Capteur capacitif de position expérimental</p>
+<p>Le capteur est composé d'un couvercle de boîte de DVD d'épaisseur constante <em>e</em> = 1,0 mm, recouvert d'adhésif métallisé sur sa face côté table, et d'une règle graduée dont la face plane est métallisée avec du ruban adhésif à partir de la graduation 10,0 cm. La règle est guidée et elle glisse sur la surface non métallisée de la boîte de DVD.</p>
+</div>
+<div class="doc-media" style="flex:0 1 260px;">
+<img alt="Capteur capacitif de position : règle métallisée glissant sur un couvercle de boîte de DVD" src="Entrainements/ex45.png"/>
+</div>
+</div>
+
+<p style="font-weight:700;margin:14px 0 6px;">Doc. 2 — Fonctionnement d'un capteur de position capacitif</p>
+<p>La capacité d'un condensateur plan est donnée par l'expression :</p>
+<p style="text-align:center;font-weight:700;color:var(--bleu);background:var(--bleu-clair);border-radius:10px;padding:8px;margin:10px 0;"><em>C</em> = <em>k</em> × <em>S</em> / <em>d</em></p>
+<p>avec <em>S</em> l'aire de la surface des armatures en regard (en m²) et <em>d</em> la distance entre les armatures (en m). Le coefficient <em>k</em> dépend de l'isolant entre les armatures : <em>k</em> = 8,85 × 10⁻¹² F·m⁻¹ pour l'air, <em>k</em> = 2,3 × 10⁻¹¹ F·m⁻¹ pour le matériau plastique qui constitue le boîtier du DVD (polystyrène).<br/><br/>
+En faisant varier la distance entre les armatures, ou bien leurs surfaces en regard d'aire commune <em>S</em>, on modifie la valeur de <em>C</em> : à <em>S</em> fixée, <em>C</em>(<em>d</em>) décroît en 1/<em>d</em> (hyperbole) ; à <em>d</em> fixée, <em>C</em>(<em>S</em>) est proportionnelle à <em>S</em> (droite passant par l'origine).</p>
+
+<p style="font-weight:700;color:var(--bleu);margin:18px 0 8px;">Questions</p>
+
+<p class="q-text"><strong>1.</strong> Réaliser le protocole fourni par le professeur permettant de mesurer la capacité <em>C</em> du capteur capacitif de position pour une position <em>x</em> = 6,0 cm de la règle.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex45-1')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex45-1">Reliez les deux surfaces métallisées (règle et couvercle de DVD) à votre capacimètre (ou au montage à microcontrôleur fourni), en veillant à bien positionner la règle à <em>x</em> = 6,0 cm avant de relever la valeur affichée.</div>
+
+<div style="background:var(--bleu-activite);border:1.5px solid var(--bleu-activite-bord);border-radius:12px;padding:14px 18px;margin:12px 0;">
+<p style="font-size:.8rem;color:var(--texte-leger);margin-bottom:10px;">🖥️ <strong>Simulation</strong> — reproduit la lecture d'un vrai capacimètre branché sur le capteur (capacité parasite du montage et bruit de mesure inclus).</p>
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+<label style="font-size:.85rem;">Position <em>x</em> de la règle (cm) : <input type="number" id="ex45-x-input" value="6.0" min="0" max="20" step="0.5" style="width:70px;padding:4px 8px;border:1.5px solid var(--gris-bord);border-radius:6px;"/></label>
+<button class="btn-indice" style="background:var(--bleu);color:#fff;border-color:var(--bleu);" onclick="ex45Mesurer()">▶ Mesurer C à cette position</button>
+</div>
+<p id="ex45-mesure-result" style="font-size:.85rem;color:var(--texte);margin-top:10px;min-height:20px;"></p>
+</div>
+<div class="appel-box">📞 APPEL n°1 — Appeler le professeur pour lui présenter les résultats ou en cas de difficulté</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>2.</strong> Proposer un protocole expérimental permettant d'obtenir et de modéliser la courbe d'étalonnage <em>C</em> = <em>f</em>(<em>x</em>) de la capacité <em>C</em> du capteur capacitif en fonction de la valeur <em>x</em> de la position de la règle.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex45-2')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex45-2">Répétez la mesure de la question 1 pour plusieurs positions <em>x</em> différentes de la règle (en balayant toute la plage utile), en relevant à chaque fois le couple (<em>x</em>, <em>C</em>). Pensez à la façon dont vous représenterez ensuite ces couples pour en tirer un modèle mathématique (cf. Doc. 2).</div>
+<div class="appel-box">📞 APPEL n°2 — Appeler le professeur pour lui présenter le protocole ou en cas de difficulté</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>3.</strong> Mettre en œuvre le protocole pour obtenir la courbe d'étalonnage <em>C</em> = <em>f</em>(<em>x</em>) et sa modélisation.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex45-3')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex45-3">Utilisez un tableur-grapheur pour tracer le nuage de points (<em>x</em>, <em>C</em>), puis testez un modèle affine <em>C</em> = <em>a</em>×<em>x</em> (ou <em>C</em> = <em>a</em>×<em>x</em> + <em>b</em> si vos mesures ne passent pas exactement par l'origine) à l'aide de l'outil de régression du logiciel.</div>
+
+<div style="background:var(--bleu-activite);border:1.5px solid var(--bleu-activite-bord);border-radius:12px;padding:14px 18px;margin:12px 0;">
+<p style="font-size:.8rem;color:var(--texte-leger);margin-bottom:10px;">🖥️ <strong>Simulation</strong> — reproduit une série de mesures de C pour x variant de 0 à 20 cm, avec le même capteur (mêmes défauts) que la mesure de la question 1 ci-dessus.</p>
+<button class="btn-indice" style="background:var(--bleu);color:#fff;border-color:var(--bleu);" onclick="ex45SimulateEtalonnage()">▶ Réaliser l'étalonnage (11 points, x = 0 à 20 cm)</button>
+<button class="btn-indice" style="margin-left:8px;" onclick="ex45NouveauCapteur()">🔄 Essayer un autre capteur</button>
+<div style="overflow-x:auto;margin-top:12px;"><canvas id="ex45-etalon-canvas" width="600" height="300" style="max-width:100%;background:#fff;border:1px solid var(--gris-bord);border-radius:8px;"></canvas></div>
+<p id="ex45-etalon-result" style="font-size:.85rem;color:var(--texte);margin-top:8px;line-height:1.6;"></p>
+</div>
+<div class="appel-box">📞 APPEL n°3 — Appeler le professeur pour lui présenter les résultats ou en cas de difficulté</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>4.</strong> À l'aide du Doc. 2 :<br/>
+— justifier que l'évolution de la capacité <em>C</em> du condensateur devrait être linéaire en fonction de la position <em>x</em> de la règle, c'est-à-dire du type <em>C</em> = <em>a</em>×<em>x</em> ;<br/>
+— estimer par un calcul la valeur de la capacité <em>C</em> du capteur capacitif pour la position <em>x</em> = 6,0 cm de la règle.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex45-4')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex45-4">Dans ce capteur, la distance <em>d</em> entre les armatures (fixée par l'épaisseur <em>e</em> du couvercle de DVD) reste constante quand on déplace la règle : c'est donc l'aire en regard <em>S</em> qui varie avec <em>x</em> (cas « <em>C</em>(<em>S</em>) » du Doc. 2), <em>S</em> étant proportionnelle à <em>x</em> (aire = largeur métallisée constante × longueur en regard <em>x</em>). Pour le calcul numérique, il vous faut la largeur de la partie métallisée de la règle (donnée dans votre protocole/fiche professeur) ; utilisez <em>k</em> = 2,3×10⁻¹¹ F·m⁻¹ (polystyrène du boîtier) et <em>d</em> = <em>e</em> = 1,0 mm.</div>
+
+<p class="q-text" style="margin-top:14px;"><strong>5.</strong> Confronter les réponses précédentes aux mesures effectuées aux questions 1 et 3. Discuter des conditions expérimentales, des sources d'erreurs et du protocole pour justifier la compatibilité :<br/>
+— du résultat du calcul effectué en 4 avec celui de la mesure réalisée en 1 ;<br/>
+— de la modélisation justifiée en 4 avec les résultats expérimentaux obtenus en 3.
+  <button class="btn-indice" onclick="toggleIndice('ind-ex45-5')">💡 Indice</button>
+</p>
+<div class="indice-box" id="ind-ex45-5">Pensez aux capacités « parasites » (câbles, connexions, capacimètre lui-même) qui s'ajoutent en dérivation à la capacité du capteur et qui peuvent être loin d'être négligeables face à des capacités de quelques dizaines de pF seulement. Pensez aussi à un éventuel entrefer d'air résiduel entre la règle et le couvercle du DVD (défaut de planéité, poussière...), qui modifierait fortement <em>C</em> puisqu'il s'ajoute en série avec l'isolant polystyrène.</div>
+
+<button class="btn-correction2" onclick="toggleCorrection('corr-ex45')">▶ Voir la correction</button>
+<div class="correction-box" id="corr-ex45">
+<p style="margin:0 0 10px;"><strong>1 à 3.</strong> Ces questions sont des questions de mise en œuvre expérimentale : il n'y a pas de valeur numérique de référence universelle, le résultat dépend de votre matériel réel (les simulations ci-dessus vous donnent un résultat plausible, avec capacité parasite et bruit de mesure inclus, pour vous entraîner à l'analyse). Validez vos résultats et votre protocole directement avec votre professeur (appels n° 1 à 3).</p>
+<p style="margin:0 0 8px;"><strong>4. Justification de la linéarité :</strong> dans ce capteur, la distance <em>d</em> entre les deux surfaces métallisées est imposée par l'épaisseur <em>e</em> = 1,0 mm du couvercle de DVD : elle reste <strong>constante</strong> quel que soit <em>x</em>. Seule l'aire en regard <em>S</em> varie lorsqu'on déplace la règle, car la longueur métallisée en vis-à-vis change avec la position <em>x</em>, alors que la largeur métallisée <em>l</em> reste, elle, constante : <em>S</em> = <em>l</em> × <em>x</em>.<br/>
+En reportant dans <em>C</em> = <em>kS</em>/<em>d</em> : <em>C</em> = (<em>kl</em>/<em>d</em>) × <em>x</em>, soit une expression du type <strong><em>C</em> = <em>a</em>×<em>x</em></strong> avec <em>a</em> = <em>kl</em>/<em>d</em> constant : la capacité est bien proportionnelle à <em>x</em> (cas « <em>C</em>(<em>S</em>) » du Doc. 2).</p>
+<p style="margin:0 0 8px;"><strong>Calcul de C pour x = 6,0 cm :</strong> <em>C</em> = <em>k</em> × <em>l</em> × <em>x</em> / <em>e</em>, avec <em>k</em> = 2,3×10⁻¹¹ F·m⁻¹ (polystyrène), <em>e</em> = 1,0×10⁻³ m, <em>x</em> = 6,0×10⁻² m.<br/>
+À titre d'exemple, pour une règle de largeur métallisée <em>l</em> = 2,0 cm = 2,0×10⁻² m (valeur usuelle d'une règle plate — <strong>à remplacer par la largeur réelle de votre règle</strong>) :<br/>
+<em>S</em> = <em>l</em>×<em>x</em> = 2,0×10⁻² × 6,0×10⁻² = 1,2×10⁻³ m².<br/>
+<em>C</em> = (2,3×10⁻¹¹ × 1,2×10⁻³) / (1,0×10⁻³) ≈ <strong>2,8×10⁻¹¹ F</strong> (soit environ 28 pF).</p>
+<p style="margin:0;"><strong>5.</strong> Le calcul théorique de la question 4 ne prend en compte que la géométrie idéale du capteur (armatures planes parfaites, isolant homogène). En pratique, plusieurs effets peuvent expliquer un écart avec les mesures des questions 1 et 3 :</p>
+<ul style="padding-left:18px;margin:8px 0 0;">
+<li><strong>Capacités parasites</strong> : les câbles de connexion et le capacimètre lui-même ajoutent une capacité parasite en dérivation, non négligeable devant une capacité attendue de seulement quelques dizaines de pF ;</li>
+<li><strong>Entrefer d'air résiduel</strong> : un défaut de planéité ou la présence de poussière entre la règle et le couvercle de DVD introduirait une fine couche d'air en série avec le polystyrène, ce qui réduirait fortement la capacité mesurée (deux isolants en série se comportent comme deux capacités en série, dominées par la plus petite) ;</li>
+<li><strong>Incertitude sur <em>e</em></strong> et sur la largeur métallisée réelle de la règle, ainsi que sur le positionnement précis de <em>x</em> ;</li>
+<li><strong>Effets de bord</strong> (lignes de champ non strictement uniformes en bordure des armatures), non pris en compte par le modèle idéal du condensateur plan.</li>
+</ul>
+<p style="margin-top:8px;">La comparaison rigoureuse se fait en calculant l'écart normalisé <em>E</em><sub>n</sub> = |<em>C</em><sub>calculée</sub> − <em>C</em><sub>mesurée</sub>| / <em>u</em>(<em>C</em>) : si <em>E</em><sub>n</sub> &lt; 2, le calcul théorique est jugé compatible avec la mesure ; sinon, il faut chercher lesquelles des sources d'erreur ci-dessus dominent. De même pour la modélisation de la question 3 : si le coefficient directeur <em>a</em> obtenu expérimentalement est compatible (aux incertitudes près) avec <em>a</em> = <em>kl</em>/<em>d</em> attendu théoriquement, le modèle linéaire proposé en 4. est validé par l'expérience.</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- /sub-E-1 -->
+
+<!-- Sous-onglet E3 : Sujets de bac -->
+<div class="sub-tab-content" id="sub-E-2">
+<div class="section-title"><span class="icon">🎓</span> Sujets de bac</div>
+
+<div class="bac-card">
+<div class="bac-card-head">
+<span class="bac-lieu">Bac 2022 · Nouvelle-Calédonie · Jour 2</span>
+<span>5 points · 53 min</span>
+</div>
+<h4>Anatomie d'un condensateur</h4>
+<div class="bac-theme">Thème : Circuit RC · Charge, constante de temps, influence de la géométrie sur la capacité</div>
+<div class="bac-notions">
+<span class="bac-tag">équation différentielle</span>
+<span class="bac-tag">constante de temps τ</span>
+<span class="bac-tag">géométrie du condensateur</span>
+</div>
+<div class="bac-pastilles">
+<a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-04/2022-NelleCaledo-J2-ExoC-Sujet-RC-5pts.pdf" rel="noopener" target="_blank">📄 Sujet (PDF)</a>
+<a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-04/2022-NelleCaledo-J2-ExoC-Correction-RC-5pts.pdf" rel="noopener" target="_blank">✓ Corrigé (PDF)</a>
+</div>
+</div>
+<div class="bac-card">
+<div class="bac-card-head">
+<span class="bac-lieu">Bac 2022 · Polynésie · Jour 2</span>
+<span>5 points · 53 min</span>
+</div>
+<h4>Un capteur capacitif</h4>
+<div class="bac-theme">Thème : Circuit RC · Capteur capacitif</div>
+<div class="bac-notions">
+<span class="bac-tag">capteur capacitif</span>
+<span class="bac-tag">circuit RC</span>
+<span class="bac-tag">temps caractéristique</span>
+</div>
+<div class="bac-pastilles">
+<a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2022-06/2022-Polynesie-J2-ExoA-Sujet-Capteur%20capacitif-5pts.pdf" rel="noopener" target="_blank">📄 Sujet (PDF)</a>
+<a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-05/2022-Polynesie-J2-ExoA-Correction-Capteur%20capacitif-5pts.pdf" rel="noopener" target="_blank">✓ Corrigé (PDF)</a>
+</div>
+</div>
+
+<div class="bac-card">
+<div class="bac-card-head">
+<span class="bac-lieu">Bac 2023 · Métropole · Jour 2</span>
+<span>6 points · 1 h 03</span>
+</div>
+<h4>Modélisation d'un détecteur capacitif d'humidité</h4>
+<div class="bac-theme">Thème : Circuit RC · Charge, Python</div>
+<div class="bac-notions">
+<span class="bac-tag">capteur capacitif</span>
+<span class="bac-tag">circuit RC</span>
+<span class="bac-tag">programmation Python</span>
+</div>
+<div class="bac-pastilles">
+<a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-09/2023-Metropole-J2-Exo3-Sujet-DetecteurCapacitif-6pts.pdf" rel="noopener" target="_blank">📄 Sujet (PDF)</a>
+<a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-09/2023-Metropole-J2-Exo3-Correction-DetecteurCapacitif-6pts.pdf" rel="noopener" target="_blank">✓ Corrigé (PDF)</a>
+</div>
+</div>
+
+<div class="bac-card">
+<div class="bac-card-head">
+<span class="bac-lieu">Bac 2021 · Métropole · Sujet 2</span>
+<span>5 points · 55 min</span>
+</div>
+<h4>Un système de détection de passager</h4>
+<div class="bac-theme">Thème : Circuit RC · Capteur capacitif artisanal, géométrie, décharge et équation différentielle</div>
+<div class="bac-notions">
+<span class="bac-tag">capteur capacitif</span>
+<span class="bac-tag">géométrie du condensateur</span>
+<span class="bac-tag">équation différentielle</span>
+</div>
+<div class="bac-pastilles">
+<a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2021-06/2021-03-Metro-Sujet2-ExoB-CondensateurSiege-5pts.pdf" rel="noopener" target="_blank">📄 Sujet (PDF)</a>
+<a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2021-06/2021-03-Metro-Sujet2-ExoB-Correction-CondensateurSiege-5pts.pdf" rel="noopener" target="_blank">✓ Corrigé (PDF)</a>
+</div>
+</div>
+
+</div>
+<!-- /sub-E-2 -->
+
+</div>
+<!-- /tab-1 (Entraînements) -->
+
 <div class="tab-content" id="tab-2">
 <nav class="sub-tabs-nav" id="sub-nav-C">
 <button class="sub-tab-btn active" data-sub="C1" onclick="switchSubTab('C',0)">
@@ -2101,99 +3884,28 @@
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
 
 <a href="https://phet.colorado.edu/fr/simulations/capacitor-lab-basics" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--bleu);">🔬 Simulation — Labo du condensateur : les bases</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange-phetfonce);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--orange-phetfonce);">🔬 Simulation — Labo du condensateur : les bases</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET · Faire varier la surface des plaques et leur écartement, visualiser le champ électrique, connecter le condensateur chargé à une ampoule pour observer une décharge RC</p>
 </div>
 </a>
 
 <a href="https://phet.colorado.edu/fr/simulations/circuit-construction-kit-dc-virtual-lab" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--bleu);">🔌 Simulation — Kit de construction de circuit : CC</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange-phet);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--orange-phet);">🔌 Simulation — Kit de construction de circuit : CC</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET · Construire un circuit avec générateurs, résistances, ampoules et interrupteurs, mesurer avec ampèremètre et voltmètre virtuels</p>
 </div>
 </a>
 
 <a href="https://phet.colorado.edu/fr/simulations/circuit-construction-kit-ac-virtual-lab" target="_blank" rel="noopener" style="text-decoration:none;">
-<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--bleu);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
-<h4 style="color:var(--bleu);">📈 Simulation — Construire un circuit (CA/CC), avec condensateurs</h4>
+<div class="bilan-card" style="cursor:pointer;transition:box-shadow 0.2s;border-left:4px solid var(--orange-phetclair);" onmouseover="this.style.boxShadow='0 4px 16px rgba(45,95,138,0.18)'" onmouseout="this.style.boxShadow=''">
+<h4 style="color:var(--orange-phetclair);">📈 Simulation — Construire un circuit (CA/CC), avec condensateurs</h4>
 <p style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;line-height:1.5;">PhET · Circuit RC complet avec condensateurs, ampèremètre et voltmètre virtuels, graphe de U(t) et i(t) — idéal pour vérifier τ = RC expérimentalement</p>
 </div>
 </a>
 
 </div>
 
-<div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
-<div class="bac-card">
-<div class="bac-card-head">
-<span class="bac-lieu">Bac 2022 · Nouvelle-Calédonie · Jour 2</span>
-<span>5 points · 53 min</span>
-</div>
-<h4>Anatomie d'un condensateur</h4>
-<div class="bac-theme">Thème : Circuit RC · Charge, constante de temps, influence de la géométrie sur la capacité</div>
-<div class="bac-notions">
-<span class="bac-tag">équation différentielle</span>
-<span class="bac-tag">constante de temps τ</span>
-<span class="bac-tag">géométrie du condensateur</span>
-</div>
-<div class="bac-pastilles">
-<a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-04/2022-NelleCaledo-J2-ExoC-Sujet-RC-5pts.pdf" rel="noopener" target="_blank">📄 Sujet (PDF)</a>
-<a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-04/2022-NelleCaledo-J2-ExoC-Correction-RC-5pts.pdf" rel="noopener" target="_blank">✓ Corrigé (PDF)</a>
-</div>
-</div>
-<div class="bac-card">
-<div class="bac-card-head">
-<span class="bac-lieu">Bac 2022 · Polynésie · Jour 2</span>
-<span>5 points · 53 min</span>
-</div>
-<h4>Un capteur capacitif</h4>
-<div class="bac-theme">Thème : Circuit RC · Capteur capacitif</div>
-<div class="bac-notions">
-<span class="bac-tag">capteur capacitif</span>
-<span class="bac-tag">circuit RC</span>
-<span class="bac-tag">temps caractéristique</span>
-</div>
-<div class="bac-pastilles">
-<a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2022-06/2022-Polynesie-J2-ExoA-Sujet-Capteur%20capacitif-5pts.pdf" rel="noopener" target="_blank">📄 Sujet (PDF)</a>
-<a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2022-05/2022-Polynesie-J2-ExoA-Correction-Capteur%20capacitif-5pts.pdf" rel="noopener" target="_blank">✓ Corrigé (PDF)</a>
-</div>
-</div>
-
-<div class="bac-card">
-<div class="bac-card-head">
-<span class="bac-lieu">Bac 2023 · Métropole · Jour 2</span>
-<span>6 points · 1 h 03</span>
-</div>
-<h4>Modélisation d'un détecteur capacitif d'humidité</h4>
-<div class="bac-theme">Thème : Circuit RC · Charge, Python</div>
-<div class="bac-notions">
-<span class="bac-tag">capteur capacitif</span>
-<span class="bac-tag">circuit RC</span>
-<span class="bac-tag">programmation Python</span>
-</div>
-<div class="bac-pastilles">
-<a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-09/2023-Metropole-J2-Exo3-Sujet-DetecteurCapacitif-6pts.pdf" rel="noopener" target="_blank">📄 Sujet (PDF)</a>
-<a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-09/2023-Metropole-J2-Exo3-Correction-DetecteurCapacitif-6pts.pdf" rel="noopener" target="_blank">✓ Corrigé (PDF)</a>
-</div>
-</div>
-
-<div class="bac-card">
-<div class="bac-card-head">
-<span class="bac-lieu">Bac 2021 · Métropole · Sujet 2</span>
-<span>5 points · 55 min</span>
-</div>
-<h4>Un système de détection de passager</h4>
-<div class="bac-theme">Thème : Circuit RC · Capteur capacitif artisanal, géométrie, décharge et équation différentielle</div>
-<div class="bac-notions">
-<span class="bac-tag">capteur capacitif</span>
-<span class="bac-tag">géométrie du condensateur</span>
-<span class="bac-tag">équation différentielle</span>
-</div>
-<div class="bac-pastilles">
-<a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2021-06/2021-03-Metro-Sujet2-ExoB-CondensateurSiege-5pts.pdf" rel="noopener" target="_blank">📄 Sujet (PDF)</a>
-<a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2021-06/2021-03-Metro-Sujet2-ExoB-Correction-CondensateurSiege-5pts.pdf" rel="noopener" target="_blank">✓ Corrigé (PDF)</a>
-</div>
-</div>
 </div>
 </div></main><div class="footer-note">Séquence 10 — Systèmes électriques capacitifs (charge et décharge d'un condensateur) · Terminale Spécialité Physique-Chimie · © C. Poirault-Gauvin</div>
 
@@ -3559,7 +5271,7 @@ function switchTab(n) {
 function switchSubTab(group, n) {
   const prefix = 'sub-' + group + '-';
   document.querySelectorAll('[id^="' + prefix + '"]').forEach((el,i) => el.classList.toggle('active', i===n));
-  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,i) => b.classList.toggle('active', i===n));
+  document.querySelectorAll('#sub-nav-' + group + ' button').forEach((b,i) => b.classList.toggle('active', i===n));
   refreshCanvasesSoon();
 }
 
@@ -3585,6 +5297,297 @@ function toggleAccord(btn) {
   const body = btn.nextElementSibling;
   body.classList.toggle('open');
   btn.querySelector('span:last-child').textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+// ── INDICE (activités documentaires) — repris de séq01
+function toggleIndice(id) {
+  const box = document.getElementById(id);
+  if (box) box.classList.toggle('visible');
+}
+
+// ── Navigation entre exercices d'un même niveau de difficulté (repris de séq01)
+function showExoItem(btn, id) {
+  const nav = btn.closest('.exo-tabs-nav');
+  const container = nav ? nav.parentElement : null;
+  if (!container) return;
+  nav.querySelectorAll('.exo-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  container.querySelectorAll('[data-exo-item]').forEach(c => { c.style.display = 'none'; });
+  const card = document.getElementById(id);
+  if (card) card.style.display = 'block';
+}
+
+// ── Correction par exercice (repris de séq01)
+function toggleCorrection(id) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  const wasVisible = box.classList.contains('visible');
+  box.classList.toggle('visible');
+  const btn = box.previousElementSibling && box.previousElementSibling.classList.contains('btn-correction2')
+    ? box.previousElementSibling
+    : (box.parentElement ? box.parentElement.querySelector('.btn-correction2') : null);
+  if (btn) btn.textContent = wasVisible ? '▶ Voir la correction' : '▼ Masquer la correction';
+}
+
+// ══════════════════════════════════════════════════════
+// ── Exercice 44 : simulations (acquisition + statistiques) ──
+// ══════════════════════════════════════════════════════
+
+function ex44GaussianRandom() {
+  // Box-Muller
+  let u1 = Math.random(), u2 = Math.random();
+  return Math.sqrt(-2*Math.log(u1)) * Math.cos(2*Math.PI*u2);
+}
+
+function ex44SimulateCharge() {
+  const canvas = document.getElementById('ex44-charge-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  const E = 5.0, R = 10000, C = 1.0e-6 * (1 + (Math.random()*0.1-0.05)); // +/-5% tolérance
+  const tau = R*C; // s
+  const N = 200;
+  const duree = 6*tau; // s, fenêtre d'acquisition ~6 tau
+  const points = [];
+  for (let i=0;i<N;i++){
+    const t = i*duree/N;
+    const uTheo = E*(1-Math.exp(-t/tau));
+    const bruit = (Math.random()-0.5)*0.015*E; // léger bruit de mesure
+    let x = Math.round(((uTheo+bruit)/E)*1023);
+    x = Math.max(0, Math.min(1023, x));
+    points.push({t: t, u: x/1023*E});
+  }
+
+  // repérage graphique de tau (première mesure où u >= 0.632*E)
+  const seuil = 0.632*E;
+  let tauLu = null;
+  for (let i=0;i<points.length;i++){
+    if (points[i].u >= seuil) { tauLu = points[i].t; break; }
+  }
+
+  // axes
+  const padL=55, padR=20, padT=20, padB=40;
+  const gW=W-padL-padR, gH=H-padT-padB;
+  const tMax = duree, uMax = E*1.15;
+  function X(t){ return padL + (t/tMax)*gW; }
+  function Y(u){ return padT + gH - (u/uMax)*gH; }
+
+  ctx.strokeStyle = '#1A2A3A'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,padT+gH); ctx.lineTo(padL+gW,padT+gH); ctx.stroke();
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '11px Nunito, sans-serif';
+  ctx.fillText('t (s)', padL+gW-20, padT+gH+22);
+  ctx.save(); ctx.translate(14, padT+14); ctx.fillText('u_C (V)', 0, 0); ctx.restore();
+
+  // graduations
+  for (let k=0;k<=5;k++){
+    const tv = tMax*k/5;
+    const xx = X(tv);
+    ctx.strokeStyle='#EEF2F6'; ctx.beginPath(); ctx.moveTo(xx,padT); ctx.lineTo(xx,padT+gH); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.fillText(tv.toExponential(1), xx-14, padT+gH+16);
+  }
+  for (let k=0;k<=5;k++){
+    const uv = uMax*k/5;
+    const yy = Y(uv);
+    ctx.strokeStyle='#EEF2F6'; ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(padL+gW,yy); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.fillText(uv.toFixed(1), padL-32, yy+4);
+  }
+
+  // points mesurés
+  ctx.fillStyle = '#2D5F8A';
+  points.forEach(p => { ctx.beginPath(); ctx.arc(X(p.t), Y(p.u), 2.3, 0, 2*Math.PI); ctx.fill(); });
+
+  // repère tau
+  if (tauLu !== null) {
+    ctx.strokeStyle = '#E8783A'; ctx.setLineDash([4,4]); ctx.lineWidth=1.3;
+    ctx.beginPath(); ctx.moveTo(X(tauLu),padT+gH); ctx.lineTo(X(tauLu),Y(seuil)); ctx.lineTo(padL,Y(seuil)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#E8783A'; ctx.font='bold 11px Nunito, sans-serif';
+    ctx.fillText('τ ≈ '+(tauLu*1000).toFixed(2)+' ms', X(tauLu)+4, Y(seuil)-6);
+  }
+
+  const res = document.getElementById('ex44-charge-result');
+  if (res) {
+    res.innerHTML = 'Acquisition simulée : <b>N = 200</b> mesures sur Δt ≈ '+(duree*1000).toFixed(1)+' ms. '
+      + 'Lecture graphique (méthode des 63 %) : τ ≈ <b>'+(tauLu!==null ? (tauLu*1000).toFixed(2) : '?')+' ms</b>, '
+      + 'soit C = τ/R ≈ <b>'+(tauLu!==null ? (tauLu/R*1e9).toFixed(0) : '?')+' nF</b> (valeur du condensateur simulé cette fois-ci).';
+  }
+}
+
+function ex44SimulateStats() {
+  const canvas = document.getElementById('ex44-hist-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  const Cref = 1.00; // µF, valeur d'étiquetage
+  const tolerance = 0.05; // 5% tolérance fabricant
+  const CvraiOffset = (Math.random()*2-1)*tolerance*Cref;
+  const Cvrai = Cref + CvraiOffset; // valeur réelle de CE condensateur précis
+  const bruitMesure = 0.012*Cref; // bruit de mesure (écart-type) ~1.2%
+  const N = 1000;
+  const data = [];
+  for (let i=0;i<N;i++){
+    data.push(Cvrai + ex44GaussianRandom()*bruitMesure);
+  }
+  const mean = data.reduce((a,b)=>a+b,0)/N;
+  const variance = data.reduce((a,b)=>a+(b-mean)*(b-mean),0)/(N-1);
+  const s = Math.sqrt(variance);
+  const uMean = s/Math.sqrt(N);
+  const En = Math.abs(mean-Cref)/uMean;
+
+  // histogramme
+  const nBins = 30;
+  const dmin = Math.min(...data), dmax = Math.max(...data);
+  const binW = (dmax-dmin)/nBins;
+  const bins = new Array(nBins).fill(0);
+  data.forEach(v => {
+    let idx = Math.floor((v-dmin)/binW);
+    if (idx>=nBins) idx = nBins-1;
+    if (idx<0) idx = 0;
+    bins[idx]++;
+  });
+  const maxCount = Math.max(...bins);
+
+  const padL=50, padR=20, padT=20, padB=40;
+  const gW=W-padL-padR, gH=H-padT-padB;
+  ctx.strokeStyle = '#1A2A3A'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,padT+gH); ctx.lineTo(padL+gW,padT+gH); ctx.stroke();
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '11px Nunito, sans-serif';
+  ctx.fillText('C (µF)', padL+gW-24, padT+gH+22);
+  ctx.save(); ctx.translate(12, padT+14); ctx.fillText('effectif', 0, 0); ctx.restore();
+
+  const barW = gW/nBins;
+  bins.forEach((cnt,i) => {
+    const bh = (cnt/maxCount)*gH;
+    ctx.fillStyle = '#5B8FB9';
+    ctx.fillRect(padL+i*barW, padT+gH-bh, barW-1, bh);
+  });
+
+  // graduations x
+  ctx.fillStyle='#5A6B7A';
+  for (let k=0;k<=4;k++){
+    const v = dmin + (dmax-dmin)*k/4;
+    const xx = padL + (v-dmin)/(dmax-dmin)*gW;
+    ctx.fillText(v.toFixed(2), xx-14, padT+gH+16);
+  }
+
+  const compatible = En < 2;
+  const res = document.getElementById('ex44-hist-result');
+  if (res) {
+    res.innerHTML = '1000 mesures simulées → <b>C̄ = '+mean.toFixed(3)+' µF</b>, écart-type <b>s = '+s.toFixed(3)+' µF</b>, '
+      + 'incertitude-type sur la moyenne <b>u(C̄) = '+uMean.toFixed(4)+' µF</b>.<br/>'
+      + 'Comparaison à C<sub>réf</sub> = '+Cref.toFixed(2)+' µF : E<sub>n</sub> = |C̄−C<sub>réf</sub>|/u(C̄) ≈ <b>'+En.toFixed(1)+'</b> → '
+      + (compatible
+          ? '<span style="color:var(--vert);font-weight:700;">résultat compatible avec la valeur d\'étiquetage (E<sub>n</sub> &lt; 2).</span>'
+          : '<span style="color:var(--rouge);font-weight:700;">résultat incompatible avec la valeur d\'étiquetage (E<sub>n</sub> ≥ 2) — le condensateur tiré ici s\'écarte plus que la tolérance ne le laissait supposer.</span>');
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// ── Exercice 45 : simulation capteur capacitif de position ──
+// ══════════════════════════════════════════════════════
+
+let ex45Capteur = null;
+
+function ex45GetCapteur() {
+  if (!ex45Capteur) {
+    ex45Capteur = {
+      Cparasite: 5 + Math.random()*10,      // pF, capacité parasite du montage
+      gapFactor: 0.75 + Math.random()*0.25, // effet d'un entrefer d'air résiduel
+      noiseSigma: 0.8                        // pF, bruit de mesure
+    };
+  }
+  return ex45Capteur;
+}
+
+function ex45NouveauCapteur() {
+  ex45Capteur = null;
+  ex45GetCapteur();
+  const res1 = document.getElementById('ex45-mesure-result');
+  if (res1) res1.innerHTML = '<em style="color:var(--texte-leger);">Nouveau capteur prêt — relancez une mesure.</em>';
+  const canvas = document.getElementById('ex45-etalon-canvas');
+  if (canvas) { const ctx = canvas.getContext('2d'); ctx.clearRect(0,0,canvas.width,canvas.height); }
+  const res2 = document.getElementById('ex45-etalon-result');
+  if (res2) res2.innerHTML = '';
+}
+
+const EX45_A_THEO = 4.60; // pF/cm, pente théorique k*l/e (l=2,0 cm, e=1,0 mm, k polystyrène)
+
+function ex45MeasureAt(xCm) {
+  const cap = ex45GetCapteur();
+  return cap.Cparasite + cap.gapFactor*EX45_A_THEO*xCm + ex44GaussianRandom()*cap.noiseSigma;
+}
+
+function ex45Mesurer() {
+  const input = document.getElementById('ex45-x-input');
+  const x = input ? parseFloat(input.value) : 6.0;
+  const C = ex45MeasureAt(isNaN(x) ? 6.0 : x);
+  const res = document.getElementById('ex45-mesure-result');
+  if (res) {
+    res.innerHTML = 'Pour <b>x = '+(isNaN(x)?6.0:x).toFixed(1)+' cm</b> : capacité mesurée <b>C ≈ '+C.toFixed(1)+' pF</b>.';
+  }
+}
+
+function ex45SimulateEtalonnage() {
+  const canvas = document.getElementById('ex45-etalon-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  const xs = [];
+  for (let x=0; x<=20; x+=2) xs.push(x);
+  const points = xs.map(x => ({x: x, c: ex45MeasureAt(x)}));
+
+  // régression linéaire (moindres carrés)
+  const n = points.length;
+  const sumX = points.reduce((a,p)=>a+p.x,0);
+  const sumC = points.reduce((a,p)=>a+p.c,0);
+  const sumXX = points.reduce((a,p)=>a+p.x*p.x,0);
+  const sumXC = points.reduce((a,p)=>a+p.x*p.c,0);
+  const aExp = (n*sumXC - sumX*sumC) / (n*sumXX - sumX*sumX);
+  const bExp = (sumC - aExp*sumX)/n;
+
+  const padL=55, padR=20, padT=20, padB=40;
+  const gW=W-padL-padR, gH=H-padT-padB;
+  const xMax = 20, cMax = Math.max(...points.map(p=>p.c))*1.15;
+  function X(x){ return padL + (x/xMax)*gW; }
+  function Y(c){ return padT + gH - (c/cMax)*gH; }
+
+  ctx.strokeStyle = '#1A2A3A'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,padT+gH); ctx.lineTo(padL+gW,padT+gH); ctx.stroke();
+  ctx.fillStyle = '#5A6B7A'; ctx.font = '11px Nunito, sans-serif';
+  ctx.fillText('x (cm)', padL+gW-24, padT+gH+22);
+  ctx.save(); ctx.translate(14, padT+14); ctx.fillText('C (pF)', 0, 0); ctx.restore();
+
+  for (let k=0;k<=5;k++){
+    const xv = xMax*k/5, xx=X(xv);
+    ctx.strokeStyle='#EEF2F6'; ctx.beginPath(); ctx.moveTo(xx,padT); ctx.lineTo(xx,padT+gH); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.fillText(xv.toFixed(0), xx-6, padT+gH+16);
+  }
+  for (let k=0;k<=5;k++){
+    const cv = cMax*k/5, yy=Y(cv);
+    ctx.strokeStyle='#EEF2F6'; ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(padL+gW,yy); ctx.stroke();
+    ctx.fillStyle='#5A6B7A'; ctx.fillText(cv.toFixed(0), padL-30, yy+4);
+  }
+
+  // droite de régression
+  ctx.strokeStyle = '#E8783A'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(X(0), Y(bExp)); ctx.lineTo(X(xMax), Y(aExp*xMax+bExp)); ctx.stroke();
+
+  // points mesurés
+  ctx.fillStyle = '#2D5F8A';
+  points.forEach(p => { ctx.beginPath(); ctx.arc(X(p.x), Y(p.c), 4, 0, 2*Math.PI); ctx.fill(); });
+
+  const res = document.getElementById('ex45-etalon-result');
+  if (res) {
+    res.innerHTML = 'Modélisation obtenue : <b>C = '+aExp.toFixed(2)+'×x + '+bExp.toFixed(1)+'</b> (C en pF, x en cm).<br/>'
+      + 'Pente théorique attendue (Doc. 2, avec une largeur de règle de 2,0 cm) : <em>a</em><sub>théo</sub> = <em>kl</em>/<em>e</em> ≈ <b>'+EX45_A_THEO.toFixed(2)+' pF/cm</b>.<br/>'
+      + 'L\'ordonnée à l\'origine non nulle (b ≈ '+bExp.toFixed(1)+' pF) correspond à la <b>capacité parasite</b> du montage (câbles, capacimètre), qui s\'ajoute à la capacité géométrique du capteur.';
+  }
 }
 </script>
 </body>
