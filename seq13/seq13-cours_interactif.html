@@ -31,6 +31,8 @@
     --rose-clair: #FBEAF1;
     --jaune: #B8901A;
     --jaune-clair: #FBF3DC;
+    --indice: #C98A00;
+    --indice-clair: #FFF6E0;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,14 +51,14 @@
     border-bottom: 3px solid var(--bleu);
     border-radius: 14px;
     max-width: 1200px;
-    margin: 0 auto 24px;
+    margin: 0 auto 10px;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 12px rgba(45,95,138,0.10);
   }
   .header-inner {
-    padding: 18px 24px 14px;
+    padding: 18px 20px 14px;
   }
   .header-top {
     display: flex;
@@ -187,8 +189,8 @@
   .sub-tabs-nav {
     display: flex;
     gap: 6px;
-    padding: 18px 0 0;
-    margin-bottom: 22px;
+    padding: 0;
+    margin-bottom: 12px;
     flex-wrap: nowrap;
     overflow-x: auto;
   }
@@ -227,8 +229,53 @@
   .sub-tab-content { display: none; }
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
+  /* ── SOUS-ONGLETS NIVEAU 3 (orange) ── */
+  .sub3-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 12px 0 0;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub3-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border: none;
+    background: var(--orange-clair);
+    color: var(--orange);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub3-tab-btn:hover { background: var(--orange); color: white; }
+  .sub3-tab-btn.active { background: var(--orange); color: white; }
+  .sub3-tab-btn .sub-tab-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.3);
+  }
+  .sub3-tab-btn:not(.active) .sub-tab-num { background: rgba(232,120,58,0.15); }
+
+  /* Espace réduit à 10px quand un sous-onglet niveau 3 suit directement un sous-onglet niveau 2, sans contenu entre les deux */
+  #sub-nav-Q { margin-bottom: 12px; }
+  .sub-tab-content > .sub3-tabs-nav:first-child { padding-top: 0; }
+
+  /* Espace réduit entre une pastille niveau 3 et le .section-title qui la suit directement */
+  .sub3-tabs-nav + .sub-tab-content > .section-title:first-child { margin-top: 0; }
+
   /* ── CONTENU ── */
-  .main { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -242,17 +289,6 @@
     padding: 16px 22px;
     margin-bottom: 16px;
     position: relative;
-  }
-  .def-card::before {
-    content: 'COURS';
-    position: absolute;
-    top: 12px; right: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--bleu-moyen);
-    opacity: 0.6;
   }
   .def-card h3 {
     font-family: 'Outfit', sans-serif;
@@ -269,24 +305,13 @@
 
   /* ── BLOCS ACTIVITÉ ── */
   .activite-card {
-    background: var(--bleu-activite);
+    background: var(--blanc);
     border: 1.5px solid var(--bleu-activite-bord);
     border-left: 4px solid var(--bleu-moyen);
     border-radius: 0 12px 12px 0;
     padding: 16px 22px;
     margin-bottom: 16px;
     position: relative;
-  }
-  .activite-card::before {
-    content: 'ACTIVITÉ';
-    position: absolute;
-    top: 12px; right: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--bleu-moyen);
-    opacity: 0.8;
   }
   .activite-card h3 {
     font-family: 'Outfit', sans-serif;
@@ -297,6 +322,189 @@
   }
   .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
 
+  /* ── ACTIVITÉ : intro texte/image ── */
+  .activite-intro-flex {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .activite-intro-flex .activite-intro-txt {
+    flex: 1 1 280px;
+    min-width: 240px;
+  }
+  .activite-intro-flex .activite-intro-media {
+    flex: 0 0 auto;
+    text-align: center;
+  }
+  .activite-intro-media img { border-radius: 10px; display: block; margin: 0 auto; }
+  .video-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: white;
+    background: var(--bleu);
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: background 0.15s ease;
+  }
+  .video-btn:hover { background: #1e4466; }
+
+  /* ── PASTILLES DE COMPÉTENCE (Analyser/Réaliser/Valider) ── */
+  .comp-badge {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: white;
+    padding: 3px 12px;
+    border-radius: 12px;
+    margin: 10px 0 6px;
+  }
+  .comp-badge.analyser { background: var(--violet); }
+  .comp-badge.realiser { background: var(--orange); }
+  .comp-badge.valider  { background: var(--vert); }
+  .comp-badge.approprier { background: var(--bleu); }
+  .comp-badge.communiquer { background: var(--rose); }
+  .grand-oral-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--jaune);
+    background: var(--jaune-clair);
+    border-radius: 12px;
+    padding: 3px 10px;
+    margin: 10px 0 6px 6px;
+    vertical-align: middle;
+  }
+
+  /* ── BOUTON INDICE (v2) ── */
+  .btn-indice2 {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--indice);
+    background: transparent;
+    border: 1.5px solid var(--indice);
+    border-radius: 16px;
+    padding: 3px 12px;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn-indice2:hover { background: var(--indice-clair); }
+  .btn-indice2.active { background: var(--indice); color: white; }
+  .indice-box {
+    display: none;
+    background: var(--indice-clair);
+    border-left: 3px solid var(--indice);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin: 8px 0 14px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--texte);
+  }
+  .indice-box.visible { display: block; }
+  .activite-question { margin-bottom: 4px; }
+
+  /* ── BOUTON CORRECTION (v2) + CARTES EXERCICES PAR NIVEAU ── */
+  .btn-correction2 { display:inline-flex; align-items:center; gap:5px; margin-left:8px; padding:6px 16px; background:#1f6b47; color:#fff; border:1.5px solid #1f6b47; border-radius:999px; font-family:'Nunito', sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; transition:all 0.18s ease; vertical-align:middle; }
+  .btn-correction2:hover { background:#3ea873; border-color:#3ea873; }
+  .correction-box { display:none; background:#eef8f2; border:1.5px solid #1f6b47; border-left:4px solid #1f6b47; border-radius:0 10px 10px 0; padding:12px 16px; margin:8px 0 0; font-size:0.87rem; line-height:1.65; }
+  .correction-box.visible { display:block; animation:fadeIn 0.2s ease; }
+  .correction-box strong { color:#1f6b47; }
+
+  .act-q { margin: 14px 0 4px; font-size: 0.92rem; }
+  .act-q .q-num { font-weight: 700; color: var(--bleu); }
+
+  .exo-diff-card {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 22px;
+    margin-bottom: 16px;
+  }
+  .exo-diff-card.facile { border-left: 4px solid var(--vert); }
+  .exo-diff-card.inter  { border-left: 4px solid var(--orange); }
+  .exo-diff-card.diff   { border-left: 4px solid var(--rouge); }
+  .exo-diff-card h3 { margin-top: 0; color: var(--bleu); font-size: 1.0rem; }
+  .exo-diff-card.facile h3 { color: var(--vert); }
+  .exo-diff-card.inter h3  { color: var(--orange); }
+  .exo-diff-card.diff h3   { color: var(--rouge); }
+
+  .exo-tab-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 16px; margin: 0 6px 8px 0;
+    background: var(--blanc); color: var(--bleu);
+    border: 1.5px solid var(--bleu-clair); border-radius: 999px;
+    font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 700;
+    cursor: pointer; transition: all 0.18s ease;
+  }
+  .exo-tab-btn:hover { background: var(--bleu-clair); }
+  .exo-tab-btn.active { background: var(--bleu); color: #fff; border-color: var(--bleu); }
+  .exo-tab-stars { font-size: 0.75rem; letter-spacing: 1px; }
+  .exo-tab-btn .exo-tab-stars { color: var(--orange); font-weight: 400; }
+  .exo-tab-btn.active .exo-tab-stars { color: #FFD9B3; }
+
+  .matiere-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: white;
+    background: var(--vert);
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .btn-corr-dark {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: white;
+    background: var(--vert);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    margin-top: 16px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .btn-corr-dark:hover { background: #2c6e56; }
+  .correction-dark {
+    display: none;
+    background: var(--vert-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-top: 12px;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--texte);
+  }
+  .correction-dark.visible { display: block; }
+  .correction-dark p { margin-bottom: 8px; }
+  .correction-dark p:last-child { margin-bottom: 0; }
+
   /* ── BLOCS EXERCICE ── */
   .exo-card {
     background: var(--vert-exo);
@@ -306,17 +514,6 @@
     padding: 16px 22px;
     margin-bottom: 16px;
     position: relative;
-  }
-  .exo-card::before {
-    content: 'EXERCICE';
-    position: absolute;
-    top: 12px; right: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--vert);
-    opacity: 0.7;
   }
   .exo-card h3 {
     font-family: 'Outfit', sans-serif;
@@ -1035,12 +1232,43 @@
 
   @media (max-width: 640px) {
     body { padding: 6px; }
-    .header-inner { padding: 12px 16px 10px; }
+    .header-inner { padding: 12px 12px 10px; }
     .header-titles h1 { font-size: 1.05rem; }
     .tab-btn { padding: 8px 12px 10px; font-size: 0.80rem; }
     .main { padding: 18px 12px 50px; }
     .mobile-icon-wrap { width: 42px; height: 42px; }
   }
+
+  /* ── EXERCICE PYTHON EXÉCUTABLE (Pyodide) ── */
+  .py-badge { display:inline-flex; align-items:center; gap:5px; font-family:'Outfit', sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.03em; color:#fff; background:#3776AB; border-radius:12px; padding:3px 10px; margin-left:8px; vertical-align:middle; }
+  .diff-level-nav { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 12px; }
+  .diff-level-btn { padding:6px 15px; border-radius:999px; border:1.5px solid var(--orange); background:var(--blanc); color:var(--orange); font-family:'Nunito', sans-serif; font-weight:700; font-size:0.8rem; cursor:pointer; transition:all 0.18s ease; }
+  .diff-level-btn:hover { background:var(--orange-clair); }
+  .diff-level-btn.active { background:var(--orange); color:#fff; }
+  .diff-level-panel { display:none; }
+  .diff-level-panel.active { display:block; }
+
+  .pycode-wrap { background:#f6f8fa; border:1.5px solid var(--gris-bord); border-radius:10px; padding:14px 16px; margin:10px 0; }
+  .pycode-fixed { margin:0; font-family:Consolas, Monaco, 'Courier New', monospace; font-size:0.8rem; line-height:1.55; color:#24292e; white-space:pre-wrap; word-break:break-word; }
+  .pycode-blank-label { display:flex; align-items:center; gap:6px; font-family:'Nunito', sans-serif; font-size:0.72rem; font-weight:700; color:#8a6d00; margin:6px 0 3px; }
+  .pycode-blank { display:block; width:100%; box-sizing:border-box; background:#FFF59D; border:1.5px dashed #C98A00; border-radius:6px; font-family:Consolas, Monaco, 'Courier New', monospace; font-size:0.8rem; line-height:1.5; color:#24292e; padding:8px 10px; margin:0 0 4px; resize:vertical; }
+  .pycode-blank:focus { outline:2px solid var(--orange); background:#FFF3B0; }
+  .pycode-legend { font-family:'Nunito', sans-serif; font-size:0.76rem; color:var(--bleu-moyen); margin:2px 0 10px; font-style:italic; }
+
+  .pycode-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:4px; }
+  .btn-run { background:var(--bleu); color:#fff; border:1.5px solid var(--bleu); border-radius:999px; padding:6px 16px; font-family:'Nunito', sans-serif; font-weight:700; font-size:0.82rem; cursor:pointer; transition:all 0.18s ease; }
+  .btn-run:hover { background:var(--bleu-moyen); }
+  .btn-run:disabled { opacity:0.6; cursor:wait; }
+  .btn-download2 { display:inline-flex; align-items:center; gap:5px; background:transparent; color:var(--bleu); border:1.5px solid var(--bleu-clair); border-radius:999px; padding:6px 14px; font-family:'Nunito', sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; transition:all 0.18s ease; }
+  .btn-download2:hover { background:var(--bleu-clair); }
+  .btn-recommencer2 { background:#4a4a4a; color:#fff; border:1.5px solid #4a4a4a; border-radius:999px; padding:6px 16px; font-family:'Nunito', sans-serif; font-weight:700; font-size:0.82rem; cursor:pointer; transition:all 0.18s ease; }
+  .btn-recommencer2:hover { background:#6c6c6c; border-color:#6c6c6c; }
+
+  .pycode-status { font-size:0.78rem; color:var(--bleu-moyen); font-style:italic; margin-top:8px; display:none; }
+  .pycode-status.visible { display:block; }
+  .pycode-console { background:#eef2f6; border:1.5px solid var(--gris-bord); border-radius:8px; padding:10px 14px; margin-top:10px; font-family:Consolas, Monaco, 'Courier New', monospace; font-size:0.8rem; line-height:1.5; white-space:pre-wrap; word-break:break-word; color:#1a1a1a; min-height:18px; }
+  .pycode-plot { margin-top:10px; text-align:center; }
+  .pycode-plot img { max-width:100%; border-radius:8px; border:1px solid var(--gris-bord); }
 </style>
 </head>
 <body>
@@ -1120,19 +1348,13 @@
 
   <nav class="tabs-nav">
     <button class="tab-btn active" onclick="switchTab(0)">
-      <span class="tab-num">P</span> Prérequis (statique)
+      <span class="tab-num">1</span> Cours
     </button>
     <button class="tab-btn" onclick="switchTab(1)">
-      <span class="tab-num">A</span> Poussée d'Archimède
+      <span class="tab-num">2</span> Entraînements
     </button>
     <button class="tab-btn" onclick="switchTab(2)">
-      <span class="tab-num">B</span> Débit &amp; régime permanent
-    </button>
-    <button class="tab-btn" onclick="switchTab(3)">
-      <span class="tab-num">C</span> Bernoulli &amp; Venturi
-    </button>
-    <button class="tab-btn" onclick="switchTab(4)">
-      <span class="tab-num">✓</span> Bilan &amp; Ressources
+      <span class="tab-num">3</span> Bilan &amp; Ressources
     </button>
   </nav>
   </div><!-- /header-inner -->
@@ -1140,14 +1362,31 @@
 
 <div class="main">
 
-<!-- ══════════════ ONGLET P — PRÉREQUIS : STATIQUE DES FLUIDES ══════════════ -->
 <div class="tab-content active" id="tab-0">
 
-  <div class="sub-tabs-nav" id="sub-nav-P">
-    <button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+  <div class="sub-tabs-nav" id="sub-nav-Q">
+    <button class="sub-tab-btn active" data-sub="Q1" onclick="switchSubTab('Q',0)">
+      <span class="sub-tab-num">1</span> Prérequis
+    </button>
+    <button class="sub-tab-btn" data-sub="Q2" onclick="switchSubTab('Q',1)">
+      <span class="sub-tab-num">2</span> Poussée d'Archimède
+    </button>
+    <button class="sub-tab-btn" data-sub="Q3" onclick="switchSubTab('Q',2)">
+      <span class="sub-tab-num">3</span> Débit &amp; régime permanent
+    </button>
+    <button class="sub-tab-btn" data-sub="Q4" onclick="switchSubTab('Q',3)">
+      <span class="sub-tab-num">4</span> Bernoulli &amp; Venturi
+    </button>
+  </div>
+
+  <!-- Sous-onglet Q1 : Prérequis -->
+  <div class="sub-tab-content active" id="sub-Q-0">
+
+  <div class="sub3-tabs-nav" id="sub-nav-P">
+    <button class="sub3-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
       <span class="sub-tab-num">1</span> Pression &amp; force pressante
     </button>
-    <button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+    <button class="sub3-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
       <span class="sub-tab-num">2</span> Loi fondamentale de la statique
     </button>
   </div>
@@ -1259,11 +1498,13 @@
     <div class="section-title"><span class="icon">🧪</span> Vrai / Faux</div>
     <div class="qcm-grid" id="qcmStatique"></div>
   </div>
-</div>
+  <!-- /sub-P-1 -->
 
-<!-- ══════════════ ONGLET A — POUSSÉE D'ARCHIMÈDE ══════════════ -->
-<div class="tab-content" id="tab-1">
+  </div>
+  <!-- /sub-Q-0 (Prérequis) -->
 
+  <!-- Sous-onglet Q2 : Poussée d'Archimède -->
+  <div class="sub-tab-content" id="sub-Q-1">
 
     <div class="activite-card">
       <h3>Activité 1 — Le nautile</h3>
@@ -1442,22 +1683,23 @@
     </div>
 
     <div class="remarque-box"><strong>C'est exactement ce que fait un TP réel :</strong> ce protocole (pesée dans l'air, puis dans un liquide) permet de <strong>mesurer expérimentalement</strong> la poussée d'Archimède, puis d'en déduire le volume — voire la masse volumique — d'un solide de forme quelconque, sans avoir besoin de le mesurer géométriquement.</div>
-</div>
+  </div>
+  <!-- /sub-Q-1 (Poussée d'Archimède) -->
 
-<!-- ══════════════ ONGLET B — DÉBIT & RÉGIME PERMANENT ══════════════ -->
-<div class="tab-content" id="tab-2">
+  <!-- Sous-onglet Q3 : Débit & régime permanent -->
+  <div class="sub-tab-content" id="sub-Q-2">
 
-  <div class="sub-tabs-nav" id="sub-nav-B">
-    <button class="sub-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
+  <div class="sub3-tabs-nav" id="sub-nav-B">
+    <button class="sub3-tab-btn active" data-sub="B1" onclick="switchSubTab('B',0)">
       <span class="sub-tab-num">1</span> Régime permanent
     </button>
-    <button class="sub-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
+    <button class="sub3-tab-btn" data-sub="B2" onclick="switchSubTab('B',1)">
       <span class="sub-tab-num">2</span> Débit volumique
     </button>
-    <button class="sub-tab-btn" data-sub="B3" onclick="switchSubTab('B',2)">
+    <button class="sub3-tab-btn" data-sub="B3" onclick="switchSubTab('B',2)">
       <span class="sub-tab-num">3</span> Conservation du débit
     </button>
-    <button class="sub-tab-btn" data-sub="B4" onclick="switchSubTab('B',3)">
+    <button class="sub3-tab-btn" data-sub="B4" onclick="switchSubTab('B',3)">
       <span class="sub-tab-num">🖥️</span> TP simulation PhET
     </button>
   </div>
@@ -1699,19 +1941,20 @@
 
     <div class="remarque-box"><strong>Bilan de ce TP :</strong> les trois onglets de cette unique simulation illustrent en réalité <strong>une seule et même relation</strong> — la relation de Bernoulli — appliquée à trois situations différentes : fluide au repos (onglet Pression, cas particulier v = 0), fluide en écoulement horizontal (onglet Écoulement, cas particulier z<sub>A</sub> = z<sub>B</sub>), et fluide en écoulement avec chute de hauteur (onglet Château d'eau, cas général).</div>
   </div>
-</div>
+  </div>
+  <!-- /sub-Q-2 (Débit & régime permanent) -->
 
-<!-- ══════════════ ONGLET C — BERNOULLI & VENTURI ══════════════ -->
-<div class="tab-content" id="tab-3">
+  <!-- Sous-onglet Q4 : Bernoulli & Venturi -->
+  <div class="sub-tab-content" id="sub-Q-3">
 
-  <div class="sub-tabs-nav" id="sub-nav-C">
-    <button class="sub-tab-btn active" data-sub="C1" onclick="switchSubTab('C',0)">
+  <div class="sub3-tabs-nav" id="sub-nav-C">
+    <button class="sub3-tab-btn active" data-sub="C1" onclick="switchSubTab('C',0)">
       <span class="sub-tab-num">1</span> Relation de Bernoulli
     </button>
-    <button class="sub-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
+    <button class="sub3-tab-btn" data-sub="C2" onclick="switchSubTab('C',1)">
       <span class="sub-tab-num">2</span> Effet Venturi
     </button>
-    <button class="sub-tab-btn" data-sub="C3" onclick="switchSubTab('C',2)">
+    <button class="sub3-tab-btn" data-sub="C3" onclick="switchSubTab('C',2)">
       <span class="sub-tab-num">3</span> Activité — Réservoir & écoulement
     </button>
   </div>
@@ -1849,10 +2092,1169 @@
 
     <div class="attention-box"><strong>Consigne :</strong> ouvre le simulateur, choisis une activité proposée (bouton « Activités »), puis règle le réservoir et le tuyau pour reproduire la situation demandée. Relève les grandeurs utiles (hauteur d'eau, section, vitesse, débit) et vérifie tes prédictions théoriques (loi de la statique, conservation du débit, effet Venturi) à l'aide des valeurs affichées par l'animation.</div>
   </div>
-</div>
+  </div>
+  <!-- /sub-Q-3 (Bernoulli & Venturi) -->
 
-<!-- ══════════════ ONGLET ✓ — BILAN & RESSOURCES ══════════════ -->
-<div class="tab-content" id="tab-4">
+</div>
+<!-- /tab-0 (Cours) -->
+
+<!-- ══════════════ ONGLET ENTRAÎNEMENTS ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <div class="sub-tabs-nav" id="sub-nav-E">
+    <button class="sub-tab-btn active" data-sub="E1" onclick="switchSubTab('E',0)">
+      <span class="sub-tab-num">1</span> Activités
+    </button>
+    <button class="sub-tab-btn" data-sub="E2" onclick="switchSubTab('E',1)">
+      <span class="sub-tab-num">2</span> Exercices
+    </button>
+    <button class="sub-tab-btn" data-sub="E3" onclick="switchSubTab('E',2)">
+      <span class="sub-tab-num">🎓</span> Sujets de bac
+    </button>
+  </div>
+
+  <!-- Sous-onglet E1 : Activités -->
+  <div class="sub-tab-content active" id="sub-E-0">
+
+    <div class="sub3-tabs-nav" id="sub-nav-EA">
+      <button class="sub3-tab-btn active" data-sub="EA1" onclick="switchSubTab('EA',0)">🧪 Activité 1</button>
+      <button class="sub3-tab-btn" data-sub="EA2" onclick="switchSubTab('EA',1)">📋 Activité 2</button>
+      <button class="sub3-tab-btn" data-sub="EA3" onclick="switchSubTab('EA',2)">🧪 Activité 3</button>
+      <button class="sub3-tab-btn" data-sub="EA4" onclick="switchSubTab('EA',3)">🧪 Activité 4</button>
+    </div>
+
+    <div class="sub-tab-content active" id="sub-EA-0">
+      <div class="activite-card">
+        <h3>Activité 1 : Le Nautile</h3>
+
+        <div class="activite-intro-flex">
+          <div class="activite-intro-txt">
+            <p>Depuis 1984, le <em>Nautile</em>, un sous-marin habité de l'IFREMER, est à l'origine de nombreuses découvertes scientifiques (voir photo ci-contre : images sous-marines du sous-marin <em>Nautile</em> pendant la mission ESSNAUT 2016).</p>
+            <p style="margin-top:8px;">Pour plonger, le <em>Nautile</em> est doté de deux ballasts de 600 litres chacun, c'est-à-dire de réservoirs qui peuvent se remplir d'eau ou d'air.</p>
+          </div>
+          <div class="activite-intro-media">
+            <img src="Entrainements/p322-1.png" alt="Le sous-marin Nautile en plongée" style="width:220px;">
+            <a class="video-btn" href="https://www.pearltrees.com/private/id105374371/item814061994?paccess=47e97570ba2.308599aa.5f9aa52340408f71cb55db325e05abfa" target="_blank" rel="noopener">▶ Vidéo</a>
+          </div>
+        </div>
+
+        <div class="attention-box"><strong>●</strong> Comment expliquer le rôle des ballasts d'un sous-marin ?</div>
+
+        <div style="text-align:center; margin:14px 0;">
+          <img src="Entrainements/p322-2.png" alt="Doc 1 : Poussée d'Archimède — Doc 2 : Photos de l'expérience, protocole et données" style="max-width:100%; width:640px; border-radius:10px; border:1px solid var(--gris-bord);">
+        </div>
+
+        <span class="comp-badge analyser">1 ANALYSER RAISONNER</span>
+        <p class="activite-question"><strong>a.</strong> Expliquer ce que représente le produit ρV dans l'expression π<sub>A</sub> = ρVg et faire le lien avec le principe d'Archimède décrit dans le DOC.1.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-nautile-1a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-nautile-1a">Le principe d'Archimède énonce qu'un corps immergé subit une poussée égale au poids du volume de fluide qu'il déplace. Identifie, dans ρVg, quelle grandeur correspond à la masse du fluide déplacé, puis compare avec l'expression du poids P = mg.</div>
+
+        <p class="activite-question" style="margin-top:10px;"><strong>b.</strong> D'après le DOC.2, effectuer le bilan des forces exercées sur l'objet quand il est dans l'air puis quand il est entièrement immergé dans l'eau.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-nautile-1b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-nautile-1b">Dans l'air, seuls le poids et la tension du fil du dynamomètre s'exercent sur l'objet (la poussée d'Archimède de l'air est négligeable). Une fois immergé, une troisième force apparaît : la poussée d'Archimède, dirigée vers le haut.</div>
+
+        <p class="activite-question" style="margin-top:10px;"><strong>c.</strong> En déduire l'expression de la norme de la poussée d'Archimède π<sub>A</sub>, avec les notations données dans le PROTOCOLE : π<sub>A</sub> = P − P<sub>a</sub>
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-nautile-1c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-nautile-1c">Écris la condition d'équilibre (deuxième loi de Newton, objet immobile) dans les deux situations du DOC.2, puis fais la différence entre les deux relations pour isoler π<sub>A</sub>.</div>
+
+        <span class="comp-badge realiser">2 RÉALISER</span>
+        <p class="activite-question">Mettre en œuvre l'expérience photographiée dans le DOC.2 avec différents objets.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-nautile-2')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-nautile-2">Pense à relever avec soin la norme P du poids à l'air, puis la norme P<sub>a</sub> du poids apparent une fois l'objet entièrement immergé, ainsi que la variation de volume ΔV lue sur l'éprouvette graduée.</div>
+
+        <span class="comp-badge valider">3 VALIDER</span>
+        <p class="activite-question" style="margin-top:10px;"><strong>a.</strong> Les mesures réalisées sont-elles compatibles avec l'expression de la norme de la poussée d'Archimède ? Justifier la réponse.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-nautile-3a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-nautile-3a">Compare la valeur expérimentale π<sub>A</sub> = P − P<sub>a</sub> à la valeur théorique π<sub>A</sub> = ρVg calculée avec le volume déplacé ΔV mesuré à l'éprouvette. Un encadrement par les incertitudes de mesure peut appuyer la comparaison.</div>
+
+        <p class="activite-question" style="margin-top:10px;"><strong>b.</strong> Expliquer le rôle des ballasts dans un sous-marin.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-nautile-3b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-nautile-3b">Remplir les ballasts d'eau augmente le poids du sous-marin sans changer son volume immergé (donc sans changer la poussée d'Archimède) : compare alors le poids et la poussée pour expliquer la plongée et la remontée.</div>
+
+      </div>
+    </div>
+    <!-- /sub-EA-0 -->
+
+    <div class="sub-tab-content" id="sub-EA-1">
+      <div class="activite-card">
+        <h3>Activité 2 : Surveillance des cours d'eau</h3>
+
+        <div class="activite-intro-flex">
+          <div class="activite-intro-txt">
+            <p>Afin de prévoir les crues, les rivières et les fleuves sont étudiés en permanence.</p>
+          </div>
+          <div class="activite-intro-media">
+            <img src="Entrainements/p323-1.png" alt="Rivière en campagne" style="width:280px;">
+          </div>
+        </div>
+
+        <div class="attention-box"><strong>●</strong> Comment décrire ces écoulements d'eau ?</div>
+
+        <div style="text-align:center; margin:14px 0;">
+          <img src="Entrainements/p323-2.png" alt="Données 1 : Écoulement d'un fluide — Document : débit volumique d'une rivière — Données 2 : Débit volumique" style="max-width:100%; width:680px; border-radius:10px; border:1px solid var(--gris-bord);">
+        </div>
+
+        <span class="comp-badge approprier">1 S'APPROPRIER</span>
+        <p class="activite-question">Comparer, en justifiant, les valeurs des vitesses d'écoulement du fluide v<sub>1</sub> et v<sub>2</sub> présentées dans les données et juger de la cohérence de l'allure des lignes de courant.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-cours-eau-1')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-cours-eau-1">Regarde l'écart entre les lignes de courant à l'endroit où passe v₁ et à l'endroit où passe v₂ sur le schéma des DONNÉES 2 : rapproche cet écart de la règle énoncée dans les DONNÉES 1 sur le lien entre resserrement des lignes de courant et vitesse d'écoulement.</div>
+
+        <span class="comp-badge realiser">2 RÉALISER</span>
+        <p class="activite-question" style="margin-top:10px;"><strong>a.</strong> D'après les données, établir la relation entre le débit volumique D<sub>v</sub> d'un fluide, la vitesse d'écoulement v et l'aire S de la section droite traversée. Vérifier l'homogénéité de la relation.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-cours-eau-2a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-cours-eau-2a">Le volume V de fluide qui traverse la section droite d'aire S pendant Δt forme un petit cylindre de longueur L = v×Δt. Exprime ce volume V en fonction de S et L, puis reporte-le dans D<sub>v</sub> = V/Δt.</div>
+
+        <p class="activite-question" style="margin-top:10px;"><strong>b.</strong> En modélisant la rivière, l'Ill, par un conduit de section rectangulaire de hauteur h = 1,11 m et de largeur L = 40,0 m, calculer la vitesse d'écoulement v de l'Ill le 6 août à 00 h quand le débit volumique vaut D<sub>v</sub> = 35,38 m³·s⁻¹.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-cours-eau-2b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-cours-eau-2b">L'aire S de la section rectangulaire du conduit s'écrit S = h × L. Réinjecte cette expression dans la relation établie à la question précédente, puis isole v.</div>
+
+        <span class="comp-badge communiquer">3 COMMUNIQUER</span><span class="grand-oral-tag">★ Grand Oral</span>
+        <p class="activite-question" style="margin-top:10px;">Réaliser une synthèse permettant d'expliquer comment décrire un écoulement, en mettant en valeur les grandeurs physiques mesurables et leurs relations.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-cours-eau-3')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-cours-eau-3">Organise ta synthèse autour de trois idées : la description d'un écoulement par les lignes de courant (et le régime permanent), la définition du débit volumique, puis la relation D<sub>v</sub> = v×S qui relie ces deux descriptions.</div>
+
+      </div>
+    </div>
+    <!-- /sub-EA-1 -->
+
+    <div class="sub-tab-content" id="sub-EA-2">
+      <div class="activite-card" id="scope-EA3">
+        <h3>Activité 3 : Athérosclérose <span class="matiere-tag">SVT</span></h3>
+
+        <div class="activite-intro-flex">
+          <div class="activite-intro-txt">
+            <p>L'athérosclérose est une maladie chronique caractérisée par l'apparition de dépôts graisseux dans les artères qui perturbent la circulation du sang. En première approximation, le sang peut être considéré comme un fluide incompressible qui s'écoule en régime permanent dans une canalisation.</p>
+          </div>
+          <div class="activite-intro-media">
+            <img src="Entrainements/p324-1.png" alt="Cœur et artère obstruée par des dépôts graisseux" style="width:200px;">
+          </div>
+        </div>
+
+        <div class="attention-box"><strong>●</strong> Quelles sont les conséquences de ces étranglements dus aux dépôts graisseux sur l'écoulement du sang dans les artères ?</div>
+
+        <div class="section-title" style="margin:20px 0 10px;"><span class="icon">📊</span> Document — Simulation de l'écoulement d'un fluide incompressible</div>
+        <p style="font-size:0.92rem; line-height:1.65; margin-bottom:10px;">Une animation permet de simuler l'écoulement en régime permanent d'un fluide incompressible dans une canalisation. Réglages disponibles : ajustement du débit, mesure de la vitesse d'écoulement, mesure de la pression du fluide, modification de l'aire de la section de la conduite.</p>
+        <div style="margin:14px 0; border-radius:10px; overflow:hidden; border:1.5px solid var(--gris-bord);">
+          <iframe src="https://phet.colorado.edu/sims/cheerpj/fluid-pressure-and-flow/latest/fluid-pressure-and-flow.html?simulation=fluid-pressure-and-flow&locale=fr" width="100%" height="520" style="border:none; display:block;" allowfullscreen title="Simulation PhET — écoulement d'un fluide incompressible"></iframe>
+        </div>
+
+        <div style="text-align:center; margin:14px 0;">
+          <img src="Entrainements/p324-2.png" alt="Donnée 1 : Relation de Bernoulli — Données 2 : Écoulement du sang dans les artères" style="max-width:100%; width:680px; border-radius:10px; border:1px solid var(--gris-bord);">
+        </div>
+
+        <span class="comp-badge realiser">1 RÉALISER</span>
+        <p class="activite-question"><strong>a.</strong> Utiliser la simulation pour vérifier la conservation du débit volumique du fluide et la relation de Bernoulli.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-athero-1a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-athero-1a">Relève la vitesse et la section à deux endroits différents de la conduite pour vérifier que v×S reste constant (conservation du débit), puis relève pression et vitesse en ces mêmes points pour tester la relation de Bernoulli (à altitude constante, la pression diminue quand la vitesse augmente).</div>
+
+        <p class="activite-question" style="margin-top:10px;"><strong>b.</strong> Exprimer puis calculer la vitesse d'écoulement du sang v<sub>n</sub> dans une artère normale puis celle du sang v<sub>o</sub> dans une artère obstruée.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-athero-1b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-athero-1b">Utilise la relation D<sub>v</sub> = v×S établie en Activité 2 pour isoler v = D<sub>v</sub>/S, à appliquer successivement avec S<sub>n</sub> puis S<sub>o</sub>. Pense à convertir toutes les grandeurs en unités SI avant de calculer.</div>
+
+        <p class="activite-question" style="margin-top:10px;"><strong>c.</strong> À l'aide de la DONNÉE 1, exprimer puis calculer la dépression P<sub>n</sub> − P<sub>o</sub> au niveau de l'étranglement d'une personne allongée (z<sub>n</sub> = z<sub>o</sub>).
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-athero-1c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-athero-1c">Écris la relation de Bernoulli entre le point normal et le point obstrué en simplifiant les termes d'altitude (z<sub>n</sub> = z<sub>o</sub>), puis isole P<sub>n</sub> − P<sub>o</sub> en fonction de ρ, v<sub>n</sub> et v<sub>o</sub>.</div>
+
+        <span class="comp-badge valider">2 VALIDER</span>
+        <p class="activite-question">Expliquer les dangers liés aux étranglements des artères dus aux dépôts graisseux.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-athero-2')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-athero-2">Pense à la fois à l'effet mécanique de la chute de pression locale sur la paroi artérielle et au risque que ferait courir un dépôt qui se détache dans la circulation sanguine.</div>
+
+        <button class="btn-corr-dark" onclick="toggleCorrDark(this,'corr-athero')">▶ Voir la correction</button>
+        <div class="correction-dark" id="corr-athero">
+          <p><strong>1.a.</strong> La simulation permet de mesurer v et l'aire S de la conduite à deux endroits différents : le produit v×S reste constant tout au long de l'écoulement, ce qui vérifie la conservation du débit volumique. En relevant simultanément la pression, on observe qu'aux points de même altitude, la pression est plus faible là où la vitesse est plus grande (rétrécissement de la conduite), conformément à la relation de Bernoulli.</p>
+          <p><strong>1.b.</strong> D<sub>v</sub> = 1,44 L·min⁻¹ = 1,44×10⁻³ m³ / 60 s = 2,40×10⁻⁵ m³·s⁻¹.<br>
+          v<sub>n</sub> = D<sub>v</sub>/S<sub>n</sub> = 2,40×10⁻⁵ / (0,80×10⁻⁴) = 0,30 m·s⁻¹.<br>
+          v<sub>o</sub> = D<sub>v</sub>/S<sub>o</sub> = 2,40×10⁻⁵ / (0,20×10⁻⁴) = 1,2 m·s⁻¹.</p>
+          <p><strong>1.c.</strong> Avec z<sub>n</sub> = z<sub>o</sub>, la relation de Bernoulli devient P<sub>n</sub> + ½ρv<sub>n</sub>² = P<sub>o</sub> + ½ρv<sub>o</sub>², soit P<sub>n</sub> − P<sub>o</sub> = ½ρ(v<sub>o</sub>² − v<sub>n</sub>²).<br>
+          P<sub>n</sub> − P<sub>o</sub> = 0,5 × 1,07×10³ × (1,2² − 0,30²) = 0,5 × 1070 × 1,35 ≈ 7,2×10² Pa.</p>
+          <p><strong>2.</strong> Au niveau de l'étranglement, la vitesse du sang augmente fortement et la pression y chute (P<sub>o</sub> &lt; P<sub>n</sub>), ce qui fragilise localement la paroi artérielle et peut favoriser sa rupture ou son affaissement. Par ailleurs, un dépôt graisseux qui se détache peut circuler dans le sang jusqu'à obstruer complètement un vaisseau plus étroit (thrombose), avec un risque d'AVC ou d'infarctus selon l'organe touché.</p>
+        </div>
+
+      </div>
+    </div>
+    <!-- /sub-EA-2 -->
+
+    <div class="sub-tab-content" id="sub-EA-3">
+      <div class="activite-card">
+        <h3>Activité 4 : Kitesurfing</h3>
+
+        <div class="activite-intro-flex">
+          <div class="activite-intro-txt">
+            <p>Le détroit des bouches de Bonifacio, situé entre la Corse et la Sardaigne, est prisé par les kitesurfeurs : grâce à l'effet Venturi, les vents y dépassent régulièrement les 40 km·h⁻¹.</p>
+          </div>
+          <div class="activite-intro-media">
+            <img src="Entrainements/p325-1.png" alt="Kitesurfeur en action" style="width:170px;">
+          </div>
+        </div>
+
+        <div class="attention-box"><strong>●</strong> Quelle est l'origine de l'effet Venturi ?</div>
+
+        <div style="text-align:center; margin:14px 0;">
+          <img src="Entrainements/p325-2.png" alt="Doc 1 : Effet Venturi dans le détroit des bouches de Bonifacio — Doc 2 : Modélisation de l'effet Venturi en classe — Données : Relation de Bernoulli et effet Venturi" style="max-width:100%; width:680px; border-radius:10px; border:1px solid var(--gris-bord);">
+        </div>
+
+        <span class="comp-badge analyser">1 ANALYSER-RAISONNER</span>
+        <p class="activite-question"><strong>a.</strong> En se basant sur la conservation du débit volumique, expliquer pourquoi la vitesse de l'écoulement de l'air augmente au niveau d'un étranglement.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-kite-1a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-kite-1a">Le débit volumique D<sub>v</sub> = v×S se conserve tout au long de l'écoulement. Que doit devenir v si S diminue, pour que le produit v×S reste constant ?</div>
+
+        <p class="activite-question" style="margin-top:10px;"><strong>b.</strong> D'après les DONNÉES, justifier pourquoi la pression de l'air est plus faible au niveau de l'étranglement.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-kite-1b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-kite-1b">À altitude constante, la relation de Bernoulli s'écrit P + ½ρv² = constante. Si la vitesse v augmente au niveau de l'étranglement, que doit faire la pression P pour que la somme reste constante ?</div>
+
+        <span class="comp-badge realiser">2 RÉALISER</span>
+        <p class="activite-question">Réaliser des mesures de pression de l'air à différents endroits du tube de Venturi. Reporter les résultats expérimentaux dans un tableau.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-kite-2')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-kite-2">Choisis plusieurs points le long du tube (avant, pendant et après l'étranglement) et relève à chaque fois la section S et la pression P au pressiomètre, en gardant le même débit de la soufflerie pour toutes les mesures.</div>
+
+        <span class="comp-badge valider">3 VALIDER</span>
+        <p class="activite-question">À l'aide de l'expression
+          v<sub>1</sub> = √<span style="display:inline-block; vertical-align:middle; margin:0 4px; text-align:center;"><span style="border-bottom:1.5px solid var(--texte); padding:0 4px; display:block;">2(P<sub>1</sub> − P<sub>2</sub>)</span><span style="display:block;">ρ(S<sub>1</sub>²/S<sub>2</sub>² − 1)</span></span>
+          découlant de la relation de Bernoulli et de la conservation du débit volumique, évaluer la vitesse d'écoulement de l'air au niveau de la sortie du tube de Venturi et la comparer à la valeur mesurée avec un anémomètre.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-kite-3')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-kite-3">Repère dans tes mesures les valeurs de P₁ et P₂ aux points de sections S₁ et S₂ correspondant à l'entrée et à la sortie du tube, convertis toutes les grandeurs en unités SI, puis calcule v₁ avec ρ = 1,20 kg·m⁻³ avant de comparer au résultat de l'anémomètre.</div>
+
+        <span class="comp-badge communiquer">4 COMMUNIQUER</span><span class="grand-oral-tag">★ Grand Oral</span>
+        <p class="activite-question" style="margin-top:10px;">Réaliser une synthèse permettant d'expliquer l'effet Venturi (variation de vitesse et de pression) dans la modélisation réalisée en classe, puis dans le détroit des bouches de Bonifacio.
+          <button class="btn-indice2" onclick="toggleIndice2(this,'ind-kite-4')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-kite-4">Structure ta synthèse en deux temps : d'abord le principe général (conservation du débit + relation de Bernoulli → accélération et dépression au niveau d'un étranglement), puis son application successive au tube de Venturi de la modélisation et au détroit des bouches de Bonifacio.</div>
+
+        <button class="btn-corr-dark" onclick="toggleCorrDark(this,'corr-kite')">▶ Voir la correction</button>
+        <div class="correction-dark" id="corr-kite">
+          <p><strong>1.a.</strong> Le débit volumique D<sub>v</sub> = v×S se conserve le long de l'écoulement. Au niveau de l'étranglement, l'aire S de la section diminue ; pour que le produit v×S reste constant, la vitesse v doit augmenter.</p>
+          <p><strong>1.b.</strong> L'écoulement étant horizontal (z₁ = z₂), la relation de Bernoulli se réduit à P + ½ρv² = constante. Comme la vitesse v augmente au niveau de l'étranglement, le terme ½ρv² augmente : pour que la somme reste constante, la pression P doit diminuer. C'est cette dépression localisée qui caractérise l'effet Venturi.</p>
+          <p><strong>2.</strong> Cette question dépend de la manipulation réelle du tube de Venturi et de la soufflerie : elle n'a pas de résultat chiffré unique. Méthode attendue : construire un tableau à deux colonnes (position/section S le long du tube ; pression P mesurée au pressiomètre), et relever au moins trois points (entrée du tube, étranglement, sortie) pour un même débit de soufflerie. On doit observer une pression minimale au niveau de la section la plus étroite.</p>
+          <p><strong>3.</strong> Méthode : repérer dans le tableau de mesures les couples (P₁, S₁) à l'entrée et (P₂, S₂) à la sortie du tube, convertir toutes les grandeurs en unités SI, puis calculer v₁ = √[2(P₁−P₂) / (ρ(S₁²/S₂² − 1))] avec ρ = 1,20 kg·m⁻³. On compare ensuite cette valeur théorique à la vitesse v₂ mesurée directement à l'anémomètre en sortie de tube : un bon accord (aux incertitudes de mesure près) valide le modèle de Bernoulli pour cet écoulement d'air.</p>
+          <p><strong>4.</strong> Dans les deux situations (tube de Venturi et détroit de Bonifacio), un rétrécissement de la section d'écoulement impose, par conservation du débit volumique, une augmentation locale de la vitesse du fluide. La relation de Bernoulli impose alors, à altitude constante, une diminution corrélée de la pression au niveau de cet étranglement. Le tube de Venturi modélise en classe, à petite échelle et avec de l'air propulsé par une soufflerie, exactement le phénomène qui accélère le vent entre les reliefs de part et d'autre du détroit des bouches de Bonifacio, expliquant les rafales recherchées par les kitesurfeurs.</p>
+        </div>
+
+      </div>
+    </div>
+    <!-- /sub-EA-3 -->
+
+  </div>
+  <!-- /sub-E-0 -->
+
+  <!-- Sous-onglet E2 : Exercices -->
+  <div class="sub-tab-content" id="sub-E-1">
+
+    <div class="sub3-tabs-nav" id="sub-nav-EX">
+      <button class="sub3-tab-btn active" data-sub="EX1" onclick="switchSubTab('EX',0)">🟢 Faciles</button>
+      <button class="sub3-tab-btn" data-sub="EX2" onclick="switchSubTab('EX',1)">🟠 Intermédiaires</button>
+      <button class="sub3-tab-btn" data-sub="EX3" onclick="switchSubTab('EX',2)">🔴 Difficiles</button>
+    </div>
+
+    <div class="sub-tab-content active" id="sub-EX-0">
+
+      <nav class="sub3-tabs-nav" id="sub-nav-EXF">
+        <button class="exo-tab-btn active" data-sub="EXF1" onclick="switchSubTab('EXF',0)">Exercice 1 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXF2" onclick="switchSubTab('EXF',1)">Exercice 2 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXF3" onclick="switchSubTab('EXF',2)">Exercice 3 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXF4" onclick="switchSubTab('EXF',3)">Exercice 4 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXF5" onclick="switchSubTab('EXF',4)">Exercice 5 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXF6" onclick="switchSubTab('EXF',5)">Exercice 6 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXF7" onclick="switchSubTab('EXF',6)">Exercice 7 <span class="exo-tab-stars">★☆☆</span></button>
+      </nav>
+
+      <div class="sub-tab-content active" id="sub-EXF-0">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 15 : Calculer une norme</h3>
+
+          <p class="act-q">Une barque flotte grâce à la poussée d'Archimède.</p>
+
+          <p class="act-q"><strong>a.</strong> Calculer la norme de la poussée d'Archimède qui s'exerce sur la barque dont la partie immergée a un volume V = 2,0 m³.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex15a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex15a">Utilise l'expression π = ρ<sub>eau</sub> × V × g, avec ρ<sub>eau</sub> = 1000 kg/m³ et g = 9,8 N/kg.</div>
+
+          <p class="act-q"><strong>b.</strong> Expliquer qualitativement l'origine de la poussée d'Archimède.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex15b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex15b">Pense à la façon dont la pression d'un fluide évolue avec la profondeur, et à ce que cela implique pour les forces pressantes exercées sur le dessous et le dessus de la partie immergée.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex15')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex15">
+            <p><strong>a.</strong> π = ρ<sub>eau</sub> × V × g = 1000 × 2,0 × 9,8 = 1,96×10⁴ N ≈ <strong>2,0×10⁴ N</strong>.</p>
+            <p><strong>b.</strong> La pression d'un fluide augmente avec la profondeur. Les forces pressantes exercées par l'eau sur le dessous de la partie immergée de la barque sont donc plus intenses que celles exercées sur le dessus : leur résultante, non nulle, est une force verticale dirigée vers le haut — la poussée d'Archimède.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-1">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 16 : Comparer des forces</h3>
+
+          <p class="act-q">Un ballon de football a une masse m = 450 g et un volume V = 5,5 L.</p>
+
+          <p class="act-q">Exprimer puis calculer la norme de son poids ainsi que celle de la poussée d'Archimède qui s'exerce sur lui lorsqu'il est totalement immergé dans l'air. Conclure.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex16')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex16">Convertis la masse en kg et le volume en m³. Utilise P = m×g pour le poids et π = ρ<sub>air</sub>×V×g pour la poussée d'Archimède, avec ρ<sub>air</sub> = 1,20 kg/m³ et g = 9,8 N/kg.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex16')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex16">
+            <p>Poids : P = m×g = 0,450 × 9,8 ≈ <strong>4,4 N</strong>.</p>
+            <p>Poussée d'Archimède : π = ρ<sub>air</sub> × V × g = 1,20 × 5,5×10⁻³ × 9,8 ≈ <strong>6,5×10⁻² N</strong>.</p>
+            <p><strong>Conclusion :</strong> la poussée d'Archimède est environ 70 fois plus faible que le poids : elle est totalement négligeable devant le poids pour un objet immergé dans l'air.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-2">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 18 : Établir un bilan des forces</h3>
+
+          <p class="act-q">Une balle de ping-pong de masse m = 2,3 g et de rayon r = 1,9 cm est lâchée sans vitesse initiale. Les frottements sont supposés négligeables.</p>
+
+          <p class="act-q"><strong>a.</strong> Établir le bilan des forces qui s'exercent sur la balle.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex18a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex18a">La balle est entourée d'air, qui est un fluide : en plus du poids, pense à la force exercée par ce fluide sur un objet immergé.</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer les normes de chaque force, les comparer et conclure.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex18b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex18b">Calcule d'abord le volume de la balle assimilée à une sphère : V = (4/3)×π×r³. Utilise ensuite P = m×g et π = ρ<sub>air</sub>×V×g, avec ρ<sub>air</sub> = 1,20 kg/m³ et g = 9,8 N/kg.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex18')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex18">
+            <p><strong>a.</strong> Deux forces s'exercent sur la balle : son poids <strong>P</strong> (vertical, vers le bas) et la poussée d'Archimède <strong>π</strong> exercée par l'air (verticale, vers le haut).</p>
+            <p><strong>b.</strong> Volume de la balle : V = (4/3)×π×r³ = (4/3)×π×(1,9×10⁻²)³ ≈ 2,87×10⁻⁵ m³.</p>
+            <p>Poids : P = m×g = 2,3×10⁻³ × 9,8 ≈ <strong>2,3×10⁻² N</strong>.</p>
+            <p>Poussée d'Archimède : π = ρ<sub>air</sub> × V × g = 1,20 × 2,87×10⁻⁵ × 9,8 ≈ <strong>3,4×10⁻⁴ N</strong>.</p>
+            <p><strong>Conclusion :</strong> π représente environ 1,5 % de P, elle est donc négligeable devant le poids. On peut donc assimiler le mouvement de la balle à une chute libre.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-3">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 22 : Calculer un débit volumique</h3>
+
+          <p class="act-q">Un robinet ouvert laisse couler 1,5 L d'eau par minute. L'aire de la section du jet en sortie de robinet vaut S = 1,0 cm².</p>
+
+          <p class="act-q"><strong>a.</strong> Exprimer puis calculer le débit volumique du jet.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex22a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex22a">Convertis le volume donné en m³ et la durée en secondes, puis calcule Q = V/t.</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer la vitesse d'écoulement de l'eau en sortie de robinet.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex22b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex22b">Utilise la relation entre débit volumique, vitesse et section : Q = v×S, en convertissant S en m².</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex22')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex22">
+            <p><strong>a.</strong> Q = V/t = 1,5×10⁻³ / 60 ≈ <strong>2,5×10⁻⁵ m³/s</strong> (soit 1,5 L/min).</p>
+            <p><strong>b.</strong> Q = v×S ⟹ v = Q/S = 2,5×10⁻⁵ / 1,0×10⁻⁴ = <strong>0,25 m/s</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-4">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 23 : Calculer une dépression</h3>
+
+          <p class="act-q">Un écoulement horizontal d'air est initialement à la vitesse v<sub>1</sub> = 5,0 m·s⁻¹ dans une section droite de conduit d'aire S<sub>1</sub> = 2,0 cm². Suite à un étranglement, la section droite de la seconde partie du conduit a une aire S<sub>2</sub> = 1,0 cm².</p>
+
+          <p class="act-q"><strong>a.</strong> Exprimer puis calculer la vitesse v<sub>2</sub> de l'écoulement de l'air dans la seconde partie du conduit.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex23a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex23a">Utilise la conservation du débit volumique : v<sub>1</sub>×S<sub>1</sub> = v<sub>2</sub>×S<sub>2</sub>.</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer la dépression P<sub>1</sub> − P<sub>2</sub> résultant de ce changement de section.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex23b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex23b">L'écoulement est horizontal : applique la relation de Bernoulli sous la forme P<sub>1</sub> − P<sub>2</sub> = ½ρ(v<sub>2</sub>² − v<sub>1</sub>²), avec ρ<sub>air</sub> = 1,20 kg/m³.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex23')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex23">
+            <p><strong>a.</strong> Conservation du débit : v<sub>1</sub>×S<sub>1</sub> = v<sub>2</sub>×S<sub>2</sub> ⟹ v<sub>2</sub> = v<sub>1</sub>×S<sub>1</sub>/S<sub>2</sub> = 5,0 × 2,0/1,0 = <strong>10,0 m/s</strong>.</p>
+            <p><strong>b.</strong> P<sub>1</sub> − P<sub>2</sub> = ½×ρ<sub>air</sub>×(v<sub>2</sub>² − v<sub>1</sub>²) = 0,5 × 1,20 × (10,0² − 5,0²) = 0,5 × 1,20 × 75 = <strong>45 Pa</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-5">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 25 : Étudier une différence d'altitude</h3>
+
+          <p class="act-q">Un écoulement d'eau vertical s'effectue à vitesse constante dans une section droite de conduit d'aire S = 1,0 cm². Une dépression est observée quand le fluide passe de l'altitude z<sub>1</sub> = 0 m à l'altitude z<sub>2</sub> = 5,0 m.</p>
+
+          <p class="act-q">Exprimer puis calculer la dépression P<sub>1</sub> − P<sub>2</sub> observée dans le fluide entre ces deux altitudes.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex25')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex25">La vitesse est constante le long de l'écoulement (même section) : dans la relation de Bernoulli P + ρgz + ½ρv² = constante, les termes cinétiques ½ρv² sont donc identiques aux deux altitudes et s'annulent dans la différence P₁ − P₂.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex25')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex25">
+            <p>La relation de Bernoulli s'écrit P<sub>1</sub> + ρgz<sub>1</sub> + ½ρv<sub>1</sub>² = P<sub>2</sub> + ρgz<sub>2</sub> + ½ρv<sub>2</sub>². La vitesse étant constante (v<sub>1</sub> = v<sub>2</sub>, la section ne changeant pas), les termes cinétiques s'annulent, d'où : <strong>P<sub>1</sub> − P<sub>2</sub> = ρg(z<sub>2</sub> − z<sub>1</sub>)</strong>.</p>
+            <p>Application numérique : P<sub>1</sub> − P<sub>2</sub> = 1,0×10³ × 9,8 × (5,0 − 0) = 4,9×10⁴ Pa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-6">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 26 : Calculer une vitesse d'éjection de vidange</h3>
+
+          <p class="act-q">La vidange d'un réservoir d'eau est représentée ci-contre. La section de l'ouverture de vidange s est très petite devant la surface libre S du liquide, ce qui permet en première approximation de supposer la surface libre du liquide immobile.</p>
+
+          <p class="act-q">Exprimer puis calculer la vitesse d'écoulement du liquide par la section s pour h<sub>0</sub> = 1,0 m.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex26')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex26">Applique la relation de Bernoulli entre un point de la surface libre (pression atmosphérique, altitude h₀, vitesse quasi nulle) et un point de l'orifice de vidange (pression atmosphérique, altitude 0, vitesse v).</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex26')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex26">
+            <p>Entre la surface libre (pression atmosphérique P<sub>atm</sub>, altitude h<sub>0</sub>, vitesse quasi nulle car S ≫ s) et l'orifice de vidange (pression atmosphérique P<sub>atm</sub>, altitude 0, vitesse v), la relation de Bernoulli donne : P<sub>atm</sub> + ρgh<sub>0</sub> + 0 = P<sub>atm</sub> + 0 + ½ρv². D'où <strong>v = √(2gh<sub>0</sub>)</strong> (relation de Torricelli).</p>
+            <p>Application numérique : v = √(2 × 9,8 × 1,0) = √19,6 ≈ <strong>4,4 m/s</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="sub-tab-content" id="sub-EX-1">
+
+      <nav class="sub3-tabs-nav" id="sub-nav-EXI">
+        <button class="exo-tab-btn active" data-sub="EXI1" onclick="switchSubTab('EXI',0)">Exercice 8 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXI2" onclick="switchSubTab('EXI',1)">Exercice 9 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXI3" onclick="switchSubTab('EXI',2)">Exercice 10 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXI4" onclick="switchSubTab('EXI',3)">Exercice 11 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXI5" onclick="switchSubTab('EXI',4)">Exercice 12 <span class="exo-tab-stars">★☆☆</span></button>
+      </nav>
+
+      <div class="sub-tab-content active" id="sub-EXI-0">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 24 : Mesurer un débit volumique <span class="py-badge">🐍 Python</span></h3>
+
+          <p class="act-q">La mesure du débit volumique D<sub>v</sub> de l'écoulement de l'eau dans une burette graduée est obtenue en mesurant la durée d'écoulement Δt pour qu'un volume V d'eau s'écoule.</p>
+
+          <p class="act-q"><strong>a.</strong> L'extrait de code Python ci-dessous est issu d'un programme permettant de déterminer le résultat de la mesure du débit volumique D<sub>v</sub> grâce à la simulation d'un processus aléatoire. En s'appuyant sur les lignes 10 et 11 de l'extrait de ce code, exprimer les résultats de la mesure de la durée d'écoulement Δt en seconde et du volume V d'eau qui s'écoule de la burette en millilitre.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex24a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex24a">Chaque liste L=[valeur, incertitude-type] donne la valeur mesurée puis l'incertitude-type associée, en unités SI (secondes pour Δt, m³ pour V) — pense à convertir V en mL en multipliant par 10⁶.</div>
+
+          <p class="act-q"><strong>b.</strong> Rappeler l'expression du débit volumique D<sub>v</sub> en fonction de Δt et V. Indiquer la ligne de code dans laquelle cette expression intervient et expliquer brièvement ce que permettent de réaliser les instructions de cette ligne.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex24b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex24b">Le débit volumique est le rapport d'un volume écoulé sur la durée de cet écoulement. Repère dans le code la ligne qui divise le volume tiré aléatoirement par la durée tirée aléatoirement.</div>
+
+          <p class="act-q"><strong>c.</strong> Expliquer brièvement ce que permettent de réaliser les lignes qui définissent la fonction <code>Alea</code> et la boucle de simulation du programme.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex24c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex24c">Distingue deux étapes : la définition de la fonction de tirage aléatoire (une seule valeur), puis la boucle qui répète ce tirage un grand nombre de fois pour construire une distribution simulée de D<sub>v</sub>, avant d'en extraire une valeur moyenne et un écart-type.</div>
+
+          <p class="act-q"><strong>d.</strong> Le résultat de l'exécution du programme est le suivant : Dv = 1.2407582572815378e-06 m³/s, u(Dv) = 9.285208653863012e-09 m³/s. Exprimer le résultat de la mesure du débit volumique D<sub>v</sub> ainsi que l'incertitude-type associée.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex24d')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex24d">L'incertitude-type ne s'exprime qu'avec un seul chiffre significatif (sauf si celui-ci est 1, auquel cas on en garde deux) ; arrondis ensuite la valeur de D<sub>v</sub> au même ordre de grandeur.</div>
+
+          <div class="diff-level-nav" id="ex24-levels">
+            <button class="diff-level-btn active" data-level="std" onclick="switchDiffLevel('ex24-levels','std')">Version standard</button>
+            <button class="diff-level-btn" data-level="conf" onclick="switchDiffLevel('ex24-levels','conf')">Version confirmé(e)</button>
+          </div>
+
+          <div id="ex24-levels-panels">
+
+            <div class="diff-level-panel active" id="ex24-levels-panel-std">
+              <p class="pycode-legend">Complète la partie surlignée en jaune (affichage du résultat), puis clique sur Exécuter. Le reste du code — dont l'histogramme — est déjà fonctionnel.</p>
+              <div class="pycode-wrap">
+                <pre class="pycode-fixed" id="pyfixed-head-ex24">import numpy as np
+from matplotlib import pyplot as plt
+
+# Listes L=[valeur,incertitude-type] en unité SI
+delta_t=[40.3,0.3]   # durée (en s)
+V_burette=[50.0e-6,0.05e-6]  # Volume de la burette en m³
+
+def Alea(L):
+    #Tirage entre -infini et +infini (loi normale)
+    tirage=np.random.normal()
+    return L[0]+L[1]*tirage
+  
+Dv=[]
+Iteration=100000
+for i in range(Iteration) :
+    Alea_Dv=Alea(V_burette)/(Alea(delta_t))
+    Dv.append(Alea_Dv)
+    
+Moy_Dv=np.mean(Dv)         
+u_Dv=np.std(Dv,ddof=1) 
+
+#Affichage brut</pre>
+                <div class="pycode-blank-label">✏️ À compléter</div>
+                <textarea class="pycode-blank" id="py-blank-ex24-std1" rows="2" spellcheck="false">#Afficher le débit volumique avec ses unités et l'incertitude associée.</textarea>
+                <pre class="pycode-fixed" id="pyfixed-mid-ex24">
+# Affichage de l'histogramme de la distribution simulée pour le débit volumique </pre>
+                <pre class="pycode-fixed" id="pyfixed-hist-ex24">plt.hist(Dv,bins=50,color='blue',edgecolor='black')
+plt.ticklabel_format(axis='x',style='scientific',scilimits=(-6,-6))
+plt.xlabel('Débit volumique (en m$^3\cdot$ s$^{-1}$)')
+plt.ylabel('Effectif')
+plt.title('Pour %d'%Iteration+ ' itérations')
+plt.show()</pre>
+                <div class="pycode-actions">
+                  <button class="btn-run" id="pyrun-ex24-std" onclick="runPyExercise('ex24-std')">▶ Exécuter</button>
+                  <button class="btn-recommencer2" onclick="resetPyExercise('ex24-std',['py-blank-ex24-std1'])">↺ Recommencer</button>
+                  <button class="btn-download2" onclick="downloadPyFile('pyfile-ex24-std','ch14_331_standard.py')">⬇ Télécharger le fichier .py</button>
+                </div>
+                <div class="pycode-status" id="pystatus-ex24-std"></div>
+                <div class="pycode-console" id="pyout-ex24-std">La sortie du programme s'affichera ici.</div>
+                <div class="pycode-plot" id="pyplot-ex24-std"></div>
+              </div>
+            </div>
+
+            <div class="diff-level-panel" id="ex24-levels-panel-conf">
+              <p class="pycode-legend">Version confirmé(e) : complète les <strong>deux</strong> parties surlignées en jaune (affichage du résultat <strong>et</strong> histogramme), puis clique sur Exécuter.</p>
+              <div class="pycode-wrap">
+                <pre class="pycode-fixed" id="pyfixed-head-ex24-b">import numpy as np
+from matplotlib import pyplot as plt
+
+# Listes L=[valeur,incertitude-type] en unité SI
+delta_t=[40.3,0.3]   # durée (en s)
+V_burette=[50.0e-6,0.05e-6]  # Volume de la burette en m³
+
+def Alea(L):
+    #Tirage entre -infini et +infini (loi normale)
+    tirage=np.random.normal()
+    return L[0]+L[1]*tirage
+  
+Dv=[]
+Iteration=100000
+for i in range(Iteration) :
+    Alea_Dv=Alea(V_burette)/(Alea(delta_t))
+    Dv.append(Alea_Dv)
+    
+Moy_Dv=np.mean(Dv)         
+u_Dv=np.std(Dv,ddof=1) 
+
+#Affichage brut</pre>
+                <div class="pycode-blank-label">✏️ À compléter (1/2)</div>
+                <textarea class="pycode-blank" id="py-blank-ex24-conf1" rows="2" spellcheck="false">#Afficher le débit volumique avec ses unités et l'incertitude associée.</textarea>
+                <pre class="pycode-fixed" id="pyfixed-mid-ex24-b">
+# Affichage de l'histogramme de la distribution simulée pour le débit volumique </pre>
+                <div class="pycode-blank-label">✏️ À compléter (2/2)</div>
+                <textarea class="pycode-blank" id="py-blank-ex24-conf2" rows="2" spellcheck="false">#Définir l'histogramme à afficher, puis l'afficher. Ne pas oublier les unités.</textarea>
+                <div class="pycode-actions">
+                  <button class="btn-run" id="pyrun-ex24-conf" onclick="runPyExercise('ex24-conf')">▶ Exécuter</button>
+                  <button class="btn-recommencer2" onclick="resetPyExercise('ex24-conf',['py-blank-ex24-conf1','py-blank-ex24-conf2'])">↺ Recommencer</button>
+                  <button class="btn-download2" onclick="downloadPyFile('pyfile-ex24-conf','ch14_331_confirme.py')">⬇ Télécharger le fichier .py</button>
+                </div>
+                <div class="pycode-status" id="pystatus-ex24-conf"></div>
+                <div class="pycode-console" id="pyout-ex24-conf">La sortie du programme s'affichera ici.</div>
+                <div class="pycode-plot" id="pyplot-ex24-conf"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex24')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex24">
+            <p><strong>a.</strong> Ligne 10 : <code>delta_t=[40.3,0.3]</code> → la durée d'écoulement mesurée vaut Δt = 40,3 s, avec une incertitude-type u(Δt) = 0,3 s. Ligne 11 : <code>V_burette=[50.0e-6,0.05e-6]</code> → en m³, 50,0×10⁻⁶ m³ = <strong>50,0 mL</strong> (1 m³ = 10⁶ mL), avec une incertitude-type u(V) = 0,05×10⁻⁶ m³ = <strong>0,05 mL</strong>.</p>
+            <p><strong>b.</strong> D<sub>v</sub> = V/Δt. Cette expression intervient dans l'instruction <code>Alea_Dv=Alea(V_burette)/(Alea(delta_t))</code> : à chaque itération, elle tire aléatoirement une valeur de V et une valeur de Δt (selon une loi normale centrée sur la valeur mesurée, d'écart-type l'incertitude-type), puis calcule le débit volumique correspondant V/Δt, qui est ensuite stocké dans la liste Dv.</p>
+            <p><strong>c.</strong> Ces lignes définissent d'abord la fonction <code>Alea</code> (tirage d'une valeur selon une loi normale de moyenne L[0] et d'écart-type L[1]), puis réalisent une méthode de Monte-Carlo : une boucle répète 100 000 fois le tirage aléatoire de V et Δt et le calcul du débit volumique associé, chaque résultat étant ajouté à la liste Dv ; enfin, la valeur moyenne de cette distribution simulée (estimation de D<sub>v</sub>) et son écart-type (estimation de l'incertitude-type u(D<sub>v</sub>)) sont calculés.</p>
+            <p><strong>d.</strong> L'incertitude-type ne conserve qu'un seul chiffre significatif (son premier chiffre, 9, n'étant pas 1) : u(D<sub>v</sub>) ≈ 9×10⁻⁹ m³·s⁻¹. La valeur de D<sub>v</sub> est arrondie au même ordre de grandeur : le résultat de la mesure s'écrit <strong>D<sub>v</sub> = (1,241 ± 0,009)×10⁻⁶ m³·s⁻¹</strong>.</p>
+
+            <p style="margin-top:12px;"><strong>Programme complet (version corrigée) :</strong></p>
+            <div class="pycode-wrap">
+              <pre class="pycode-fixed" id="pycode-ex24-prof">import numpy as np
+from matplotlib import pyplot as plt
+
+# Listes L=[valeur,incertitude-type] en unité SI
+delta_t=[40.3,0.3]   # durée (en s)
+V_burette=[50.0e-6,0.05e-6]  # Volume de la burette en m³
+
+def Alea(L):
+    #Tirage entre -infini et +infini (loi normale)
+    tirage=np.random.normal()
+    return L[0]+L[1]*tirage
+  
+Dv=[]
+Iteration=100000
+for i in range(Iteration) :
+    Alea_Dv=Alea(V_burette)/(Alea(delta_t))
+    Dv.append(Alea_Dv)
+    
+Moy_Dv=np.mean(Dv)         
+u_Dv=np.std(Dv,ddof=1) 
+
+#Affichage brut
+print('\n')
+print('Débit volumique Dv =', Moy_Dv,' m³/s')
+print('Incertitude-type : u(Dv) =',u_Dv,' m³/s')
+print('\n')
+print('Le résultat de la mesure est :')
+print('Dv =','%.3e'%Moy_Dv,' m³/s', 
+      'avec l\'incertitude-type u(Dv) =','%.0e'%u_Dv,' m³/s')
+
+# Affichage de l'histogramme de la distribution simulée pour le débit volumique 
+plt.hist(Dv,bins=50,color='blue',edgecolor='black')
+plt.ticklabel_format(axis='x',style='scientific',scilimits=(-6,-6))
+plt.xlabel('Débit volumique (en m$^3\cdot$ s$^{-1}$)')
+plt.ylabel('Effectif')
+plt.title('Pour %d'%Iteration+ ' itérations')
+plt.show()</pre>
+              <div class="pycode-actions">
+                <button class="btn-run" id="pyrun-ex24-prof" onclick="runPyExercise('ex24-prof')">▶ Exécuter</button>
+                <button class="btn-recommencer2" onclick="resetPyExercise('ex24-prof',[])">↺ Recommencer</button>
+              </div>
+              <div class="pycode-status" id="pystatus-ex24-prof"></div>
+              <div class="pycode-console" id="pyout-ex24-prof">La sortie du programme s'affichera ici.</div>
+              <div class="pycode-plot" id="pyplot-ex24-prof"></div>
+            </div>
+            <p style="margin-top:8px; font-size:0.8rem; color:var(--bleu-moyen);">(Ce programme prof est fourni ici à titre indicatif : il n'est pas téléchargeable.)</p>
+          </div>
+
+          <script type="text/plain" id="pyfile-ex24-std">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# =============================================================================
+# Chapitre 14 Type Exercice 27                                       Précision  
+# =============================================================================
+import numpy as np
+from matplotlib import pyplot as plt
+
+# Listes L=[valeur,incertitude-type] en unité SI
+delta_t=[40.3,0.3]   # durée (en s)
+V_burette=[50.0e-6,0.05e-6]  # Volume de la burette en m³
+
+def Alea(L):
+    #Tirage entre -infini et +infini (loi normale)
+    tirage=np.random.normal()
+    return L[0]+L[1]*tirage
+  
+Dv=[]
+Iteration=100000
+for i in range(Iteration) :
+    Alea_Dv=Alea(V_burette)/(Alea(delta_t))
+    Dv.append(Alea_Dv)
+    
+Moy_Dv=np.mean(Dv)         
+u_Dv=np.std(Dv,ddof=1) 
+
+#Affichage brut
+#Afficher le débit volumique avec ses unités et l'incertitude associée.
+
+
+# Affichage de l'histogramme de la distribution simulée pour le débit volumique 
+plt.hist(Dv,bins=50,color='blue',edgecolor='black')
+plt.ticklabel_format(axis='x',style='scientific',scilimits=(-6,-6))
+plt.xlabel('Débit volumique (en m$^3\cdot$ s$^{-1}$)')
+plt.ylabel('Effectif')
+plt.title('Pour %d'%Iteration+ ' itérations')
+plt.show()  
+</script>
+          <script type="text/plain" id="pyfile-ex24-conf">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# =============================================================================
+# Chapitre 14 Type Exercice 27                                       Précision  
+# =============================================================================
+import numpy as np
+from matplotlib import pyplot as plt
+
+# Listes L=[valeur,incertitude-type] en unité SI
+delta_t=[40.3,0.3]   # durée (en s)
+V_burette=[50.0e-6,0.05e-6]  # Volume de la burette en m³
+
+def Alea(L):
+    #Tirage entre -infini et +infini (loi normale)
+    tirage=np.random.normal()
+    return L[0]+L[1]*tirage
+  
+Dv=[]
+Iteration=100000
+for i in range(Iteration) :
+    Alea_Dv=Alea(V_burette)/(Alea(delta_t))
+    Dv.append(Alea_Dv)
+    
+Moy_Dv=np.mean(Dv)         
+u_Dv=np.std(Dv,ddof=1) 
+
+#Affichage brut
+#Afficher le débit volumique avec ses unités et l'incertitude associée.
+
+
+# Affichage de l'histogramme de la distribution simulée pour le débit volumique 
+#Définir l'histogramme à afficher, puis l'afficher. Ne pas oublier les unités. 
+</script>
+
+          <script>
+            window.PYEX = window.PYEX || {};
+            window.PYEX['ex24-std'] = function(){
+              return document.getElementById('pyfixed-head-ex24').textContent
+                   + document.getElementById('py-blank-ex24-std1').value
+                   + document.getElementById('pyfixed-mid-ex24').textContent
+                   + document.getElementById('pyfixed-hist-ex24').textContent;
+            };
+            window.PYEX['ex24-conf'] = function(){
+              return document.getElementById('pyfixed-head-ex24-b').textContent
+                   + document.getElementById('py-blank-ex24-conf1').value
+                   + document.getElementById('pyfixed-mid-ex24-b').textContent
+                   + document.getElementById('py-blank-ex24-conf2').value;
+            };
+            window.PYEX['ex24-prof'] = function(){
+              return document.getElementById('pycode-ex24-prof').textContent;
+            };
+          </script>
+
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-1">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 27 : Étudier des lignes de courant</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">Au football, une frappe enroulée consiste à faire tourner le ballon sur lui-même. Cet effet, dit « effet Magnus », rend les trajectoires imprévisibles. L'allure des lignes de champ, vues du dessus, de l'écoulement de l'air autour du ballon est donnée ci-contre.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex27.png" alt="Lignes de courant de l'écoulement de l'air autour d'un ballon de football en rotation, avec points A au-dessus et B en dessous du ballon" style="width:280px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Citer le référentiel dans lequel est décrit l'écoulement de l'air.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex27a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex27a">L'écoulement représenté est celui de l'air autour d'un ballon immobile sur le schéma : c'est donc le référentiel lié au ballon (et non le référentiel terrestre, dans lequel le ballon se déplace et tourne sur lui-même).</div>
+
+          <p class="act-q"><strong>b.</strong> Comparer les vitesses d'écoulement de l'air aux points A et B.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex27b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex27b">Observe l'écartement des lignes de courant au voisinage de A et de B : plus les lignes de courant sont resserrées, plus la vitesse d'écoulement y est grande.</div>
+
+          <p class="act-q"><strong>c.</strong> Comparer les pressions aux points A et B et expliquer l'effet sur le ballon.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex27c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex27c">Applique la relation de Bernoulli le long d'une ligne de courant, entre deux points de même altitude : la pression est plus faible là où la vitesse est plus grande. La différence de pression entre A et B crée une force résultante sur le ballon.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex27')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex27">
+            <p><strong>a.</strong> L'écoulement est décrit dans le <strong>référentiel lié au ballon</strong> : sur le schéma, le ballon est représenté immobile et ce sont les lignes de courant de l'air qui défilent autour de lui.</p>
+            <p><strong>b.</strong> Les lignes de courant sont plus resserrées au voisinage de B qu'au voisinage de A. Or, pour un fluide incompressible, un resserrement des lignes de courant traduit une vitesse d'écoulement plus grande. On en déduit que la vitesse de l'air en B est <strong>supérieure</strong> à la vitesse de l'air en A.</p>
+            <p><strong>c.</strong> D'après la relation de Bernoulli le long d'une ligne de courant (A et B étant à la même altitude), la pression est la plus faible là où la vitesse est la plus grande : la pression en B est donc <strong>inférieure</strong> à la pression en A. Cette différence de pression entre le dessus (A) et le dessous (B) du ballon crée une force résultante non nulle, dirigée de A vers B, qui dévie la trajectoire du ballon perpendiculairement à son mouvement de translation : c'est l'effet Magnus, responsable de la trajectoire courbe de la « frappe enroulée ».</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-2">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 30 : Vitesse d'écoulement dans une conduite d'eau</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">Dans une conduite d'eau, une sonde Pitot, immobile dans le référentiel terrestre, mesure une pression différentielle P<sub>A</sub> − P<sub>B</sub> = 37 Pa. Le point A correspond au point d'arrêt de la sonde, où l'écoulement est stoppé (vitesse nulle), tandis qu'au point B l'eau continue de s'écouler à la vitesse v de l'écoulement non perturbé, à la même altitude qu'en A.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex30.png" alt="Conduites d'eau colorées installées au sol dans un champ" style="width:220px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q"><strong>Donnée :</strong> masse volumique de l'eau : ρ = 1000 kg·m⁻³.</p>
+
+          <p class="act-q"><strong>a.</strong> Exprimer la différence de pression P<sub>A</sub> − P<sub>B</sub> en fonction de la vitesse d'écoulement v de l'eau et de la masse volumique ρ de l'eau.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex30a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex30a">Applique la relation de Bernoulli entre le point A (vitesse nulle) et le point B (vitesse v), ces deux points étant à la même altitude : les termes de pesanteur s'annulent dans la différence P<sub>A</sub> − P<sub>B</sub>.</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer la vitesse d'écoulement v de l'eau dans la conduite.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex30b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex30b">Isole v dans la relation trouvée à la question a., puis fais l'application numérique avec P<sub>A</sub> − P<sub>B</sub> = 37 Pa et ρ = 1000 kg·m⁻³.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex30')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex30">
+            <p><strong>a.</strong> La relation de Bernoulli entre A (v<sub>A</sub> = 0) et B (v<sub>B</sub> = v), à la même altitude, s'écrit : P<sub>A</sub> + 0 = P<sub>B</sub> + ½ρv². D'où <strong>P<sub>A</sub> − P<sub>B</sub> = ½ρv²</strong>.</p>
+            <p><strong>b.</strong> En isolant v : v = √(2(P<sub>A</sub> − P<sub>B</sub>)/ρ). Application numérique : v = √(2 × 37 / 1000) = √0,074 ≈ <strong>0,27 m/s</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-3">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 32 : Trompe à eau</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">En travaux pratiques, on utilise une trompe à eau lors d'un séchage sur Büchner. Le rétrécissement du tube où circule l'eau provoque une dépression qui aspire l'air à travers l'ouverture C.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex32.png" alt="Schéma d'une trompe à eau : écoulement d'eau de A vers B à travers un rétrécissement, aspiration d'air en C relié à l'enceinte D" style="width:220px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q">Le diamètre de la conduite vaut d<sub>A</sub> = 12 mm en A, et d<sub>B</sub> = 5,0 mm en B. La distance AB = 5,0 cm est assez faible pour que les effets de la gravité soient négligeables.</p>
+
+          <p class="act-q"><strong>a.</strong> Nommer l'effet qui relie l'apparition d'une différence de pression à une variation de vitesse.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex32a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex32a">C'est une conséquence directe de la relation de Bernoulli : dans un écoulement horizontal, quand la vitesse d'un fluide augmente, sa pression diminue.</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer la dépression P<sub>A</sub> − P<sub>B</sub> en fonction du débit volumique D<sub>v</sub> de l'eau, pour D<sub>v</sub> = 6,0 L·min⁻¹.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex32b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex32b">Exprime v<sub>A</sub> et v<sub>B</sub> à partir de D<sub>v</sub> = v×S avec S = πd²/4, puis applique la relation de Bernoulli entre A et B (gravité négligeable, donc P<sub>A</sub> − P<sub>B</sub> = ½ρ(v<sub>B</sub>² − v<sub>A</sub>²)).</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex32')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex32">
+            <p><strong>a.</strong> C'est l'<strong>effet Venturi</strong>, conséquence de la relation de Bernoulli : dans un écoulement horizontal, une augmentation de vitesse s'accompagne d'une diminution de pression.</p>
+            <p><strong>b.</strong> Conversion : D<sub>v</sub> = 6,0 L·min⁻¹ = 1,0×10⁻⁴ m³·s⁻¹.</p>
+            <p>Vitesses : v<sub>A</sub> = D<sub>v</sub>/S<sub>A</sub> = D<sub>v</sub>/(πd<sub>A</sub>²/4) = 1,0×10⁻⁴/(π×(12×10⁻³)²/4) ≈ <strong>0,88 m/s</strong>.<br>
+            v<sub>B</sub> = D<sub>v</sub>/S<sub>B</sub> = D<sub>v</sub>/(πd<sub>B</sub>²/4) = 1,0×10⁻⁴/(π×(5,0×10⁻³)²/4) ≈ <strong>5,1 m/s</strong>.</p>
+            <p>La gravité étant négligeable, la relation de Bernoulli donne : <strong>P<sub>A</sub> − P<sub>B</sub> = ½ρ(v<sub>B</sub>² − v<sub>A</sub>²)</strong> = 0,5 × 1000 × (5,1² − 0,88²) ≈ <strong>1,3×10⁴ Pa</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-4">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 33 : Aérodynamisme et forces pressantes</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">De nombreux travaux en aérodynamisme portent sur les écoulements d'air, afin d'analyser leurs effets sur des éléments solides qu'ils environnent. La visualisation des lignes de champ permet de comprendre certains phénomènes et d'optimiser les dispositifs. L'écoulement de l'air est étudié autour d'une voiture de Formule 1.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex33.png" alt="Lignes de champ de vitesse de l'écoulement de l'air autour d'une voiture de Formule 1, avec un point A au-dessus de la carrosserie et un point B sous la voiture" style="width:320px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> En se basant sur les lignes de champ de vitesse décrites dans le schéma ci-contre, repérer les zones de dépression et de surpression.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex33a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33a">Repère où les lignes de champ sont les plus resserrées : c'est là que la vitesse d'écoulement de l'air est la plus grande, donc là où la pression est la plus faible (dépression).</div>
+
+          <p class="act-q"><strong>b.</strong> Tracer de façon qualitative les résultantes des forces pressantes exercées sur une voiture de Formule 1 puis expliquer ce que les ingénieurs en aérodynamique ont souhaité obtenir.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex33b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33b">Une force pressante est toujours dirigée de la zone de haute pression vers la zone de basse pression. Compare l'intensité de la pression au-dessus et en dessous de la voiture pour en déduire le sens de la résultante.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex33')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex33">
+            <p><strong>a.</strong> Les lignes de champ sont plus resserrées sous la voiture, au voisinage de B, qu'au-dessus, au voisinage de A : la vitesse de l'air y est donc plus grande. D'après la relation de Bernoulli, la zone de <strong>dépression</strong> se situe donc sous la voiture (autour de B), tandis que la zone de <strong>surpression</strong> (relative) se situe au-dessus (autour de A).</p>
+            <p><strong>b.</strong> La force pressante résultante est dirigée de la zone de surpression (au-dessus, en A) vers la zone de dépression (en dessous, en B) : elle pointe donc <strong>vers le bas</strong>, plaquant la voiture contre la piste. Cette force d'appui aérodynamique (appelée « downforce ») est précisément ce que les ingénieurs ont cherché à obtenir : elle augmente l'adhérence des pneus sur la piste et améliore la stabilité et la tenue de route du véhicule, en particulier à haute vitesse et en virage.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="sub-tab-content" id="sub-EX-2">
+
+      <nav class="sub3-tabs-nav" id="sub-nav-EXD">
+        <button class="exo-tab-btn active" data-sub="EXD1" onclick="switchSubTab('EXD',0)">Exercice 13 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXD2" onclick="switchSubTab('EXD',1)">Exercice 14 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXD3" onclick="switchSubTab('EXD',2)">Exercice 15 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXD4" onclick="switchSubTab('EXD',3)">Exercice 16 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXD5" onclick="switchSubTab('EXD',4)">Exercice 17 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" data-sub="EXD6" onclick="switchSubTab('EXD',5)">Exercice 18 <span class="exo-tab-stars">★★☆</span></button>
+      </nav>
+
+      <div class="sub-tab-content active" id="sub-EXD-0">
+        <div class="exo-diff-card difficile">
+          <h3>Exercice 35 : Tube de Venturi</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">Sur un tube de Venturi, un tube en U contenant du mercure Hg est branché entre deux positions 1 et 2. De l'eau traverse le tube avec un débit volumique D<sub>v</sub>. Dans la direction perpendiculaire à l'écoulement horizontal de l'eau dans le tube, les fluides sont statiques.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex35.png" alt="Tube de Venturi avec manomètre en U au mercure entre les positions 1 (diamètre d1) et 2 (diamètre d2), différence de niveau h" style="width:280px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q"><strong>Données :</strong><br>
+          Masses volumiques : ρ<sub>Hg</sub> = 13 550 kg·m⁻³ ; ρ<sub>eau</sub> = 1000 kg·m⁻³.<br>
+          Diamètres des sections : d<sub>1</sub> = 10 mm ; d<sub>2</sub> = 5,0 mm.<br>
+          Hauteur h = 0,30 m.</p>
+
+          <p class="act-q"><strong>a.</strong> Exprimer de deux manières différentes la différence de pression entre les positions 1 et 2, en fonction de la différence de niveaux h, en appliquant la relation de Bernoulli à l'eau et au mercure.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex35a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35a">D'une part, applique la relation de Bernoulli à l'écoulement horizontal de l'eau entre 1 et 2. D'autre part, exploite l'équilibre hydrostatique du mercure dans le tube en U : les deux surfaces de mercure sont à des hauteurs différentes de h, et l'eau remplit chaque branche au-dessus du mercure jusqu'aux points 1 et 2, situés à la même altitude.</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer le débit volumique D<sub>v</sub> du fluide en fonction de h.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex35b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35b">Exprime v<sub>1</sub> et v<sub>2</sub> en fonction de D<sub>v</sub> et des sections S<sub>1</sub>, S<sub>2</sub> (S = πd²/4), puis égalise les deux expressions de la différence de pression trouvées à la question a. pour isoler D<sub>v</sub>.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex35')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex35">
+            <p><strong>a.</strong> <u>Avec la relation de Bernoulli appliquée à l'eau</u> (écoulement horizontal, z<sub>1</sub> = z<sub>2</sub>) : P<sub>1</sub> + ½ρ<sub>eau</sub>v<sub>1</sub>² = P<sub>2</sub> + ½ρ<sub>eau</sub>v<sub>2</sub>², d'où <strong>P<sub>1</sub> − P<sub>2</sub> = ½ρ<sub>eau</sub>(v<sub>2</sub>² − v<sub>1</sub>²)</strong>.</p>
+            <p><u>Avec l'équilibre hydrostatique du mercure</u> dans le tube en U : en écrivant l'égalité des pressions au niveau de la surface de mercure la plus basse (le mercure étant un fluide continu et statique), on obtient <strong>P<sub>1</sub> − P<sub>2</sub> = (ρ<sub>Hg</sub> − ρ<sub>eau</sub>)×g×h</strong>.</p>
+            <p><strong>b.</strong> En notant S<sub>1</sub> = πd<sub>1</sub>²/4 et S<sub>2</sub> = πd<sub>2</sub>²/4, on a v<sub>1</sub> = D<sub>v</sub>/S<sub>1</sub> et v<sub>2</sub> = D<sub>v</sub>/S<sub>2</sub>. En égalant les deux expressions de la question a. :</p>
+            <p>½ρ<sub>eau</sub>×D<sub>v</sub>²×(1/S<sub>2</sub>² − 1/S<sub>1</sub>²) = (ρ<sub>Hg</sub> − ρ<sub>eau</sub>)×g×h</p>
+            <p>D'où : <strong>D<sub>v</sub> = √[ 2(ρ<sub>Hg</sub> − ρ<sub>eau</sub>)×g×h / (ρ<sub>eau</sub>×(1/S<sub>2</sub>² − 1/S<sub>1</sub>²)) ]</strong></p>
+            <p>Calcul des sections : S<sub>1</sub> = π×(10×10⁻³)²/4 ≈ 7,85×10⁻⁵ m² ; S<sub>2</sub> = π×(5,0×10⁻³)²/4 ≈ 1,96×10⁻⁵ m².</p>
+            <p>Application numérique : D<sub>v</sub> = √[2×(13550−1000)×9,8×0,30 / (1000×(1/(1,96×10⁻⁵)² − 1/(7,85×10⁻⁵)²))] ≈ <strong>1,7×10⁻⁴ m³·s⁻¹</strong>, soit environ <strong>10 L/min</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-1">
+        <div class="exo-diff-card difficile">
+          <h3>Exercice 36 : Écoulement d'eau dans un conduit</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">Pour accélérer un écoulement d'eau horizontal de vitesse initiale v<sub>1</sub>, afin qu'il sorte à l'air libre avec une vitesse d'écoulement de l'eau v<sub>2</sub> = 2,0 × v<sub>1</sub>, on place un « convergent » qui fait un angle α avec l'horizontale.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex36.png" alt="Convergent conique reliant un conduit de diamètre d1 à un diamètre de sortie d2, de longueur L, faisant un angle alpha avec l'horizontale" style="width:320px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q"><strong>Données :</strong><br>
+          α = 20°.<br>
+          Débit volumique de l'eau D<sub>v</sub> = 100 L·s⁻¹.<br>
+          Diamètre de la section droite à l'entrée du conduit d<sub>1</sub> = 200 mm.<br>
+          Pression de l'eau à la sortie du conduit P<sub>2</sub> = P<sub>atm</sub> = 1,013×10⁵ Pa.</p>
+
+          <p class="act-q"><strong>a.</strong> Exprimer puis calculer la longueur L du « convergent ».
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex36a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex36a">Utilise d'abord la conservation du débit volumique (D<sub>v</sub> = v×S = v×πd²/4) pour trouver v<sub>1</sub>, puis v<sub>2</sub>, puis en déduire d<sub>2</sub>. Exploite ensuite la géométrie du convergent : tan α = (d<sub>1</sub> − d<sub>2</sub>)/(2L).</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer la pression P<sub>1</sub> à l'entrée du « convergent ».
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex36b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex36b">Applique la relation de Bernoulli entre l'entrée et la sortie du convergent (écoulement horizontal) : P<sub>1</sub> + ½ρv<sub>1</sub>² = P<sub>2</sub> + ½ρv<sub>2</sub>².</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex36')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex36">
+            <p><strong>a.</strong> Conservation du débit : v<sub>1</sub> = D<sub>v</sub>/(πd<sub>1</sub>²/4) = 0,100/(π×0,200²/4) ≈ <strong>3,18 m/s</strong>, donc v<sub>2</sub> = 2,0×v<sub>1</sub> ≈ <strong>6,37 m/s</strong>.</p>
+            <p>De D<sub>v</sub> = v<sub>2</sub>×πd<sub>2</sub>²/4, on tire d<sub>2</sub> = √(4D<sub>v</sub>/(π×v<sub>2</sub>)) ≈ <strong>141 mm</strong> (soit d<sub>2</sub> = d<sub>1</sub>/√2 puisque v<sub>2</sub> = 2v<sub>1</sub>).</p>
+            <p>Géométrie du convergent : tan α = (d<sub>1</sub> − d<sub>2</sub>)/(2L), d'où <strong>L = (d<sub>1</sub> − d<sub>2</sub>)/(2 tan α)</strong> = (0,200 − 0,141)/(2×tan 20°) ≈ 0,0588/0,728 ≈ <strong>0,080 m</strong> (8,0 cm).</p>
+            <p><strong>b.</strong> L'écoulement étant horizontal, la relation de Bernoulli donne : <strong>P<sub>1</sub> = P<sub>2</sub> + ½ρ(v<sub>2</sub>² − v<sub>1</sub>²)</strong> = 1,013×10⁵ + 0,5×1000×(6,37² − 3,18²) ≈ 1,013×10⁵ + 1,52×10⁴ ≈ <strong>1,16×10⁵ Pa</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-2">
+        <div class="exo-diff-card difficile">
+          <h3>Exercice 37 : Robinet</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">Un filet d'eau sort d'un robinet avec un débit volumique D<sub>v</sub>. La section de sortie a un rayon r<sub>0</sub>. On note h la distance à la sortie pour laquelle le rayon de la section du filet a été divisé par 2 en régime permanent. La pression en tout point du filet est égale à la pression ambiante. Les phénomènes de tension superficielle sont négligés.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex37.png" alt="Filet d'eau sortant d'un robinet, de rayon r0 à la sortie, se resserrant progressivement jusqu'à un rayon r0/2 à une distance h" style="width:200px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q">Si le débit volumique de l'eau est doublé, indiquer en justifiant comment est modifiée la distance h.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex37')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex37">Combine deux relations : la conservation du débit volumique π r² v = constante le long du filet, et la relation reliant la vitesse v à la distance de chute z (obtenue en appliquant la relation de Bernoulli entre la sortie et le point considéré, la pression étant partout égale à la pression ambiante — c'est la même relation que pour une chute libre : v² = v<sub>0</sub>² + 2gz). Exprime ensuite v<sub>0</sub> en fonction de D<sub>v</sub> et r<sub>0</sub> pour voir comment h dépend de D<sub>v</sub>.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex37')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex37">
+            <p>À la sortie du robinet (rayon r<sub>0</sub>, vitesse v<sub>0</sub>), le débit s'écrit D<sub>v</sub> = π r<sub>0</sub>² v<sub>0</sub>, donc v<sub>0</sub> = D<sub>v</sub>/(π r<sub>0</sub>²).</p>
+            <p>La pression étant égale à la pression ambiante en tout point du filet, la relation de Bernoulli appliquée entre la sortie et un point situé à la distance z en dessous donne (comme pour une chute libre) : <strong>v(z)² = v<sub>0</sub>² + 2gz</strong>.</p>
+            <p>La conservation du débit volumique le long du filet impose π r(z)² v(z) = D<sub>v</sub> = π r<sub>0</sub>² v<sub>0</sub>, donc r(z)² v(z) = r<sub>0</sub>² v<sub>0</sub> = constante.</p>
+            <p>À z = h, le rayon vaut r<sub>0</sub>/2, d'où (r<sub>0</sub>/2)² × v(h) = r<sub>0</sub>² v<sub>0</sub>, soit <strong>v(h) = 4 v<sub>0</sub></strong>.</p>
+            <p>En reportant dans la relation de chute libre : (4v<sub>0</sub>)² = v<sub>0</sub>² + 2gh ⟹ 16v<sub>0</sub>² − v<sub>0</sub>² = 2gh ⟹ <strong>h = 15v<sub>0</sub>²/(2g)</strong>.</p>
+            <p>Comme v<sub>0</sub> = D<sub>v</sub>/(π r<sub>0</sub>²), on a finalement <strong>h = 15D<sub>v</sub>²/(2g π² r<sub>0</sub>⁴)</strong> : la distance h est proportionnelle au carré du débit volumique D<sub>v</sub> (r<sub>0</sub> étant fixé par la géométrie du robinet).</p>
+            <p><strong>Conclusion :</strong> si le débit volumique est doublé (D<sub>v</sub> → 2D<sub>v</sub>), la distance h est multipliée par 2² = <strong>4</strong> : elle quadruple.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-3">
+        <div class="exo-diff-card difficile">
+          <h3>Exercice 38 : Jet d'eau</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">Le jet d'eau de Genève, en Suisse, est l'une des attractions touristiques de la ville. Les informations techniques issues de la fiche touristique mentionnent une vitesse d'écoulement de sortie de l'eau v = 200 km·h⁻¹.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex38.png" alt="Le jet d'eau de Genève, jaillissant verticalement au-dessus du lac Léman" style="width:180px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Exprimer puis calculer la hauteur h du jet en utilisant la relation de Bernoulli.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex38a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex38a">Applique la relation de Bernoulli entre la sortie de la buse (vitesse v, altitude 0) et le sommet du jet (vitesse nulle, altitude h), la pression étant égale à la pression atmosphérique aux deux points. Convertis d'abord v en m·s⁻¹.</div>
+
+          <p class="act-q"><strong>b.</strong> La hauteur réelle du jet est de 140 m. Interpréter ce résultat.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex38b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex38b">Compare la hauteur calculée à la question a. à la hauteur réelle. La relation de Bernoulli suppose un écoulement parfait, sans dissipation d'énergie : quel phénomène réel, non pris en compte par ce modèle, peut expliquer l'écart observé ?</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex38')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex38">
+            <p><strong>a.</strong> Conversion : v = 200 km·h⁻¹ = 200/3,6 ≈ 55,6 m·s⁻¹.</p>
+            <p>En appliquant la relation de Bernoulli entre la sortie de la buse (pression atmosphérique P<sub>atm</sub>, altitude 0, vitesse v) et le sommet du jet (pression atmosphérique P<sub>atm</sub>, altitude h, vitesse nulle) : P<sub>atm</sub> + ½ρv² = P<sub>atm</sub> + ρgh, d'où <strong>h = v²/(2g)</strong>.</p>
+            <p>Application numérique : h = 55,6²/(2×9,8) = 3091/19,6 ≈ <strong>1,6×10² m</strong> (environ 158 m).</p>
+            <p><strong>b.</strong> La hauteur calculée (≈ 158 m) est supérieure à la hauteur réelle du jet (140 m). Cet écart s'explique par le fait que la relation de Bernoulli suppose un écoulement parfait, sans perte d'énergie : elle néglige notamment les frottements de l'eau avec l'air (résistance de l'air, dispersion du jet en fines gouttelettes) qui dissipent une partie de l'énergie cinétique du jet lors de sa montée. En réalité, une partie de cette énergie ne se convertit donc pas intégralement en énergie potentielle de pesanteur, ce qui explique que la hauteur atteinte soit inférieure à la valeur théorique.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-4">
+        <div class="exo-diff-card difficile">
+          <h3>Exercice 39 : Origine de la poussée d'Archimède</h3>
+
+          <p class="act-q">Un glaçon, assimilé à un cube de glace (eau solide) d'arête a, est immergé partiellement dans l'eau liquide sur une hauteur h.</p>
+
+          <p class="act-q"><strong>Données :</strong><br>
+          Arête du glaçon : a = 2,0 cm.<br>
+          Pression atmosphérique : P<sub>0</sub> = 1013 hPa.<br>
+          Masse volumique de l'eau solide (glace) : ρ<sub>g</sub> = 920 kg·m⁻³.<br>
+          Masse volumique de l'eau liquide : ρ<sub>l</sub> = 1000 kg·m⁻³.</p>
+
+          <p class="act-q"><strong>a.</strong> Exprimer la pression P à une profondeur h dans un fluide au repos.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex39a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex39a">C'est la loi fondamentale de la statique des fluides : la pression augmente linéairement avec la profondeur, à partir de la pression régnant à la surface libre.</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer la résultante des forces pressantes, s'exerçant sur toutes les faces du cube <span class="vec">π</span><sub>A</sub> = Σ<span class="vec">F</span><sub>P</sub> appelée poussée d'Archimède, et la représenter qualitativement sur un schéma. Interpréter l'expression à la lumière du principe d'Archimède.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex39b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex39b">Les forces pressantes sur les quatre faces latérales se compensent deux à deux par symétrie. Il ne reste que la différence entre la force pressante sur la face immergée du dessous (à la profondeur h) et la pression atmosphérique s'exerçant au niveau de la surface libre.</div>
+
+          <p class="act-q"><strong>c.</strong> Le glaçon flotte quand la poussée d'Archimède exercée sur le glaçon compense son poids. Exprimer cette condition avec une relation mathématique et montrer que la partie immergée du glaçon représente 92 % de son volume total.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex39c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex39c">Écris l'égalité entre la norme de la poussée d'Archimède (question b.) et le poids du glaçon P = ρ<sub>g</sub>×g×a³, puis isole le rapport h/a, qui correspond à la fraction du volume immergée puisque la section du cube est constante.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex39')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex39">
+            <p><strong>a.</strong> Dans un fluide au repos, la pression à la profondeur h (mesurée depuis la surface libre, où règne la pression P<sub>0</sub>) vaut : <strong>P(h) = P<sub>0</sub> + ρ<sub>l</sub>×g×h</strong>, avec ρ<sub>l</sub> la masse volumique du fluide considéré (ici l'eau liquide).</p>
+            <p><strong>b.</strong> Sur les quatre faces latérales du cube, les forces pressantes se compensent deux à deux par symétrie (même profondeur, directions opposées) : leur résultante est nulle. Il ne reste que les forces pressantes verticales : sur la face supérieure (à la surface libre, pression P<sub>0</sub>, hors de l'eau ou juste à la surface), la force pressante est dirigée vers le bas, de norme P<sub>0</sub>×a² ; sur la face inférieure (immergée à la profondeur h), la force pressante est dirigée vers le haut, de norme P(h)×a² = (P<sub>0</sub> + ρ<sub>l</sub>gh)×a².</p>
+            <p>La résultante <span class="vec">π</span><sub>A</sub> est donc verticale, dirigée vers le haut, de norme :</p>
+            <p><strong>π<sub>A</sub> = (P<sub>0</sub> + ρ<sub>l</sub>gh)×a² − P<sub>0</sub>×a² = ρ<sub>l</sub>×g×h×a²</strong></p>
+            <p>Or a²×h est exactement le volume immergé V<sub>imm</sub> du glaçon (cube de section a² immergé sur une hauteur h) : on retrouve donc <strong>π<sub>A</sub> = ρ<sub>l</sub>×g×V<sub>imm</sub></strong>, c'est-à-dire le poids du volume de liquide déplacé par la partie immergée du glaçon — ce qui est précisément l'énoncé du principe d'Archimède : la poussée est verticale, vers le haut, et sa norme est égale au poids du fluide déplacé.</p>
+            <p><em>Schéma qualitatif :</em> un cube partiellement immergé, avec une flèche courte vers le bas sur la face supérieure (F<sub>P0</sub> = P<sub>0</sub>a²) et une flèche plus longue vers le haut sur la face inférieure immergée (F<sub>P(h)</sub> = P(h)a², avec P(h) > P<sub>0</sub>), les flèches latérales s'annulant deux à deux.</p>
+            <p><strong>c.</strong> Le glaçon flotte lorsque π<sub>A</sub> = P (poids du glaçon) : <strong>ρ<sub>l</sub>×g×a²×h = ρ<sub>g</sub>×g×a³</strong>.</p>
+            <p>En simplifiant par g×a² : <strong>h = (ρ<sub>g</sub>/ρ<sub>l</sub>)×a</strong>, soit h/a = ρ<sub>g</sub>/ρ<sub>l</sub>.</p>
+            <p>Application numérique : h/a = 920/1000 = 0,92 = <strong>92 %</strong>. Comme la section du cube est constante sur toute sa hauteur, la fraction de hauteur immergée h/a est égale à la fraction de volume immergé : la partie immergée du glaçon représente donc bien <strong>92 % de son volume total</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-5">
+        <div class="exo-diff-card difficile">
+          <h3>Exercice 40 : Siphon</h3>
+
+          <div class="activite-intro-flex">
+            <div class="activite-intro-txt">
+              <p class="act-q">Pour vider partiellement un réservoir parallélépipédique contenant de l'eau, on utilise un siphon qui est un tube de section d'aire constante s. On note Σ l'aire de la section du réservoir. Soient A le point d'entrée du siphon, B le point le plus haut du siphon, C un point à la sortie du siphon et D un point de la surface libre dans le réservoir. La surface libre dans le réservoir et l'extrémité C du siphon sont à la pression atmosphérique P<sub>a</sub>. L'origine des ordonnées est prise au fond du réservoir.</p>
+            </div>
+            <div class="activite-intro-media">
+              <img src="Entrainements/ex40.png" alt="Schéma d'un siphon plongeant dans un réservoir, avec le point d'entrée A, le sommet B, la sortie C et la surface libre D" style="width:220px; border:1px solid var(--gris-bord);">
+            </div>
+          </div>
+
+          <p class="act-q"><strong>Données :</strong><br>
+          z<sub>A</sub> = 5,0 cm ; z<sub>B</sub> = 70 cm ; z<sub>C</sub> = −10 cm ; à l'instant initial : z<sub>D</sub> = 60 cm.<br>
+          Σ = 1,0 m².<br>
+          s = 1,0 cm².</p>
+
+          <p class="act-q"><strong>a.</strong> En considérant que s ≪ Σ, comparer les vitesses d'écoulement de l'eau au point D et au point C.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex40a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex40a">Utilise la conservation du débit volumique entre la surface libre (section Σ, vitesse v<sub>D</sub>) et la sortie du siphon (section s, vitesse v<sub>C</sub>) : Σ×v<sub>D</sub> = s×v<sub>C</sub>.</div>
+
+          <p class="act-q"><strong>b.</strong> Calculer la vitesse d'écoulement de l'eau à la sortie du siphon. En déduire une condition pour que le fluide s'écoule.
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex40b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex40b">Applique la relation de Bernoulli entre D et C (même pression atmosphérique aux deux points, v<sub>D</sub> négligeable devant v<sub>C</sub> d'après la question a.).</div>
+
+          <p class="act-q"><strong>c.</strong> Exprimer la pression P<sub>B</sub> au point B. La hauteur z<sub>B</sub> du point B peut-elle être quelconque ? Comment amorcer le siphon ?
+            <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex40c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex40c">Le tube ayant une section constante s tout du long (de A à C), la vitesse est la même en tout point du tube : v<sub>A</sub> = v<sub>B</sub> = v<sub>C</sub>. Applique la relation de Bernoulli entre D et B pour exprimer P<sub>B</sub>, puis réfléchis à la valeur minimale physiquement possible pour une pression.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection('cor-ex40')">▶ Voir la correction</button>
+          <div class="correction-box" id="cor-ex40">
+            <p><strong>a.</strong> La conservation du débit volumique entre D et C impose Σ×v<sub>D</sub> = s×v<sub>C</sub>, soit v<sub>C</sub> = (Σ/s)×v<sub>D</sub>. Puisque Σ ≫ s, on a v<sub>C</sub> ≫ v<sub>D</sub> : la vitesse à la sortie du siphon est très supérieure à la vitesse de descente de la surface libre, qui est donc négligeable en comparaison.</p>
+            <p><strong>b.</strong> La relation de Bernoulli entre D et C (même pression atmosphérique P<sub>a</sub> aux deux points, v<sub>D</sub> ≈ 0) s'écrit : P<sub>a</sub> + ρgz<sub>D</sub> + 0 = P<sub>a</sub> + ρgz<sub>C</sub> + ½ρv<sub>C</sub>², d'où <strong>v<sub>C</sub> = √(2g(z<sub>D</sub> − z<sub>C</sub>))</strong>.</p>
+            <p>Application numérique (à l'instant initial) : v<sub>C</sub> = √(2×9,8×(0,60−(−0,10))) = √(2×9,8×0,70) ≈ <strong>3,7 m/s</strong>.</p>
+            <p><strong>Condition d'écoulement :</strong> pour que v<sub>C</sub> soit définie (racine carrée d'un nombre positif), il faut <strong>z<sub>D</sub> > z<sub>C</sub></strong> : la surface libre du réservoir doit être plus haute que la sortie du siphon. Cette condition reste vérifiée tant que le réservoir n'est pas complètement vidé jusqu'au niveau de l'entrée A du siphon.</p>
+            <p><strong>c.</strong> Le tube ayant une section constante s sur tout son parcours, la conservation du débit impose v<sub>A</sub> = v<sub>B</sub> = v<sub>C</sub>. En appliquant la relation de Bernoulli entre D et B (v<sub>D</sub> ≈ 0) :</p>
+            <p>P<sub>a</sub> + ρgz<sub>D</sub> = P<sub>B</sub> + ρgz<sub>B</sub> + ½ρv<sub>B</sub>², avec v<sub>B</sub>² = v<sub>C</sub>² = 2g(z<sub>D</sub> − z<sub>C</sub>).</p>
+            <p>D'où : P<sub>B</sub> = P<sub>a</sub> + ρg(z<sub>D</sub> − z<sub>B</sub>) − ρg(z<sub>D</sub> − z<sub>C</sub>) = <strong>P<sub>a</sub> − ρg(z<sub>B</sub> − z<sub>C</sub>)</strong>.</p>
+            <p>La hauteur z<sub>B</sub> ne peut donc pas être quelconque : comme une pression ne peut physiquement pas être négative (l'eau ne peut pas être mise en tension indéfiniment ; en pratique, elle se vaporiserait bien avant, phénomène de cavitation), il faut P<sub>B</sub> > 0, soit :</p>
+            <p><strong>z<sub>B</sub> − z<sub>C</sub> < P<sub>a</sub>/(ρg)</strong> ≈ 1,013×10⁵/(1000×9,8) ≈ <strong>10,3 m</strong>.</p>
+            <p>Le sommet du siphon ne peut donc pas être placé à une hauteur supérieure à environ 10 m au-dessus de la sortie : c'est la limite imposée par la pression atmosphérique (le même phénomène que la hauteur limite d'un baromètre à eau).</p>
+            <p><strong>Amorçage du siphon :</strong> pour qu'il fonctionne, le tube doit être entièrement rempli d'eau, sans poche d'air, avant de laisser l'eau s'écouler. On peut par exemple remplir le tube d'eau puis boucher provisoirement les deux extrémités, plonger l'entrée A dans le réservoir, puis débloquer la sortie C (placée plus bas que la surface libre) : la différence de pression due à la pesanteur met alors l'eau en mouvement. On peut aussi amorcer le siphon par aspiration à l'extrémité C, comme pour transvaser un liquide avec un tuyau.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /sub-E-1 -->
+
+  <!-- Sous-onglet E3 : Sujets de bac -->
+  <div class="sub-tab-content" id="sub-E-2">
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2025 · Amérique du Nord · Jour 1 · Exercice 3</span>
+        <span>6 points</span>
+      </div>
+      <h4>Traitement des eaux d'un bassin d'orage</h4>
+      <div class="bac-theme">Thème : Poussée d'Archimède · Débit · Relation de Bernoulli</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Poussée d'Archimède</span>
+        <span class="bac-tag">Débit volumique</span>
+        <span class="bac-tag">Relation de Bernoulli</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Sujet-Bassin-MecaFluide-6pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Correction-Traitement-Eau-Bassin-6pts_3.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2025 · Amérique du Nord · Exercice 2</span>
+        <span>5 points</span>
+      </div>
+      <h4>Écoulement du sang dans une artère</h4>
+      <div class="bac-theme">Thème : Effet Doppler · Débit · Relation de Bernoulli</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Effet Doppler</span>
+        <span class="bac-tag">Débit volumique</span>
+        <span class="bac-tag">Relation de Bernoulli</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-R-Exo2-Sujet-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2025-AmNord-R-Exo2-Correction-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-E-2 -->
+
+</div>
+<!-- /tab-1 (Entraînements) -->
+
+<!-- ══════════════ ONGLET BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-2">
 
   <div class="sub-tabs-nav" id="sub-nav-R">
     <button class="sub-tab-btn active" data-sub="R1" onclick="switchSubTab('R',0)">
@@ -2032,46 +3434,8 @@
     </a>
   </div>
 
-  <div class="section-title" style="margin-top:28px;"><span class="icon">🎓</span> Sujets de bac</div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac 2025 · Amérique du Nord · Jour 1 · Exercice 3</span>
-      <span>6 points</span>
-    </div>
-    <h4>Traitement des eaux d'un bassin d'orage</h4>
-    <div class="bac-theme">Thème : Poussée d'Archimède · Débit · Relation de Bernoulli</div>
-    <div class="bac-notions">
-      <span class="bac-tag">Poussée d'Archimède</span>
-      <span class="bac-tag">Débit volumique</span>
-      <span class="bac-tag">Relation de Bernoulli</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Sujet-Bassin-MecaFluide-6pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-      <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J1-Exo3-Correction-Traitement-Eau-Bassin-6pts_3.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-    </div>
   </div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac 2025 · Amérique du Nord · Exercice 2</span>
-      <span>5 points</span>
-    </div>
-    <h4>Écoulement du sang dans une artère</h4>
-    <div class="bac-theme">Thème : Effet Doppler · Débit · Relation de Bernoulli</div>
-    <div class="bac-notions">
-      <span class="bac-tag">Effet Doppler</span>
-      <span class="bac-tag">Débit volumique</span>
-      <span class="bac-tag">Relation de Bernoulli</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-R-Exo2-Sujet-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-      <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2025-AmNord-R-Exo2-Correction-DopplerSangBernoulli-5pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-    </div>
-  </div>
-
-  </div>
-</div>
+<!-- /tab-2 (Bilan & Ressources) -->
 
 </div><!-- /main -->
 
@@ -2090,8 +3454,120 @@ function switchTab(i) {
 }
 function switchSubTab(group, i) {
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
-  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' button').forEach((b,idx) => b.classList.toggle('active', idx===i));
   window.scrollTo({ top: 0, behavior: 'auto' });
+}
+function toggleIndice2(btn, id) {
+  var box = document.getElementById(id);
+  box.classList.toggle('visible');
+  btn.classList.toggle('active');
+}
+function toggleCorrection(id) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  box.classList.toggle('visible');
+  const btn = box.previousElementSibling && box.previousElementSibling.classList.contains('btn-correction2')
+    ? box.previousElementSibling
+    : (box.parentElement ? box.parentElement.querySelector('.btn-correction2') : null);
+  if (btn) btn.textContent = box.classList.contains('visible') ? '▼ Masquer la correction' : '▶ Voir la correction';
+}
+function toggleCorrDark(btn, id) {
+  var box = document.getElementById(id);
+  var visible = box.classList.toggle('visible');
+  btn.textContent = visible ? '▼ Masquer la correction' : '▶ Voir la correction';
+}
+
+/* ════════ EXERCICES PYTHON EXÉCUTABLES (Pyodide) ════════ */
+window.PYEX = window.PYEX || {};
+function registerPyExercise(key, getCodeFn) { window.PYEX[key] = getCodeFn; }
+
+function switchDiffLevel(groupId, level) {
+  document.querySelectorAll('#' + groupId + ' .diff-level-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.level === level);
+  });
+  document.querySelectorAll('#' + groupId + '-panels .diff-level-panel').forEach(function(p){
+    p.classList.toggle('active', p.id === groupId + '-panel-' + level);
+  });
+}
+
+var _pyodidePromise = null;
+function _loadScriptTag(src) {
+  return new Promise(function(resolve, reject){
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = function(){ resolve(); };
+    s.onerror = function(){ reject(new Error("Impossible de charger l'environnement Python (vérifie ta connexion internet).")); };
+    document.head.appendChild(s);
+  });
+}
+function getPyodideInstance() {
+  if (window.__pyodideInstance) return Promise.resolve(window.__pyodideInstance);
+  if (!_pyodidePromise) {
+    _pyodidePromise = _loadScriptTag('https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js')
+      .then(function(){ return loadPyodide(); })
+      .then(function(pyodide){
+        return pyodide.loadPackage(['numpy','matplotlib']).then(function(){
+          window.__pyodideInstance = pyodide;
+          return pyodide;
+        });
+      });
+  }
+  return _pyodidePromise;
+}
+
+async function runPyExercise(key) {
+  var getCode = window.PYEX[key];
+  if (!getCode) return;
+  var outputEl = document.getElementById('pyout-' + key);
+  var plotEl = document.getElementById('pyplot-' + key);
+  var statusEl = document.getElementById('pystatus-' + key);
+  var btn = document.getElementById('pyrun-' + key);
+  btn.disabled = true;
+  outputEl.textContent = '';
+  plotEl.innerHTML = '';
+  statusEl.textContent = "Chargement de l'environnement Python (jusqu'à ~30 s la 1ʳᵉ fois, puis instantané)…";
+  statusEl.classList.add('visible');
+  try {
+    var pyodide = await getPyodideInstance();
+    statusEl.textContent = 'Exécution du code…';
+    var out = '';
+    pyodide.setStdout({ batched: function(s){ out += s + '\n'; } });
+    pyodide.setStderr({ batched: function(s){ out += s + '\n'; } });
+    pyodide.runPython("import matplotlib\nmatplotlib.use('AGG')\nimport matplotlib.pyplot as plt\nplt.close('all')");
+    var code = getCode();
+    await pyodide.runPythonAsync(code);
+    var nfig = pyodide.runPython("import matplotlib.pyplot as plt\nlen(plt.get_fignums())");
+    if (nfig > 0) {
+      var b64 = pyodide.runPython("import io, base64\nimport matplotlib.pyplot as plt\nbuf = io.BytesIO()\nplt.gcf().savefig(buf, format='png', dpi=110, bbox_inches='tight')\nbase64.b64encode(buf.getvalue()).decode('utf-8')");
+      plotEl.innerHTML = '<img src="data:image/png;base64,' + b64 + '" alt="Histogramme du débit volumique">';
+    }
+    outputEl.textContent = out.trim() || '(Aucune sortie — pense à utiliser print() pour afficher un résultat.)';
+  } catch (err) {
+    outputEl.textContent = "Erreur d'exécution :\n" + err.message;
+  } finally {
+    statusEl.classList.remove('visible');
+    btn.disabled = false;
+  }
+}
+
+function resetPyExercise(key, blankIds) {
+  (blankIds || []).forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.value = el.defaultValue;
+  });
+  document.getElementById('pyout-' + key).textContent = '';
+  document.getElementById('pyplot-' + key).innerHTML = '';
+  document.getElementById('pystatus-' + key).classList.remove('visible');
+}
+
+function downloadPyFile(sourceId, filename) {
+  var text = document.getElementById(sourceId).textContent;
+  var blob = new Blob([text], { type: 'text/x-python' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 /* ===== Glossaire recherchable ===== */
