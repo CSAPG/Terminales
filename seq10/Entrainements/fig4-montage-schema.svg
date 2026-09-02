@@ -1,0 +1,50 @@
+<svg viewBox="0 0 560 380" xmlns="http://www.w3.org/2000/svg" font-family="Nunito, sans-serif">
+  <rect x="0" y="0" width="560" height="380" fill="#FFFFFF"/>
+
+  <!-- Plaque d'essai (breadboard) -->
+  <rect x="180" y="30" width="340" height="150" rx="8" fill="#F5F7FA" stroke="#DDE3EC" stroke-width="2"/>
+  <text x="330" y="20" font-size="14" font-weight="700" fill="#5A6B7A">Plaque d'essai</text>
+
+  <!-- Bouton poussoir -->
+  <rect x="215" y="65" width="34" height="34" rx="4" fill="#FFFFFF" stroke="#1A2A3A" stroke-width="2"/>
+  <circle cx="232" cy="82" r="7" fill="#5A6B7A"/>
+  <text x="195" y="120" font-size="12" fill="#1A2A3A">Bouton poussoir</text>
+
+  <!-- Condensateur (cylindre) -->
+  <rect x="330" y="55" width="46" height="70" rx="10" fill="#FFFFFF" stroke="#2D5F8A" stroke-width="2.5"/>
+  <line x1="330" y1="72" x2="376" y2="72" stroke="#2D5F8A" stroke-width="1.5"/>
+  <text x="315" y="145" font-size="12" fill="#2D5F8A">Condensateur</text>
+  <text x="308" y="160" font-size="12" fill="#2D5F8A">(capacité à retrouver)</text>
+
+  <!-- Résistance -->
+  <rect x="420" y="72" width="70" height="22" fill="#FFFFFF" stroke="#1A2A3A" stroke-width="2"/>
+  <text x="415" y="115" font-size="12" font-weight="700" fill="#1A2A3A">R = 5,1 kΩ</text>
+
+  <!-- Fils internes plaque -->
+  <line x1="249" y1="82" x2="330" y2="72" stroke="#E8783A" stroke-width="2"/>
+  <line x1="376" y1="90" x2="420" y2="83" stroke="#3A8A6E" stroke-width="2"/>
+  <line x1="232" y1="99" x2="232" y2="150" stroke="#1A2A3A" stroke-width="2"/>
+  <line x1="232" y1="150" x2="490" y2="150" stroke="#1A2A3A" stroke-width="2"/>
+  <line x1="490" y1="150" x2="490" y2="94" stroke="#1A2A3A" stroke-width="2"/>
+
+  <!-- Carte Arduino -->
+  <rect x="40" y="220" width="220" height="130" rx="10" fill="#2D5F8A"/>
+  <text x="90" y="290" font-size="18" font-weight="800" fill="#FFFFFF">ARDUINO UNO</text>
+  <rect x="55" y="235" width="30" height="16" fill="#FFFFFF" opacity="0.85"/>
+  <text x="58" y="247" font-size="10" fill="#2D5F8A">USB</text>
+
+  <!-- broches -->
+  <circle cx="260" cy="245" r="4" fill="#E8783A"/>
+  <text x="268" y="249" font-size="13" font-weight="700" fill="#E8783A">D2</text>
+  <circle cx="260" cy="270" r="4" fill="#3A8A6E"/>
+  <text x="268" y="274" font-size="13" font-weight="700" fill="#3A8A6E">A0</text>
+  <circle cx="260" cy="295" r="4" fill="#1A2A3A"/>
+  <text x="268" y="299" font-size="13" font-weight="700" fill="#1A2A3A">GND</text>
+
+  <!-- Fils vers la plaque -->
+  <path d="M 264,245 C 285,200 300,120 330,90" fill="none" stroke="#E8783A" stroke-width="2.5"/>
+  <path d="M 264,270 C 300,250 340,150 355,125" fill="none" stroke="#3A8A6E" stroke-width="2.5"/>
+  <path d="M 264,295 C 290,340 180,300 190,150 L 232,150" fill="none" stroke="#1A2A3A" stroke-width="2.5"/>
+
+  <text x="30" y="370" font-size="11" font-style="italic" fill="#5A6B7A">Schéma simplifié (d'après la simulation Tinkercad du TP)</text>
+</svg>

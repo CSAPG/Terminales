@@ -1,0 +1,13 @@
+<svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="220" height="140" fill="#FFFFFF"/>
+  <!-- fil gauche -->
+  <line x1="20" y1="70" x2="85" y2="70" stroke="#1A2A3A" stroke-width="3"/>
+  <!-- plaque droite (verticale) -->
+  <line x1="85" y1="30" x2="85" y2="110" stroke="#1A2A3A" stroke-width="4"/>
+  <!-- plaque courbe (polarisé) -->
+  <path d="M 105 30 Q 130 70 105 110" fill="none" stroke="#2D5F8A" stroke-width="4"/>
+  <!-- fil droit -->
+  <line x1="105" y1="70" x2="200" y2="70" stroke="#1A2A3A" stroke-width="3"/>
+  <!-- signe + -->
+  <text x="60" y="35" font-family="Nunito, sans-serif" font-size="26" font-weight="800" fill="#E8783A">+</text>
+</svg>
