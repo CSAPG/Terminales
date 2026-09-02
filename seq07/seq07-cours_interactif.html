@@ -49,7 +49,7 @@
     border-bottom: 3px solid var(--bleu);
     border-radius: 14px;
     max-width: 1300px;
-    margin: 0 auto 24px;
+    margin: 0 auto 10px;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -163,9 +163,6 @@
     white-space: nowrap;
     position: relative;
     bottom: -3px;
-    flex: 1;
-    justify-content: center;
-    text-align: center;
   }
   .tab-btn:hover { color: var(--orange); }
   .tab-btn.active {
@@ -179,7 +176,7 @@
     border-radius: 50%;
     background: var(--gris-bord);
     color: var(--texte-leger);
-    font-size: 0.70rem;
+    font-size: 0.75rem;
     font-weight: 700;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.2s;
@@ -191,8 +188,8 @@
   .sub-tabs-nav {
     display: flex;
     gap: 6px;
-    padding: 18px 0 0;
-    margin-bottom: 22px;
+    padding: 0;
+    margin-bottom: 12px;
     flex-wrap: nowrap;
     overflow-x: auto;
   }
@@ -231,8 +228,53 @@
   .sub-tab-content { display: none; }
   .sub-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
 
+  /* ── SOUS-ONGLETS NIVEAU 3 (orange) ── */
+  .sub3-tabs-nav {
+    display: flex;
+    gap: 6px;
+    padding: 12px 0 0;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sub3-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border: none;
+    background: var(--orange-clair);
+    color: var(--orange);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sub3-tab-btn:hover { background: var(--orange); color: white; }
+  .sub3-tab-btn.active { background: var(--orange); color: white; }
+  .sub3-tab-btn .sub-tab-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.3);
+  }
+  .sub3-tab-btn:not(.active) .sub-tab-num { background: rgba(232,120,58,0.15); }
+
+  /* Espace réduit à 10px quand un sous-onglet niveau 3 suit directement un sous-onglet niveau 2, sans contenu entre les deux */
+  #sub-nav-P { margin-bottom: 12px; }
+  .sub-tab-content > .sub3-tabs-nav:first-child { padding-top: 0; }
+
+  /* Espace réduit entre une pastille niveau 3 et le .section-title qui la suit directement (harmonisation avec le gabarit sans section-title, ex. séq.02) */
+  .sub3-tabs-nav + .sub-tab-content > .section-title:first-child { margin-top: 0; }
+
   /* ── CONTENU ── */
-  .main { max-width: 1300px; margin: 0 auto; padding: 28px 20px 60px; }
+  .main { max-width: 1300px; margin: 0 auto; padding: 0 20px 60px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -247,31 +289,19 @@
     margin-bottom: 16px;
     position: relative;
   }
-  .def-card::before {
-    content: 'DÉFINITION';
-    position: absolute;
-    top: 12px; right: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--bleu);
-    opacity: 0.55;
-  }
   .def-card h3 {
     font-family: 'Outfit', sans-serif;
     font-size: 1.02rem;
     font-weight: 700;
     color: var(--bleu);
     margin-bottom: 8px;
-    padding-right: 70px;
   }
   .def-card p, .def-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
   .def-card ul { padding-left: 18px; }
   .def-card ul li { margin-bottom: 5px; }
 
   .activite-card {
-    background: var(--bleu-activite);
+    background: var(--blanc);
     border: 1.5px solid var(--bleu-activite-bord);
     border-left: 4px solid var(--bleu-moyen);
     border-radius: 0 12px 12px 0;
@@ -279,24 +309,12 @@
     margin-bottom: 16px;
     position: relative;
   }
-  .activite-card::before {
-    content: 'ACTIVITÉ';
-    position: absolute;
-    top: 12px; right: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--bleu-moyen);
-    opacity: 0.7;
-  }
   .activite-card h3 {
     font-family: 'Outfit', sans-serif;
     font-size: 1.0rem;
     font-weight: 700;
     color: var(--bleu);
     margin-bottom: 10px;
-    padding-right: 70px;
   }
   .activite-card p, .activite-card ul { font-size: 0.92rem; line-height: 1.65; color: var(--texte); }
 
@@ -309,17 +327,6 @@
     margin-bottom: 16px;
     position: relative;
   }
-  .exo-card::before {
-    content: 'EXERCICE';
-    position: absolute;
-    top: 12px; right: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--vert);
-    opacity: 0.7;
-  }
   .exo-card h3 {
     font-family: 'Outfit', sans-serif;
     font-size: 1.0rem;
@@ -327,6 +334,25 @@
     color: var(--vert);
     margin-bottom: 10px;
   }
+
+  /* ── ONGLET ENTRAÎNEMENTS > EXERCICES : nav niveau 4 (exercices individuels) ── */
+  .exo-tabs-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 14px; }
+  .exo-tab-btn {
+    background: var(--blanc);
+    border: 1.5px solid var(--bleu);
+    color: var(--bleu);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .exo-tab-btn:hover { background: var(--bleu-clair); }
+  .exo-tab-btn.active { background: var(--bleu); color: white; border-color: var(--bleu); }
+  .exo-tab-btn .exo-tab-stars { font-size: 0.78rem; margin-left: 4px; letter-spacing: 1px; color: var(--orange); font-weight: 400; }
+  .exo-tab-btn.active .exo-tab-stars { color: #FFD9B3; }
 
   .section-title {
     font-family: 'Outfit', sans-serif;
@@ -425,6 +451,112 @@
     font-size: 0.92rem;
   }
 
+  /* ── INDICE (activités documentaires) ── */
+  :root { --indice: #C98A00; --indice-clair: #FFF6E0; }
+  .btn-indice {
+    display: inline-block;
+    background: none;
+    border: 1.5px solid var(--indice);
+    color: var(--indice);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 6px;
+  }
+  .btn-indice:hover { background: var(--indice-clair); }
+  .indice-box {
+    display: none;
+    background: var(--indice-clair);
+    border-left: 4px solid var(--indice);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 16px;
+    margin: 10px 0 4px 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--texte);
+  }
+  .indice-box.visible { display: block; }
+
+  /* ── AIDE LOGICIEL (protocole détaillé) ── */
+  .btn-aide {
+    display: inline-block;
+    background: var(--violet);
+    border: none;
+    color: white;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 6px 0;
+  }
+  .btn-aide:hover { background: #663f8c; }
+  .aide-box {
+    display: none;
+    background: var(--violet-clair);
+    border-left: 4px solid var(--violet);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--texte);
+  }
+  .aide-box.visible { display: block; }
+  .aide-box ol { padding-left: 20px; margin: 6px 0; }
+  .aide-box li { margin-bottom: 8px; }
+  .aide-box .aide-titre {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--violet);
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+  .aide-box .protocole-img {
+    display: block;
+    max-width: 420px;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #d5c3e8;
+    margin: 6px 0 2px 0;
+  }
+  .aide-box .protocole-legende {
+    font-size: 0.78rem;
+    color: var(--texte-leger);
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+
+  /* ── BADGE MATÉRIEL ── */
+  .badge-materiel {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--jaune-clair);
+    color: var(--jaune);
+    border: 1px solid var(--jaune);
+    border-radius: 14px;
+    padding: 2px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ── DOCUMENT texte/image côte à côte ── */
+  .doc-flex {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+  .doc-flex > p { flex: 1 1 260px; margin: 0; }
+  .doc-media { flex: 1 1 260px; text-align: center; }
+  .doc-media img { max-width: 100%; border-radius: 8px; border: 1px solid #e0e0e0; }
+
   /* ── EXERCICE INTERACTIF ── */
   .exo-enonce {
     background: var(--blanc);
@@ -475,6 +607,61 @@
   .correction.visible { display: block; animation: fadeIn 0.2s ease; }
   .correction strong { color: var(--vert); }
   .correction .calc-step {
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 7px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--vert);
+  }
+
+  /* ── INDICE / CORRECTION v2 (composants génériques, sans toucher à l'ancien système) ── */
+  .btn-indice2 {
+    display: inline-block;
+    background: none;
+    border: 1.5px solid var(--indice);
+    color: var(--indice);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-indice2:hover { background: var(--indice-clair); }
+  .btn-indice2.active { background: var(--indice); color: #fff; }
+  .btn-correction2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 9px 20px;
+    background: var(--vert);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-correction2:hover { background: #2A6B52; transform: translateY(-1px); }
+  .correction-box {
+    display: none;
+    background: #F0FAF6;
+    border: 1.5px solid var(--vert);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .correction-box.visible { display: block; animation: fadeIn 0.2s ease; }
+  .correction-box strong { color: var(--vert); }
+  .correction-box .calc-step {
     background: white;
     border-radius: 6px;
     padding: 8px 12px;
@@ -1096,25 +1283,13 @@
 
   <nav class="tabs-nav">
     <button class="tab-btn active" onclick="switchTab(0)">
-      <span class="tab-num">P</span> Prérequis
+      <span class="tab-num">1</span> Cours
     </button>
     <button class="tab-btn" onclick="switchTab(1)">
-      <span class="tab-num">A</span> Intensité sonore
+      <span class="tab-num">2</span> Entraînements
     </button>
     <button class="tab-btn" onclick="switchTab(2)">
-      <span class="tab-num">B</span> Atténuations
-    </button>
-    <button class="tab-btn" onclick="switchTab(3)">
-      <span class="tab-num">C</span> Effet Doppler
-    </button>
-    <button class="tab-btn" onclick="switchTab(4)">
-      <span class="tab-num">D</span> Décalage Doppler
-    </button>
-    <button class="tab-btn" onclick="switchTab(5)">
-      <span class="tab-num">E</span> Simulateur Doppler
-    </button>
-    <button class="tab-btn" onclick="switchTab(6)">
-      <span class="tab-num">✓</span> Bilan &amp; Ressources
+      <span class="tab-num">3</span> Bilan &amp; Ressources
     </button>
   </nav>
   </div><!-- /header-inner -->
@@ -1123,6 +1298,27 @@
 <div class="main">
 <!-- ══════════════ ONGLET PRÉREQUIS ══════════════ -->
 <div class="tab-content active" id="tab-0">
+
+  <div class="sub-tabs-nav" id="sub-nav-P">
+    <button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+      <span class="sub-tab-num">1</span> Prérequis
+    </button>
+    <button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+      <span class="sub-tab-num">2</span> Intensité sonore
+    </button>
+    <button class="sub-tab-btn" data-sub="P3" onclick="switchSubTab('P',2)">
+      <span class="sub-tab-num">3</span> Atténuations
+    </button>
+    <button class="sub-tab-btn" data-sub="P4" onclick="switchSubTab('P',3)">
+      <span class="sub-tab-num">4</span> Effet Doppler
+    </button>
+    <button class="sub-tab-btn" data-sub="P5" onclick="switchSubTab('P',4)">
+      <span class="sub-tab-num">5</span> Décalage Doppler
+    </button>
+  </div>
+
+  <!-- Sous-onglet P1 : Prérequis -->
+  <div class="sub-tab-content active" id="sub-P-0">
 
   <div class="intro-box">
     Avant d'étudier l'atténuation des ondes sonores et l'effet Doppler, il est utile de revoir la fonction logarithme décimal, l'outil mathématique qui permet de définir le niveau sonore en décibels, ainsi que les grandeurs de base d'une onde périodique (longueur d'onde, période, fréquence).
@@ -1139,7 +1335,9 @@
     </ul>
     <div class="remarque-box"><strong>À revoir :</strong> la fiche « Incontournables n°4 – Fonction logarithme » regroupe l'essentiel des propriétés à connaître avant d'aborder cette séquence.</div>
   </div>
-
+  <div class="fig-box">
+    <img src="images-cours/echelle_log.png" alt="Explication de l'échelle logarithmique"style="max-width:900px;width:100%;display:block;margin:10px auto;border-radius:8px;">
+  </div>
   <div class="activite-card">
     <h3>📝 QCM interactif de prérequis</h3>
     <p>Teste tes acquis sur la caractérisation des phénomènes ondulatoires avant de commencer la séquence :</p>
@@ -1152,11 +1350,11 @@
     <p style="margin-top:8px;"><a class="pastille pastille-video" href="https://www.pearltrees.com/private/id105394473/item805049007?paccess=47d683a9192.2ffc12af.98a3c04c40dd6b3aad75d57aa2f3a467" target="_blank">🎬 « Cours 1 – Ondes sonores » — Stella</a></p>
   </div>
 
-</div>
-<!-- /tab-0 -->
+  </div>
+  <!-- /sub-P-0 (Prérequis) -->
 
-<!-- ══════════════ ONGLET A — INTENSITÉ SONORE ══════════════ -->
-<div class="tab-content" id="tab-1">
+  <!-- Sous-onglet P2 : Intensité sonore -->
+  <div class="sub-tab-content" id="sub-P-1">
 
   <div class="intro-box">
     Une onde sonore transporte de l'énergie depuis la source jusqu'au récepteur. Cette énergie, rapportée à une surface et à une durée, définit l'intensité sonore. Comme l'oreille humaine perçoit les sons sur une échelle très étendue, on préfère utiliser une grandeur logarithmique, le niveau d'intensité sonore, exprimée en décibels.
@@ -1182,7 +1380,7 @@
   </div>
 
   <div class="fig-box">
-    <img src="images-cours/doc1-niveaux-sonores.png" alt="Échelle des niveaux sonores en dB, du seuil d'audibilité (0 dB, laboratoire acoustique) au seuil de douleur (130 dB, avion au décollage), avec les zones de risque auditif : plus de 105 dB(A) risques immédiats, 85-105 dB(A) risques à moyen/long terme, et effets extra-auditifs du bruit à partir de 40-55 dB(A)">
+    <img src="images-cours/doc1-niveaux-sonores.png" alt="Échelle des niveaux sonores en dB, du seuil d'audibilité (0 dB, laboratoire acoustique) au seuil de douleur (130 dB, avion au décollage), avec les zones de risque auditif : plus de 105 dB(A) risques immédiats, 85-105 dB(A) risques à moyen/long terme, et effets extra-auditifs du bruit à partir de 40-55 dB(A)"style="max-width:900px;width:100%;display:block;margin:10px auto;border-radius:8px;"> >
     <div class="fig-caption">Échelle des niveaux sonores usuels et seuils de risque pour l'audition. Plusieurs facteurs influencent le risque réel : niveau sonore, fréquence, caractère continu ou intempestif du bruit, durée d'exposition, sensibilité individuelle.</div>
   </div>
 
@@ -1245,11 +1443,11 @@
     <p style="font-size:0.90rem;">Exercices sur les intensités sonores : n° 11, 15, 19, 22, 32 et 42 p.400 à 413.</p>
   </div>
 
-</div>
-<!-- /tab-1 -->
+  </div>
+  <!-- /sub-P-1 (Intensité sonore) -->
 
-<!-- ══════════════ ONGLET B — ATTÉNUATIONS ══════════════ -->
-<div class="tab-content" id="tab-2">
+  <!-- Sous-onglet P3 : Atténuations -->
+  <div class="sub-tab-content" id="sub-P-2">
 
   <div class="intro-box">
     Un son perd de l'intensité en se propageant, pour deux raisons distinctes : il se répartit sur une surface de plus en plus grande (atténuation géométrique), et une partie de son énergie peut être absorbée par les milieux qu'il traverse (atténuation par absorption).
@@ -1261,6 +1459,29 @@
     <div class="formule-box">
       A = L<sub>proche</sub> − L<sub>éloigné</sub> = 10 · log(I<sub>proche</sub> / I<sub>éloigné</sub>)
       <div class="legend">avec A l'atténuation en dB, L<sub>proche</sub> et L<sub>éloigné</sub> les niveaux d'intensité sonore en dB mesurés respectivement près et loin de la source émettrice.</div>
+    </div>
+  </div>
+
+  <div class="activite-card">
+    <h3>🔊 Animation interactive — Atténuation géométrique</h3>
+    <p>Déplace l'auditeur à l'aide du curseur et observe comment l'intensité sonore perçue diminue lorsque la distance à la source augmente, la puissance émise restant constante (I = P/S).</p>
+    <div class="anim-canvas-wrap">
+      <div class="anim-canvas-title">Ondes sonores émises par une source ponctuelle, sans obstacle</div>
+      <canvas id="attenGeoCanvas" width="560" height="240"></canvas>
+      <div class="slider-row">
+        <label for="attenGeoD">Distance auditeur–source d</label>
+        <input type="range" id="attenGeoD" min="20" max="200" step="5" value="40">
+        <span class="slider-val" id="attenGeoDVal">40 unités</span>
+      </div>
+      <div class="anim-controls">
+        <button class="anim-btn active" id="attenGeoPlayBtn" onclick="toggleAttenGeoAnim()">⏸ Pause</button>
+        <button class="anim-btn" onclick="resetAttenGeoAnim()">↺ Recommencer</button>
+      </div>
+      <div class="legende-vect">
+        <span><span class="swatch" style="background:#E8783A;"></span> Fronts d'onde émis</span>
+        <span><span class="swatch" style="background:#2D5F8A;"></span> Intensité relative perçue</span>
+      </div>
+      <div class="etape-msg-box" id="attenGeoMsgBox">À d = 40 unités (référence d₀ = 20) : intensité relative ≈ 25 % de I₀, soit une atténuation A ≈ 6 dB.</div>
     </div>
   </div>
 
@@ -1309,10 +1530,40 @@
 
   <div class="def-card">
     <h3>Atténuation par absorption</h3>
-    <p>Lorsqu'un son traverse un milieu matériel (mur, casque, vitrage...), une partie de sa puissance est absorbée par ce milieu : l'intensité sonore diminue alors du fait de cette traversée. On parle d'<strong>atténuation par absorption</strong>.</p>
-    <div class="formule-box">
-      A = L<sub>incident</sub> − L<sub>transmis</sub> = 10 · log(I<sub>incident</sub> / I<sub>transmis</sub>)
-      <div class="legend">avec L<sub>incident</sub> le niveau sonore avant la traversée du milieu, et L<sub>transmis</sub> le niveau sonore après cette traversée.</div>
+    <div class="doc-flex">
+      <div style="flex:1 1 260px;">
+        <p>Lorsqu'un son traverse un milieu matériel (mur, casque, vitrage...), une partie de sa puissance est absorbée par ce milieu : l'intensité sonore diminue alors du fait de cette traversée. On parle d'<strong>atténuation par absorption</strong>.</p>
+        <div class="formule-box">
+          A = L<sub>incident</sub> − L<sub>transmis</sub> = 10 · log(I<sub>incident</sub> / I<sub>transmis</sub>)
+          <div class="legend">avec L<sub>incident</sub> le niveau sonore avant la traversée du milieu, et L<sub>transmis</sub> le niveau sonore après cette traversée.</div>
+        </div>
+      </div>
+      <div class="doc-media">
+        <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-width:300px;">
+          <!-- Source sonore -->
+          <circle cx="26" cy="100" r="9" fill="#E8783A"/>
+          <text x="26" y="128" font-family="Outfit, sans-serif" font-size="11" fill="#5A6B7A" text-anchor="middle">Source</text>
+
+          <!-- Onde incidente (arcs oranges) -->
+          <path d="M 45 100 A 20 46 0 0 1 45 54" fill="none" stroke="#E8783A" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M 65 100 A 40 60 0 0 1 65 40" fill="none" stroke="#E8783A" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M 88 100 A 63 70 0 0 1 88 30" fill="none" stroke="#E8783A" stroke-width="2.4" stroke-linecap="round"/>
+          <text x="68" y="18" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="#E8783A" text-anchor="middle">L incident</text>
+
+          <!-- Milieu absorbant (mur / casque) -->
+          <rect x="150" y="35" width="26" height="130" rx="4" fill="#DDE3EC" stroke="#5A6B7A" stroke-width="1.5"/>
+          <text x="163" y="182" font-family="Outfit, sans-serif" font-size="11" fill="#5A6B7A" text-anchor="middle">Milieu absorbant</text>
+
+          <!-- Onde transmise (arcs bleus, atténués) -->
+          <path d="M 195 100 A 14 30 0 0 1 195 70" fill="none" stroke="#2D5F8A" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+          <path d="M 213 100 A 26 38 0 0 1 213 62" fill="none" stroke="#2D5F8A" stroke-width="2.2" stroke-linecap="round" opacity="0.6"/>
+          <text x="205" y="30" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="#2D5F8A" text-anchor="middle">L transmis</text>
+
+          <!-- Récepteur (oreille) -->
+          <path d="M 300 88 q 14 0 14 14 q 0 14 -14 16 q -8 -2 -8 -16 q 0 -12 8 -14 z" fill="none" stroke="#1A2A3A" stroke-width="2.2"/>
+          <text x="300" y="128" font-family="Outfit, sans-serif" font-size="11" fill="#5A6B7A" text-anchor="middle">Auditeur</text>
+        </svg>
+      </div>
     </div>
     <div class="attention-box"><strong>À retenir :</strong> une atténuation A est toujours une grandeur positive.</div>
   </div>
@@ -1358,11 +1609,11 @@
     <p style="font-size:0.90rem;">Exercices sur l'atténuation : n° 21 et 33 p.403-404, ainsi que l'annale « Casque anti-bruit ».</p>
   </div>
 
-</div>
-<!-- /tab-2 -->
+  </div>
+  <!-- /sub-P-2 (Atténuations) -->
 
-<!-- ══════════════ ONGLET C — EFFET DOPPLER (QUALITATIF) ══════════════ -->
-<div class="tab-content" id="tab-3">
+  <!-- Sous-onglet P4 : Effet Doppler -->
+  <div class="sub-tab-content" id="sub-P-3">
 
   <div class="intro-box">
     L'effet Doppler est une propriété générale des ondes, aussi bien mécaniques (son) qu'électromagnétiques (lumière). Il se manifeste dès que la distance entre l'émetteur et le récepteur d'une onde varie au cours du temps.
@@ -1455,11 +1706,11 @@
     </div>
   </div>
 
-</div>
-<!-- /tab-3 -->
+  </div>
+  <!-- /sub-P-3 (Effet Doppler) -->
 
-<!-- ══════════════ ONGLET D — ÉTABLIR LE DÉCALAGE DOPPLER ══════════════ -->
-<div class="tab-content" id="tab-4">
+  <!-- Sous-onglet P5 : Décalage Doppler -->
+  <div class="sub-tab-content" id="sub-P-4">
 
   <div class="intro-box">
     On cherche maintenant à établir une expression quantitative de l'effet Doppler, dans le cas simple d'un observateur fixe et d'une source mobile se déplaçant à vitesse constante v sur une droite (configuration à une dimension).
@@ -1475,7 +1726,57 @@
   <div class="section-title"><span class="icon">🚙</span> Cas n°1 — La source approche de l'observateur immobile</div>
 
   <div class="def-card">
-    <p>Un observateur fixe observe une source (par exemple une voiture) se déplaçant à la vitesse constante v et émettant des « bips » avec une période T<sub>E</sub>. La distance entre la source et l'observateur, à l'instant du premier bip, est notée D. Entre l'émission d'un bip et le suivant, la source s'est rapprochée d'une distance <span class="math">d = v × T<sub>E</sub></span> : il lui reste alors une distance <span class="math">D − d</span> à parcourir pour atteindre l'observateur.</p>
+    <div class="doc-flex">
+      <p>Un observateur fixe observe une source (par exemple une voiture) se déplaçant à la vitesse constante v et émettant des « bips » avec une période T<sub>E</sub>. La distance entre la source et l'observateur, à l'instant du premier bip, est notée D. Entre l'émission d'un bip et le suivant, la source s'est rapprochée d'une distance <span class="math">d = v × T<sub>E</sub></span> : il lui reste alors une distance <span class="math">D − d</span> à parcourir pour atteindre l'observateur.</p>
+      <div class="doc-media">
+        <svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-width:320px;">
+          <!-- Axe -->
+          <line x1="20" y1="90" x2="340" y2="90" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6 5"/>
+
+          <!-- Source à t=0 (bip 1), estompée -->
+          <g opacity="0.4">
+            <path d="M 46 96 L 50 84 L 66 84 L 74 92 L 74 96 Z" fill="#E8783A"/>
+            <circle cx="53" cy="98" r="4" fill="#1A2A3A"/>
+            <circle cx="69" cy="98" r="4" fill="#1A2A3A"/>
+          </g>
+          <text x="60" y="66" font-family="Outfit, sans-serif" font-size="11" fill="#5A6B7A" text-anchor="middle">Bip 1 (t = 0)</text>
+
+          <!-- Source à t=T_E (bip 2), pleine -->
+          <g>
+            <path d="M 126 96 L 130 84 L 146 84 L 154 92 L 154 96 Z" fill="#E8783A"/>
+            <circle cx="133" cy="98" r="4" fill="#1A2A3A"/>
+            <circle cx="149" cy="98" r="4" fill="#1A2A3A"/>
+          </g>
+          <text x="140" y="66" font-family="Outfit, sans-serif" font-size="11" fill="#1A2A3A" text-anchor="middle">Bip 2 (t = T<tspan baseline-shift="sub" font-size="8">E</tspan>)</text>
+
+          <!-- Observateur -->
+          <g stroke="#1A2A3A" stroke-width="2.4">
+            <line x1="303" y1="83" x2="317" y2="97"/>
+            <line x1="317" y1="83" x2="303" y2="97"/>
+          </g>
+          <text x="310" y="66" font-family="Outfit, sans-serif" font-size="11" fill="#1A2A3A" text-anchor="middle">Observateur</text>
+          <text x="310" y="122" font-family="Outfit, sans-serif" font-size="10.5" fill="#5A6B7A" text-anchor="middle">(fixe)</text>
+
+          <!-- Cote D : de Bip1 à Observateur (au-dessus) -->
+          <line x1="60" y1="40" x2="310" y2="40" stroke="#5A6B7A" stroke-width="1.6"/>
+          <polygon points="60,40 67,36 67,44" fill="#5A6B7A"/>
+          <polygon points="310,40 303,36 303,44" fill="#5A6B7A"/>
+          <text x="185" y="32" font-family="Outfit, sans-serif" font-size="13" font-weight="700" fill="#5A6B7A" text-anchor="middle">D</text>
+
+          <!-- Cote d : de Bip1 à Bip2 (en dessous) -->
+          <line x1="60" y1="140" x2="140" y2="140" stroke="#E8783A" stroke-width="1.8"/>
+          <polygon points="60,140 67,136 67,144" fill="#E8783A"/>
+          <polygon points="140,140 133,136 133,144" fill="#E8783A"/>
+          <text x="100" y="156" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="#E8783A" text-anchor="middle">d = v × T<tspan baseline-shift="sub" font-size="8">E</tspan></text>
+
+          <!-- Cote D-d : de Bip2 à Observateur (en dessous) -->
+          <line x1="140" y1="140" x2="310" y2="140" stroke="#2D5F8A" stroke-width="1.8"/>
+          <polygon points="140,140 147,136 147,144" fill="#2D5F8A"/>
+          <polygon points="310,140 303,136 303,144" fill="#2D5F8A"/>
+          <text x="225" y="156" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="#2D5F8A" text-anchor="middle">D − d</text>
+        </svg>
+      </div>
+    </div>
   </div>
 
   <div class="methode-box">
@@ -1514,7 +1815,57 @@
 
   <div class="activite-card">
     <h3>✏️ À toi de compléter le raisonnement</h3>
-    <p>La situation est identique au Cas n°1, mais la source s'éloigne désormais de l'observateur : entre deux bips, la distance Source–Observateur <strong>augmente</strong> de d = v×T<sub>E</sub> au lieu de diminuer. Sélectionne, à chaque étape, l'expression correcte.</p>
+    <div class="doc-flex">
+      <p>La situation est identique au Cas n°1, mais la source s'éloigne désormais de l'observateur : entre deux bips, la distance Source–Observateur <strong>augmente</strong> de d = v×T<sub>E</sub> au lieu de diminuer. Sélectionne, à chaque étape, l'expression correcte.</p>
+      <div class="doc-media">
+        <svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-width:320px;">
+          <!-- Axe -->
+          <line x1="20" y1="90" x2="340" y2="90" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6 5"/>
+
+          <!-- Source à t=0 (bip 1), estompée, plus proche de l'observateur -->
+          <g opacity="0.4">
+            <path d="M 154 96 L 158 84 L 174 84 L 182 92 L 182 96 Z" fill="#E8783A"/>
+            <circle cx="161" cy="98" r="4" fill="#1A2A3A"/>
+            <circle cx="177" cy="98" r="4" fill="#1A2A3A"/>
+          </g>
+          <text x="168" y="66" font-family="Outfit, sans-serif" font-size="11" fill="#5A6B7A" text-anchor="middle">Bip 1 (t = 0)</text>
+
+          <!-- Source à t=T_E (bip 2), pleine, plus loin (s'éloigne) -->
+          <g transform="scale(-1,1) translate(-140,0)">
+            <path d="M 46 96 L 50 84 L 66 84 L 74 92 L 74 96 Z" fill="#E8783A"/>
+            <circle cx="53" cy="98" r="4" fill="#1A2A3A"/>
+            <circle cx="69" cy="98" r="4" fill="#1A2A3A"/>
+          </g>
+          <text x="60" y="66" font-family="Outfit, sans-serif" font-size="11" fill="#1A2A3A" text-anchor="middle">Bip 2 (t = T<tspan baseline-shift="sub" font-size="8">E</tspan>)</text>
+
+          <!-- Observateur -->
+          <g stroke="#1A2A3A" stroke-width="2.4">
+            <line x1="303" y1="83" x2="317" y2="97"/>
+            <line x1="317" y1="83" x2="303" y2="97"/>
+          </g>
+          <text x="310" y="66" font-family="Outfit, sans-serif" font-size="11" fill="#1A2A3A" text-anchor="middle">Observateur</text>
+          <text x="310" y="122" font-family="Outfit, sans-serif" font-size="10.5" fill="#5A6B7A" text-anchor="middle">(fixe)</text>
+
+          <!-- Cote D : de Bip1 à Observateur (au-dessus) -->
+          <line x1="168" y1="40" x2="310" y2="40" stroke="#5A6B7A" stroke-width="1.6"/>
+          <polygon points="168,40 175,36 175,44" fill="#5A6B7A"/>
+          <polygon points="310,40 303,36 303,44" fill="#5A6B7A"/>
+          <text x="239" y="32" font-family="Outfit, sans-serif" font-size="13" font-weight="700" fill="#5A6B7A" text-anchor="middle">D</text>
+
+          <!-- Cote d : de Bip2 à Bip1 (en dessous), sens de l'éloignement -->
+          <line x1="60" y1="140" x2="168" y2="140" stroke="#E8783A" stroke-width="1.8"/>
+          <polygon points="60,140 67,136 67,144" fill="#E8783A"/>
+          <polygon points="168,140 161,136 161,144" fill="#E8783A"/>
+          <text x="114" y="156" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="#E8783A" text-anchor="middle">d = v × T<tspan baseline-shift="sub" font-size="8">E</tspan></text>
+
+          <!-- Cote D+d : de Bip2 à Observateur (en dessous) -->
+          <line x1="60" y1="122" x2="310" y2="122" stroke="#2D5F8A" stroke-width="1.8" stroke-dasharray="2 3"/>
+          <polygon points="60,122 67,118 67,126" fill="#2D5F8A"/>
+          <polygon points="310,122 303,118 303,126" fill="#2D5F8A"/>
+          <text x="185" y="114" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="#2D5F8A" text-anchor="middle">D + d</text>
+        </svg>
+      </div>
+    </div>
 
     <div class="dq-row" id="dq-cas2-1">
       <div class="dq-label">Distance Source–Observateur à l'instant T<sub>E</sub> (émission du 2<sup>e</sup> bip) :</div>
@@ -1577,11 +1928,40 @@
     </div>
   </div>
 
-</div>
-<!-- /tab-4 -->
+  </div>
+  <!-- /sub-P-4 (Décalage Doppler) -->
 
-<!-- ══════════════ ONGLET E — SIMULATEUR DOPPLER INTERACTIF (HATIER-CLIC) ══════════════ -->
-<div class="tab-content" id="tab-5">
+</div>
+<!-- /tab-0 (Cours) -->
+
+<!-- ══════════════ ONGLET ENTRAÎNEMENTS ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <div class="sub-tabs-nav" id="sub-nav-E">
+    <button class="sub-tab-btn active" data-sub="E1" onclick="switchSubTab('E',0)">
+      <span class="sub-tab-num">1</span> Activités
+    </button>
+    <button class="sub-tab-btn" data-sub="E2" onclick="switchSubTab('E',1)">
+      <span class="sub-tab-num">2</span> Exercices
+    </button>
+    <button class="sub-tab-btn" data-sub="E3" onclick="switchSubTab('E',2)">
+      <span class="sub-tab-num">🎓</span> Sujets de bac
+    </button>
+  </div>
+
+  <!-- Sous-onglet E1 : Activités -->
+  <div class="sub-tab-content active" id="sub-E-0">
+
+  <div class="sub3-tabs-nav" id="sub-nav-EA">
+    <button class="sub3-tab-btn active" data-sub="EA1" onclick="switchSubTab('EA',0)">🧪 Activité 1</button>
+    <button class="sub3-tab-btn" data-sub="EA2" onclick="switchSubTab('EA',1)">📄 Activité 2</button>
+    <button class="sub3-tab-btn" data-sub="EA3" onclick="switchSubTab('EA',2)">📄 Activité 3</button>
+    <button class="sub3-tab-btn" data-sub="EA4" onclick="switchSubTab('EA',3)">📄 Activité 4</button>
+    <button class="sub3-tab-btn" data-sub="EA5" onclick="switchSubTab('EA',4)">🔬 Activité 5</button>
+  </div>
+
+  <!-- Sous-onglet EA1 : Activité 1 (Simulateur Doppler) -->
+  <div class="sub-tab-content active" id="sub-EA-0">
 
   <div class="intro-box">
     Le simulateur interactif Hatier-clic propose une maquette virtuelle « voiture-observateur » permettant de mesurer soi-même les grandeurs caractéristiques de l'effet Doppler (période, fréquence, longueur d'onde) et d'en déduire une vitesse, avec correction intégrée à chaque étape. Les 6 activités ci-dessous se complètent : lance-les dans l'ordre pour progresser du constat expérimental jusqu'au calcul d'incertitude.
@@ -1593,29 +1973,29 @@
     <p style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_Doppler/index.html" target="_blank">🖥️ Ouvrir le simulateur Doppler</a></p>
   </div>
 
-  <div class="sub-tabs-nav" id="sub-nav-E">
-    <button class="sub-tab-btn active" data-sub="E1" onclick="switchSubTab('E',0)">
+  <div class="sub3-tabs-nav" id="sub-nav-S">
+    <button class="sub3-tab-btn active" data-sub="S1" onclick="switchSubTab('S',0)">
       <span class="sub-tab-num">1</span> Vitesse
     </button>
-    <button class="sub-tab-btn" data-sub="E2" onclick="switchSubTab('E',1)">
+    <button class="sub3-tab-btn" data-sub="S2" onclick="switchSubTab('S',1)">
       <span class="sub-tab-num">2</span> Radar
     </button>
-    <button class="sub-tab-btn" data-sub="E3" onclick="switchSubTab('E',2)">
+    <button class="sub3-tab-btn" data-sub="S3" onclick="switchSubTab('S',2)">
       <span class="sub-tab-num">3</span> Paramètres
     </button>
-    <button class="sub-tab-btn" data-sub="E4" onclick="switchSubTab('E',3)">
+    <button class="sub3-tab-btn" data-sub="S4" onclick="switchSubTab('S',3)">
       <span class="sub-tab-num">4</span> Décalage
     </button>
-    <button class="sub-tab-btn" data-sub="E5" onclick="switchSubTab('E',4)">
+    <button class="sub3-tab-btn" data-sub="S5" onclick="switchSubTab('S',4)">
       <span class="sub-tab-num">5</span> λ et v
     </button>
-    <button class="sub-tab-btn" data-sub="E6" onclick="switchSubTab('E',5)">
+    <button class="sub3-tab-btn" data-sub="S6" onclick="switchSubTab('S',5)">
       <span class="sub-tab-num">6</span> Incertitude
     </button>
   </div>
 
   <!-- ───────── E1 : DÉTERMINATION DE LA VITESSE DE LA VOITURE ───────── -->
-  <div class="sub-tab-content active" id="sub-E-0">
+  <div class="sub-tab-content active" id="sub-S-0">
     <div class="activite-card">
       <h3>1️⃣ Détermination de la vitesse de la voiture</h3>
       <p><strong>Objectif :</strong> utiliser l'effet Doppler pour calculer une vitesse.</p>
@@ -1637,7 +2017,7 @@
   </div>
 
   <!-- ───────── E2 : RADAR « À L'OREILLE » ───────── -->
-  <div class="sub-tab-content" id="sub-E-1">
+  <div class="sub-tab-content" id="sub-S-1">
     <div class="activite-card">
       <h3>2️⃣ Radar « à l'oreille »</h3>
       <p><strong>Objectif :</strong> déterminer la fréquence perçue par l'observateur.</p>
@@ -1659,7 +2039,7 @@
   </div>
 
   <!-- ───────── E3 : PARAMÈTRES D'INFLUENCE ───────── -->
-  <div class="sub-tab-content" id="sub-E-2">
+  <div class="sub-tab-content" id="sub-S-2">
     <div class="activite-card">
       <h3>3️⃣ Paramètres d'influence</h3>
       <p><strong>Objectif :</strong> étudier l'influence de la vitesse de la voiture sur l'onde sonore.</p>
@@ -1681,7 +2061,7 @@
   </div>
 
   <!-- ───────── E4 : DÉCALAGE DOPPLER ───────── -->
-  <div class="sub-tab-content" id="sub-E-3">
+  <div class="sub-tab-content" id="sub-S-3">
     <div class="activite-card">
       <h3>4️⃣ Décalage Doppler</h3>
       <p><strong>Objectif :</strong> relier période, fréquence et effet Doppler.</p>
@@ -1704,7 +2084,7 @@
   </div>
 
   <!-- ───────── E5 : LONGUEUR D'ONDE ET VITESSE ───────── -->
-  <div class="sub-tab-content" id="sub-E-4">
+  <div class="sub-tab-content" id="sub-S-4">
     <div class="activite-card">
       <h3>5️⃣ Longueur d'onde et vitesse</h3>
       <p><strong>Objectif :</strong> établir une relation entre longueur d'onde et vitesse de propagation.</p>
@@ -1726,7 +2106,7 @@
   </div>
 
   <!-- ───────── E6 : PRÉCISION D'UNE MESURE ───────── -->
-  <div class="sub-tab-content" id="sub-E-5">
+  <div class="sub-tab-content" id="sub-S-5">
     <div class="activite-card">
       <h3>6️⃣ Précision d'une mesure</h3>
       <p><strong>Objectif :</strong> évaluer une incertitude de mesure.</p>
@@ -1749,11 +2129,1330 @@
     </div>
   </div>
 
+  </div>
+  <!-- /sub-EA-0 (Activité 1 : Simulateur Doppler) -->
+
+  <!-- Sous-onglet EA2 : Activité 2 (Documentaire — Intensité et niveau sonore) -->
+  <div class="sub-tab-content" id="sub-EA-1">
+
+  <div class="intro-box">
+    <strong>Situation :</strong> vous voulez acheter un lave-vaisselle. Vous hésitez entre deux modèles dont la différence se situe sur le « bruit ». Le vendeur affirme que cette différence est faible puisqu'elle n'est que de 3 dB…<br>
+    <strong>Problème :</strong> faut-il croire le vendeur ? Une différence de 3 dB modifie-t-elle de manière notable la perception auditive ?
+  </div>
+
+  <div class="activite-card">
+    <h3>📄 Documents</h3>
+    <div class="doc-flex">
+      <p>Deux étiquettes énergie de lave-vaisselle (niveau sonore en dB), une échelle de correspondance entre intensité sonore I (en W·m⁻²) et niveau d'intensité sonore L (en dB), et des affiches de prévention du bruit illustrant l'addition de sons émis par des véhicules.</p>
+      <div class="doc-media">
+        <img src="Entrainements/AD1.png" alt="Documents : étiquettes énergie, échelle I/L, addition de bruits de voitures">
+      </div>
+    </div>
+  </div>
+
+  <div class="methode-box">
+    <div class="methode-titre">Rappel : le logarithme décimal</div>
+    <p>La fonction logarithme décimal (log) est la fonction réciproque de la fonction puissance de 10 : quelle que soit la grandeur physique notée X, log(10<sup>X</sup>) = X.</p>
+    <p style="margin-top:6px;"><strong>Propriétés :</strong> log(a×b) = log a + log b&nbsp;&nbsp;|&nbsp;&nbsp;log(a/b) = log a − log b&nbsp;&nbsp;|&nbsp;&nbsp;log(X<sup>n</sup>) = n·log X</p>
+  </div>
+
+  <div class="activite-card">
+    <h3>1️⃣ La surface dans « par unité de surface »</h3>
+    <p>Dans la définition de l'intensité sonore I, de quelle surface parle-t-on dans « par unité de surface » ? <button class="btn-indice" onclick="toggleIndice('ind-ea2-1')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea2-1">Le son est une onde qui se propage dans toutes les directions à partir de sa source : pense à la forme de l'onde émise (sphérique) et à la surface sur laquelle sa puissance se répartit à une distance d de la source.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>2️⃣ Unité de l'intensité sonore</h3>
+    <p>Justifier que l'intensité sonore s'exprime en W·m⁻². <button class="btn-indice" onclick="toggleIndice('ind-ea2-2')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea2-2">Repars de la définition physique de I comme rapport de deux grandeurs : une puissance sonore et une surface. Quelle est l'unité SI de chacune de ces deux grandeurs ?</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>3️⃣ Étendue de l'intensité sonore</h3>
+    <p><strong>a.</strong> Comparer les valeurs minimale et maximale de l'intensité sonore des sons audibles.<br>
+    <strong>b.</strong> Quel est l'inconvénient majeur de cette échelle d'intensité ? <button class="btn-indice" onclick="toggleIndice('ind-ea2-3')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea2-3">Repère sur l'échelle I/L les bornes I<sub>min</sub> et I<sub>max</sub> des sons audibles, puis calcule le rapport I<sub>max</sub>/I<sub>min</sub>. Une échelle est-elle pratique à manipuler quand les valeurs s'étendent sur autant d'ordres de grandeur ?</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>4️⃣ Niveau d'intensité sonore</h3>
+    <p><strong>a.</strong> Calculer les valeurs minimale et maximale du niveau d'intensité sonore des sons audibles sur la gamme proposée sur le graphe de correspondance entre L et I.<br>
+    <strong>b.</strong> Quelle est l'utilité de cette autre échelle ? <button class="btn-indice" onclick="toggleIndice('ind-ea2-4')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea2-4">Utilise la relation L = 10×log(I/I₀) avec I₀ = 10⁻¹² W·m⁻². Une fois L<sub>min</sub> et L<sub>max</sub> calculés, compare l'étendue obtenue (en dB) à celle de I (en puissances de 10).</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>5️⃣ Compléter un tableau I / L</h3>
+    <p><strong>a.</strong> Compléter le tableau de correspondance entre I et L pour les valeurs proposées dans le document.<br>
+    <strong>b.</strong> Que constate-t-on en relation avec les deux situations proposées sur les affiches (voitures) ? <button class="btn-indice" onclick="toggleIndice('ind-ea2-5')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea2-5">Utilise systématiquement L = 10×log(I/I₀) dans un sens ou dans l'autre (I = I₀×10^(L/10)). Pour la question b., regarde ce que devient L quand I est multipliée par 2, puis ce qui se passe quand on additionne deux intensités très différentes.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>6️⃣ Pourquoi les niveaux ne s'additionnent pas</h3>
+    <p>Les intensités sonores s'additionnent mais pas les niveaux d'intensité sonore, pourquoi ? <button class="btn-indice" onclick="toggleIndice('ind-ea2-6')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea2-6">Regarde la nature mathématique de L : c'est une grandeur construite à partir d'un logarithme. Le logarithme d'une somme est-il égal à la somme des logarithmes ?</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>7️⃣ Le vendeur a-t-il raison ?</h3>
+    <p>À la lumière de vos réponses précédentes, le vendeur a-t-il raison d'affirmer qu'une différence de 3 dB est une différence faible ? <button class="btn-indice" onclick="toggleIndice('ind-ea2-7')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea2-7">Calcule le rapport I₂/I₁ entre deux niveaux qui diffèrent de 3 dB en utilisant L₂ − L₁ = 10×log(I₂/I₁). Ce rapport correspond-il à une variation « faible » de l'intensité sonore reçue par l'oreille ?</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>8️⃣ Boîte de nuit et scooters</h3>
+    <p>Un scooter a un niveau sonore de 90 dB et une boîte de nuit de 130 dB. À combien de scooters équivaut une boîte de nuit ? <button class="btn-indice" onclick="toggleIndice('ind-ea2-8')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea2-8">Note L₁ = 90 dB (un scooter) et L₂ = 130 dB (la boîte de nuit), avec I₂ = n×I₁ puisque les intensités sonores s'ajoutent. Exprime L₂ − L₁ en fonction de n à l'aide des propriétés du logarithme, puis isole n.</div>
+  </div>
+
+  </div>
+  <!-- /sub-EA-1 (Activité 2 : Documentaire — Intensité et niveau sonore) -->
+
+  <!-- Sous-onglet EA3 : Activité 3 (Documentaire — Achat ou non d'une habitation) -->
+  <div class="sub-tab-content" id="sub-EA-2">
+
+  <div class="intro-box">
+    <strong>Situation :</strong> une usine bruyante est assimilée à une source ponctuelle émettant des ondes sonores sphériques de puissance sonore P = 3,98 W. L'émission se fait sans atténuation et de façon identique dans toutes les directions de l'espace.<br>
+    <strong>Problème :</strong> une habitation est située à une distance d = 200 m de cette usine et est à vendre, l'achèteriez-vous ?
+  </div>
+
+  <div class="activite-card">
+    <h3>📄 Documents</h3>
+    <div class="doc-flex">
+      <p><strong>Document 1 :</strong> échelle du niveau d'intensité sonore (en dB) et du risque associé (aucun risque, fatigue, incomfort, risque sérieux, danger).<br><br>
+      <strong>Document 2 :</strong> l'intensité sonore I à une distance d d'une source émettant dans toutes les directions est liée à la puissance sonore P de cette source par I = P/S, avec S la surface de la sphère de rayon d (S = 4πd²).<br><br>
+      <strong>Donnée :</strong> I₀ = 1,0×10⁻¹² W·m⁻² (intensité sonore de référence).</p>
+      <div class="doc-media">
+        <img src="Entrainements/AD2.png" alt="Documents : échelle du niveau sonore et risques, schéma de propagation sphérique">
+      </div>
+    </div>
+  </div>
+
+  <div class="activite-card">
+    <h3>1️⃣ Schéma de la situation</h3>
+    <p>Faire un schéma de la situation. <button class="btn-indice" onclick="toggleIndice('ind-ea3-1')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea3-1">Inspire-toi du schéma de propagation sphérique du document 2 : place la source (l'usine), un rayon d et l'habitation à la distance d = 200 m sur la sphère de rayon d centrée sur la source.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>2️⃣ Relation entre L et I</h3>
+    <p>Rappeler la relation liant le niveau d'intensité sonore L à l'intensité sonore I. <button class="btn-indice" onclick="toggleIndice('ind-ea3-2')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea3-2">C'est la relation logarithmique vue en Activité 2 entre L (en dB) et le rapport de I à l'intensité de référence I₀.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>3️⃣ Calcul du niveau sonore à l'habitation</h3>
+    <p>Calculer le niveau d'intensité sonore L au niveau de l'habitation, à la distance d = 200 m de l'usine. <button class="btn-indice" onclick="toggleIndice('ind-ea3-3')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea3-3">Exprime d'abord I en fonction de P et d à l'aide du document 2 (I = P/S avec S = 4πd²), puis injecte cette expression dans la relation L = 10×log(I/I₀) avant de faire l'application numérique avec P = 3,98 W, d = 200 m et I₀ = 1,0×10⁻¹² W·m⁻².</div>
+  </div>
+
+  <div class="activite-card">
+    <h3>4️⃣ Conclusion</h3>
+    <p>Le niveau d'intensité sonore obtenu au niveau de l'habitation est-il acceptable ? Justifier à l'aide du document 1. <button class="btn-indice" onclick="toggleIndice('ind-ea3-4')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea3-4">Repère sur l'échelle du document 1 dans quelle zone de risque se situe la valeur de L que tu as calculée, et à quel type de situation sonore du quotidien elle correspond.</div>
+  </div>
+
+  </div>
+  <!-- /sub-EA-2 (Activité 3 : Documentaire — Achat ou non d'une habitation) -->
+
+  <!-- Sous-onglet EA4 : Activité 4 (Effet Doppler d'une sirène de pompiers) -->
+  <div class="sub-tab-content" id="sub-EA-3">
+
+  <div class="intro-box">
+    Quand une source sonore est en mouvement par rapport à un observateur, la fréquence de l'onde reçue par l'observateur est différente de celle de l'onde émise par la source : c'est l'effet Doppler.<br>
+    <strong>Quelle expression lie le décalage de fréquence à la vitesse de la source ?</strong>
+  </div>
+
+  <div class="activite-card">
+    <h3>📄 Documents</h3>
+    <div class="doc-flex">
+      <p><strong>DOC. 1 — À l'écoute d'une sirène :</strong> la sirène d'un camion de pompiers retentit. L'observateur A, qui voit le camion s'approcher, entend un son plus aigu que le conducteur du camion. L'observateur B, qui voit le camion s'éloigner, entend un son plus grave que le conducteur.<br><br>
+      <strong>DOC. 2 — Modélisation de la situation :</strong> A et B sont deux observateurs immobiles. Une source S, située sur la droite (AB) entre A et B, émet une onde sinusoïdale de période T se propageant vers A et vers B avec une célérité v. La source se déplace suivant (AB) à une vitesse de valeur constante v<sub>S</sub> telle que v<sub>S</sub> &lt; v. À la date t₀ = 0, la source est en S₀ et commence à émettre. L'élongation de l'onde y est maximale. Le schéma représente les différentes positions S₀, S₁, S₂ et S₃ occupées par la source aux dates t₀ = 0, t₁ = T, t₂ = 2T, t₃ = 3T ainsi que les points du milieu où l'élongation de l'onde est maximale à ces mêmes dates. La longueur d₀ correspond à la distance parcourue par l'onde pendant une durée égale à 3T.</p>
+      <div class="doc-media">
+        <img src="Entrainements/p393.png" alt="DOC.1 sirène de camion de pompiers et DOC.2 modélisation avec positions S0 à S3, distances d0 d1 d2 et longueurs d'onde lambdaA lambdaB">
+      </div>
+    </div>
+  </div>
+
+  <div class="activite-card">
+    <h3 style="color:var(--bleu);">1 · Analyser-Raisonner</h3>
+    <p><strong>a.</strong> En utilisant le DOC.1, comparer les fréquences f<sub>A</sub> et f<sub>B</sub> des signaux reçus par les observateurs A et B à la fréquence f du signal émis. <button class="btn-indice" onclick="toggleIndice('ind-ea4-1a')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-1a">Un son plus aigu correspond à une fréquence plus élevée ; un son plus grave correspond à une fréquence plus basse. Associe chaque observateur du DOC.1 à ce qu'il entend.</div>
+    <p style="margin-top:10px;"><strong>b.</strong> Justifier que les longueurs d'onde λ<sub>A</sub> et λ<sub>B</sub> représentées sur le schéma du DOC.2 sont en accord avec le phénomène décrit dans le DOC.1. <button class="btn-indice" onclick="toggleIndice('ind-ea4-1b')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-1b">Une longueur d'onde plus courte correspond à une fréquence plus élevée (v = λ×f à célérité v fixée). Regarde de quel côté du schéma les longueurs d'onde sont resserrées, et relie cela à la réponse de la question a.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3 style="color:var(--bleu);">2 · Réaliser</h3>
+    <p><strong>a.</strong> Exprimer les longueurs d₀, d₁ et d₂ en fonction de la longueur d'onde λ = vT. <button class="btn-indice" onclick="toggleIndice('ind-ea4-2a')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-2a">Chaque d<sub>i</sub> est la distance parcourue par l'onde émise en S<sub>i</sub>, entre son émission et la date t₃ = 3T. Détermine la durée de propagation correspondant à chaque cas (3T, 2T, T), puis utilise d = v × durée.</div>
+    <p style="margin-top:10px;"><strong>b.</strong> Exprimer la longueur D parcourue par la source pendant une période T. <button class="btn-indice" onclick="toggleIndice('ind-ea4-2b')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-2b">La source se déplace à vitesse constante v<sub>S</sub> : utilise la relation distance = vitesse × durée, avec la durée T.</div>
+    <p style="margin-top:10px;"><strong>c.</strong> En déduire, à l'aide de la figure du DOC.2, une relation entre λ, λ<sub>A</sub> et D, puis entre λ, λ<sub>B</sub> et v<sub>S</sub>. <button class="btn-indice" onclick="toggleIndice('ind-ea4-2c')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-2c">Du côté où la source se rapproche, chaque longueur d'onde est raccourcie de la distance D parcourue par la source pendant une période. Du côté où elle s'éloigne, chaque longueur d'onde est allongée de cette même distance D. Remplace ensuite D par son expression en fonction de v<sub>S</sub> et T (question b), puis T par λ/v.</div>
+    <p style="margin-top:10px;"><strong>d.</strong> Exprimer le décalage de longueur d'onde λ<sub>B</sub> − λ<sub>A</sub> en fonction de λ, v et v<sub>S</sub>. <button class="btn-indice" onclick="toggleIndice('ind-ea4-2d')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-2d">Utilise les deux expressions de λ<sub>A</sub> et λ<sub>B</sub> obtenues à la question c., puis fais la différence λ<sub>B</sub> − λ<sub>A</sub>.</div>
+    <p style="margin-top:10px;"><strong>e.</strong> Exprimer de même le décalage λ − λ<sub>A</sub> pour l'observateur A, puis λ<sub>B</sub> − λ pour l'observateur B, en fonction de v<sub>S</sub>, v et λ. <button class="btn-indice" onclick="toggleIndice('ind-ea4-2e')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-2e">Repars des expressions de λ<sub>A</sub> et λ<sub>B</sub> de la question c. et isole chaque écart par rapport à λ.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3 style="color:var(--bleu);">3 · Valider</h3>
+    <p><strong>a.</strong> Vérifier que les décalages en fréquence s'expriment par les relations f<sub>A</sub> − f = f × v<sub>S</sub>/(v − v<sub>S</sub>) et f<sub>B</sub> − f = −f × v<sub>S</sub>/(v + v<sub>S</sub>). <button class="btn-indice" onclick="toggleIndice('ind-ea4-3a')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-3a">Utilise f<sub>A</sub> = 1/T<sub>A</sub> = v/λ<sub>A</sub> et f<sub>B</sub> = v/λ<sub>B</sub> avec les expressions de λ<sub>A</sub> et λ<sub>B</sub> trouvées en 2.c (en fonction de T, v et v<sub>S</sub>), sachant que f = 1/T.</div>
+    <p style="margin-top:10px;"><strong>b.</strong> Vérifier que, lorsque v<sub>S</sub> est négligeable devant v, ces expressions se simplifient sous la forme |Δf|/f = v<sub>S</sub>/v, avec Δf = f<sub>A</sub> − f ou Δf = f − f<sub>B</sub>. <button class="btn-indice" onclick="toggleIndice('ind-ea4-3b')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-3b">Si v<sub>S</sub> ≪ v, alors (v − v<sub>S</sub>) ≈ v et (v + v<sub>S</sub>) ≈ v dans les expressions de la question a. Simplifie chaque relation avec cette approximation.</div>
+    <p style="margin-top:10px;"><strong>c.</strong> Envisager une application de cette relation dans le domaine des ondes acoustiques et électromagnétiques. <button class="btn-indice" onclick="toggleIndice('ind-ea4-3c')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea4-3c">Pense à des dispositifs qui mesurent une vitesse à partir d'un décalage de fréquence : contrôle routier, milieu médical, ou observation d'objets célestes.</div>
+  </div>
+
+  <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Voir la correction</button>
+  <div class="correction">
+    <p><strong>1. Analyser-Raisonner</strong></p>
+    <div class="calc-step">a. L'observateur A voit le camion s'approcher et entend un son plus aigu : f<sub>A</sub> &gt; f. L'observateur B voit le camion s'éloigner et entend un son plus grave : f<sub>B</sub> &lt; f. On a donc <strong>f<sub>A</sub> &gt; f &gt; f<sub>B</sub></strong>.</div>
+    <div class="calc-step">b. À célérité v fixée, v = λ×f, donc une fréquence plus élevée correspond à une longueur d'onde plus courte. Le schéma du DOC.2 montre des longueurs d'onde resserrées du côté de l'observateur qui perçoit la fréquence la plus élevée (λ<sub>A</sub> &lt; λ) et des longueurs d'onde étirées du côté de celui qui perçoit la fréquence la plus basse (λ<sub>B</sub> &gt; λ) : cela concorde avec f<sub>A</sub> &gt; f &gt; f<sub>B</sub> établi en a.</div>
+    <p style="margin-top:10px;"><strong>2. Réaliser</strong></p>
+    <div class="calc-step">a. L'onde émise en S₀ se propage pendant 3T avant t₃ : d₀ = v×3T = 3λ.<br>L'onde émise en S₁ se propage pendant 2T avant t₃ : d₁ = v×2T = 2λ.<br>L'onde émise en S₂ se propage pendant T avant t₃ : d₂ = v×T = λ.</div>
+    <div class="calc-step">b. La source avance à vitesse constante v<sub>S</sub> pendant une durée T, donc D = v<sub>S</sub>×T.</div>
+    <div class="calc-step">c. Du côté vers lequel la source se rapproche, chaque longueur d'onde est raccourcie de D : λ<sub>A</sub> = λ − D. Du côté d'où elle s'éloigne, chaque longueur d'onde est allongée de D : λ<sub>B</sub> = λ + D.<br>Avec D = v<sub>S</sub>×T = v<sub>S</sub>×λ/v (car T = λ/v), on obtient : <strong>λ<sub>A</sub> = λ(1 − v<sub>S</sub>/v)</strong> et <strong>λ<sub>B</sub> = λ(1 + v<sub>S</sub>/v)</strong>.</div>
+    <div class="calc-step">d. λ<sub>B</sub> − λ<sub>A</sub> = λ(1 + v<sub>S</sub>/v) − λ(1 − v<sub>S</sub>/v) = <strong>2λ×v<sub>S</sub>/v</strong>.</div>
+    <div class="calc-step">e. λ − λ<sub>A</sub> = λ − λ(1 − v<sub>S</sub>/v) = <strong>λ×v<sub>S</sub>/v</strong> (= D). De même, λ<sub>B</sub> − λ = <strong>λ×v<sub>S</sub>/v</strong> (= D). Les deux observateurs subissent donc un décalage de même valeur absolue D par rapport à λ, mais de signe opposé.</div>
+    <p style="margin-top:10px;"><strong>3. Valider</strong></p>
+    <div class="calc-step">a. f<sub>A</sub> = v/λ<sub>A</sub> = v/[T(v−v<sub>S</sub>)] = f×v/(v−v<sub>S</sub>) (car f = 1/T). Donc f<sub>A</sub> − f = f×v/(v−v<sub>S</sub>) − f = f×[v−(v−v<sub>S</sub>)]/(v−v<sub>S</sub>) = <strong>f×v<sub>S</sub>/(v−v<sub>S</sub>)</strong>.<br>De même, f<sub>B</sub> = v/λ<sub>B</sub> = f×v/(v+v<sub>S</sub>), donc f<sub>B</sub> − f = f×[v−(v+v<sub>S</sub>)]/(v+v<sub>S</sub>) = <strong>−f×v<sub>S</sub>/(v+v<sub>S</sub>)</strong>. Les deux relations sont vérifiées.</div>
+    <div class="calc-step">b. Si v<sub>S</sub> ≪ v, alors (v−v<sub>S</sub>) ≈ v et (v+v<sub>S</sub>) ≈ v. Les relations deviennent f<sub>A</sub> − f ≈ f×v<sub>S</sub>/v et f − f<sub>B</sub> ≈ f×v<sub>S</sub>/v, soit dans les deux cas <strong>|Δf|/f = v<sub>S</sub>/v</strong>.</div>
+    <div class="calc-step">c. Cette relation est exploitée par les radars de vitesse routiers (onde électromagnétique réfléchie par le véhicule), par l'échographie Doppler en médecine (mesure de la vitesse du sang à partir d'une onde ultrasonore réfléchie par les globules rouges), et en astrophysique (décalage Doppler de la lumière des étoiles ou galaxies, permettant de déterminer leur vitesse de rapprochement ou d'éloignement).</div>
+  </div>
+
+  </div>
+  <!-- /sub-EA-3 (Activité 4 : Effet Doppler d'une sirène de pompiers) -->
+
+  <!-- Sous-onglet EA5 : Activité 5 (Mesure d'une vitesse par effet Doppler — expérimentale) -->
+  <div class="sub-tab-content" id="sub-EA-4">
+
+  <div class="intro-box">
+    <strong>Situation déclenchante :</strong> de jeunes mariés, à fond dans leur « deudeuche », traversent la ville, klaxon bloqué, pour aller célébrer leurs noces comme il se doit.<br>
+    <strong>Le conducteur de la voiture est-il en infraction pour excès de vitesse ?</strong>
+  </div>
+
+  <div class="activite-card">
+    <h3>📄 Documents</h3>
+    <div class="doc-flex">
+      <p><strong>DONNÉES 1 :</strong> dans le référentiel terrestre, la valeur de la vitesse v<sub>S</sub> d'une source S s'approchant en direction d'un observateur A immobile et s'éloignant dans la même direction d'un observateur B immobile, s'exprime par :</p>
+      <div class="doc-media">
+        <img src="Entrainements/p394-2.png" alt="Données 1 : formules de la vitesse de la source par effet Doppler">
+      </div>
+    </div>
+    <div class="doc-flex" style="margin-top:14px;">
+      <p><strong>DONNÉES 2 :</strong> s'il n'y a pas d'indication particulière, en ville, la vitesse est limitée à 50 km·h⁻¹ (Code de la route, article R 413-3). La tolérance est de 5 km·h⁻¹ pour les vitesses inférieures à 100 km·h⁻¹ (Arrêté du 7 janvier 1991).</p>
+      <div class="doc-media">
+        <img src="Entrainements/p394-3.png" alt="Données 2 : limitation de vitesse en ville et tolérance">
+      </div>
+    </div>
+    <div class="doc-flex" style="margin-top:14px;">
+      <p><strong>DOCUMENT — Représentation de la situation :</strong> au début et à la fin de la bande son, quand la voiture est loin du smartphone, on peut considérer que la direction de la vitesse est confondue avec la direction voiture-smartphone. Dans ces conditions, les relations des DONNÉES 1 sont applicables.</p>
+      <div class="doc-media">
+        <img src="Entrainements/p394-4.png" alt="Représentation de la situation : voiture, smartphone, et bande-son Audacity">
+      </div>
+    </div>
+    <div style="margin-top:14px;">
+      <strong>🎧 Fichier son :</strong> enregistrement (simulé) du passage de la voiture klaxon bloqué devant le smartphone.
+      <audio controls style="display:block; margin-top:8px; width:100%; max-width:420px;">
+        <source src="Entrainements/audio-doppler-klaxon.wav" type="audio/wav">
+        Ton navigateur ne prend pas en charge la lecture audio.
+      </audio>
+    </div>
+  </div>
+
+  <div class="intro-box" style="background:var(--jaune-clair); border-left-color:var(--jaune);">
+    En cas de difficulté, demander l'aide de ton professeur.
+  </div>
+
+  <div class="activite-card">
+    <h3 style="color:var(--bleu);">1 · Analyser-Raisonner <span class="badge-materiel">🧰 Matériel</span></h3>
+    <p style="font-size:0.85rem; color:var(--texte-leger); margin-bottom:8px;"><em>Matériel disponible : un ordinateur muni de logiciel(s) permettant d'analyser un son.</em></p>
+    <p>À l'aide du matériel disponible, proposer une expérience permettant de mesurer la vitesse du véhicule. <button class="btn-indice" onclick="toggleIndice('ind-ea5-1')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea5-1">Le fichier son contient les fréquences reçues avant et après le passage de la voiture. Pense à un logiciel qui permette de visualiser et mesurer la fréquence d'un son enregistré, puis à la relation des DONNÉES 1 permettant de remonter à v<sub>S</sub> sans connaître f.</div>
+  </div>
+
+  <div class="activite-card">
+    <h3 style="color:var(--bleu);">2 · Réaliser</h3>
+    <p>Réaliser l'expérience proposée. <button class="btn-indice" onclick="toggleIndice('ind-ea5-2')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea5-2">Utilise Audacity pour mesurer, sur le fichier son fourni, la fréquence reçue au début de l'enregistrement (voiture qui approche, f<sub>A</sub>) et à la fin (voiture qui s'éloigne, f<sub>B</sub>). Si tu ne sais pas utiliser le logiciel, ouvre le protocole d'aide ci-dessous.</div>
+    <button class="btn-aide" onclick="toggleAide('aide-ea5-audacity', this)">🔧 Aide logiciel (Audacity)</button>
+    <div class="aide-box" id="aide-ea5-audacity">
+      <div class="aide-titre">Protocole détaillé — Mesurer f_A et f_B avec Audacity</div>
+      <ol>
+        <li><strong>Ouvrir Audacity</strong> (logiciel gratuit). S'il n'est pas installé, télécharger la version correspondant à ton système sur <em>audacityteam.org</em>, puis l'installer.</li>
+        <li><strong>Importer le fichier son :</strong> menu <em>Fichier → Ouvrir</em> (ou glisser-déposer le fichier <code>audio-doppler-klaxon.wav</code> directement dans la fenêtre d'Audacity). La piste audio apparaît sous forme d'onde (représentation temporelle du signal).
+          <img class="protocole-img" src="Entrainements/p394-a1.png" alt="Piste audio importée dans Audacity, affichée en forme d'onde">
+          <div class="protocole-legende">Forme d'onde après import : on distingue déjà le renflement au moment du passage de la voiture.</div>
+        </li>
+        <li><strong>Passer en vue spectrogramme :</strong> cliquer sur l'icône <strong>⋯</strong> en haut à droite de la piste (menu déroulant de la piste) → choisir <em>Spectrogramme</em> à la place de « Forme d'onde ». La piste affiche alors la fréquence (axe vertical) en fonction du temps (axe horizontal), avec une couleur qui code l'intensité.
+          <img class="protocole-img" src="Entrainements/p394-a2.png" alt="Piste audio affichée en spectrogramme dans Audacity">
+          <div class="protocole-legende">Vue spectrogramme : on distingue deux bandes horizontales (la fondamentale et son harmonique) avec une légère bascule vers le milieu.</div>
+        </li>
+        <li><strong>Repérer les deux zones stables :</strong> sur le spectrogramme, on distingue une bande horizontale à fréquence plus élevée au tout début de l'enregistrement (la voiture est encore loin et s'approche) et une bande horizontale à fréquence plus basse à la toute fin (la voiture s'éloigne). C'est dans ces deux zones, où la voiture est encore loin du smartphone, que les relations des DONNÉES 1 s'appliquent.</li>
+        <li><strong>Sélectionner l'intervalle de temps</strong> correspondant à la première zone stable (par exemple entre 0,5 s et 1,5 s) en cliquant-glissant avec la souris sur cette portion de la piste.
+          <img class="protocole-img" src="Entrainements/p394-a3.png" alt="Sélection d'un intervalle de temps sur le spectrogramme, entre 0,5 s et 1,5 s">
+          <div class="protocole-legende">La zone sélectionnée apparaît en surbrillance sur toute la hauteur de la piste.</div>
+        </li>
+        <li><strong>Mesurer la fréquence précisément :</strong> menu <em>Analyse → Tracer le spectre</em> (« Plot Spectrum »). Une fenêtre s'ouvre avec un graphe amplitude/fréquence : le pic le plus haut correspond à la fréquence dominante du son sur l'intervalle sélectionné. Déplacer le curseur sur ce pic pour lire sa valeur exacte en Hz (affichée en bas de la fenêtre, à côté de « Pic : »). Noter cette valeur : c'est <strong>f<sub>A</sub></strong> (fréquence reçue pendant l'approche).
+          <img class="protocole-img" src="Entrainements/p394-a4.png" alt="Fenêtre Analyse de fréquence avec le pic mesuré à 481 Hz pour f_A">
+          <div class="protocole-legende">Exemple de lecture : ici le pic est à 481 Hz, ce sera f<sub>A</sub>.</div>
+        </li>
+        <li><strong>Refaire la même mesure sur la fin de l'enregistrement</strong> (par exemple entre 8,5 s et 9,5 s), toujours avec <em>Analyse → Tracer le spectre</em>. La valeur du pic obtenue est <strong>f<sub>B</sub></strong> (fréquence reçue pendant l'éloignement).
+          <img class="protocole-img" src="Entrainements/p394-a5.png" alt="Fenêtre Analyse de fréquence avec le pic mesuré à 436 Hz pour f_B">
+          <div class="protocole-legende">Exemple de lecture : ici le pic est à 436 Hz, ce sera f<sub>B</sub>.</div>
+        </li>
+        <li><strong>Calculer la vitesse v<sub>S</sub> :</strong> à partir des deux relations des DONNÉES 1, on peut éliminer la fréquence f (inconnue) émise par le klaxon pour obtenir une relation ne faisant intervenir que des grandeurs mesurées :
+          <div class="calc-step" style="margin-top:6px;">v<sub>S</sub> = v × (f<sub>A</sub> − f<sub>B</sub>) / (f<sub>A</sub> + f<sub>B</sub>)</div>
+          avec v = 340 m·s⁻¹ (célérité du son dans l'air). Remplacer f<sub>A</sub> et f<sub>B</sub> par les valeurs mesurées pour obtenir v<sub>S</sub> en m·s⁻¹, puis convertir en km·h⁻¹ (× 3,6).</li>
+        <li><strong>Conclure :</strong> comparer la vitesse obtenue à la vitesse limite autorisée augmentée de la tolérance (DONNÉES 2), pour dire si le conducteur est en infraction.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="activite-card">
+    <h3 style="color:var(--bleu);">3 · Valider</h3>
+    <p><strong>a.</strong> Compte tenu de la tolérance accordée aux automobilistes et du résultat obtenu à l'issue de l'expérience, justifier que le conducteur de la voiture est ou n'est pas en infraction pour excès de vitesse. <button class="btn-indice" onclick="toggleIndice('ind-ea5-3a')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea5-3a">Compare la vitesse v<sub>S</sub> calculée à la vitesse limite en ville augmentée de la tolérance (50 + 5 km·h⁻¹). Si v<sub>S</sub> dépasse cette valeur, conclus à l'infraction.</div>
+    <p style="margin-top:10px;"><strong>b.</strong> Mettre en commun les résultats de la classe. Lister des sources d'erreur expliquant la dispersion des résultats et discuter de l'influence du protocole. <button class="btn-indice" onclick="toggleIndice('ind-ea5-3b')">💡 Indice</button></p>
+    <div class="indice-box" id="ind-ea5-3b">Pense à la précision de la lecture du pic de fréquence sur le spectre, au choix de l'intervalle de temps sélectionné (la voiture est-elle vraiment très loin du smartphone à cet instant ?), à la valeur de la célérité du son utilisée, et aux conditions d'enregistrement.</div>
+  </div>
+
+  <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Voir la correction</button>
+  <div class="correction">
+    <p><strong>1. Analyser-Raisonner</strong></p>
+    <div class="calc-step">Expérience proposée : enregistrer (ou utiliser) le son du klaxon avec un smartphone fixe posé au bord de la route pendant le passage de la voiture, puis analyser ce fichier son avec un logiciel comme Audacity pour mesurer les fréquences reçues f<sub>A</sub> (voiture qui s'approche) et f<sub>B</sub> (voiture qui s'éloigne), avant d'utiliser les relations des DONNÉES 1 pour en déduire v<sub>S</sub>.</div>
+    <p style="margin-top:10px;"><strong>2. Réaliser</strong></p>
+    <div class="calc-step">Mesure au spectrogramme (via <em>Analyse → Tracer le spectre</em>) sur les deux portions stables de l'enregistrement :<br>f<sub>A</sub> ≈ 473 Hz (approche) &nbsp;|&nbsp; f<sub>B</sub> ≈ 429 Hz (éloignement)</div>
+    <div class="calc-step">En combinant les deux relations des DONNÉES 1 pour éliminer f : v<sub>S</sub> = v×(f<sub>A</sub> − f<sub>B</sub>)/(f<sub>A</sub> + f<sub>B</sub>)<br>v<sub>S</sub> = 340×(473 − 429)/(473 + 429) = 340×44/902 ≈ <strong>16,6 m·s⁻¹</strong></div>
+    <div class="calc-step">Conversion : v<sub>S</sub> ≈ 16,6 × 3,6 ≈ <strong>59,8 km·h⁻¹</strong> ≈ 60 km·h⁻¹</div>
+    <p style="margin-top:10px;"><strong>3. Valider</strong></p>
+    <div class="calc-step">a. La vitesse limite en ville est de 50 km·h⁻¹, avec une tolérance de 5 km·h⁻¹, soit une vitesse maximale tolérée de 55 km·h⁻¹. La vitesse mesurée (≈ 60 km·h⁻¹) dépasse cette valeur : <strong>le conducteur est en infraction pour excès de vitesse</strong>.</div>
+    <div class="calc-step">b. Sources d'erreur possibles : imprécision de la lecture du pic de fréquence sur le spectre (résolution du graphe, largeur du pic), choix de l'intervalle de temps analysé (la portion choisie n'est pas rigoureusement dans l'axe voiture-smartphone), incertitude sur la valeur de la célérité du son (dépend de la température de l'air), bruit de fond ou qualité de l'enregistrement. Un protocole plus précis (mesure de la température de l'air, sélection d'intervalles plus courts et bien choisis, répétition de la mesure) permettrait de réduire la dispersion des résultats.</div>
+  </div>
+
+  </div>
+  <!-- /sub-EA-4 (Activité 5 : Mesure d'une vitesse par effet Doppler) -->
+
+  </div>
+  <!-- /sub-E-0 (Activités) -->
+
+  <!-- Sous-onglet E2 : Exercices -->
+  <div class="sub-tab-content" id="sub-E-1">
+
+    <div class="sub3-tabs-nav" id="sub-nav-EX">
+      <button class="sub3-tab-btn active" data-sub="EX1" onclick="switchSubTab('EX',0)">🟢 Faciles</button>
+      <button class="sub3-tab-btn" data-sub="EX2" onclick="switchSubTab('EX',1)">🟠 Intermédiaires</button>
+      <button class="sub3-tab-btn" data-sub="EX3" onclick="switchSubTab('EX',2)">🔴 Difficiles</button>
+    </div>
+
+    <div class="sub-tab-content active" id="sub-EX-0">
+      <div class="exo-tabs-nav" id="sub-nav-EXF">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXF',0)">Exercice 1 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',1)">Exercice 2 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',2)">Exercice 3 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',3)">Exercice 4 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',4)">Exercice 5 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',5)">Exercice 6 <span class="exo-tab-stars">★☆☆</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXF-0">
+        <div class="exo-card">
+          <h3>Exercice 17 : Résoudre sans calculatrice</h3>
+          <div class="exo-enonce">
+            En utilisant les propriétés de la fonction logarithme décimal, déterminer sans calculatrice le niveau d'intensité sonore <em>L</em> en un point où l'intensité sonore d'une source vaut <em>I</em> = 5,0 × 10⁻⁵ W·m⁻². <button class="btn-indice" onclick="toggleIndice('ind-ex17')">💡 Indice</button>
+          </div>
+          <div class="indice-box" id="ind-ex17">Exprime d'abord le rapport I/I₀ (avec I₀ = 1,0 × 10⁻¹² W·m⁻²) sous la forme d'un produit d'une puissance de 10 par 5,0, puis utilise les deux propriétés du logarithme fournies : log(a×b) = log a + log b et log(aⁿ) = n×log a.</div>
+
+          <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+            <strong>Données</strong> — <em>a</em> et <em>b</em> étant des réels positifs :
+            <ul style="margin:6px 0 0 0; padding-left:20px;">
+              <li>log(a×b) = log a + log b</li>
+              <li>log(aⁿ) = n×log a</li>
+              <li>log 5,0 = 0,70</li>
+              <li>log 10 = 1</li>
+            </ul>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p>Le niveau d'intensité sonore s'écrit L = 10·log(I/I₀), avec I₀ = 1,0 × 10⁻¹² W·m⁻² (seuil d'audibilité).</p>
+            <div class="calc-step">I/I₀ = (5,0 × 10⁻⁵) / (1,0 × 10⁻¹²) = 5,0 × 10⁷</div>
+            <p style="margin-top:8px;">Or log(5,0 × 10⁷) = log 5,0 + log(10⁷) = log 5,0 + 7×log 10, donc :</p>
+            <div class="calc-step">log(I/I₀) = 0,70 + 7×1 = 7,70</div>
+            <div class="calc-step">L = 10 × 7,70 = <strong>77 dB</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXF-1">
+        <div class="exo-card">
+          <h3>Exercice 18 : Calculer l'intensité sonore du seuil de douleur</h3>
+          <div class="exo-enonce">
+            Le seuil de douleur d'un être humain est atteint pour un niveau d'intensité sonore <em>L</em> = 120 dB. Calculer l'intensité sonore correspondante. <button class="btn-indice" onclick="toggleIndice('ind-ex18')">💡 Indice</button>
+          </div>
+          <div class="indice-box" id="ind-ex18">Pars de la relation L = 10·log(I/I₀) et isole log(I/I₀), puis utilise l'équivalence y = log x ⟺ x = 10ʸ pour passer du logarithme à l'intensité I elle-même.</div>
+
+          <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+            <strong>Données</strong>
+            <ul style="margin:6px 0 0 0; padding-left:20px;">
+              <li>L = 10 log(I/I₀)</li>
+              <li>y = log x ⟺ x = 10ʸ avec y ∈ ℝ, x ∈ ℝ⁺*</li>
+            </ul>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p>On part de L = 10·log(I/I₀), avec I₀ = 1,0 × 10⁻¹² W·m⁻² (seuil d'audibilité).</p>
+            <div class="calc-step">log(I/I₀) = L/10 = 120/10 = 12</div>
+            <p style="margin-top:8px;">Or log(I/I₀) = 12 ⟺ I/I₀ = 10¹², donc :</p>
+            <div class="calc-step">I = I₀ × 10¹² = 1,0 × 10⁻¹² × 10¹² = <strong>1,0 W·m⁻²</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXF-2">
+        <div class="exo-card">
+          <h3>Exercice 20 : Se mettre en sécurité</h3>
+          <div class="exo-enonce">
+            À une distance <em>d</em> = 2,0 m d'une enceinte, le niveau d'intensité sonore est <em>L</em> = 110 dB. Sachant que le niveau d'intensité sonore diminue de 6 dB à chaque fois que la distance entre la source et le récepteur double, indiquer à quelle distance minimale <em>d'</em> il faut se placer pour que le niveau d'intensité sonore soit inférieur à 85 dB. <button class="btn-indice" onclick="toggleIndice('ind-ex20')">💡 Indice</button>
+          </div>
+          <div class="indice-box" id="ind-ex20">Calcule d'abord la baisse totale de niveau sonore nécessaire (L initial − 85 dB), puis détermine combien de « doublements de distance » de 6 dB chacun sont nécessaires pour atteindre au moins cette baisse. N'oublie pas d'arrondir au nombre entier de doublements immédiatement supérieur.</div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p>La baisse de niveau sonore nécessaire est : ΔL = 110 − 85 = 25 dB.</p>
+            <p style="margin-top:8px;">Chaque doublement de distance fait baisser le niveau de 6 dB. Il faut donc un nombre entier <em>n</em> de doublements tel que 6<em>n</em> ≥ 25 dB, soit <em>n</em> ≥ 25/6 ≈ 4,17, donc <em>n</em> = 5 doublements (avec <em>n</em> = 4, la baisse ne serait que de 24 dB, insuffisante).</p>
+            <div class="calc-step">d' = d × 2⁵ = 2,0 × 32 = <strong>64 m</strong></div>
+            <p style="margin-top:8px;">Il faut donc se placer à au moins 64 m de l'enceinte pour que le niveau sonore soit inférieur à 85 dB (à cette distance, L = 110 − 5×6 = 80 dB).</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXF-3">
+        <div class="exo-card">
+          <h3>Exercice 26 : Apprendre à rédiger</h3>
+          <div class="exo-enonce">
+            Un enfant immobile sur un trottoir regarde passer une ambulance, sirène en marche. Il constate que le son de la sirène change lorsque la voiture passe devant lui.
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a) Décrire l'évolution des caractéristiques du son entendu par l'enfant et nommer l'effet correspondant. <button class="btn-indice" onclick="toggleIndice('ind-ex26-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex26-a">Avant de citer l'effet observé, précise le sens d'évolution de la hauteur et de l'intensité du son entendu et indique si le timbre est <em>a priori</em> modifié.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) L'effet observé par l'enfant se traduit mathématiquement par l'expression f<sub>R</sub>/f = v/(v ± v<sub>S</sub>). Préciser la signification de chacune des grandeurs de cette expression. <button class="btn-indice" onclick="toggleIndice('ind-ex26-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex26-b">Bien faire la différence entre f<sub>R</sub> et f d'une part et célérité de l'onde et vitesse de la source d'autre part. Cite le référentiel d'étude.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c) Indiquer, en justifiant, à quelle situation correspond un signe + à la place du ± dans l'expression précédente. <button class="btn-indice" onclick="toggleIndice('ind-ex26-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex26-c">Compare le numérateur et le dénominateur du membre de droite de cette égalité pour en déduire s'il est inférieur ou supérieur à un et conclure.</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> Lorsque l'ambulance s'approche de l'enfant, la hauteur (fréquence perçue) et l'intensité du son entendu augmentent ; lorsqu'elle s'éloigne, elles diminuent toutes les deux. Le timbre du son n'est <em>a priori</em> pas modifié. Cet effet, lié au mouvement relatif de la source par rapport au récepteur, est l'<strong>effet Doppler</strong>.</p>
+            <p style="margin-top:10px;"><strong>b.</strong> f<sub>R</sub> est la fréquence perçue par le récepteur (l'enfant), f est la fréquence émise par la source (la sirène), v est la célérité du son dans l'air (le milieu de propagation) et v<sub>S</sub> est la vitesse de la source (l'ambulance) par rapport au référentiel terrestre, dans lequel l'enfant est immobile.</p>
+            <p style="margin-top:10px;"><strong>c.</strong> Lorsque la source s'éloigne du récepteur, la fréquence perçue f<sub>R</sub> est inférieure à la fréquence émise f, donc f<sub>R</sub>/f &lt; 1. Pour que v/(v ± v<sub>S</sub>) soit inférieur à 1, il faut que le dénominateur soit supérieur à v, ce qui correspond au signe <strong>+</strong> : v/(v + v<sub>S</sub>). Le signe + correspond donc à la situation où <strong>la source s'éloigne du récepteur</strong>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXF-4">
+        <div class="exo-card">
+          <h3>Exercice 30 : Détecter une exoplanète</h3>
+      <div class="exo-enonce">
+           <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+             <div style="flex:1;min-width:240px;">
+              <p> Lorsqu'une planète gravite autour d'une étoile, le couple étoile-exoplanète tourne autour du centre d'inertie de l'ensemble. Si le plan de révolution n'est pas perpendiculaire à la direction d'observation, l'étoile s'approche et s'éloigne périodiquement de la Terre.<br><br> </p>
+              <p> Pour la raie α du spectre de l'hydrogène (raie H<sub>α</sub>), la longueur d'onde de la lumière reçue d'une étoile varie entre 656,18 nm et 656,38 nm alors qu'au laboratoire, elle vaut λ<sub>α</sub> = 656,28 nm.</p>
+           </div>
+            <img src="Entrainements/ex30.png" alt="Photo de Michel Mayor et Didier Queloz, lauréats du prix Nobel de Physique 2019 pour leur découverte de la première exoplanète en 1995." style="flex:1;min-width:150px;max-width:150px;display:block;">
+        </div>
+        </div>
+          <div class="question-block">
+            <div class="question-label">a) Justifier que l'étoile observée n'est pas immobile par rapport à la Terre, mais a bien, au cours du temps, un mouvement dans la direction d'observation. <button class="btn-indice" onclick="toggleIndice('ind-ex30-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex30-a">Si l'étoile était immobile par rapport à la Terre, la longueur d'onde reçue serait-elle constante et égale à la valeur mesurée au laboratoire ? Compare avec ce qui est observé.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Calculer le décalage Doppler en longueur d'onde puis en déduire la valeur de la vitesse avec laquelle l'étoile tourne sur son orbite autour du centre d'inertie de l'ensemble. <button class="btn-indice" onclick="toggleIndice('ind-ex30-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex30-b">Le décalage Doppler Δλ correspond à l'écart entre la longueur d'onde extrême reçue (λ<sub>max</sub> ou λ<sub>min</sub>) et la longueur d'onde de référence λ<sub>α</sub> mesurée au laboratoire. Utilise ensuite la relation Δλ/λ<sub>α</sub> = v/c pour isoler v.</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> Si l'étoile était immobile par rapport à la Terre, la longueur d'onde reçue serait constante et égale à la valeur mesurée au laboratoire, λ<sub>α</sub> = 656,28 nm. Or la longueur d'onde reçue varie au cours du temps entre 656,18 nm et 656,38 nm : cette variation périodique de la longueur d'onde reçue (effet Doppler) montre que l'étoile se rapproche puis s'éloigne alternativement de la Terre, donc qu'elle possède bien un mouvement dans la direction d'observation.</p>
+            <p style="margin-top:10px;"><strong>b.</strong> Le décalage Doppler correspond à l'écart entre la longueur d'onde extrême et la longueur d'onde de référence :</p>
+            <div class="calc-step">Δλ = λ<sub>max</sub> − λ<sub>α</sub> = 656,38 − 656,28 = 0,10 nm</div>
+            <p style="margin-top:8px;">D'après la relation non relativiste de l'effet Doppler, Δλ/λ<sub>α</sub> = v/c, donc :</p>
+            <div class="calc-step">v = c × Δλ/λ<sub>α</sub> = (3,00 × 10⁸) × 0,10/656,28 ≈ <strong>4,6 × 10⁴ m·s⁻¹</strong></div>
+            <p style="margin-top:8px;">L'étoile tourne donc autour du centre d'inertie du système avec une vitesse d'environ 46 km·s⁻¹.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXF-5">
+        <div class="exo-card">
+          <h3>Exercice 34 : Reculer en toute sécurité</h3>
+          <div class="exo-enonce">
+            Les voitures récentes sont équipées d'un dispositif qui émet des bips sonores quand le véhicule recule. La fréquence des bips augmente quand on s'approche du véhicule à l'arrêt situé derrière. Justifier avec deux arguments qu'il ne s'agit pas d'un effet Doppler. <button class="btn-indice" onclick="toggleIndice('ind-ex34')">💡 Indice</button>
+          </div>
+          <div class="indice-box" id="ind-ex34">Un effet Doppler suppose un récepteur qui perçoit directement un décalage de fréquence d'une onde continue émise par une source, du fait d'un mouvement relatif entre eux au moment de la propagation. Ici, demande-toi : qui émet le son, qui l'entend, et ce qui varie réellement (la hauteur d'un son continu, ou autre chose) ?</div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p>Il ne s'agit pas d'un effet Doppler, pour deux raisons :</p>
+            <p style="margin-top:8px;"><strong>1.</strong> L'effet Doppler concerne le décalage de la fréquence perçue d'une onde <strong>continue</strong> émise par une source, lorsqu'il existe un mouvement relatif entre la source et le récepteur pendant la propagation de cette onde. Or ici, chaque bip a la même hauteur (même fréquence acoustique) : ce n'est pas le son lui-même qui change de fréquence, mais uniquement la <strong>cadence de répétition</strong> des bips (leur fréquence de répétition) qui augmente.</p>
+            <p style="margin-top:8px;"><strong>2.</strong> La variation de cette cadence n'est pas due à un mouvement relatif entre une source sonore et un récepteur au sens de l'effet Doppler : elle est <strong>générée électroniquement</strong> par le calculateur du véhicule à partir de la distance mesurée par un capteur (ultrasons ou radar), et non par la perception directe d'une onde sonore décalée en fréquence par le mouvement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-tab-content" id="sub-EX-1">
+      <div class="exo-tabs-nav" id="sub-nav-EXI">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXI',0)">Exercice 7 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',1)">Exercice 8 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',2)">Exercice 9 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',3)">Exercice 10 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',4)">Exercice 11 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',5)">Exercice 12 <span class="exo-tab-stars">★☆☆</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXI-0">
+        <div class="exo-card">
+          <h3>Exercice 35 : Calculer un rapport d'énergie</h3>
+          <div class="exo-enonce">
+            L'indice d'affaiblissement acoustique <em>R</em> d'un matériau, exprimé en dB, caractérise la « résistance » de 1 m² d'une paroi constituée de ce matériau au passage du bruit. Il est défini par : <em>R</em> = 10 log(𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub>), 𝓔<sub>incidente</sub> et 𝓔<sub>transmise</sub> étant les énergies mesurées de chaque côté de la paroi. Calculer le rapport d'énergie 𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub> lorsque l'indice d'affaiblissement acoustique est égal à 50. <button class="btn-indice" onclick="toggleIndice('ind-ex35')">💡 Indice</button>
+          </div>
+          <div class="indice-box" id="ind-ex35">Isole d'abord log(𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub>) à partir de la relation R = 10 log(𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub>), puis utilise l'équivalence y = log x ⟺ x = 10ʸ pour retrouver le rapport d'énergie.</div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p>On part de R = 10 log(𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub>).</p>
+            <div class="calc-step">log(𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub>) = R/10 = 50/10 = 5</div>
+            <p style="margin-top:8px;">Or log(𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub>) = 5 ⟺ 𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub> = 10⁵, donc :</p>
+            <div class="calc-step">𝓔<sub>incidente</sub>/𝓔<sub>transmise</sub> = <strong>1,0 × 10⁵</strong></div>
+            <p style="margin-top:8px;">Une paroi d'indice d'affaiblissement acoustique R = 50 dB laisse donc passer 100 000 fois moins d'énergie sonore qu'elle n'en reçoit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXI-1">
+        <div class="exo-card">
+          <h3>Exercice 36 : Vitesse de fuite de la galaxie NGC 3627</h3>
+         
+          <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+           <div style="flex:1;min-width:240px;">
+             <div class="exo-enonce">
+               La figure ci-dessous représente une petite partie du spectre d'émission de la galaxie NGC 3627. Sur ce spectre figurent la raie α de la lumière émise par l'hydrogène de la galaxie ainsi que la même raie obtenue au laboratoire avec une lampe à hydrogène et le même spectroscope.
+             </div>
+           </div>
+          <img src="Entrainements/ex36.png" alt="Spectre d'intensité relative en fonction de la longueur d'onde entre 6500 et 6800 Å : la raie d'hydrogène au laboratoire est repérée par une ligne rouge verticale vers 6563 Å, la raie d'hydrogène de la galaxie correspond au pic d'intensité décalé vers les grandes longueurs d'onde, vers 6580 Å." style="max-width:300px;width:100%;display:block;margin:10px auto;border-radius:8px;">
+         </div>
+
+          <div class="question-block">
+            <div class="question-label">a) Justifier le fait que les deux raies ne soient pas superposées. <button class="btn-indice" onclick="toggleIndice('ind-ex36-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex36-a">Si la galaxie était immobile par rapport à nous, la raie observée coïnciderait-elle avec la raie de référence obtenue au laboratoire ? Quel phénomène explique un tel décalage entre les deux longueurs d'onde ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Déterminer si la galaxie NGC 3627 s'éloigne ou se rapproche de la nôtre. <button class="btn-indice" onclick="toggleIndice('ind-ex36-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex36-b">Compare la longueur d'onde de la raie de la galaxie à celle de la raie de référence : est-elle plus grande ou plus petite ? Un décalage vers les grandes longueurs d'onde (vers le rouge) correspond-il à un éloignement ou à un rapprochement de la source ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c) À partir de l'expression du décalage Doppler de longueur d'onde, calculer la valeur de la vitesse de cette galaxie dans un référentiel lié à la nôtre. <button class="btn-indice" onclick="toggleIndice('ind-ex36-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex36-c">Lis sur le graphique les longueurs d'onde de la raie au laboratoire et de la raie de la galaxie, calcule leur écart Δλ, puis utilise la relation Δλ/λ = v/c pour isoler v.</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> Les deux raies ne sont pas superposées car la longueur d'onde de la raie émise par l'hydrogène de la galaxie n'est pas égale à celle mesurée au laboratoire pour le même élément : ce décalage s'explique par l'<strong>effet Doppler</strong>, dû au mouvement relatif de la galaxie par rapport à la Terre.</p>
+            <p style="margin-top:10px;"><strong>b.</strong> La raie de la galaxie est décalée vers les grandes longueurs d'onde (vers le rouge) par rapport à la raie de référence obtenue au laboratoire. Un tel décalage vers le rouge correspond à un <strong>éloignement</strong> de la source : la galaxie NGC 3627 <strong>s'éloigne</strong> de la nôtre.</p>
+            <p style="margin-top:10px;"><strong>c.</strong> D'après le graphique, la raie de référence au laboratoire est à λ ≈ 656,3 nm (6563 Å) et la raie de la galaxie est à λ' ≈ 658,0 nm (6580 Å).</p>
+            <div class="calc-step">Δλ = λ' − λ = 658,0 − 656,3 = 1,7 nm</div>
+            <p style="margin-top:8px;">D'après la relation non relativiste de l'effet Doppler, Δλ/λ = v/c, donc :</p>
+            <div class="calc-step">v = c × Δλ/λ = (3,00 × 10⁸) × 1,7/656,3 ≈ <strong>7,8 × 10⁵ m·s⁻¹</strong></div>
+            <p style="margin-top:8px;">La galaxie NGC 3627 s'éloigne donc de nous à une vitesse d'environ 780 km·s⁻¹.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXI-2">
+        <div class="exo-card">
+          <h3>Exercice 37 : Rendement d'une enceinte</h3>
+          <div class="exo-enonce">
+            Pour déterminer le rendement de leurs enceintes, deux élèves empruntent un sonomètre au laboratoire de leur lycée et mesurent le niveau d'intensité sonore à 10 m des enceintes. Ils obtiennent 80 dB. Ils ont lu sur Internet que le rendement d'une enceinte s'exprime en dB·W⁻¹·m⁻¹ : c'est le niveau d'intensité sonore à 1,0 m des enceintes lorsque la puissance électrique est égale à 𝒫<sub>élec</sub> = 1,0 W.
+          </div>
+
+          <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+            <strong>Donnée</strong> — I = 𝒫/(4πd²)
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a) Calculer le niveau d'intensité sonore <em>L</em> à 1,0 m des enceintes. <button class="btn-indice" onclick="toggleIndice('ind-ex37-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex37-a">Convertis d'abord le niveau sonore à 10 m en intensité sonore I(10 m), utilise la donnée I = 𝒫/(4πd²) pour en déduire la puissance acoustique 𝒫 rayonnée, puis calcule l'intensité I(1 m) avec cette même puissance à d = 1,0 m avant de repasser en dB.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Sachant que la puissance électrique au niveau des haut-parleurs est 𝒫<sub>HP</sub> = 16 W, en déduire le rendement des enceintes. <button class="btn-indice" onclick="toggleIndice('ind-ex37-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex37-b">Le rendement correspond au niveau sonore qui serait obtenu à 1,0 m avec seulement 1,0 W électrique. Comme l'intensité sonore est proportionnelle à la puissance électrique, exprime l'écart de niveau entre 16 W et 1,0 W à l'aide de 10 log(𝒫<sub>HP</sub>/1,0), puis retranche cet écart au niveau trouvé en a).</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> On convertit d'abord le niveau sonore à 10 m en intensité sonore, avec I₀ = 1,0 × 10⁻¹² W·m⁻² :</p>
+            <div class="calc-step">I(10 m) = I₀ × 10^(L/10) = 1,0 × 10⁻¹² × 10⁸ = 1,0 × 10⁻⁴ W·m⁻²</div>
+            <p style="margin-top:8px;">D'après I = 𝒫/(4πd²), la puissance acoustique rayonnée par les enceintes vaut :</p>
+            <div class="calc-step">𝒫 = I(10 m) × 4π × d² = 1,0 × 10⁻⁴ × 4π × 10² ≈ 0,13 W</div>
+            <p style="margin-top:8px;">Avec cette même puissance, l'intensité sonore à 1,0 m est :</p>
+            <div class="calc-step">I(1 m) = 𝒫/(4π × 1,0²) ≈ 1,0 × 10⁻² W·m⁻²</div>
+            <p style="margin-top:8px;">Soit un niveau sonore à 1,0 m :</p>
+            <div class="calc-step">L(1 m) = 10 log(I(1 m)/I₀) = 10 log(1,0 × 10¹⁰) = <strong>100 dB</strong></div>
+            <p style="margin-top:10px;"><strong>b.</strong> Le rendement correspond au niveau sonore qui serait obtenu à 1,0 m avec une puissance électrique de seulement 1,0 W, alors que la mesure précédente correspond à 𝒫<sub>HP</sub> = 16 W. Comme l'intensité sonore est proportionnelle à la puissance électrique, l'écart de niveau entre les deux puissances est :</p>
+            <div class="calc-step">10 log(𝒫<sub>HP</sub>/1,0) = 10 log(16) ≈ 12 dB</div>
+            <p style="margin-top:8px;">Le rendement, obtenu avec une puissance électrique 16 fois plus faible, est donc inférieur de 12 dB au niveau trouvé en a) :</p>
+            <div class="calc-step">Rendement = L(1 m) − 12 = 100 − 12 ≈ <strong>88 dB·W⁻¹·m⁻¹</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXI-3">
+        
+        <div class="exo-card">
+          <h3>Exercice 38 : Radar routier</h3>
+            
+          <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+            <div style="flex:1;min-width:240px;">
+              <div class="exo-enonce">
+               Les radars fixes installés au bord des routes mesurent la vitesse des véhicules par effet Doppler et prennent une photo si la vitesse enregistrée est supérieure à la vitesse autorisée. Les ondes utilisées sont des ondes électromagnétiques de fréquence <em>f</em> = 34,0 GHz. La voiture ne constitue pas une source en mouvement car elle n'émet pas d'ondes électromagnétiques : elle diffuse les ondes émises par le radar.<br><br>
+               Les radars sont installés de telle sorte que l'angle α entre la direction de visée et l'axe de la route soit égal à 25° (la valeur de α est ajustée lors de l'installation). Dans ces conditions, le décalage de fréquence dû à l'effet Doppler se calcule grâce à l'expression : |Δf| = 2 cos α × f × v/c.
+               </div>
+            </div>
+            <img src="Entrainements/ex38.png" alt="Schéma d'un radar routier visé selon un angle alpha par rapport à l'axe de la route, une voiture circulant sur la route étant traversée par le faisceau du radar." style="max-width:420px;width:100%;display:block;margin:10px auto;border-radius:8px;">
+           </div>
+          <div class="question-block">
+            <div class="question-label">a) Un véhicule passe devant le radar à 98 km·h⁻¹ alors que la vitesse est limitée à 90 km·h⁻¹. Calculer |Δf| pour ces deux valeurs de vitesses. <button class="btn-indice" onclick="toggleIndice('ind-ex38-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex38-a">Convertis d'abord les deux vitesses en m·s⁻¹, puis applique directement la formule |Δf| = 2 cos α × f × v/c avec α = 25° et f = 34,0 GHz pour chacune des deux vitesses.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Un radar identique a été mis en place sur une route voisine pour effectuer le même contrôle de vitesse. Lors de l'installation, la valeur de l'angle α n'a pas été respectée : 9° au lieu de 25°. Indiquer en quoi cela pose un problème. <button class="btn-indice" onclick="toggleIndice('ind-ex38-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex38-b">Le radar calcule la vitesse à partir du décalage Δf mesuré en supposant toujours α = 25° dans la formule. Compare cos 9° et cos 25° : si l'angle réel diffère de celui supposé par le calculateur, la vitesse calculée à partir du même Δf sera-t-elle correcte ?</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> On convertit les vitesses en m·s⁻¹ : v₁ = 98/3,6 ≈ 27,2 m·s⁻¹ et v₂ = 90/3,6 = 25,0 m·s⁻¹. Avec cos 25° ≈ 0,906 :</p>
+            <div class="calc-step">|Δf₁| = 2 × cos 25° × f × v₁/c = 2 × 0,906 × 34,0 × 10⁹ × 27,2/(3,00 × 10⁸) ≈ <strong>5,59 × 10³ Hz</strong></div>
+            <div class="calc-step">|Δf₂| = 2 × cos 25° × f × v₂/c = 2 × 0,906 × 34,0 × 10⁹ × 25,0/(3,00 × 10⁸) ≈ <strong>5,14 × 10³ Hz</strong></div>
+            <p style="margin-top:10px;"><strong>b.</strong> Le radar calcule la vitesse du véhicule à partir du décalage Δf mesuré en utilisant la formule v = Δf × c/(2 cos α × f), avec la valeur d'angle α = 25° qu'il est censé avoir. Or l'angle réellement installé est de 9°, avec cos 9° ≈ 0,988 &gt; cos 25° ≈ 0,906. Pour une vitesse réelle donnée, le décalage Δf effectivement produit avec cet angle de 9° est donc plus grand que celui qui serait produit avec 25°. Le calculateur du radar, qui divise toujours par cos 25° (et non par cos 9°), va alors surestimer la vitesse dans le rapport cos 9°/cos 25° ≈ 1,09, soit une vitesse calculée supérieure d'environ <strong>9 %</strong> à la vitesse réelle du véhicule. Ce défaut d'installation pose donc un problème de fiabilité de la mesure : des véhicules respectant la limitation de vitesse pourraient être injustement verbalisés pour excès de vitesse.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXI-4">
+        <div class="exo-card">
+          <h3>Exercice 39 : Record de vitesse sur rail</h3>
+          <div class="exo-enonce">
+            Jusqu'au 22 avril 2015, le TGV détenait le record du monde de vitesse sur rail avec une vitesse de valeur égale à 574,8 km·h⁻¹. Le jour du record, le 3 avril 2007, un technicien se tient près de la voie et constate, lorsque le train passe en klaxonnant, que la fréquence du son qu'il perçoit est deux fois plus élevée quand le train s'approche que lorsqu'il s'éloigne.<br><br>
+            Le décalage Doppler en fréquence à l'approche du train roulant à une vitesse de valeur constante v<sub>S</sub> en direction d'un observateur immobile est tel que : |Δf| = f × v<sub>S</sub>/(v − v<sub>S</sub>), <em>v</em> étant la célérité des ondes sonores.
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a) Démontrer que |Δf| = f × v<sub>S</sub>/(v + v<sub>S</sub>) lorsque le train s'éloigne. <button class="btn-indice" onclick="toggleIndice('ind-ex39-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex39-a">Reprends le même raisonnement que pour l'approche (écart entre deux fronts d'onde successifs sur une période T du son émis), mais en tenant compte du fait que la source s'éloigne de l'observateur pendant cette durée T, au lieu de s'en rapprocher.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Calculer la valeur de la vitesse du train lors de son passage devant le technicien. <button class="btn-indice" onclick="toggleIndice('ind-ex39-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex39-b">Exprime la fréquence perçue à l'approche (f<sub>R,approche</sub> = f + |Δf|<sub>approche</sub>) et celle à l'éloignement (f<sub>R,éloignement</sub> = f − |Δf|<sub>éloignement</sub>), traduis la condition « deux fois plus élevée » par une égalité entre ces deux fréquences perçues, puis résous pour v<sub>S</sub> (prendre v ≈ 340 m·s⁻¹ pour la célérité du son dans l'air).</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> Pendant une période T = 1/f du son émis, la source s'éloigne de l'observateur d'une distance supplémentaire v<sub>S</sub>T. La distance entre deux fronts d'onde successifs, telle que perçue par l'observateur, est donc étirée : elle vaut λ<sub>R</sub> = vT + v<sub>S</sub>T = (v + v<sub>S</sub>)T, au lieu de λ = vT dans le cas d'une source immobile. La fréquence perçue est donc :</p>
+            <div class="calc-step">f<sub>R</sub> = v/λ<sub>R</sub> = v/[(v + v<sub>S</sub>)T] = f × v/(v + v<sub>S</sub>)</div>
+            <p style="margin-top:8px;">Le décalage en fréquence vaut alors :</p>
+            <div class="calc-step">|Δf| = f − f<sub>R</sub> = f × [1 − v/(v + v<sub>S</sub>)] = f × v<sub>S</sub>/(v + v<sub>S</sub>)</div>
+            <p style="margin-top:10px;"><strong>b.</strong> La fréquence perçue à l'approche est f<sub>R,approche</sub> = f + |Δf|<sub>approche</sub> = f × v/(v − v<sub>S</sub>), et celle à l'éloignement est f<sub>R,éloignement</sub> = f − |Δf|<sub>éloignement</sub> = f × v/(v + v<sub>S</sub>). La condition « fréquence perçue deux fois plus élevée à l'approche qu'à l'éloignement » s'écrit :</p>
+            <div class="calc-step">f × v/(v − v<sub>S</sub>) = 2 × f × v/(v + v<sub>S</sub>)</div>
+            <p style="margin-top:8px;">En simplifiant par f × v puis en développant :</p>
+            <div class="calc-step">v + v<sub>S</sub> = 2(v − v<sub>S</sub>) ⟺ 3v<sub>S</sub> = v ⟺ v<sub>S</sub> = v/3</div>
+            <p style="margin-top:8px;">Avec v ≈ 340 m·s⁻¹ pour la célérité du son dans l'air :</p>
+            <div class="calc-step">v<sub>S</sub> = 340/3 ≈ 113 m·s⁻¹ ≈ <strong>408 km·h⁻¹</strong></div>
+            <p style="margin-top:8px;">Cette estimation, obtenue par une méthode acoustique assez simple, est nettement inférieure à la vitesse officielle du record (574,8 km·h⁻¹), ce qui illustre les limites de précision de ce genre de mesure « à l'oreille ».</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXI-5">
+        <div class="exo-card">
+          <h3>Exercice 40 : Retour sur l'ouverture du chapitre</h3>
+          <div class="exo-enonce">
+            À 200 mètres d'un avion au décollage, le niveau d'intensité sonore est proche de <em>L</em><sub>a</sub> = 125 dB. Quand un étourneau chante, on estime que le niveau d'intensité sonore à un mètre de l'oiseau est de <em>L</em><sub>e</sub> = 60 dB.
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a) Déterminer le nombre d'étourneaux qu'il faudrait dans une nuée pour atteindre le niveau d'intensité sonore d'un avion si la nuée se trouve en moyenne à 200 mètres du lieu d'écoute. <button class="btn-indice" onclick="toggleIndice('ind-ex40-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex40-a">Convertis d'abord L<sub>e</sub> = 60 dB à 1 m en intensité sonore, ramène-la à 200 m grâce à la loi en 1/d², puis convertis L<sub>a</sub> = 125 dB en intensité à 200 m. Pour N sources incohérentes identiques à la même distance, l'intensité totale vaut N fois l'intensité d'une seule source : il ne reste plus qu'à isoler N.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Une nuée d'étourneaux compte environ un million d'oiseaux. Doit-on porter un casque antibruit pour admirer leur ballet ? <button class="btn-indice" onclick="toggleIndice('ind-ex40-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex40-b">Calcule le niveau sonore réellement produit à 200 m par un million d'étourneaux (même méthode qu'en a), puis compare-le aux seuils de risque auditif usuels (autour de 80-85 dB pour une exposition prolongée).</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> On convertit d'abord L<sub>e</sub> = 60 dB à 1 m en intensité sonore, avec I₀ = 1,0 × 10⁻¹² W·m⁻² :</p>
+            <div class="calc-step">I<sub>e</sub>(1 m) = I₀ × 10^(L<sub>e</sub>/10) = 1,0 × 10⁻¹² × 10⁶ = 1,0 × 10⁻⁶ W·m⁻²</div>
+            <p style="margin-top:8px;">À 200 m, l'intensité d'un seul étourneau devient (loi en 1/d²) :</p>
+            <div class="calc-step">I<sub>e</sub>(200 m) = I<sub>e</sub>(1 m)/200² = 1,0 × 10⁻⁶/4,0 × 10⁴ = 2,5 × 10⁻¹¹ W·m⁻²</div>
+            <p style="margin-top:8px;">L'intensité sonore d'un avion à 200 m correspondant à L<sub>a</sub> = 125 dB est :</p>
+            <div class="calc-step">I<sub>a</sub>(200 m) = I₀ × 10^(L<sub>a</sub>/10) = 1,0 × 10⁻¹² × 10^12,5 ≈ 3,2 W·m⁻²</div>
+            <p style="margin-top:8px;">Pour N étourneaux incohérents à 200 m, l'intensité totale est N × I<sub>e</sub>(200 m). Pour atteindre I<sub>a</sub>(200 m), il faut :</p>
+            <div class="calc-step">N = I<sub>a</sub>(200 m)/I<sub>e</sub>(200 m) = 3,2/(2,5 × 10⁻¹¹) ≈ <strong>1,3 × 10¹¹ étourneaux</strong></div>
+            <p style="margin-top:8px;">Ce nombre (environ 130 milliards d'oiseaux) est totalement irréaliste : il illustre le caractère logarithmique de l'échelle des décibels, qui rend le niveau sonore d'un avion très difficile à atteindre avec des sources aussi faibles individuellement que des chants d'oiseaux.</p>
+            <p style="margin-top:10px;"><strong>b.</strong> Pour une nuée réaliste de N' = 1,0 × 10⁶ étourneaux à 200 m, l'intensité totale est :</p>
+            <div class="calc-step">I' = N' × I<sub>e</sub>(200 m) = 1,0 × 10⁶ × 2,5 × 10⁻¹¹ = 2,5 × 10⁻⁵ W·m⁻²</div>
+            <p style="margin-top:8px;">Soit un niveau sonore :</p>
+            <div class="calc-step">L' = 10 log(I'/I₀) = 10 log(2,5 × 10⁷) ≈ <strong>74,0 dB</strong></div>
+            <p style="margin-top:8px;">Ce niveau, comparable à celui d'une conversation animée ou d'une circulation routière modérée, reste très inférieur aux seuils de risque auditif (environ 80-85 dB pour une exposition prolongée). Il n'est donc <strong>pas nécessaire</strong> de porter un casque antibruit pour admirer le ballet d'une nuée d'étourneaux.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-tab-content" id="sub-EX-2">
+      <div class="exo-tabs-nav" id="sub-nav-EXD">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXD',0)">Exercice 13 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',1)">Exercice 14 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',2)">Exercice 15 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',3)">Exercice 16 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',4)">Exercice 17 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',5)">Exercice 18 <span class="exo-tab-stars">★★★</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXD-0">
+        <div class="exo-card">
+          <h3>Exercice 43 : Une expérience historique</h3>
+          <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+            <div style="flex:1;min-width:240px;">
+              <div class="exo-enonce">
+                3 juin 1845 : trois musiciens, installés dans un wagon découvert, accordent leurs cornets à pistons, et plusieurs groupes d'observateurs, dotés de l'oreille absolue, sont disséminés à des intervalles bien déterminés le long de la voie. Dès que le train atteindra sa vitesse maximale, soit plus de 70 km/h, les musiciens joueront à l'unisson et aussi fort que possible, de façon à couvrir le bruit de la locomotive, un <em>la</em> dont les observateurs placés le long de la voie tenteront d'estimer l'altération, en demis et quarts de ton, sous l'effet de la vitesse.
+              </div>
+              <div class="exo-enonce" style="margin-top:8px;">
+                L'expérience donnera les résultats que tout le monde attendait. À fond sur sa locomotive, Buys Ballot démontra – avec quel panache ! – ce que chacun tenait pour acquis.
+              </div>
+              <p style="font-size:0.82rem; color:var(--texte-leger); margin-top:6px;">D'après Nicolas Witkowski, <em>Une histoire sentimentale des sciences</em>, Éditions du Seuil, 2003.</p>
+              <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+                <strong>Donnée</strong> — Dans la gamme tempérée, l'écart d'un demi-ton entre deux notes correspond à une variation relative de fréquence d'environ 6 %.
+              </div>
+            </div>
+            <img src="Entrainements/ex43.png" alt="Illustration d'époque : une locomotive à vapeur tractant un wagon découvert où des musiciens jouent du cornet à pistons ; des observateurs postés le long de la voie écoutent la note jouée." style="flex:1;min-width:220px;max-width:300px;display:block;margin:10px auto;border-radius:8px;">
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a) Indiquer le nom du phénomène que cherche à mettre en évidence Buys Ballot dans cette expérience. <button class="btn-indice" onclick="toggleIndice('ind-ex43-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex43-a">Le train est en mouvement par rapport aux observateurs immobiles le long de la voie : quel effet relie le mouvement relatif d'une source sonore et la fréquence perçue par un observateur ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Expliquer en quoi ce phénomène consiste et comment l'expérience doit permettre de le vérifier. <button class="btn-indice" onclick="toggleIndice('ind-ex43-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex43-b">Pense à ce que devient la fréquence perçue par un observateur fixe lorsque la source se rapproche puis s'éloigne de lui. Dans l'expérience, qui joue le rôle de la source ? Qui joue le rôle des observateurs, et pourquoi doivent-ils avoir l'oreille absolue ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">
+              c) Lorsque la locomotive est en approche à la vitesse v<sub>L</sub>, le son perçu est plus aigu que celui émis et le niveau d'intensité sonore augmente.<br>
+              Parmi les relations (1) et (2) ci-dessous, indiquer celle qui lie la fréquence <em>f</em> de l'onde émise par les musiciens à la fréquence <em>f</em><sub>Obs</sub> de l'onde perçue par les observateurs lorsque la locomotive s'approche d'eux à la vitesse v<sub>L</sub>.
+              <button class="btn-indice" onclick="toggleIndice('ind-ex43-c')">💡 Indice</button>
+            </div>
+            <div style="text-align:center; margin:8px 0; font-size:0.95rem;">
+              (1) f<sub>Obs</sub> = f × v/(v − v<sub>L</sub>) &nbsp;&nbsp;&nbsp; (2) f<sub>Obs</sub> = f × v/(v + v<sub>L</sub>)
+            </div>
+            <div class="indice-box" id="ind-ex43-c">Le son perçu étant plus aigu, f<sub>Obs</sub> doit être supérieure à f. Laquelle des deux expressions donne, pour v<sub>L</sub> &gt; 0, une fréquence perçue plus grande que f ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">d) En supposant que la note jouée par les musiciens soit l'une des notes présentées dans le tableau ci-dessous, justifier que l'expérience donne un résultat concluant. <button class="btn-indice" onclick="toggleIndice('ind-ex43-d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex43-d">Calcule la variation relative Δf/f = v<sub>L</sub>/(v − v<sub>L</sub>) en prenant v<sub>L</sub> = 70 km/h converti en m·s⁻¹ et v ≈ 340 m·s⁻¹ pour la célérité du son. Cette variation dépend-elle de la note choisie dans le tableau ? Compare-la à la donnée sur le demi-ton.</div>
+          </div>
+
+          <div style="overflow-x:auto; margin:10px 0;">
+            <table style="border-collapse:collapse; width:100%; font-size:0.88rem;">
+              <tr style="background:var(--vert-clair);">
+                <th style="border:1px solid var(--vert-exo-bord); padding:6px 10px; text-align:left;">Note</th>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">Ré₃</td>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">Mi₃</td>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">Fa₃</td>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">Sol₃</td>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">La₃</td>
+              </tr>
+              <tr>
+                <th style="border:1px solid var(--vert-exo-bord); padding:6px 10px; text-align:left;">Fréquence (en Hz)</th>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">294</td>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">330</td>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">349</td>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">392</td>
+                <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">440</td>
+              </tr>
+            </table>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> Buys Ballot cherche à mettre en évidence l'<strong>effet Doppler</strong> (Doppler-Fizeau), c'est-à-dire le décalage de la fréquence d'une onde perçue par un observateur lorsque la source qui l'émet est en mouvement par rapport à lui.</p>
+            <p style="margin-top:10px;"><strong>b.</strong> Ce phénomène consiste en un écart entre la fréquence <em>f</em> de l'onde émise par une source et la fréquence <em>f</em><sub>Obs</sub> perçue par un observateur, dès lors qu'il existe un mouvement relatif entre la source et l'observateur : la fréquence perçue augmente quand la source se rapproche, et diminue quand elle s'éloigne. Dans l'expérience, les musiciens jouent le rôle de la source (fréquence <em>f</em> connue et fixe), tandis que les observateurs, immobiles le long de la voie, jouent le rôle des récepteurs ; leur oreille absolue leur permet d'estimer directement, en demis et quarts de ton, l'altération de la note perçue au passage du train, ce qui permet de vérifier expérimentalement que la fréquence perçue varie bien avec la vitesse de la source.</p>
+            <p style="margin-top:10px;"><strong>c.</strong> Le son perçu à l'approche étant plus aigu, on a <em>f</em><sub>Obs</sub> &gt; <em>f</em>. C'est la relation <strong>(1)</strong> qui convient : f<sub>Obs</sub> = f × v/(v − v<sub>L</sub>), le dénominateur (v − v<sub>L</sub>) étant plus petit que v, ce qui donne bien f<sub>Obs</sub> &gt; f (la relation (2) donnerait au contraire une fréquence perçue plus faible que f, incompatible avec l'énoncé).</p>
+            <p style="margin-top:10px;"><strong>d.</strong> On convertit la vitesse maximale du train : v<sub>L</sub> = 70/3,6 ≈ 19,4 m·s⁻¹, et on prend v ≈ 340 m·s⁻¹ pour la célérité du son dans l'air.</p>
+            <div class="calc-step">Δf/f = f<sub>Obs</sub>/f − 1 = v<sub>L</sub>/(v − v<sub>L</sub>) = 19,4/(340 − 19,4) = 19,4/320,6 ≈ <strong>6,1 %</strong></div>
+            <p style="margin-top:8px;">Cette variation relative ne dépend que de v et de v<sub>L</sub>, pas de la fréquence <em>f</em> de la note jouée : elle vaut environ 6,1 % <strong>quelle que soit la note choisie</strong> dans le tableau (Ré₃, Mi₃, Fa₃, Sol₃ ou La₃).</p>
+            <p style="margin-top:8px;">Or, d'après la donnée, un écart de 6 % correspond à un <strong>demi-ton</strong>. L'altération produite par la vitesse du train (≈ 6,1 %) correspond donc à un décalage d'environ un demi-ton, ce qui est largement supérieur à la plus petite variation détectable mentionnée dans l'énoncé (le quart de ton, ≈ 3 %). Des observateurs à l'oreille absolue peuvent donc percevoir sans ambiguïté ce décalage : l'expérience donne bien un résultat concluant, quelle que soit la note effectivement jouée par les musiciens.</p>
+            <p style="margin-top:8px; font-style:italic;">À titre d'exemple, si les musiciens jouent un La₃ (440 Hz), les observateurs perçoivent à l'approche f<sub>Obs</sub> ≈ 440 × 340/320,6 ≈ 467 Hz, soit une note très proche du La♯₃ (≈ 466 Hz) — exactement ce qu'entend l'observateur de la bande dessinée !</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXD-1">
+        <div class="exo-card">
+          <h3>Exercice 44 : Doppler sanguin</h3>
+          <div class="exo-enonce">
+            Le Doppler sanguin est un examen couramment pratiqué en milieu hospitalier. Il permet d'étudier le flux sanguin dans les artères et les veines dans le but de détecter la présence éventuelle d'un obstacle comme une plaque d'athérome pour les personnes qui souffrent d'un excès de cholestérol.
+          </div>
+          <div class="exo-enonce" style="margin-top:8px;">
+            La sonde utilisée est munie d'un émetteur ultrasonore de fréquence f<sub>E</sub> = 4,0 MHz et d'un récepteur qui capte le signal réfléchi par les globules rouges et mesure sa fréquence f<sub>R</sub>. Dans ces conditions, le décalage Doppler en fréquence est donné par la relation :
+          </div>
+          <div style="text-align:center; margin:10px 0; font-size:1.0rem;">
+            Δf = f<sub>E</sub> − f<sub>R</sub> = 2cosα × f<sub>E</sub> × v<sub>G</sub>/v
+          </div>
+          <div class="exo-enonce">
+            dans laquelle v<sub>G</sub> est la valeur de la vitesse des globules rouges et <em>v</em> la célérité des ultrasons dans le sang.
+          </div>
+
+          <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+            <strong>Données</strong>
+            <ul style="margin:6px 0 0 1.2rem;">
+              <li>v = 1540 m·s⁻¹</li>
+              <li>Si v<sub>G</sub> est la valeur de la vitesse d'écoulement d'un fluide incompressible dans une canalisation de section droite S, la conservation du débit impose que le produit de v<sub>G</sub> par S soit constant, soit v<sub>G,A</sub>/v<sub>G,B</sub> = S<sub>B</sub>/S<sub>A</sub> : la vitesse est d'autant plus grande que la section de la canalisation est petite.</li>
+            </ul>
+          </div>
+
+          <img src="Entrainements/ex44.png" alt="Schéma d'une veine ou artère contenant des globules rouges animés d'une vitesse v, sonde d'échographie Doppler placée en biais sur la peau formant un angle α avec le vaisseau." style="max-width:340px;width:100%;display:block;margin:10px auto;border-radius:8px;">
+
+          <div class="question-block">
+            <div class="question-label">a) Au cours d'un examen, le décalage Doppler en fréquence mesuré est Δf = 5,0 kHz pour un angle α = 20°. Calculer la vitesse du sang dans la veine. <button class="btn-indice" onclick="toggleIndice('ind-ex44-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex44-a">Isole v<sub>G</sub> dans la relation Δf = 2cosα × f<sub>E</sub> × v<sub>G</sub>/v, puis fais l'application numérique avec f<sub>E</sub> = 4,0 MHz et v = 1540 m·s⁻¹.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Comme tous les liquides, le sang est incompressible. Justifier que la mesure de la valeur de la vitesse du sang en différents endroits de la même veine permet de détecter un obstacle comme une plaque d'athérome. <button class="btn-indice" onclick="toggleIndice('ind-ex44-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex44-b">Utilise la relation de conservation du débit donnée : que devient v<sub>G</sub> si la section S diminue localement, par exemple à cause d'une plaque d'athérome ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c) L'angle α est un paramètre important. Il n'est pas connu avec une grande précision et doit être inférieur à 60° pour réaliser une mesure de vitesse. Justifier que le Doppler sanguin ne peut pas être pratiqué sur des veines ou des artères qui ne sont pas proches de la peau. <button class="btn-indice" onclick="toggleIndice('ind-ex44-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex44-c">Pour le seuil sur α, regarde comment v<sub>G</sub> dépend de 1/cosα et ce qui se passe quand α se rapproche de 90°. Pour les vaisseaux profonds, pense au trajet supplémentaire parcouru par les ultrasons dans les tissus et à ce que tu sais de l'atténuation d'une onde sonore avec la distance.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">d) Calculer l'écart sur la vitesse mesurée si l'angle α varie entre 20° et 30°. Conclure. <button class="btn-indice" onclick="toggleIndice('ind-ex44-d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex44-d">Reprends le calcul de la question a) en gardant Δf = 5,0 kHz, mais avec α = 30° cette fois, puis compare au résultat obtenu pour α = 20°.</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> D'après la relation donnée, Δf = 2cosα × f<sub>E</sub> × v<sub>G</sub>/v, donc :</p>
+            <div class="calc-step">v<sub>G</sub> = Δf × v/(2cosα × f<sub>E</sub>) = (5,0×10³ × 1540)/(2 × cos20° × 4,0×10⁶) = 7,70×10⁶/7,52×10⁶ ≈ <strong>1,0 m·s⁻¹</strong></div>
+
+            <p style="margin-top:10px;"><strong>b.</strong> Le sang étant incompressible, la conservation du débit le long d'un même vaisseau impose v<sub>G</sub> × S = constante (relation donnée). Si une plaque d'athérome réduit localement la section S de la veine ou de l'artère, la vitesse v<sub>G</sub> du sang à cet endroit doit donc augmenter pour conserver le débit. Ainsi, mesurer v<sub>G</sub> en plusieurs points d'un même vaisseau et observer une augmentation locale de la vitesse permet de détecter la présence d'un rétrécissement, donc d'un obstacle comme une plaque d'athérome.</p>
+
+            <p style="margin-top:10px;"><strong>c.</strong> D'après la relation, v<sub>G</sub> est proportionnelle à 1/cosα. Au voisinage de α = 90°, cosα tend vers 0 et varie très rapidement avec α (sa dérivée −sinα est alors maximale en valeur absolue) : une petite incertitude sur α se traduit donc par une incertitude très importante, voire incontrôlable, sur v<sub>G</sub>. Comme α n'est pas connu avec précision, il faut rester à des angles suffisamment éloignés de 90° (donc α &lt; 60°) pour que cette incertitude reste acceptable.</p>
+            <p style="margin-top:8px;">Par ailleurs, comme toute onde sonore, les ultrasons émis par la sonde s'atténuent en traversant les tissus : plus le trajet aller-retour entre la sonde et le vaisseau est long, plus le signal réfléchi reçu par le récepteur est faible. Si le vaisseau visé est trop profond, l'écho renvoyé par les globules rouges devient trop atténué pour être détecté correctement. C'est pourquoi le Doppler sanguin ne peut être pratiqué que sur des veines ou artères suffisamment proches de la peau, pour lesquelles le signal reçu reste exploitable.</p>
+
+            <p style="margin-top:10px;"><strong>d.</strong> Pour α = 20°, on a retrouvé v<sub>G</sub> ≈ 1,02 m·s⁻¹ (question a). Pour α = 30°, à Δf inchangé :</p>
+            <div class="calc-step">v<sub>G</sub> = (5,0×10³ × 1540)/(2 × cos30° × 4,0×10⁶) = 7,70×10⁶/6,93×10⁶ ≈ <strong>1,11 m·s⁻¹</strong></div>
+            <p style="margin-top:8px;">L'écart entre les deux valeurs est d'environ 0,09 m·s⁻¹, soit une variation relative d'environ <strong>9 %</strong> pour seulement 10° d'incertitude sur α. Cet écart n'est pas négligeable dans un contexte médical : il confirme que la mesure de v<sub>G</sub> est très sensible à la connaissance précise de l'angle α, ce qui justifie la nécessité de limiter α (typiquement en dessous de 60°, voir question c) pour obtenir une mesure fiable de la vitesse du sang.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXD-2">
+        <div class="exo-card">
+          <h3>Exercice 45 : Rotation du noyau d'une galaxie</h3>
+          <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+            <div style="flex:1.3;min-width:260px;">
+              <div class="exo-enonce">
+                Le document <strong>a</strong> ci-dessous représente une partie du spectre de raies d'émission de la lumière émise par la galaxie NGC7083. La fente du spectroscope utilisé est dans le plan équatorial de la galaxie.
+              </div>
+              <div class="exo-enonce" style="margin-top:8px;">
+                Le document <strong>b</strong> est un agrandissement de la zone située au voisinage du centre d'une raie. On y distingue clairement les pixels mais surtout, contrairement au spectre d'émission habituel comme celui d'une lampe à vapeur d'hydrogène, les raies sont inclinées. Ceci est dû au fait que le noyau de la galaxie est en mouvement de rotation.
+              </div>
+              <div class="exo-enonce" style="margin-top:8px;">
+                En effet, certains points de la galaxie, comme le point O sur le document <strong>c</strong>, s'approchent de la Terre pendant que d'autres, tels que E, s'en éloignent. Le point S n'a lui aucun mouvement suivant la direction de visée. Du fait de l'effet Doppler, les parties de raies d'émission correspondant à O se décalent dans un sens tandis que celles correspondant à E se décalent dans l'autre sens. Il s'ensuit une inclinaison des raies dans leur ensemble.
+              </div>
+              <div class="exo-enonce" style="margin-top:8px;">
+                Sur les documents a et b, la longueur d'onde augmente de gauche à droite et l'échelle horizontale est de 0,099 nm par pixel. La valeur de la longueur d'onde au centre de la raie observée, là où le décalage est nul sur le document a, est de λ = 658,4 nm.
+              </div>
+            </div>
+            <div style="flex:1;min-width:200px;">
+              <img src="Entrainements/ex45-1.png" alt="Documents a et b : spectre de raies d'émission de la galaxie NGC7083 (document a) et agrandissement en pixels au voisinage du centre d'une raie, montrant une raie inclinée (document b)." style="max-width:500px;width:100%;display:block;margin:10px auto;border-radius:8px;">
+              <img src="Entrainements/ex45-2.png" alt="Document c : schéma du noyau de la galaxie vu depuis la Terre, avec le point O à gauche (flèche de vitesse vers le bas) et le point E à droite (flèche de vitesse vers le haut), le point S au centre sur l'axe de la direction de visée." style="max-width:200px;width:100%;display:block;margin:10px auto;border-radius:8px;">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a) Établir l'expression du décalage Doppler relatif en longueur d'onde : |Δλ|/λ = v/c. <button class="btn-indice" onclick="toggleIndice('ind-ex45-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex45-a">Pars de la relation λ = c/f, puis relie les variations relatives |Δλ|/λ et |Δf|/f. Utilise ensuite la relation Doppler non relativiste vue en cours pour une onde électromagnétique : |Δf|/f = v/c.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Dans la situation du document c, la partie supérieure du spectre du document b correspond-elle à la lumière émise par O, S ou E ? Même question pour la partie centrale. <button class="btn-indice" onclick="toggleIndice('ind-ex45-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex45-b">Regarde vers quel côté (petites ou grandes longueurs d'onde) est décalée la partie supérieure de la raie sur le document b. À quel point (O ou E), approchant ou s'éloignant, correspond un décalage vers les petites longueurs d'onde ? Où se situe la partie non décalée de la raie ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c) Estimer la longueur d'onde λ' de la raie en bordure supérieure du spectre du document b. <button class="btn-indice" onclick="toggleIndice('ind-ex45-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex45-c">Compte, sur le document b, l'écart en pixels entre la position de la raie au centre (non décalée) et sa position en bordure supérieure, puis convertis cet écart en longueur d'onde à l'aide de l'échelle 0,099 nm/pixel.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">d) En déduire, dans le référentiel terrestre, la valeur de la vitesse du point O suivant la direction de visée. <button class="btn-indice" onclick="toggleIndice('ind-ex45-d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex45-d">Utilise la relation établie en a) avec λ et λ' déterminés en c) pour isoler v.</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>a.</strong> La longueur d'onde et la fréquence d'une onde électromagnétique sont reliées par λ = c/f. Pour une petite variation, cette relation donne |Δλ|/λ = |Δf|/f (les variations relatives de λ et de f sont égales en valeur absolue). Or, pour une source de vitesse radiale v petite devant c, l'effet Doppler donne |Δf|/f = v/c. En combinant les deux relations :</p>
+            <div class="calc-step">|Δλ|/λ = v/c</div>
+
+            <p style="margin-top:10px;"><strong>b.</strong> Sur le document b, la partie supérieure de la raie est décalée vers la gauche, donc vers les <strong>courtes longueurs d'onde</strong> (vers le bleu). Un tel décalage correspond à un rapprochement de la source : c'est donc la lumière émise par <strong>O</strong> (qui s'approche de la Terre, d'après le document c). La partie centrale de la raie, à la verticale de la colonne correspondant à λ = 658,4 nm (là où le décalage est nul), correspond au point <strong>S</strong>, qui n'a aucun mouvement suivant la direction de visée. <em>(Par élimination, la partie inférieure de la raie, décalée vers les grandes longueurs d'onde, correspond à E.)</em></p>
+
+            <p style="margin-top:10px;"><strong>c.</strong> On repère sur le document b un écart total d'environ 5 pixels entre la position de la raie tout en haut et tout en bas du document, la partie centrale (non décalée, point S) se situant à mi-hauteur. L'écart entre le centre et le bord supérieur est donc d'environ 5/2 ≈ 2,5 pixels, soit :</p>
+            <div class="calc-step">Δλ ≈ 2,5 × 0,099 ≈ 0,25 nm</div>
+            <p style="margin-top:8px;">La partie supérieure étant décalée vers les courtes longueurs d'onde (question b) :</p>
+            <div class="calc-step">λ' = λ − Δλ = 658,4 − 0,25 ≈ <strong>658,2 nm</strong></div>
+
+            <p style="margin-top:10px;"><strong>d.</strong> D'après la relation établie en a), appliquée entre λ (non décalée) et λ' (bord supérieur, lumière émise par O) :</p>
+            <div class="calc-step">v = c × |λ' − λ|/λ = 3,00×10⁸ × 0,25/658,4 ≈ <strong>1,1×10⁵ m·s⁻¹</strong> (≈ 110 km/s)</div>
+            <p style="margin-top:8px;">Cette valeur, de l'ordre de la centaine de km/s, est bien cohérente avec les vitesses de rotation typiquement mesurées dans le noyau des galaxies spirales.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXD-3">
+        <div class="exo-card">
+          <h3>Exercice 48 : Déterminer la vitesse d'un hélicoptère par effet Doppler</h3>
+          <div class="exo-enonce">
+            Très pratiques pour porter secours ou déposer du matériel en terrain accidenté, les hélicoptères peuvent également se déplacer à des vitesses dépassant les 250 km·h⁻¹. Avec un niveau d'intensité sonore de 99 dB à proximité immédiate, ils sont d'autant plus bruyants qu'ils ne l'étaient il y a quelques dizaines d'années.
+          </div>
+
+          <div style="background:var(--rose-clair); border-left:4px solid var(--rose); border-radius:0 8px 8px 0; padding:10px 16px; margin:10px 0 14px; font-size:0.86rem; line-height:1.6;">
+            <strong style="color:var(--rose);">DOCUMENT</strong> — Représentations des fronts de l'onde sonore émise par l'hélicoptère à un instant donné<br><br>
+            Les portions de cercles des figures 1 et 2 représentent les fronts de l'onde sonore (maxima de l'élongation) émise par un hélicoptère à un instant donné. Le point A représente l'hélicoptère. Dans le cas de la figure 1, l'hélicoptère est immobile. Dans le cas de la figure 2, il se déplace à la vitesse de valeur v<sub>S</sub> constante le long de (AO) et vers l'observateur placé au point O. Les mouvements sont étudiés dans le référentiel terrestre.
+          </div>
+
+          <img src="Entrainements/ex48.png" alt="Deux figures représentant les fronts d'onde sonore émis par un hélicoptère : à gauche l'hélicoptère A immobile, à droite l'hélicoptère A se déplaçant vers l'observateur O, avec une échelle de 1,0 m." style="max-width:640px;width:100%;display:block;margin:10px auto;border-radius:8px;border:1px solid #e0e0e0;">
+
+          <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; border:1px solid var(--vert-exo-bord);">
+            <strong>Donnée</strong> — Fréquence de l'onde sonore émise par l'hélicoptère, considérée comme sinusoïdale : f<sub>0</sub> = 8,0×10² Hz.
+          </div>
+
+          <div style="font-family:'Outfit',sans-serif; font-weight:800; color:var(--vert); font-size:0.95rem; margin:16px 0 6px;">Question 1</div>
+
+          <div class="question-block">
+            <div class="question-label">a) Déterminer, avec précision, les longueurs d'onde λ<sub>0</sub> et λ' de l'onde sonore reçue par l'observateur lorsque l'hélicoptère est respectivement immobile, puis en mouvement rectiligne uniforme. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-1a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-1a">Utilise l'échelle donnée (1,0 m) pour mesurer, sur chaque figure, la distance correspondant à 5 longueurs d'onde consécutives (entre les fronts les plus éloignés) : cela limite l'erreur de lecture. N'oublie pas de diviser par 5 pour obtenir λ₀ (figure 1) puis λ' (figure 2).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) En déduire une estimation de la valeur de la célérité v de l'onde sonore. Commenter la valeur obtenue. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-1b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-1b">Utilise la relation entre célérité, longueur d'onde et fréquence : v = λ₀ × f₀ (figure 1, hélicoptère immobile). Compare ensuite la valeur trouvée à la célérité usuelle du son dans l'air (≈ 340 m·s⁻¹).</div>
+          </div>
+
+          <div style="font-family:'Outfit',sans-serif; font-weight:800; color:var(--vert); font-size:0.95rem; margin:16px 0 6px;">Question 2</div>
+
+          <div class="question-block">
+            <div class="question-label">a) À partir des résultats obtenus aux deux questions précédentes, calculer la fréquence f' de l'onde sonore reçue par l'observateur lorsque l'hélicoptère est en mouvement. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-2a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-2a">La célérité v du son ne dépend pas du mouvement de la source : réutilise la valeur trouvée en 1.b, avec cette fois la longueur d'onde λ' mesurée sur la figure 2.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Préciser si le son reçu par l'observateur est plus aigu ou plus grave que celui qu'entend le pilote. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-2b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-2b">Compare f' à f₀ : une fréquence perçue plus grande correspond-elle à un son plus aigu ou plus grave ?</div>
+          </div>
+
+          <div style="font-family:'Outfit',sans-serif; font-weight:800; color:var(--vert); font-size:0.95rem; margin:16px 0 6px;">Question 3</div>
+          <p style="font-size:0.88rem; margin-bottom:8px;">Dans le <strong>document</strong>, les fronts d'onde notés F et G ont été émis respectivement aux dates <em>t</em> et <em>t'</em>.</p>
+
+          <div class="question-block">
+            <div class="question-label">a) Indiquer à quoi correspond la durée qui sépare ces deux dates <em>t</em> et <em>t'</em>. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-3a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-3a">F et G sont deux fronts d'onde consécutifs : ils ont été émis à un intervalle de temps égal à une grandeur temporelle caractéristique de l'onde, déjà utilisée en 1.b.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Établir l'expression du décalage Doppler de longueur d'onde : λ<sub>0</sub> − λ' = λ<sub>0</sub> × v<sub>S</sub>/v. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-3b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-3b">Pendant la durée T qui sépare l'émission de F et de G, de quelle distance la source (vitesse v<sub>S</sub>) s'est-elle rapprochée de l'observateur ? Comment cette distance modifie-t-elle l'écart entre les deux fronts, par rapport au cas où la source serait immobile (λ₀ = vT) ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c) En déduire la valeur de la vitesse de l'hélicoptère et déterminer si le résultat obtenu est compatible avec l'information concernant la vitesse d'un hélicoptère donnée dans le texte d'introduction de l'exercice. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-3c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-3c">Isole v<sub>S</sub> dans la relation établie en b), puis convertis le résultat en km·h⁻¹ pour le comparer à l'ordre de grandeur donné dans le texte d'introduction.</div>
+          </div>
+
+          <div style="font-family:'Outfit',sans-serif; font-weight:800; color:var(--vert); font-size:0.95rem; margin:16px 0 6px;">Question 4</div>
+          <p style="font-size:0.88rem; margin-bottom:8px;">Un niveau d'intensité sonore L = 66 dB est mesuré lorsque l'hélicoptère se trouve à une distance d = 300 m de l'observateur. La source sonore (l'hélicoptère) est supposée isotrope (pas de direction d'émission privilégiée) et l'atténuation par absorption n'est pas prise en considération.</p>
+
+          <div class="question-block">
+            <div class="question-label">a) Déterminer le niveau d'intensité sonore lorsque l'appareil se trouve à une distance d' = 50 m au-dessus de l'observateur. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-4a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-4a">Le niveau d'intensité sonore s'écrit L = 10 log(I/I₀) avec I = 𝒫/(4πd²) pour une source isotrope sans absorption. Exprime la différence L' − L sous la forme d'un terme en 20 log(d/d'), sans avoir besoin de connaître 𝒫 ni I₀.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Nommer le type d'atténuation qui explique que le niveau d'intensité sonore est plus faible à 300 m de l'hélicoptère qu'à 50 m. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex48-4b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex48-4b">L'énoncé précise que l'atténuation par absorption n'est pas prise en compte. Quel est alors le seul phénomène physique — lié à la géométrie de propagation d'une onde sphérique — qui explique la diminution du niveau sonore avec la distance ?</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex48')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex48">
+            <p><strong>1.a.</strong> Les deux figures sont réalisées à l'échelle 1/100 : 1,0 cm sur le schéma représente 1,0 m.</p>
+            <p style="margin-top:6px;">Sur la figure 1, les deux fronts d'onde les plus éloignés sont distants de 2,2 cm, soit 2,2 m dans la réalité, ce qui correspond à 5λ₀. On en déduit :</p>
+            <div class="calc-step">λ₀ = 2,2/5 = 0,44 m</div>
+            <p style="margin-top:6px;">Sur la figure 2, les deux fronts d'onde les plus éloignés sont distants de 1,85 cm, soit 1,85 m dans la réalité, ce qui correspond à 5λ'. On en déduit :</p>
+            <div class="calc-step">λ' = 1,85/5 = 0,37 m</div>
+
+            <p style="margin-top:12px;"><strong>1.b.</strong> À partir de la figure 1, la fréquence de l'onde émise étant f₀ = 8,0×10² Hz, on en déduit la célérité du son :</p>
+            <div class="calc-step">v = λ₀ × f₀ = 0,44 × 8,0×10² ≈ 3,5×10² m·s⁻¹</div>
+            <p>Compte tenu de la faible précision de nos mesures graphiques, ce résultat est cohérent avec la valeur usuelle de la célérité du son dans l'air (≈ 340 m·s⁻¹).</p>
+
+            <p style="margin-top:12px;"><strong>2.a.</strong> À partir de la figure 2, la célérité des ondes sonores étant maintenant connue, on peut calculer la fréquence f' de l'onde sonore reçue par l'observateur :</p>
+            <div class="calc-step">f' = v/λ' = 3,5×10²/0,37 ≈ 9,5×10² Hz</div>
+
+            <p style="margin-top:12px;"><strong>2.b.</strong> La fréquence de l'onde reçue étant plus grande que celle de l'onde émise, le son reçu par l'observateur est plus <strong>aigu</strong> que celui qu'entend le pilote.</p>
+
+            <p style="margin-top:12px;"><strong>3.a.</strong> La durée qui sépare les deux dates <em>t</em> et <em>t'</em> correspond à la <strong>période T</strong> de l'onde sonore (F et G sont deux fronts consécutifs).</p>
+
+            <p style="margin-top:12px;"><strong>3.b.</strong> Lorsque l'hélicoptère est immobile, la distance qui sépare les deux fronts d'onde F et G est égale à λ₀, avec λ₀ = vT.</p>
+            <p>Quand l'hélicoptère est en mouvement, les fronts d'onde sont plus serrés car, pendant la durée T, la source a avancé d'une longueur L = v<sub>S</sub>×T. Les fronts d'onde, qui se propagent à la même célérité v, sont donc rapprochés de v<sub>S</sub>×T.</p>
+            <p>On a donc λ' = λ₀ − L = λ₀ − v<sub>S</sub>×T.</p>
+            <div class="calc-step">Avec λ₀ = vT : λ' = λ₀ − (v<sub>S</sub>×λ₀)/v &nbsp;⇒&nbsp; λ₀ − λ' = λ₀ × v<sub>S</sub>/v</div>
+
+            <p style="margin-top:12px;"><strong>3.c.</strong> De la relation précédente, on extrait v<sub>S</sub> :</p>
+            <div class="calc-step">v<sub>S</sub> = v × (λ₀−λ')/λ₀ = 3,5×10² × (0,44−0,37)/0,44 ≈ 56 m·s⁻¹ soit environ 2,0×10² km·h⁻¹</div>
+            <p>Ce résultat, de l'ordre de 200 km·h⁻¹, est compatible avec les données de l'énoncé (vitesses d'hélicoptère pouvant dépasser 250 km·h⁻¹).</p>
+
+            <p style="margin-top:12px;"><strong>4.a.</strong> Puisque la source est isotrope et que l'atténuation par absorption est négligée, on peut écrire le niveau d'intensité sonore sous la forme :</p>
+            <div class="calc-step">L = 10 log[𝒫/(4πd²I₀)] avec L = 66 dB et d = 300 m</div>
+            <p>Appelons L' le niveau d'intensité sonore lorsque l'hélicoptère est à la distance d' = 50 m :</p>
+            <div class="calc-step">L' = 10 log[𝒫/(4πd'²I₀)]</div>
+            <p>En soustrayant les deux expressions, la puissance 𝒫 et l'intensité de référence I₀ s'éliminent :</p>
+            <div class="calc-step">L' − L = 10 log(d²/d'²) = 20 log(d/d') = 20 log(300/50) ≈ 15,6 dB</div>
+            <div class="calc-step">L' = 66 + 15,6 ≈ <strong>82 dB</strong></div>
+
+            <p style="margin-top:12px;"><strong>4.b.</strong> Ce type d'atténuation, qui ne dépend que de la distance à une source sonore isotrope (et non d'un phénomène de dissipation d'énergie dans le milieu), s'appelle l'<strong>atténuation géométrique</strong> : l'énergie de l'onde sonore se répartit sur une sphère de plus en plus grande à mesure qu'elle s'éloigne de la source, d'où une intensité — et donc un niveau sonore — qui diminue avec la distance, même en l'absence d'absorption.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXD-4">
+        <div class="exo-card">
+          <h3>Exercice 49 : Un pendule pour mesurer une vitesse</h3>
+          <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+            <div style="flex:1.3;min-width:260px;">
+              <div class="exo-enonce">
+                L'effet Doppler est utilisé dans de nombreux domaines pour mesurer des vitesses : vitesse du flux sanguin dans les veines ou les artères, vitesse de véhicules sur les routes, vitesse de fuite des galaxies…
+              </div>
+              <p style="font-weight:700; color:var(--vert); font-size:0.9rem; margin:10px 0;">● Comment mesurer la vitesse d'une source sonore en mouvement par effet Doppler ?</p>
+
+              <div style="background:var(--bleu-activite); border:1px solid var(--bleu-activite-bord); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.86rem; line-height:1.6;">
+                <strong style="color:var(--bleu);">Matériel disponible</strong>
+                <ul style="padding-left:1.2rem; margin-top:6px;">
+                  <li>Ordinateur muni de logiciels d'analyse de son et de traitement de données.</li>
+                  <li>Buzzer, alimenté par une pile, suspendu à une potence.</li>
+                  <li>Microphone, casque et mètre ruban.</li>
+                </ul>
+              </div>
+
+              <div style="background:var(--rose-clair); border-left:4px solid var(--rose); border-radius:0 8px 8px 0; padding:10px 16px; margin:10px 0 14px; font-size:0.86rem; line-height:1.6;">
+                <strong style="color:var(--rose);">DOCUMENT</strong> — Schéma du dispositif utilisé<br><br>
+                Un buzzer, assimilé à une source sonore ponctuelle, est accroché à l'extrémité d'un fil de longueur ℓ suspendu à une potence, formant un pendule. Lâché sans vitesse initiale depuis une inclinaison θ<sub>i</sub> par rapport à la verticale, le buzzer passe par la position verticale avec une vitesse de valeur v, horizontale, notée <span class="vec">v</span>.
+              </div>
+
+              <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.86rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+                <strong>Données</strong>
+                <ul style="padding-left:1.2rem; margin-top:6px;">
+                  <li>Le décalage Doppler relatif de fréquence est : |Δf|/f = v<sub>S</sub>/v, avec v<sub>S</sub> la valeur de la vitesse de la source et v la célérité du son dans l'air, avec v<sub>S</sub> ≪ v.</li>
+                  <li>La mesure de fréquence donne des résultats acceptables si |Δf|/f est au moins de l'ordre de 0,01 soit 1 %.</li>
+                  <li>La conservation de l'énergie mécanique permet d'établir l'expression de la valeur v<sub>S</sub> de la vitesse du buzzer lors de son passage par la verticale en fonction de l'inclinaison initiale θ<sub>i</sub> et de la longueur ℓ du pendule : v<sub>S</sub> = √(2gℓ(1 − cos θ<sub>i</sub>)).</li>
+                </ul>
+              </div>
+            </div>
+            <img src="Entrainements/ex49-2.png" alt="Schéma du dispositif : un pendule de longueur ℓ suspendu à une potence, le buzzer lâché sans vitesse initiale (v=0) depuis une inclinaison θᵢ par rapport à la verticale, passant par la position verticale avec une vitesse horizontale v." style="flex:1;min-width:220px;max-width:300px;display:block;margin:10px auto;border-radius:8px;border:1px solid #e0e0e0;">
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">1. Calculer la valeur minimale de la vitesse de la source pour que la mesure par analyse spectrale donne des résultats acceptables. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex49-1')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex49-1">Utilise la donnée sur le décalage Doppler relatif minimal acceptable (1 %) et exprime v<sub>S,min</sub> en fonction de v, la célérité du son dans l'air (≈ 340 m·s⁻¹).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">2. En déduire l'inclinaison minimale θ<sub>min</sub> à donner au pendule pour que, lâchée sans vitesse initiale, la source sonore passe à la verticale du point d'attache avec cette vitesse. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex49-2')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex49-2">Isole θ<sub>min</sub> dans la relation v<sub>S</sub> = √(2gℓ(1 − cos θ<sub>i</sub>)) donnée dans les données, en utilisant la valeur de v<sub>S,min</sub> trouvée en 1. Le résultat dépend de la longueur ℓ du pendule, à mesurer avec le mètre ruban disponible.</div>
+          </div>
+
+          <div style="background:var(--violet-clair); border-left:4px solid var(--violet); border-radius:0 8px 8px 0; padding:8px 14px; margin:10px 0; font-size:0.85rem; font-weight:700; color:var(--violet);">📞 APPEL N°1 — Appeler le professeur pour lui présenter les résultats ou en cas de difficulté.</div>
+
+          <div class="question-block">
+            <div class="question-label">3. En utilisant le matériel disponible, élaborer un protocole exploitant l'effet Doppler pour mesurer la valeur v du buzzer lorsque le pendule passe par la position verticale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex49-3')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex49-3">Pense à utiliser le microphone et le logiciel d'analyse de son pour enregistrer le son du buzzer lors de son passage à la verticale. Où faut-il placer le microphone par rapport à la trajectoire pour que le déplacement du buzzer se fasse bien selon la direction qui le sépare du micro à cet instant ?</div>
+          </div>
+
+          <div style="background:var(--violet-clair); border-left:4px solid var(--violet); border-radius:0 8px 8px 0; padding:8px 14px; margin:10px 0; font-size:0.85rem; font-weight:700; color:var(--violet);">📞 APPEL N°2 — Appeler le professeur pour lui présenter les résultats ou en cas de difficulté.</div>
+
+          <div class="question-block">
+            <div class="question-label">4. Mettre en œuvre le protocole pour plusieurs inclinaisons initiales θ<sub>i</sub> du pendule supérieures à l'inclinaison minimale et consigner les résultats expérimentaux (θ<sub>i</sub> et v) dans un tableau. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex49-4')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex49-4">Répète la mesure pour plusieurs valeurs de θ<sub>i</sub>, toutes supérieures à θ<sub>min</sub>, et consigne systématiquement θ<sub>i</sub> et la vitesse v obtenue par analyse du décalage Doppler dans un tableau à deux colonnes.</div>
+          </div>
+
+          <div style="background:var(--violet-clair); border-left:4px solid var(--violet); border-radius:0 8px 8px 0; padding:8px 14px; margin:10px 0; font-size:0.85rem; font-weight:700; color:var(--violet);">📞 APPEL N°3 — Appeler le professeur pour lui présenter le protocole ou lui montrer une mesure.</div>
+
+          <div class="question-block">
+            <div class="question-label">5. Comparer les valeurs de vitesse déterminées par effet Doppler aux valeurs déduites de la conservation de l'énergie mécanique. Conclure sur la validité des mesures réalisées en discutant des conditions expérimentales, de l'influence des instruments de mesure ou du protocole. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex49-5')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex49-5">Pour chaque θ<sub>i</sub> du tableau, calcule la vitesse théorique v<sub>S</sub> = √(2gℓ(1 − cos θ<sub>i</sub>)) et compare-la à la vitesse mesurée par effet Doppler. Un écart peut provenir des frottements (air, pivot du pendule) non pris en compte dans le modèle théorique, de la précision de l'analyse spectrale, ou d'un mauvais alignement du microphone avec la direction du mouvement.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex49')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex49">
+            <p><strong>1.</strong> La mesure est acceptable si |Δf|/f ≥ 0,01, soit v<sub>S</sub>/v ≥ 0,01. La vitesse minimale mesurable est donc :</p>
+            <div class="calc-step">v<sub>S,min</sub> = 0,01 × v = 0,01 × 3,4×10² ≈ <strong>3,4 m·s⁻¹</strong></div>
+            <p>(en reprenant v ≈ 340 m·s⁻¹, valeur usuelle de la célérité du son dans l'air, cohérente avec celle obtenue dans l'exercice précédent).</p>
+
+            <p style="margin-top:12px;"><strong>2.</strong> En isolant θ<sub>i</sub> dans v<sub>S</sub> = √(2gℓ(1 − cos θ<sub>i</sub>)) :</p>
+            <div class="calc-step">cos θ<sub>min</sub> = 1 − v<sub>S,min</sub>²/(2gℓ) &nbsp;⇒&nbsp; θ<sub>min</sub> = arccos[1 − v<sub>S,min</sub>²/(2gℓ)]</div>
+            <p>La longueur ℓ n'est pas donnée dans l'énoncé : c'est une caractéristique du pendule réellement utilisé, à mesurer au mètre ruban. À titre d'exemple, pour ℓ = 1,0 m :</p>
+            <div class="calc-step">cos θ<sub>min</sub> = 1 − 3,4²/(2×9,8×1,0) ≈ 0,41 &nbsp;⇒&nbsp; θ<sub>min</sub> ≈ 66°</div>
+            <p style="font-style:italic; color:var(--texte-leger);">Cette valeur numérique n'est qu'un exemple illustratif : à recalculer avec la longueur ℓ effectivement mesurée sur le pendule du laboratoire.</p>
+
+            <p style="margin-top:12px;"><strong>3.</strong> Protocole envisageable :</p>
+            <ul style="padding-left:1.2rem; line-height:1.7;">
+              <li>Placer le microphone <strong>dans l'axe horizontal</strong> de la trajectoire du buzzer au point le plus bas du pendule (et non à la verticale du point d'attache), de façon à ce que le buzzer se déplace bien selon la direction qui le sépare du microphone lors de son passage : c'est cette condition qui permet à la totalité de la vitesse v<sub>S</sub> de se traduire en décalage Doppler.</li>
+              <li>Enregistrer d'abord le son du buzzer immobile, proche du microphone, pour mesurer la fréquence de référence f<sub>0</sub> (à la verticale, pendule au repos).</li>
+              <li>Lâcher le pendule sans vitesse initiale depuis une inclinaison θ<sub>i</sub> > θ<sub>min</sub> et enregistrer le son perçu par le microphone lors du passage du buzzer à la verticale.</li>
+              <li>À l'aide du logiciel de traitement de données, effectuer une analyse spectrale (FFT) du signal enregistré au voisinage de cet instant pour déterminer la fréquence perçue f.</li>
+              <li>Calculer le décalage relatif |Δf|/f₀ puis en déduire v<sub>S</sub> = v × |Δf|/f₀ (avec v ≈ 340 m·s⁻¹).</li>
+            </ul>
+
+            <p style="margin-top:12px;"><strong>4.</strong> Tableau de résultats à compléter en répétant le protocole de la question 3 pour plusieurs inclinaisons initiales θ<sub>i</sub> supérieures à θ<sub>min</sub> (exemple de structure) :</p>
+            <div style="overflow-x:auto; margin:10px 0;">
+              <table style="border-collapse:collapse; width:100%; font-size:0.86rem;">
+                <tr style="background:var(--vert-clair);">
+                  <th style="border:1px solid var(--vert-exo-bord); padding:6px 10px; text-align:left;">θ<sub>i</sub></th>
+                  <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">…</td>
+                  <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">…</td>
+                  <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">…</td>
+                </tr>
+                <tr>
+                  <th style="border:1px solid var(--vert-exo-bord); padding:6px 10px; text-align:left;">v (Doppler, m·s⁻¹)</th>
+                  <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">…</td>
+                  <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">…</td>
+                  <td style="border:1px solid var(--vert-exo-bord); padding:6px 10px;">…</td>
+                </tr>
+              </table>
+            </div>
+            <p style="font-style:italic; color:var(--texte-leger);">Les valeurs numériques dépendent du pendule et des mesures réellement effectuées en séance : ce tableau est un canevas, pas un résultat figé.</p>
+
+            <p style="margin-top:12px;"><strong>5.</strong> Pour chaque valeur de θ<sub>i</sub> du tableau, on calcule la vitesse théorique v<sub>S</sub> = √(2gℓ(1 − cos θ<sub>i</sub>)) (conservation de l'énergie mécanique) et on la compare à la vitesse mesurée par effet Doppler à la question 4.</p>
+            <p>Si les deux valeurs sont proches (à quelques % près), les mesures sont validées. Un écart plus important peut s'expliquer par :</p>
+            <ul style="padding-left:1.2rem; line-height:1.7;">
+              <li>les frottements (résistance de l'air, frottement au niveau du pivot du pendule), non pris en compte par le modèle de conservation de l'énergie mécanique, qui tendent à réduire la vitesse réelle par rapport à la valeur théorique ;</li>
+              <li>la précision limitée de l'analyse spectrale (résolution en fréquence de la FFT, durée finie du passage du buzzer devant le microphone) ;</li>
+              <li>un positionnement du microphone pas parfaitement aligné avec la direction du mouvement du buzzer à la verticale, qui sous-estime la vitesse déduite de l'effet Doppler.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXD-5">
+        <div class="exo-card">
+          <h3>Exercice 50 : Période de rotation de Saturne</h3>
+
+              <div class="exo-enonce">
+                L'effet Doppler permet de mesurer des vitesses radiales.
+               </div>
+          <p style="font-weight:700; color:var(--vert); font-size:0.9rem; margin:10px 0;">● Comment utiliser cet effet pour mesurer la période de rotation de Saturne ?</p>
+
+          <div style="background:var(--bleu-activite); border:1px solid var(--bleu-activite-bord); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.86rem; line-height:1.6;">
+            <strong style="color:var(--bleu);">Matériel disponible</strong>
+            <ul style="padding-left:1.2rem; margin-top:6px;">
+              <li>Ordinateur muni d'un logiciel de traitement d'images (SalsaJ par exemple).</li>
+              <li>Photo du spectre de Saturne avec longueurs d'onde du spectre de référence, à télécharger.</li>
+            </ul>
+          </div>
+          <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+            <div style="flex:1;min-width:240px;">
+              <div style="background:var(--rose-clair); border-left:4px solid var(--rose); border-radius:0 8px 8px 0; padding:10px 16px; margin:10px 0 14px; font-size:0.86rem; line-height:1.6;">
+              <strong style="color:var(--rose);">DOC. 1</strong> — Principales caractéristiques de Saturne et de son orbite<br><br>
+              Saturne est la sixième planète du Système solaire par sa distance au Soleil et la deuxième par sa taille avec un diamètre équatorial de 120 960 km (environ 9,5 fois celui de la Terre).<br>
+              Elle effectue un tour complet autour du Soleil (révolution sidérale) en 29 ans et 167 jours à une distance moyenne de 1,43 milliard de km.<br>
+              Elle tourne également sur elle-même (rotation sidérale) avec une période <em>T</em> = 10 h 39 min.<br>
+              Saturne possède des anneaux découverts en 1655 par le physicien néerlandais Christian Huygens (1629-1695) et une cinquantaine de satellites dont le plus gros, Titan, est visible depuis la Terre dans de petits instruments.
+              </div>
+            </div>
+            <img src="Entrainements/ex50-1.png" alt="Photo de Saturne et de ses anneaux, prise par une sonde spatiale." style="flex:1;min-width:180px;max-width:220px;display:block;margin:10px auto;border-radius:8px;border:1px solid #e0e0e0;">
+          </div>
+
+          <div style="background:var(--rose-clair); border-left:4px solid var(--rose); border-radius:0 8px 8px 0; padding:10px 16px; margin:14px 0; font-size:0.86rem; line-height:1.6;">
+            <strong style="color:var(--rose);">DOC. 2</strong> — Spectre de la lumière de Saturne lors de l'opposition de 1962
+          </div>
+          <img src="Entrainements/ex50-3.png" alt="Doc. 2 : schémas de la position de la Terre et de Saturne à l'opposition (vues de dessus et de profil), et extrait du spectre de la lumière de Saturne encadré par le spectre de référence." style="max-width:650px;width:100%;display:block;margin:10px auto;border-radius:8px;border:1px solid #e0e0e0;">
+
+          <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+            <div style="flex:1;min-width:240px;">
+              <div style="background:var(--rose-clair); border-left:4px solid var(--rose); border-radius:0 8px 8px 0; padding:10px 16px; margin:14px 0; font-size:0.86rem; line-height:1.6;">
+                <strong style="color:var(--rose);">DOC. 3</strong> — Position de la fente du spectroscope par rapport à l'image de Saturne
+              </div>
+            </div>
+            <img src="Entrainements/ex50-4.png" alt="Doc. 3 : schéma de la position de la fente du spectrographe par rapport à l'image de Saturne (points A à E) et du spectre de Saturne et de ses anneaux, avec les raies 1 à 6 et la raie brillante de référence." style="flex:1.2;min-width:260px;max-width:340px;display:block;margin:10px auto;border-radius:8px;border:1px solid #e0e0e0;">
+          </div>
+
+          <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+            <div style="flex:1;min-width:240px;">
+              <div style="background:var(--rose-clair); border-left:4px solid var(--rose); border-radius:0 8px 8px 0; padding:10px 16px; margin:14px 0; font-size:0.86rem; line-height:1.6;">
+                <strong style="color:var(--rose);">DOC. 4</strong> — Inclinaison des anneaux de Saturne lors de l'opposition
+              </div>
+              <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:14px 0; font-size:0.86rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+                <strong>Donnée</strong> — Relation entre la célérité <em>c</em> de la lumière dans le vide, le décalage Δλ d'une raie de longueur d'onde λ pour deux points diamétralement opposés du disque de Saturne et la valeur v<sub>r</sub> de la vitesse radiale (suivant l'axe Saturne-Terre) de ces points :
+                <div class="calc-step" style="margin-top:8px;">Δλ / λ = 4 × v<sub>r</sub> / c</div>
+              </div>
+            </div>
+            <img src="Entrainements/ex50-5.png" alt="Doc. 4 : schémas de l'inclinaison des anneaux de Saturne lors de l'opposition, vue de face avec l'angle de 10° entre la vitesse réelle v et la vitesse radiale v_r, et vue de dessus avec les points A, B, C." style="flex:1;min-width:220px;max-width:300px;display:block;margin:10px auto;border-radius:8px;border:1px solid #e0e0e0;">
+          </div>
+
+          <p style="font-weight:700; margin:14px 0 4px; font-size:0.9rem;">1. À propos du spectre</p>
+
+          <div class="question-block">
+            <div class="question-label">a) D'après le spectre du DOC. 3, déterminer si les points A et C s'approchent ou s'éloignent de la Terre. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-1a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-1a">Repère, sur le spectre du DOC. 3, si la raie associée à chaque point est décalée vers le bleu (longueur d'onde plus courte) ou vers le rouge (longueur d'onde plus grande) par rapport à la raie de référence : un décalage vers le bleu correspond à un rapprochement, un décalage vers le rouge à un éloignement.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Justifier que le milieu de la raie 3-4 coïncide avec la raie du spectre de référence (pas de décalage Doppler). <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-1b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-1b">Quel point du disque de Saturne se situe au milieu de la fente du spectrographe (DOC. 3) ? Quelle est sa vitesse radiale due à la rotation propre de la planète sur elle-même ?</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c) Comparer la valeur de la vitesse du point D de l'intérieur de l'anneau à celle du point E situé à l'extérieur. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-1c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-1c">Sur le spectre du DOC. 3, compare l'écart entre la raie de référence et la raie correspondant à D à celui correspondant à E : plus l'écart est grand, plus la vitesse radiale est grande.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">d) Que peut-on en conclure quant à la composition de l'anneau ? <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-1d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-1d">Si l'anneau était un disque solide rigide en rotation, comment varierait la vitesse d'un point avec sa distance à Saturne ? Est-ce cohérent avec le résultat de la question précédente ?</div>
+          </div>
+
+          <p style="font-weight:700; margin:18px 0 4px; font-size:0.9rem;">2. Calcul de la vitesse radiale d'un point de l'équateur</p>
+
+          <div class="question-block">
+            <div class="question-label">a) En utilisant le matériel indiqué, déterminer le décalage Doppler en longueur d'onde correspondant à deux points diamétralement opposés du disque de Saturne. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-2a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-2a">Sur la photo du spectre (document téléchargeable), repère la position (en pixels, ou directement en Å si le logiciel le permet) de la raie de référence et de la raie décalée pour deux points diamétralement opposés du bord de la planète (pas de l'anneau). La différence entre les deux positions, convertie en longueur d'onde à l'aide des raies de référence encadrantes, donne Δλ.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) Utiliser la donnée et le résultat précédent pour déterminer la valeur v<sub>r</sub> de la vitesse radiale d'un point de l'équateur de Saturne dans le référentiel « saturnocentrique ». <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-2b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-2b">Isole v<sub>r</sub> dans la relation Δλ/λ = 4×v<sub>r</sub>/c donnée, en utilisant la valeur de Δλ trouvée en 2.a et la longueur d'onde λ de la raie utilisée.</div>
+          </div>
+
+          <p style="font-weight:700; margin:18px 0 4px; font-size:0.9rem;">3. Calcul de la période de rotation</p>
+
+          <div class="question-block">
+            <div class="question-label">a) Calculer la valeur v de vitesse réelle d'un point de l'équateur de Saturne. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-3a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-3a">D'après le DOC. 4, la vitesse radiale v<sub>r</sub> est la projection de la vitesse réelle v sur l'axe Saturne-Terre, avec un angle de 10° entre les deux vecteurs : v<sub>r</sub> = v × cos(10°).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b) En déduire la période de rotation de cette planète. Le résultat est-il en accord avec le DOC. 1 ? <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-3b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-3b">Un point de l'équateur parcourt une distance égale à la circonférence de l'équateur (2πR, avec R le rayon équatorial donné dans le DOC. 1) en une période T, à la vitesse v : T = 2πR/v.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c) Identifier les principales sources d'erreurs. Expliquer comment il est possible d'améliorer la précision. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex50-3c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex50-3c">Pense à la précision de la mesure des positions des raies sur la photographie, à l'incertitude sur l'angle de 10°, et à l'hypothèse de mouvement circulaire uniforme.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex50')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex50">
+            <p><strong>1.a)</strong> Sur le spectre du DOC. 3, la raie correspondant au point C (moitié supérieure de la fente, du côté des raies 1-2-3) est décalée vers le bleu (longueur d'onde plus courte que la référence) : <strong>C s'approche de la Terre</strong>. La raie correspondant au point A (extrémité inférieure, du côté des raies 4-5-6) est décalée vers le rouge (longueur d'onde plus grande) : <strong>A s'éloigne de la Terre</strong>. C'est cohérent avec le DOC. 4(b) : le vecteur <span class="vec">v</span><sub>r</sub> en C pointe vers la Terre, celui en A pointe dans le sens opposé.</p>
+
+            <p style="margin-top:12px;"><strong>1.b)</strong> Le point B est le centre du disque de Saturne : il se trouve sur l'axe de rotation de la planète. Comme tout point situé sur l'axe de rotation d'un solide, sa vitesse due à cette rotation est nulle, donc sa vitesse radiale l'est également. De plus, à l'opposition, il n'y a pas de décalage Doppler dû au mouvement orbital de Saturne (DOC. 2). Le point B n'a donc aucune vitesse radiale : la raie observée à cet endroit — le milieu de la raie 3-4, à la jonction des deux moitiés du spectre — coïncide donc avec la raie du spectre de référence.</p>
+
+            <p style="margin-top:12px;"><strong>1.c)</strong> Sur le spectre, l'écart entre la raie et la raie de référence est plus grand pour le point D que pour le point E. La vitesse radiale du point D, à l'intérieur de l'anneau, est donc <strong>supérieure</strong> à celle du point E, situé à l'extérieur.</p>
+
+            <p style="margin-top:12px;"><strong>1.d)</strong> Si l'anneau était un disque solide rigide en rotation, la vitesse d'un point croîtrait avec sa distance à l'axe de rotation (comme pour la planète elle-même) : le point E, plus éloigné de Saturne, devrait alors être plus rapide que D. Or c'est l'inverse qui est observé. Ce résultat est cohérent avec la troisième loi de Kepler : chaque partie de l'anneau se comporte comme un petit satellite en orbite libre et indépendante autour de Saturne, dont la vitesse diminue quand la distance à la planète augmente. On en conclut que <strong>l'anneau n'est pas un disque solide</strong>, mais qu'il est constitué d'une multitude de petits corps (blocs de glace et de roche) en orbite kepplérienne indépendante autour de Saturne.</p>
+
+            <p style="margin-top:14px;"><strong>2.a)</strong> Méthode : on ouvre la photo du spectre (document téléchargeable) dans un logiciel de traitement d'images (SalsaJ). On repère les raies de référence encadrantes, dont les longueurs d'onde λ sont indiquées en Å, et on mesure la position de la raie de référence ainsi que celle de la raie décalée pour deux points diamétralement opposés du bord de la planète (hors anneau). L'étalonnage réalisé à partir des raies de référence connues permet de convertir l'écart de position mesuré en un décalage de longueur d'onde Δλ.</p>
+            <p style="font-style:italic; color:var(--texte-leger);">Les valeurs numériques dépendent de la photographie et des raies effectivement mesurées : à titre d'exemple, pour une raie de référence λ ≈ 500 nm, on peut mesurer Δλ ≈ 0,065 nm (soit 0,65 Å).</p>
+
+            <p style="margin-top:12px;"><strong>2.b)</strong> En isolant v<sub>r</sub> dans la relation donnée :</p>
+            <div class="calc-step">v<sub>r</sub> = Δλ × c / (4 × λ) = (0,065×10⁻⁹ × 3,00×10⁸) / (4 × 500×10⁻⁹) ≈ <strong>9,8×10³ m·s⁻¹</strong></div>
+
+            <p style="margin-top:14px;"><strong>3.a)</strong> D'après le DOC. 4, v<sub>r</sub> = v × cos(10°), donc :</p>
+            <div class="calc-step">v = v<sub>r</sub> / cos(10°) = 9,8×10³ / cos(10°) ≈ <strong>9,9×10³ m·s⁻¹</strong></div>
+
+            <p style="margin-top:12px;"><strong>3.b)</strong> Un point de l'équateur parcourt la circonférence 2πR à la vitesse v en une période T = 2πR/v, avec R = 120 960/2 = 60 480 km (DOC. 1) :</p>
+            <div class="calc-step">T = 2π × 6,048×10⁷ / 9,9×10³ ≈ 3,84×10⁴ s ≈ <strong>10 h 40 min</strong></div>
+            <p>Cette valeur est en très bon accord avec la période T = 10 h 39 min donnée dans le DOC. 1 (écart inférieur à 1 %).</p>
+
+            <p style="margin-top:12px;"><strong>3.c)</strong> Sources d'erreurs principales : la précision de la mesure des positions des raies sur le cliché photographique (résolution du cliché, largeur des raies), l'incertitude sur les longueurs d'onde de référence utilisées pour l'étalonnage, la précision limitée de l'angle d'inclinaison de 10°, et l'hypothèse d'une rotation circulaire uniforme et d'un rayon équatorial parfaitement défini.</p>
+            <p>Pour améliorer la précision, on peut répéter la mesure sur plusieurs couples de points symétriques (voire plusieurs raies) et moyenner les résultats obtenus, utiliser un spectre de plus haute résolution, et automatiser la mesure des positions de raies par traitement numérique plutôt qu'à l'œil.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-E-1 -->
+
+  <!-- Sous-onglet E3 : Sujets de bac -->
+  <div class="sub-tab-content" id="sub-E-2">
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2026 · Centres étrangers · SI</span>
+        <span>10 points · 30 min</span>
+      </div>
+      <h4>Étude de l'effet Doppler à l'aide de deux téléphones</h4>
+      <div class="bac-theme">Thème : Effet Doppler · Mesure expérimentale</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Effet Doppler</span>
+        <span class="bac-tag">Décalage Doppler</span>
+        <span class="bac-tag">Mesure de vitesse</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Sujet-DopplerTelephone.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Correction-DopplerTelephone.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2024 · Métropole · SI</span>
+        <span>10 points · 30 min</span>
+      </div>
+      <h4>Galaxie d'Andromède</h4>
+      <div class="bac-theme">Thème : Effet Doppler · Ondes électromagnétiques</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Effet Doppler</span>
+        <span class="bac-tag">Décalage Doppler</span>
+        <span class="bac-tag">Astrophysique</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-08/2024-Metro-SI-J1-ExoA-Sujet-AndromedeDoppler-10pts-30min.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-06/2024-Metro-SI-Exo1-Correction-AndromedeDoppler-10pts-30min_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-E-2 -->
+
 </div>
-<!-- /tab-5 -->
+<!-- /tab-1 (Entraînements) -->
 
 <!-- ══════════════ ONGLET BILAN & RESSOURCES ══════════════ -->
-<div class="tab-content" id="tab-6">
+<div class="tab-content" id="tab-2">
 
   <div class="sub-tabs-nav" id="sub-nav-R">
     <button class="sub-tab-btn active" data-sub="R1" onclick="switchSubTab('R',0)">
@@ -1914,49 +3613,11 @@
       <p style="font-size:0.88rem;line-height:1.7;">L'effet Doppler doit son nom au physicien autrichien <strong>Christian Doppler</strong> (1803-1853), qui l'a décrit pour la première fois en 1842. Ce phénomène, valable pour toutes les ondes (sonores comme électromagnétiques), a depuis trouvé de nombreuses applications : radars de vitesse, échographie Doppler en médecine, ou encore mesure du décalage spectral des galaxies en astrophysique.</p>
     </div>
 
-    <div class="section-title" style="margin-top:30px;"><span class="icon">🎓</span> Sujets de bac</div>
-
-    <div class="bac-card">
-      <div class="bac-card-head">
-        <span class="bac-lieu">Bac 2026 · Centres étrangers · SI</span>
-        <span>10 points · 30 min</span>
-      </div>
-      <h4>Étude de l'effet Doppler à l'aide de deux téléphones</h4>
-      <div class="bac-theme">Thème : Effet Doppler · Mesure expérimentale</div>
-      <div class="bac-notions">
-        <span class="bac-tag">Effet Doppler</span>
-        <span class="bac-tag">Décalage Doppler</span>
-        <span class="bac-tag">Mesure de vitesse</span>
-      </div>
-      <div class="bac-pastilles">
-        <a class="bac-pastille bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Sujet-DopplerTelephone.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-        <a class="bac-pastille bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-06/2026-CentresEtrangers1-SI-J1-ExoA-Correction-DopplerTelephone.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-      </div>
-    </div>
-
-    <div class="bac-card">
-      <div class="bac-card-head">
-        <span class="bac-lieu">Bac 2024 · Métropole · SI</span>
-        <span>10 points · 30 min</span>
-      </div>
-      <h4>Galaxie d'Andromède</h4>
-      <div class="bac-theme">Thème : Effet Doppler · Ondes électromagnétiques</div>
-      <div class="bac-notions">
-        <span class="bac-tag">Effet Doppler</span>
-        <span class="bac-tag">Décalage Doppler</span>
-        <span class="bac-tag">Astrophysique</span>
-      </div>
-      <div class="bac-pastilles">
-        <a class="bac-pastille bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-08/2024-Metro-SI-J1-ExoA-Sujet-AndromedeDoppler-10pts-30min.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-        <a class="bac-pastille bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-06/2024-Metro-SI-Exo1-Correction-AndromedeDoppler-10pts-30min_0.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-      </div>
-    </div>
-
   </div>
   <!-- /sub-R-2 (Ressources) -->
 
 </div>
-<!-- /tab-5 -->
+<!-- /tab-2 (Bilan & Ressources) -->
 
 </div><!-- /main -->
 
@@ -1971,7 +3632,7 @@ function switchTab(i) {
 }
 function switchSubTab(group, i) {
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
-  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' button').forEach((b,idx) => b.classList.toggle('active', idx===i));
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
@@ -1993,6 +3654,24 @@ function toggleCorrection(btn) {
   var c = btn.nextElementSibling;
   c.classList.toggle('visible');
   btn.textContent = c.classList.contains('visible') ? '🙈 Masquer la correction' : '✅ Voir la correction';
+}
+function toggleIndice(id) {
+  document.getElementById(id).classList.toggle('visible');
+}
+function toggleIndice2(btn, id) {
+  var box = document.getElementById(id);
+  var vis = box.classList.toggle('visible');
+  btn.classList.toggle('active', vis);
+}
+function toggleCorrection2(btn, id) {
+  var box = document.getElementById(id);
+  var vis = box.classList.toggle('visible');
+  btn.textContent = vis ? '▼ Masquer la correction' : '▶ Voir la correction';
+}
+function toggleAide(id, btn) {
+  var box = document.getElementById(id);
+  box.classList.toggle('visible');
+  if (btn) btn.textContent = box.classList.contains('visible') ? '🔧 Masquer le protocole Audacity' : '🔧 Aide logiciel (Audacity)';
 }
 
 /* ════════ VÉRIFICATION NUMÉRIQUE ════════ */
@@ -2273,6 +3952,130 @@ function checkDQ(sel, correctValue, rowId) {
   };
 
   resetSim();
+  draw();
+  requestAnimationFrame(tick);
+})();
+
+/* ════════ ANIMATION — ATTÉNUATION GÉOMÉTRIQUE (I ∝ 1/d²) ════════ */
+(function() {
+  var canvas = document.getElementById('attenGeoCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var trackY = H / 2 + 10;
+  var srcX = 60;
+  var d0 = 20; // distance de référence (unités arbitraires)
+  var dMin = 20, dMax = 200;
+  var pxMin = 60, pxMax = W - 50;
+
+  var dSlider = document.getElementById('attenGeoD');
+  var dValLabel = document.getElementById('attenGeoDVal');
+  var msgBox = document.getElementById('attenGeoMsgBox');
+  var playBtn = document.getElementById('attenGeoPlayBtn');
+  var playing = true;
+
+  var vOnde = 70; // px/s, vitesse d'expansion des fronts
+  var fronts = []; // {t0}
+  var lastEmit = 0;
+  var emitPeriod = 0.5;
+  var lastTs = null;
+  var simTime = 0;
+
+  function dToPx(d) {
+    return pxMin + (d - dMin) / (dMax - dMin) * (pxMax - pxMin);
+  }
+
+  function currentD() { return parseFloat(dSlider.value); }
+
+  function updateReadout() {
+    var d = currentD();
+    var ratio = Math.pow(d0 / d, 2);      // I(d)/I(d0)
+    var attenDB = 20 * Math.log10(d / d0); // A en dB
+    dValLabel.textContent = d + ' unités';
+    msgBox.innerHTML = 'À d = ' + d + ' unités (référence d₀ = ' + d0 + ') : intensité relative ≈ ' +
+      (ratio * 100).toFixed(1) + ' % de I₀, soit une atténuation A ≈ ' + attenDB.toFixed(1) + ' dB.';
+  }
+
+  function resetSim() {
+    fronts = []; lastEmit = 0; simTime = 0; lastTs = null;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // axe
+    ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 2; ctx.setLineDash([6,5]);
+    ctx.beginPath(); ctx.moveTo(15, trackY + 30); ctx.lineTo(W - 15, trackY + 30); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // fronts d'onde
+    ctx.lineWidth = 2;
+    for (var i = 0; i < fronts.length; i++) {
+      var age = simTime - fronts[i].t0;
+      var r = age * vOnde;
+      if (r > W) continue;
+      var alpha = Math.max(0, 1 - r / (W * 0.9));
+      ctx.strokeStyle = 'rgba(232,120,58,' + alpha.toFixed(2) + ')';
+      ctx.beginPath();
+      ctx.arc(srcX, trackY, r, 0, 2*Math.PI);
+      ctx.stroke();
+    }
+
+    // source
+    ctx.fillStyle = '#E8783A';
+    ctx.beginPath(); ctx.arc(srcX, trackY, 8, 0, 2*Math.PI); ctx.fill();
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '11px Outfit, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Source', srcX, trackY - 18);
+
+    // auditeur
+    var d = currentD();
+    var ax = dToPx(d);
+    var ratio = Math.pow(d0 / d, 2);
+    var barMaxH = 90;
+    var barH = Math.max(3, (d0 / d) * barMaxH); // échelle visuelle en 1/d (lisible sur toute la plage)
+
+    ctx.fillStyle = '#2D5F8A';
+    ctx.fillRect(ax - 6, trackY - 30 - barH, 12, barH);
+
+    ctx.strokeStyle = '#1A2A3A'; ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.arc(ax, trackY, 7, 0, 2*Math.PI); ctx.stroke();
+    ctx.fillStyle = '#1A2A3A'; ctx.font = '11px Outfit, sans-serif';
+    ctx.fillText('Auditeur', ax, trackY + 22);
+    ctx.fillText((ratio*100).toFixed(0) + ' % de I₀', ax, trackY - 34 - barH);
+    ctx.textAlign = 'left';
+  }
+
+  function tick(ts) {
+    if (lastTs === null) lastTs = ts;
+    var dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    if (playing) {
+      simTime += dt;
+      if (simTime - lastEmit >= emitPeriod) {
+        fronts.push({ t0: simTime });
+        lastEmit = simTime;
+        if (fronts.length > 30) fronts.shift();
+      }
+      draw();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  dSlider.addEventListener('input', function() { updateReadout(); draw(); });
+
+  window.toggleAttenGeoAnim = function() {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Lecture';
+    playBtn.classList.toggle('active', playing);
+    lastTs = null;
+  };
+  window.resetAttenGeoAnim = function() {
+    resetSim();
+    draw();
+  };
+
+  resetSim();
+  updateReadout();
   draw();
   requestAnimationFrame(tick);
 })();
