@@ -44,7 +44,7 @@ h1{font-size:1.35rem;font-family:'Outfit',sans-serif;font-weight:800;color:var(-
   border-radius:14px;
   padding:18px 24px 14px;
   max-width:1300px;
-  margin:0 auto 24px;
+  margin:0 auto 10px;
   position:sticky; top:0; z-index:100;
   box-shadow:0 2px 12px rgba(45,95,138,0.10);
 }
@@ -68,29 +68,40 @@ button.cap-toggle:hover{background:#1e4466}
 .lunette-icon-wrap svg{display:block;width:100%;height:auto}
 
 /* ── ONGLETS (charte séq. 01) ── */
-.tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex-wrap:wrap}
-.tabs::-webkit-scrollbar{display:none}
-.tab{
+.tabs-nav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex-wrap:wrap}
+.tabs-nav::-webkit-scrollbar{display:none}
+.tab-btn{
   display:flex;align-items:center;gap:8px;
   padding:10px 18px 12px;border:none;background:transparent;
   font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:600;
   color:var(--texte-leger);cursor:pointer;border-bottom:3px solid transparent;
   transition:all .2s;white-space:nowrap;position:relative;bottom:-3px
 }
-.tab:hover{color:var(--orange)}
-.tab.on{color:var(--orange);border-bottom-color:var(--orange);background:var(--orange-clair);border-radius:6px 6px 0 0}
-.panel{display:none;background:var(--blanc);border:1.5px solid var(--gris-bord);border-radius:0 0 12px 12px;padding:20px}
-.panel.on{display:block;animation:fadeIn .25s ease}
+.tab-btn:hover{color:var(--orange)}
+.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange);background:var(--orange-clair);border-radius:6px 6px 0 0}
+.tab-num{width:22px;height:22px;border-radius:50%;background:var(--gris-bord);color:var(--texte-leger);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.tab-btn.active .tab-num{background:var(--bleu);color:#fff}
+.tab-content{display:none;background:var(--blanc);border:1.5px solid var(--gris-bord);border-radius:0 0 12px 12px;padding:20px}
+.tab-content.active{display:block;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.main{max-width:1300px;margin:0 auto;padding:28px 20px 60px}
+.main{max-width:1300px;margin:0 auto;padding:0 20px 60px}
 
-/* ── Sous-onglets (Bilan / Ressources) ── */
-.sub-tabs-nav{display:flex;gap:6px;padding:0 0 0;margin-bottom:18px;flex-wrap:nowrap;overflow-x:auto}
+/* ── Sous-onglets niveau 2 (Cours / Bilan) ── */
+.sub-tabs-nav{display:flex;gap:6px;padding:0;margin-bottom:12px;flex-wrap:nowrap;overflow-x:auto}
 .sub-tab-btn{display:flex;align-items:center;gap:8px;padding:8px 18px;border:none;background:#b8cfe0;color:var(--bleu);font-family:'Nunito',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;border-radius:999px;transition:all .2s;white-space:nowrap}
 .sub-tab-btn:hover{background:var(--bleu);color:#fff}
 .sub-tab-btn.active{background:#1e4466;color:#fff}
 .sub-tab-content{display:none}
 .sub-tab-content.active{display:block;animation:fadeIn .2s ease}
+
+/* ── Sous-onglets niveau 3 (orange) ── */
+.sub3-tabs-nav{display:flex;gap:6px;padding:12px 0 0;margin-bottom:12px;flex-wrap:nowrap;overflow-x:auto}
+.sub3-tab-btn{display:flex;align-items:center;gap:8px;padding:7px 16px;border:none;background:var(--orange-clair);color:var(--orange);font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;border-radius:999px;transition:all .2s;white-space:nowrap}
+.sub3-tab-btn:hover{background:var(--orange);color:#fff}
+.sub3-tab-btn.active{background:var(--orange);color:#fff}
+#sub-nav-P{margin-bottom:12px}
+.sub-tab-content > .sub3-tabs-nav:first-child{padding-top:0}
+.sub3-tabs-nav + .sub-tab-content > .section-title:first-child{margin-top:0}
 
 /* ── Section / bilan / ressources (charte séq. 01) ── */
 .section-title{font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:800;color:var(--bleu);margin:24px 0 14px;display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:2px solid var(--bleu-clair)}
@@ -230,8 +241,8 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
   .header{padding:12px 16px 10px}
   .header-titles h1{font-size:1.05rem}
   .lunette-icon-wrap{width:64px}
-  .tab{padding:8px 12px 10px;font-size:.8rem}
-  .panel{padding:12px}
+  .tab-btn{padding:8px 12px 10px;font-size:.8rem}
+  .tab-content{padding:12px}
   .main{padding:0 0 30px}
   .fctrl{gap:7px;padding:7px 9px}
   .fctrl label{min-width:70px;font-size:11px}
@@ -241,14 +252,76 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
   .rbtn{padding:5px 8px;font-size:11px}
   .btn{padding:5px 8px;font-size:11px}
   canvas{border-radius:4px}
-  .tabs{gap:2px}
+  .tabs-nav{gap:2px}
   .gval{font-size:12px}
   .bilan-grid{grid-template-columns:1fr}
 }
 @media(max-width:400px){
-  .tab{padding:6px 6px;font-size:10px}
+  .tab-btn{padding:6px 6px;font-size:10px}
   .rbtn{padding:4px 6px;font-size:10px}
 }
+
+/* ═══ Activités (Entraînements) ═══ */
+:root{
+  --indice: #C98A00;
+  --indice-clair: #FFF6E0;
+}
+.activite-card{background:var(--blanc);border:1.5px solid var(--bleu-activite-bord);border-left:4px solid var(--bleu-moyen);border-radius:0 12px 12px 0;padding:16px 22px;margin-bottom:16px;position:relative}
+.activite-card h3{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;color:var(--bleu);margin-bottom:10px;margin-top:0}
+.activite-card p,.activite-card ul{font-size:.92rem;line-height:1.65;color:var(--texte)}
+.doc-flex{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin:10px 0}
+.doc-flex>p{flex:1 1 260px;margin:0}
+.doc-media{flex:1 1 260px;max-width:var(--doc-media-w, none);text-align:center}
+.doc-media img{max-width:100%;border-radius:8px;border:1px solid #e0e0e0}
+.doc-media-full{margin:14px auto;max-width:var(--doc-w,55%)}
+.doc-media-full img{width:100%;height:auto;border-radius:8px;border:1px solid var(--gris-bord);display:block}
+.vocab-box{background:var(--gris-fond);border-left:4px solid var(--rouge);border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0;font-size:.92rem;line-height:1.6}
+.vocab-box h4{color:var(--rouge);font-size:.85rem;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px}
+.vocab-box ul{margin:0;padding-left:20px}
+.vocab-box li{margin-bottom:6px}
+.pastille-simu{color:var(--vert);border-color:var(--vert)}
+.pastille-simu:hover{background:var(--vert-clair)}
+.btn-indice{display:inline-block;background:none;border:1.5px solid var(--indice);color:var(--indice);border-radius:20px;padding:4px 12px;font-size:.85rem;font-weight:600;cursor:pointer;margin-left:6px}
+.btn-indice:hover{background:var(--indice-clair)}
+.indice-box{display:none;background:var(--indice-clair);border-left:4px solid var(--indice);border-radius:0 8px 8px 0;padding:10px 16px;margin:10px 0 4px 0;font-size:.88rem;line-height:1.6;color:var(--texte)}
+.indice-box.visible{display:block}
+
+/* ═══ Exercices (Entraînements) ═══ */
+.exo-card{background:var(--vert-exo);border:1.5px solid var(--vert-exo-bord);border-left:4px solid var(--vert);border-radius:0 12px 12px 0;padding:16px 22px;margin-bottom:16px;position:relative}
+.exo-card h3{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;color:var(--vert);margin-bottom:10px}
+.exo-tabs-nav{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
+.exo-tab-btn{background:var(--blanc);border:1.5px solid var(--bleu);color:var(--bleu);border-radius:20px;padding:6px 16px;font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:background .15s,color .15s}
+.exo-tab-btn:hover{background:var(--bleu-clair)}
+.exo-tab-btn.active{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.exo-tab-btn .exo-tab-stars{font-size:.78rem;margin-left:4px;letter-spacing:1px;color:var(--orange);font-weight:400}
+.exo-tab-btn.active .exo-tab-stars{color:#FFD9B3}
+.exo-enonce{background:var(--blanc);border-radius:8px;padding:12px 16px;font-size:.9rem;line-height:1.65;margin-bottom:12px;border:1px solid var(--vert-exo-bord)}
+.question-block{margin-bottom:14px}
+.question-label{font-size:.88rem;font-weight:700;color:var(--texte);margin-bottom:7px;padding-left:8px;border-left:3px solid var(--vert);line-height:1.5}
+.btn-correction{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:9px 20px;background:var(--vert);color:#fff;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s,transform .1s}
+.btn-correction:hover{background:#2A6B52;transform:translateY(-1px)}
+.correction{display:none;background:#F0FAF6;border:1.5px solid var(--vert);border-radius:10px;padding:14px 18px;margin-top:8px;font-size:.88rem;line-height:1.7}
+.correction.visible{display:block}
+.correction strong{color:var(--vert)}
+.correction .calc-step{background:#fff;border-radius:6px;padding:8px 12px;margin:7px 0;font-family:'Outfit',sans-serif;font-size:.92rem;border-left:3px solid var(--vert)}
+
+/* ═══ Exercices Entraînements — cartes par niveau de difficulté ═══ */
+.exo-diff-card{background:var(--vert-exo);border:1.5px solid var(--vert-exo-bord);border-radius:0 12px 12px 0;padding:16px 22px;margin-bottom:16px;position:relative}
+.exo-diff-card.facile{border-left:4px solid var(--vert)}
+.exo-diff-card.inter{border-left:4px solid var(--orange)}
+.exo-diff-card.diff{border-left:4px solid var(--rouge)}
+.exo-diff-card h3{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;color:var(--vert);margin-bottom:10px;margin-top:0}
+
+/* ═══ Indice / Correction dédiés (composants standardisés) ═══ */
+.btn-indice2{display:inline-block;background:none;border:1.5px solid var(--indice);color:var(--indice);border-radius:20px;padding:4px 12px;font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;margin-left:6px;transition:background .15s,color .15s}
+.btn-indice2:hover{background:var(--indice-clair)}
+.btn-indice2.active{background:var(--indice);color:#fff}
+.btn-correction2{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:9px 20px;background:var(--vert);color:#fff;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s,transform .1s}
+.btn-correction2:hover{background:#2A6B52;transform:translateY(-1px)}
+.correction-box{display:none;background:#F0FAF6;border:1.5px solid var(--vert);border-radius:10px;padding:14px 18px;margin-top:8px;font-size:.88rem;line-height:1.7}
+.correction-box.visible{display:block}
+.correction-box strong{color:var(--vert)}
+.correction-box .calc-step{background:#fff;border-radius:6px;padding:8px 12px;margin:7px 0;font-family:'Outfit',sans-serif;font-size:.92rem;border-left:3px solid var(--vert)}
 </style>
 </head>
 <body>
@@ -341,13 +414,16 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
     </div>
   </div>
 
-  <nav class="tabs">
-    <div class="tab on"  onclick="showTab('anim')">Construction des rayons</div>
-    <div class="tab"     onclick="showTab('gross')">Cercle oculaire</div>
-    <div class="tab"     onclick="showTab('gros')">Grossissement</div>
-    <div class="tab"     onclick="showTab('exo')">Exercices guidés</div>
-    <div class="tab"     onclick="showTab('lun')">Autres lunettes</div>
-    <div class="tab"     onclick="showTab('bilan')">✓ Ressources</div>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">1</span> Cours
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">2</span> Entraînements
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">3</span> Bilan &amp; Ressources
+    </button>
   </nav>
 
   <div class="cap-panel" id="capPanelLun">
@@ -366,8 +442,28 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
 
 <main class="main">
 
-<!-- ONGLET 1 -->
-<div class="panel on" id="tab-anim">
+<div class="tab-content active" id="tab-0">
+
+  <div class="sub-tabs-nav" id="sub-nav-P">
+    <button class="sub-tab-btn active" data-sub="P1" onclick="switchSubTab('P',0)">
+      <span class="sub-tab-num">1</span> Construction des rayons
+    </button>
+    <button class="sub-tab-btn" data-sub="P2" onclick="switchSubTab('P',1)">
+      <span class="sub-tab-num">2</span> Cercle oculaire
+    </button>
+    <button class="sub-tab-btn" data-sub="P3" onclick="switchSubTab('P',2)">
+      <span class="sub-tab-num">3</span> Grossissement
+    </button>
+    <button class="sub-tab-btn" data-sub="P4" onclick="switchSubTab('P',3)">
+      <span class="sub-tab-num">4</span> Exercices guidés
+    </button>
+    <button class="sub-tab-btn" data-sub="P5" onclick="switchSubTab('P',4)">
+      <span class="sub-tab-num">5</span> Autres lunettes
+    </button>
+  </div>
+
+<!-- Sous-onglet P1 : Construction des rayons -->
+<div class="sub-tab-content active" id="sub-P-0">
   <div class="fctrl">
     <label>f₁' objectif</label>
     <input type="range" id="af1" min="100" max="340" value="210" step="5" oninput="onFChange()">
@@ -710,10 +806,11 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
 })();
 </script>
 
-</div><!-- fin tab-anim -->
+</div>
+<!-- /sub-P-0 (Construction des rayons) -->
 
-<!-- ONGLET 2 -->
-<div class="panel" id="tab-gross">
+<!-- Sous-onglet P2 : Cercle oculaire -->
+<div class="sub-tab-content" id="sub-P-1">
   <button class="btn" id="btnCO" onclick="updateCO()" style="margin-bottom:8px">▶ Lancer / Reprendre</button>
   <div class="astro-wrap">
   <canvas id="cvG" height="440"></canvas>
@@ -904,9 +1001,10 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
     </div>
   </div>
 </div>
+<!-- /sub-P-1 (Cercle oculaire) -->
 
-<!-- ONGLET 3 -->
-<div class="panel" id="tab-gros">
+<!-- Sous-onglet P3 : Grossissement -->
+<div class="sub-tab-content" id="sub-P-2">
   <div class="fctrl" style="margin-bottom:6px">
     <label>f₁' objectif</label>
     <input type="range" id="gf1" min="100" max="1000" value="300" step="10" oninput="updateGros()">
@@ -986,9 +1084,10 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
     ⚠️ Plus G est grand → plus le <b>cercle oculaire est petit</b> → plus difficile à utiliser.
   </div>
 </div>
+<!-- /sub-P-2 (Grossissement) -->
 
-<!-- ONGLET 4 : Exercices guidés -->
-<div class="panel" id="tab-exo">
+<!-- Sous-onglet P4 : Exercices guidés -->
+<div class="sub-tab-content" id="sub-P-3">
   <!-- En-tête et sélecteur -->
   <div style="background:#f4f8ff;border:2px solid #1a4aaa;border-radius:10px;padding:14px 18px;margin-bottom:14px">
     <h2 style="font-size:15px;font-weight:700;color:#1a3a6a;margin-bottom:6px">
@@ -1044,9 +1143,10 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
     </div>
   </div>
 </div>
+<!-- /sub-P-3 (Exercices guidés) -->
 
-<!-- ONGLET 5 : Autres lunettes -->
-<div class="panel" id="tab-lun">
+<!-- Sous-onglet P5 : Autres lunettes -->
+<div class="sub-tab-content" id="sub-P-4">
   <div style="padding:8px 0">
     <h2 style="font-size:17px;font-weight:700;color:#1a3a6a;margin-bottom:14px">Quelques exemples de lunettes astronomiques</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px">
@@ -1153,31 +1253,1212 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
     </div>
   </div>
 </div>
+<!-- /sub-P-4 (Autres lunettes) -->
 
+</div>
+<!-- /tab-0 (Cours) -->
 
-<!-- ONGLET 7 : Bilan & Ressources -->
-<div class="panel" id="tab-bilan">
+<!-- ══════════════ ONGLET ENTRAÎNEMENTS ══════════════ -->
+<div class="tab-content" id="tab-1">
 
-  <nav class="sub-tabs-nav" id="sub-nav-bilan">
-    <button class="sub-tab-btn active" data-sub="bilan1" onclick="switchSubTabLun(0)">
-      <span class="sub-tab-num">📋</span> Bilan
+  <div class="sub-tabs-nav" id="sub-nav-E">
+    <button class="sub-tab-btn active" data-sub="E1" onclick="switchSubTab('E',0)">
+      <span class="sub-tab-num">1</span> Activités
     </button>
-    <button class="sub-tab-btn" data-sub="bilan2" onclick="switchSubTabLun(1)">
+    <button class="sub-tab-btn" data-sub="E2" onclick="switchSubTab('E',1)">
+      <span class="sub-tab-num">2</span> Exercices
+    </button>
+    <button class="sub-tab-btn" data-sub="E3" onclick="switchSubTab('E',2)">
+      <span class="sub-tab-num">🎓</span> Sujets de bac
+    </button>
+  </div>
+
+  <!-- Sous-onglet E1 : Activités -->
+  <div class="sub-tab-content active" id="sub-E-0">
+
+    <div class="sub3-tabs-nav" id="sub-nav-EA">
+      <button class="sub3-tab-btn active" data-sub="EA1" onclick="switchSubTab('EA',0)">📄 Activité 1</button>
+      <button class="sub3-tab-btn" data-sub="EA2" onclick="switchSubTab('EA',1)">🖥️ Activité 2</button>
+      <button class="sub3-tab-btn" data-sub="EA3" onclick="switchSubTab('EA',2)">🔬 Activité 3</button>
+    </div>
+
+    <!-- Sous-onglet EA1 : Activité 1 (documentaire) -->
+    <div class="sub-tab-content active" id="sub-EA-0">
+
+      <div class="activite-card">
+        <h3>Activité 1 — Construction d'une lunette astronomique</h3>
+        <p>L'invention de la lunette astronomique au xvii<sup>e</sup> siècle a permis une étude minutieuse du ciel étoilé. Les découvertes faites avec cet instrument ont révolutionné les connaissances de la structure de l'Univers.</p>
+        <p><b>Comment construire une maquette de lunette astronomique ?</b></p>
+
+        <div class="doc-media-full">
+          <img src="Entrainements/p442-1.png" alt="DOC. 1 — Matériel pour construire une lunette astronomique">
+        </div>
+
+        <div class="doc-media-full">
+          <img src="Entrainements/p442-2.png" alt="DOC. 2 — Constitution d'une lunette astronomique">
+        </div>
+
+        <div class="vocab-box">
+          <h4>Vocabulaire</h4>
+          <ul>
+            <li>Un point objet est considéré « <b>à l'infini</b> » si la distance qui le sépare d'une lentille mince convergente est très grande devant la distance focale de la lentille.</li>
+            <li>Une lunette astronomique est <b>afocale</b> si elle donne d'un objet situé « à l'infini » une image « à l'infini ».</li>
+            <li>L'<b>objectif</b> comme l'<b>oculaire</b> d'une lunette astronomique peuvent être modélisés par une lentille mince convergente.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="activite-card">
+        <h3>1. S'approprier</h3>
+        <p><strong>a.</strong> Justifier le nom des deux lentilles minces convergentes de la lunette astronomique. <button class="btn-indice" onclick="toggleIndice('ind-a1-1a')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a1-1a">Repense au sens de « objectif » et d'« oculaire » : l'un fait face à l'objet observé, l'autre est placé du côté de l'œil.</div>
+        <p style="margin-top:10px;"><strong>b.</strong> Expliquer pourquoi la lunette astronomique du DOC. 2 est afocale. <button class="btn-indice" onclick="toggleIndice('ind-a1-1b')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a1-1b">Reviens à la définition du mot « afocale » donnée dans l'encart Vocabulaire, et à la position de l'objet observé (une étoile, par exemple).</div>
+      </div>
+
+      <div class="activite-card">
+        <h3>2. Analyser-raisonner</h3>
+        <p>On considère un point objet réel situé « à l'infini » sur l'axe optique d'une lunette astronomique du DOC. 2. Indiquer la position de l'image intermédiaire de ce point formée par l'objectif. En déduire la position de cette image et sa position pour l'oculaire si la lunette est afocale. <button class="btn-indice" onclick="toggleIndice('ind-a1-2')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a1-2">Un objet à l'infini forme son image par une lentille convergente dans le plan focal image de cette lentille. Pense ensuite à la condition pour que l'image finale soit aussi à l'infini.</div>
+      </div>
+
+      <div class="activite-card">
+        <h3>3. Réaliser</h3>
+        <p><strong>a.</strong> Représenter, en précisant l'échelle utilisée, le schéma de la lunette afocale réalisable à partir du DOC. 1. Identifier l'objectif et l'oculaire. <button class="btn-indice" onclick="toggleIndice('ind-a1-3a')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a1-3a">L'objectif est la lentille de plus grande distance focale (125 mm) ; l'oculaire, celle de plus petite distance focale (25 mm). Place les deux foyers correspondants au même point pour l'afocalité.</div>
+        <p style="margin-top:10px;"><strong>b.</strong> En déduire la distance entre les centres optiques des lentilles minces modélisant l'objectif et l'oculaire de la lunette astronomique afocale. <button class="btn-indice" onclick="toggleIndice('ind-a1-3b')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a1-3b">Pour une lunette afocale, le foyer image de l'objectif coïncide avec le foyer objet de l'oculaire : la distance entre les deux lentilles est donc f₁' + f₂'.</div>
+      </div>
+
+    </div>
+    <!-- /sub-EA-0 (Activité 1) -->
+
+    <!-- Sous-onglet EA2 : Activité 2 (numérique) -->
+    <div class="sub-tab-content" id="sub-EA-1">
+
+      <div class="activite-card">
+        <h3>Activité 2 — Lunettes astronomiques commerciales</h3>
+        <p>Depuis l'invention, au début du xvii<sup>e</sup> siècle, de la lunette astronomique par Johannes Kepler, les astronomes amateurs et professionnels ont utilisé cet instrument pour observer le ciel.</p>
+        <p><b>Objectif :</b> exploiter les données caractéristiques d'une lunette commerciale.</p>
+        <p class="pastille-row" style="margin-top:8px;"><a class="pastille pastille-simu" href="https://www.hatier-clic.fr/miniliens/mie/2020/9782401073364/Simulateur_lentille_sim/index.html" target="_blank" rel="noopener">🖥️ Ouvrir le simulateur</a></p>
+
+        <div class="doc-media-full">
+          <img src="Entrainements/AD2.png" alt="Caractéristiques de deux lunettes, oculaires disponibles et cercle oculaire">
+        </div>
+      </div>
+
+      <div class="activite-card">
+        <h3>1. Grossissements des deux lunettes</h3>
+        <p>Sur le simulateur, choisis successivement le Modèle 1 puis le Modèle 2 et teste, pour chacun, les oculaires fournis (DOC. 1). Relève à chaque fois le grossissement affiché, puis retrouve ces valeurs par le calcul. <button class="btn-indice" onclick="toggleIndice('ind-a2-1')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a2-1">Le grossissement d'une lunette afocale se calcule par G = f₁'/f₂', avec f₁' la distance focale de l'objectif et f₂' celle de l'oculaire utilisé (DOC. 1).</div>
+      </div>
+
+      <div class="activite-card">
+        <h3>2. Adapter les oculaires du DOC. 2</h3>
+        <p><strong>a.</strong> Sur le simulateur, monte sur le Modèle 2 chacun des oculaires proposés au DOC. 2 (6,0 ; 9,0 ; 12,5 ; 18 ; 25 et 32 mm) et note les grossissements obtenus. Vérifie-les par le calcul. <button class="btn-indice" onclick="toggleIndice('ind-a2-2a')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a2-2a">Utilise la même relation qu'à la question 1, avec la distance focale de l'objectif du Modèle 2 (DOC. 1) et celle de chaque oculaire testé.</div>
+        <p style="margin-top:10px;"><strong>b.</strong> Observe sur le simulateur (ou sur le DOC. 2) que ces oculaires n'ont pas tous la même hauteur. En utilisant le caractère afocal de la lunette, explique pourquoi. <button class="btn-indice" onclick="toggleIndice('ind-a2-2b')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a2-2b">Pour que la lunette reste afocale quel que soit l'oculaire monté, le plan focal objet de l'oculaire doit toujours se trouver au même endroit (là où se forme l'image intermédiaire). La position de la lentille dans son tube dépend donc de sa distance focale.</div>
+      </div>
+
+      <div class="activite-card">
+        <h3>3. Cercle oculaire</h3>
+        <p><strong>a.</strong> À l'aide du DOC. 3 et du théorème de Thalès, montre que le diamètre <i>d</i> du cercle oculaire est égal au diamètre <i>D</i> de l'objectif divisé par le grossissement <i>G</i> de la lunette. <button class="btn-indice" onclick="toggleIndice('ind-a2-3a')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a2-3a">Identifie sur le DOC. 3 deux triangles semblables formés par les rayons issus de B∞ et le faisceau qui traverse l'objectif puis l'oculaire ; exprime le rapport d/D à l'aide des distances focales f₁' et f₂', puis relie-le à G = f₁'/f₂'.</div>
+        <p style="margin-top:10px;"><strong>b.</strong> Estimer l'ordre de grandeur du diamètre de la pupille d'un œil. <button class="btn-indice" onclick="toggleIndice('ind-a2-3b')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a2-3b">Pense à une valeur usuelle en conditions d'observation nocturne (pupille dilatée) — un ordre de grandeur en mm suffit.</div>
+        <p style="margin-top:10px;"><strong>c.</strong> Pour une bonne observation, le diamètre du cercle oculaire doit être inférieur au diamètre de la pupille de l'œil. Pourquoi ? En utilisant le simulateur (ou la relation de la question 3a), vérifie si c'est le cas pour les deux lunettes du DOC. 1 avec tous les oculaires fournis. <button class="btn-indice" onclick="toggleIndice('ind-a2-3c')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a2-3c">Si le cercle oculaire est plus large que la pupille, une partie de la lumière sortant de la lunette n'entre pas dans l'œil. Calcule d = D/G pour chaque couple lunette/oculaire du DOC. 1 et compare à la valeur trouvée en 3b.</div>
+      </div>
+
+      <div class="activite-card">
+        <h3>Bilan</h3>
+        <p>Le grossissement des deux lunettes présentées est du même ordre de grandeur, alors que le Modèle 2 est bien plus cher que le Modèle 1. Le grossissement est-il donc le seul critère de qualité d'une lunette ? Justifie en t'appuyant sur les prix indiqués au DOC. 1. <button class="btn-indice" onclick="toggleIndice('ind-a2-b1')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a2-b1">Compare ce qui différencie surtout les deux modèles dans le DOC. 1, en dehors du grossissement obtenu avec un oculaire donné.</div>
+        <p style="margin-top:10px;">Le diamètre de l'objectif est une donnée essentielle d'une lunette. Pour une même distance focale, vaut-il mieux un diamètre élevé ou faible ? Pourquoi ? En quoi cela limite-t-il le grossissement maximal utilisable ? <button class="btn-indice" onclick="toggleIndice('ind-a2-b2')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a2-b2">Un grand diamètre d'objectif collecte davantage de lumière (image plus lumineuse). Mais d'après la question 3, augmenter G réduit le diamètre du cercle oculaire : il existe donc un grossissement maximal utile, lié à la taille de la pupille de l'œil.</div>
+      </div>
+
+    </div>
+    <!-- /sub-EA-1 (Activité 2) -->
+
+    <!-- Sous-onglet EA3 : Activité 3 (expérimentale) -->
+    <div class="sub-tab-content" id="sub-EA-2">
+
+      <div class="activite-card">
+        <h3>Activité 3 — Image formée par une lunette afocale</h3>
+        <p>Une lunette astronomique afocale permet d'observer des objets situés « à l'infini ». Pour que les astronomes ayant une vision normale puissent étudier le ciel étoilé sans fatigue oculaire, l'image de l'astre formée par une lunette astronomique doit se situer « à l'infini ».</p>
+        <p><b>Quel trajet suit la lumière, issue d'un point d'un astre, à travers une lunette astronomique afocale ?</b></p>
+
+        <div class="doc-media-full">
+          <img src="Entrainements/p443-1.png" alt="DOC. 1 — Objet situé à l'infini">
+        </div>
+
+        <div class="doc-media-full">
+          <img src="Entrainements/p443-2.png" alt="DOC. 2 — Faisceau issu d'un point objet B situé à l'infini">
+        </div>
+
+        <div class="doc-media-full">
+          <img src="Entrainements/p443-3.png" alt="DOC. 3 — Dispositif expérimental : banc d'optique, papier millimétré, porte-objet, écran, lentilles convergentes L0 L1 L2 et source lumineuse">
+        </div>
+      </div>
+
+      <div class="activite-card">
+        <h3>1. Réaliser</h3>
+        <p>Réaliser le montage sur banc d'optique permettant de modéliser un objet situé « à l'infini ». <button class="btn-indice" onclick="toggleIndice('ind-a3-1')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a3-1">D'après le DOC. 1, un objet situé « à l'infini » peut être modélisé par l'image d'un objet réel placé dans le plan focal objet d'une lentille convergente L₀ : c'est cette image qui servira d'objet pour la suite du montage.</div>
+      </div>
+
+      <div class="activite-card">
+        <h3>2. Analyser-raisonner</h3>
+        <p>Identifier, parmi les deux lentilles encore disponibles, celle qui joue le rôle de l'objectif et celle qui joue le rôle de l'oculaire. <button class="btn-indice" onclick="toggleIndice('ind-a3-2')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a3-2">L'objectif d'une lunette astronomique a toujours une distance focale plus grande que celle de l'oculaire (DOC. 1 de l'Activité 1). Compare les distances focales des deux lentilles L₁ et L₂ restantes.</div>
+      </div>
+
+      <div class="activite-card">
+        <h3>3. Réaliser</h3>
+        <p><strong>a.</strong> Sur le papier millimétré, en précisant l'échelle utilisée, reproduire le schéma du DOC. 2 et compléter le tracé du faisceau issu de B traversant successivement les deux lentilles convergentes modélisant l'objectif et l'oculaire. Vérifier que le point image intermédiaire B₁ est bien dans le plan focal objet de l'oculaire. <button class="btn-indice" onclick="toggleIndice('ind-a3-3a')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a3-3a">Les trois rayons incidents du DOC. 2 sont parallèles entre eux (objet à l'infini) : ils se croisent tous au foyer image de l'objectif. Trace ensuite chaque rayon depuis ce point image intermédiaire à travers l'oculaire, sachant que le foyer objet de l'oculaire coïncide avec ce même point si la lunette est afocale.</div>
+        <p style="margin-top:10px;"><strong>b.</strong> Construire sur le banc optique la maquette de la lunette astronomique afocale permettant d'observer l'objet situé « à l'infini ». Vérifier la position de l'image intermédiaire A₁B₁ en la visualisant sur un écran. <button class="btn-indice" onclick="toggleIndice('ind-a3-3b')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a3-3b">Place l'oculaire de sorte que son foyer objet coïncide avec la position de l'image intermédiaire A₁B₁ formée par l'objectif (DOC. 3) ; celle-ci doit apparaître nette sur l'écran placé au niveau de ce plan, avant d'insérer l'oculaire.</div>
+      </div>
+
+      <div class="activite-card">
+        <h3>4. Valider</h3>
+        <p><strong>a.</strong> Identifier des sources d'erreur pour expliquer l'écart éventuel entre la position de l'image intermédiaire tracée au 3.a. et celle visualisée sur l'écran. <button class="btn-indice" onclick="toggleIndice('ind-a3-4a')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a3-4a">Pense à la précision du tracé graphique (échelle, épaisseur du trait), à l'incertitude sur le repérage des positions des lentilles et de l'écran sur le banc optique, et à l'approximation des lentilles minces.</div>
+        <p style="margin-top:10px;"><strong>b.</strong> Vérifier que l'image définitive est renversée en utilisant la maquette de la lunette astronomique afocale pour viser un objet réel extérieur à la salle de classe. <button class="btn-indice" onclick="toggleIndice('ind-a3-4b')">💡 Indice</button></p>
+        <div class="indice-box" id="ind-a3-4b">Observe un objet lointain et fixe (bâtiment, arbre) à travers la maquette : compare son orientation observée à travers la lunette à son orientation réelle, à l'œil nu.</div>
+      </div>
+
+    </div>
+    <!-- /sub-EA-2 (Activité 3) -->
+
+  </div>
+  <!-- /sub-E-0 -->
+
+  <!-- Sous-onglet E2 : Exercices -->
+  <div class="sub-tab-content" id="sub-E-1">
+
+    <div class="sub3-tabs-nav" id="sub-nav-EX">
+      <button class="sub3-tab-btn active" data-sub="EX1" onclick="switchSubTab('EX',0)">🟢 Faciles</button>
+      <button class="sub3-tab-btn" data-sub="EX2" onclick="switchSubTab('EX',1)">🟠 Intermédiaires</button>
+      <button class="sub3-tab-btn" data-sub="EX3" onclick="switchSubTab('EX',2)">🔴 Difficiles</button>
+    </div>
+
+    <div class="sub-tab-content active" id="sub-EX-0">
+
+      <div class="exo-tabs-nav" id="sub-nav-EXF">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXF',0)">Exercice 1 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',1)">Exercice 2 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',2)">Exercice 3 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',3)">Exercice 4 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',4)">Exercice 5 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',5)">Exercice 6 <span class="exo-tab-stars">★★☆</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXF-0">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 15 : Schématiser une lunette afocale</h3>
+
+          <div class="doc-flex">
+            <p>La lunette astronomique de l'observatoire de Nice dispose d'un objectif de 17,89 m de distance focale. La distance focale de l'oculaire permettant le grossissement maximal est égale à 8 mm.</p>
+            <div class="doc-media" style="--doc-media-w:260px">
+              <img src="Entrainements/ex15.png" alt="Coupole et lunette astronomique de l'observatoire de Nice">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Réaliser un schéma de la lunette astronomique afocale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex15-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex15-a">Une lunette afocale associe deux lentilles convergentes : l'objectif (grande distance focale f₁') et l'oculaire (petite distance focale f₂'), placées de sorte que le foyer image de l'objectif F₁' coïncide avec le foyer objet de l'oculaire F₂. Un rayon issu de l'infini, parallèle à l'axe optique, traverse l'objectif, passe par F₁' = F₂, puis ressort de l'oculaire parallèle à l'axe (mais incliné par rapport au rayon incident).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Estimer la longueur de la lunette astronomique de l'observatoire de Nice. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex15-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex15-b">Dans une lunette afocale, la longueur L de la lunette correspond à la distance entre les centres optiques des deux lentilles. Comme F₁' = F₂, cette distance est simplement la somme des deux distances focales : L = f₁' + f₂'.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex15')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex15">
+            <p><strong>a.</strong> La lunette astronomique afocale est constituée de deux lentilles minces convergentes placées sur le même axe optique :</p>
+            <ul style="margin:8px 0 8px 20px;line-height:1.7;">
+              <li>l'<strong>objectif</strong> (L₁), de grande distance focale f₁' = O₁F₁', tourné vers l'objet observé (à l'infini) ;</li>
+              <li>l'<strong>oculaire</strong> (L₂), de petite distance focale f₂' = O₂F₂', du côté de l'œil de l'observateur.</li>
+            </ul>
+            <p>La condition d'afocalité impose que le foyer image de l'objectif F₁' coïncide avec le foyer objet de l'oculaire F₂ : <strong>F₁' = F₂</strong>. Un faisceau de rayons parallèles issu d'un point à l'infini (donc incliné d'un angle θ par rapport à l'axe) converge en F₁' après l'objectif, diverge ensuite depuis ce même point F₂ à travers l'oculaire, et ressort de la lunette sous forme d'un faisceau de rayons à nouveau parallèles entre eux, mais inclinés d'un angle θ' plus grand que θ.</p>
+            <p style="margin-top:8px;">(Schéma attendu : axe optique horizontal, lentille L₁ à gauche avec ses foyers F₁ et F₁', lentille L₂ à droite avec ses foyers F₂ et F₂', F₁' et F₂ confondus au centre ; un rayon incident parallèle à l'axe qui se brise en passant par L₁, passe par F₁'=F₂, puis se brise à nouveau en traversant L₂ pour ressortir parallèle à un autre rayon incident issu du même point objet à l'infini.)</p>
+            <p style="margin-top:10px;"><strong>b.</strong> La longueur L de la lunette correspond à la distance séparant les centres optiques O₁ et O₂ des deux lentilles. Puisque F₁' = F₂, on a :</p>
+            <div class="calc-step">L = O₁O₂ = O₁F₁' + F₂O₂ = f₁' + f₂'</div>
+            <div class="calc-step">L = 17,89 m + 8×10⁻³ m ≈ <strong>17,90 m</strong></div>
+            <p style="margin-top:8px;">La lunette de l'observatoire de Nice mesure donc environ 17,90 m de long — une longueur cohérente avec la taille de la coupole visible sur la photo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-1">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 16 : Choisir des lentilles minces convergentes</h3>
+
+          <div class="doc-flex">
+            <p>Afin de modéliser une lunette afocale, un élève doit choisir, entre deux lentilles minces convergentes, celle qui jouera le rôle de l'objectif et celle qui sera l'oculaire.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Proposer une technique permettant de différencier la distance focale des deux lentilles. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex16-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex16-a">Une lentille convergente forme, d'un objet très éloigné (le soleil, un objet au fond de la salle), une image nette sur un écran. La distance entre la lentille et cet écran, lorsque l'image est nette, correspond à la distance focale image f' de la lentille.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Préciser comment l'élève va placer sur le banc d'optique les lentilles minces convergentes. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex16-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex16-b">Dans une lunette afocale, l'objectif (grande distance focale) est tourné vers l'objet observé, et l'oculaire (petite distance focale) est placé du côté de l'œil de l'observateur. La condition d'afocalité impose que le foyer image de l'objectif coïncide avec le foyer objet de l'oculaire.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex16')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex16">
+            <p><strong>a.</strong> Pour différencier la distance focale des deux lentilles, on peut projeter, à l'aide de chaque lentille, l'image d'un objet très éloigné (par exemple une fenêtre ou un objet situé au fond de la pièce, considéré comme à l'infini) sur un écran placé sur le banc d'optique.</p>
+            <p style="margin-top:8px;">On déplace l'écran jusqu'à obtenir une image nette : la distance séparant alors la lentille de l'écran correspond à la distance focale image f' de cette lentille (puisqu'un objet à l'infini se forme dans le plan focal image). En répétant l'opération avec la seconde lentille, on compare les deux distances obtenues : la lentille donnant la plus grande distance possède la plus grande distance focale.</p>
+            <p style="margin-top:10px;"><strong>b.</strong> Dans une lunette afocale, l'élève doit placer :</p>
+            <ul style="margin:8px 0 8px 20px;line-height:1.7;">
+              <li>la lentille de <strong>plus grande distance focale</strong> (déterminée à la question a.) en premier sur le banc, du côté de l'objet observé : elle joue le rôle de l'<strong>objectif</strong> ;</li>
+              <li>la lentille de <strong>plus petite distance focale</strong> ensuite, du côté de l'œil de l'observateur : elle joue le rôle de l'<strong>oculaire</strong>.</li>
+            </ul>
+            <p>Les deux lentilles doivent être alignées sur le même axe optique et séparées d'une distance L = f₁' + f₂' (somme de leurs distances focales), de sorte que le foyer image de l'objectif coïncide avec le foyer objet de l'oculaire, condition nécessaire à l'afocalité du système.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-2">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 21 : Représenter un faisceau de lumière</h3>
+
+          <div class="doc-flex">
+            <p>Un faisceau de lumière issu d'un point objet réel A du Soleil pénètre parallèlement à l'axe optique d'une lunette astronomique afocale adaptée à l'observation solaire.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Représenter, sans souci d'échelle, le faisceau issu du point A et traversant la lunette. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex21-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex21-a">Un point objet à l'infini situé sur l'axe optique envoie un faisceau de rayons parallèles à cet axe. Ce faisceau converge, après l'objectif, au foyer image F₁' de l'objectif, qui coïncide avec le foyer objet F₂ de l'oculaire (condition d'afocalité). Après l'oculaire, les rayons ressortent à nouveau parallèles entre eux, mais inclinés par rapport à l'axe optique.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Expliquer pourquoi il ne faut pas regarder directement le Soleil à travers une lunette astronomique. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex21-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex21-b">Une lunette astronomique afocale a un grossissement supérieur à 1 : elle concentre l'énergie lumineuse collectée par l'objectif (de grand diamètre) dans un faisceau plus étroit à la sortie de l'oculaire, avant qu'il n'entre dans l'œil.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex21')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex21">
+            <p><strong>a.</strong> Le point A du Soleil étant à l'infini, il envoie un faisceau de rayons lumineux parallèles entre eux et à l'axe optique. Après avoir traversé l'objectif (lentille L₁, de centre O₁), ces rayons convergent au foyer image F₁' de l'objectif. Or, dans une lunette afocale, F₁' coïncide avec le foyer objet F₂ de l'oculaire (lentille L₂, de centre O₂) : le point A₁ où se croisent les rayons est donc confondu avec F₁' = F₂. Après avoir traversé l'oculaire, les rayons ressortent à nouveau parallèles entre eux (puisqu'ils sont issus du foyer objet de l'oculaire), mais parallèles à l'axe optique cette fois, sans conserver l'inclinaison qu'ils avaient à l'entrée.</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex21-c.png" alt="Trajet du faisceau A∞ à travers la lunette afocale : O1, F1'=F2=A1, O2" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>b.</strong> L'objectif d'une lunette astronomique a un diamètre bien plus grand que celui de la pupille de l'œil : il collecte donc une quantité d'énergie lumineuse très supérieure à celle que l'œil recevrait à l'œil nu. Cette énergie, concentrée par le système optique et transmise par l'oculaire vers l'œil, forme un faisceau beaucoup plus intense que la lumière solaire directe. Regarder le Soleil à travers une lunette astronomique expose donc la rétine à une énergie lumineuse considérablement amplifiée, ce qui provoque des lésions oculaires irréversibles, quasi instantanées. C'est pourquoi l'observation solaire nécessite un instrument spécialement adapté (filtre solaire adéquat placé devant l'objectif, ou projection de l'image sur un écran), et non une lunette astronomique classique utilisée directement à l'œil.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-3">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 27 : Faire une conversion</h3>
+
+          <div class="doc-flex">
+            <p>Pour mesurer des angles très petits, on utilise des sous-multiples du degré : la minute (1° = 60') et la seconde (1° = 3600'').</p>
+          </div>
+          <div class="def-card" style="margin-bottom:14px;">
+            <p><strong>DONNÉE</strong> 1° = π/180 rad.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Convertir 5,0° en radian. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex27-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex27-a">Pour convertir un angle de degrés en radians, on multiplie sa valeur en degrés par π/180.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Convertir 3,0×10⁻⁴ radian en degré. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex27-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex27-b">Pour convertir un angle de radians en degrés, on multiplie sa valeur en radians par 180/π (relation inverse de la précédente).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. Convertir 32' en radian. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex27-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex27-c">Il faut d'abord convertir les minutes d'angle en degrés (1° = 60'), puis convertir le résultat obtenu en radians à l'aide de la donnée.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex27')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex27">
+            <p><strong>a.</strong> On multiplie 5,0° par π/180 :</p>
+            <div class="calc-step">5,0 × π/180 ≈ <strong>8,7×10⁻² rad</strong></div>
+            <p style="margin-top:10px;"><strong>b.</strong> On multiplie 3,0×10⁻⁴ rad par 180/π :</p>
+            <div class="calc-step">3,0×10⁻⁴ × 180/π ≈ <strong>1,7×10⁻² °</strong></div>
+            <p style="margin-top:10px;"><strong>c.</strong> On convertit d'abord 32' en degré, sachant que 1° = 60' :</p>
+            <div class="calc-step">32' = 32/60 ° ≈ 0,53°</div>
+            <p>Puis on convertit ce résultat en radian :</p>
+            <div class="calc-step">0,53 × π/180 ≈ <strong>9,3×10⁻³ rad</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-4">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 28 : Définir un grossissement</h3>
+
+          <div class="doc-flex">
+            <p>Un astronome observe un astre à travers une lunette astronomique afocale sous un angle θ' = 0,20 rad. À l'œil nu, cet objet céleste est vu sous un angle θ = 2×10⁻³ rad.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Représenter, sans souci d'échelle, le faisceau issu d'un point objet de l'astre observé et traversant la lunette afocale. Faire apparaître les angles θ et θ' sur le schéma. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex28-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex28-a">Le point objet observé (B∞) est hors de l'axe optique : il envoie un faisceau de rayons parallèles entre eux, inclinés d'un angle θ par rapport à l'axe. Ce faisceau converge en B₁, dans le plan focal image commun (F₁' = F₂), avant de traverser l'oculaire et de ressortir parallèle, incliné cette fois d'un angle θ' par rapport à l'axe.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Exprimer puis calculer le grossissement G de cette lunette astronomique afocale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex28-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex28-b">Le grossissement d'une lunette afocale est défini comme le rapport entre l'angle sous lequel l'observateur voit l'objet à travers l'instrument (θ') et l'angle sous lequel il le voit à l'œil nu (θ) : G = θ'/θ.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex28')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex28">
+            <p><strong>a.</strong> Le point objet B∞ étant à l'infini et hors de l'axe optique, il envoie un faisceau de rayons parallèles entre eux, inclinés d'un angle θ par rapport à l'axe optique. Après l'objectif (O₁), ce faisceau converge au point B₁, situé dans le plan focal image commun (F₁' = F₂), à une distance A₁B₁ de l'axe. Après avoir traversé l'oculaire (O₂), les rayons ressortent à nouveau parallèles entre eux, inclinés cette fois d'un angle θ' par rapport à l'axe optique, plus grand que θ.</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex28-c.png" alt="Faisceau issu de B∞ à travers la lunette afocale, avec les angles θ (avant l'objectif) et θ' (après l'oculaire)" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>b.</strong> Le grossissement G d'une lunette afocale est le rapport entre l'angle θ' sous lequel l'observateur voit l'objet à travers l'instrument et l'angle θ sous lequel il le voit à l'œil nu :</p>
+            <div class="calc-step">G = θ' / θ</div>
+            <div class="calc-step">G = 0,20 / (2×10⁻³) = <strong>100</strong></div>
+            <p>La lunette astronomique afocale grossit donc 100 fois l'angle sous lequel l'astre est observé.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-5">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 29 : Apprendre à rédiger</h3>
+
+          <div class="doc-flex">
+            <p>La Lune peut être vue depuis la Terre sous un angle θ = 9,0×10⁻³ rad. Elle est observée plus en détails avec une lunette astronomique afocale dont l'axe optique passe par le centre de la Lune.<br><br>
+            Cette lunette dispose d'un objectif de distance focale f₁' = 80 cm et d'un oculaire de distance focale f₂' = 2,0 cm.<br><br>
+            On considère deux points objet réel A et B situés à la surface de la Lune, diamétralement opposés et symétriques l'un de l'autre par rapport à l'axe optique de la lunette.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Calculer le diamètre d de l'image intermédiaire formée par l'objectif. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex29-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex29-a">
+              <ul style="margin:0 0 0 18px;line-height:1.7;">
+                <li>Réaliser un schéma, sans souci d'échelle, de la lunette astronomique afocale en précisant les points caractéristiques.</li>
+                <li>Représenter le faisceau issu de la Lune (objet réel AB) et traversant la lunette astronomique afocale.</li>
+                <li>Représenter l'image intermédiaire A₁B₁ de l'objet AB formée par l'objectif.</li>
+                <li>Indiquer, sur le schéma, l'angle θ et le diamètre d.</li>
+                <li>Utiliser l'approximation des petits angles pour faire les calculs.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Déterminer l'angle θ' sous lequel l'image de la Lune est vue à travers la lunette afocale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex29-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex29-b">
+              <ul style="margin:0 0 0 18px;line-height:1.7;">
+                <li>Sur le schéma précédent, repérer l'image A'B' de l'objet A₁B₁ formée par l'oculaire et l'angle θ'.</li>
+                <li>Utiliser l'approximation des petits angles afin d'exprimer θ' en fonction du diamètre de l'image intermédiaire et de la distance focale de l'oculaire.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. Calculer le grossissement. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex29-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex29-c">Donner le résultat en tenant compte du nombre de chiffres significatifs.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex29')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex29">
+            <p><strong>a.</strong> L'objet AB, situé à la surface de la Lune, est vu depuis la Terre sous l'angle θ. Les rayons issus de A et B, parallèles à l'axe optique pour le point A (situé sur l'axe) et inclinés de θ pour le point B, traversent l'objectif et forment l'image intermédiaire A₁B₁ dans le plan focal image de l'objectif (à la distance f₁' de O₁).</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex29-c1.png" alt="Schéma de la lunette afocale : faisceau issu de A∞B∞, formation de l'image intermédiaire A1B1 dans le plan focal, angle θ et diamètre d" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p>Dans l'approximation des petits angles, le diamètre d de l'image intermédiaire A₁B₁ vérifie : d = f₁' × θ (en radians).</p>
+            <div class="calc-step">d = f₁' × θ = 80 × 9,0×10⁻³</div>
+            <div class="calc-step">d ≈ <strong>0,72 cm</strong></div>
+            <p style="margin-top:10px;"><strong>b.</strong> L'image intermédiaire A₁B₁, formée dans le plan focal objet de l'oculaire (puisque F₁' = F₂), joue le rôle d'objet pour l'oculaire. L'observateur voit alors l'image finale A'B' à l'infini, sous l'angle θ' repéré depuis O₂.</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex29-c2.png" alt="Schéma complet de la lunette afocale avec l'angle θ' sous lequel l'image finale est vue à travers l'oculaire" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p>Dans l'approximation des petits angles, appliquée cette fois à l'oculaire : d = f₂' × θ', soit θ' = d / f₂'.</p>
+            <div class="calc-step">θ' = d / f₂' = 0,72 / 2,0</div>
+            <div class="calc-step">θ' ≈ <strong>0,36 rad</strong></div>
+            <p style="margin-top:10px;"><strong>c.</strong> Le grossissement G est le rapport entre l'angle θ' sous lequel l'image est vue à travers la lunette et l'angle θ sous lequel l'objet est vu à l'œil nu :</p>
+            <div class="calc-step">G = θ' / θ = 0,36 / (9,0×10⁻³)</div>
+            <div class="calc-step">G ≈ <strong>40</strong> (2 chiffres significatifs, cohérents avec les données de l'énoncé)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="sub-tab-content" id="sub-EX-1">
+
+      <div class="exo-tabs-nav" id="sub-nav-EXI">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXI',0)">Exercice 7 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',1)">Exercice 8 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',2)">Exercice 9 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',3)">Exercice 10 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',4)">Exercice 11 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',5)">Exercice 12 <span class="exo-tab-stars">★★☆</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXI-0">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 32 : Utiliser l'approximation des petits angles</h3>
+
+          <div class="doc-flex">
+            <p>Des élèves modélisent une lunette astronomique afocale à l'aide de lentilles minces convergentes de 300 mm et 50 mm de distances focales. Ils observent un objet AB situé « à l'infini » : le point A étant sur l'axe optique et les rayons issus de B sont inclinés d'un angle θ = 0,010 rad.</p>
+            <div class="doc-media" style="--doc-media-w:260px">
+              <img src="Entrainements/ex32.png" alt="Banc d'optique avec source lumineuse, deux lentilles et écran">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Représenter, sans souci d'échelle, le rayon lumineux issu de B passant par le centre optique de l'objectif et émergeant de l'oculaire de la lunette astronomique afocale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex32-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex32-a">Un rayon lumineux passant par le centre optique d'une lentille mince n'est pas dévié. Ce rayon traverse donc l'objectif sans déviation, puis il faut déterminer comment il est ensuite dévié par l'oculaire (il n'est pas garanti qu'il passe par le centre optique de l'oculaire).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Déterminer la hauteur de l'image intermédiaire A₁B₁. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex32-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex32-b">Dans l'approximation des petits angles, la hauteur de l'image intermédiaire A₁B₁, formée dans le plan focal image de l'objectif, vérifie A₁B₁ = f₁' × θ (θ en radians).</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex32')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex32">
+            <p><strong>a.</strong> Le rayon lumineux issu de B, incliné d'un angle θ par rapport à l'axe optique, passe par le centre optique O₁ de l'objectif sans être dévié. Il continue en ligne droite jusqu'à traverser l'oculaire, dont il est dévié pour émerger de la lunette parallèlement au faisceau global sortant (incliné de θ' par rapport à l'axe optique).</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex32-c.png" alt="Marche du rayon issu de B∞ passant par O1 (non dévié) puis émergeant de l'oculaire, formation de l'image intermédiaire A1B1" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>b.</strong> Dans l'approximation des petits angles, la hauteur de l'image intermédiaire A₁B₁, formée dans le plan focal image de l'objectif, s'exprime :</p>
+            <div class="calc-step">A₁B₁ = f₁' × θ</div>
+            <div class="calc-step">A₁B₁ = 300 × 0,010 = <strong>3,0 mm</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-1">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 34 : Définir un angle</h3>
+
+          <div class="doc-flex">
+            <p>Les anneaux de Saturne ont été observés au xvii<sup>e</sup> siècle. D'autres planètes (Jupiter, Uranus et Neptune) du Système solaire possèdent des anneaux, mais qui ne sont pas visibles du fait, entre autres, de leur faible albédo.<br><br>
+            Une lunette astronomique de grossissement 100 est utilisée pour observer les anneaux de Saturne.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Établir l'expression du grossissement G en fonction des distances focales de l'objectif et de l'oculaire d'une lunette afocale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex34-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex34-a">Dans l'approximation des petits angles, la hauteur de l'image intermédiaire A₁B₁ s'exprime à la fois avec l'angle θ (via l'objectif) et avec l'angle θ' (via l'oculaire) : A₁B₁ = f₁' × θ = f₂' × θ'. Le grossissement est G = θ'/θ.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. La lunette astronomique afocale utilisée dispose d'un objectif de 700 mm de distance focale. Déterminer la distance focale de l'oculaire qu'il faut utiliser pour obtenir le grossissement souhaité. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex34-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex34-b">Réutiliser l'expression de G établie à la question a. pour isoler f₂'.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex34')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex34">
+            <p><strong>a.</strong> L'image intermédiaire A₁B₁, formée dans le plan focal image commun (F₁' = F₂), a pour hauteur, dans l'approximation des petits angles :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex34-c.png" alt="Schéma de la lunette afocale avec les angles θ et θ', les distances focales f1' et f2', et l'image intermédiaire A1B1" style="max-width:100%;border-radius:6px;">
+            </div>
+            <div class="calc-step">A₁B₁ = f₁' × θ = f₂' × θ'</div>
+            <p>On en déduit θ'/θ = f₁'/f₂', soit, puisque G = θ'/θ :</p>
+            <div class="calc-step">G = f₁' / f₂'</div>
+            <p style="margin-top:10px;"><strong>b.</strong> En isolant f₂' dans l'expression précédente :</p>
+            <div class="calc-step">f₂' = f₁' / G</div>
+            <div class="calc-step">f₂' = 700 / 100 = <strong>7,0 mm</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-2">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 35 : Pouvoir séparateur de l'œil</h3>
+
+          <div class="doc-flex">
+            <p>Si l'angle sous lequel l'œil observe deux points proches est inférieur au pouvoir séparateur de l'œil ε = 3×10⁻⁴ rad, alors les deux points sont confondus.<br><br>
+            Jupiter, la plus grosse planète du Système solaire, apparaît ponctuelle à l'œil nu depuis la Terre.</p>
+            <div class="doc-media" style="--doc-media-w:260px">
+              <img src="Entrainements/ex35.png" alt="Photo de la planète Jupiter">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Calculer le diamètre apparent θ sous lequel la planète Jupiter est observée depuis la Terre lorsqu'elle se situe à D = 590 millions de km. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex35-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex35-a">Dans l'approximation des petits angles, le diamètre apparent d'un objet de diamètre d vu à une distance D vérifie θ = d/D (θ en radians).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Expliquer pourquoi cette planète apparaît ponctuelle depuis la Terre. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex35-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex35-b">Comparer la valeur de θ calculée à la question a. avec le pouvoir séparateur de l'œil ε donné dans l'énoncé.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex35')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex35">
+            <p><strong>a.</strong> Dans l'approximation des petits angles :</p>
+            <div class="calc-step">θ ≈ d<sub>Jupiter</sub> / D<sub>TJ</sub> = (2 × 71,5×10⁶ m) / (590×10⁶ km) = (2 × 71,5×10⁶ m) / (590×10⁶ × 10³ m)</div>
+            <div class="calc-step">θ ≈ <strong>2,42×10⁻⁴ rad</strong></div>
+            <p style="font-style:italic;color:var(--bleu);">Le rayon de Jupiter est indiqué dans les pages de rabat. On le multiplie par 2 pour obtenir le diamètre.</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex35-c.png" alt="Faisceau issu de Jupiter avec l'angle θ observé depuis l'œil, D_TJ et d_Jupiter" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>b.</strong> Cette planète apparaît ponctuelle depuis la Terre, car son diamètre apparent est inférieur au pouvoir séparateur de l'œil :</p>
+            <div class="calc-step">θ ≈ 2,42×10⁻⁴ rad et ε = 3×10⁻⁴ rad donc θ &lt; ε</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-3">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 36 : Image intermédiaire</h3>
+
+          <div class="doc-flex">
+            <p>Une lunette astronomique afocale est composée d'un objectif de distance focale f'₁ = 900 mm et d'un oculaire de distance focale f'₂ = 5 mm. Un objet situé « à l'infini » est observé à l'œil nu sous un angle θ = 2×10⁻⁴ rad.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Représenter, sans souci d'échelle, le faisceau issu d'un point de l'objet situé « à l'infini » et traversant la lunette. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex36-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex36-a">Le rayon issu de B∞, incliné de θ par rapport à l'axe optique, passant par le centre optique O₁ de l'objectif n'est pas dévié. Le système étant afocal, le foyer image de l'objectif F₁' coïncide avec le foyer objet de l'oculaire F₂.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Déterminer la position de l'image intermédiaire. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex36-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex36-b">L'image d'un objet à l'infini par une lentille convergente se forme dans son plan focal image. Pour une lunette afocale, ce plan focal image de l'objectif est confondu avec le plan focal objet de l'oculaire (F₁' = F₂).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. Calculer la hauteur de l'image intermédiaire. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex36-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex36-c">Dans l'approximation des petits angles, la hauteur de l'image intermédiaire A₁B₁, formée dans le plan focal image de l'objectif, vérifie A₁B₁ = f'₁ × θ (θ en radians).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">d. Déterminer l'angle θ' sous lequel est vue l'image de l'objet à travers la lunette. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex36-d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex36-d">L'image intermédiaire A₁B₁ joue le rôle d'objet pour l'oculaire, situé dans son plan focal objet F₂. Dans l'approximation des petits angles, elle vérifie A₁B₁ = f'₂ × θ'.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex36')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex36">
+            <p><strong>a.</strong> Le rayon issu de B∞, incliné d'un angle θ par rapport à l'axe optique, passe par le centre optique O₁ de l'objectif sans être dévié. Il traverse l'objectif jusqu'au plan focal image F₁', confondu avec le foyer objet F₂ de l'oculaire, puis est dévié par l'oculaire pour émerger de la lunette incliné d'un angle θ' par rapport à l'axe optique.</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex36-c.png" alt="Marche du faisceau issu de A∞B∞ à travers l'objectif et l'oculaire d'une lunette afocale, formation de l'image intermédiaire A1B1 dans le plan focal commun F1'=F2, avec les angles θ et θ'" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>b.</strong> L'image intermédiaire A₁B₁ se forme dans le plan focal image de l'objectif, confondu avec le plan focal objet de l'oculaire (F₁' = F₂), soit à une distance f'₁ = 900 mm en avant de l'objectif, sur l'axe optique.</p>
+            <p style="margin-top:10px;"><strong>c.</strong> Dans l'approximation des petits angles, la hauteur de l'image intermédiaire s'exprime :</p>
+            <div class="calc-step">A₁B₁ = f'₁ × θ</div>
+            <div class="calc-step">A₁B₁ = 900 × 2×10⁻⁴ = <strong>0,18 mm</strong></div>
+            <p style="margin-top:10px;"><strong>d.</strong> L'image intermédiaire A₁B₁ étant située dans le plan focal objet de l'oculaire, elle est vue à travers celui-ci sous l'angle θ' tel que, dans l'approximation des petits angles :</p>
+            <div class="calc-step">A₁B₁ = f'₂ × θ' &nbsp;⟹&nbsp; θ' = A₁B₁ / f'₂</div>
+            <div class="calc-step">θ' = 0,18 / 5 = <strong>3,6×10⁻² rad</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-4">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 38 : Distance focale de l'oculaire</h3>
+
+          <div class="doc-flex">
+            <p>Sur la fiche de présentation d'une lunette astronomique livrée avec plusieurs oculaires, on relève les indications suivantes : 910 / 90 – Grossissement utile maximum : 225.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Donner la distance focale de l'objectif. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex38-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex38-a">La distance focale d'un objectif de lunette est toujours nettement supérieure à son diamètre (rapport d'ouverture f'/D typiquement compris entre 5 et 15).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Donner le diamètre de l'objectif et expliquer l'intérêt de préciser cette valeur. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex38-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex38-b">Le diamètre de l'objectif conditionne la quantité de lumière collectée (luminosité de l'image) ainsi que le pouvoir séparateur de l'instrument, indépendamment du choix de l'oculaire utilisé.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. Calculer la distance focale de l'oculaire permettant le grossissement maximum. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex38-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex38-c">Pour une lunette astronomique afocale, le grossissement s'exprime G = f'₁/f'₂.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">d. Indiquer si la distance focale des autres oculaires disponibles est inférieure ou supérieure à cette valeur. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex38-d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex38-d">Pour f'₁ fixée, G = f'₁/f'₂ est une fonction décroissante de f'₂ : plus f'₂ est grande, plus G est petit.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex38')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex38">
+            <p><strong>a.</strong> Les deux nombres indiqués sont la distance focale de l'objectif et son diamètre. La distance focale étant toujours nettement supérieure au diamètre pour un objectif de lunette :</p>
+            <div class="calc-step">f'₁ = <strong>910 mm</strong></div>
+            <p style="margin-top:10px;"><strong>b.</strong> Le diamètre de l'objectif est :</p>
+            <div class="calc-step">D = <strong>90 mm</strong></div>
+            <p>Préciser cette valeur est essentiel, car le diamètre de l'objectif détermine la quantité de lumière collectée par la lunette (donc la luminosité des images, en particulier pour les objets peu lumineux) ainsi que le pouvoir séparateur de l'instrument — deux caractéristiques qui ne dépendent pas de l'oculaire choisi.</p>
+            <p style="margin-top:10px;"><strong>c.</strong> Le grossissement d'une lunette afocale s'exprime G = f'₁/f'₂, soit :</p>
+            <div class="calc-step">f'₂ = f'₁ / G</div>
+            <div class="calc-step">f'₂ = 910 / 225 ≈ <strong>4,0 mm</strong></div>
+            <p style="margin-top:10px;"><strong>d.</strong> Le grossissement G = f'₁/f'₂ étant une fonction décroissante de f'₂, pour ne pas dépasser le grossissement utile maximum (225), il faut f'₂ ≥ 4,0 mm. Les autres oculaires disponibles ont donc une distance focale <strong>supérieure</strong> à 4,0 mm.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-5">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 39 : Collecteur de lumière</h3>
+
+          <div class="doc-flex">
+            <p>L'objectif d'une lunette astronomique afocale a un diamètre de 50 mm. Sa distance focale est f'₁ = 800 mm. La distance focale de l'oculaire est f'₂ = 20 mm.</p>
+            <div class="doc-media" style="--doc-media-w:260px">
+              <img src="Entrainements/ex39.png" alt="Lunette astronomique installée sur un site d'observation sous un ciel étoilé">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Représenter, sans souci d'échelle, le trajet d'un faisceau de rayons parallèles à l'axe optique, couvrant toute la surface de l'objectif. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex39-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex39-a">Le système étant afocal, tous les rayons parallèles à l'axe convergent vers le foyer image de l'objectif F₁', confondu avec le foyer objet de l'oculaire F₂, puis ressortent parallèles à l'axe après l'oculaire.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Calculer le diamètre du faisceau émergent en supposant que toute la lumière traversant l'objectif est recueillie à la sortie de la lunette. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex39-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex39-b">Les triangles formés de part et d'autre du plan focal commun F₁'=F₂ sont semblables : le rapport des diamètres du faisceau avant et après l'oculaire est égal au rapport des distances focales f'₂/f'₁.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. Expliquer alors pourquoi une étoile est plus lumineuse vue à travers une lunette astronomique qu'à l'œil nu. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex39-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex39-c">Comparer le diamètre de l'objectif (qui collecte la lumière) et le diamètre du faisceau émergent calculé en b. à celui de la pupille de l'œil (quelques mm).</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex39')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex39">
+            <p><strong>a.</strong> Tous les rayons parallèles à l'axe optique et couvrant l'objectif convergent vers le foyer image de l'objectif F₁', confondu avec le foyer objet de l'oculaire F₂, puis ressortent de l'oculaire parallèles à l'axe optique, formant un faisceau de diamètre plus petit :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex39-c.png" alt="Faisceau de rayons parallèles couvrant l'objectif de diamètre C1C1', convergeant vers le plan focal commun F1'=F2 avec les angles α et α', puis émergeant de l'oculaire parallèle à l'axe avec un diamètre C2C2' plus petit" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>b.</strong> D'après la similitude des triangles de sommet commun F₁'=F₂ visible sur le schéma :</p>
+            <div class="calc-step">D₂ / D₁ = f'₂ / f'₁</div>
+            <div class="calc-step">D₂ = D₁ × f'₂ / f'₁ = 50 × 20 / 800 = <strong>1,25 mm</strong></div>
+            <p style="margin-top:10px;"><strong>c.</strong> L'objectif, de diamètre 50 mm, collecte bien plus de lumière que ne le ferait la pupille de l'œil nu (quelques millimètres de diamètre). Cette lumière ressort concentrée dans un faisceau de seulement 1,25 mm de diamètre, plus étroit que la pupille de l'œil : celle-ci reçoit alors la totalité de la lumière collectée par l'objectif, bien supérieure à ce qu'elle recevrait directement à l'œil nu. L'étoile apparaît donc plus lumineuse à travers la lunette.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="sub-tab-content" id="sub-EX-2">
+
+      <div class="exo-tabs-nav" id="sub-nav-EXD">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXD',0)">Exercice 13 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',1)">Exercice 14 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',2)">Exercice 15 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',3)">Exercice 16 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',4)">Exercice 17 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',5)">Exercice 18 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',6)">Exercice 19 <span class="exo-tab-stars">★★☆</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXD-0">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 41 : Modélisation d'une lunette afocale</h3>
+
+          <div class="doc-flex">
+            <p>Au cours d'une séance de travaux pratiques, un élève modélise une lunette astronomique à l'aide de deux lentilles minces convergentes de 4,0 cm de diamètre. La lentille L₁ possède une distance focale égale à 50 cm et la lentille L₂ une distance focale de 10 cm.</p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Identifier l'objectif et l'oculaire. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex41-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex41-a">L'objectif d'une lunette astronomique est toujours la lentille de plus grande distance focale ; l'oculaire est celle de plus petite distance focale.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Déterminer la distance séparant les centres optiques des deux lentilles minces convergentes si la lunette est afocale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex41-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex41-b">Pour une lunette afocale, le foyer image de l'objectif F₁' est confondu avec le foyer objet de l'oculaire F₂ : la distance entre les centres optiques vaut donc O₁O₂ = f'₁ + f'₂.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. Réaliser un schéma de la lunette afocale à l'échelle 1 verticalement et à l'échelle 1/5 horizontalement. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex41-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex41-c">Représenter chaque lentille par une flèche verticale de hauteur égale à son diamètre réel (échelle 1, soit 4,0 cm), en plaçant les centres optiques O₁ et O₂ à la distance calculée en b. réduite au 1/5, puis positionner les foyers F₁, F₁', F₂, F₂' de part et d'autre de chaque lentille à la distance focale correspondante (réduite au 1/5).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">d. Représenter l'image intermédiaire sur le schéma. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex41-d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex41-d">L'objet AB étant à l'infini, l'image intermédiaire A₁B₁ se forme dans le plan focal image de l'objectif, confondu avec le plan focal objet de l'oculaire (F₁' = F₂) : elle a pour hauteur 1,0 cm donnée dans l'énoncé.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">e. Calculer l'angle θ sous lequel l'objet est vu à l'œil nu. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex41-e')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex41-e">Le rayon issu de B∞ passant par le centre optique O₁ n'est pas dévié : dans l'approximation des petits angles, θ = A₁B₁/f'₁.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">f. Construire l'image définitive A'B'. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex41-f')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex41-f">L'image intermédiaire A₁B₁ se situe dans le plan focal objet de l'oculaire. Son image par l'oculaire (lentille convergente) se forme donc à l'infini également, puisque le système est afocal : l'image définitive apparaît sous la forme d'un faisceau de rayons parallèles émergents, inclinés d'un angle θ' par rapport à l'axe optique.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">g. Calculer l'angle θ' sous lequel l'image définitive est vue à travers la lunette astronomique afocale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex41-g')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex41-g">L'image intermédiaire A₁B₁, objet pour l'oculaire situé dans son plan focal objet, est vue à travers l'oculaire sous l'angle θ' tel que, dans l'approximation des petits angles, θ' = A₁B₁/f'₂.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">h. En déduire le grossissement G de la lunette afocale. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex41-h')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex41-h">Le grossissement d'une lunette afocale est défini par G = θ'/θ.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex41')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex41">
+            <p><strong>a.</strong> L'objectif est la lentille de plus grande distance focale : <strong>L₁</strong> (f'₁ = 50 cm). L'oculaire est la lentille de plus petite distance focale : <strong>L₂</strong> (f'₂ = 10 cm).</p>
+            <p style="margin-top:10px;"><strong>b.</strong> La lunette étant afocale, le foyer image de l'objectif F₁' est confondu avec le foyer objet de l'oculaire F₂ :</p>
+            <div class="calc-step">O₁O₂ = f'₁ + f'₂ = 50 + 10 = <strong>60 cm</strong></div>
+            <p style="margin-top:10px;"><strong>c.</strong> Schéma des deux lentilles avec leurs foyers, à l'échelle 1 verticalement et 1/5 horizontalement :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex41-c1.png" alt="Schéma à l'échelle des deux lentilles L1 et L2 avec leurs centres optiques O1, O2 et leurs foyers F1, F1', F2, F2'" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>d. et e.</strong> Le rayon issu de B∞, incliné de θ par rapport à l'axe, passe par O₁ sans être dévié et forme l'image intermédiaire A₁B₁ dans le plan focal commun F₁' = F₂ :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex41-c2.png" alt="Rayon issu de B∞ passant par O1 non dévié, formant l'image intermédiaire A1B1 dans le plan focal commun F1'=F2, avec l'angle θ" style="max-width:100%;border-radius:6px;">
+            </div>
+            <div class="calc-step">θ = A₁B₁ / f'₁</div>
+            <div class="calc-step">θ = 1,0 / 50 = <strong>2,0×10⁻² rad</strong></div>
+            <p style="margin-top:10px;"><strong>f. et g.</strong> L'image intermédiaire A₁B₁ étant située dans le plan focal objet de l'oculaire, son image par l'oculaire se forme à l'infini : les rayons émergent parallèles entre eux, inclinés d'un angle θ' par rapport à l'axe optique :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex41-c3.png" alt="Construction complète de la lunette afocale avec le faisceau émergent parallèle incliné de θ' après l'oculaire, image définitive à l'infini B'∞" style="max-width:100%;border-radius:6px;">
+            </div>
+            <div class="calc-step">θ' = A₁B₁ / f'₂</div>
+            <div class="calc-step">θ' = 1,0 / 10 = <strong>1,0×10⁻¹ rad</strong></div>
+            <p style="margin-top:10px;"><strong>h.</strong> Le grossissement de la lunette afocale est :</p>
+            <div class="calc-step">G = θ' / θ = 1,0×10⁻¹ / 2,0×10⁻² = <strong>5</strong></div>
+            <p style="font-style:italic;color:var(--bleu);">On retrouve bien G = f'₁/f'₂ = 50/10 = 5, cohérent avec la relation vue en cours.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-1">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 42 : Étoiles doubles</h3>
+
+          <div class="doc-flex">
+            <p>Deux étoiles sont vues séparées par l'œil si la distance angulaire qui les sépare est supérieure à 3,0×10⁻⁴ rad. Alcor et Mizar, par exemple, constituent un couple d'étoiles visibles à l'œil nu dans la constellation de la Grande Ourse.<br><br>
+            Mais Mizar est elle-même une étoile double invisible à l'œil nu car les deux composantes sont trop proches l'une de l'autre. Elles ne sont distantes que de 14,5″.</p>
+            <div class="doc-media" style="--doc-media-w:260px">
+              <img src="Entrainements/ex42.png" alt="Constellation de la Grande Ourse avec Alcor et Mizar repérées">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Exprimer en radian la distance angulaire entre les deux étoiles. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex42-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex42-a">1 seconde d'arc (1″) correspond à 1/3600 de degré. Convertis d'abord en degrés, puis en radians (π rad = 180°).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. En déduire le grossissement minimal de la lunette astronomique afocale permettant d'observer cette étoile double. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex42-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex42-b">Les deux composantes sont séparables à travers la lunette si l'angle sous lequel on les observe, G×θ, dépasse le pouvoir séparateur de l'œil ε. Le grossissement minimal vérifie donc G_min = ε/θ.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. Indiquer si cette étoile double est observable en construisant une lunette astronomique afocale à l'aide de deux lentilles minces convergentes de distances focales de 20,0 cm et 4,0 cm. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex42-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex42-c">Calcule le grossissement G = f'₁/f'₂ de cette lunette (avec f'₁ la plus grande distance focale) et compare-le au grossissement minimal trouvé en b.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex42')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex42">
+            <p><strong>a.</strong> Une seconde d'arc vaut 1/3600 de degré, soit, en radians :</p>
+            <div class="calc-step">1″ = (1/3600) × (π/180) ≈ 4,848×10⁻⁶ rad</div>
+            <div class="calc-step">θ = 14,5 × 4,848×10⁻⁶ ≈ <strong>7,0×10⁻⁵ rad</strong></div>
+            <p style="margin-top:10px;"><strong>b.</strong> Le grossissement minimal G_min vérifie G_min × θ = ε, soit :</p>
+            <div class="calc-step">G_min = ε / θ</div>
+            <div class="calc-step">G_min = 3,0×10⁻⁴ / 7,0×10⁻⁵ ≈ <strong>4,3</strong></div>
+            <p style="margin-top:10px;"><strong>c.</strong> Le grossissement de la lunette proposée est :</p>
+            <div class="calc-step">G = f'₁ / f'₂ = 20,0 / 4,0 = <strong>5,0</strong></div>
+            <p style="margin-top:8px;">Comme G = 5,0 &gt; G_min ≈ 4,3, cette lunette astronomique afocale permet <strong>bien d'observer</strong> l'étoile double Mizar.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-2">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 43 : Drapeaux américains</h3>
+
+          <div class="doc-flex">
+            <p>La Lune est observée à l'aide de la plus grande lunette astronomique du monde, celle de Yerkes (États-Unis) qui possède un objectif de 102 cm de diamètre et de 19,2 m de distance focale. Elle permet d'atteindre un grossissement maximal de 2500.<br><br>
+            Si l'angle sous lequel l'œil observe deux points est inférieur au pouvoir séparateur de l'œil ε = 3,0×10⁻⁴ rad, alors les deux points sont confondus.</p>
+            <div class="doc-media" style="--doc-media-w:220px">
+              <img src="Entrainements/ex43.png" alt="Astronaute Buzz Aldrin près du drapeau américain planté sur la Lune, mission Apollo 11">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Déterminer la taille du plus petit détail que l'on peut voir sur la Lune en utilisant la lunette de Yerkes. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex43-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex43-a">Le plus petit détail séparable correspond à l'angle θ, vu à l'œil nu, tel que l'angle observé à travers la lunette G_max × θ soit tout juste égal au pouvoir séparateur de l'œil ε. Une fois θ déterminé, utilise l'approximation des petits angles avec la distance Terre-Lune D pour trouver la taille correspondante sur la Lune.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. En déduire si les drapeaux laissés par les Américains lors de leurs différents voyages sur la Lune sont visibles. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex43-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex43-b">Compare la taille du plus petit détail observable calculée en a. à la taille réelle d'un drapeau (de l'ordre de 1 à 2 m).</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex43')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex43">
+            <p><strong>a.</strong> Le plus petit détail séparable correspond à l'angle θ vu à l'œil nu tel que l'angle vu à travers la lunette soit égal au pouvoir séparateur de l'œil :</p>
+            <div class="calc-step">G_max × θ = ε &nbsp;⟹&nbsp; θ = ε / G_max</div>
+            <div class="calc-step">θ = 3,0×10⁻⁴ / 2500 = <strong>1,2×10⁻⁷ rad</strong></div>
+            <p>Dans l'approximation des petits angles, la taille d du plus petit détail visible sur la Lune, située à D ≈ 384 000 km de la Terre, vérifie θ = d/D, soit :</p>
+            <div class="calc-step">d = θ × D</div>
+            <div class="calc-step">d = 1,2×10⁻⁷ × 384 000×10³ ≈ <strong>46 m</strong></div>
+            <p style="margin-top:10px;"><strong>b.</strong> Un drapeau mesure environ 1 à 2 m, une taille bien inférieure au plus petit détail observable (46 m) avec la lunette de Yerkes. Les drapeaux laissés sur la Lune <strong>ne sont donc pas visibles</strong>, même avec la plus grande lunette astronomique du monde.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-3">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 45 : Retour sur l'ouverture du chapitre</h3>
+
+          <div class="doc-flex">
+            <p><strong>DOCUMENT — Lunette commerciale</strong><br>
+            • Lunette astronomique 80/400.<br>
+            • Grossissement maximal recommandé : 150.</p>
+            <div class="doc-media" style="--doc-media-w:260px">
+              <img src="Entrainements/ex45.png" alt="Lunette astronomique commerciale Sky-Watcher, tube noir monté sur son support">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">a. Donner le diamètre et la distance focale de l'objectif de la lunette astronomique. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex45-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex45-a">Pour une lunette commerciale, la notation « diamètre/focale » (en mm) indique directement les caractéristiques de l'objectif.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Cette lunette astronomique est afocale. Calculer la distance focale de l'oculaire correspondant au grossissement maximal recommandé. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex45-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex45-b">Pour une lunette afocale, le grossissement s'exprime G = f'₁/f'₂.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. La Lune peut alors être vue depuis la Terre sous un angle θ = 32′. Calculer l'angle θ' sous lequel est vue l'image de la Lune à travers la lunette. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex45-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex45-c">Le grossissement relie les angles par G = θ'/θ. Les angles peuvent être comparés directement en minutes d'angle (′), sans passer par les radians.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex45')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex45">
+            <p><strong>a.</strong> La notation « 80/400 » d'une lunette commerciale indique le diamètre puis la distance focale de l'objectif, en mm :</p>
+            <div class="calc-step">D = <strong>80 mm</strong> &nbsp;et&nbsp; f'₁ = <strong>400 mm</strong></div>
+            <p style="margin-top:10px;"><strong>b.</strong> Le grossissement d'une lunette afocale s'exprime G = f'₁/f'₂, soit :</p>
+            <div class="calc-step">f'₂ = f'₁ / G</div>
+            <div class="calc-step">f'₂ = 400 / 150 ≈ <strong>2,7 mm</strong></div>
+            <p style="margin-top:10px;"><strong>c.</strong> Le grossissement relie les angles par G = θ'/θ, soit :</p>
+            <div class="calc-step">θ' = G × θ = 150 × 32′ = 4800′</div>
+            <p>Or 4800′ = 4800/60 = 80°, donc :</p>
+            <div class="calc-step">θ' = <strong>80°</strong> (soit environ 1,4 rad)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-4">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 46 : Un passionné d'astronomie</h3>
+
+          <div class="doc-flex">
+            <p>Un élève de Terminale ayant choisi l'enseignement de spécialité physique-chimie et passionné d'astronomie vient de recevoir en cadeau une lunette astronomique. L'élève décide d'en analyser le fonctionnement et d'en vérifier les caractéristiques, en assimilant l'objectif et les oculaires à des lentilles minces convergentes.</p>
+            <div class="doc-media" style="--doc-media-w:260px">
+              <img src="Entrainements/ex46.png" alt="Lunette astronomique offerte, rangée dans sa mallette avec accessoires et notice">
+            </div>
+          </div>
+
+          <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+            <strong>DOCUMENT — Notice de la lunette astronomique offerte</strong><br>
+            Lunette astronomique équipée d'une superbe monture équatoriale permettant un suivi parfait des astres lors des observations. C'est un appareil de très belle finition, la focale de 800 mm associée à un objectif achromatique de diamètre 60 mm rigoureusement surfacé améliore la qualité optique. Cet instrument très complet est livré avec 3 oculaires de focales 6,0 – 12,5 – 20,0 mm. Grossissement : 133 – 64 – 40.
+          </div>
+
+          <p style="margin-top:10px;"><strong>1. Objectif</strong></p>
+          <div class="question-block">
+            <div class="question-label">Pour mesurer la distance focale f'₁ de l'objectif, l'élève sort soigneusement la lentille de son tube support, puis la place perpendiculairement à la direction du Soleil et observe avec précaution sur un carton, également perpendiculaire à cette direction, la tache lumineuse obtenue. Il constate alors que le diamètre de la tache est minimal pour une distance entre ce carton et le centre de l'objectif égale à 800 mm. En s'aidant d'un schéma pour justifier la réponse, indiquer la distance focale f'₁ de l'objectif et vérifier si cette valeur est en accord avec la notice du fabricant. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-1')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-1">Le Soleil, situé à une distance très grande devant la focale de l'objectif, peut être assimilé à un objet à l'infini sur l'axe optique. L'image d'un point de l'axe situé à l'infini se forme dans le plan focal image de la lentille, confondue avec le foyer image F'.</div>
+          </div>
+
+          <p style="margin-top:10px;"><strong>2. Oculaires</strong></p>
+          <div class="question-block">
+            <div class="question-label">L'élève constate que les oculaires peuvent servir de loupe pour examiner un texte dont les lettres ont une hauteur moyenne de 0,8 mm.<br>a. Indiquer la distance à laquelle il faut placer le texte par rapport au centre de chacun des oculaires pour que l'élève puisse voir avec une vision normale et sans effort l'image du texte plus grosse que le texte. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-2a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-2a">Voir « sans effort » signifie que l'image donnée par la loupe se forme à l'infini : cela impose de placer l'objet (le texte) dans le plan focal objet de la lentille, donc à une distance de son centre optique égale à la valeur absolue de sa distance focale.</div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">b. Réaliser un schéma pour identifier l'oculaire qui permet d'observer le texte le plus gros. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-2b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-2b">Dans l'approximation des petits angles, l'angle θ' sous lequel est vu le texte à travers une loupe de focale f' vérifie θ' = AB/f' : plus la focale est petite, plus l'angle (et donc la taille apparente) est grand.</div>
+          </div>
+
+          <p style="margin-top:10px;"><strong>3. Lunette</strong></p>
+          <div class="question-block">
+            <div class="question-label">L'élève observe maintenant le ciel nocturne à travers la lunette, équipée avec l'un des oculaires. Il effectue les réglages de telle sorte que l'image dans l'instrument d'un objet céleste soit à l'infini.<br>a. Exprimer, en fonction de f'₁ et f'₂, la distance d entre les centres optiques de l'oculaire et de l'objectif. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-3a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-3a">L'image finale étant à l'infini pour un objet à l'infini, la lunette fonctionne en système afocal : le foyer image de l'objectif F₁' est confondu avec le foyer objet de l'oculaire F₂.</div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">b. Représenter, sans souci d'échelle, le dispositif en faisant apparaître les centres optiques et les foyers des lentilles. L'élève pointe sa lunette vers la planète Vénus, dont le diamètre apparent à l'œil nu est θ = 1,0 minute d'angle. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-3b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-3b">Place O₁ et O₂ à la distance d = f'₁ + f'₂, avec les foyers F₁, F₁', F₂, F₂' positionnés de part et d'autre de chaque lentille à la distance focale correspondante (F₁' et F₂ confondus).</div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">c. Représenter, sur le schéma précédent, sans souci d'échelle, le trajet, dans la lunette, d'un rayon lumineux incliné d'un angle θ sur l'axe optique, mais passant par le centre optique de l'objectif. On note θ' l'angle que fait, avec l'axe optique, le rayon émergent correspondant. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-3c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-3c">Le rayon passant par le centre optique O₁ de l'objectif n'est pas dévié ; il forme l'image intermédiaire A₁B₁ dans le plan focal commun F₁'=F₂, puis est dévié par l'oculaire pour émerger incliné de θ'.</div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">d. Établir l'expression du grossissement de la lunette en fonction des distances focales de l'objectif et de l'oculaire, puis calculer le grossissement obtenu avec chacun des oculaires. Indiquer si ces valeurs sont conformes à celles indiquées par le constructeur. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-3d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-3d">Dans l'approximation des petits angles, A₁B₁ = f'₁ × θ = f'₂ × θ' : on en déduit G = θ'/θ en fonction de f'₁ et f'₂.</div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">e. Calculer l'angle θ' sous lequel l'élève voit l'image de Vénus à travers l'instrument avec chacun des oculaires. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-3e')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-3e">Utilise θ' = G × θ avec les grossissements calculés en d. et θ = 1,0 minute d'angle.</div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">f. L'élève dirige maintenant sa lunette vers une zone du ciel, où aucun objet n'est visible à l'œil nu. Il est surpris de constater que plusieurs étoiles apparaissent comme des points lumineux dans le champ de l'instrument. Expliquer l'origine de cette apparition. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex46-3f')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex46-3f">Compare le diamètre de l'objectif (60 mm) à celui de la pupille de l'œil (quelques mm) : quel effet cela a-t-il sur la quantité de lumière collectée, donc sur la luminosité minimale détectable ?</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex46')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex46">
+            <p><strong>1.</strong> Le Soleil étant situé à une distance très grande devant la focale de l'objectif, il peut être assimilé à un objet à l'infini sur l'axe optique. Son image se forme donc dans le plan focal image de l'objectif, confondue avec le foyer image F' :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex46-c1.png" alt="Faisceau parallèle issu du Soleil convergeant vers le foyer image F, confondu avec le point B' où se forme la tache minimale, dans le plan focal image" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p>La tache est donc minimale (ponctuelle) lorsque le carton est placé à la distance focale de l'objectif :</p>
+            <div class="calc-step">f'₁ = <strong>800 mm</strong></div>
+            <p>Cette valeur est bien <strong>conforme à la notice du fabricant</strong> (focale annoncée de 800 mm).</p>
+
+            <p style="margin-top:12px;"><strong>2.a</strong> Pour voir l'image d'un objet sans effort à travers une loupe, l'image doit se former à l'infini : il faut donc placer l'objet (le texte) dans le plan focal objet de la lentille, c'est-à-dire à une distance de son centre optique égale à sa distance focale :</p>
+            <div class="calc-step">Distance texte–oculaire = |f'| = <strong>6,0 mm, 12,5 mm ou 20,0 mm</strong> selon l'oculaire utilisé</div>
+            <p style="margin-top:10px;"><strong>2.b</strong> Dans l'approximation des petits angles, l'angle θ' sous lequel est vu le texte à travers la loupe vérifie θ' = AB/f' : plus la focale est petite, plus l'angle apparent — donc la taille apparente du texte — est grand, comme le montre le schéma comparant deux oculaires de focales différentes :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex46-c2.png" alt="Comparaison de deux oculaires-loupes de focales différentes fa et fb, avec les angles θa' et θb' sous lesquels est vue la lettre, l'oculaire de plus petite focale donnant l'angle le plus grand" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p>L'oculaire de plus petite distance focale (<strong>f' = 6,0 mm</strong>) permet donc d'observer le texte le plus gros.</p>
+
+            <p style="margin-top:12px;"><strong>3.a</strong> La lunette fonctionnant en système afocal (image finale à l'infini pour un objet à l'infini), le foyer image de l'objectif F₁' est confondu avec le foyer objet de l'oculaire F₂ :</p>
+            <div class="calc-step">d = f'₁ + f'₂</div>
+            <p style="margin-top:10px;"><strong>3.b</strong> Schéma du dispositif avec les centres optiques O₁, O₂ et les foyers F₁, F₁', F₂, F₂' :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex46-c3.png" alt="Schéma vierge des deux lentilles avec leurs centres optiques O1, O2 et leurs foyers F1, F1', F2, F2'" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>3.c</strong> Le rayon incliné de θ passant par O₁ n'est pas dévié ; il forme l'image intermédiaire A₁B₁ dans le plan focal commun F₁'=F₂, puis émerge de l'oculaire incliné d'un angle θ' :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex46-c4.png" alt="Rayon incliné de θ passant par O1 non dévié, formant l'image intermédiaire A1B1 au plan focal commun F1'=F2, puis émergeant de l'oculaire incliné de θ'" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>3.d</strong> Dans l'approximation des petits angles, la hauteur de l'image intermédiaire A₁B₁ s'exprime de deux façons :</p>
+            <div class="calc-step">A₁B₁ = f'₁ × θ = f'₂ × θ'</div>
+            <p>On en déduit, puisque G = θ'/θ :</p>
+            <div class="calc-step">G = f'₁ / f'₂</div>
+            <div class="calc-step">Oculaire 6,0 mm : G = 800/6,0 ≈ <strong>133</strong></div>
+            <div class="calc-step">Oculaire 12,5 mm : G = 800/12,5 = <strong>64</strong></div>
+            <div class="calc-step">Oculaire 20,0 mm : G = 800/20,0 = <strong>40</strong></div>
+            <p>Ces trois valeurs sont bien <strong>conformes</strong> à celles indiquées par le constructeur (133 – 64 – 40).</p>
+            <p style="margin-top:10px;"><strong>3.e</strong> L'angle θ' vérifie θ' = G × θ, avec θ = 1,0 minute d'angle :</p>
+            <div class="calc-step">Oculaire 6,0 mm : θ' = 133 × 1,0′ = <strong>133′ ≈ 2,2°</strong></div>
+            <div class="calc-step">Oculaire 12,5 mm : θ' = 64 × 1,0′ = <strong>64′ ≈ 1,1°</strong></div>
+            <div class="calc-step">Oculaire 20,0 mm : θ' = 40 × 1,0′ = <strong>40′ ≈ 0,67°</strong></div>
+            <p style="margin-top:10px;"><strong>3.f</strong> L'objectif, de diamètre 60 mm, collecte bien plus de lumière que la pupille de l'œil nu (quelques millimètres de diamètre). Des étoiles trop peu lumineuses pour être détectées à l'œil nu deviennent ainsi visibles à travers la lunette, qui concentre vers l'œil une quantité de lumière bien supérieure à celle qu'il recevrait directement.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXD-5">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 47 : Cercle oculaire</h3>
+
+          <div class="doc-flex">
+            <p>La maquette d'une lunette astronomique afocale est réalisée sur un banc d'optique à l'aide de deux lentilles minces convergentes de 20,0 cm et 4,0 cm de distances focales et de 5,0 cm de diamètre.</p>
+          </div>
+
+          <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+            <strong>DONNÉES</strong> — Relation de conjugaison : l'image A'B' d'un objet AB formée par une lentille mince convergente de distance focale <span style="text-decoration:overline;">OF'</span> est telle que 1/O A' &minus; 1/O A = 1/O F'.
+          </div>
+
+          <p style="margin-top:10px;">Pour observer l'image la plus lumineuse possible, l'œil doit se placer au niveau du cercle oculaire. Le cercle oculaire est l'image de la monture de l'objectif formée par l'oculaire.</p>
+
+          <div class="question-block">
+            <div class="question-label">a. Réaliser un schéma de la maquette de la lunette astronomique afocale à l'échelle 1 verticalement et ½ horizontalement. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex47-a')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex47-a">Place les centres optiques O₁ et O₂ des deux lentilles à la distance f'₁ + f'₂ (lunette afocale), réduite de moitié à l'échelle ½ horizontale, et représente chaque lentille par une flèche verticale de hauteur égale à son diamètre réel (5,0 cm, échelle 1).</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">b. Construire le cercle oculaire. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex47-b')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex47-b">Le cercle oculaire est l'image, par l'oculaire, de la monture de l'objectif (le bord de l'objectif, en O₁). Construis cette image à l'aide des rayons remarquables de l'oculaire.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">c. Déterminer grâce à la représentation graphique, la distance entre le centre optique O₂ de l'oculaire et le cercle oculaire. Vérifier cette position par calcul en utilisant les relations de conjugaison. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex47-c')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex47-c">La monture de l'objectif, vue depuis l'oculaire, est un objet situé à la distance O₂A = &minus;(f'₁+f'₂). Applique la relation de conjugaison 1/O₂A' &minus; 1/O₂A = 1/O₂F'₂ pour trouver la position O₂A' de son image.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">d. Mesurer son diamètre sur la représentation graphique, puis vérifier sa valeur par calcul. <button class="btn-indice2" onclick="toggleIndice2(this,'ind-ex47-d')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex47-d">Le diamètre du cercle oculaire s'obtient à partir du diamètre de l'objectif D et du grandissement γ = O₂A'/O₂A de l'oculaire pour cet objet.</div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection2(this,'corr-ex47')">▶ Voir la correction</button>
+          <div class="correction-box" id="corr-ex47">
+            <p><strong>a.</strong> Schéma des deux lentilles à l'échelle 1 (verticale) et ½ (horizontale), avec leurs centres optiques O₁, O₂ et leurs foyers F₁', F₂ confondus (lunette afocale) :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex47-c1.png" alt="Schéma à l'échelle des deux lentilles de la maquette avec leurs centres optiques O1, O2 et leurs foyers confondus F1'=F2" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p style="margin-top:10px;"><strong>b., c. et d.</strong> Le cercle oculaire, image de la monture de l'objectif à travers l'oculaire, se construit à l'aide des rayons remarquables de l'oculaire :</p>
+            <div style="text-align:center;margin:12px 0;">
+              <img src="Entrainements/ex47-c2.png" alt="Construction du cercle oculaire, image de la monture de l'objectif (points D1, D2) par l'oculaire, avec les rayons remarquables et le cercle oculaire formé après F2'" style="max-width:100%;border-radius:6px;">
+            </div>
+            <p>La lecture graphique donne une distance O₂ – cercle oculaire d'environ 4,8 cm, ce que l'on vérifie par le calcul : la monture de l'objectif, vue comme un objet par l'oculaire, est située en O₂A = &minus;(f'₁+f'₂) = &minus;(20,0+4,0) = &minus;24,0 cm. La relation de conjugaison donne :</p>
+            <div class="calc-step">1/O₂A' = 1/f'₂ + 1/O₂A = 1/4,0 + 1/(&minus;24,0) = 5/24</div>
+            <div class="calc-step">O₂A' = 24/5 = <strong>4,8 cm</strong></div>
+            <p style="margin-top:10px;">Le diamètre du cercle oculaire, mesuré graphiquement, vaut environ 1,0 cm. Par le calcul, le grandissement de l'oculaire pour cet objet est :</p>
+            <div class="calc-step">γ = O₂A' / O₂A = 4,8 / (&minus;24,0) = &minus;0,20</div>
+            <div class="calc-step">diamètre du cercle oculaire = |γ| × D = 0,20 × 5,0 = <strong>1,0 cm</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tab-content" id="sub-EXD-6">
+        <div class="exo-card">
+          <h3>Exercice 19 : Grossissement d'une lunette astronomique afocale</h3>
+          <p style="font-size:0.85rem; color:var(--texte-leger); margin-bottom:8px;"><em>Histoire des sciences · S'approprier · Analyser-raisonner · Réaliser</em></p>
+
+          <div class="exo-enonce">
+            Au xvii<sup>e</sup> siècle, Johannes Kepler s'appuie sur les travaux de Galilée pour inventer une nouvelle lunette astronomique en utilisant la combinaison de deux lentilles minces convergentes.
+          </div>
+          <p style="margin-top:8px;"><b>Comment réaliser la maquette d'une lunette astronomique afocale et calculer son grossissement avec le matériel d'optique du lycée ?</b></p>
+
+          <div style="background:var(--blanc); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:0.88rem; line-height:1.6; border:1px solid var(--vert-exo-bord);">
+            <strong>Donnée</strong> — Grossissement d'une lunette astronomique afocale : G = f₁'/f₂'.
+          </div>
+
+          <div class="doc-media-full" style="max-width:80%;">
+            <img src="Entrainements/ex50-1.png" alt="DOC. 1 — Montage réalisé : support élévateur, banc, lunette, vers l'objet AB ; lentilles minces convergentes de distances focales 20 cm et 5 cm">
+          </div>
+
+          <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:14px 0;">
+            <div class="doc-media-full" style="flex:1 1 100px;max-width:25%;margin:0;">
+              <img src="Entrainements/ex50-2.png" alt="DOC. 2 — Objet utilisé : deux points A et B repérés sur la photo de la Lune, servant d'objet situé à l'infini">
+            </div>
+            <div class="doc-media-full" style="flex:1 1 260px;max-width:48%;margin:0;">
+              <img src="Entrainements/ex50-3.png" alt="DOC. 3 — Trajet d'un faisceau lumineux dans une lunette afocale, avec O1, F1', F2, O2, F2', angles θ et θ'">
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">1. Réaliser le montage d'une lunette astronomique afocale proposé dans le DOC. 1 et faire les réglages nécessaires afin d'observer l'objet AB placé à au moins 6 m de cette lunette. <button class="btn-indice" onclick="toggleIndice('ind-ex19-1')">💡 Indice</button></div>
+            <p style="font-size:0.85rem; color:var(--texte-leger); margin-top:4px;"><strong>APPEL N°1</strong> — Appeler le professeur pour lui présenter l'image de l'objet AB.</p>
+            <div class="indice-box" id="ind-ex19-1">Place l'objectif (la lentille de plus grande distance focale, 20 cm) côté objet, puis règle la position de l'oculaire (5 cm) le long du banc jusqu'à obtenir une image nette de l'objet AB lorsque tu regardes à travers la lunette. Un objet à 6 m est suffisamment loin pour être assimilé à un objet « à l'infini » devant les focales utilisées.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">2. Placer une règle graduée sur le banc d'optique pour que sa position coïncide avec celle de l'image intermédiaire A₁B₁ formée par l'objectif. Retirer l'oculaire et observer directement cette image intermédiaire à la règle transparente en plaçant l'œil sur l'axe de la lunette à une trentaine de centimètres environ de l'extrémité du banc. <button class="btn-indice" onclick="toggleIndice('ind-ex19-2')">💡 Indice</button></div>
+            <p style="font-size:0.85rem; color:var(--texte-leger); margin-top:4px;"><strong>APPEL N°2</strong> — Appeler le professeur pour lui présenter l'image intermédiaire A₁B₁.</p>
+            <div class="indice-box" id="ind-ex19-2">D'après le DOC. 3, l'image intermédiaire A₁B₁ se forme dans le plan focal image de l'objectif (puisque l'objet est à l'infini) : déplace la règle graduée le long du banc, sans l'oculaire, jusqu'à voir cette image nette se superposer au plan de la règle.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">3. Mesurer la distance O₁A₁ entre l'objectif et l'image intermédiaire A₁B₁. <button class="btn-indice" onclick="toggleIndice('ind-ex19-3')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex19-3">Cette distance correspond à la position, repérée sur le banc, où tu as trouvé l'image nette à la question 2. Compare-la à la distance focale de l'objectif donnée au DOC. 1.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">4. Remettre l'oculaire et observer simultanément l'image intermédiaire A₁B₁ formée par l'objectif et l'image définitive A'B' de l'objet AB formée par la lunette. <button class="btn-indice" onclick="toggleIndice('ind-ex19-4')">💡 Indice</button></div>
+            <p style="font-size:0.85rem; color:var(--texte-leger); margin-top:4px;"><strong>APPEL N°3</strong> — Appeler le professeur pour lui présenter les deux images.</p>
+            <div class="indice-box" id="ind-ex19-4">Une fois l'oculaire remis à sa place initiale (celle qui donnait une image nette de AB à la question 1), l'image intermédiaire A₁B₁ (sur la règle) et l'image définitive A'B' (à travers la lunette) doivent pouvoir être observées quasi simultanément si le montage est bien afocal.</div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-label">5. Mesurer A₁B₁ à travers l'oculaire et la distance O₂A₁ entre la position de l'image intermédiaire et le centre optique O₂ de l'oculaire afin de calculer le grossissement de la lunette afocale. <button class="btn-indice" onclick="toggleIndice('ind-ex19-5')">💡 Indice</button></div>
+            <div class="indice-box" id="ind-ex19-5">D'après le DOC. 3, tan θ = A₁B₁/O₁A₁ et tan θ' = A₁B₁/O₂A₁. Le grossissement G = θ'/θ ≈ tan θ'/tan θ (petits angles) : exprime ce rapport en fonction de O₁A₁ et O₂A₁ pour voir que A₁B₁ se simplifie.</div>
+          </div>
+
+          <button class="btn-correction" onclick="toggleCorrection(this)" style="margin-top:10px;">✅ Voir la correction</button>
+          <div class="correction">
+            <p><strong>1.</strong> On place l'objectif (lentille convergente de plus grande distance focale, 20 cm) du côté de l'objet AB, puis l'oculaire (5 cm) du côté de l'œil, en réglant leur écartement sur le banc jusqu'à obtenir une image nette de l'objet AB observé à travers la lunette. L'objet étant placé à au moins 6 m, soit une distance très grande devant les distances focales (20 cm et 5 cm), il peut être assimilé à un objet « à l'infini ».</p>
+            <p style="margin-top:10px;"><strong>2.</strong> D'après le DOC. 3, l'objet étant à l'infini, l'image intermédiaire A₁B₁ formée par l'objectif se situe dans le plan focal image de celui-ci, à la distance O₁F₁' = f₁' de l'objectif. En déplaçant la règle graduée transparente le long du banc (oculaire retiré), on repère la position où l'image de l'objet apparaît nette, superposée à la règle : c'est la position de A₁B₁.</p>
+            <p style="margin-top:10px;"><strong>3.</strong> La distance O₁A₁ mesurée doit être proche de la distance focale de l'objectif donnée au DOC. 1 : <strong>O₁A₁ ≈ f₁' = 20 cm</strong> (aux incertitudes de mesure et de mise au point près).</p>
+            <p style="margin-top:10px;"><strong>4.</strong> Une fois l'oculaire remis en place, l'image intermédiaire A₁B₁ (visible sur la règle graduée) doit se situer dans (ou très près) du plan focal objet de l'oculaire pour que la lunette soit afocale : on observe alors simultanément A₁B₁ sur la règle et l'image définitive A'B' à travers l'oculaire, cette dernière apparaissant renversée par rapport à l'objet AB.</p>
+            <p style="margin-top:10px;"><strong>5.</strong> D'après le DOC. 3, en appelant θ l'angle sous lequel on voit l'objet à l'œil nu et θ' l'angle sous lequel on voit l'image A'B' à travers la lunette :</p>
+            <div class="calc-step">tan θ = A₁B₁/O₁A₁ &nbsp;&nbsp;et&nbsp;&nbsp; tan θ' = A₁B₁/O₂A₁</div>
+            <div class="calc-step">G = θ'/θ ≈ tan θ'/tan θ = (A₁B₁/O₂A₁) × (O₁A₁/A₁B₁) = <strong>O₁A₁/O₂A₁</strong></div>
+            <p style="margin-top:8px;">Le grossissement expérimental s'obtient donc directement à partir des deux distances mesurées aux questions 3 et 5, sans même avoir besoin de la taille A₁B₁. Avec les distances focales du DOC. 1 (f₁' = 20 cm, f₂' = 5 cm), la valeur théorique attendue, d'après la donnée G = f₁'/f₂', est :</p>
+            <div class="calc-step">G = f₁'/f₂' = 20/5 = <strong>4</strong></div>
+            <p style="margin-top:8px;">Si le montage est correctement réalisé et afocal, on doit retrouver O₁A₁/O₂A₁ ≈ 4, c'est-à-dire O₂A₁ ≈ f₂' = 5 cm, aux incertitudes expérimentales près.</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+  <!-- /sub-E-1 -->
+
+  <!-- Sous-onglet E3 : Sujets de bac -->
+  <div class="sub-tab-content" id="sub-E-2">
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2024 · Métropole · Jour 1</span>
+        <span>5 points · 53 min</span>
+      </div>
+      <h4>Observation d'un avion en vol</h4>
+      <div class="bac-theme">Thème : Ondes et signaux · Lunette astronomique &amp; effet Doppler</div>
+      <div class="bac-notions">
+        <span class="bac-tag">grossissement</span>
+        <span class="bac-tag">lunette astronomique</span>
+        <span class="bac-tag">effet Doppler</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-08/2024-Metro-J1-Exo2-Sujet-LunetteDoppler-5pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2024-Metro-J1-Exo2-Correction-LunetteDoppler-5pts.doc" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2023 · Asie · Jour 1</span>
+        <span>11 points · 1 h 45</span>
+      </div>
+      <h4>Autour de Saturne</h4>
+      <div class="bac-theme">Thème : Lunette astronomique · Diffraction · Satellites &amp; lois de Kepler</div>
+      <div class="bac-notions">
+        <span class="bac-tag">grossissement</span>
+        <span class="bac-tag">diffraction</span>
+        <span class="bac-tag">3ᵉ loi de Kepler</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-04/2023-Asie-J1-Exo1-Sujet-Saturne-LunetteDiffractionSatellite-11pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-01/2023-Asie-J1-Exo1-Correction-Saturne-LunetteDiffractionSatellite-11pts.docx" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2021 · Polynésie</span>
+        <span>5 points · 55 min</span>
+      </div>
+      <h4>La « Grande Lunette » de Meudon</h4>
+      <div class="bac-theme">Thème : Lunette astronomique · Lentille convergente · Grossissement</div>
+      <div class="bac-notions">
+        <span class="bac-tag">lentille convergente</span>
+        <span class="bac-tag">grossissement</span>
+        <span class="bac-tag">lunette astronomique</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2022-11/2021-Polynesie-Sujet-ExoC-LunetteMeudon-5pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
+        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-03/2021-Polynesie-Sujet-ExoC-Correction-LunetteMeudon-5pts.doc" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-E-2 -->
+
+</div>
+<!-- /tab-1 (Entraînements) -->
+
+<!-- ══════════════ ONGLET BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-2">
+
+  <nav class="sub-tabs-nav" id="sub-nav-R">
+    <button class="sub-tab-btn active" data-sub="R1" onclick="switchSubTab('R',0)">
+      <span class="sub-tab-num">1</span> Bilan
+    </button>
+    <button class="sub-tab-btn" data-sub="R2" onclick="switchSubTab('R',1)">
       <span class="sub-tab-num">📖</span> Glossaire
     </button>
-    <button class="sub-tab-btn" data-sub="bilan3" onclick="switchSubTabLun(2)">
+    <button class="sub-tab-btn" data-sub="R3" onclick="switchSubTab('R',2)">
       <span class="sub-tab-num">🎬</span> Vidéos &amp; QCM
     </button>
-    <button class="sub-tab-btn" data-sub="bilan4" onclick="switchSubTabLun(3)">
+    <button class="sub-tab-btn" data-sub="R4" onclick="switchSubTab('R',3)">
       <span class="sub-tab-num">🔭</span> Sites &amp; simulations
-    </button>
-    <button class="sub-tab-btn" data-sub="bilan5" onclick="switchSubTabLun(4)">
-      <span class="sub-tab-num">🎓</span> Sujets de bac
     </button>
   </nav>
 
   <!-- Sous-onglet : BILAN -->
-  <div class="sub-tab-content active" id="sub-bilan-0">
+  <div class="sub-tab-content active" id="sub-R-0">
     <div class="section-title"><span class="icon">📋</span> Bilan de la séquence</div>
     <div class="intro-box">
       Récapitulatif des notions essentielles et des capacités exigibles du B.O. spécial n° 8 du 25 juillet 2019 (thème « Ondes et signaux »).
@@ -1227,7 +2508,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
   </div>
 
   <!-- Sous-onglet : GLOSSAIRE -->
-  <div class="sub-tab-content" id="sub-bilan-1">
+  <div class="sub-tab-content" id="sub-R-1">
     <div class="section-title"><span class="icon">📖</span> Glossaire</div>
     <input type="text" class="gloss-search" id="glossSearch" placeholder="🔎 Rechercher un mot du glossaire…" oninput="glossFilter()">
     <dl class="gloss-grid" id="glossGrid">
@@ -1247,7 +2528,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
   </div>
 
   <!-- Sous-onglet : RESSOURCES -->
-  <div class="sub-tab-content" id="sub-bilan-2">
+  <div class="sub-tab-content" id="sub-R-2">
 
     <div class="section-title"><span class="icon">🎬</span> Vidéos</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
@@ -1296,7 +2577,7 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
   </div>
 
   <!-- Sous-onglet : SITES & SIMULATIONS -->
-  <div class="sub-tab-content" id="sub-bilan-3">
+  <div class="sub-tab-content" id="sub-R-3">
 
     <div style="background:#f0f8ff;border:2px solid #1a5aaa;border-radius:10px;padding:14px 18px;margin-bottom:16px">
       <h2 style="font-size:16px;font-weight:700;color:#1a3a6a;margin-bottom:4px">🔭 Simulation PhET — Vérifier la position de l'image intermédiaire</h2>
@@ -1386,67 +2667,8 @@ canvas{display:block;width:100%;border:1px solid #dde4ec;border-radius:6px}
 
   </div>
 
-  <!-- Sous-onglet : SUJETS DE BAC -->
-  <div class="sub-tab-content" id="sub-bilan-4">
-
-    <div class="section-title"><span class="icon">🎓</span> Sujets de bac</div>
-
-    <div class="bac-card">
-      <div class="bac-card-head">
-        <span class="bac-lieu">Bac 2024 · Métropole · Jour 1</span>
-        <span>5 points · 53 min</span>
-      </div>
-      <h4>Observation d'un avion en vol</h4>
-      <div class="bac-theme">Thème : Ondes et signaux · Lunette astronomique &amp; effet Doppler</div>
-      <div class="bac-notions">
-        <span class="bac-tag">grossissement</span>
-        <span class="bac-tag">lunette astronomique</span>
-        <span class="bac-tag">effet Doppler</span>
-      </div>
-      <div class="bac-pastilles">
-        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-08/2024-Metro-J1-Exo2-Sujet-LunetteDoppler-5pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
-        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2024-Metro-J1-Exo2-Correction-LunetteDoppler-5pts.doc" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
-      </div>
-    </div>
-
-    <div class="bac-card">
-      <div class="bac-card-head">
-        <span class="bac-lieu">Bac 2023 · Asie · Jour 1</span>
-        <span>11 points · 1 h 45</span>
-      </div>
-      <h4>Autour de Saturne</h4>
-      <div class="bac-theme">Thème : Lunette astronomique · Diffraction · Satellites &amp; lois de Kepler</div>
-      <div class="bac-notions">
-        <span class="bac-tag">grossissement</span>
-        <span class="bac-tag">diffraction</span>
-        <span class="bac-tag">3ᵉ loi de Kepler</span>
-      </div>
-      <div class="bac-pastilles">
-        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2024-04/2023-Asie-J1-Exo1-Sujet-Saturne-LunetteDiffractionSatellite-11pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
-        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2024-01/2023-Asie-J1-Exo1-Correction-Saturne-LunetteDiffractionSatellite-11pts.docx" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
-      </div>
-    </div>
-
-    <div class="bac-card">
-      <div class="bac-card-head">
-        <span class="bac-lieu">Bac 2021 · Polynésie</span>
-        <span>5 points · 55 min</span>
-      </div>
-      <h4>La « Grande Lunette » de Meudon</h4>
-      <div class="bac-theme">Thème : Lunette astronomique · Lentille convergente · Grossissement</div>
-      <div class="bac-notions">
-        <span class="bac-tag">lentille convergente</span>
-        <span class="bac-tag">grossissement</span>
-        <span class="bac-tag">lunette astronomique</span>
-      </div>
-      <div class="bac-pastilles">
-        <a class="pastille pastille-sujet" href="https://www.labolycee.org/sites/default/files/2022-11/2021-Polynesie-Sujet-ExoC-LunetteMeudon-5pts.docx" target="_blank" rel="noopener">📄 Sujet (Word)</a>
-        <a class="pastille pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-03/2021-Polynesie-Sujet-ExoC-Correction-LunetteMeudon-5pts.doc" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
-      </div>
-    </div>
-
-  </div>
 </div>
+<!-- /tab-2 (Bilan & Ressources) -->
 
 </main>
 
@@ -2062,7 +3284,7 @@ function _renderCO(prog){
   const cvg=document.getElementById('cvG');
   if(!cvg)return;
   const dpr=window.devicePixelRatio||1;
-  const panel=document.getElementById('tab-gross');
+  const panel=document.getElementById('sub-P-1');
   const CWg=Math.max((panel?panel.offsetWidth:700)-28,400);
   const CHg=440;
   cvg.width=CWg*dpr; cvg.height=CHg*dpr;
@@ -2506,7 +3728,7 @@ function drawGrossissement(){
   const cvg=document.getElementById('cvGros');
   if(!cvg)return;
   const dpr=window.devicePixelRatio||1;
-  const panel=document.getElementById('tab-gros');
+  const panel=document.getElementById('sub-P-2');
   const CWg=Math.max((panel?panel.offsetWidth:700)-28,400);
   const CHg=360;
   cvg.width=CWg*dpr; cvg.height=CHg*dpr;
@@ -2678,7 +3900,7 @@ function drawGrossissement(){
 
   // Relancer si animation en cours
   if(tp<1 || tp2<1){
-    requestAnimationFrame(function(){ if(document.getElementById('tab-gros').classList.contains('on')) drawGrossissement(); });
+    requestAnimationFrame(function(){ if(document.getElementById('sub-P-2').classList.contains('active')) drawGrossissement(); });
   }
 
   // ── Image A1B1 ────────────────────────────────────────────────────────
@@ -2789,25 +4011,50 @@ function drawGrossissement(){
     +'en tenant compte de l\'approximation des petits angles.';
 }
 
-function showTab(id){
-  // Arrêter l'audio de l'astronaute et annuler tout son en attente
+function switchTab(n) {
   if(window._vfAudio){ window._vfAudio.pause(); window._vfAudio.currentTime=0; }
   window._vfPendingSrc = null;
-  const ids=['anim','gross','gros','exo','lun','bilan'];
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('on',ids[i]===id));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
-  document.getElementById('tab-'+id).classList.add('on');
-  if(id==='anim'){resizeCV();drawScene();}
-  if(id==='gross') setTimeout(updateCO,20);
-  if(id==='gros')  setTimeout(updateGros,20);
+  document.querySelectorAll('.tab-content').forEach((t,i) => t.classList.toggle('active', i===n));
+  document.querySelectorAll('.tabs-nav .tab-btn').forEach((b,i) => b.classList.toggle('active', i===n));
+  window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
-// ═══ SOUS-ONGLETS BILAN & RESSOURCES ══════════════════════════════════════
-function switchSubTabLun(idx){
-  var btns = document.querySelectorAll('#sub-nav-bilan .sub-tab-btn');
-  var contents = [document.getElementById('sub-bilan-0'), document.getElementById('sub-bilan-1'), document.getElementById('sub-bilan-2'), document.getElementById('sub-bilan-3'), document.getElementById('sub-bilan-4')];
-  btns.forEach((b,i)=>b.classList.toggle('active', i===idx));
-  contents.forEach((c,i)=>{ if(c) c.classList.toggle('active', i===idx); });
+function switchSubTab(group, i) {
+  if(window._vfAudio){ window._vfAudio.pause(); window._vfAudio.currentTime=0; }
+  window._vfPendingSrc = null;
+  document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' button').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  // Effets de bord des animations Cours (reprend la logique de l'ancien showTab)
+  if(group === 'P'){
+    if(i === 0){ resizeCV(); drawScene(); }
+    if(i === 1) setTimeout(updateCO, 20);
+    if(i === 2) setTimeout(updateGros, 20);
+  }
+}
+
+
+function toggleIndice(id){
+  var box = document.getElementById(id);
+  if(box) box.classList.toggle('visible');
+}
+
+function toggleCorrection(btn){
+  var c = btn.nextElementSibling;
+  c.classList.toggle('visible');
+  btn.textContent = c.classList.contains('visible') ? '🙈 Masquer la correction' : '✅ Voir la correction';
+}
+
+function toggleIndice2(btn, id){
+  var box = document.getElementById(id);
+  if(box) box.classList.toggle('visible');
+  btn.classList.toggle('active');
+}
+
+function toggleCorrection2(btn, id){
+  var box = document.getElementById(id);
+  var visible = box.classList.toggle('visible');
+  btn.innerHTML = visible ? '▼ Masquer la correction' : '▶ Voir la correction';
 }
 
 /* ===== Glossaire recherchable ===== */
@@ -3509,8 +4756,8 @@ function exportExoPDF(){
 
 window.addEventListener('resize',()=>{
   resizeCV();drawScene();
-  if(document.getElementById('tab-gross').classList.contains('on'))updateCO();
-  if(document.getElementById('tab-gros').classList.contains('on'))updateGros();
+  if(document.getElementById('sub-P-1').classList.contains('active'))updateCO();
+  if(document.getElementById('sub-P-2').classList.contains('active'))updateGros();
 });
 function init(){resizeCV();onFChange();drawScene();updateGros();}
 init();
