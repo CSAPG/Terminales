@@ -40,7 +40,7 @@ body {
 .page-wrapper {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 28px 20px 60px;
+  padding: 0 20px 60px;
 }
 
 /* ── HEADER (sticky, façon séquence 01) ── */
@@ -50,7 +50,7 @@ body {
   border-bottom: 3px solid var(--accent1);
   border-radius: 14px;
   max-width: 1300px;
-  margin: 0 auto 24px;
+  margin: 0 auto 10px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -181,7 +181,7 @@ button.cap-toggle:hover { background: #1e4466; }
   border-radius: 50%;
   background: var(--border);
   color: var(--text3);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
@@ -190,7 +190,7 @@ button.cap-toggle:hover { background: #1e4466; }
 .tab-btn.active .tab-num { background: var(--accent1); color: #fff; }
 
 /* ── PANEL ── */
-.tab-panel {
+.tab-content {
   display: none;
   background: #fff;
   border: 1.5px solid var(--accent1);
@@ -199,7 +199,7 @@ button.cap-toggle:hover { background: #1e4466; }
   animation: fadeIn 0.25s ease;
   box-shadow: var(--shadow2);
 }
-.tab-panel.active { display: block; }
+.tab-content.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 /* ── TYPOGRAPHY ── */
@@ -293,12 +293,40 @@ button.cap-toggle:hover { background: #1e4466; }
 .gloss-item dd { font-size: 0.84rem; color: var(--text); line-height: 1.55; }
 
 /* ── SOUS-ONGLETS BILAN/RESSOURCES ── */
-.sub-tabs-nav { display: flex; gap: 6px; padding: 6px 0 0; margin-bottom: 22px; flex-wrap: nowrap; overflow-x: auto; }
+.sub-tabs-nav { display: flex; gap: 6px; padding: 0; margin-bottom: 12px; flex-wrap: nowrap; overflow-x: auto; }
 .sub-tab-btn { display: flex; align-items: center; gap: 8px; padding: 8px 18px; border: none; background: #b8cfe0; font-family: 'Nunito', sans-serif; font-size: 0.84rem; font-weight: 700; color: var(--accent1); cursor: pointer; border-radius: 999px; transition: all 0.2s; white-space: nowrap; }
 .sub-tab-btn:hover { background: var(--accent1); color: white; }
 .sub-tab-btn.active { background: #1e4466; color: white; }
 .sub-tab-content { display: none; }
 .sub-tab-content.active { display: block; }
+
+/* ── SOUS-ONGLETS NIVEAU 3 (orange) ── */
+.sub3-tabs-nav { display: flex; gap: 6px; padding: 12px 0 0; margin-bottom: 12px; flex-wrap: nowrap; overflow-x: auto; }
+.sub3-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border: none;
+  background: #FDF0E8;
+  color: var(--accent4);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.sub3-tab-btn:hover { background: var(--accent4); color: white; }
+.sub3-tab-btn.active { background: var(--accent4); color: white; }
+
+/* Espace réduit à 10px quand un sous-onglet niveau 3 suit directement un sous-onglet niveau 2, sans contenu entre les deux */
+#sub-nav-P { margin-bottom: 12px; }
+.sub-tab-content > .sub3-tabs-nav:first-child { padding-top: 0; }
+
+/* Espace réduit entre une pastille niveau 3 et le .section-title qui la suit directement */
+.sub3-tabs-nav + .sub-tab-content > .section-title:first-child { margin-top: 0; }
 
 /* ── SUJETS DE BAC ── */
 .bac-card { background: var(--bg3); border: 1.5px solid var(--border); border-left: 4px solid var(--accent5); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
@@ -465,6 +493,50 @@ button.cap-toggle:hover { background: #1e4466; }
 .correction p { font-size: 0.85rem; color: var(--text); line-height: 1.75; }
 .correction .step { margin-bottom: 8px; }
 .correction .step strong { color: var(--accent1); }
+
+/* ── ACTIVITÉS (indices uniquement, jamais de correction) ── */
+.activite-card { background: var(--bg3); border: 1.5px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+.activite-card h3 { margin-top: 0; font-family: 'Outfit', sans-serif; font-size: 1.05rem; color: var(--accent4); margin-bottom: 10px; }
+.activite-card p { font-size: 0.88rem; color: var(--text2); line-height: 1.75; margin-bottom: 8px; }
+.activite-card .data { background: var(--card); border-left: 3px solid var(--accent4); border-radius: 5px; padding: 8px 14px; font-family: 'Nunito', sans-serif; font-size: 0.8rem; margin: 10px 0; color: var(--text2); }
+.btn-indice { display: inline-block; background: #FFF6E0; color: #C98A00; border: 1.5px solid #C98A00; border-radius: 999px; padding: 3px 12px; font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; margin-left: 8px; vertical-align: middle; transition: all 0.2s; }
+.btn-indice:hover { background: #C98A00; color: white; }
+.indice-box { display: none; background: #FFF6E0; border: 1px solid #F0D48A; border-radius: 8px; padding: 10px 14px; margin: 8px 0 4px; font-size: 0.84rem; color: #7A5900; line-height: 1.65; }
+.indice-box.open { display: block; }
+.doc-flex { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 10px; }
+.doc-flex .doc-text { flex: 1 1 260px; }
+.doc-flex .doc-media { flex: 0 1 240px; text-align: center; }
+.doc-flex .doc-media img { max-width: 100%; border-radius: 8px; border: 1.5px solid var(--border); }
+.doc-flex .doc-media .doc-caption { font-size: 0.72rem; color: var(--text3); margin-top: 6px; line-height: 1.5; }
+.img-resizable { max-width: 320px; margin: 10px auto; display: block; resize: both; overflow: auto; border-radius: 8px; border: 1.5px solid var(--border); }
+.activite-quote { background: var(--card); border-left: 3px solid var(--accent4); border-radius: 6px; padding: 10px 16px; font-size: 0.85rem; font-style: italic; color: var(--text2); margin: 10px 0; line-height: 1.7; }
+
+/* ── EXERCICES (v2) : onglets par exercice, indices multiples + 1 correction finale ── */
+.exo-diff-card { background: var(--bg3); border: 1.5px solid var(--border); border-radius: 0 12px 12px 0; padding: 16px 22px; margin-bottom: 16px; }
+.exo-diff-card.facile { border-left: 4px solid var(--accent3); }
+.exo-diff-card.inter  { border-left: 4px solid var(--accent4); }
+.exo-diff-card.diff   { border-left: 4px solid var(--accent2); }
+.exo-diff-card h3 { margin-top: 0; font-size: 1.0rem; }
+.exo-diff-card.facile h3 { color: var(--accent3); }
+.exo-diff-card.inter h3  { color: var(--accent4); }
+.exo-diff-card.diff h3   { color: var(--accent2); }
+.act-q { margin: 14px 0 4px; font-size: 0.88rem; color: var(--text2); line-height: 1.75; }
+.exo-tab-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; margin: 0 6px 8px 0; background: var(--bg3); color: var(--accent1); border: 1.5px solid #b8cfe0; border-radius: 999px; font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.18s ease; }
+.exo-tab-btn:hover { background: #b8cfe0; }
+.exo-tab-btn.active { background: var(--accent1); color: #fff; border-color: var(--accent1); }
+.exo-tab-stars { font-size: 0.75rem; letter-spacing: 1px; }
+.exo-tab-btn .exo-tab-stars { color: var(--accent4); font-weight: 400; }
+.exo-tab-btn.active .exo-tab-stars { color: #FFD9B3; }
+.btn-correction2 { display:inline-flex; align-items:center; gap:5px; margin-left:8px; padding:6px 16px; background:#1f6b47; color:#fff; border:1.5px solid #1f6b47; border-radius:999px; font-family:'Nunito', sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; transition:all 0.18s ease; vertical-align:middle; }
+.video-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 18px; background:var(--accent1); color:#fff; border:1.5px solid var(--accent1); border-radius:999px; font-family:'Nunito', sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer; text-decoration:none; transition:all 0.18s ease; }
+.video-btn:hover { background:#24486b; border-color:#24486b; }
+.btn-correction2:hover { background:#3ea873; border-color:#3ea873; }
+.correction-box { display:none; background:#eef8f2; border:1.5px solid #1f6b47; border-left:4px solid #1f6b47; border-radius:0 10px 10px 0; padding:12px 16px; margin:8px 0 0; font-size:0.87rem; line-height:1.65; }
+.correction-box.open { display:block; }
+.correction-box strong { color:#1f6b47; }
+.comp-tag { display:inline-flex; align-items:center; background:#FFE1B3; color:#5A3D00; font-size:0.76rem; font-weight:700; padding:0; border-radius:6px; margin:0 8px 10px 0; overflow:hidden; }
+.comp-tag strong { background:#FFC168; padding:5px 10px; margin-right:8px; }
+.comp-tag span.comp-desc { padding:5px 10px 5px 0; }
 
 /* ── SEGRE LINK ── */
 .segre-link-block {
@@ -942,20 +1014,27 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
 
     <!-- TABS -->
     <nav class="tabs-nav">
-      <button class="tab-btn active" onclick="showTab(0)"><span class="tab-num">A</span>Noyaux radioactifs</button>
-      <button class="tab-btn" onclick="showTab(1)"><span class="tab-num">B</span>Types de radioactivité</button>
-      <button class="tab-btn" onclick="showTab(2)"><span class="tab-num">C</span>Activité</button>
-      <button class="tab-btn" onclick="showTab(3)"><span class="tab-num">D</span>Décroissance</button>
-      <button class="tab-btn" onclick="showTab(4)"><span class="tab-num">E</span>Applications</button>
-      <button class="tab-btn" onclick="showTab(5)"><span class="tab-num">✓</span>Bilan &amp; Ressources</button>
+      <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span>Cours</button>
+      <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span>Entraînements</button>
+      <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span>Bilan &amp; Ressources</button>
     </nav>
   </div><!-- /header-inner -->
 </div>
 
 <div class="page-wrapper">
 
-<!-- ══════════════════ TAB I ══════════════════ -->
-<div class="tab-panel active" id="tab0">
+<div class="tab-content active" id="tab-0">
+
+  <div class="sub-tabs-nav" id="sub-nav-P">
+    <button class="sub-tab-btn active" onclick="switchSubTab('P',0)"><span class="tab-num">1</span>Noyaux radioactifs</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('P',1)"><span class="tab-num">2</span>Types de radioactivité</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('P',2)"><span class="tab-num">3</span>Activité</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('P',3)"><span class="tab-num">4</span>Décroissance</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('P',4)"><span class="tab-num">5</span>Applications</button>
+  </div>
+
+<!-- Sous-onglet P1 : Noyaux radioactifs -->
+<div class="sub-tab-content active" id="sub-P-0">
   <div class="section-title">⚛ Noyaux radioactifs</div>
   <div class="section-sub">DÉFINITIONS · DIAGRAMME DE SÉGRÉ INTERACTIF · LOIS DE CONSERVATION</div>
 
@@ -1066,9 +1145,10 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
     </div>
   </div>
 </div>
+<!-- /sub-P-0 (Noyaux radioactifs) -->
 
-<!-- ══════════════════ TAB II ══════════════════ -->
-<div class="tab-panel" id="tab1">
+<!-- Sous-onglet P2 : Types de radioactivité -->
+<div class="sub-tab-content" id="sub-P-1">
   <div class="section-title">⚡ Types de radioactivité</div>
   <div class="section-sub">α · β⁻ · β⁺ · DÉSEXCITATION γ</div>
 
@@ -1183,9 +1263,10 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
     </div>
   </div>
 </div>
+<!-- /sub-P-1 (Types de radioactivité) -->
 
-<!-- ══════════════════ TAB III ══════════════════ -->
-<div class="tab-panel" id="tab2">
+<!-- Sous-onglet P3 : Activité -->
+<div class="sub-tab-content" id="sub-P-2">
   <div class="section-title">📡 Activité d'un échantillon</div>
   <div class="section-sub">DÉFINITION · ACTIVITÉ INSTANTANÉE · CONSTANTE RADIOACTIVE λ</div>
 
@@ -1368,9 +1449,10 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
     </div>
   </div>
 </div>
+<!-- /sub-P-2 (Activité) -->
 
-<!-- ══════════════════ TAB IV ══════════════════ -->
-<div class="tab-panel" id="tab3">
+<!-- Sous-onglet P4 : Décroissance -->
+<div class="sub-tab-content" id="sub-P-3">
   <div class="section-title">📉 Décroissance radioactive</div>
   <div class="section-sub">LOI DE DÉCROISSANCE · CONSTANTE DE TEMPS τ · DEMI-VIE t₁/₂ · SIMULATION</div>
 
@@ -1534,20 +1616,21 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
     </div>
   </div>
 </div>
+<!-- /sub-P-3 (Décroissance) -->
 
-<!-- ══════════════════ TAB V ══════════════════ -->
-<div class="tab-panel" id="tab4">
+<!-- Sous-onglet P5 : Applications -->
+<div class="sub-tab-content" id="sub-P-4">
   <div class="section-title">🏥 Applications de la radioactivité</div>
   <div class="section-sub">DATATION · MÉDECINE · RADIOPROTECTION</div>
 
-  <div class="sub-tabs-nav" id="sub-nav-E">
-    <button class="sub-tab-btn active" onclick="switchSubTab('E',0)">A. Datation</button>
-    <button class="sub-tab-btn" onclick="switchSubTab('E',1)">B. Applications médicales</button>
-    <button class="sub-tab-btn" onclick="switchSubTab('E',2)">C. Radioprotection</button>
-    <button class="sub-tab-btn" onclick="switchSubTab('E',3)">🔬 Exercices</button>
+  <div class="sub3-tabs-nav" id="sub-nav-AP">
+    <button class="sub3-tab-btn active" onclick="switchSubTab('AP',0)">A. Datation</button>
+    <button class="sub3-tab-btn" onclick="switchSubTab('AP',1)">B. Applications médicales</button>
+    <button class="sub3-tab-btn" onclick="switchSubTab('AP',2)">C. Radioprotection</button>
+    <button class="sub3-tab-btn" onclick="switchSubTab('AP',3)">🔬 Exercices</button>
   </div>
 
-  <div class="sub-tab-content active" id="sub-E-0">
+  <div class="sub-tab-content active" id="sub-AP-0">
 
   <div class="sub-title" style="color:var(--accent1);">A. Datation par les noyaux radioactifs</div>
 
@@ -1598,9 +1681,9 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
   </div>
 
   </div>
-  <!-- /sub-E-0 -->
+  <!-- /sub-AP-0 -->
 
-  <div class="sub-tab-content" id="sub-E-1">
+  <div class="sub-tab-content" id="sub-AP-1">
 
   <div class="sub-title" style="color:var(--accent2);">B. Applications médicales</div>
 
@@ -1632,9 +1715,9 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
   <div class="note">Tous les traceurs médicaux ont des <strong>demi-vies courtes</strong> (de quelques minutes à quelques jours) pour minimiser l'irradiation du patient tout en permettant l'examen.</div>
 
   </div>
-  <!-- /sub-E-1 -->
+  <!-- /sub-AP-1 -->
 
-  <div class="sub-tab-content" id="sub-E-2">
+  <div class="sub-tab-content" id="sub-AP-2">
 
   <div class="sub-title" style="color:var(--accent4);">C. Radioprotection</div>
 
@@ -1695,9 +1778,9 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
   </div>
 
   </div>
-  <!-- /sub-E-2 -->
+  <!-- /sub-AP-2 -->
 
-  <div class="sub-tab-content" id="sub-E-3">
+  <div class="sub-tab-content" id="sub-AP-3">
 
   <div class="sub-title">🔬 Exercices — Applications</div>
 
@@ -1762,12 +1845,1269 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
   </div>
 
   </div>
-  <!-- /sub-E-3 -->
+  <!-- /sub-AP-3 -->
 
 </div>
+<!-- /sub-P-4 (Applications) -->
 
-<!-- ══════════════ ONGLET ✓ — BILAN & RESSOURCES ══════════════ -->
-<div class="tab-panel" id="tab5">
+</div>
+<!-- /tab-0 (Cours) -->
+
+<!-- ══════════════ ONGLET ENTRAÎNEMENTS ══════════════ -->
+<div class="tab-content" id="tab-1">
+
+  <div class="sub-tabs-nav" id="sub-nav-E">
+    <button class="sub-tab-btn active" onclick="switchSubTab('E',0)"><span class="tab-num">1</span>Activités</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('E',1)"><span class="tab-num">2</span>Exercices</button>
+    <button class="sub-tab-btn" onclick="switchSubTab('E',2)">🎓 Sujets de bac</button>
+  </div>
+
+  <!-- Sous-onglet E1 : Activités -->
+  <div class="sub-tab-content active" id="sub-E-0">
+
+    <div class="sub3-tabs-nav" id="sub-nav-EA">
+      <button class="sub3-tab-btn active" onclick="switchSubTab('EA',0)">Activité 1</button>
+      <button class="sub3-tab-btn" onclick="switchSubTab('EA',1)">Activité 2</button>
+      <button class="sub3-tab-btn" onclick="switchSubTab('EA',2)">Activité 3</button>
+      <button class="sub3-tab-btn" onclick="switchSubTab('EA',3)">Activité 4</button>
+      <button class="sub3-tab-btn" onclick="switchSubTab('EA',4)">Activité 5</button>
+    </div>
+
+    <div class="sub-tab-content active" id="sub-EA-0">
+
+      <div class="activite-card">
+        <h3>Activité 1 — Découverte de la radioactivité</h3>
+
+        <div class="sub-title" style="color:var(--accent4);margin-top:0;">I. Tout a commencé avec Henri Becquerel</div>
+
+        <p>Voir la vidéo : <a href="https://www.youtube.com/watch?v=hoa2jdUJ1Bg" target="_blank" style="color:var(--accent4);">La découverte de la radioactivité par CEA Sciences</a></p>
+
+        <div class="doc-flex">
+          <div class="doc-text">
+            <p>Après avoir visionné le film sur Henri Becquerel, lire le texte puis répondre aux questions.</p>
+            <div class="activite-quote">« Une plaque photographique a été enfermée dans un châssis opaque, fermé d'un côté par une plaque d'aluminium : si l'on exposait le châssis en plein soleil, la plaque ne serait pas voilée. Cependant, si l'on vient à fixer sur la plaque d'aluminium, à l'extérieur, une lamelle de sel d'uranium et si l'on expose le tout pendant plusieurs heures au soleil, on reconnaît, lorsqu'on développe ensuite la plaque par des procédés ordinaires, que la silhouette de la lamelle cristalline apparaît en noir sur la plaque sensible. Parmi les expériences qui précèdent, quelques-unes avaient été préparées le mercredi 26 et le jeudi 27 février. J'avais conservé les expériences toutes préparées et rentré les châssis à l'obscurité en laissant en place les lamelles du sel d'uranium. Le soleil ne s'étant pas montré les jours suivants, j'ai développé les plaques photographiques le 1<sup>er</sup> mars, en m'attendant à trouver des images très faibles. Les silhouettes apparurent, au contraire, avec une grande intensité. »<br><span style="font-style:normal;font-size:0.78rem;">— Henri Becquerel, note à l'Académie des sciences, 1896.</span></div>
+          </div>
+          <div class="doc-media">
+            <img src="Entrainements/AD1-1.jpg" alt="Cahier de notes et cliché de Becquerel, 1896" style="max-width:240px;">
+            <div class="doc-caption">Notes manuscrites et cliché de Becquerel (26 février – 1<sup>er</sup> mars 1896).</div>
+          </div>
+        </div>
+
+        <p><strong>1.</strong> Combien d'hypothèses Henri Becquerel fait-il pour obtenir une interprétation correcte des résultats expérimentaux qu'il obtient ? Les énumérer.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea-1')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea-1">Relis bien le texte : Becquerel envisage d'abord une explication liée au Soleil, puis une autre liée à un phénomène lumineux connu, avant d'aboutir à une troisième piste, propre à l'uranium lui-même. Compte le nombre de pistes différentes qu'il évoque avant de conclure.</div>
+
+        <p><strong>2.</strong> Est-ce la lumière solaire qui impressionne la plaque photo dans l'expérience de Becquerel ?
+          <button class="btn-indice" onclick="toggleIndice('ind-ea-2')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea-2">Regarde la phrase « Le soleil ne s'étant pas montré les jours suivants… ». Si la plaque a quand même été impressionnée sans exposition au Soleil, qu'est-ce que cela permet d'éliminer comme cause ?</div>
+
+        <p><strong>3.</strong> D'où provient le rayonnement qui impressionne la plaque photo ?
+          <button class="btn-indice" onclick="toggleIndice('ind-ea-3')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea-3">Puisque ce n'est pas le Soleil, cherche dans le texte quel est le seul élément resté en contact avec la plaque pendant tout ce temps, à l'obscurité.</div>
+
+        <div class="doc-flex" style="margin-top:14px;">
+          <div class="doc-text">
+            <p><strong>4.</strong> Sur la photographie obtenue par Henri Becquerel, on distingue les contours d'une croix.</p>
+            <p><strong>4.1</strong> Quel est le matériau qui a laissé ces contours ?
+              <button class="btn-indice" onclick="toggleIndice('ind-ea-4a')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ea-4a">Entre les sels d'uranium et la plaque photo, Becquerel avait placé un écran formé d'une lame de cuivre en forme de croix. Regarde l'image ci-contre : de quel métal courant est faite cette croix ?</div>
+            <p><strong>4.2</strong> Que peut-on en conclure concernant les rayonnements radioactifs mis en évidence par Becquerel dans cette expérience ?
+              <button class="btn-indice" onclick="toggleIndice('ind-ea-4b')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-ea-4b">Si la silhouette de la croix apparaît nette et sombre (donc peu impressionnée) alors que le reste de la plaque est fortement impressionné, que peux-tu en déduire sur la capacité de ce métal à arrêter (ou non) le rayonnement émis par l'uranium ?</div>
+          </div>
+          <div class="doc-media">
+            <img src="Entrainements/AD1-3.png" alt="Cliché de Becquerel montrant la silhouette d'une croix" style="max-width:240px;">
+            <div class="doc-caption">Cliché développé par Becquerel le 1<sup>er</sup> mars 1896 : on distingue la silhouette d'une croix en cuivre. (Cliché Bibliothèque de l'École polytechnique)</div>
+          </div>
+        </div>
+
+        <p><strong>5.</strong> Lors de son expérience, Henri Becquerel utilise des sels d'uranium contenant des atomes d'uranium 235 radioactifs notés <sup>235</sup><sub>92</sub>U. De quoi est constitué un noyau d'uranium 235 ?
+          <button class="btn-indice" onclick="toggleIndice('ind-ea-5')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea-5">Le nombre en haut (A) est le nombre de nucléons, celui en bas (Z) est le numéro atomique = nombre de protons. Le nombre de neutrons se calcule par N = A − Z.</div>
+
+        <div class="doc-flex" style="margin-top:22px;">
+          <div class="doc-text">
+            <div class="sub-title" style="color:var(--accent4);margin-top:0;">II. Puis d'autres génies sont arrivés</div>
+            <p>À la fin du XIX<sup>ème</sup> siècle et dans la première moitié du XX<sup>ème</sup>, la conception de l'atome et de la matière a changé radicalement.</p>
+          </div>
+        </div>
+
+        <div class="doc-media" style="max-width:none;text-align:center;margin:6px 0 16px;">
+          <img src="Entrainements/AD1-4.png" alt="Trombinoscope : Becquerel, Rutherford, Pierre Curie, Marie Curie, Irène Curie, Frédéric Joliot" style="max-width:100%;border-radius:8px;border:1.5px solid var(--border);">
+          <div class="doc-caption">Henri Becquerel · Ernest Rutherford · Pierre Curie · Marie Skłodowska-Curie · Irène Curie · Frédéric Joliot</div>
+        </div>
+
+        <div class="activite-quote">« Deux minéraux d'uranium, la pechblende (oxyde d'urane) et la chalcolite (phosphate de cuivre et d'uranyle) sont beaucoup plus actifs que l'uranium lui-même. Ce fait est très remarquable et porte à croire que ces minéraux peuvent contenir un élément beaucoup plus actif que l'uranium. »<br><span style="font-style:normal;font-size:0.78rem;">— Marie Skłodowska-Curie, « Rayons émis par les composés de l'uranium et du thorium », Comptes rendus de l'Académie des sciences, t. CXXVII, 1898.</span></div>
+
+        <p style="font-size:0.88rem;color:var(--text2);"><strong>Découverte du polonium :</strong> en 1898, Marie Curie est une jeune scientifique inconnue ayant à peine fini ses études. Pour sujet de thèse, elle choisit d'étudier les rayonnements émis par les composés d'uranium, découverts deux ans auparavant par Henri Becquerel. À l'aide d'un appareil mis au point avec son mari Pierre Curie, elle mesure les rayonnements émis par de nombreuses substances. Elle découvre que seuls les minerais d'uranium et de thorium sont radioactifs, et constate une anomalie. Plus tard Pierre et Marie Curie baptisent ce nouvel élément <em>polonium</em>, en hommage au pays de naissance de Marie Curie.</p>
+
+        <div class="activite-card" style="background:var(--card);margin:14px 0 0;padding:12px 16px;">
+          <p style="margin:0;font-size:0.83rem;"><strong>Découvertes associées à cette période :</strong> radioactivité naturelle · radioactivité artificielle · polonium · radium · positron · neutron · électron · proton · existence du noyau dans l'atome · particules α et β · lois de conservation dans les transformations nucléaires · effets biologiques de la radioactivité · scintigraphie.</p>
+        </div>
+
+        <p style="margin-top:14px;"><strong>1.</strong> Pour chacun·e des savant·e·s ci-dessus, rechercher sa nationalité, ses dates de naissance, d'obtention du prix Nobel et de décès. Préciser la raison pour laquelle a été attribué chaque prix Nobel.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea-6')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea-6">Fais une recherche pour chaque savant·e (nom complet, nationalité, dates). Attention : certains couples (Pierre et Marie Curie, Irène et Frédéric Joliot-Curie) ont reçu le prix Nobel ensemble — précise à chaque fois le domaine (physique ou chimie) et le motif exact.</div>
+
+        <p><strong>2.</strong> Le texte ci-dessus présente un extrait du premier article de recherche de Marie Curie concernant la radioactivité. Expliquer pourquoi la découverte de Marie Curie lui permet de postuler l'existence d'un élément inconnu jusqu'alors et de conclure que cet élément est très radioactif.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea-7')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea-7">Compare l'activité de l'uranium pur à celle des minerais (pechblende, chalcolite) qui le contiennent. Si un minerai est plus actif que l'uranium pur qu'il contient, qu'est-ce que cela implique forcément sur sa composition ? Et si cet élément inconnu n'est présent qu'en très faible quantité tout en produisant une forte activité, que peut-on dire de son activité massique ?</div>
+
+        <p><strong>3.</strong> Sur une frise chronologique, placer chacune des découvertes évoquées ci-dessus ainsi que le nom du, de la ou des scientifique(s) qui en est (sont) responsable(s).
+          <button class="btn-indice" onclick="toggleIndice('ind-ea-8')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea-8">Range les découvertes entre 1896 (Becquerel) et 1934 : électron, radioactivité naturelle, polonium et radium, particules α et β⁻, lois de conservation, existence du noyau, proton, neutron et positron, radioactivité artificielle. Pour chaque date, un seul événement principal — attention, certaines découvertes (neutron/positron) sont très proches dans le temps mais dues à des scientifiques différents.</div>
+
+      </div>
+
+    </div>
+    <!-- /sub-EA-0 -->
+
+    <div class="sub-tab-content" id="sub-EA-1">
+
+      <div class="activite-card">
+        <h3>Activité 2 — Les types de rayonnements radioactifs</h3>
+
+        <div class="activite-quote">« Le rayonnement radioactif se subdivise en trois composantes. Si quelques mois se sont avérés nécessaires pour découvrir que le rayonnement α, arrêté par une simple feuille de papier, était constitué d'atomes d'hélium 4 dépouillés de leurs électrons, le rayonnement β, absorbé par quelques millimètres d'aluminium, fut immédiatement identifié comme constitué d'électrons.<br>On établit également que, contrairement aux précédents, le rayonnement γ que seule une grande épaisseur de plomb ou de béton permettait de contenir, ne constituait pas un ensemble de particules matérielles mais était de nature électromagnétique, s'apparentant à la lumière ou aux rayons X, avec toutefois une énergie supérieure. »<br><span style="font-style:normal;font-size:0.78rem;">— D'après M.Ch de la Souchère, <em>La Radioactivité</em>, Ellipses, 2005.</span></div>
+
+        <div class="activite-quote">La radioactivité bêta β fut d'abord observée comme un rayonnement étant dévié par un champ électrique ou magnétique, mais dans la direction contraire à la déviation subie par les particules α. Elle est donc portée par des charges négatives. Le physicien anglais J.J. Thomson venait de découvrir en 1897 que l'électricité était transportée par des corpuscules de charge électrique négative, les électrons. Rapidement, le rayonnement bêta fut lui aussi identifié aux électrons. Il fallut attendre 1932, avec la découverte du « positon », une particule identique à l'électron, mais de charge opposée, pour mettre en évidence un rayonnement semblable, mais porté par des particules de charge positive. On distingue les deux variantes de la radioactivité bêta par les termes bêta-plus (+) et bêta-moins (−).<br><span style="font-style:normal;font-size:0.78rem;">— D'après un dossier de TPE d'élèves de première scientifique.</span></div>
+
+        <p><strong>Compléter le tableau ci-dessous :</strong></p>
+
+        <div style="overflow-x:auto;margin:12px 0;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.85rem;text-align:center;">
+            <thead>
+              <tr style="background:var(--card);">
+                <th style="border:1px solid var(--border);padding:8px;">Rayonnement</th>
+                <th style="border:1px solid var(--border);padding:8px;">Notation <sup>A</sup><sub>Z</sub>X</th>
+                <th style="border:1px solid var(--border);padding:8px;">électrons</th>
+                <th style="border:1px solid var(--border);padding:8px;">charge</th>
+                <th style="border:1px solid var(--border);padding:8px;">neutrons</th>
+                <th style="border:1px solid var(--border);padding:8px;">Comment stopper le rayonnement ?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="border:1px solid var(--border);padding:10px;font-weight:700;">α</td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td></tr>
+              <tr><td style="border:1px solid var(--border);padding:10px;font-weight:700;">β⁺</td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td></tr>
+              <tr><td style="border:1px solid var(--border);padding:10px;font-weight:700;">β⁻</td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td><td style="border:1px solid var(--border);padding:10px;"></td></tr>
+              <tr><td style="border:1px solid var(--border);padding:10px;font-weight:700;">γ</td><td style="border:1px solid var(--border);padding:10px;background:repeating-linear-gradient(45deg,var(--card),var(--card) 5px,var(--border) 5px,var(--border) 6px);"></td><td style="border:1px solid var(--border);padding:10px;background:repeating-linear-gradient(45deg,var(--card),var(--card) 5px,var(--border) 5px,var(--border) 6px);"></td><td style="border:1px solid var(--border);padding:10px;background:repeating-linear-gradient(45deg,var(--card),var(--card) 5px,var(--border) 5px,var(--border) 6px);"></td><td style="border:1px solid var(--border);padding:10px;background:repeating-linear-gradient(45deg,var(--card),var(--card) 5px,var(--border) 5px,var(--border) 6px);"></td><td style="border:1px solid var(--border);padding:10px;"></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>Ligne α</strong>
+          <button class="btn-indice" onclick="toggleIndice('ind-ea2-1')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea2-1">Le texte précise que la particule α est « constituée d'atomes d'hélium 4 dépouillés de leurs électrons ». Repars du noyau d'hélium ⁴₂He pour trouver A et Z, déduis-en le nombre de neutrons (N = A − Z), le nombre d'électrons (particule dépouillée de ses électrons) et la charge (en fonction de Z). Pour l'arrêt du rayonnement, relis la première phrase du texte.</div>
+
+        <p><strong>Ligne β⁺</strong>
+          <button class="btn-indice" onclick="toggleIndice('ind-ea2-2')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea2-2">Le positon est « une particule identique à l'électron, mais de charge opposée ». L'électron a une masse quasi nulle (A = 0) et une charge élémentaire négative (Z = −1 en notation ᴬZX). Que devient Z si la charge est opposée à celle de l'électron ? Le nombre de neutrons et d'électrons d'une telle particule légère est-il nul ou non ?</div>
+
+        <p><strong>Ligne β⁻</strong>
+          <button class="btn-indice" onclick="toggleIndice('ind-ea2-3')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea2-3">Le rayonnement β⁻ a été « identifié aux électrons » eux-mêmes. Utilise directement la notation de l'électron (A, Z, charge) telle qu'établie par J.J. Thomson. Pour le blindage, relis la première citation : quelle épaisseur de quel matériau est nécessaire ?</div>
+
+        <p><strong>Ligne γ</strong>
+          <button class="btn-indice" onclick="toggleIndice('ind-ea2-4')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea2-4">Le texte précise que le rayonnement γ « ne constituait pas un ensemble de particules matérielles mais était de nature électromagnétique ». Puisqu'il n'y a pas de particule matérielle, les cases notation/composition n'ont pas de sens ici (elles sont grisées dans le tableau). Concentre-toi uniquement sur la dernière colonne : quelle épaisseur de quel(s) matériau(x) permet de contenir ce rayonnement, d'après le texte ?</div>
+
+      </div>
+
+    </div>
+    <!-- /sub-EA-1 -->
+
+    <div class="sub-tab-content" id="sub-EA-2">
+
+      <div class="activite-card">
+        <h3>Activité 3 — Stabilité des noyaux : le diagramme (N ; Z) de Segré</h3>
+
+        <p>Alors que seulement 118 éléments chimiques, classés dans le tableau périodique, ont été identifiés sur Terre ou en laboratoire, plus de 1500 noyaux connus sont classés dans un diagramme (N ; Z).</p>
+        <p style="font-weight:700;color:var(--accent4);">Comment extraire les informations sur la stabilité d'un noyau grâce au diagramme (N ; Z) ?</p>
+
+        <div class="doc-media" style="max-width:none;text-align:center;margin:14px 0;">
+          <img src="Entrainements/AD3.png" alt="Diagramme (N ; Z) ou diagramme de Segré" class="img-resizable" style="max-width:100%;">
+          <div class="doc-caption">Diagramme (N ; Z) ou diagramme de Segré.</div>
+        </div>
+
+        <div style="overflow-x:auto;margin:14px 0;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+            <thead>
+              <tr style="background:var(--card);">
+                <th style="border:1px solid var(--border);padding:8px;">Radioactivité</th>
+                <th style="border:1px solid var(--border);padding:8px;text-align:left;">Le noyau radioactif se désintègre en un autre noyau et en émettant :</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="border:1px solid var(--border);padding:8px;text-align:center;font-weight:700;">β⁻</td><td style="border:1px solid var(--border);padding:8px;">un électron <sup>0</sup><sub>-1</sub>e et un antineutrino <sup>0</sup><sub>0</sub>ν̄ₑ</td></tr>
+              <tr><td style="border:1px solid var(--border);padding:8px;text-align:center;font-weight:700;">β⁺</td><td style="border:1px solid var(--border);padding:8px;">un positon <sup>0</sup><sub>1</sub>e et un neutrino <sup>0</sup><sub>0</sub>νₑ</td></tr>
+              <tr><td style="border:1px solid var(--border);padding:8px;text-align:center;font-weight:700;">α</td><td style="border:1px solid var(--border);padding:8px;">un noyau d'hélium <sup>4</sup><sub>2</sub>He</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="def-box orange">
+          <div class="def-label">Rappels</div>
+          <p>Deux noyaux sont isotopes s'ils ont le même nombre de protons (Z) mais pas le même nombre de neutrons (N).</p>
+          <p><strong>Lois de conservation :</strong> lors d'une réaction transformation nucléaire, il y a conservation de la charge électrique et du nombre de nucléons.</p>
+        </div>
+
+        <div class="app-card" style="cursor:pointer;border-color:#2D5F8A !important;margin:14px 0;" onclick="window.open('https://physique.ostralo.net/diagramme_NZ/','_blank')" title="Ouvrir le simulateur Ostralo">
+          <div class="app-icon">🧭</div>
+          <div class="app-title" style="color:#2D5F8A;">Simulateur — Diagramme (N ; Z) <span class="video-badge" style="background:#2D5F8A;">🔗 Ostralo</span></div>
+          <div class="app-desc">Explorer le diagramme (N ; Z) de façon interactive : repérer un noyau, ses isotopes, ses isobares, et observer les zones de stabilité/instabilité.</div>
+          <div style="margin-top:8px;"><a href="https://physique.ostralo.net/diagramme_NZ/" target="_blank" style="font-size:0.75rem;color:#2D5F8A;font-family:'Nunito',sans-serif;">→ Ouvrir physique.ostralo.net/diagramme_NZ</a></div>
+        </div>
+
+        <div class="sub-title" style="color:var(--accent4);margin-top:18px;">Questions</div>
+
+        <p style="font-weight:700;color:var(--accent1);margin-bottom:4px;">1. S'approprier</p>
+        <p><strong>a.</strong> Repérer les noyaux suivants sur le diagramme : <sup>12</sup><sub>6</sub>C, <sup>13</sup><sub>6</sub>C, <sup>14</sup><sub>6</sub>C, <sup>39</sup><sub>19</sub>K, <sup>40</sup><sub>19</sub>K, <sup>41</sup><sub>19</sub>K. Indiquer pour chacun s'il est stable ou instable. Comment peut-on qualifier des noyaux situés sur une même ligne ?
+          <button class="btn-indice" onclick="toggleIndice('ind-ea3-1a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea3-1a">Pour chaque noyau, le nombre du bas (Z) donne la ligne horizontale à suivre, et N = A − Z donne la position sur l'axe horizontal. Une fois le point repéré, regarde la légende des couleurs pour savoir s'il est noir (stable) ou coloré (instable, avec le type d'émetteur). Des noyaux sur une même ligne horizontale ont tous le même Z : que dit la définition d'isotopes à ce sujet ?</div>
+
+        <p><strong>b.</strong> Pour l'ensemble des noyaux du document, préciser si les noyaux les plus abondants du diagramme sont des noyaux stables ou instables.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea3-1b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea3-1b">Observe la largeur de la bande noire par rapport aux bandes colorées sur l'ensemble du diagramme : laquelle regroupe visuellement le plus grand nombre de noyaux ?</div>
+
+        <p style="font-weight:700;color:var(--accent1);margin-bottom:4px;margin-top:16px;">2. Analyser-raisonner</p>
+        <p><strong>a.</strong> Le phosphore-30 peut subir une transformation nucléaire, modélisée par la réaction d'équation <sup>30</sup><sub>15</sub>P → <sup>30</sup><sub>14</sub>Si + <sup>0</sup><sub>1</sub>e + <sup>0</sup><sub>0</sub>νₑ. Identifier le type de radioactivité associé à cette désintégration et montrer que l'équation de cette transformation nucléaire respecte les lois de conservation.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea3-2a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea3-2a">Compare la particule émise (<sup>0</sup><sub>1</sub>e) au tableau des types de radioactivité donné plus haut : quel type correspond à l'émission d'un positon ? Pour vérifier les lois de conservation, additionne séparément les nombres du haut (A) de chaque côté de la flèche, puis les nombres du bas (Z) de chaque côté : les deux totaux doivent être égaux.</div>
+
+        <p><strong>b.</strong> L'uranium-238 peut se désintégrer en thorium-234 suivant un processus de radioactivité α. Écrire l'équation de la réaction nucléaire qui modélise cette transformation.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea3-2b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea3-2b">Écris d'abord le noyau père <sup>238</sup><sub>92</sub>U, la particule α (voir le tableau : <sup>4</sup><sub>2</sub>He) et le noyau fils <sup>234</sup><sub>90</sub>Th (Z du thorium à retrouver dans une classification périodique). Vérifie ensuite que la somme des A et la somme des Z sont conservées de part et d'autre de la flèche.</div>
+
+        <p style="font-weight:700;color:var(--accent1);margin-bottom:4px;margin-top:16px;">3. Communiquer <span style="background:linear-gradient(90deg,#c9a94a,#e8c766);color:#4a3a00;font-size:0.7rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:4px;">GRAND ORAL</span></p>
+        <p>Préparer une communication orale, présentée sans note, permettant d'expliquer quelles informations peuvent être extraites du diagramme (N ; Z).
+          <button class="btn-indice" onclick="toggleIndice('ind-ea3-3')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea3-3">Structure ton oral en 3 temps : (1) présenter les axes du diagramme et ce que représente chaque point (un noyau) ; (2) expliquer le code couleur (stabilité, types d'émetteurs α/β⁺/β⁻) et la position de la droite Z = N ; (3) donner un exemple concret (isotopes, noyau stable vs instable) pour illustrer comment on lit une information sur le diagramme. Entraîne-toi à voix haute sans regarder tes notes.</div>
+
+      </div>
+
+    </div>
+    <!-- /sub-EA-2 -->
+
+    <div class="sub-tab-content" id="sub-EA-3">
+
+      <div class="activite-card">
+        <h3>Activité 4 — Radioactivité artificielle et décroissance radioactive</h3>
+
+        <div class="activite-quote">« Frédéric et Irène Joliot-Curie observèrent en 1933 que le bombardement d'une feuille d'aluminium 27 par des particules α pouvait donner lieu à des réactions nucléaires. L'une d'elles aboutissait à l'émission de neutrons et d'électrons positifs, qu'ils crurent d'abord être émis dans la réaction nucléaire elle-même.<br>Cependant, les deux physiciens découvrirent en janvier 1934 que l'émission de positrons n'était pas instantanée. Le processus comportait donc deux étapes : dans la première était formé dans l'aluminium (après émission de neutrons) un isotope radioactif du phosphore qui n'existait pas dans la nature, dans la seconde, ce phosphore 30 radioactif se désintégrait en silicium 30 stable par émission de positrons. Le nouveau phénomène fut appelé « radioactivité artificielle ». »<br><span style="font-style:normal;font-size:0.78rem;">— D'après P.Radvanyi, <em>Histoire de l'atome</em>, Belin, 2007.</span></div>
+
+        <div class="activite-quote">Dans la nature, l'isotope prépondérant de l'élément phosphore est le phosphore 31.<br>Substance radioactive artificielle, le phosphore 32 est utilisé en médecine nucléaire. Il est radioactif β⁻ et sa demi-vie t₁/₂ est égale à 14,3 jours. Il se présente sous forme d'une solution qui s'injecte par voie veineuse pour traiter la polyglobulie primitive (maladie de Vaquez). Il se fixe sélectivement sur les globules rouges (hématies), car il suit le métabolisme du fer, abondant dans ces globules, et son rayonnement détruit les hématies en excès. C'est un traitement efficace et bien toléré de cette affection.<br><span style="font-style:normal;font-size:0.78rem;">— D'après le site « dictionnaire médical »</span></div>
+
+        <div class="activite-card" style="background:var(--card);padding:12px 16px;margin-bottom:16px;">
+          <p style="margin:0;font-size:0.85rem;"><strong>Données :</strong> extrait de la classification périodique : <sup>_</sup><sub>11</sub>Na ; <sup>_</sup><sub>12</sub>Mg ; <sup>_</sup><sub>13</sub>Al ; <sup>_</sup><sub>14</sub>Si ; <sup>_</sup><sub>15</sub>P ; <sup>_</sup><sub>16</sub>S ; <sup>_</sup><sub>17</sub>Cl.</p>
+        </div>
+
+        <p><strong>1.</strong> Donner la représentation symbolique puis la composition du noyau de l'atome de phosphore naturel 31.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-1')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-1">Le numéro atomique Z du phosphore se lit dans l'extrait de classification périodique ci-dessus. La représentation symbolique s'écrit <sup>A</sup><sub>Z</sub>X avec A = 31. Le nombre de protons = Z, le nombre de neutrons = A − Z.</div>
+
+        <p><strong>2.</strong> Le phosphore 30 est radioactif β⁺ : en quoi s'agit-il d'une radioactivité « artificielle » ? Donner sa représentation symbolique et sa composition.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-2')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-2">Relis le premier texte : le phosphore 30 est-il présent naturellement sur Terre, ou a-t-il fallu le créer par une réaction nucléaire provoquée ? Pour la représentation symbolique, le phosphore a le même Z que le phosphore 31 (même élément chimique) mais un A différent (30).</div>
+
+        <p><strong>3.</strong> Comment appelle-t-on les noyaux des atomes de phosphore 30, 31 et 32 ? Pourquoi ?
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-3')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-3">Ces trois noyaux ont-ils le même numéro atomique Z ? Ont-ils le même nombre de masse A ? Quel terme désigne des noyaux de même Z mais de A différents (voir le Rappel de l'Activité 3) ?</div>
+
+        <p><strong>4.</strong> Recopier et compléter l'équation décrivant la 1<sup>ère</sup> étape de l'expérience analysée par Frédéric et Irène Joliot-Curie en 1934 :<br>
+          <span style="display:inline-block;margin:6px 0;font-family:'Nunito',sans-serif;">
+          <sup>_</sup><sub>13</sub>Al + <sup>4</sup><sub>2</sub>He → <sup>30</sup><sub>_</sub>P + <sup>1</sup><sub>0</sub>n
+          </span>
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-4')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-4">Les nombres manquants se retrouvent en appliquant les lois de conservation (question 5) : la somme des A à gauche doit être égale à la somme des A à droite, et de même pour les Z.</div>
+
+        <p><strong>5.</strong> Quelles sont les relations entre les nombres de charge et de masse des réactifs et des produits ? Lors d'une réaction nucléaire, quelles sont les grandeurs qui se conservent ?
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-5')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-5">Reprends l'équation de la question 4 une fois complétée : additionne les A de chaque côté de la flèche, puis les Z de chaque côté. Que constates-tu ? Nomme les deux grandeurs physiques concernées (déjà citées dans le Rappel de l'Activité 3).</div>
+
+        <p><strong>6.</strong> Écrire l'équation de désintégration radioactive du phosphore 30 qui se produit lors de la deuxième étape de cette même expérience.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-6')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-6">D'après le premier texte, le phosphore 30 se désintègre en silicium 30 stable par émission de positon (β⁺). Écris le noyau père (phosphore 30), puis le noyau fils (silicium, Z à retrouver dans l'extrait de classification périodique) et la particule émise <sup>0</sup><sub>1</sub>e. Vérifie la conservation de A et de Z.</div>
+
+        <div class="activite-card" style="background:var(--card);padding:12px 16px;margin:18px 0 16px;">
+          <p style="margin:0;font-size:0.85rem;">Un patient reçoit par voie intraveineuse une solution de phosphate de sodium contenant une masse m₀ égale à 10,0×10⁻⁹ g de phosphore 32, dont l'activité vaut 106 MBq.</p>
+        </div>
+
+        <p><strong>7.</strong> L'activité d'un échantillon radioactif est le nombre moyen de désintégrations nucléaires par seconde. Donner l'unité de l'activité.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-7')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-7">L'unité de l'activité porte le nom du physicien qui a découvert la radioactivité (Activité 1) — c'est aussi l'unité déjà rencontrée en Activité 1, question 4 (t₁/₂, A₀ = λN₀).</div>
+
+        <p><strong>8.</strong> On appelle « période radioactive » ou demi-vie t₁/₂ d'un noyau radioactif, la durée au bout de laquelle l'activité d'un échantillon contenant ce noyau est divisée par deux.<br>Compléter les deux lignes du tableau suivant :
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-8')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-8">La demi-vie t₁/₂ = 14,3 jours est donnée dans le deuxième texte. Reporte-la et ses multiples (2t₁/₂, 3t₁/₂…) sur la première ligne. Pour l'activité, chaque durée de t₁/₂ supplémentaire divise l'activité précédente par 2 (106 → 106/2 → …/2 → …).</div>
+
+        <div style="overflow-x:auto;margin:10px 0;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.85rem;text-align:center;">
+            <tbody>
+              <tr style="background:var(--card);">
+                <td style="border:1px solid var(--border);padding:8px;font-weight:700;">t (en jours)</td>
+                <td style="border:1px solid var(--border);padding:8px;font-weight:700;">t = 0</td>
+                <td style="border:1px solid var(--border);padding:8px;">t₁/₂ = ...</td>
+                <td style="border:1px solid var(--border);padding:8px;">2t₁/₂ = ...</td>
+                <td style="border:1px solid var(--border);padding:8px;">3t₁/₂ = ...</td>
+                <td style="border:1px solid var(--border);padding:8px;">4t₁/₂ = ...</td>
+                <td style="border:1px solid var(--border);padding:8px;">5t₁/₂ = ...</td>
+              </tr>
+              <tr>
+                <td style="border:1px solid var(--border);padding:8px;font-weight:700;">A (en MBq)</td>
+                <td style="border:1px solid var(--border);padding:8px;">106</td>
+                <td style="border:1px solid var(--border);padding:8px;"></td>
+                <td style="border:1px solid var(--border);padding:8px;"></td>
+                <td style="border:1px solid var(--border);padding:8px;"></td>
+                <td style="border:1px solid var(--border);padding:8px;"></td>
+                <td style="border:1px solid var(--border);padding:8px;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="margin-top:14px;"><strong>9.</strong> Tracer la courbe représentative de l'activité de l'échantillon en fonction du temps. Au bout de quelle durée l'activité a-t-elle été divisée par cinq ?
+          <button class="btn-indice" onclick="toggleIndice('ind-ea4-9')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea4-9">Place en abscisse le temps t (en jours) et en ordonnée l'activité A (en MBq), à partir des valeurs du tableau complété. Pour répondre à la deuxième partie : calcule d'abord A₀/5, puis lis sur ta courbe tracée à quelle valeur de t cette activité est atteinte.</div>
+
+      </div>
+
+    </div>
+    <!-- /sub-EA-3 -->
+
+    <div class="sub-tab-content" id="sub-EA-4">
+
+      <div class="activite-card">
+        <h3>Activité 5 — Datation au carbone 14</h3>
+
+        <p>Il existe de nombreuses techniques de datation utilisant la radioactivité. La datation au carbone 14 est adaptée à la datation de matière organique.</p>
+
+        <div class="sub-title" style="color:var(--accent4);margin-top:16px;">1. Les trois isotopes naturels du carbone</div>
+        <p>Le carbone naturel est constitué de <sup>12</sup><sub>6</sub>C (98,9 % du carbone naturel terrestre, non radioactif) et de <sup>13</sup><sub>6</sub>C (1,1 %, non radioactif), auxquels s'ajoute <sup>14</sup><sub>6</sub>C, présent naturellement à l'état de traces infimes.</p>
+        <p><sup>14</sup><sub>6</sub>C est radioactif β⁻ de demi-vie t₁/₂ = 5 730 ans. Il est produit en permanence dans la haute atmosphère, par la rencontre d'un noyau d'azote 14 avec un neutron cosmique, qui produit également une autre particule.</p>
+
+        <div class="sub-title" style="color:var(--accent4);margin-top:16px;">2. Principe d'une datation au carbone 14</div>
+        <p>Tout être vivant, végétal ou animal, contient du carbone. Celui-ci est en permanence renouvelé, dans les végétaux par la photosynthèse à partir du dioxyde de carbone atmosphérique et dans les animaux par l'alimentation.</p>
+        <p>Tant que l'être est en vie, la proportion du carbone se trouvant sous forme de l'isotope <sup>14</sup><sub>6</sub>C est, comme dans l'atmosphère, constante. Ainsi, un échantillon de carbone de masse 1,000 g issu d'un être vivant ou de l'atmosphère a une activité constante A₀ égale à 13,56 désintégrations par minute.</p>
+        <p>Une fois que l'être est mort, le carbone qu'il contient n'est plus renouvelé. Comme le carbone 14 est radioactif, sa quantité diminue, donc l'activité qu'il engendre diminue également. Par une mesure d'activité, on peut connaître la durée écoulée entre la mort de l'être ayant contenu ce carbone et la date de la mesure effectuée, en utilisant la loi de décroissance radioactive.</p>
+
+        <div class="sub-title" style="color:var(--accent4);margin-top:16px;">3. Activité de quelques échantillons</div>
+
+        <div class="doc-flex">
+          <div class="doc-text">
+            <p>L'activité de chaque échantillon est ramenée à un gramme de carbone de l'échantillon. Toutes les mesures sont faites en 2010.</p>
+            <ul style="padding-left:18px;font-size:0.88rem;color:var(--text2);line-height:1.9;">
+              <li>Papier du dessin <em>la Joconde nue</em>, attribuée à Léonard de Vinci : 0,213 Bq.</li>
+              <li>Charbons de bois prélevés dans des canaux sur le site de Gadachrili Gora, en Géorgie : 0,086 Bq.</li>
+              <li>Bois d'échafaudage dans le site des Arêtes de poisson, à Lyon : 0,179 Bq.</li>
+              <li>Traces de feu dans la grotte de Bruniquel, dans l'Aveyron : 7,7 × 10⁻⁴ Bq.</li>
+            </ul>
+          </div>
+          <div class="doc-media">
+            <img src="Entrainements/AD5.png" alt="La Joconde nue, dessin attribué à Léonard de Vinci" style="max-width:240px;">
+            <div class="doc-caption"><em>La Joconde nue</em>, dessin attribué à Léonard de Vinci.</div>
+          </div>
+        </div>
+
+        <div class="sub-title" style="color:var(--accent4);margin-top:18px;">Questions</div>
+
+        <p><strong>1.</strong> Écrire les équations de formation et de désintégration de <sup>14</sup><sub>6</sub>C (doc. 1).
+          <button class="btn-indice" onclick="toggleIndice('ind-ea5-1')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea5-1">Pour la formation : relis le doc. 1, un noyau d'azote 14 (<sup>14</sup><sub>7</sub>N) rencontre un neutron cosmique (<sup>1</sup><sub>0</sub>n) et produit <sup>14</sup><sub>6</sub>C et une autre particule à identifier par conservation de A et Z. Pour la désintégration : <sup>14</sup><sub>6</sub>C est radioactif β⁻ (voir tableau de l'Activité 3) — écris le noyau fils (azote) et la particule émise, en vérifiant la conservation de A et Z.</div>
+
+        <p><strong>2.a.</strong> Exprimer en becquerels (nombre de désintégrations par seconde) l'activité d'un gramme de carbone pris dans un être vivant (doc. 2).
+          <button class="btn-indice" onclick="toggleIndice('ind-ea5-2a')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea5-2a">L'activité donnée dans le doc. 2 est en désintégrations par minute. Combien de secondes y a-t-il dans une minute ? Convertis en divisant par ce nombre.</div>
+
+        <p><strong>2.b.</strong> En utilisant la demi-vie du carbone 14, déterminer le nombre d'atomes de carbone 14 dans un gramme d'être vivant.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea5-2b')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea5-2b">Utilise la relation entre l'activité initiale A₀, la constante radioactive λ et le nombre de noyaux N₀ : A₀ = λN₀, avec λ = ln(2)/t₁/₂. Isole N₀ = t₁/₂·A₀/ln(2). Attention aux unités : convertis t₁/₂ (5 730 ans) en secondes pour être cohérent avec A₀ en Bq.</div>
+
+        <p><strong>2.c.</strong> À l'aide de la masse molaire du carbone, déterminer le nombre d'atomes de carbone dans un gramme de carbone. En déduire la proportion d'atomes de carbone se trouvant sous forme de carbone 14 dans un être vivant.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea5-2c')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea5-2c">Utilise N = m·N_A/M avec m = 1,000 g, M = 12,0 g/mol (masse molaire du carbone) et N_A le nombre d'Avogadro. La proportion cherchée est le rapport entre le nombre d'atomes de ¹⁴C trouvé en 2.b et le nombre total d'atomes de carbone trouvé ici.</div>
+
+        <p><strong>3.</strong> En utilisant la loi de décroissance radioactive, déterminer, pour chaque échantillon du doc. 3, la date de mort de l'être vivant à l'origine de l'échantillon.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea5-3')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea5-3">Pars de A(t) = A₀e⁻λᵗ et isole t : t = −(t₁/₂/ln 2)·ln(A(t)/A₀), avec A₀ l'activité d'un être vivant trouvée en 2.a et A(t) l'activité de l'échantillon. Une fois l'âge t obtenu (en années), soustrais-le à l'année de la mesure (2010) pour obtenir l'année approximative de mort.</div>
+
+        <div class="sub-title" style="color:var(--accent4);margin-top:18px;">Bilan</div>
+
+        <p><strong>•</strong> Faire la liste des sources d'incertitude d'une telle datation. Expliquer pourquoi l'incertitude est plus élevée si l'échantillon daté est plus vieux.
+          <button class="btn-indice" onclick="toggleIndice('ind-ea5-b1')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea5-b1">Trois grandeurs interviennent dans le calcul de t : A(t), A₀ et t₁/₂. Chacune est connue avec une certaine précision. Pour la deuxième partie : plus l'échantillon est vieux, plus son activité A(t) est faible — comment l'incertitude relative sur une mesure évolue-t-elle quand la valeur mesurée devient très petite ?</div>
+
+        <p><strong>•</strong> Pourquoi cette méthode de datation ne peut-elle pas être utilisée pour dater n'importe quel objet ?
+          <button class="btn-indice" onclick="toggleIndice('ind-ea5-b2')">💡 Indice</button>
+        </p>
+        <div class="indice-box" id="ind-ea5-b2">Relis le principe du doc. 2 : la méthode repose sur le renouvellement du carbone pendant la vie de l'organisme, puis son arrêt à la mort. Un objet qui n'a jamais été vivant (roche, métal…) a-t-il jamais contenu du carbone 14 renouvelé de cette façon ?</div>
+
+      </div>
+
+    </div>
+    <!-- /sub-EA-4 -->
+
+  </div>
+  <!-- /sub-E-0 -->
+
+  <!-- Sous-onglet E2 : Exercices -->
+  <div class="sub-tab-content" id="sub-E-1">
+
+    <div class="sub3-tabs-nav" id="sub-nav-EX">
+      <button class="sub3-tab-btn active" onclick="switchSubTab('EX',0)">🟢 Faciles</button>
+      <button class="sub3-tab-btn" onclick="switchSubTab('EX',1)">🟠 Intermédiaires</button>
+      <button class="sub3-tab-btn" onclick="switchSubTab('EX',2)">🔴 Difficiles</button>
+    </div>
+
+    <div class="sub-tab-content active" id="sub-EX-0">
+
+      <div class="sub3-tabs-nav" id="sub-nav-EXF">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXF',0)">Exercice 1 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',1)">Exercice 2 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',2)">Exercice 3 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',3)">Exercice 4 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',4)">Exercice 5 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXF',5)">Exercice 6 <span class="exo-tab-stars">★☆☆</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXF-0">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 15 : Écrire une équation de désintégration β⁺</h3>
+
+          <div class="doc-flex">
+            <div class="doc-text">
+              <p class="act-q">Une photo de la réaction du sodium métallique au contact de l'eau est donnée ci-contre.</p>
+              <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+                <p style="margin:0;font-size:0.83rem;"><strong>DONNÉE</strong> Équation de la réaction modélisant la transformation entre le sodium métallique et l'eau :<br>2 Na(s) + 2 H₂O(ℓ) → 2 Na⁺(aq) + 2 HO⁻(aq) + H₂(g)</p>
+              </div>
+            </div>
+            <div class="doc-media">
+              <img src="Entrainements/ex15.png" alt="Réaction du sodium métallique au contact de l'eau" style="max-width:240px;">
+              <div class="doc-caption">Réaction du sodium métallique au contact de l'eau.</div>
+            </div>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Préciser si la réaction entre le sodium métallique et l'eau est une transformation nucléaire. Justifier.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex15a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex15a">Dans l'équation donnée, regarde s'il y a un changement de noyau (de Z ou de A) ou seulement un réarrangement des atomes/électrons entre espèces chimiques. Une transformation nucléaire modifie toujours la composition d'un noyau.</div>
+
+          <p class="act-q"><strong>b.</strong> Écrire l'équation de désintégration β⁺ du sodium-21.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex15b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex15b">Le numéro atomique du sodium est Z = 11. Écris le noyau père <sup>21</sup><sub>11</sub>Na, puis le positon <sup>0</sup><sub>1</sub>e émis (voir tableau des types de radioactivité de l'Activité 3), et retrouve le noyau fils par conservation de A et de Z (Z du noyau fils dans une classification périodique).</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex15">
+            <p><strong>a.</strong> Ce n'est <strong>pas</strong> une transformation nucléaire : l'équation ne fait intervenir aucun changement de noyau (le sodium reste du sodium, Na → Na⁺), seulement une perte d'un électron et la formation de nouvelles espèces chimiques. C'est une transformation chimique.</p>
+            <p><strong>b.</strong> Le sodium a pour numéro atomique Z = 11, donc le sodium-21 s'écrit <sup>21</sup><sub>11</sub>Na. L'équation de désintégration β⁺ s'écrit :<br><sup>21</sup><sub>11</sub>Na → <sup>21</sup><sub>12</sub>Mg + <sup>0</sup><sub>1</sub>e<br>(conservation du nombre de nucléons : 21 = 21 + 0 ; conservation de la charge : 11 = 12 − 1)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-1">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 17 : Écrire une équation de réaction</h3>
+
+          <p class="act-q">Le carbone-14 se forme dans la haute atmosphère terrestre : sous l'effet du rayonnement cosmique, un noyau d'azote-14 capture un neutron et forme le carbone-14 et un autre noyau.</p>
+
+          <p class="act-q">Écrire l'équation de la réaction modélisant cette capture neutronique.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex17')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex17">Écris à gauche de la flèche le noyau d'azote-14 (<sup>14</sup><sub>7</sub>N) et le neutron capturé (<sup>1</sup><sub>0</sub>n), et à droite le carbone-14 (<sup>14</sup><sub>6</sub>C, déjà rencontré en Activité 5). Le noyau manquant se retrouve par conservation du nombre de nucléons et du numéro atomique.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex17">
+            <p>L'équation de la réaction s'écrit :<br><sup>14</sup><sub>7</sub>N + <sup>1</sup><sub>0</sub>n → <sup>14</sup><sub>6</sub>C + <sup>1</sup><sub>1</sub>H<br>(conservation du nombre de nucléons : 14 + 1 = 14 + 1 ; conservation de la charge : 7 + 0 = 6 + 1). L'autre noyau formé est donc un noyau d'hydrogène, c'est-à-dire un proton.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-2">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 19 : Reproduire une courbe de décroissance radioactive</h3>
+
+          <div class="doc-flex">
+            <div class="doc-text">
+              <p class="act-q">Reproduire soigneusement la courbe de décroissance radioactive donnée ci-contre, en plaçant avec précision le point d'abscisse 3t₁/₂.
+                <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex19')">💡 Indice</button>
+              </p>
+              <div class="indice-box" id="ind-ex19">Sur la courbe, l'activité (ou le nombre de noyaux N) est divisée par 2 à chaque fois qu'une durée t₁/₂ s'écoule : N₀ en t = 0, N₀/2 en t₁/₂, N₀/4 en 2t₁/₂. En appliquant la même logique, quelle fraction de N₀ obtient-on en 3t₁/₂ ?</div>
+            </div>
+            <div class="doc-media">
+              <img src="Entrainements/ex19.png" alt="Courbe de décroissance radioactive N(t)" style="max-width:240px;">
+              <div class="doc-caption">Courbe de décroissance radioactive N(t).</div>
+            </div>
+          </div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex19">
+            <p>À chaque durée t₁/₂ écoulée, le nombre de noyaux restants est divisé par 2 : N(0) = N₀ ; N(t₁/₂) = N₀/2 ; N(2t₁/₂) = N₀/4 ; donc <strong>N(3t₁/₂) = N₀/8</strong>. Le point d'abscisse 3t₁/₂ doit être placé sur la courbe à l'ordonnée N₀/8, en poursuivant la décroissance exponentielle déjà amorcée entre 0 et 2t₁/₂.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-3">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 22 : Calculer l'activité d'un échantillon</h3>
+
+          <p class="act-q">Le césium-137 est un isotope radioactif du césium, produit notamment lors de la fission de l'uranium ; son temps de demi-vie est t₁/₂ = 30 ans.<br>À la date t = 0, un échantillon de césium-137 a une activité A₀ = 1,0 × 10⁷ Bq.</p>
+
+          <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+            <p style="margin:0;font-size:0.83rem;"><strong>DONNÉE</strong> Le temps de demi-vie et la constante radioactive d'un noyau sont liées par l'expression t₁/₂ = ln(2)/λ.</p>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Calculer la constante radioactive du césium-137.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex22a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex22a">Isole λ dans la relation t₁/₂ = ln(2)/λ, puis remplace t₁/₂ par 30 ans. Pense à l'unité de λ (l'inverse de celle de t₁/₂).</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer l'activité de l'échantillon radioactif après une durée de désintégration Δt = 1,0 an.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex22b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex22b">Utilise la loi de décroissance radioactive A(t) = A₀e⁻λᵗ avec t = Δt = 1,0 an et la valeur de λ trouvée en a. (attention à garder la même unité de temps pour λ et Δt).</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex22">
+            <p><strong>a.</strong> λ = ln(2)/t₁/₂ = 0,693/30 = <strong>2,3 × 10⁻² an⁻¹</strong>.</p>
+            <p><strong>b.</strong> A(Δt) = A₀ × e<sup>−λΔt</sup> = 1,0×10⁷ × e<sup>−(2,3×10⁻² × 1,0)</sup> = 1,0×10⁷ × e<sup>−0,023</sup> ≈ 1,0×10⁷ × 0,977 ≈ <strong>9,8 × 10⁶ Bq</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-4">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 24 : Retour sur l'ouverture du chapitre</h3>
+
+          <div class="doc-flex">
+            <div class="doc-text">
+              <p class="act-q">Visionner la vidéo d'ouverture du chapitre montrant l'inauguration d'un nouvel appareil d'imagerie médical combinant un TEP et un scanner.</p>
+            </div>
+          </div>
+
+          <div class="doc-media" style="max-width:none;text-align:center;margin:6px 0 12px;">
+            <img src="Entrainements/ex24.png" alt="Imagerie médicale TEP/scanner du cerveau" style="max-width:100%;border-radius:8px;border:1.5px solid var(--border);">
+            <div style="margin-top:10px;">
+              <a class="video-btn" href="https://www.pearltrees.com/private/id105377258/item815214911?paccess=47e9f1e51db.3097313f.b4059dfa8a339bfd66dba41837ccab3e" target="_blank" rel="noopener">▶ Voir la vidéo</a>
+            </div>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Expliquer le terme « traceur radioactif ».
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex24a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex24a">Repense à l'Activité 5 (datation) et à la partie Applications médicales du cours : un traceur radioactif est une substance qui contient un noyau radioactif. Pourquoi l'injecte-t-on dans l'organisme, et comment permet-il de « suivre » quelque chose ?</div>
+
+          <p class="act-q"><strong>b.</strong> Justifier la nécessité d'utiliser des traceurs radioactifs de temps de demi-vie ni trop courtes ni trop longues.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex24b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex24b">Si la demi-vie est trop courte, le traceur a-t-il le temps d'être administré puis détecté avant d'avoir disparu ? Si elle est trop longue, que devient l'irradiation du patient après l'examen ?</div>
+
+          <p class="act-q"><strong>c.</strong> Expliquer, éventuellement à l'aide d'une recherche, la signification de l'abréviation « TEP ».
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex24c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex24c">Cette abréviation a déjà été rencontrée dans la partie Applications médicales du cours (émetteur β⁺, annihilation positon-électron). Cherche ce que signifient les trois lettres T, E, P dans ce contexte d'imagerie.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex24">
+            <p><strong>a.</strong> Un traceur radioactif est une substance contenant un noyau radioactif, introduite dans l'organisme (par injection, ingestion ou inhalation), dont le rayonnement émis lors de la désintégration peut être détecté de l'extérieur. Il permet de « suivre » son cheminement ou sa fixation dans un organe cible sans intervention invasive.</p>
+            <p><strong>b.</strong> Une demi-vie trop courte ne laisserait pas le temps de réaliser l'examen (le traceur aurait quasiment disparu avant la détection). Une demi-vie trop longue prolongerait inutilement l'irradiation du patient après l'examen, alors que le traceur n'est plus utile une fois l'imagerie réalisée.</p>
+            <p><strong>c.</strong> TEP signifie <strong>Tomographie par Émission de Positons</strong> : technique d'imagerie médicale utilisant un traceur émetteur β⁺, dont l'annihilation positon-électron produit deux photons γ détectés pour reconstruire une image 3D de l'activité métabolique.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXF-5">
+        <div class="exo-diff-card facile">
+          <h3>Exercice 25 : Se protéger des rayonnements</h3>
+
+          <div class="doc-flex">
+            <div class="doc-text">
+              <p class="act-q">Dans les installations à risque radioactif, des affiches sont prévues à l'entrée des zones exposées aux rayonnements ionisants afin d'offrir un rappel supplémentaire de sécurité.</p>
+            </div>
+            <div class="doc-media">
+              <img src="Entrainements/ex25.png" alt="Équipement de protection radiologique : casque, film, badge, dosimètre" style="max-width:240px;">
+              <div class="doc-caption">Équipement de protection : casque, film, badge, dosimètre.</div>
+            </div>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Relever le nom du dispositif qui mesure le niveau d'exposition aux rayonnements ionisants.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex25a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex25a">Regarde l'image : l'un des quatre éléments légendés est spécifiquement conçu pour indiquer une mesure numérique (les « 0.00 » affichés).</div>
+
+          <p class="act-q"><strong>b.</strong> Expliquer pourquoi certaines installations mentionnent des durées maximales de séjour dans des zones spécifiées.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex25b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex25b">Repense au principe de radioprotection vu dans le cours (dose reçue = fonction du temps d'exposition) : plus on reste longtemps dans une zone irradiée, plus la dose reçue augmente. Que cherche-t-on à limiter ?</div>
+
+          <p class="act-q"><strong>c.</strong> Déduire de la question b. une modalité de protection contre les rayonnements ionisants.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex25c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex25c">Parmi les trois grands principes de radioprotection du cours (distance, temps, écran), lequel est directement lié à une « durée maximale de séjour » ?</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex25">
+            <p><strong>a.</strong> Le dispositif qui mesure le niveau d'exposition aux rayonnements ionisants est le <strong>dosimètre</strong>.</p>
+            <p><strong>b.</strong> La dose de rayonnement reçue par une personne augmente avec la durée d'exposition. Limiter le temps de séjour dans une zone irradiée permet donc de limiter la dose totale reçue, et donc les effets biologiques associés.</p>
+            <p><strong>c.</strong> On en déduit le principe de protection par le <strong>temps</strong> : réduire au minimum nécessaire la durée d'exposition aux rayonnements ionisants.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="sub-tab-content" id="sub-EX-1">
+
+      <div class="sub3-tabs-nav" id="sub-nav-EXI">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXI',0)">Exercice 7 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',1)">Exercice 8 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',2)">Exercice 9 <span class="exo-tab-stars">★★☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXI',3)">Exercice 10 <span class="exo-tab-stars">★★☆</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXI-0">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 26 : Analyser un schéma</h3>
+
+          <div class="doc-media" style="max-width:none;text-align:center;margin:6px 0 14px;">
+            <img src="Entrainements/ex26.png" alt="Schéma : pouvoir de pénétration des rayonnements α, β, γ/X et neutron à travers aluminium, plomb, béton" style="max-width:100%;border-radius:8px;border:1.5px solid var(--border);">
+            <div class="doc-caption">Pouvoir de pénétration des rayonnements α, β, γ/X et neutron à travers l'aluminium, le plomb et le béton.</div>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Analyser et interpréter l'illustration.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex26a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex26a">Pour chaque type de rayonnement, repère jusqu'à quel écran (aluminium, plomb, béton) la flèche pointillée va, c'est-à-dire à quel endroit elle s'arrête. Compare le pouvoir de pénétration des quatre rayonnements représentés.</div>
+
+          <p class="act-q"><strong>b.</strong> En déduire deux facteurs d'influence relatifs à l'utilisation d'écrans pour se protéger des rayonnements ionisants.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex26b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex26b">Un premier facteur concerne la nature du rayonnement à arrêter (tous ne nécessitent pas le même écran). Un second facteur concerne le matériau lui-même : qu'est-ce qui différencie l'aluminium, le plomb et le béton dans leur capacité à arrêter un rayonnement (pense à leur densité/épaisseur nécessaire) ?</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex26">
+            <p><strong>a.</strong> Le schéma montre que les rayonnements α sont arrêtés avant même l'aluminium (dès la main/quelques cm d'air) ; les rayonnements β sont arrêtés par l'aluminium ; les rayonnements γ et X traversent l'aluminium et le plomb mais sont arrêtés par le béton ; le neutron traverse même le béton. Le pouvoir de pénétration croît donc dans l'ordre : α < β < γ/X < neutron.</p>
+            <p><strong>b.</strong> Deux facteurs influencent le choix d'un écran de protection : <strong>la nature du rayonnement</strong> à arrêter (α, β, γ/X ou neutron n'ont pas le même pouvoir de pénétration) et <strong>la nature du matériau</strong> utilisé comme écran (l'aluminium suffit pour le β, mais il faut du plomb ou du béton, plus denses, pour arrêter les γ/X).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-1">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 28 : Activité du polonium-210</h3>
+
+          <div class="doc-flex">
+            <div class="doc-text">
+              <p class="act-q">L'élément polonium est ainsi nommé en l'honneur de la nationalité d'origine de Marie Curie qui l'a découvert. Le polonium-210, isotope radioactif α du polonium, était autrefois utilisé comme source d'énergie pour maintenir les instruments des robots lunaires à une température adaptée à leur condition de fonctionnement. Une source de polonium-210, de masse m = 1,00 g a une activité de 1,7 × 10¹⁴ Bq.</p>
+            </div>
+            <div class="doc-media">
+              <img src="Entrainements/ex28.png" alt="Marie Curie" style="max-width:240px;">
+              <div class="doc-caption">Marie Curie.</div>
+            </div>
+          </div>
+
+          <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+            <p style="margin:0;font-size:0.83rem;"><strong>DONNÉES</strong> · Activité moyenne d'un gramme de minerai d'uranium : A_m = 1,0 × 10⁷ Bq.<br>· Temps de demi-vie du polonium-210 : 138 jours ; t₁/₂ = ln(2)/λ.</p>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Écrire l'équation de réaction modélisant la désintégration du polonium-210.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex28a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex28a">Le numéro atomique du polonium est Z = 84. Le polonium-210 est radioactif α (émission d'un noyau d'hélium ⁴₂He, voir tableau de l'Activité 3). Retrouve le noyau fils par conservation de A et de Z (numéro atomique dans une classification périodique).</div>
+
+          <p class="act-q"><strong>b.</strong> L'évolution temporelle de la population en noyaux de polonium-210 de l'échantillon vérifie l'équation : dN/dt = −λN(t). Présenter cette équation sous sa forme usuelle puis la nommer. En déduire l'expression de la fonction N(t).
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex28b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex28b">Cette équation différentielle du premier ordre a déjà été rencontrée dans le cours (elle porte le nom de la loi qu'elle modélise). Sa solution générale est de la forme N(t) = N₀ × exp(quelque chose en fonction de λ et t), avec N₀ = N(0).</div>
+
+          <p class="act-q"><strong>c.</strong> Déterminer la durée nécessaire pour que l'activité de cette source soit égale à celle d'un gramme de minerai d'uranium.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex28c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex28c">Pars de A(t) = A₀e⁻λᵗ avec A₀ = 1,7×10¹⁴ Bq et A(t) = A_m = 1,0×10⁷ Bq (donnée). Isole t = (1/λ)·ln(A₀/A(t)), avec λ = ln(2)/138 (en jours⁻¹). N'oublie pas de convertir le résultat en années si besoin.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex28">
+            <p><strong>a.</strong> Le polonium a pour numéro atomique Z = 84, donc le polonium-210 s'écrit <sup>210</sup><sub>84</sub>Po. L'équation de désintégration α s'écrit :<br><sup>210</sup><sub>84</sub>Po → <sup>206</sup><sub>82</sub>Pb + <sup>4</sup><sub>2</sub>He<br>(conservation du nombre de nucléons : 210 = 206 + 4 ; conservation de la charge : 84 = 82 + 2). Le noyau fils est un noyau de plomb.</p>
+            <p><strong>b.</strong> Sous sa forme usuelle, cette équation s'écrit dN/dt + λN(t) = 0 : c'est l'<strong>équation différentielle de la décroissance radioactive</strong>. Sa solution est N(t) = N₀ × e<sup>−λt</sup>, où N₀ = N(0) est le nombre de noyaux de polonium-210 présents à l'instant initial.</p>
+            <p><strong>c.</strong> λ = ln(2)/138 = 5,02×10⁻³ jour⁻¹. En utilisant A(t) = A₀e<sup>−λt</sup> : t = (1/λ)×ln(A₀/A_m) = (1/5,02×10⁻³) × ln(1,7×10¹⁴/1,0×10⁷) = 199,1 × ln(1,7×10⁷) = 199,1 × 16,65 ≈ <strong>3,3 × 10³ jours ≈ 9,1 ans</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-2">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 29 : Les cernes du bois</h3>
+
+          <div>
+            <span class="comp-tag"><strong>RÉA</strong><span class="comp-desc">Effectuer un calcul</span></span>
+            <span class="comp-tag"><strong>VAL</strong><span class="comp-desc">Faire preuve d'esprit critique</span></span>
+          </div>
+
+          <div class="doc-flex">
+            <div class="doc-text">
+              <p class="act-q">Il est possible d'établir un étalonnage de la méthode de datation au carbone-14 à partir des cernes d'un arbre. Chaque cerne représente une durée d'une année. En prélevant un échantillon dans chaque cerne et en mesurant sa teneur en carbone-14, il est possible de comparer ces teneurs en carbone-14 mesurées aux valeurs calculées par la loi de décroissance radioactive du carbone-14. Cette comparaison constitue une première étape possible dans l'étalonnage de la méthode de datation au carbone-14.</p>
+            </div>
+            <div class="doc-media">
+              <img src="Entrainements/ex29.png" alt="Cernes du bois" style="max-width:240px;">
+              <div class="doc-caption">Cernes de croissance d'un tronc d'arbre.</div>
+            </div>
+          </div>
+
+          <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+            <p style="margin:0;font-size:0.83rem;"><strong>DONNÉE</strong> Temps de demi-vie du carbone-14, t₁/₂ = 5730 ans ; t₁/₂ = ln(2)/λ.</p>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Rappeler l'expression de l'activité A(t) d'un échantillon contenant du carbone-14 en fonction de A₀, l'activité de cet échantillon à une date t₀ = 0 an.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex29a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex29a">Cette expression a déjà été utilisée dans les Activités 4, 5 et l'Exercice 22/28 : c'est la loi de décroissance radioactive appliquée à l'activité (et non plus au nombre de noyaux).</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer le rapport A(t₁)/A₀ à la date t₁ = 1,0 an. Commenter le résultat obtenu.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex29b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex29b">À partir de l'expression de a., isole le rapport A(t₁)/A₀ = e⁻λᵗ¹. Calcule λ = ln(2)/5730 (en an⁻¹), puis évalue l'exponentielle pour t₁ = 1,0 an. Le résultat est-il proche de 1 ou très différent de 1 ?</div>
+
+          <p class="act-q"><strong>c.</strong> Déterminer s'il est possible, à l'aide d'un tronc d'arbre d'âge t₂ = 500 ans, d'enregistrer une décroissance significative de l'activité du carbone-14.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex29c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex29c">Calcule de la même façon le rapport A(t₂)/A₀ pour t₂ = 500 ans. Compare l'écart à 1 obtenu ici à celui obtenu en b. pour 1 an : est-il du même ordre de grandeur, ou nettement plus grand et donc potentiellement mesurable ?</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex29">
+            <p><strong>a.</strong> A(t) = A₀ × e<sup>−λt</sup>.</p>
+            <p><strong>b.</strong> λ = ln(2)/5730 = 1,21×10⁻⁴ an⁻¹. A(t₁)/A₀ = e<sup>−λ×1,0</sup> = e<sup>−1,21×10⁻⁴</sup> ≈ <strong>0,99988</strong>. Ce rapport est extrêmement proche de 1 : sur une durée d'un an, la décroissance de l'activité du carbone-14 est totalement négligeable (moins de 0,02 %), donc impossible à distinguer expérimentalement des incertitudes de mesure.</p>
+            <p><strong>c.</strong> A(t₂)/A₀ = e<sup>−λ×500</sup> = e<sup>−0,0605</sup> ≈ <strong>0,9413</strong>, soit une diminution d'environ 5,9 % de l'activité. Cet écart est bien plus important que celui obtenu pour 1 an (0,012 %) et dépasse largement les incertitudes de mesure typiques : une décroissance significative de l'activité du carbone-14 est donc mesurable sur un tronc d'arbre âgé de 500 ans.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXI-3">
+        <div class="exo-diff-card inter">
+          <h3>Exercice 32 : Un modèle multi-sciences</h3>
+
+          <div>
+            <span class="comp-tag"><strong>RCO</strong><span class="comp-desc">Connaître un modèle</span></span>
+            <span class="comp-tag"><strong>Val</strong><span class="comp-desc">Faire preuve d'esprit critique</span></span>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Rappeler ce que signifie que l'évolution de la concentration d'une espèce chimique suit une loi d'ordre un.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex32a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex32a">Repense au chapitre de cinétique chimique : une loi d'ordre un relie la vitesse de disparition d'une espèce à sa propre concentration, par une relation de proportionnalité (vitesse = constante × concentration).</div>
+
+          <p class="act-q"><strong>b.</strong> Expliquer pourquoi il est possible d'affirmer que la vitesse de désintégration radioactive d'un noyau instable suit une loi de vitesse d'ordre un.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex32b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex32b">Reprends l'équation dN/dt = −λN(t) rencontrée en Exercice 28 : la vitesse de désintégration (−dN/dt) est-elle proportionnelle au nombre de noyaux N(t) restants, comme dans une loi d'ordre un en cinétique chimique ?</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex32">
+            <p><strong>a.</strong> Dire que l'évolution de la concentration d'une espèce chimique suit une loi d'ordre un signifie que sa vitesse de disparition est proportionnelle à sa propre concentration : v = −d[A]/dt = k×[A], où k est la constante de vitesse. Cette loi conduit à une décroissance exponentielle de la concentration au cours du temps.</p>
+            <p><strong>b.</strong> La vitesse de désintégration radioactive s'écrit −dN/dt = λN(t) : elle est proportionnelle au nombre de noyaux N(t) encore présents, avec λ jouant le rôle de constante de vitesse. Cette relation a exactement la même forme mathématique qu'une loi de vitesse d'ordre un en cinétique chimique, ce qui justifie l'analogie entre les deux modèles.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="sub-tab-content" id="sub-EX-2">
+
+      <div class="sub3-tabs-nav" id="sub-nav-EXD">
+        <button class="exo-tab-btn active" onclick="switchSubTab('EXD',0)">Exercice 11 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',1)">Exercice 12 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',2)">Exercice 13 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',3)">Exercice 14 <span class="exo-tab-stars">★☆☆</span></button>
+        <button class="exo-tab-btn" onclick="switchSubTab('EXD',4)">Exercice 15 <span class="exo-tab-stars">★★☆</span></button>
+      </div>
+
+      <div class="sub-tab-content active" id="sub-EXD-0">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 30 : Identifier des isotopes naturels</h3>
+
+          <div>
+            <span class="comp-tag"><strong>RÉA</strong><span class="comp-desc">Effectuer un calcul</span></span>
+            <span class="comp-tag"><strong>ANA-RAI</strong><span class="comp-desc">Émettre des hypothèses</span></span>
+          </div>
+
+          <p class="act-q">La méthode de datation « au potassium-argon » permet de dater certaines roches.</p>
+
+          <div class="activite-card" style="background:var(--card);padding:12px 16px;margin:10px 0;">
+            <p style="margin:0 0 6px;font-size:0.8rem;font-weight:800;color:var(--accent2);">DOC. 1 — Isotopes du potassium</p>
+            <p style="margin:0;font-size:0.85rem;">Le potassium (Z = 19) possède trois isotopes naturels dont les proportions en quantités de matière sont : <sup>39</sup>K (93,2581 %), <sup>40</sup>K (0,001167 %) et <sup>41</sup>K (6,7302 %). Seul le potassium-40 est radioactif.</p>
+            <p style="margin:8px 0 0;font-size:0.85rem;">88 % des noyaux de potassium-40 se désintègrent en <sup>40</sup>Ca (calcium-40) selon la réaction d'équation :<br><sup>40</sup><sub>19</sub>K → <sup>40</sup><sub>20</sub>Ca + <sup>0</sup><sub>-1</sub>e + <sup>0</sup><sub>0</sub>ν̄ₑ<br>La constante radioactive associée à cette désintégration est λ₁ = 4,962 × 10⁻¹⁰ an⁻¹, ce qui donne une période radioactive soit un temps de demi-vie T₁ = 1,40 Gan (milliard d'années).</p>
+            <p style="margin:8px 0 0;font-size:0.85rem;">12 % des noyaux de potassium-40 se désintègrent en <sup>40</sup>Ar (argon-40) par capture d'une partie des électrons ainsi produits (capture électronique) :<br><sup>40</sup><sub>19</sub>K + <sup>0</sup><sub>-1</sub>e → <sup>40</sup><sub>18</sub>Ar + <sup>0</sup><sub>0</sub>νₑ<br>La constante radioactive associée à cette transformation est λ₂ = 0,581 × 10⁻¹⁰ an⁻¹ ce qui donne une période radioactive T₂ = 11,9 Gannées.</p>
+            <p style="margin:8px 0 0;font-size:0.72rem;color:var(--text3);text-align:right;">D'après ENS Lyon plateforme ACCES</p>
+          </div>
+
+          <div class="doc-media" style="max-width:none;text-align:center;margin:14px 0;">
+            <img src="Entrainements/AD3.png" alt="DOC. 2 — Extrait du diagramme (N ; Z)" class="img-resizable" style="max-width:100%;">
+            <div class="doc-caption">DOC. 2 — Extrait du diagramme (N ; Z) ou diagramme de Segré.</div>
+          </div>
+
+          <div style="margin:10px 0 14px;">
+            <div style="font-size:0.78rem;color:var(--text3);margin-bottom:6px;text-align:center;">Version interactive (Ostralo) — pour explorer le diagramme et localiser précisément le potassium</div>
+            <iframe src="https://physique.ostralo.net/diagramme_NZ/" style="width:100%;height:520px;border:1.5px solid var(--border);border-radius:10px;" loading="lazy" title="Diagramme (N;Z) interactif — Ostralo"></iframe>
+          </div>
+
+          <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+            <p style="margin:0;font-size:0.83rem;"><strong>DONNÉE</strong> Le temps de demi-vie t₁/₂ et la constante radioactive λ d'un noyau sont liées par l'expression t₁/₂ = ln(2)/λ.</p>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Expliquer en quoi l'équation de désintégration du potassium-40 en calcium-40 caractérise une radioactivité β⁻.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex30a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex30a">Regarde la particule émise dans cette équation et compare-la au tableau des types de radioactivité de l'Activité 3 : quel type de radioactivité correspond à l'émission d'un électron (et d'un antineutrino) ?</div>
+
+          <p class="act-q"><strong>b.</strong> Retrouver les valeurs du temps de demi-vie du potassium-40 associé aux deux voies de désintégration.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex30b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex30b">Applique t₁/₂ = ln(2)/λ séparément à λ₁ puis à λ₂ donnés dans le doc. 1.</div>
+
+          <p class="act-q"><strong>c.</strong> Comparer les valeurs calculées dans la question précédente aux deux « périodes » données dans le DOC. 1. Conclure sur la signification de « période radioactive ».
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex30c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex30c">Compare tes deux résultats de la question b. à T₁ = 1,40 Gan et T₂ = 11,9 Gan donnés dans le texte. Que représente alors chacune de ces « périodes » : le temps de demi-vie réel du potassium-40, ou le temps de demi-vie associé à une seule voie de désintégration considérée isolément ?</div>
+
+          <p class="act-q"><strong>d.</strong> Identifier les trois isotopes naturels du potassium sur le DOC. 2 et reproduire les trois cases correspondantes avec les couleurs adaptées.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex30d')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex30d">Le potassium a Z = 19 : place-toi sur la ligne Z = 19 du diagramme. Calcule N = A − Z pour chacun des trois isotopes (39, 40, 41) afin de trouver leur position en abscisse. Utilise ensuite la légende du diagramme (Activité 3) pour choisir la couleur : noir pour un noyau stable, une couleur d'émetteur pour un noyau instable.</div>
+
+          <p class="act-q"><strong>e.</strong> Il existe un grand nombre d'autres isotopes du potassium. Expliquer pourquoi le DOC. 1 ne les mentionne pas.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex30e')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex30e">Relis la première phrase du doc. 1 : il précise que le potassium possède trois isotopes « naturels ». Que peut-on en déduire sur l'origine des autres isotopes du potassium non mentionnés (existent-ils dans la nature, ou sont-ils produits autrement) ?</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex30">
+            <p><strong>a.</strong> Cette désintégration émet un électron <sup>0</sup><sub>-1</sub>e (et un antineutrino), ce qui correspond exactement à la définition de la radioactivité β⁻ donnée dans le tableau de l'Activité 3.</p>
+            <p><strong>b.</strong> T₁ = ln(2)/λ₁ = 0,6931/(4,962×10⁻¹⁰) ≈ <strong>1,40 × 10⁹ ans = 1,40 Gan</strong>. T₂ = ln(2)/λ₂ = 0,6931/(0,581×10⁻¹⁰) ≈ <strong>1,19 × 10¹⁰ ans = 11,9 Gan</strong>.</p>
+            <p><strong>c.</strong> Les valeurs calculées correspondent exactement aux périodes T₁ et T₂ données dans le DOC. 1. Cela montre que ces « périodes radioactives » sont en réalité les temps de demi-vie associés à chaque voie de désintégration prise séparément (comme si elle était la seule voie possible), et non le temps de demi-vie réel du potassium-40 (qui combine les deux voies via λ = λ₁ + λ₂, et vaut en réalité environ 1,25 Gan).</p>
+            <p><strong>d.</strong> Pour Z = 19 : <sup>39</sup>K a N = 39 − 19 = 20 (noyau stable, case noire) ; <sup>40</sup>K a N = 40 − 19 = 21 (noyau instable, émetteur β⁻ majoritairement, case colorée en conséquence) ; <sup>41</sup>K a N = 41 − 19 = 22 (noyau stable, case noire).</p>
+            <p><strong>e.</strong> Le DOC. 1 précise dès la première phrase que le potassium possède trois isotopes <strong>naturels</strong>. Les autres isotopes du potassium existants n'apparaissent pas à l'état naturel sur Terre : ce sont des isotopes artificiels, produits uniquement en laboratoire ou dans des réacteurs, ce qui explique qu'ils ne soient pas mentionnés dans ce document consacré aux isotopes naturels.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-1">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 31 : Modélisation de l'évolution temporelle d'une population radioactive</h3>
+
+          <div>
+            <span class="comp-tag"><strong>RCO</strong><span class="comp-desc">Connaître un modèle</span></span>
+            <span class="comp-tag"><strong>RÉA</strong><span class="comp-desc">Utiliser un tableur</span></span>
+            <span class="comp-tag" style="background:#E8D9FA;color:#4a2e7a;"><strong style="background:#C9A0F0;">📊</strong><span class="comp-desc">Tableur</span></span>
+          </div>
+
+          <p class="act-q">L'oxygène-15 est utilisé dans la tomographie par émission de positons, une technique d'imagerie médicale. Une source de cet isotope radioactif β⁺ de l'oxygène est placée dans un détecteur afin de mesurer l'évolution de son activité au cours du temps.</p>
+
+          <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+            <p style="margin:0;font-size:0.83rem;"><strong>DONNÉE</strong> Temps de demi-vie de l'oxygène-15 : t₁/₂ = 122 s.</p>
+          </div>
+
+          <div style="margin:12px 0;">
+            <a href="Entrainements/ch05_127_tableur_1.xlsx" download style="display:inline-flex;align-items:center;gap:8px;background:var(--accent1);color:#fff;padding:8px 18px;border-radius:999px;font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:700;text-decoration:none;">📊 Télécharger le fichier tableur (t, A)</a>
+          </div>
+
+          <div style="overflow-x:auto;margin:10px 0;">
+            <table style="width:100%;max-width:400px;border-collapse:collapse;font-size:0.82rem;text-align:center;">
+              <thead>
+                <tr style="background:var(--card);">
+                  <th style="border:1px solid var(--border);padding:6px 10px;">t (en s)</th>
+                  <th style="border:1px solid var(--border);padding:6px 10px;">A (en MBq)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="border:1px solid var(--border);padding:6px 10px;">10</td><td style="border:1px solid var(--border);padding:6px 10px;">189</td></tr>
+                <tr><td style="border:1px solid var(--border);padding:6px 10px;">20</td><td style="border:1px solid var(--border);padding:6px 10px;">179</td></tr>
+                <tr><td style="border:1px solid var(--border);padding:6px 10px;">30</td><td style="border:1px solid var(--border);padding:6px 10px;">169</td></tr>
+                <tr><td style="border:1px solid var(--border);padding:6px 10px;">…</td><td style="border:1px solid var(--border);padding:6px 10px;">…</td></tr>
+                <tr><td style="border:1px solid var(--border);padding:6px 10px;">600</td><td style="border:1px solid var(--border);padding:6px 10px;">6,62</td></tr>
+              </tbody>
+            </table>
+            <div class="doc-caption" style="text-align:left;margin-top:4px;">Extrait des données du fichier téléchargeable (60 points, t de 10 s à 600 s).</div>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Écrire l'équation de désintégration de l'oxygène-15.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex31a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex31a">L'oxygène a pour numéro atomique Z = 8. L'oxygène-15 est radioactif β⁺ (voir tableau de l'Activité 3) : écris le noyau père, le positon <sup>0</sup><sub>1</sub>e émis, puis retrouve le noyau fils par conservation de A et de Z.</div>
+
+          <p class="act-q"><strong>b.</strong> Représenter à l'aide d'un tableur-grapheur la courbe d'évolution temporelle de l'activité de la source.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex31b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex31b">Ouvre le fichier téléchargé dans un tableur (Excel, LibreOffice Calc…). Sélectionne les deux colonnes t et A, puis insère un graphique de type nuage de points (XY).</div>
+
+          <p class="act-q"><strong>c.</strong> Modéliser cette courbe par une fonction adaptée.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex31c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex31c">La forme de la courbe (décroissance qui ralentit progressivement) correspond à la loi de décroissance radioactive vue en cours. Dans ton tableur, ajoute une courbe de tendance de type « exponentielle » et affiche son équation.</div>
+
+          <p class="act-q"><strong>d.</strong> Déduire de la modélisation effectuée la valeur initiale de l'activité de l'échantillon, ainsi que la valeur du temps de demi-vie de l'oxygène-15.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex31d')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex31d">L'équation affichée par le tableur est de la forme A = A₀×e⁻λᵗ. Identifie A₀ (l'ordonnée à l'origine du modèle) et λ (le coefficient dans l'exponentielle), puis calcule t₁/₂ = ln(2)/λ pour comparer à la donnée de l'énoncé.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex31">
+            <p><strong>a.</strong> L'oxygène a pour numéro atomique Z = 8, donc l'oxygène-15 s'écrit <sup>15</sup><sub>8</sub>O. L'équation de désintégration β⁺ s'écrit :<br><sup>15</sup><sub>8</sub>O → <sup>15</sup><sub>7</sub>N + <sup>0</sup><sub>1</sub>e<br>(conservation du nombre de nucléons : 15 = 15 + 0 ; conservation de la charge : 8 = 7 + 1). Le noyau fils est un noyau d'azote.</p>
+            <p><strong>b.</strong> Le tableur-grapheur donne une courbe décroissante caractéristique d'une décroissance exponentielle, passant d'environ 189 MBq à t = 10 s à environ 6,6 MBq à t = 600 s.</p>
+            <p><strong>c.</strong> Une courbe de tendance exponentielle modélise correctement les données, sous la forme A(t) = A₀ × e<sup>−λt</sup>.</p>
+            <p><strong>d.</strong> L'ajustement donne A₀ ≈ <strong>200 MBq</strong> et λ ≈ 5,68 × 10⁻³ s⁻¹, soit t₁/₂ = ln(2)/λ ≈ 0,693/5,68×10⁻³ ≈ <strong>122 s</strong>, ce qui est cohérent avec la donnée de l'énoncé.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-2">
+        <div class="exo-diff-card diff">
+          <h3><span style="color:var(--accent2);">✱</span> Exercice 33 : L'iode et la thyroïde <span style="display:inline-block;background:#3A8A6E;color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:999px;margin-left:6px;vertical-align:middle;">SVT</span></h3>
+
+          <div>
+            <span class="comp-tag"><strong>RCO</strong><span class="comp-desc">Connaître un modèle</span></span>
+            <span class="comp-tag"><strong>RÉA</strong><span class="comp-desc">Utiliser un tableur, effectuer un calcul</span></span>
+          </div>
+
+          <p class="act-q">L'apport d'iode est essentiel pour l'organisme humain. La captation de cet élément par l'organisme se fait sous forme d'ion iodure au niveau de la glande thyroïde. L'iode participe à la synthèse des hormones thyroïdiennes. En 2016, il a été décidé d'étendre le périmètre du plan particulier d'intervention en étendant de 10 km à 20 km la zone d'application, notamment avec la distribution de comprimés d'iode-127 (sous forme d'iodure de potassium KI) à prendre en cas de fuite radioactive d'iode-131.</p>
+
+          <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+            <p style="margin:0;font-size:0.83rem;"><strong>DONNÉES</strong> · <sup>127</sup><sub>53</sub>I, seul isotope naturel de l'iode, noyau non radioactif.<br>· Iode-131 : isotope artificiel de l'iode, radioactif β⁻, présent dans les rejets atmosphériques suite aux accidents nucléaires et dans de nombreux examens médicaux.<br>· Temps de demi-vie de l'iode-131 : t₁/₂ = 8,1 jours.<br>· Constante d'Avogadro, N_A = 6,02 × 10²³ mol⁻¹.</p>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Citer la zone du corps humain dans laquelle l'élément iode est capté.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33a">Relis la première phrase du texte : quel organe est nommé comme lieu de captation de l'iode ?</div>
+
+          <p class="act-q"><strong>b.</strong> Justifier la mesure consistant à prendre des pastilles d'iodure de potassium en cas d'incident nucléaire.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33b">L'iode-127 des pastilles n'est pas radioactif. En saturant la thyroïde avec cet iode stable, quel effet cela a-t-il sur la capacité de la thyroïde à capter ensuite l'iode-131 radioactif rejeté lors de l'incident ?</div>
+
+          <p class="act-q"><strong>c.</strong> Écrire l'équation de la désintégration de l'iode-131.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33c">L'iode a pour numéro atomique Z = 53. L'iode-131 est radioactif β⁻ (voir tableau de l'Activité 3) : écris le noyau père, l'électron émis, puis retrouve le noyau fils par conservation de A et de Z.</div>
+
+          <p class="act-q"><strong>d.</strong> Définir le temps de demi-vie de l'iode-131.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33d')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33d">Cette définition a déjà été rencontrée dans le cours et l'Activité 4 : elle porte sur la durée au bout de laquelle une certaine grandeur caractéristique de l'échantillon est divisée par deux.</div>
+
+          <p class="act-q"><strong>e.</strong> Exprimer puis calculer λ, la constante radioactive de l'iode-131.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33e')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33e">Utilise λ = ln(2)/t₁/₂ avec t₁/₂ = 8,1 jours. Pense à convertir en secondes si tu veux exprimer λ en s⁻¹.</div>
+
+          <p class="act-q"><strong>f.</strong> Montrer que l'activité A d'un échantillon d'iode-131 de masse m est donnée par : A = λ × (m/M(I)) × N_A, M(I) étant la masse molaire de l'iode-131.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33f')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33f">Pars de la relation entre activité et nombre de noyaux A = λN, puis exprime N à partir de la masse m, de la masse molaire M(I) et de la constante d'Avogadro N_A (relation classique n = m/M, puis N = n×N_A).</div>
+
+          <p class="act-q"><strong>g.</strong> Déduire de la réponse f. la masse m₁ d'iode-131 à injecter à un patient pour une scintigraphie thyroïdienne qui nécessite une activité A₁ = 37 MBq.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33g')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33g">Isole m dans la relation de la question f. : m₁ = A₁×M(I)/(λ×N_A). Utilise λ calculé en s⁻¹ à la question e., M(I) = 131 g/mol, et A₁ = 37×10⁶ Bq.</div>
+
+          <p class="act-q"><strong>h.</strong> Construire par une méthode de votre choix (tableur-grapheur, papier millimétré, etc.) la représentation graphique de la décroissance de l'activité du produit injecté au cours du temps, pour une durée comprise entre 0 et 50 jours.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33h')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33h">Utilise A(t) = A₁×e⁻λᵗ avec λ en jour⁻¹ (question e.) et A₁ = 37 MBq. Calcule quelques valeurs de A tous les 10 jours (t = 0, 10, 20, 30, 40, 50 jours) puis place les points sur un graphique.</div>
+
+          <p class="act-q"><strong>i.</strong> Déduire de la réponse g., par une méthode graphique, la date t₁₀ pour laquelle l'activité du produit injecté est divisée par dix.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex33i')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex33i">Sur ton graphique de la question h., repère l'ordonnée A₁/10 = 3,7 MBq, puis lis l'abscisse correspondante. Tu peux vérifier ta lecture graphique par le calcul : t₁₀ = ln(10)/λ.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex33">
+            <p><strong>a.</strong> L'iode est capté au niveau de la <strong>glande thyroïde</strong>.</p>
+            <p><strong>b.</strong> L'iode-127 (stable) des pastilles sature la thyroïde en iode, empêchant celle-ci de capter ensuite l'iode-131 radioactif présent dans l'environnement en cas d'accident nucléaire, ce qui limite l'irradiation interne de la thyroïde.</p>
+            <p><strong>c.</strong> L'iode a pour numéro atomique Z = 53, donc l'iode-131 s'écrit <sup>131</sup><sub>53</sub>I. L'équation de désintégration β⁻ s'écrit :<br><sup>131</sup><sub>53</sub>I → <sup>131</sup><sub>54</sub>Xe + <sup>0</sup><sub>-1</sub>e<br>(conservation du nombre de nucléons : 131 = 131 + 0 ; conservation de la charge : 53 = 54 − 1). Le noyau fils est un noyau de xénon.</p>
+            <p><strong>d.</strong> Le temps de demi-vie de l'iode-131 est la durée au bout de laquelle la moitié des noyaux d'iode-131 initialement présents dans un échantillon se sont désintégrés (ou : au bout de laquelle l'activité de l'échantillon est divisée par 2).</p>
+            <p><strong>e.</strong> λ = ln(2)/t₁/₂ = 0,6931/8,1 ≈ <strong>8,56 × 10⁻² jour⁻¹</strong>, soit en secondes (t₁/₂ = 8,1×24×3600 = 699 840 s) : λ ≈ <strong>9,90 × 10⁻⁷ s⁻¹</strong>.</p>
+            <p><strong>f.</strong> Le nombre de moles d'iode-131 dans l'échantillon est n = m/M(I), donc le nombre de noyaux est N = n×N_A = (m/M(I))×N_A. Comme A = λN, on obtient <strong>A = λ × (m/M(I)) × N_A</strong>.</p>
+            <p><strong>g.</strong> m₁ = A₁×M(I)/(λ×N_A) = (3,7×10⁷ × 131)/(9,90×10⁻⁷ × 6,02×10²³) = 4,85×10⁹/5,96×10¹⁷ ≈ <strong>8,1 × 10⁻⁹ g ≈ 8,1 ng</strong> (une masse infime, typique des traceurs radiopharmaceutiques).</p>
+            <p><strong>h.</strong> Avec A(t) = 37×e<sup>−0,0856t</sup> (t en jours) : A(0) = 37 MBq ; A(10) ≈ 15,7 MBq ; A(20) ≈ 6,7 MBq ; A(30) ≈ 2,85 MBq ; A(40) ≈ 1,21 MBq ; A(50) ≈ 0,51 MBq. Le tracé donne une courbe de décroissance exponentielle typique.</p>
+            <p><strong>i.</strong> Graphiquement, on lit A = 3,7 MBq (A₁/10) pour t₁₀ ≈ 27 jours. Par le calcul : t₁₀ = ln(10)/λ = 2,303/0,0856 ≈ <strong>26,9 jours</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-3">
+        <div class="exo-diff-card diff">
+          <h3><span style="color:var(--accent2);">✱</span> Exercice 34 : Âge d'une momie</h3>
+
+          <div>
+            <span class="comp-tag"><strong>RCO</strong><span class="comp-desc">Connaître un modèle</span></span>
+            <span class="comp-tag"><strong>RÉA</strong><span class="comp-desc">Effectuer un calcul</span></span>
+          </div>
+
+          <p class="act-q">Des égyptologues découvrent une momie. La méthode de datation au carbone-14 est utilisée afin de valider l'âge estimé de la tombe par des considérations historiques. L'hypothèse est que la proportion de carbone-14 dans le dioxyde de carbone atmosphérique est restée stable au cours des derniers millénaires.</p>
+
+          <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+            <p style="margin:0;font-size:0.83rem;"><strong>DONNÉES</strong> · Le carbone-14 est radioactif β⁻ et son temps de demi-vie est t₁/₂ = 5570 ans.<br>· Quotient r de l'activité d'un échantillon de bois trouvé dans la tombe par l'activité d'un morceau de bois de même masse encore vivant : r = 0,56.</p>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Rappeler en quoi consiste une désintégration β⁻ et écrire l'équation de désintégration du carbone-14.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex34a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex34a">Une désintégration β⁻ émet un électron (et un antineutrino), voir tableau de l'Activité 3. Le carbone a Z = 6 : écris le noyau père <sup>14</sup><sub>6</sub>C, l'électron émis, puis retrouve le noyau fils par conservation de A et de Z.</div>
+
+          <p class="act-q"><strong>b.</strong> Exprimer puis calculer la constante radioactive λ du carbone-14.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex34b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex34b">Utilise λ = ln(2)/t₁/₂ avec la valeur de t₁/₂ donnée dans cet exercice (5570 ans).</div>
+
+          <p class="act-q"><strong>c.</strong> Exprimer puis calculer l'âge présumé de la tombe découverte.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex34c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex34c">Le quotient r correspond au rapport A(t)/A₀ = e⁻λᵗ. Isole t = −ln(r)/λ, avec r = 0,56 et λ calculé en b.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex34">
+            <p><strong>a.</strong> Une désintégration β⁻ correspond à l'émission d'un électron (et d'un antineutrino) par un noyau instable. Pour le carbone-14 :<br><sup>14</sup><sub>6</sub>C → <sup>14</sup><sub>7</sub>N + <sup>0</sup><sub>-1</sub>e<br>(conservation du nombre de nucléons : 14 = 14 + 0 ; conservation de la charge : 6 = 7 − 1).</p>
+            <p><strong>b.</strong> λ = ln(2)/t₁/₂ = 0,6931/5570 ≈ <strong>1,244 × 10⁻⁴ an⁻¹</strong>.</p>
+            <p><strong>c.</strong> Le quotient r = A(t)/A₀ = e⁻λᵗ, donc t = −ln(r)/λ = −ln(0,56)/1,244×10⁻⁴ = 0,5798/1,244×10⁻⁴ ≈ <strong>4,66 × 10³ ans</strong> (environ 4 660 ans).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-tab-content" id="sub-EXD-4">
+        <div class="exo-diff-card diff">
+          <h3>Exercice 35 : Le granit de Trégor</h3>
+
+          <div>
+            <span class="comp-tag"><strong>ANA-RAI</strong><span class="comp-desc">Proposer un modèle</span></span>
+            <span class="comp-tag"><strong>RÉA</strong><span class="comp-desc">Effectuer un calcul</span></span>
+            <span class="comp-tag"><strong>VAL</strong><span class="comp-desc">Faire preuve d'esprit critique</span></span>
+          </div>
+
+          <div class="doc-flex">
+            <div class="doc-text">
+              <p class="act-q">Trégor est une ville bretonne sur la côte de granit rose. Lors de la formation de ces roches, des noyaux <sup>87</sup><sub>37</sub>Rb, <sup>87</sup><sub>38</sub>Sr et <sup>86</sup><sub>38</sub>Sr ont été piégés dans le magma granitique.</p>
+              <p class="act-q">Le rubidium-87 est radioactif β⁻ et sa désintégration conduit au strontium-87. Si le système est isolé, la teneur isotopique en rubidium-87 diminue et celle en strontium-87 augmente, alors que celle en strontium-86 reste stable.</p>
+            </div>
+            <div class="doc-media">
+              <img src="Entrainements/ex35.png" alt="Côte de granit rose, Trégor" style="max-width:240px;">
+              <div class="doc-caption">Côte de granit rose, Trégor.</div>
+              <div style="margin-top:8px;">
+                <a href="https://fr.wikipedia.org/wiki/C%C3%B4te_de_granit_rose#/media/Fichier:France_Cotes_d_Armor_Cote_de_granit_rose_04.jpg" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:var(--accent1);color:#fff;padding:5px 14px;border-radius:999px;font-family:'Nunito',sans-serif;font-size:0.72rem;font-weight:700;text-decoration:none;">🔗 Source de l'image (Wikipédia)</a>
+              </div>
+            </div>
+          </div>
+
+          <p class="act-q">Grâce à un spectromètre de masse, six échantillons de granit sont analysés afin d'obtenir les rapports isotopiques qui permettent de tracer la courbe isochrone, représentant le quotient y = N₈₇Sr(t)/N₈₆Sr(t) en fonction du quotient x = N₈₇Rb(t)/N₈₆Sr(t). Les résultats des mesures sont donnés dans le tableau suivant.</p>
+
+          <div style="overflow-x:auto;margin:10px 0;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;text-align:center;">
+              <tbody>
+                <tr style="background:var(--card);">
+                  <td style="border:1px solid var(--border);padding:6px 10px;font-weight:700;">x</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">2,47</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">0,209</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">4,81</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">5,52</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">3,38</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">1,54</td>
+                </tr>
+                <tr>
+                  <td style="border:1px solid var(--border);padding:6px 10px;font-weight:700;">y</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">0,7167</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">0,7066</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">0,7278</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">0,7267</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">0,7229</td>
+                  <td style="border:1px solid var(--border);padding:6px 10px;">0,7129</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="doc-caption" style="text-align:left;margin-top:4px;">La datation des roches par la méthode rubidium-strontium repose sur l'exploitation de la représentation graphique de x en fonction de y, appelée courbe isochrone.</div>
+          </div>
+
+          <div class="activite-card" style="background:var(--card);padding:10px 14px;margin:8px 0;">
+            <p style="margin:0;font-size:0.83rem;"><strong>DONNÉE</strong> Constante radioactive du rubidium-87 : λ = 1,42 × 10⁻¹¹ an⁻¹.</p>
+          </div>
+
+          <p class="act-q"><strong>a.</strong> Écrire l'équation de désintégration du rubidium-87.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35a')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35a">Le rubidium a Z = 37. Le rubidium-87 est radioactif β⁻ : écris le noyau père <sup>87</sup><sub>37</sub>Rb, l'électron émis, puis retrouve le noyau fils (strontium) par conservation de A et de Z.</div>
+
+          <p class="act-q"><strong>b.</strong> Déduire de la loi de décroissance radioactive la relation entre N₈₇Rb(t), le nombre de noyaux de rubidium-87 lors de l'analyse, et N₀,₈₇Rb, le nombre initial de noyaux de rubidium-87.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35b')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35b">C'est directement la loi de décroissance radioactive vue en cours, appliquée au nombre de noyaux N (et non à l'activité) : N(t) = N₀ × e⁻λᵗ.</div>
+
+          <p class="act-q"><strong>c.</strong> Justifier que : N₈₇Sr,formés = N₀,₈₇Rb − N₈₇Rb(t).
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35c')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35c">Chaque noyau de rubidium-87 qui se désintègre donne naissance à exactement un noyau de strontium-87 (voir l'équation de la question a.). Le nombre de noyaux de strontium-87 ainsi formés est donc égal au nombre de noyaux de rubidium-87 ayant disparu depuis l'instant initial.</div>
+
+          <p class="act-q"><strong>d.</strong> Déduire des réponses b. et c. la relation : N₈₇Sr(t) = N₀,₈₇Sr + N₀,₈₇Rb × (1 − e⁻λᵗ).
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35d')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35d">Le nombre total de noyaux de strontium-87 à l'instant t est la somme du nombre initial N₀,₈₇Sr et du nombre de noyaux formés par désintégration (question c.). Remplace N₈₇Rb(t) par son expression de la question b. dans le résultat de la question c., puis ajoute N₀,₈₇Sr.</div>
+
+          <p class="act-q"><strong>e.</strong> Démontrer la relation : N₈₇Sr(t)/N₈₆Sr(t) = N₀,₈₇Sr/N₈₆Sr(t) + (N₀,₈₇Rb/N₈₆Sr(t)) × a, avec a = 1 − e⁻λᵗ.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35e')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35e">Divise chaque terme de la relation de la question d. par N₈₆Sr(t). Reconnais alors a = 1 − e⁻λᵗ dans l'expression obtenue.</div>
+
+          <p class="act-q"><strong>f.</strong> Représenter la courbe isochrone par la méthode de votre choix.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35f')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35f">Place les six couples (x ; y) du tableau sur un graphique (papier millimétré ou tableur), avec x en abscisse et y en ordonnée. Les points doivent sembler globalement alignés.</div>
+
+          <p class="act-q"><strong>g.</strong> Modéliser la courbe obtenue par une fonction affine et montrer que l'équation de cette fonction est : y = 0,0047x + 0,705.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35g')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35g">Utilise la fonction de régression linéaire d'un tableur (ou trace la droite la plus proche des points au jugé) sur le nuage de points de la question f. Vérifie que la droite obtenue passe raisonnablement près de chaque point du tableau.</div>
+
+          <p class="act-q"><strong>h.</strong> Vérifier que l'âge des granites étudiés est proche de 330 millions d'années.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35h')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35h">Compare l'équation y = 0,0047x + 0,705 à la relation théorique de la question e. : le coefficient directeur de la droite correspond à a = 1 − e⁻λᵗ. Isole t à partir de cette égalité (a = 0,0047), puis calcule sa valeur avec λ donné.</div>
+
+          <p class="act-q"><strong>i.</strong> Déterminer la valeur de la composition initiale N₀,₈₇Sr/N₀,₈₆Sr.
+            <button class="btn-indice" onclick="toggleIndice2(this,'ind-ex35i')">💡 Indice</button>
+          </p>
+          <div class="indice-box" id="ind-ex35i">Dans la relation de la question e., l'ordonnée à l'origine correspond à N₀,₈₇Sr/N₈₆Sr(t). Comme le strontium-86 est stable et le système isolé, N₈₆Sr(t) = N₀,₈₆Sr (quantité constante au cours du temps). Identifie alors cette ordonnée à l'origine dans l'équation de la question g.</div>
+
+          <button class="btn-correction2" onclick="toggleCorrection(this)">Voir la correction</button>
+          <div class="correction-box" id="cor-ex35">
+            <p><strong>a.</strong> Le rubidium a Z = 37, donc le rubidium-87 s'écrit <sup>87</sup><sub>37</sub>Rb. L'équation de désintégration β⁻ s'écrit :<br><sup>87</sup><sub>37</sub>Rb → <sup>87</sup><sub>38</sub>Sr + <sup>0</sup><sub>-1</sub>e<br>(conservation du nombre de nucléons : 87 = 87 + 0 ; conservation de la charge : 37 = 38 − 1).</p>
+            <p><strong>b.</strong> N₈₇Rb(t) = N₀,₈₇Rb × e⁻λᵗ.</p>
+            <p><strong>c.</strong> Chaque désintégration d'un noyau de rubidium-87 produit un unique noyau de strontium-87 (équation de a.). Le nombre de noyaux de strontium-87 formés est donc égal au nombre de noyaux de rubidium-87 disparus, soit N₀,₈₇Rb − N₈₇Rb(t).</p>
+            <p><strong>d.</strong> N₈₇Sr(t) = N₀,₈₇Sr + N₈₇Sr,formés = N₀,₈₇Sr + [N₀,₈₇Rb − N₀,₈₇Rb×e⁻λᵗ] = <strong>N₀,₈₇Sr + N₀,₈₇Rb × (1 − e⁻λᵗ)</strong>.</p>
+            <p><strong>e.</strong> En divisant la relation de d. par N₈₆Sr(t) : N₈₇Sr(t)/N₈₆Sr(t) = N₀,₈₇Sr/N₈₆Sr(t) + [N₀,₈₇Rb×(1−e⁻λᵗ)]/N₈₆Sr(t) = N₀,₈₇Sr/N₈₆Sr(t) + (N₀,₈₇Rb/N₈₆Sr(t)) × a, avec <strong>a = 1 − e⁻λᵗ</strong>.</p>
+            <p><strong>f.</strong> Le tracé des six points (x ; y) du tableau donne un nuage de points globalement aligné.</p>
+            <p><strong>g.</strong> Une régression linéaire sur les six points donne la droite d'équation <strong>y = 0,0047x + 0,705</strong> (vérifiable point par point, par exemple pour x = 2,47 : y ≈ 0,0047×2,47 + 0,705 = 0,7166, proche de la valeur mesurée 0,7167).</p>
+            <p><strong>h.</strong> En identifiant y = ax + b (question g.) à la relation théorique de e., le coefficient directeur correspond à a = 1 − e⁻λᵗ = 0,0047, donc e⁻λᵗ = 0,9953, soit −λt = ln(0,9953) = −4,711×10⁻³, d'où t = 4,711×10⁻³/λ = 4,711×10⁻³/(1,42×10⁻¹¹) ≈ 3,32×10⁸ ans ≈ <strong>332 millions d'années</strong>, proche des 330 millions d'années attendus.</p>
+            <p><strong>i.</strong> L'ordonnée à l'origine de la droite (0,705) correspond à N₀,₈₇Sr/N₈₆Sr(t). Le strontium-86 étant stable et le système isolé, N₈₆Sr(t) = N₀,₈₆Sr, donc <strong>N₀,₈₇Sr/N₀,₈₆Sr = 0,705</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /sub-E-1 -->
+
+  <!-- Sous-onglet E3 : Sujets de bac -->
+  <div class="sub-tab-content" id="sub-E-2">
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2025 · Amérique du Nord · Jour 2 · Exercice 2</span>
+        <span>5 points · 53 min</span>
+      </div>
+      <h4>Combustible MOX pour limiter les déchets radioactifs</h4>
+      <div class="bac-theme">Thème : Radioactivité · Décroissance radioactive</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Isotopie</span>
+        <span class="bac-tag">Temps de demi-vie</span>
+        <span class="bac-tag">Lois de conservation</span>
+        <span class="bac-tag">Constante radioactive</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J2-Exo2-Sujet-MOX-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2025-AmNord-J2-Exo2-MOX-5pts-Correction.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2025 · Polynésie · Jour 1 · Exercice 1</span>
+        <span>9 points · 1h35</span>
+      </div>
+      <h4>Autour de la glace</h4>
+      <div class="bac-theme">Thème : Datation Pb210 · Décroissance radioactive (exercice pluridisciplinaire physique-chimie)</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Datation</span>
+        <span class="bac-tag">Lois de conservation</span>
+        <span class="bac-tag">Équation différentielle</span>
+        <span class="bac-tag">Temps de demi-vie</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-04/2025-Polynesie-J1-Exo1-Sujet-DatationGlace-AgI-9pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-05/2025-Polynesie-J1-Exo1-Correction-DatationGlace-AgI-9pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac 2026 · Asie Pacifique · Jour 2 · Exercice 2</span>
+        <span>4 points · 42 min</span>
+      </div>
+      <h4>Datation (Lune)</h4>
+      <div class="bac-theme">Thème : Datation · Méthode rubidium-strontium</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Datation</span>
+        <span class="bac-tag">Isotopie</span>
+        <span class="bac-tag">Équation différentielle</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-06/2026-Asie-J2-Exo2-Sujet-DatationLune-4pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
+        <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-06/2026-Asie-J2-Exo2-Correction-DatationLune-4pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
+      </div>
+    </div>
+
+    <div class="bac-card">
+      <div class="bac-card-head">
+        <span class="bac-lieu">Bac S 2010 · Amérique du Sud · Exercice 2</span>
+        <span>5 points · 1h05</span>
+      </div>
+      <h4>La transmutation pour éliminer les déchets nucléaires</h4>
+      <div class="bac-theme">Thème : Radioactivité α et β · Loi de décroissance</div>
+      <div class="bac-notions">
+        <span class="bac-tag">Isotopie</span>
+        <span class="bac-tag">Lois de conservation</span>
+        <span class="bac-tag">Radioactivité α/β</span>
+        <span class="bac-tag">Loi de décroissance</span>
+      </div>
+      <div class="bac-pastilles">
+        <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/exos/sujets/2010/2010-AmSud-Exo2-Sujet-TransmutationDechets-5pts.doc" target="_blank" rel="noopener">📄 Sujet (Word)</a>
+        <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/exos/corriges/2010/2010-AmSud-Exo2-Correction-TransmutationDechets-5pts.doc" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
+      </div>
+    </div>
+
+  </div>
+  <!-- /sub-E-2 -->
+
+</div>
+<!-- /tab-1 (Entraînements) -->
+
+<!-- ══════════════ ONGLET BILAN & RESSOURCES ══════════════ -->
+<div class="tab-content" id="tab-2">
 
   <div class="sub-tabs-nav" id="sub-nav-Z">
     <button class="sub-tab-btn active" onclick="switchSubTab('Z',0)">📋 Bilan</button>
@@ -1916,87 +3256,11 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
     </a>
   </div>
 
-  <div class="section-title" style="margin-top:30px;">🎓 Sujets de bac</div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac 2025 · Amérique du Nord · Jour 2 · Exercice 2</span>
-      <span>5 points · 53 min</span>
-    </div>
-    <h4>Combustible MOX pour limiter les déchets radioactifs</h4>
-    <div class="bac-theme">Thème : Radioactivité · Décroissance radioactive</div>
-    <div class="bac-notions">
-      <span class="bac-tag">Isotopie</span>
-      <span class="bac-tag">Temps de demi-vie</span>
-      <span class="bac-tag">Lois de conservation</span>
-      <span class="bac-tag">Constante radioactive</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2025-05/2025-AmNord-J2-Exo2-Sujet-MOX-5pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-      <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2025-06/2025-AmNord-J2-Exo2-MOX-5pts-Correction.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-    </div>
-  </div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac 2025 · Polynésie · Jour 1 · Exercice 1</span>
-      <span>9 points · 1h35</span>
-    </div>
-    <h4>Autour de la glace</h4>
-    <div class="bac-theme">Thème : Datation Pb210 · Décroissance radioactive (exercice pluridisciplinaire physique-chimie)</div>
-    <div class="bac-notions">
-      <span class="bac-tag">Datation</span>
-      <span class="bac-tag">Lois de conservation</span>
-      <span class="bac-tag">Équation différentielle</span>
-      <span class="bac-tag">Temps de demi-vie</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-04/2025-Polynesie-J1-Exo1-Sujet-DatationGlace-AgI-9pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-      <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-05/2025-Polynesie-J1-Exo1-Correction-DatationGlace-AgI-9pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-    </div>
-  </div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac 2026 · Asie Pacifique · Jour 2 · Exercice 2</span>
-      <span>4 points · 42 min</span>
-    </div>
-    <h4>Datation (Lune)</h4>
-    <div class="bac-theme">Thème : Datation · Méthode rubidium-strontium</div>
-    <div class="bac-notions">
-      <span class="bac-tag">Datation</span>
-      <span class="bac-tag">Isotopie</span>
-      <span class="bac-tag">Équation différentielle</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/2026-06/2026-Asie-J2-Exo2-Sujet-DatationLune-4pts.pdf" target="_blank" rel="noopener">📄 Sujet (PDF)</a>
-      <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/2026-06/2026-Asie-J2-Exo2-Correction-DatationLune-4pts.pdf" target="_blank" rel="noopener">✓ Corrigé (PDF)</a>
-    </div>
-  </div>
-
-  <div class="bac-card">
-    <div class="bac-card-head">
-      <span class="bac-lieu">Bac S 2010 · Amérique du Sud · Exercice 2</span>
-      <span>5 points · 1h05</span>
-    </div>
-    <h4>La transmutation pour éliminer les déchets nucléaires</h4>
-    <div class="bac-theme">Thème : Radioactivité α et β · Loi de décroissance</div>
-    <div class="bac-notions">
-      <span class="bac-tag">Isotopie</span>
-      <span class="bac-tag">Lois de conservation</span>
-      <span class="bac-tag">Radioactivité α/β</span>
-      <span class="bac-tag">Loi de décroissance</span>
-    </div>
-    <div class="bac-pastilles">
-      <a class="bac-pastille-sujet" href="https://www.labolycee.org/sites/default/files/exos/sujets/2010/2010-AmSud-Exo2-Sujet-TransmutationDechets-5pts.doc" target="_blank" rel="noopener">📄 Sujet (Word)</a>
-      <a class="bac-pastille-corrige" href="https://www.labolycee.org/sites/default/files/exos/corriges/2010/2010-AmSud-Exo2-Correction-TransmutationDechets-5pts.doc" target="_blank" rel="noopener">✓ Corrigé (Word)</a>
-    </div>
-  </div>
-
   </div>
   <!-- /sub-Z-2 (Ressources) -->
 
 </div>
+<!-- /tab-2 (Bilan & Ressources) -->
 
 <!-- ══════ MODAL VIDÉO SCINTIGRAPHIE ══════ -->
 <div id="scintiModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.78);align-items:center;justify-content:center;">
@@ -2107,11 +3371,10 @@ footer { text-align: center; padding: 24px; font-size: 0.72rem; color: var(--tex
 // ════════════════════════════════════════════
 // TABS
 // ════════════════════════════════════════════
-function showTab(idx) {
-  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
-  if (idx===3) setTimeout(runSimulation, 50);
-  if (idx===2) setTimeout(function(){ if(typeof dgInitAndDraw==='function') dgInitAndDraw(); }, 50);
+function switchTab(n) {
+  document.querySelectorAll('.tab-content').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===n));
+  window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
 function toggleAccord(btn) {
@@ -2119,8 +3382,13 @@ function toggleAccord(btn) {
 }
 
 function switchSubTab(group, i) {
-  document.querySelectorAll('#sub-nav-' + group + ' .sub-tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===i));
+  document.querySelectorAll('#sub-nav-' + group + ' button').forEach((b,idx) => b.classList.toggle('active', idx===i));
   document.querySelectorAll('[id^="sub-' + group + '-"]').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  if (group === 'P') {
+    if (i===2) setTimeout(function(){ if(typeof dgInitAndDraw==='function') dgInitAndDraw(); }, 50);
+    if (i===3) setTimeout(runSimulation, 50);
+  }
 }
 
 /* ===== Glossaire recherchable ===== */
@@ -2139,6 +3407,15 @@ document.getElementById('capToggle').addEventListener('click', () => {
 // ════════════════════════════════════════════
 // EXERCISES
 // ════════════════════════════════════════════
+function toggleIndice(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function toggleIndice2(btn, id) {
+  document.getElementById(id).classList.toggle('open');
+  btn.classList.toggle('active');
+}
+
 function toggleExo(header) {
   const body = header.nextElementSibling;
   const arrow = header.querySelector('.exo-arrow');
