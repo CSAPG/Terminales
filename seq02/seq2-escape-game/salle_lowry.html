@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Game - Le Laboratoire de T.M. Lowry</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', serif; }
+    html, body { background-color: #0d0d0d; color: #f0e6d2; height: 100%; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+    .game-container {
+        position: relative;
+        width: 100%;
+        max-width: 1100px;
+        aspect-ratio: 16 / 9;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        border: 4px solid #4a3728;
+        border-radius: 8px;
+        overflow: hidden;
+        background-image: url('bureau_2.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .header-bar {
+        position: absolute; top: 15px; left: 20px; right: 20px;
+        display: flex; justify-content: space-between; align-items: center; z-index: 10;
+    }
+    .progress-bar, .timer-box {
+        background: rgba(20, 15, 10, 0.85); border: 1px solid #d4af37;
+        padding: 8px 16px; border-radius: 20px; font-size: 0.95rem;
+        color: #d4af37; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .timer-box { font-weight: bold; font-size: 1.1rem; color: #e74c3c; }
+
+    .hotspot {
+        position: absolute; border-radius: 10px; background: transparent;
+        cursor: pointer; z-index: 5; transition: all 0.3s ease;
+    }
+    .hotspot.solved { background: rgba(46, 204, 113, 0.35) !important; border: 2px solid #2ecc71 !important; box-shadow: 0 0 15px #2ecc71; }
+    .hotspot.locked { cursor: not-allowed; }
+
+    #hs-phmetre  { top: 55.6%; left: 28.8%; width: 14.4%; height: 13.4%; }
+    #hs-flacon   { top: 68.4%; left: 0%;    width: 9.6%;  height: 18.3%; }
+    #hs-carnet   { top: 72%;   left: 14.4%; width: 24%;   height: 15.3%; }
+    #hs-pancarte { top: 7.7%;  left: 60.8%; width: 8.2%;  height: 9.4%; }
+    #hs-valise   { top: 46.4%; left: 65.6%; width: 8.6%;  height: 17.1%; }
+    #hs-sortie   { top: 19%;   left: 37.5%; width: 7%;    height: 21%; }
+
+    .hint-glow { animation: doorHint 1.6s ease-in-out infinite; }
+    @keyframes doorHint {
+        0%, 100% { box-shadow: 0 0 8px 3px rgba(212, 175, 55, 0.25); }
+        50% { box-shadow: 0 0 22px 9px rgba(212, 175, 55, 0.85); }
+    }
+
+    .modal {
+        display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.85);
+        z-index: 20; justify-content: center; align-items: center; padding: 16px;
+    }
+    .modal-content {
+        background: #1c1612; border: 2px solid #d4af37; border-radius: 8px;
+        padding: 22px; max-width: 680px; width: 100%; max-height: 92%; overflow-y: auto;
+        box-shadow: 0 0 20px rgba(0,0,0,0.8); color: #f0e6d2; position: relative;
+    }
+    .modal-content h3 {
+        color: #d4af37; margin-bottom: 10px; font-size: 1.25rem;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 6px;
+    }
+    .modal-content p { margin-bottom: 12px; font-size: 0.92rem; line-height: 1.4; }
+    .close-btn { position: absolute; top: 8px; right: 13px; background: none; border: none; color: #aaa; font-size: 1.4rem; cursor: pointer; }
+
+    /* --- fragments de décor (télégramme / carnet / pancarte) --- */
+    .doc-fragment {
+        background: #ece2c8; color: #2a2015; border: 1px solid #b8a679; border-radius: 3px;
+        padding: 14px 16px; margin-bottom: 14px; font-family: 'Courier New', monospace;
+        font-size: 0.9rem; line-height: 1.5; box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .doc-fragment.smudged { opacity: 0.85; filter: blur(0.2px); }
+    .doc-fragment .fiche-tech { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #b8a679; font-size: 0.8rem; color: #5a4a30; }
+    .formula-skeleton { font-size: 1.1rem; text-align: center; margin: 10px 0; letter-spacing: 1px; }
+    .btn-jeton { display: inline-block; background: #2a211b; border: 1px solid #d4af37; color: #f0e6d2; padding: 4px 10px; border-radius: 4px; margin: 2px; font-size: 0.85rem; }
+
+    /* --- boutons --- */
+    .btn-indice {
+        background: #FFF6E0; color: #C98A00; border: 1px solid #C98A00;
+        padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold;
+    }
+    .btn-indice:hover { background: #C98A00; color: #fff; }
+    .indice-box {
+        display: none; background: #FFF6E0; color: #7a5200; border: 1px dashed #C98A00;
+        border-radius: 4px; padding: 8px 10px; margin-top: 8px; font-size: 0.85rem;
+    }
+    .check-btn {
+        background: #3a6ea5; color: #fff; border: none; padding: 9px 18px;
+        border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem;
+    }
+    .check-btn:hover { background: #4d84c0; }
+    .btn-recommencer2 {
+        background: #4a4a4a; color: #fff; border: none; padding: 8px 16px;
+        border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+    }
+    .btn-recommencer2:hover { background: #6c6c6c; }
+    .btn-fermer2 {
+        background: #3a6ea5; color: #fff; border: none; padding: 9px 18px;
+        border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem;
+    }
+    .btn-fermer2:hover { background: #4d84c0; }
+
+    .feedback { margin-top: 10px; font-size: 0.88rem; font-weight: bold; min-height: 1.1em; }
+    .feedback.correct { color: #2ecc71; }
+    .feedback.incorrect { color: #e74c3c; }
+
+    /* --- drag & drop --- */
+    .tray {
+        display: flex; flex-wrap: wrap; gap: 8px; padding: 10px;
+        background: rgba(255,255,255,0.04); border: 1px dashed #7a5c3e; border-radius: 6px;
+        margin-bottom: 14px; min-height: 46px;
+    }
+    .token {
+        background: #2a211b; border: 1px solid #d4af37; color: #f0e6d2;
+        padding: 7px 12px; border-radius: 5px; cursor: grab; user-select: none;
+        font-size: 0.88rem; touch-action: none; white-space: nowrap;
+    }
+    .token.selected { outline: 2px solid #2ecc71; }
+    .token.dragging { position: fixed; z-index: 999; opacity: 0.92; pointer-events: none; box-shadow: 0 0 12px #d4af37; }
+
+    /* --- formule à trous (glisser-déposer inline) --- */
+    .formule-row {
+        display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+        gap: 8px; font-size: 1.15rem; margin: 18px 0; padding: 16px;
+        background: rgba(0,0,0,0.25); border-radius: 6px;
+    }
+    .formule-row .fixe { color: #d4af37; font-weight: bold; }
+    .slot { min-height: 40px; border: 2px dashed #7a5c3e; border-radius: 5px;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.25); font-size: 0.8rem; color: #7a6a58; }
+    .slot.formule-slot { min-width: 100px; padding: 0 6px; }
+    .slot.filled { border-style: solid; border-color: #d4af37; color: transparent; }
+    .slot.correct { border-color: #2ecc71 !important; }
+    .slot.wrong { border-color: #e74c3c !important; }
+
+    .calc-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .calc-label { font-size: 0.9rem; color: #d4af37; }
+    .calc-input {
+        padding: 8px; font-size: 1rem; border: 1px solid #d4af37;
+        background: #0d0d0d; color: #fff; border-radius: 4px; width: 90px; text-align: center;
+    }
+
+    .end-screen {
+        display: none; position: absolute; inset: 0; background: rgba(10,8,5,0.95);
+        z-index: 30; flex-direction: column; justify-content: center; align-items: center;
+        text-align: center; padding: 20px;
+    }
+    .digit-reveal {
+        font-size: 2.4rem; color: #d4af37; border: 2px solid #d4af37; border-radius: 10px;
+        padding: 10px 26px; margin: 16px 0; letter-spacing: 4px;
+    }
+
+    #locked-msg {
+        display: none; position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 10;
+        background: rgba(20, 15, 10, 0.9); border: 1px solid #e74c3c; border-radius: 8px;
+        padding: 10px 16px; font-size: 0.9rem; color: #e88; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    #hint-sortie-msg {
+        display: none; position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 10;
+        background: rgba(20, 15, 10, 0.9); border: 1px solid #d4af37; border-radius: 8px;
+        padding: 10px 16px; font-size: 0.9rem; color: #d4af37; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    #retour-labo-msg {
+        display: none; position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 10;
+        background: rgba(20, 15, 10, 0.9); border: 1px solid #d4af37; border-radius: 8px;
+        padding: 10px 16px; font-size: 0.9rem; color: #d4af37; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+</style>
+</head>
+<body>
+
+<div class="game-container" id="game-container">
+    <div class="header-bar">
+        <div class="progress-bar">Indices trouvés : <span id="indices-count">0</span> / 4</div>
+        <div class="timer-box" id="timer">5:00</div>
+    </div>
+
+    <div class="hotspot" id="hs-phmetre"  onclick="openIndice('phmetre')"  title="Le pH-mètre et le télégramme"></div>
+    <div class="hotspot" id="hs-flacon"   onclick="openIndice('flacon')"   title="Le flacon Solution tampon"></div>
+    <div class="hotspot" id="hs-carnet"   onclick="openIndice('carnet')"   title="Le carnet de notes"></div>
+    <div class="hotspot" id="hs-pancarte" onclick="openIndice('pancarte')" title="La pancarte du laboratoire"></div>
+    <div class="hotspot locked" id="hs-valise" onclick="tryOpenValise()" title="La valise diplomatique"></div>
+    <div class="hotspot locked" id="hs-sortie" onclick="tryOpenSortie()" title="La porte entrebâillée"></div>
+
+    <div id="locked-msg"></div>
+    <div id="hint-sortie-msg">⏳ Il ne reste qu'une minute : cherchez la porte de sortie !</div>
+    <div id="retour-labo-msg">🔍 Recherche la porte pour sortir du laboratoire</div>
+
+    <!-- ================= INDICE : LE pH-METRE + TELEGRAMME ================= -->
+    <div class="modal" id="modal-phmetre">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-phmetre')">&times;</button>
+            <h3>Le pH-mètre et le télégramme</h3>
+            <div class="doc-fragment">
+                <em>« Stabilisez mon milieu réactionnel pour valider mes mesures optiques. »</em><br>
+                — T.M.L.
+                <div class="fiche-tech">Fiche technique du pH-mètre (écran cassé) — Couple CH₃COOH / CH₃COO⁻ : <strong>pKa = 4,8</strong></div>
+            </div>
+            <p>L'appareil ne répond plus, mais son étiquette technique a survécu. Notez bien cette valeur : elle vous servira pour la valise.</p>
+            <button class="btn-fermer2" onclick="closeModal('modal-phmetre')">Refermer</button>
+        </div>
+    </div>
+
+    <!-- ================= INDICE : LE FLACON SOLUTION TAMPON ================= -->
+    <div class="modal" id="modal-flacon">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-flacon')">&times;</button>
+            <h3>Le flacon « Solution tampon »</h3>
+            <div class="doc-fragment">
+                SOLUTION TAMPON<br>
+                Acide éthanoïque CH₃COOH ... n = n₀<br>
+                Éthanoate de sodium CH₃COO⁻ ... n = n₀<br>
+                <em>(mélange équimolaire)</em>
+            </div>
+            <p>Le flacon confirme que les concentrations de l'acide et de sa base conjuguée sont <strong>égales</strong> : [CH₃COOH] = [CH₃COO⁻].</p>
+            <button class="btn-fermer2" onclick="closeModal('modal-flacon')">Refermer</button>
+        </div>
+    </div>
+
+    <!-- ================= INDICE : LE CARNET DE NOTES ================= -->
+    <div class="modal" id="modal-carnet">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-carnet')">&times;</button>
+            <h3>Le carnet de notes taché</h3>
+            <div class="doc-fragment smudged">
+                ... la relation permettant de calculer le pH<br>
+                d'une solution tampon :<br><br>
+                <span class="formula-skeleton">pH&nbsp;=&nbsp;. . .&nbsp;+&nbsp;log( . . . / . . . )</span><br><br>
+                <em>(le reste de la page est illisible)</em>
+            </div>
+            <p>La structure de la formule apparaît, mais les termes ont disparu sous l'encre. Il faudra les replacer vous-même dans la valise.</p>
+            <button class="btn-fermer2" onclick="closeModal('modal-carnet')">Refermer</button>
+        </div>
+    </div>
+
+    <!-- ================= INDICE : LA PANCARTE ================= -->
+    <div class="modal" id="modal-pancarte">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-pancarte')">&times;</button>
+            <h3>Laboratoire de T.M. Lowry — Cambridge, 1923</h3>
+            <div class="doc-fragment">
+                En 1923, indépendamment de Brønsted, Thomas Martin Lowry formule la même théorie acide-base
+                fondée sur l'échange de proton H⁺.
+                <br><br>
+                <strong>Convention utilisée dans ce laboratoire :</strong> dans le rapport log(...), on place
+                toujours <u>au numérateur la forme qui a perdu le proton</u> — c'est-à-dire la base conjuguée.
+            </div>
+            <p>Un indice précieux pour savoir où placer l'acide et la base dans la formule de la valise.</p>
+            <button class="btn-fermer2" onclick="closeModal('modal-pancarte')">Refermer</button>
+        </div>
+    </div>
+
+    <!-- ================= LA VALISE DIPLOMATIQUE ================= -->
+    <div class="modal" id="modal-valise">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-valise')">&times;</button>
+            <h3>La valise diplomatique</h3>
+
+            <!-- ---- PHASE A : reconstituer la formule ---- -->
+            <div id="valise-phaseA" class="phase-block">
+                <p><em>"Reconstituez la relation du cours à l'aide des jetons récoltés dans le laboratoire, puis appliquez-la à la solution tampon."</em></p>
+
+                <button class="btn-indice" onclick="toggleIndice('ind-valise-a')">💡 Indice</button>
+                <div class="indice-box" id="ind-valise-a">Repensez à la pancarte : au numérateur du logarithme, on place la forme qui a perdu un proton — la base conjuguée.</div>
+
+                <div class="tray" id="tray-valise-a"></div>
+
+                <div class="formule-row">
+                    <span class="fixe">pH&nbsp;=</span>
+                    <div class="slot formule-slot" data-slot="f-pka" data-correct="pKa"> ? </div>
+                    <span class="fixe">+&nbsp;log(</span>
+                    <div class="slot formule-slot" data-slot="f-num" data-correct="base">numérateur ?</div>
+                    <span class="fixe">/</span>
+                    <div class="slot formule-slot" data-slot="f-denom" data-correct="acide">dénominateur ?</div>
+                    <span class="fixe">)</span>
+                </div>
+
+                <button class="check-btn" onclick="checkValiseA()">✓ Vérifier</button>
+                <button class="btn-recommencer2" onclick="resetValise()">↺ Recommencer</button>
+                <div class="feedback" id="fb-valise-a"></div>
+            </div>
+
+            <!-- ---- PHASE B : calcul numérique ---- -->
+            <div id="valise-phaseB" class="phase-block" style="display:none;">
+                <p><em>"La formule est posée. Appliquez-la maintenant à la solution tampon (souvenez-vous de la valeur de pKa relevée sur la fiche technique ; [CH₃COOH] = [CH₃COO⁻])."</em></p>
+
+                <button class="btn-indice" onclick="toggleIndice('ind-valise-b')">💡 Indice</button>
+                <div class="indice-box" id="ind-valise-b">Si les deux concentrations sont égales, leur rapport vaut 1. Or log(1) = 0.</div>
+
+                <div class="calc-row">
+                    <span class="calc-label">log([CH₃COO⁻] / [CH₃COOH]) =</span>
+                    <input type="text" class="calc-input" id="valise-log-input" placeholder="?">
+                </div>
+                <div class="calc-row">
+                    <span class="calc-label">pH = pKa + log(...) =</span>
+                    <input type="text" class="calc-input" id="valise-ph-input" placeholder="?">
+                </div>
+
+                <button class="check-btn" onclick="checkValiseB()">✓ Vérifier</button>
+                <button class="btn-recommencer2" onclick="resetValise()">↺ Recommencer</button>
+                <div class="feedback" id="fb-valise-b"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= LA PORTE ENTREBÂILLÉE (sortie) ================= -->
+    <div class="modal" id="modal-sortie">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-sortie')">&times;</button>
+            <h3>La porte entrebâillée</h3>
+            <div class="doc-fragment">
+                Une carte glissée sous la porte, à l'écriture nerveuse :<br><br>
+                <em>« Si vos calculs sont exacts, vous savez lire un couple acide/base. Reste à savoir si vous connaissez aussi l'eau elle-même... »</em><br>
+                — un message destiné à G.N. Lewis, Berkeley, Californie
+            </div>
+            <p>Pour franchir cette porte, répondez à la question :</p>
+            <div class="calc-row">
+                <span class="calc-label">Valeur du pKe (autoprotolyse de l'eau) à 25 °C =</span>
+                <input type="text" class="calc-input" id="sortie-input" placeholder="?">
+            </div>
+            <button class="check-btn" onclick="checkSortie()">✓ Vérifier</button>
+            <div class="feedback" id="fb-sortie"></div>
+        </div>
+    </div>
+
+    <div class="end-screen" id="victory-screen">
+        <h3 style="color:#2ecc71; font-size:2rem;">La porte s'ouvre !</h3>
+        <p>La correspondance diplomatique est en sécurité. Le couloir mène vers un prochain rendez-vous : le bureau de Gilbert Newton Lewis, à Berkeley, Californie.</p>
+        <div class="digit-reveal">pKe = 14</div>
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+            <button class="btn-recommencer2" onclick="location.reload()">↺ Recommencer la salle</button>
+            <button class="btn-fermer2" onclick="exitRoom()">🚪 Quitter le laboratoire</button>
+        </div>
+    </div>
+
+    <div class="end-screen" id="defeat-screen">
+        <h3 style="color:#e74c3c; font-size:2rem;">Temps écoulé !</h3>
+        <p>La valise diplomatique reste verrouillée...</p>
+        <button class="btn-recommencer2" style="margin-top:18px;" onclick="location.reload()">↺ Recommencer la salle</button>
+    </div>
+</div>
+
+<script>
+    let visitedState = { phmetre: false, flacon: false, carnet: false, pancarte: false };
+    let hintShown = false;
+    let valiseFormuleOk = false;
+    let valiseDone = false;
+    let timeLeft = 300;
+    let timerInterval;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('t')) timeLeft = parseInt(params.get('t'), 10) || timeLeft;
+    const totalTime = timeLeft;
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+            document.getElementById('timer').innerText = `${m<10?'0':''}${m}:${s<10?'0':''}${s}`;
+            if (timeLeft <= 60 && !hintShown) {
+                hintShown = true;
+                document.getElementById('hint-sortie-msg').style.display = 'block';
+            }
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('defeat-screen').style.display = 'flex';
+                notifyParent('room-timeout');
+            }
+        }, 1000);
+    }
+    startTimer();
+
+    function notifyParent(type, extra) {
+        try { window.parent.postMessage(Object.assign({ source: 'escape-game', room: 'lowry-laboratoire', type }, extra || {}), '*'); }
+        catch (e) {}
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function toggleIndice(id) {
+        const el = document.getElementById(id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function showLockedMsg(text) {
+        const msg = document.getElementById('locked-msg');
+        msg.innerText = text;
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.display = 'none'; }, 2200);
+    }
+
+    function showRetourLaboMsg() {
+        const msg = document.getElementById('retour-labo-msg');
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.display = 'none'; }, 2800);
+    }
+
+    /* ===================== INDICES (4 zones d'exploration) ===================== */
+    function openIndice(key) {
+        openModal('modal-' + key);
+        if (!visitedState[key]) {
+            visitedState[key] = true;
+            document.getElementById('hs-' + key).classList.add('solved');
+            updateIndicesCount();
+        }
+    }
+
+    function updateIndicesCount() {
+        const count = Object.values(visitedState).filter(Boolean).length;
+        document.getElementById('indices-count').innerText = count;
+        notifyParent('room-progress', { indices: count, total: 4 });
+        if (count === 4) {
+            document.getElementById('hs-valise').classList.remove('locked');
+            document.getElementById('hs-valise').classList.add('hint-glow');
+        }
+    }
+
+    function tryOpenValise() {
+        const count = Object.values(visitedState).filter(Boolean).length;
+        if (count < 4) { showLockedMsg("🔒 Explorez d'abord les 4 indices du laboratoire (pH-mètre, flacon, carnet, pancarte)."); return; }
+        openModal('modal-valise');
+    }
+
+    /* ===================== DRAG & DROP ENGINE ===================== */
+    let dragToken = null, dragOffsetX = 0, dragOffsetY = 0, sourceParent = null, sourceNext = null;
+
+    function makeToken(value, label) {
+        const t = document.createElement('div');
+        t.className = 'token';
+        t.dataset.value = value;
+        t.innerText = label;
+        t.addEventListener('pointerdown', onPointerDown);
+        return t;
+    }
+
+    function onPointerDown(e) {
+        const token = e.currentTarget;
+        dragToken = token;
+        sourceParent = token.parentElement;
+        sourceNext = token.nextSibling;
+        const rect = token.getBoundingClientRect();
+        dragOffsetX = e.clientX - rect.left;
+        dragOffsetY = e.clientY - rect.top;
+        token.style.width = rect.width + 'px';
+        document.body.appendChild(token);
+        token.classList.add('dragging');
+        token.style.left = (e.clientX - dragOffsetX) + 'px';
+        token.style.top = (e.clientY - dragOffsetY) + 'px';
+        document.addEventListener('pointermove', onPointerMove);
+        document.addEventListener('pointerup', onPointerUp);
+        token.setPointerCapture && token.setPointerCapture(e.pointerId);
+    }
+
+    function onPointerMove(e) {
+        if (!dragToken) return;
+        dragToken.style.left = (e.clientX - dragOffsetX) + 'px';
+        dragToken.style.top = (e.clientY - dragOffsetY) + 'px';
+    }
+
+    function onPointerUp(e) {
+        if (!dragToken) return;
+        dragToken.classList.remove('dragging');
+        dragToken.style.left = ''; dragToken.style.top = ''; dragToken.style.width = '';
+        document.removeEventListener('pointermove', onPointerMove);
+        document.removeEventListener('pointerup', onPointerUp);
+
+        dragToken.style.display = 'none';
+        const under = document.elementFromPoint(e.clientX, e.clientY);
+        dragToken.style.display = '';
+        const slot = under ? under.closest('.slot') : null;
+
+        if (slot && slot.closest('.modal-content') === sourceParent.closest('.modal-content')) {
+            if (slot.children.length > 0) {
+                const occupant = slot.children[0];
+                const scope = slot.closest('.phase-block') || slot.closest('.modal-content');
+                const tray = scope.querySelector('.tray');
+                tray.appendChild(occupant);
+            }
+            slot.innerHTML = '';
+            slot.appendChild(dragToken);
+            slot.classList.add('filled');
+            slot.classList.remove('correct', 'wrong');
+        } else {
+            if (sourceNext) sourceParent.insertBefore(dragToken, sourceNext);
+            else sourceParent.appendChild(dragToken);
+        }
+        dragToken = null;
+    }
+
+    function shuffle(arr) { return arr.map(v => [Math.random(), v]).sort((a,b) => a[0]-b[0]).map(v => v[1]); }
+
+    /* ===================== VALISE : PHASE A (formule) ===================== */
+    const valiseJetons = [
+        ['pKa', 'pKa'],
+        ['base', '[CH₃COO⁻]'],
+        ['acide', '[CH₃COOH]'],
+        ['piege', '[H₃O⁺]']
+    ];
+
+    function initValise() {
+        const tray = document.getElementById('tray-valise-a');
+        tray.innerHTML = '';
+        shuffle(valiseJetons).forEach(([val, label]) => tray.appendChild(makeToken(val, label)));
+        document.querySelectorAll('#valise-phaseA .slot').forEach(s => {
+            s.innerHTML = s.dataset.slot === 'f-pka' ? '?' : (s.dataset.slot === 'f-num' ? 'numérateur ?' : 'dénominateur ?');
+            s.classList.remove('filled','correct','wrong');
+        });
+        document.getElementById('fb-valise-a').innerText = '';
+        document.getElementById('fb-valise-a').className = 'feedback';
+
+        document.getElementById('valise-log-input').value = '';
+        document.getElementById('valise-ph-input').value = '';
+        document.getElementById('fb-valise-b').innerText = '';
+        document.getElementById('fb-valise-b').className = 'feedback';
+
+        document.getElementById('valise-phaseA').style.display = 'block';
+        document.getElementById('valise-phaseB').style.display = 'none';
+        valiseFormuleOk = false;
+    }
+    function resetValise() { initValise(); }
+
+    function checkValiseA() {
+        const slots = document.querySelectorAll('#valise-phaseA .slot');
+        let allFilled = true, allCorrect = true;
+        slots.forEach(s => {
+            const token = s.querySelector('.token');
+            if (!token) { allFilled = false; return; }
+            if (token.dataset.value === s.dataset.correct) { s.classList.add('correct'); s.classList.remove('wrong'); }
+            else { s.classList.add('wrong'); s.classList.remove('correct'); allCorrect = false; }
+        });
+        const fb = document.getElementById('fb-valise-a');
+        if (!allFilled) { fb.className = 'feedback incorrect'; fb.innerText = 'Placez les 3 jetons dans la formule avant de vérifier.'; return; }
+        if (allCorrect) {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Formule correcte ! Passons au calcul.';
+            valiseFormuleOk = true;
+            setTimeout(() => {
+                document.getElementById('valise-phaseA').style.display = 'none';
+                document.getElementById('valise-phaseB').style.display = 'block';
+            }, 900);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Certains jetons sont mal placés (voir les cases en rouge). Un jeton n'est pas utile : lequel ?";
+        }
+    }
+
+    /* ===================== VALISE : PHASE B (calcul) ===================== */
+    function parseNum(str) {
+        if (!str) return NaN;
+        return parseFloat(str.trim().replace(',', '.'));
+    }
+
+    function checkValiseB() {
+        const logVal = parseNum(document.getElementById('valise-log-input').value);
+        const phVal = parseNum(document.getElementById('valise-ph-input').value);
+        const fb = document.getElementById('fb-valise-b');
+        if (isNaN(logVal) || isNaN(phVal)) { fb.className = 'feedback incorrect'; fb.innerText = 'Complétez les deux calculs avant de vérifier.'; return; }
+        const logOk = Math.abs(logVal - 0) < 0.05;
+        const phOk = Math.abs(phVal - 4.8) < 0.05;
+        if (logOk && phOk) {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Exact ! pH = 4,8 — la valise s\'entrouvre...';
+            valiseDone = true;
+            setTimeout(() => {
+                closeModal('modal-valise');
+                document.getElementById('hs-valise').classList.add('solved');
+                document.getElementById('hs-valise').classList.remove('hint-glow');
+                document.getElementById('hs-sortie').classList.remove('locked');
+                showRetourLaboMsg();
+            }, 1300);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Résultat incorrect. Rappel : [CH₃COOH] = [CH₃COO⁻], donc leur rapport vaut 1.";
+        }
+    }
+
+    /* ===================== SORTIE : LA PORTE (pKe) ===================== */
+    function tryOpenSortie() {
+        if (!valiseDone) { showLockedMsg("🔒 Ouvrez d'abord la valise diplomatique."); return; }
+        openModal('modal-sortie');
+    }
+
+    function checkSortie() {
+        const val = parseNum(document.getElementById('sortie-input').value);
+        const fb = document.getElementById('fb-sortie');
+        if (isNaN(val)) { fb.className = 'feedback incorrect'; fb.innerText = 'Entrez une valeur avant de vérifier.'; return; }
+        if (Math.abs(val - 14) < 0.05) {
+            fb.className = 'feedback correct';
+            fb.innerText = "✓ Exact ! La porte s'ouvre...";
+            clearInterval(timerInterval);
+            document.getElementById('hint-sortie-msg').style.display = 'none';
+            setTimeout(() => {
+                closeModal('modal-sortie');
+                document.getElementById('hs-sortie').classList.add('solved');
+                document.getElementById('victory-screen').style.display = 'flex';
+                notifyParent('room-complete', { code: 'pKe=14', elapsed: totalTime - timeLeft });
+            }, 900);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Ce n'est pas la bonne valeur. Pensez au produit ionique de l'eau (Ke = [H₃O⁺][HO⁻]).";
+        }
+    }
+
+    function exitRoom() {
+        notifyParent('room-exit');
+        if (window.parent === window) {
+            const screen = document.getElementById('victory-screen');
+            screen.innerHTML = '<h3 style="color:#2ecc71; font-size:2rem;">À bientôt !</h3><p>Cette salle sera bientôt reliée aux suivantes dans le hub de l\'escape game.</p>';
+        }
+    }
+
+    /* ===================== INIT ===================== */
+    initValise();
+</script>
+
+</body>
+</html>

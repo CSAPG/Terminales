@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Game - Le Bureau de Brønsted</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', serif; }
+    html, body { background-color: #0d0d0d; color: #f0e6d2; height: 100%; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+    .game-container {
+        position: relative;
+        width: 100%;
+        max-width: 1100px;
+        aspect-ratio: 16 / 9;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        border: 4px solid #4a3728;
+        border-radius: 8px;
+        overflow: hidden;
+        background-image: url('bureau_1.png');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .header-bar {
+        position: absolute; top: 15px; left: 20px; right: 20px;
+        display: flex; justify-content: space-between; align-items: center; z-index: 10;
+    }
+    .progress-bar, .timer-box {
+        background: rgba(20, 15, 10, 0.85); border: 1px solid #d4af37;
+        padding: 8px 16px; border-radius: 20px; font-size: 0.95rem;
+        color: #d4af37; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .timer-box { font-weight: bold; font-size: 1.1rem; color: #e74c3c; }
+
+    .hotspot {
+        position: absolute; border-radius: 10px; background: transparent;
+        cursor: pointer; z-index: 5; transition: all 0.3s ease;
+    }
+    .hotspot.solved { background: rgba(46, 204, 113, 0.35) !important; border: 2px solid #2ecc71 !important; box-shadow: 0 0 15px #2ecc71; }
+    .hotspot.locked { cursor: not-allowed; }
+
+    #hs-lettre  { top: 54%; left: 14%; width: 34%; height: 24%; }
+    #hs-etabli  { top: 47%; left: 51%; width: 27%; height: 25%; }
+    #hs-tiroir  { top: 76%; left: 12%; width: 22%; height: 18%; }
+
+    .hint-glow { animation: doorHint 1.6s ease-in-out infinite; }
+    @keyframes doorHint {
+        0%, 100% { box-shadow: 0 0 8px 3px rgba(212, 175, 55, 0.25); }
+        50% { box-shadow: 0 0 22px 9px rgba(212, 175, 55, 0.85); }
+    }
+
+    .modal {
+        display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.85);
+        z-index: 20; justify-content: center; align-items: center; padding: 16px;
+    }
+    .modal-content {
+        background: #1c1612; border: 2px solid #d4af37; border-radius: 8px;
+        padding: 22px; max-width: 820px; width: 100%; max-height: 92%; overflow-y: auto;
+        box-shadow: 0 0 20px rgba(0,0,0,0.8); color: #f0e6d2; position: relative;
+    }
+    .modal-content h3 {
+        color: #d4af37; margin-bottom: 10px; font-size: 1.25rem;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 6px;
+    }
+    .modal-content p { margin-bottom: 12px; font-size: 0.92rem; line-height: 1.4; }
+    .close-btn { position: absolute; top: 8px; right: 13px; background: none; border: none; color: #aaa; font-size: 1.4rem; cursor: pointer; }
+
+    /* --- boutons --- */
+    .btn-indice {
+        background: #FFF6E0; color: #C98A00; border: 1px solid #C98A00;
+        padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold;
+    }
+    .btn-indice:hover { background: #C98A00; color: #fff; }
+    .indice-box {
+        display: none; background: #FFF6E0; color: #7a5200; border: 1px dashed #C98A00;
+        border-radius: 4px; padding: 8px 10px; margin-top: 8px; font-size: 0.85rem;
+    }
+    .check-btn {
+        background: #3a6ea5; color: #fff; border: none; padding: 9px 18px;
+        border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem;
+    }
+    .check-btn:hover { background: #4d84c0; }
+    .btn-recommencer2 {
+        background: #4a4a4a; color: #fff; border: none; padding: 8px 16px;
+        border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+    }
+    .btn-recommencer2:hover { background: #6c6c6c; }
+    .btn-submit {
+        background: #d4af37; color: #1c1612; border: none; padding: 10px 20px;
+        font-weight: bold; border-radius: 4px; cursor: pointer;
+    }
+
+    .feedback { margin-top: 10px; font-size: 0.88rem; font-weight: bold; min-height: 1.1em; }
+    .feedback.correct { color: #2ecc71; }
+    .feedback.incorrect { color: #e74c3c; }
+
+    /* --- drag & drop --- */
+    .tray {
+        display: flex; flex-wrap: wrap; gap: 8px; padding: 10px;
+        background: rgba(255,255,255,0.04); border: 1px dashed #7a5c3e; border-radius: 6px;
+        margin-bottom: 14px; min-height: 46px;
+    }
+    .token {
+        background: #2a211b; border: 1px solid #d4af37; color: #f0e6d2;
+        padding: 7px 12px; border-radius: 5px; cursor: grab; user-select: none;
+        font-size: 0.88rem; touch-action: none; white-space: nowrap;
+    }
+    .token.selected { outline: 2px solid #2ecc71; }
+    .token.dragging { position: fixed; z-index: 999; opacity: 0.92; pointer-events: none; box-shadow: 0 0 12px #d4af37; }
+
+    .pair-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .pair-label { width: 82px; font-size: 0.85rem; color: #d4af37; font-weight: bold; flex-shrink: 0; }
+    .slot {
+        flex: 1; min-height: 40px; border: 2px dashed #7a5c3e; border-radius: 5px;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.25); font-size: 0.8rem; color: #7a6a58;
+    }
+    .slot.filled { border-style: solid; border-color: #d4af37; color: transparent; }
+    .slot.correct { border-color: #2ecc71 !important; }
+    .slot.wrong { border-color: #e74c3c !important; }
+
+    .rank-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .rank-label { width: 130px; font-size: 0.8rem; color: #d4af37; flex-shrink: 0; }
+
+    /* --- échelle de pKa (étape 2) --- */
+    .pka-ruler { position: relative; height: 150px; margin: 26px 10px 44px; }
+    .ruler-line { position: absolute; top: 78px; left: 0; right: 0; height: 2px; background: #7a5c3e; }
+    .ruler-tick {
+        position: absolute; top: 86px; transform: translateX(-50%);
+        font-size: 0.72rem; color: #a08c6e;
+    }
+    .ruler-tick::before {
+        content: ''; position: absolute; top: -10px; left: 50%; width: 1px; height: 8px; background: #7a5c3e;
+    }
+    .pka-anchor { position: absolute; top: 0; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; }
+    .anchor-slots { display: flex; flex-direction: row; gap: 3px; }
+    .anchor-line { width: 1px; flex: 1; min-height: 6px; background: #7a5c3e; margin-top: 2px; }
+    .slot.mini { min-height: 28px; font-size: 0.6rem; padding: 2px; width: 54px; }
+    .slot.mini .token { font-size: 0.62rem; padding: 3px 4px; white-space: normal; text-align: center; line-height: 1.1; }
+
+    .code-container { display: flex; gap: 10px; margin-top: 15px; }
+    .code-input {
+        padding: 10px; font-size: 1.2rem; border: 1px solid #d4af37;
+        background: #0d0d0d; color: #fff; border-radius: 4px; width: 130px; text-align: center; letter-spacing: 3px;
+    }
+
+    .end-screen {
+        display: none; position: absolute; inset: 0; background: rgba(10,8,5,0.95);
+        z-index: 30; flex-direction: column; justify-content: center; align-items: center;
+        text-align: center; padding: 20px;
+    }
+    .digit-reveal {
+        font-size: 2.4rem; color: #d4af37; border: 2px solid #d4af37; border-radius: 10px;
+        padding: 10px 26px; margin: 16px 0; letter-spacing: 4px;
+    }
+
+    #locked-msg {
+        display: none; position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 10;
+        background: rgba(20, 15, 10, 0.9); border: 1px solid #e74c3c; border-radius: 8px;
+        padding: 10px 16px; font-size: 0.9rem; color: #e88; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+</style>
+</head>
+<body>
+
+<div class="game-container" id="game-container">
+    <div class="header-bar">
+        <div class="progress-bar">Énigmes résolues : <span id="solved-count">0</span> / 2</div>
+        <div class="timer-box" id="timer">8:00</div>
+    </div>
+
+    <div class="hotspot" id="hs-lettre" onclick="openModal('modal-lettre')" title="La lettre de Brønsted"></div>
+    <div class="hotspot locked" id="hs-etabli" onclick="tryOpenEtabli()" title="L'établi aux flacons"></div>
+    <div class="hotspot locked" id="hs-tiroir" onclick="tryOpenTiroir()" title="Le tiroir du bureau"></div>
+
+    <div id="locked-msg"></div>
+
+    <!-- ================= ENIGME 1 : LA LETTRE ================= -->
+    <div class="modal" id="modal-lettre">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-lettre')">&times;</button>
+            <h3>1. La lettre de Brønsted — L'inventaire des couples</h3>
+            <p><em>"On ne mélange pas les espèces isolées ! Chaque acide cède un proton H⁺ pour former sa base conjuguée. Associez chaque acide à sa base, et classez vos 4 couples de 1 à 4."</em></p>
+
+            <button class="btn-indice" onclick="toggleIndice('ind-lettre')">💡 Indice</button>
+            <div class="indice-box" id="ind-lettre">Un couple acide/base ne diffère que d'un seul proton H⁺. Cherchez les paires dont les formules ne diffèrent que par un "H" en plus ou en moins.</div>
+
+            <div class="tray" id="tray-lettre"></div>
+
+            <div class="pair-row">
+                <div class="pair-label">Couple n°1</div>
+                <div class="slot" data-slot="c1-acide" data-correct="CH3COOH">acide</div>
+                <div class="slot" data-slot="c1-base" data-correct="CH3COO−">base</div>
+            </div>
+            <div class="pair-row">
+                <div class="pair-label">Couple n°2</div>
+                <div class="slot" data-slot="c2-acide" data-correct="NH4+">acide</div>
+                <div class="slot" data-slot="c2-base" data-correct="NH3">base</div>
+            </div>
+            <div class="pair-row">
+                <div class="pair-label">Couple n°3</div>
+                <div class="slot" data-slot="c3-acide" data-correct="H3O+">acide</div>
+                <div class="slot" data-slot="c3-base" data-correct="H2O">base</div>
+            </div>
+            <div class="pair-row">
+                <div class="pair-label">Couple n°4</div>
+                <div class="slot" data-slot="c4-acide" data-correct="H2O">acide</div>
+                <div class="slot" data-slot="c4-base" data-correct="OH−">base</div>
+            </div>
+
+            <button class="check-btn" onclick="checkLettre()">✓ Vérifier</button>
+            <button class="btn-recommencer2" onclick="resetLettre()">↺ Recommencer</button>
+            <div class="feedback" id="fb-lettre"></div>
+        </div>
+    </div>
+
+    <!-- ================= ENIGME 2 : L'ETABLI (2 étapes) ================= -->
+    <div class="modal" id="modal-etabli">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-etabli')">&times;</button>
+            <h3>2. L'établi — Le pKa et la force des acides</h3>
+
+            <!-- ---- ETAPE 1 : classer les couples ---- -->
+            <div id="etabli-phase1" class="phase-block">
+                <p><em>"Plus le pKa est faible, plus l'acide cède facilement son proton. Classez ces quatre flacons — couple acide/base et pKa — de l'acide le plus fort au plus faible."</em></p>
+                <p style="color:#d4af37; font-size:0.85rem;"><strong>⚠ Retenez bien les quatre couples acide/base et leurs valeurs de pKa : à l'étape suivante, il faudra les replacer sur une échelle sans pouvoir les revoir !</strong></p>
+
+                <button class="btn-indice" onclick="toggleIndice('ind-etabli-1')">💡 Indice</button>
+                <div class="indice-box" id="ind-etabli-1">Regardez uniquement la valeur du pKa inscrite sur chaque flacon : le plus petit pKa correspond à l'acide le plus fort.</div>
+
+                <div class="tray" id="tray-etabli-p1"></div>
+
+                <div class="rank-row"><div class="rank-label">1ᵉʳ (le plus fort)</div><div class="slot" data-slot="r1" data-correct="HCOOH">—</div></div>
+                <div class="rank-row"><div class="rank-label">2ᵉ</div><div class="slot" data-slot="r2" data-correct="CH3COOH">—</div></div>
+                <div class="rank-row"><div class="rank-label">3ᵉ</div><div class="slot" data-slot="r3" data-correct="HClO">—</div></div>
+                <div class="rank-row"><div class="rank-label">4ᵉ (le plus faible)</div><div class="slot" data-slot="r4" data-correct="NH4+">—</div></div>
+
+                <button class="check-btn" onclick="checkEtabliPhase1()">✓ Vérifier</button>
+                <button class="btn-recommencer2" onclick="resetEtabli()">↺ Recommencer</button>
+                <div class="feedback" id="fb-etabli-p1"></div>
+            </div>
+
+            <!-- ---- ETAPE 2 : placer sur l'échelle de pKa ---- -->
+            <div id="etabli-phase2" class="phase-block" style="display:none;">
+                <p><em>"Bien joué. Maintenant, replacez chaque acide et sa base conjuguée à la graduation entière la plus proche de son pKa — souvenez-vous des valeurs lues sur les flacons."</em></p>
+                <p style="color:#d4af37; font-size:0.85rem;"><strong>Convention : la forme acide se place toujours à gauche de la graduation, la forme basique conjuguée à droite — comme sur un diagramme de prédominance.</strong></p>
+
+                <button class="btn-indice" onclick="toggleIndice('ind-etabli-2')">💡 Indice</button>
+                <div class="indice-box" id="ind-etabli-2">Un acide et sa base conjuguée partagent le même pKa : ils se placent donc de part et d'autre de la même graduation, l'acide à gauche (domaine où AH prédomine) et la base à droite (domaine où A⁻ prédomine).</div>
+
+                <div class="tray" id="tray-etabli-p2"></div>
+
+                <div class="pka-ruler">
+                    <div class="ruler-line"></div>
+                    <!-- Échelle NON linéaire : 0→3 et 10→12 resserrés ; 3→5 (les 2 pKa les plus proches) très étiré ;
+                         5→10 étiré aussi. Cela laisse assez de place pour poser acide (gauche) et base (droite)
+                         de part et d'autre de chaque graduation, comme sur un diagramme de prédominance. -->
+                    <div class="ruler-tick" style="left:0%">0</div>
+                    <div class="ruler-tick" style="left:3.3%">2</div>
+                    <div class="ruler-tick" style="left:22.5%">4</div>
+                    <div class="ruler-tick" style="left:50.4%">6</div>
+                    <div class="ruler-tick" style="left:71.2%">8</div>
+                    <div class="ruler-tick" style="left:92%">10</div>
+                    <div class="ruler-tick" style="left:100%">12</div>
+
+                    <div class="pka-anchor" style="left:19%">
+                        <div class="anchor-slots">
+                            <div class="slot mini" data-slot="p2-a1-acide" data-correct="HCOOH">acide</div>
+                            <div class="slot mini" data-slot="p2-a1-base" data-correct="HCOO−">base</div>
+                        </div>
+                        <div class="anchor-line"></div>
+                    </div>
+                    <div class="pka-anchor" style="left:36.5%">
+                        <div class="anchor-slots">
+                            <div class="slot mini" data-slot="p2-a2-acide" data-correct="CH3COOH">acide</div>
+                            <div class="slot mini" data-slot="p2-a2-base" data-correct="CH3COO−">base</div>
+                        </div>
+                        <div class="anchor-line"></div>
+                    </div>
+                    <div class="pka-anchor" style="left:66%">
+                        <div class="anchor-slots">
+                            <div class="slot mini" data-slot="p2-a3-acide" data-correct="HClO">acide</div>
+                            <div class="slot mini" data-slot="p2-a3-base" data-correct="ClO−">base</div>
+                        </div>
+                        <div class="anchor-line"></div>
+                    </div>
+                    <div class="pka-anchor" style="left:83.7%">
+                        <div class="anchor-slots">
+                            <div class="slot mini" data-slot="p2-a4-acide" data-correct="NH4+">acide</div>
+                            <div class="slot mini" data-slot="p2-a4-base" data-correct="NH3">base</div>
+                        </div>
+                        <div class="anchor-line"></div>
+                    </div>
+                </div>
+
+                <button class="check-btn" onclick="checkEtabliPhase2()">✓ Vérifier</button>
+                <button class="btn-recommencer2" onclick="resetEtabli()">↺ Recommencer</button>
+                <div class="feedback" id="fb-etabli-p2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TIROIR ================= -->
+    <div class="modal" id="modal-tiroir">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-tiroir')">&times;</button>
+            <h3>Le tiroir du bureau</h3>
+            <p style="color:#d4af37; font-style:italic;">Une serrure à 4 chiffres. Le code est celui obtenu au classement des pKa de l'établi : le chiffre des unités de chaque valeur, dans l'ordre du plus fort au plus faible.</p>
+            <div class="code-container">
+                <input type="text" id="tiroir-code" class="code-input" maxlength="4" placeholder="- - - -">
+                <button class="btn-submit" onclick="submitTiroir()">Ouvrir</button>
+            </div>
+            <div class="feedback" id="fb-tiroir"></div>
+        </div>
+    </div>
+
+    <div class="end-screen" id="victory-screen">
+        <h3 style="color:#2ecc71; font-size:2rem;">Tiroir ouvert !</h3>
+        <p>Vous découvrez le billet de train pour Cambridge — Brønsted s'apprêtait à rejoindre l'Angleterre.</p>
+        <div class="digit-reveal">3479</div>
+        <p>Le bureau de Brønsted a livré ses secrets.</p>
+        <button class="btn-submit" style="margin-top:18px;" onclick="exitRoom()">Quitter le bureau →</button>
+    </div>
+
+    <div class="end-screen" id="defeat-screen">
+        <h3 style="color:#e74c3c; font-size:2rem;">Temps écoulé !</h3>
+        <p>Le bureau reste verrouillé...</p>
+        <button class="btn-recommencer2" style="margin-top:18px;" onclick="location.reload()">↺ Recommencer la salle</button>
+    </div>
+</div>
+
+<script>
+    let solvedState = { lettre: false, etabli: false };
+    let timeLeft = 480;
+    let timerInterval;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('t')) timeLeft = parseInt(params.get('t'), 10) || timeLeft;
+    const totalTime = timeLeft;
+    const HINT_DELAY = 240;
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+            document.getElementById('timer').innerText = `${m<10?'0':''}${m}:${s<10?'0':''}${s}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('defeat-screen').style.display = 'flex';
+                notifyParent('room-timeout');
+            }
+        }, 1000);
+    }
+    startTimer();
+
+    function notifyParent(type, extra) {
+        try { window.parent.postMessage(Object.assign({ source: 'escape-game', room: 'bronsted-bureau', type }, extra || {}), '*'); }
+        catch (e) {}
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function toggleIndice(id) {
+        const el = document.getElementById(id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function showLockedMsg(text) {
+        const msg = document.getElementById('locked-msg');
+        msg.innerText = text;
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.display = 'none'; }, 2200);
+    }
+
+    function tryOpenEtabli() {
+        if (!solvedState.lettre) { showLockedMsg("🔒 Décryptez d'abord la lettre de Brønsted pour accéder à l'établi."); return; }
+        openModal('modal-etabli');
+    }
+    function tryOpenTiroir() {
+        if (!solvedState.lettre || !solvedState.etabli) { showLockedMsg("🔒 Résolvez les deux énigmes avant d'ouvrir le tiroir."); return; }
+        openModal('modal-tiroir');
+    }
+
+    function updateProgress() {
+        const count = Object.values(solvedState).filter(Boolean).length;
+        document.getElementById('solved-count').innerText = count;
+        notifyParent('room-progress', { solved: count, total: 2 });
+        if (solvedState.lettre) {
+            document.getElementById('hs-etabli').classList.remove('locked');
+        }
+        if (solvedState.lettre && solvedState.etabli) {
+            document.getElementById('hs-tiroir').classList.remove('locked');
+            document.getElementById('hs-tiroir').classList.add('hint-glow');
+        }
+    }
+
+    /* ===================== DRAG & DROP ENGINE ===================== */
+    let dragToken = null, dragOffsetX = 0, dragOffsetY = 0, sourceParent = null, sourceNext = null;
+
+    function makeToken(value, label) {
+        const t = document.createElement('div');
+        t.className = 'token';
+        t.dataset.value = value;
+        t.innerText = label;
+        t.addEventListener('pointerdown', onPointerDown);
+        return t;
+    }
+
+    function onPointerDown(e) {
+        const token = e.currentTarget;
+        dragToken = token;
+        sourceParent = token.parentElement;
+        sourceNext = token.nextSibling;
+        const rect = token.getBoundingClientRect();
+        dragOffsetX = e.clientX - rect.left;
+        dragOffsetY = e.clientY - rect.top;
+        token.style.width = rect.width + 'px';
+        document.body.appendChild(token);
+        token.classList.add('dragging');
+        token.style.left = (e.clientX - dragOffsetX) + 'px';
+        token.style.top = (e.clientY - dragOffsetY) + 'px';
+        document.addEventListener('pointermove', onPointerMove);
+        document.addEventListener('pointerup', onPointerUp);
+        token.setPointerCapture && token.setPointerCapture(e.pointerId);
+    }
+
+    function onPointerMove(e) {
+        if (!dragToken) return;
+        dragToken.style.left = (e.clientX - dragOffsetX) + 'px';
+        dragToken.style.top = (e.clientY - dragOffsetY) + 'px';
+    }
+
+    function onPointerUp(e) {
+        if (!dragToken) return;
+        dragToken.classList.remove('dragging');
+        dragToken.style.left = ''; dragToken.style.top = ''; dragToken.style.width = '';
+        document.removeEventListener('pointermove', onPointerMove);
+        document.removeEventListener('pointerup', onPointerUp);
+
+        dragToken.style.display = 'none';
+        const under = document.elementFromPoint(e.clientX, e.clientY);
+        dragToken.style.display = '';
+        const slot = under ? under.closest('.slot') : null;
+
+        if (slot && slot.closest('.modal-content') === sourceParent.closest('.modal-content')) {
+            if (slot.children.length > 0) {
+                // slot occupé : renvoyer l'occupant dans le plateau (tray) de son propre volet (phase-block),
+                // pas dans le premier plateau trouvé de la modale (utile pour une modale à 2 étapes).
+                const occupant = slot.children[0];
+                const scope = slot.closest('.phase-block') || slot.closest('.modal-content');
+                const tray = scope.querySelector('.tray');
+                tray.appendChild(occupant);
+            }
+            slot.innerHTML = '';
+            slot.appendChild(dragToken);
+            slot.classList.add('filled');
+            slot.classList.remove('correct', 'wrong');
+        } else {
+            if (sourceNext) sourceParent.insertBefore(dragToken, sourceNext);
+            else sourceParent.appendChild(dragToken);
+        }
+        dragToken = null;
+    }
+
+    /* ===================== ENIGME 1 : LA LETTRE ===================== */
+    const lettreEspeces = [
+        ['CH3COOH', 'CH₃COOH'], ['CH3COO−', 'CH₃COO⁻'],
+        ['NH4+', 'NH₄⁺'], ['NH3', 'NH₃'],
+        ['H3O+', 'H₃O⁺'], ['H2O-a', 'H₂O'],
+        ['H2O-b', 'H₂O'], ['OH−', 'OH⁻']
+    ];
+    // remarque : H2O apparaît deux fois (amphotère) -> deux valeurs internes distinctes H2O-a / H2O-b
+    // mais les slots attendent la donnée "H2O" -> on normalise à la vérification
+
+    function shuffle(arr) { return arr.map(v => [Math.random(), v]).sort((a,b) => a[0]-b[0]).map(v => v[1]); }
+
+    function initLettre() {
+        const tray = document.getElementById('tray-lettre');
+        tray.innerHTML = '';
+        shuffle(lettreEspeces).forEach(([val, label]) => tray.appendChild(makeToken(val, label)));
+        document.querySelectorAll('#modal-lettre .slot').forEach(s => { s.innerHTML = s.dataset.slot.includes('acide') ? 'acide' : 'base'; s.classList.remove('filled','correct','wrong'); });
+        document.getElementById('fb-lettre').innerText = '';
+        document.getElementById('fb-lettre').className = 'feedback';
+    }
+    function resetLettre() { initLettre(); }
+
+    // Les 4 couples valides (acide -> base conjuguée). Peu importe la ligne où l'élève les place :
+    // seul compte le fait que l'acide soit à gauche, la base à droite, et que la paire soit correcte.
+    const validPairsLettre = [
+        ['CH3COOH', 'CH3COO−'],
+        ['NH4+', 'NH3'],
+        ['H3O+', 'H2O'],
+        ['H2O', 'OH−']
+    ];
+
+    function checkLettre() {
+        let allFilled = true, allCorrect = true;
+        for (let i = 1; i <= 4; i++) {
+            const acideSlot = document.querySelector(`[data-slot="c${i}-acide"]`);
+            const baseSlot = document.querySelector(`[data-slot="c${i}-base"]`);
+            const acideToken = acideSlot.querySelector('.token');
+            const baseToken = baseSlot.querySelector('.token');
+            if (!acideToken || !baseToken) { allFilled = false; continue; }
+            const aVal = acideToken.dataset.value.replace('-a','').replace('-b','');
+            const bVal = baseToken.dataset.value.replace('-a','').replace('-b','');
+            const isValidPair = validPairsLettre.some(p => p[0] === aVal && p[1] === bVal);
+            if (isValidPair) { acideSlot.classList.add('correct'); baseSlot.classList.add('correct'); acideSlot.classList.remove('wrong'); baseSlot.classList.remove('wrong'); }
+            else { acideSlot.classList.add('wrong'); baseSlot.classList.add('wrong'); acideSlot.classList.remove('correct'); baseSlot.classList.remove('correct'); allCorrect = false; }
+        }
+        const fb = document.getElementById('fb-lettre');
+        if (!allFilled) { fb.className = 'feedback incorrect'; fb.innerText = 'Complétez les 4 couples avant de vérifier.'; return; }
+        if (allCorrect) {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Les 4 couples acide/base sont corrects !';
+            if (!solvedState.lettre) {
+                solvedState.lettre = true;
+                document.getElementById('hs-lettre').classList.add('solved');
+                updateProgress();
+            }
+            setTimeout(() => closeModal('modal-lettre'), 1400);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Certains couples sont incorrects (voir les cases en rouge). Un couple ne diffère que d'un seul H⁺.";
+        }
+    }
+
+    /* ===================== ENIGME 2 : L'ETABLI (2 étapes) ===================== */
+    const etabliCouples = [
+        { acide: 'HCOOH',   base: 'HCOO−',   label: 'HCOOH / HCOO⁻ — pKa 3,8' },
+        { acide: 'CH3COOH', base: 'CH3COO−', label: 'CH3COOH / CH3COO⁻ — pKa 4,8' },
+        { acide: 'HClO',    base: 'ClO−',    label: 'HClO / ClO⁻ — pKa 7,5' },
+        { acide: 'NH4+',    base: 'NH3',     label: 'NH4⁺ / NH3 — pKa 9,2' }
+    ];
+
+    function initEtabli() {
+        // étape 1
+        const tray1 = document.getElementById('tray-etabli-p1');
+        tray1.innerHTML = '';
+        shuffle(etabliCouples).forEach(c => tray1.appendChild(makeToken(c.acide, c.label)));
+        document.querySelectorAll('#etabli-phase1 .slot').forEach(s => { s.innerHTML = '—'; s.classList.remove('filled','correct','wrong'); });
+        document.getElementById('fb-etabli-p1').innerText = '';
+        document.getElementById('fb-etabli-p1').className = 'feedback';
+
+        // étape 2
+        const tray2 = document.getElementById('tray-etabli-p2');
+        tray2.innerHTML = '';
+        const especes2 = [];
+        etabliCouples.forEach(c => { especes2.push([c.acide, c.acide.replace('+','⁺')]); especes2.push([c.base, c.base.replace('−','⁻')]); });
+        shuffle(especes2).forEach(([val, label]) => tray2.appendChild(makeToken(val, label)));
+        document.querySelectorAll('#etabli-phase2 .slot').forEach(s => { s.innerHTML = s.dataset.slot.includes('acide') ? 'acide' : 'base'; s.classList.remove('filled','correct','wrong'); });
+        document.getElementById('fb-etabli-p2').innerText = '';
+        document.getElementById('fb-etabli-p2').className = 'feedback';
+
+        document.getElementById('etabli-phase1').style.display = 'block';
+        document.getElementById('etabli-phase2').style.display = 'none';
+    }
+    function resetEtabli() { initEtabli(); }
+
+    function checkEtabliPhase1() {
+        const slots = document.querySelectorAll('#etabli-phase1 .slot');
+        let allFilled = true, allCorrect = true;
+        slots.forEach(s => {
+            const token = s.querySelector('.token');
+            if (!token) { allFilled = false; return; }
+            if (token.dataset.value === s.dataset.correct) { s.classList.add('correct'); s.classList.remove('wrong'); }
+            else { s.classList.add('wrong'); s.classList.remove('correct'); allCorrect = false; }
+        });
+        const fb = document.getElementById('fb-etabli-p1');
+        if (!allFilled) { fb.className = 'feedback incorrect'; fb.innerText = 'Placez les 4 flacons avant de vérifier.'; return; }
+        if (allCorrect) {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Classement correct ! Passons à l\u2019échelle de pKa.';
+            setTimeout(() => {
+                document.getElementById('etabli-phase1').style.display = 'none';
+                document.getElementById('etabli-phase2').style.display = 'block';
+            }, 900);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Ordre incorrect (voir les cases en rouge). Plus le pKa est petit, plus l'acide est fort.";
+        }
+    }
+
+    function checkEtabliPhase2() {
+        const slots = document.querySelectorAll('#etabli-phase2 .slot');
+        let allFilled = true, allCorrect = true;
+        slots.forEach(s => {
+            const token = s.querySelector('.token');
+            if (!token) { allFilled = false; return; }
+            if (token.dataset.value === s.dataset.correct) { s.classList.add('correct'); s.classList.remove('wrong'); }
+            else { s.classList.add('wrong'); s.classList.remove('correct'); allCorrect = false; }
+        });
+        const fb = document.getElementById('fb-etabli-p2');
+        if (!allFilled) { fb.className = 'feedback incorrect'; fb.innerText = 'Placez les 8 espèces avant de vérifier.'; return; }
+        if (allCorrect) {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Échelle correcte ! Le code du tiroir est déverrouillé.';
+            if (!solvedState.etabli) {
+                solvedState.etabli = true;
+                document.getElementById('hs-etabli').classList.add('solved');
+                updateProgress();
+            }
+            setTimeout(() => closeModal('modal-etabli'), 1400);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Certaines espèces ne sont pas à la bonne graduation (voir les cases en rouge). Un acide et sa base conjuguée partagent le même pKa.";
+        }
+    }
+
+    /* ===================== TIROIR ===================== */
+    function submitTiroir() {
+        const val = document.getElementById('tiroir-code').value.trim();
+        const fb = document.getElementById('fb-tiroir');
+        if (val === '3479') {
+            clearInterval(timerInterval);
+            closeModal('modal-tiroir');
+            document.getElementById('victory-screen').style.display = 'flex';
+            notifyParent('room-complete', { code: '3479', elapsed: totalTime - timeLeft });
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Code incorrect. Reprenez le classement des pKa de l'établi.";
+        }
+    }
+
+    function exitRoom() {
+        // Prévient le hub (page parente) que la salle est terminée et qu'il peut enchaîner sur la suivante.
+        notifyParent('room-exit');
+        // En mode autonome (pas encore intégré à un hub), on informe simplement l'élève.
+        if (window.parent === window) {
+            const screen = document.getElementById('victory-screen');
+            screen.innerHTML = '<h3 style="color:#2ecc71; font-size:2rem;">À bientôt !</h3><p>Cette salle sera bientôt reliée aux suivantes dans le hub de l\'escape game.</p>';
+        }
+    }
+
+    /* ===================== INIT ===================== */
+    initLettre();
+    initEtabli();
+</script>
+
+</body>
+</html>

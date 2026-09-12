@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Game - Le Voyage des Pionniers</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', serif; }
+    html, body { background-color: #12100d; color: #f0e6d2; height: 100%; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+    .hub-wrapper { width: 100%; max-width: 1100px; }
+
+    .hub-progress {
+        display: flex; justify-content: center; align-items: center; gap: 6px;
+        margin-bottom: 14px; flex-wrap: wrap;
+    }
+    .step {
+        display: flex; align-items: center; gap: 8px;
+        background: rgba(212, 175, 55, 0.08); border: 1px solid #4a3728;
+        border-radius: 20px; padding: 6px 14px 6px 8px; font-size: 0.8rem; color: #a08c6e;
+        transition: all 0.3s ease;
+    }
+    .step .dot {
+        width: 22px; height: 22px; border-radius: 50%; background: #2a211b; border: 1.5px solid #4a3728;
+        display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: bold; color: #a08c6e;
+        flex-shrink: 0;
+    }
+    .step.current { border-color: #d4af37; color: #d4af37; box-shadow: 0 0 10px rgba(212,175,55,0.35); }
+    .step.current .dot { background: #d4af37; color: #1c1612; border-color: #d4af37; }
+    .step.done { border-color: #2ecc71; color: #2ecc71; }
+    .step.done .dot { background: #2ecc71; color: #0d1f14; border-color: #2ecc71; }
+    .step-sep { width: 18px; height: 1px; background: #4a3728; flex-shrink: 0; }
+
+    .game-container {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        border: 4px solid #4a3728;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #1c1612;
+    }
+
+    .scene-hub { position: absolute; inset: 0; display: none; }
+    .scene-hub.active { display: block; }
+
+    #scene-room iframe { width: 100%; height: 100%; border: none; display: block; background: #000; }
+
+    /* ---- écrans narratifs (intro / transitions / conclusion) ---- */
+    .narrative-bg {
+        position: absolute; inset: 0; background-size: cover; background-position: center;
+    }
+    .narrative-bg::after {
+        content: ''; position: absolute; inset: 0; background: rgba(12, 9, 6, 0.82);
+    }
+    #bg-intro { background-image: url('bureau_1.png'); }
+    #bg-t1 { background-image: url('bureau_2.jpg'); }
+    #bg-t2 { background-image: url('bureau_3.jpg'); }
+    #bg-t3 { background-image: url('labo_final_1.jpg'); }
+    #bg-conclusion { background-image: url('labo_final_2.jpg'); }
+
+    .narrative-panel {
+        position: relative; z-index: 2; height: 100%; display: flex;
+        justify-content: center; align-items: center; padding: 24px; overflow-y: auto;
+    }
+    .narrative-card {
+        background: #1c1612; border: 2px solid #d4af37; border-radius: 8px;
+        padding: 26px 30px; max-width: 640px; width: 100%; max-height: 100%; overflow-y: auto;
+        box-shadow: 0 0 25px rgba(0,0,0,0.6); text-align: center;
+    }
+    .narrative-tag {
+        display: inline-block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+        color: #a08c6e; border: 1px solid #4a3728; border-radius: 12px; padding: 3px 12px; margin-bottom: 12px;
+    }
+    .narrative-card h2 {
+        color: #d4af37; font-size: 1.5rem; margin-bottom: 14px; border-bottom: 1px solid rgba(212,175,55,0.3);
+        padding-bottom: 10px;
+    }
+    .narrative-card p { font-size: 0.94rem; line-height: 1.6; margin-bottom: 14px; text-align: left; }
+    .narrative-card p.signature { font-style: italic; color: #a08c6e; font-size: 0.85rem; text-align: right; margin-top: -6px; }
+    .narrative-card .stamp {
+        display: inline-block; border: 2px double #d4af37; color: #d4af37; font-size: 0.72rem;
+        letter-spacing: 0.06em; padding: 5px 10px; margin-bottom: 14px; transform: rotate(-2deg);
+    }
+
+    .btn-voyage {
+        background: #d4af37; color: #1c1612; border: none; padding: 12px 26px;
+        font-weight: bold; font-size: 0.95rem; border-radius: 4px; cursor: pointer; margin-top: 6px;
+        transition: all 0.2s ease;
+    }
+    .btn-voyage:hover { background: #e8c65a; box-shadow: 0 0 14px rgba(212,175,55,0.5); }
+
+    .codes-recap { text-align: left; margin: 6px 0 16px; list-style: none; }
+    .codes-recap li {
+        display: flex; justify-content: space-between; padding: 7px 12px; margin-bottom: 6px;
+        background: rgba(212,175,55,0.08); border: 1px solid #4a3728; border-radius: 5px; font-size: 0.86rem;
+    }
+    .codes-recap li span.val { color: #d4af37; font-weight: bold; letter-spacing: 1px; }
+    .total-time-box {
+        display: inline-block; margin-top: 4px; padding: 8px 18px; border: 1px solid #4a3728;
+        border-radius: 20px; font-size: 0.85rem; color: #a08c6e;
+    }
+    .total-time-box strong { color: #d4af37; }
+</style>
+</head>
+<body>
+
+<div class="hub-wrapper">
+
+    <div class="hub-progress" id="hub-progress">
+        <div class="step" id="step-0"><span class="dot">1</span>Copenhague</div>
+        <div class="step-sep"></div>
+        <div class="step" id="step-1"><span class="dot">2</span>Cambridge</div>
+        <div class="step-sep"></div>
+        <div class="step" id="step-2"><span class="dot">3</span>Berkeley</div>
+        <div class="step-sep"></div>
+        <div class="step" id="step-3"><span class="dot">4</span>Centre Intl.</div>
+    </div>
+
+    <div class="game-container">
+
+        <!-- ================= INTRODUCTION ================= -->
+        <div class="scene-hub active" id="scene-intro">
+            <div class="narrative-bg" id="bg-intro"></div>
+            <div class="narrative-panel">
+                <div class="narrative-card">
+                    <span class="narrative-tag">Prologue — 1923</span>
+                    <h2>Le Voyage des Pionniers</h2>
+                    <p>En cette même année 1923, sans se connaître, trois chimistes travaillent chacun de leur côté sur une question vieille comme la chimie elle-même : <strong>qu'est-ce qu'un acide, qu'est-ce qu'une base ?</strong></p>
+                    <p>À Copenhague, <strong>Johannes Brønsted</strong> classe ses observations dans son bureau. À Cambridge, <strong>Thomas Martin Lowry</strong> aboutit, seul, presque au même instant, à la même conclusion. Sur un autre continent, à Berkeley, <strong>Gilbert Newton Lewis</strong> imagine une théorie plus large encore.</p>
+                    <p>Un télégramme urgent vient de circuler entre les trois laboratoires : un centre de recherche international a besoin de la synthèse de ces trois découvertes pour achever la mise au point d'un antidote. Le temps presse.</p>
+                    <p>Vous allez voyager de bureau en bureau, de malle postale en télégramme, pour reconstituer ce fil scientifique — d'un pays à l'autre, d'une théorie à l'autre.</p>
+                    <button class="btn-voyage" onclick="startVoyage()">Ouvrir la première malle — Copenhague, 1923 →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SALLE COURANTE (iframe) ================= -->
+        <div class="scene-hub" id="scene-room">
+            <iframe id="room-iframe" src="about:blank" title="Salle de l'escape game"></iframe>
+        </div>
+
+        <!-- ================= TRANSITION 1 : Copenhague -> Cambridge ================= -->
+        <div class="scene-hub" id="scene-t1">
+            <div class="narrative-bg" id="bg-t1"></div>
+            <div class="narrative-panel">
+                <div class="narrative-card">
+                    <div class="stamp">Chemins de fer danois — 1923</div>
+                    <h2>Un billet pour Cambridge</h2>
+                    <p>Le tiroir du bureau de Brønsted s'est ouvert sur un billet de train : <strong id="t1-code">3479</strong>. Une note glissée à côté, de l'écriture pressée de Brønsted lui-même, indique qu'un confrère anglais serait arrivé, sans concertation, à la même conclusion que lui sur les couples acide/base.</p>
+                    <p>Direction l'Angleterre : le laboratoire de <strong>T. M. Lowry</strong>, à Cambridge, vous attend.</p>
+                    <p class="signature">— J. N. Brønsted</p>
+                    <button class="btn-voyage" onclick="goToRoom(1)">Embarquer pour Cambridge →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TRANSITION 2 : Cambridge -> Berkeley ================= -->
+        <div class="scene-hub" id="scene-t2">
+            <div class="narrative-bg" id="bg-t2"></div>
+            <div class="narrative-panel">
+                <div class="narrative-card">
+                    <div class="stamp">Câble transatlantique — Western Union</div>
+                    <h2>Cap sur la Californie</h2>
+                    <p>Sous la porte du laboratoire de Lowry, une carte : <em>« Si vos calculs sont exacts, vous savez lire un couple acide/base. Reste à savoir si vous connaissez aussi l'eau elle-même... »</em> Le mot de passe retenu, <strong id="t2-code">pKe = 14</strong>, ouvre la voie.</p>
+                    <p>La carte porte une adresse : <strong>Gilbert Newton Lewis, doyen, Berkeley, Californie</strong>. Un télégramme transatlantique confirme votre passage sur le prochain paquebot.</p>
+                    <p class="signature">— T. M. Lowry</p>
+                    <button class="btn-voyage" onclick="goToRoom(2)">Traverser l'Atlantique vers Berkeley →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TRANSITION 3 : Berkeley -> Centre International ================= -->
+        <div class="scene-hub" id="scene-t3">
+            <div class="narrative-bg" id="bg-t3"></div>
+            <div class="narrative-panel">
+                <div class="narrative-card">
+                    <div class="stamp">Archives centrales — Accès autorisé</div>
+                    <h2>Trois théories, une seule réponse</h2>
+                    <p>Dans son bureau de Berkeley, Lewis a rangé le mot-clé <strong id="t3-code">ZWITTERION</strong> parmi ses notes sur les doublets d'électrons. Sa théorie, plus générale que celle de Brønsted et Lowry, vient de déverrouiller l'accès aux archives centrales.</p>
+                    <p>Là-bas, les trois recherches — le proton de Brønsted et Lowry, le doublet d'électrons de Lewis — doivent enfin converger pour permettre la synthèse de l'antidote.</p>
+                    <button class="btn-voyage" onclick="goToRoom(3)">Rejoindre le Centre International →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CONCLUSION ================= -->
+        <div class="scene-hub" id="scene-conclusion">
+            <div class="narrative-bg" id="bg-conclusion"></div>
+            <div class="narrative-panel">
+                <div class="narrative-card">
+                    <span class="narrative-tag">Épilogue</span>
+                    <h2>Le voyage s'achève</h2>
+                    <p>Le coffre du Centre International s'est ouvert. Réunies, les trois théories — celle de Brønsted et Lowry sur le transfert de proton, celle de Lewis sur le transfert de doublet d'électrons — ont permis de caractériser précisément l'espèce active de l'antidote et sa concentration. La synthèse peut enfin être validée.</p>
+                    <p>Trois chimistes, trois pays, trois façons de définir un acide et une base — et une seule chimie, en définitive, qui les relie tous.</p>
+                    <ul class="codes-recap" id="codes-recap"></ul>
+                    <div class="total-time-box">Temps total du voyage : <strong id="total-time">—</strong></div>
+                    <br>
+                    <button class="btn-voyage" onclick="restartVoyage()">↺ Recommencer le voyage</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const rooms = [
+        { id: 'bronsted-bureau',      file: 'salle_bronsted.html',              label: 'Copenhague',   code: null, elapsed: null },
+        { id: 'lowry-laboratoire',    file: 'salle_lowry.html',                 label: 'Cambridge',    code: null, elapsed: null },
+        { id: 'lewis-bureau',         file: 'salle_lewis.html',                 label: 'Berkeley',     code: null, elapsed: null },
+        { id: 'centre-international', file: 'salle_centre_international.html',  label: 'Centre Intl.', code: null, elapsed: null }
+    ];
+    let currentIndex = -1;
+
+    function showScene(id) {
+        document.querySelectorAll('.scene-hub').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function updateProgressBar() {
+        rooms.forEach((r, idx) => {
+            const el = document.getElementById('step-' + idx);
+            el.classList.remove('current', 'done');
+            if (r.code) el.classList.add('done');
+            else if (idx === currentIndex) el.classList.add('current');
+        });
+    }
+
+    function startVoyage() { goToRoom(0); }
+
+    function goToRoom(i) {
+        currentIndex = i;
+        document.getElementById('room-iframe').src = rooms[i].file;
+        showScene('scene-room');
+        updateProgressBar();
+    }
+
+    window.addEventListener('message', (e) => {
+        const d = e.data;
+        if (!d || d.source !== 'escape-game') return;
+        if (currentIndex < 0 || d.room !== rooms[currentIndex].id) return;
+
+        if (d.type === 'room-complete') {
+            rooms[currentIndex].code = d.code;
+            rooms[currentIndex].elapsed = d.elapsed || 0;
+            updateProgressBar();
+        } else if (d.type === 'room-exit') {
+            advanceAfterRoom(currentIndex);
+        }
+    });
+
+    function advanceAfterRoom(i) {
+        document.getElementById('room-iframe').src = 'about:blank';
+        if (i === 0) showScene('scene-t1');
+        else if (i === 1) showScene('scene-t2');
+        else if (i === 2) showScene('scene-t3');
+        else if (i === 3) showConclusion();
+    }
+
+    function showConclusion() {
+        const totalSec = rooms.reduce((s, r) => s + (r.elapsed || 0), 0);
+        const m = Math.floor(totalSec / 60), s = totalSec % 60;
+        document.getElementById('total-time').innerText = `${m} min ${s < 10 ? '0' : ''}${s} s`;
+        const list = document.getElementById('codes-recap');
+        list.innerHTML = rooms.map(r => `<li><span>${r.label}</span><span class="val">${r.code || '—'}</span></li>`).join('');
+        showScene('scene-conclusion');
+    }
+
+    function restartVoyage() {
+        rooms.forEach(r => { r.code = null; r.elapsed = null; });
+        currentIndex = -1;
+        updateProgressBar();
+        showScene('scene-intro');
+    }
+
+    updateProgressBar();
+</script>
+
+</body>
+</html>

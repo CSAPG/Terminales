@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Game - Le Bureau de G.N. Lewis</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', serif; }
+    html, body { background-color: #0d0d0d; color: #f0e6d2; height: 100%; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+    .game-container {
+        position: relative;
+        width: 100%;
+        max-width: 1100px;
+        aspect-ratio: 16 / 9;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        border: 4px solid #4a3728;
+        border-radius: 8px;
+        overflow: hidden;
+        background-image: url('bureau_3.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .header-bar {
+        position: absolute; top: 15px; left: 20px; right: 20px;
+        display: flex; justify-content: space-between; align-items: center; z-index: 10;
+    }
+    .progress-bar, .timer-box {
+        background: rgba(20, 15, 10, 0.85); border: 1px solid #d4af37;
+        padding: 8px 16px; border-radius: 20px; font-size: 0.95rem;
+        color: #d4af37; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .timer-box { font-weight: bold; font-size: 1.1rem; color: #e74c3c; }
+
+    .hotspot {
+        position: absolute; border-radius: 10px; background: transparent;
+        cursor: pointer; z-index: 5; transition: all 0.3s ease;
+    }
+    .hotspot.solved { background: rgba(46, 204, 113, 0.35) !important; border: 2px solid #2ecc71 !important; box-shadow: 0 0 15px #2ecc71; }
+    .hotspot.locked { cursor: not-allowed; }
+
+    #hs-tableau-gauche { top: 20.8%; left: 29.1%; width: 20.6%; height: 34.5%; }
+    #hs-tableau-droit   { top: 19.5%; left: 65%;   width: 25.9%; height: 44.3%; }
+    #hs-maquette        { top: 56.6%; left: 66.8%; width: 11.4%; height: 28%; }
+    #hs-doublets        { top: 3.9%;  left: 50.8%; width: 40.1%; height: 17.6%; }
+    #hs-fiche           { top: 68.4%; left: 19.9%; width: 42.3%; height: 22.8%; }
+
+    .hint-glow { animation: doorHint 1.6s ease-in-out infinite; }
+    @keyframes doorHint {
+        0%, 100% { box-shadow: 0 0 8px 3px rgba(212, 175, 55, 0.25); }
+        50% { box-shadow: 0 0 22px 9px rgba(212, 175, 55, 0.85); }
+    }
+
+    .modal {
+        display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.85);
+        z-index: 20; justify-content: center; align-items: center; padding: 16px;
+    }
+    .modal-content {
+        background: #1c1612; border: 2px solid #d4af37; border-radius: 8px;
+        padding: 22px; max-width: 680px; width: 100%; max-height: 92%; overflow-y: auto;
+        box-shadow: 0 0 20px rgba(0,0,0,0.8); color: #f0e6d2; position: relative;
+    }
+    .modal-content h3 {
+        color: #d4af37; margin-bottom: 10px; font-size: 1.25rem;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 6px;
+    }
+    .modal-content p { margin-bottom: 12px; font-size: 0.92rem; line-height: 1.4; }
+    .close-btn { position: absolute; top: 8px; right: 13px; background: none; border: none; color: #aaa; font-size: 1.4rem; cursor: pointer; }
+
+    /* --- fragments de décor --- */
+    .doc-fragment {
+        background: #ece2c8; color: #2a2015; border: 1px solid #b8a679; border-radius: 3px;
+        padding: 14px 16px; margin-bottom: 14px; font-family: 'Courier New', monospace;
+        font-size: 0.9rem; line-height: 1.5; box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .doc-fragment .fiche-tech { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #b8a679; font-size: 0.8rem; color: #5a4a30; }
+
+    /* --- boutons --- */
+    .btn-indice {
+        background: #FFF6E0; color: #C98A00; border: 1px solid #C98A00;
+        padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold;
+    }
+    .btn-indice:hover { background: #C98A00; color: #fff; }
+    .indice-box {
+        display: none; background: #FFF6E0; color: #7a5200; border: 1px dashed #C98A00;
+        border-radius: 4px; padding: 8px 10px; margin-top: 8px; font-size: 0.85rem;
+    }
+    .check-btn {
+        background: #3a6ea5; color: #fff; border: none; padding: 9px 18px;
+        border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem;
+    }
+    .check-btn:hover { background: #4d84c0; }
+    .btn-recommencer2 {
+        background: #4a4a4a; color: #fff; border: none; padding: 8px 16px;
+        border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+    }
+    .btn-recommencer2:hover { background: #6c6c6c; }
+    .btn-fermer2 {
+        background: #3a6ea5; color: #fff; border: none; padding: 9px 18px;
+        border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem;
+    }
+    .btn-fermer2:hover { background: #4d84c0; }
+
+    .feedback { margin-top: 10px; font-size: 0.88rem; font-weight: bold; min-height: 1.1em; }
+    .feedback.correct { color: #2ecc71; }
+    .feedback.incorrect { color: #e74c3c; }
+
+    /* --- schéma topologique --- */
+    .schema-box {
+        background: #ece2c8; border: 1px solid #b8a679; border-radius: 4px;
+        padding: 14px; margin-bottom: 14px; text-align: center;
+    }
+    .schema-box svg { max-width: 100%; height: auto; }
+
+    .formule-options {
+        display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 14px 0;
+    }
+    .formule-option {
+        background: #ece2c8; border: 2px solid #b8a679; border-radius: 6px;
+        padding: 10px; width: 190px; text-align: center; cursor: pointer; transition: all 0.2s ease;
+    }
+    .formule-option svg { width: 100%; height: auto; }
+    .formule-option .formule-label { margin-top: 6px; font-size: 0.8rem; color: #5a4a30; font-weight: bold; }
+    .formule-option:hover { border-color: #d4af37; }
+    .formule-option.selected { border-color: #3a6ea5; box-shadow: 0 0 8px rgba(58, 110, 165, 0.5); }
+    .formule-option.correct { border-color: #2ecc71 !important; box-shadow: 0 0 10px #2ecc71; }
+    .formule-option.incorrect { border-color: #e74c3c !important; box-shadow: 0 0 10px #e74c3c; }
+
+    .pka-row {
+        display: flex; justify-content: center; gap: 30px; margin: 14px 0;
+        font-size: 1.05rem; color: #d4af37; font-weight: bold;
+    }
+
+    .pass-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .pass-input {
+        padding: 9px 12px; font-size: 1rem; border: 1px solid #d4af37;
+        background: #0d0d0d; color: #fff; border-radius: 4px; width: 220px;
+        letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    .end-screen {
+        display: none; position: absolute; inset: 0; background: rgba(10,8,5,0.95);
+        z-index: 30; flex-direction: column; justify-content: center; align-items: center;
+        text-align: center; padding: 20px;
+    }
+    .digit-reveal {
+        font-size: 1.7rem; color: #d4af37; border: 2px solid #d4af37; border-radius: 10px;
+        padding: 10px 26px; margin: 16px 0; letter-spacing: 3px;
+    }
+
+    #locked-msg {
+        display: none; position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 10;
+        background: rgba(20, 15, 10, 0.9); border: 1px solid #e74c3c; border-radius: 8px;
+        padding: 10px 16px; font-size: 0.9rem; color: #e88; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    #hint-sortie-msg {
+        display: none; position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 10;
+        background: rgba(20, 15, 10, 0.9); border: 1px solid #d4af37; border-radius: 8px;
+        padding: 10px 16px; font-size: 0.9rem; color: #d4af37; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+</style>
+</head>
+<body>
+
+<div class="game-container" id="game-container">
+    <div class="header-bar">
+        <div class="progress-bar">Indices explorés : <span id="indices-count">0</span> / 4</div>
+        <div class="timer-box">⏱ <span id="timer">05:00</span></div>
+    </div>
+
+    <!-- ===================== HOTSPOTS ===================== -->
+    <div class="hotspot" id="hs-tableau-gauche" onclick="openIndice('tableau-gauche')"></div>
+    <div class="hotspot" id="hs-tableau-droit" onclick="openIndice('tableau-droit')"></div>
+    <div class="hotspot" id="hs-maquette" onclick="openIndice('maquette')"></div>
+    <div class="hotspot" id="hs-doublets" onclick="openIndice('doublets')"></div>
+    <div class="hotspot locked" id="hs-fiche" onclick="tryOpenFiche()"></div>
+
+    <div id="locked-msg"></div>
+    <div id="hint-sortie-msg">⏳ Il ne reste qu'une minute : concentrez-vous sur la fiche de l'acide α-aminé pour trouver le mot de passe !</div>
+
+    <!-- ===================== MODAL : TABLEAU GAUCHE ===================== -->
+    <div class="modal" id="modal-tableau-gauche">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-tableau-gauche')">✕</button>
+            <h3>Tableau noir — Structures de Lewis</h3>
+            <div class="doc-fragment">
+                Sur ce tableau, le professeur Lewis a représenté les molécules H₂O et CO₂ à l'aide de leurs doublets non liants (représentés par des points autour des atomes).
+                <div class="fiche-tech">📌 Rappel : un doublet non liant appartient à un seul atome ; un doublet liant est partagé entre deux atomes.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODAL : TABLEAU DROIT ===================== -->
+    <div class="modal" id="modal-tableau-droit">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-tableau-droit')">✕</button>
+            <h3>Tableau noir — Acides et bases de Lewis</h3>
+            <div class="doc-fragment">
+                CH₄, BF₃—NH₃... Le tableau illustre la théorie de Lewis : un acide de Lewis accepte un doublet d'électrons, une base de Lewis en cède un.
+                <div class="fiche-tech">📌 Rappel : cette théorie généralise la notion d'acide/base au-delà des seuls échanges de H⁺.</div>
+            </div>
+            <div class="doc-fragment">
+                Une note griffonnée dans la marge attire l'œil : « Certaines espèces chimiques peuvent, selon les circonstances, se comporter comme un acide ou comme une base — on les dit <strong>amphotères</strong>. »
+                <div class="fiche-tech">📌 À retenir : une espèce amphotère peut à la fois céder et capter un proton H⁺ (ou un doublet, selon Lewis). Ce mot pourrait vous être utile plus loin dans le bureau...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODAL : MAQUETTE ===================== -->
+    <div class="modal" id="modal-maquette">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-maquette')">✕</button>
+            <h3>Maquette moléculaire</h3>
+            <div class="doc-fragment">
+                Un modèle en bois et fil de fer, éclairé de petites diodes rouges, représente les liaisons covalentes reliant les atomes entre eux.
+                <div class="fiche-tech">📌 Rappel : une liaison covalente correspond à la mise en commun d'un doublet d'électrons entre deux atomes.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODAL : DOUBLETS ===================== -->
+    <div class="modal" id="modal-doublets">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-doublets')">✕</button>
+            <h3>Étagère — Doublets d'électrons</h3>
+            <div class="doc-fragment">
+                De petites maquettes étiquetées « electron pair » s'alignent sur l'étagère, chacune représentant deux électrons appariés.
+                <div class="fiche-tech">📌 Rappel : les doublets d'électrons (liants ou non liants) sont au cœur du modèle de Lewis.</div>
+            </div>
+            <div class="doc-fragment">
+                Coincée entre deux maquettes, une carte annotée par Lewis lui-même : « Une molécule qui porte simultanément une charge positive et une charge négative, tout en restant globalement neutre, est appelée <strong>zwitterion</strong> (de l'allemand "ion hybride"). »
+                <div class="fiche-tech">📌 À retenir : ce terme désigne un ion dipolaire — un mot à garder en tête pour la suite de l'enquête.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODAL : FICHE (ÉNIGME 4) ===================== -->
+    <div class="modal" id="modal-fiche">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-fiche')">✕</button>
+            <h3>Note de Lewis — Les acides α-aminés</h3>
+            <div class="doc-fragment">
+                « Ces molécules du vivant possèdent deux fonctions acido-basiques distinctes : une fonction acide carboxylique et une fonction amine. Leur état d'ionisation dépend étroitement du pH du milieu. »
+            </div>
+
+            <div class="pka-row">
+                <span>pKa₁ = 2,4</span>
+                <span>pKa₂ = 9,9</span>
+            </div>
+
+            <div class="doc-fragment">
+                Le texte joint précise : « Le milieu réactionnel local a un pH de 6,0. »
+            </div>
+
+            <p style="font-size:0.85rem; color:#a8946a;">🔎 Si certains mots vous semblent familiers, relisez les indices explorés dans le bureau : ils restent accessibles à tout moment en recliquant dessus.</p>
+
+            <p><strong>Consigne :</strong> Parmi les trois formules ci-dessous, identifiez la forme chimique et ionique majoritaire de cet acide α-aminé au cœur de la cellule.
+                <button class="btn-indice" onclick="toggleIndice('ind-fiche')">💡 Indice</button>
+            </p>
+            <div class="indice-box" id="ind-fiche">
+                Comparez le pH (6,0) aux deux pKa. Entre pKa₁ et pKa₂, la fonction acide carboxylique est sous forme basique (COO⁻) et la fonction amine sous forme acide (NH₃⁺).
+            </div>
+
+            <div class="formule-options" id="formule-options"></div>
+            <button class="check-btn" onclick="checkFormule()">✓ Vérifier</button>
+            <div class="feedback" id="fb-formule"></div>
+
+            <div id="fiche-etape2" style="display:none;">
+                <div class="doc-fragment" style="margin-top:16px;">
+                    Cette molécule porte à la fois une charge positive et une charge négative : elle est donc <strong>amphotère</strong>. Le nom scientifique de ce type d'ion dipolaire a été mentionné plus tôt dans le bureau — c'est précisément le mot qui ouvrira les archives.
+                </div>
+                <p><strong>Le mot de passe textuel vous donnera accès aux archives centrales :</strong></p>
+                <div class="pass-row">
+                    <input type="text" class="pass-input" id="fiche-input" placeholder="MOT DE PASSE">
+                    <button class="check-btn" onclick="checkFiche()">✓ Vérifier</button>
+                </div>
+                <div class="feedback" id="fb-fiche"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== ÉCRAN DE VICTOIRE ===================== -->
+    <div class="end-screen" id="victory-screen">
+        <h3 style="color:#2ecc71; font-size:1.8rem;">🔓 Accès déverrouillé !</h3>
+        <div class="digit-reveal">ZWITTERION</div>
+        <p>Les archives centrales s'ouvrent : l'étape finale est désormais accessible.</p>
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+            <button class="btn-recommencer2" onclick="location.reload()">↺ Recommencer la salle</button>
+            <button class="btn-fermer2" onclick="exitRoom()">🚪 Quitter la salle</button>
+        </div>
+    </div>
+
+    <!-- ===================== ÉCRAN D'ÉCHEC (temps écoulé) ===================== -->
+    <div class="end-screen" id="defeat-screen">
+        <h3 style="color:#e74c3c; font-size:1.8rem;">⏱ Temps écoulé !</h3>
+        <p>La note de Lewis reste incomplète...</p>
+        <button class="btn-recommencer2" style="margin-top:18px;" onclick="location.reload()">↺ Recommencer la salle</button>
+    </div>
+</div>
+
+<script>
+    let visitedState = { 'tableau-gauche': false, 'tableau-droit': false, maquette: false, doublets: false };
+    let timeLeft = 300;
+    let timerInterval;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('t')) timeLeft = parseInt(params.get('t'), 10) || timeLeft;
+    const totalTime = timeLeft;
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+            document.getElementById('timer').innerText = `${m<10?'0':''}${m}:${s<10?'0':''}${s}`;
+            if (timeLeft === 60) {
+                document.getElementById('hint-sortie-msg').style.display = 'block';
+            }
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('defeat-screen').style.display = 'flex';
+                notifyParent('room-timeout');
+            }
+        }, 1000);
+    }
+    startTimer();
+
+    function notifyParent(type, extra) {
+        try { window.parent.postMessage(Object.assign({ source: 'escape-game', room: 'lewis-bureau', type }, extra || {}), '*'); }
+        catch (e) {}
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function toggleIndice(id) {
+        const el = document.getElementById(id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function showLockedMsg(text) {
+        const msg = document.getElementById('locked-msg');
+        msg.innerText = text;
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.display = 'none'; }, 2200);
+    }
+
+    /* ===================== INDICES (4 zones d'exploration) ===================== */
+    function openIndice(key) {
+        openModal('modal-' + key);
+        if (!visitedState[key]) {
+            visitedState[key] = true;
+            document.getElementById('hs-' + key).classList.add('solved');
+            updateIndicesCount();
+        }
+    }
+
+    function updateIndicesCount() {
+        const count = Object.values(visitedState).filter(Boolean).length;
+        document.getElementById('indices-count').innerText = count;
+        notifyParent('room-progress', { indices: count, total: 4 });
+        if (count === 4) {
+            document.getElementById('hs-fiche').classList.remove('locked');
+            document.getElementById('hs-fiche').classList.add('hint-glow');
+        }
+    }
+
+    function tryOpenFiche() {
+        const count = Object.values(visitedState).filter(Boolean).length;
+        if (count < 4) { showLockedMsg("🔒 Explorez d'abord les 4 indices du bureau (tableaux, maquette, doublets) — lisez-les attentivement, ils contiennent des éléments utiles pour la suite."); return; }
+        openModal('modal-fiche');
+    }
+
+    /* ===================== FICHE ÉTAPE 1 : IDENTIFICATION DE LA FORME ===================== */
+    function aminoTspans(state) {
+        if (state === 'NH3+') {
+            return `<tspan font-size="26">NH</tspan><tspan font-size="15" dy="6">3</tspan><tspan font-size="17" dy="-13" fill="#a5321f" font-weight="bold">+</tspan>`;
+        }
+        return `<tspan font-size="26">NH</tspan><tspan font-size="15" dy="6">2</tspan>`;
+    }
+
+    function carboxyTspans(state) {
+        if (state === 'O-') {
+            return `<tspan font-size="26">O</tspan><tspan font-size="19" dy="-11" fill="#a5321f" font-weight="bold">−</tspan>`;
+        }
+        return `<tspan font-size="26">OH</tspan>`;
+    }
+
+    function schemaSVG(aminoState, carboxyState) {
+        return `<svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg">
+            <!-- squelette carboné : méthyle - Cα - carbone du carboxyle (angle net, ~59°, sur toute la chaîne) -->
+            <polyline points="30,170 78,90 126,170" fill="none" stroke="#2a2015" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+            <!-- liaison vers l'azote (au-dessus de Cα), avec un espace net avant le label -->
+            <line x1="78" y1="90" x2="78" y2="48" stroke="#2a2015" stroke-width="2.6" stroke-linecap="round"/>
+            <text x="78" y="20" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" fill="#2a2015">${aminoTspans(aminoState)}</text>
+            <!-- double liaison C=O : deux barres de même longueur, parallèles -->
+            <line x1="126" y1="170" x2="172" y2="92" stroke="#2a2015" stroke-width="2.6" stroke-linecap="round"/>
+            <line x1="132" y1="173.6" x2="178" y2="95.6" stroke="#2a2015" stroke-width="2.6" stroke-linecap="round"/>
+            <text x="185" y="79" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" fill="#2a2015"><tspan font-size="26">O</tspan></text>
+            <!-- liaison simple C-O(H), presque verticale (~77°), nettement descendante -->
+            <line x1="126" y1="170" x2="144" y2="250" stroke="#2a2015" stroke-width="2.6" stroke-linecap="round"/>
+            <text x="147" y="264" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" fill="#2a2015">${carboxyTspans(carboxyState)}</text>
+        </svg>`;
+    }
+
+    const formesPossibles = [
+        { id: 'cation',     amino: 'NH3+', carboxy: 'OH' },
+        { id: 'zwitterion', amino: 'NH3+', carboxy: 'O-' },
+        { id: 'anion',      amino: 'NH2',  carboxy: 'O-' }
+    ];
+    let formeSelectionnee = null;
+
+    function initFiche() {
+        const container = document.getElementById('formule-options');
+        container.innerHTML = '';
+        shuffle(formesPossibles).forEach(f => {
+            const div = document.createElement('div');
+            div.className = 'formule-option';
+            div.dataset.id = f.id;
+            div.innerHTML = schemaSVG(f.amino, f.carboxy) + '<div class="formule-label">Formule</div>';
+            div.addEventListener('click', () => selectFormule(div));
+            container.appendChild(div);
+        });
+        formeSelectionnee = null;
+        document.getElementById('fb-formule').innerText = '';
+        document.getElementById('fb-formule').className = 'feedback';
+        document.getElementById('fiche-etape2').style.display = 'none';
+        document.getElementById('fiche-input').value = '';
+        document.getElementById('fb-fiche').innerText = '';
+        document.getElementById('fb-fiche').className = 'feedback';
+    }
+
+    function selectFormule(div) {
+        document.querySelectorAll('.formule-option').forEach(o => o.classList.remove('selected', 'correct', 'incorrect'));
+        div.classList.add('selected');
+        formeSelectionnee = div;
+    }
+
+    function checkFormule() {
+        const fb = document.getElementById('fb-formule');
+        if (!formeSelectionnee) { fb.className = 'feedback incorrect'; fb.innerText = 'Sélectionnez une formule avant de vérifier.'; return; }
+        document.querySelectorAll('.formule-option').forEach(o => o.classList.remove('correct', 'incorrect'));
+        if (formeSelectionnee.dataset.id === 'zwitterion') {
+            formeSelectionnee.classList.add('correct');
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Exact ! Entre pKa₁ et pKa₂, l\'acide α-aminé porte deux charges opposées.';
+            document.getElementById('fiche-etape2').style.display = 'block';
+        } else {
+            formeSelectionnee.classList.add('incorrect');
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Ce n'est pas la forme majoritaire à pH = 6,0. Comparez à nouveau le pH aux deux pKa.";
+        }
+    }
+
+    /* ===================== FICHE ÉTAPE 2 : MOT DE PASSE (ZWITTERION) ===================== */
+    function normalizePass(str) {
+        return str.trim().toUpperCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function checkFiche() {
+        const val = normalizePass(document.getElementById('fiche-input').value);
+        const fb = document.getElementById('fb-fiche');
+        if (!val) { fb.className = 'feedback incorrect'; fb.innerText = 'Entrez un mot de passe avant de vérifier.'; return; }
+        if (val === 'ZWITTERION') {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Exact ! Les archives centrales s\'ouvrent...';
+            clearInterval(timerInterval);
+            document.getElementById('hint-sortie-msg').style.display = 'none';
+            setTimeout(() => {
+                closeModal('modal-fiche');
+                document.getElementById('hs-fiche').classList.add('solved');
+                document.getElementById('hs-fiche').classList.remove('hint-glow');
+                document.getElementById('victory-screen').style.display = 'flex';
+                notifyParent('room-complete', { code: 'ZWITTERION', elapsed: totalTime - timeLeft });
+            }, 900);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Ce n'est pas la bonne forme. Comparez le pH à pKa₁ et pKa₂ : quel est l'état de chaque fonction acido-basique ?";
+        }
+    }
+
+    function shuffle(arr) { return arr.map(v => [Math.random(), v]).sort((a,b) => a[0]-b[0]).map(v => v[1]); }
+
+    function exitRoom() {
+        notifyParent('room-exit');
+        if (window.parent === window) {
+            const screen = document.getElementById('victory-screen');
+            screen.innerHTML = '<h3 style="color:#2ecc71; font-size:2rem;">À bientôt !</h3><p>Cette salle sera bientôt reliée aux suivantes dans le hub de l\'escape game.</p>';
+        }
+    }
+
+    /* ===================== INIT ===================== */
+    initFiche();
+</script>
+
+</body>
+</html>

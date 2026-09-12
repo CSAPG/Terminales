@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Game - Le Centre International de la Chimie</title>
+<style>
+    :root {
+        --bleu: #3a6ea5;
+        --bleu-clair: #eaf3fb;
+        --accent: #1f6fb2;
+        --neon: #29b6f6;
+        --panel-bg: rgba(255, 255, 255, 0.97);
+        --panel-border: #9fc7e6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', 'Nunito', Arial, sans-serif; }
+    html, body { background-color: #dce9f5; color: #1c3a52; height: 100%; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+    .game-container {
+        position: relative;
+        width: 100%;
+        max-width: 1100px;
+        aspect-ratio: 16 / 9;
+        box-shadow: 0 0 30px rgba(41, 182, 246, 0.35);
+        border: 4px solid #bcd8ee;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #cfe4f5;
+    }
+
+    .scene {
+        position: absolute; inset: 0;
+        background-size: cover; background-position: center;
+        display: none;
+        transition: opacity 0.4s ease;
+    }
+    .scene.active { display: block; }
+    #scene-wide { background-image: url('labo_final_1.jpg'); }
+    #scene-paillasse { background-image: url('labo_final_2.jpg'); }
+
+    .header-bar {
+        position: absolute; top: 15px; left: 20px; right: 20px;
+        display: flex; justify-content: space-between; align-items: center; z-index: 10;
+    }
+    .progress-bar, .timer-box {
+        background: rgba(255, 255, 255, 0.9); border: 1px solid var(--neon);
+        padding: 8px 16px; border-radius: 20px; font-size: 0.95rem;
+        color: var(--accent); box-shadow: 0 0 10px rgba(41, 182, 246, 0.25); font-weight: bold;
+    }
+    .timer-box { font-weight: bold; font-size: 1.1rem; color: #d35400; }
+
+    .hotspot {
+        position: absolute; border-radius: 10px; background: transparent;
+        cursor: pointer; z-index: 5; transition: all 0.3s ease;
+    }
+    .hotspot:hover { background: rgba(41, 182, 246, 0.22); border: 2px solid var(--neon); box-shadow: 0 0 18px rgba(41, 182, 246, 0.6); }
+    .hotspot.solved { background: rgba(46, 204, 113, 0.3) !important; border: 2px solid #2ecc71 !important; box-shadow: 0 0 15px #2ecc71; }
+
+    #hs-paillasse { top: 78%; left: 70%; width: 15%; height: 5%; }
+    #hs-ordinateur { top: 2%; left: 20%; width: 15%; height: 10%; }
+    #hs-archives { top: 30%; left: 55%; width: 15%; height: 5%; }
+    #hs-synthese { top: 25%; left: 0%; width: 15%; height: 5%; }
+    #hs-flux { top: 25%; left: 86%; width: 12%; height: 5%; }
+    .hotspot.locked { cursor: not-allowed; }
+    .hotspot.done { border: 2px solid #2ecc71; background: rgba(46, 204, 113, 0.12); }
+
+    .hover-hint {
+        position: absolute; display: none; z-index: 6; pointer-events: none;
+        background: rgba(20, 45, 70, 0.92); color: #eaf6ff; border: 1px solid var(--neon);
+        border-radius: 6px; padding: 8px 12px; font-size: 0.85rem; max-width: 260px;
+        box-shadow: 0 0 12px rgba(41, 182, 246, 0.5);
+    }
+    #hint-paillasse { top: 46%; left: 30%; }
+    #hint-ordinateur { top: 6%; left: 34%; }
+    .hotspot:hover + .hover-hint { display: block; }
+
+    .back-btn {
+        position: absolute; top: 15px; left: 50%; transform: translateX(-50%); z-index: 10;
+        background: rgba(255,255,255,0.9); border: 1px solid var(--panel-border); color: var(--accent);
+        padding: 6px 14px; border-radius: 16px; font-size: 0.8rem; cursor: pointer; font-weight: bold;
+        display: none;
+    }
+    #scene-paillasse.active ~ .back-btn, #scene-paillasse .back-btn { display: block; }
+
+    .intro-banner {
+        position: absolute; inset: 0; z-index: 25; display: flex; justify-content: center; align-items: center;
+        background: rgba(15, 35, 55, 0.7); padding: 20px;
+    }
+    .intro-banner-content {
+        background: rgba(20, 45, 70, 0.97); color: #eaf6ff; border: 1px solid var(--neon);
+        border-radius: 10px; padding: 20px 26px; max-width: 500px; text-align: center;
+        box-shadow: 0 0 25px rgba(41, 182, 246, 0.5); font-size: 0.98rem; line-height: 1.5;
+    }
+    .intro-banner-content h4 { color: var(--neon); font-size: 1.1rem; margin-bottom: 10px; }
+    .intro-banner .btn-submit { margin-top: 14px; }
+
+    .modal {
+        display: none; position: absolute; inset: 0; background: rgba(15, 35, 55, 0.55);
+        z-index: 20; justify-content: center; align-items: center; padding: 16px;
+    }
+    .modal-content {
+        background: var(--panel-bg); border: 2px solid var(--neon); border-radius: 10px;
+        padding: 22px; max-width: 880px; width: 100%; max-height: 92%; overflow-y: auto;
+        box-shadow: 0 0 25px rgba(41, 182, 246, 0.35); color: #1c3a52; position: relative;
+    }
+    .modal-content h3 {
+        color: var(--accent); margin-bottom: 10px; font-size: 1.25rem;
+        border-bottom: 1px solid rgba(41, 182, 246, 0.3); padding-bottom: 6px;
+    }
+    .modal-content p { margin-bottom: 12px; font-size: 0.95rem; line-height: 1.45; }
+    .close-btn { position: absolute; top: 8px; right: 13px; background: none; border: none; color: #7a94a8; font-size: 1.4rem; cursor: pointer; }
+
+    .step-tag {
+        display: inline-block; background: var(--bleu-clair); color: var(--accent);
+        border: 1px solid var(--panel-border); border-radius: 12px; padding: 3px 10px;
+        font-size: 0.78rem; font-weight: bold; margin-bottom: 10px;
+    }
+
+    /* --- boutons (charte) --- */
+    .btn-indice {
+        background: #FFF6E0; color: #C98A00; border: 1px solid #C98A00;
+        padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold;
+    }
+    .btn-indice:hover { background: #C98A00; color: #fff; }
+    .indice-box {
+        display: none; background: #FFF6E0; color: #7a5200; border: 1px dashed #C98A00;
+        border-radius: 4px; padding: 8px 10px; margin-top: 8px; font-size: 0.85rem;
+    }
+    .check-btn {
+        background: var(--bleu); color: #fff; border: none; padding: 9px 18px;
+        border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem;
+    }
+    .check-btn:hover { background: #4d84c0; }
+    .btn-recommencer2 {
+        background: #4a4a4a; color: #fff; border: none; padding: 8px 16px;
+        border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+    }
+    .btn-recommencer2:hover { background: #6c6c6c; }
+    .btn-submit {
+        background: var(--accent); color: #fff; border: none; padding: 10px 20px;
+        font-weight: bold; border-radius: 4px; cursor: pointer;
+    }
+    .btn-submit:hover { background: #175a92; }
+
+    .feedback { margin-top: 10px; font-size: 0.88rem; font-weight: bold; min-height: 1.1em; }
+    .feedback.correct { color: #1f9d55; }
+    .feedback.incorrect { color: #c0392b; }
+
+    /* --- drag & drop (équation) --- */
+    .tray {
+        display: flex; flex-wrap: wrap; gap: 8px; padding: 10px;
+        background: var(--bleu-clair); border: 1px dashed var(--panel-border); border-radius: 6px;
+        margin-bottom: 14px; min-height: 46px;
+    }
+    .token {
+        background: #ffffff; border: 1px solid var(--accent); color: #1c3a52;
+        padding: 7px 12px; border-radius: 5px; cursor: grab; user-select: none;
+        font-size: 0.9rem; touch-action: none; white-space: nowrap;
+    }
+    .token.dragging { position: fixed; z-index: 999; opacity: 0.92; pointer-events: none; box-shadow: 0 0 12px var(--neon); }
+
+    .equation-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 14px 0; font-size: 1rem; }
+    .eq-fixed { font-weight: bold; color: #1c3a52; }
+    .slot-eq {
+        min-width: 130px; min-height: 40px; border: 2px dashed var(--panel-border); border-radius: 5px;
+        display: flex; align-items: center; justify-content: center;
+        background: #fff; font-size: 0.85rem; color: #9fb3c2; padding: 4px 8px;
+    }
+    .slot-eq.filled { border-style: solid; border-color: var(--accent); color: transparent; }
+    .slot-eq.correct { border-color: #2ecc71 !important; }
+    .slot-eq.wrong { border-color: #e74c3c !important; }
+
+    /* --- graphique de titrage --- */
+    .graph-wrap { background: #fff; border: 1px solid var(--panel-border); border-radius: 8px; padding: 10px; margin-bottom: 14px; }
+    .graph-wrap svg { width: 100%; height: auto; display: block; }
+    .veq-input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+    .num-input {
+        padding: 8px 10px; font-size: 1rem; border: 1px solid var(--panel-border);
+        background: #fff; color: #1c3a52; border-radius: 4px; width: 110px; text-align: center;
+    }
+
+    /* --- indicateur coloré --- */
+    .indic-choices { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
+    .indic-card {
+        border: 2px solid var(--panel-border); border-radius: 8px; padding: 10px 14px;
+        cursor: pointer; background: #fff; min-width: 170px; transition: all 0.2s ease;
+    }
+    .indic-card:hover { border-color: var(--neon); box-shadow: 0 0 10px rgba(41,182,246,0.3); }
+    .indic-card.selected { border-color: var(--accent); background: var(--bleu-clair); }
+    .indic-card.correct-final { border-color: #2ecc71; background: #eafff2; }
+    .indic-card.wrong-final { border-color: #e74c3c; background: #fff0ee; }
+    .indic-name { font-weight: bold; margin-bottom: 4px; }
+    .indic-swatch { display: inline-flex; gap: 4px; align-items: center; font-size: 0.8rem; margin-bottom: 4px; }
+    .swatch { width: 16px; height: 16px; border-radius: 50%; border: 1px solid #999; display: inline-block; }
+    .indic-range { font-size: 0.78rem; color: #5a7080; }
+
+    .code-container { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; align-items: center; }
+    .code-input {
+        padding: 10px; font-size: 1.2rem; border: 1px solid var(--accent);
+        background: #fff; color: #1c3a52; border-radius: 4px; width: 150px; text-align: center; letter-spacing: 3px;
+    }
+
+    .end-screen {
+        display: none; position: absolute; inset: 0; background: rgba(230, 243, 253, 0.97);
+        z-index: 30; flex-direction: column; justify-content: center; align-items: center;
+        text-align: center; padding: 20px;
+    }
+    .digit-reveal {
+        font-size: 2.4rem; color: var(--accent); border: 2px solid var(--accent); border-radius: 10px;
+        padding: 10px 26px; margin: 16px 0; letter-spacing: 4px; background: #fff;
+    }
+
+    .info-modal .modal-content { border-color: var(--bleu); }
+    .qcm-choices { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+    .qcm-opt {
+        border: 2px solid var(--panel-border); border-radius: 6px; padding: 10px 14px;
+        cursor: pointer; background: #fff; text-align: left; font-size: 0.92rem;
+    }
+    .qcm-opt:hover { border-color: var(--neon); }
+    .qcm-opt.correct-final { border-color: #2ecc71; background: #eafff2; }
+    .qcm-opt.wrong-final { border-color: #e74c3c; background: #fff0ee; }
+
+    #locked-msg {
+        display: none; position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 10;
+        background: rgba(255,255,255,0.95); border: 1px solid #e74c3c; border-radius: 8px;
+        padding: 10px 16px; font-size: 0.9rem; color: #c0392b; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+</style>
+</head>
+<body>
+
+<div class="game-container" id="game-container">
+    <div class="header-bar">
+        <div class="progress-bar">Étapes résolues : <span id="solved-count">0</span> / 4</div>
+        <div class="timer-box" id="timer">10:00</div>
+    </div>
+
+    <!-- ================= ECRAN A : PLAN LARGE ================= -->
+    <div class="scene active" id="scene-wide">
+        <div class="hotspot locked" id="hs-paillasse" onclick="tryGoToPaillasse()" title="Une paillasse semble regrouper les trois recherches"></div>
+        <div class="hover-hint" id="hint-paillasse">Une paillasse semble avoir accueilli la convergence des trois recherches...</div>
+
+        <div class="hotspot" id="hs-archives" onclick="openPanel('archives')" title="Archives mondiales"></div>
+        <div class="hotspot" id="hs-synthese" onclick="openPanel('synthese')" title="Synthèse en cours"></div>
+        <div class="hotspot" id="hs-flux" onclick="openPanel('flux')" title="Flux de travaux"></div>
+
+        <div class="intro-banner" id="intro-banner">
+            <div class="intro-banner-content">
+                <h4>Le Centre International de la Chimie</h4>
+                <p>Vous entrez dans la salle où convergent les travaux des trois savants. <strong>Rien n'est indiqué : à vous de chercher.</strong> Explorez la pièce du regard, survolez ce qui semble important — certaines zones réagiront.</p>
+                <button class="btn-submit" onclick="document.getElementById('intro-banner').style.display='none'">Commencer l'exploration</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PANNEAUX NARRATIFS ================= -->
+    <div class="modal info-modal" id="modal-archives">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-archives')">&times;</button>
+            <h3>Archives mondiales</h3>
+            <p>Une correspondance de 1923 : Brønsted (Danemark) et Lowry (Angleterre) publient, chacun de leur côté et sans se concerter, la même idée : <strong>un acide cède un proton H⁺ à une base, qui le capte</strong>. Deux noms, une seule théorie.</p>
+        </div>
+    </div>
+    <div class="modal info-modal" id="modal-synthese">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-synthese')">&times;</button>
+            <h3>Synthèse en cours</h3>
+            <p>Note de labo : <em>« L'espèce active de l'antidote a été synthétisée avec succès. Sa concentration reste à déterminer par titrage. Compte-rendu déposé sur l'ordinateur de la paillasse commune. »</em></p>
+        </div>
+    </div>
+    <div class="modal info-modal" id="modal-flux">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-flux')">&times;</button>
+            <h3>Flux de travaux</h3>
+            <p>Une fiche signée Lewis, glissée dans le dossier commun : <em>« Un acide accepte un doublet d'électrons, une base le cède. »</em> Une théorie plus large que celle de Brønsted et Lowry — mais est-ce bien elle qui est en jeu dans un titrage acido-basique classique ?</p>
+        </div>
+    </div>
+
+    <!-- ================= QCM DE SYNTHESE ================= -->
+    <div class="modal" id="modal-qcm-theorie">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-qcm-theorie')">&times;</button>
+            <h3>Relier les travaux</h3>
+            <p>Vous avez consulté les trois panneaux. <strong>Quelle théorie acido-basique explique la réaction de titrage que vous allez étudier sur la paillasse ?</strong></p>
+            <div class="qcm-choices" id="qcm-theorie-choices">
+                <button class="qcm-opt" data-value="bl" onclick="checkTheorie('bl', this)">La théorie de Brønsted-Lowry (transfert de proton H⁺)</button>
+                <button class="qcm-opt" data-value="lewis" onclick="checkTheorie('lewis', this)">La théorie de Lewis (transfert de doublet d'électrons)</button>
+                <button class="qcm-opt" data-value="both" onclick="checkTheorie('both', this)">Les deux théories, à parts égales</button>
+            </div>
+            <div class="feedback" id="fb-qcm-theorie"></div>
+        </div>
+    </div>
+
+    <!-- ================= ECRAN B : LA PAILLASSE ================= -->
+    <div class="scene" id="scene-paillasse">
+        <div class="hotspot" id="hs-ordinateur" onclick="openOrdinateur()" title="L'ordinateur de la paillasse"></div>
+        <div class="hover-hint" id="hint-ordinateur">Un message attend sur l'écran de l'ordinateur...</div>
+        <button class="back-btn" onclick="goToWide()">← Retour au plan large</button>
+        <div class="intro-banner" id="intro-banner-paillasse" style="display:none;">
+            <div class="intro-banner-content">
+                <h4>La paillasse commune</h4>
+                <p>Vous voici sur la paillasse commune. <strong>Un ordinateur, quelque part ici, affiche un message des trois savants</strong> — trouvez-le.</p>
+                <button class="btn-submit" onclick="document.getElementById('intro-banner-paillasse').style.display='none'">J'ai compris</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="locked-msg"></div>
+
+    <!-- ================= MODALE : ENIGME FINALE ================= -->
+    <div class="modal" id="modal-titrage">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-titrage')">&times;</button>
+            <h3>Le Centre International de la Chimie — Message conjoint</h3>
+            <p><em>"Prouvez votre maîtrise de la réaction support !"</em> — un compte-rendu de TP s'affiche : titrage pH-métrique de V<sub>a</sub> = 20,0 mL de la solution active de l'antidote (un acide faible, l'acide éthanoïque, de concentration C<sub>a</sub> inconnue), par une solution d'hydroxyde de sodium (Na⁺ + HO⁻) de concentration C<sub>b</sub> = 0,10 mol/L.</p>
+
+            <!-- ---- PHASE 1 : EQUATION ---- -->
+            <div id="phase-equation" class="phase-block">
+                <div class="step-tag">Étape 1 / 4 — La réaction support</div>
+                <p>Complétez l'équation de la réaction support de ce titrage.</p>
+
+                <button class="btn-indice" onclick="toggleIndice('ind-equation')">💡 Indice</button>
+                <div class="indice-box" id="ind-equation">La réaction acide/base est une réaction entre l'acide éthanoïque et l'ion hydroxyde HO⁻. Un acide faible cède un proton H⁺ à HO⁻ pour former sa base conjuguée et de l'eau.</div>
+
+                <div class="tray" id="tray-equation"></div>
+
+                <div class="equation-row">
+                    <span class="eq-fixed">CH₃COOH(aq)</span>
+                    <span class="eq-fixed">+</span>
+                    <span class="eq-fixed">HO⁻(aq)</span>
+                    <span class="eq-fixed">→</span>
+                    <div class="slot-eq" data-slot="eq-p1" data-correct="CH3COO-">produit 1</div>
+                    <span class="eq-fixed">+</span>
+                    <div class="slot-eq" data-slot="eq-p2" data-correct="H2O">produit 2</div>
+                </div>
+
+                <button class="check-btn" onclick="checkEquation()">✓ Vérifier</button>
+                <button class="btn-recommencer2" onclick="resetEquation()">↺ Recommencer</button>
+                <div class="feedback" id="fb-equation"></div>
+            </div>
+
+            <!-- ---- PHASE 2 : LECTURE DE Veq ---- -->
+            <div id="phase-veq" class="phase-block" style="display:none;">
+                <div class="step-tag">Étape 2 / 4 — Le volume équivalent</div>
+                <p>Voici la courbe pH = f(V<sub>b</sub>) obtenue lors du titrage. Repérez graphiquement le volume équivalent V<sub>eq</sub>.</p>
+
+                <button class="btn-indice" onclick="toggleIndice('ind-veq')">💡 Indice</button>
+                <div class="indice-box" id="ind-veq">Utilisez la méthode des tangentes : tracez deux tangentes parallèles de part et d'autre du saut de pH, la droite équidistante entre elles coupe la courbe au point équivalent.</div>
+
+                <div class="graph-wrap">
+                    <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="40" y1="20" x2="40" y2="260" stroke="#5a7080" stroke-width="1.5"/>
+                        <line x1="40" y1="260" x2="480" y2="260" stroke="#5a7080" stroke-width="1.5"/>
+                        <text x="250" y="292" font-size="11" fill="#1c3a52" text-anchor="middle">V(HO⁻) versé (mL)</text>
+                        <text x="14" y="140" font-size="11" fill="#1c3a52" text-anchor="middle" transform="rotate(-90 14 140)">pH</text>
+                        <g stroke="#dbe7f0" stroke-width="1">
+                            <line x1="40" y1="20" x2="480" y2="20"/>
+                            <line x1="40" y1="192.9" x2="480" y2="192.9"/>
+                            <line x1="40" y1="55.4" x2="480" y2="55.4"/>
+                        </g>
+                        <g font-size="9" fill="#5a7080">
+                            <text x="30" y="264" text-anchor="end">0</text>
+                            <text x="30" y="24" text-anchor="end">14</text>
+                            <text x="30" y="142" text-anchor="end">7</text>
+                            <text x="40" y="272" text-anchor="middle">0</text>
+                            <text x="128" y="272" text-anchor="middle">5</text>
+                            <text x="216" y="272" text-anchor="middle">10</text>
+                            <text x="304" y="272" text-anchor="middle">15</text>
+                            <text x="392" y="272" text-anchor="middle">20</text>
+                            <text x="480" y="272" text-anchor="middle">25</text>
+                        </g>
+                        <path d="M 40,210.3 L 110.4,186.3 L 180.8,177.7 L 251.2,169.2 L 286.4,162.3 L 304,155.5 L 312.8,146.9 L 321.6,110.9 L 330.4,74.9 L 339.2,66.3 L 392,57.7 L 480,52.6"
+                              fill="none" stroke="var(--accent, #1f6fb2)" stroke-width="2.5"/>
+                    </svg>
+                </div>
+
+                <div class="veq-input-row">
+                    <label for="veq-input">V<sub>eq</sub> lu sur la courbe (mL) :</label>
+                    <input type="number" step="0.5" class="num-input" id="veq-input" placeholder="mL">
+                </div>
+
+                <button class="check-btn" onclick="checkVeq()">✓ Vérifier</button>
+                <button class="btn-recommencer2" onclick="resetVeq()">↺ Recommencer</button>
+                <div class="feedback" id="fb-veq"></div>
+            </div>
+
+            <!-- ---- PHASE 3 : INDICATEUR COLORE ---- -->
+            <div id="phase-indicateur" class="phase-block" style="display:none;">
+                <div class="step-tag">Étape 3 / 4 — L'indicateur coloré</div>
+                <p>À l'équivalence, le pH mesuré vaut environ <strong>8,7</strong>. Quel indicateur coloré fallait-il utiliser pour ce titrage ?</p>
+
+                <button class="btn-indice" onclick="toggleIndice('ind-indicateur')">💡 Indice</button>
+                <div class="indice-box" id="ind-indicateur">L'indicateur adapté est celui dont la zone de virage contient le pH à l'équivalence.</div>
+
+                <div class="indic-choices" id="indic-choices">
+                    <div class="indic-card" data-value="helianthine" onclick="chooseIndicateur('helianthine')">
+                        <div class="indic-name">Hélianthine</div>
+                        <div class="indic-swatch"><span class="swatch" style="background:#e74c3c;"></span>→<span class="swatch" style="background:#f1c40f;"></span></div>
+                        <div class="indic-range">Zone de virage : 3,1 – 4,4</div>
+                    </div>
+                    <div class="indic-card" data-value="bbt" onclick="chooseIndicateur('bbt')">
+                        <div class="indic-name">Bleu de bromothymol</div>
+                        <div class="indic-swatch"><span class="swatch" style="background:#f1c40f;"></span>→<span class="swatch" style="background:#2980b9;"></span></div>
+                        <div class="indic-range">Zone de virage : 6,0 – 7,6</div>
+                    </div>
+                    <div class="indic-card" data-value="phenol" onclick="chooseIndicateur('phenol')">
+                        <div class="indic-name">Phénolphtaléine</div>
+                        <div class="indic-swatch"><span class="swatch" style="background:#eee; border-color:#bbb;"></span>→<span class="swatch" style="background:#e91e8c;"></span></div>
+                        <div class="indic-range">Zone de virage : 8,2 – 10,0</div>
+                    </div>
+                </div>
+
+                <button class="check-btn" onclick="checkIndicateur()">✓ Vérifier</button>
+                <div class="feedback" id="fb-indicateur"></div>
+            </div>
+
+            <!-- ---- PHASE 4 : STOECHIOMETRIE + CODE ---- -->
+            <div id="phase-stoechio" class="phase-block" style="display:none;">
+                <div class="step-tag">Étape 4 / 4 — La stœchiométrie</div>
+                <p>À l'équivalence, les réactifs ont été mélangés dans les proportions stœchiométriques : n(CH₃COOH) = n(HO⁻ versé) = C<sub>b</sub>×V<sub>eq</sub>. Calculez la concentration C<sub>a</sub> de la solution d'antidote (en mol/L).</p>
+
+                <button class="btn-indice" onclick="toggleIndice('ind-stoechio')">💡 Indice</button>
+                <div class="indice-box" id="ind-stoechio">C<sub>a</sub> = (C<sub>b</sub> × V<sub>eq</sub>) / V<sub>a</sub>, avec C<sub>b</sub> = 0,10 mol/L, V<sub>eq</sub> = le volume trouvé à l'étape 2, et V<sub>a</sub> = 20,0 mL.</div>
+
+                <div class="veq-input-row">
+                    <label for="ca-input">C<sub>a</sub> (mol/L) :</label>
+                    <input type="number" step="0.001" class="num-input" id="ca-input" placeholder="mol/L">
+                </div>
+
+                <button class="check-btn" onclick="checkStoechio()">✓ Vérifier</button>
+                <div class="feedback" id="fb-stoechio"></div>
+
+                <div id="coffre-zone" style="display:none; margin-top: 16px; border-top: 1px solid var(--panel-border); padding-top: 14px;">
+                    <p><strong>Le coffre de l'antidote</strong> — composez le code à 4 chiffres : les 2 chiffres de V<sub>eq</sub> (en mL), suivis des 2 chiffres de C<sub>a</sub> (en mmol/L, arrondi à la dizaine).</p>
+                    <div class="code-container">
+                        <input type="text" id="coffre-code" class="code-input" maxlength="4" placeholder="- - - -">
+                        <button class="btn-submit" onclick="submitCoffre()">Ouvrir le coffre</button>
+                    </div>
+                    <div class="feedback" id="fb-coffre"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="end-screen" id="victory-screen">
+        <h3 style="color:#1f9d55; font-size:2rem;">Le coffre s'ouvre !</h3>
+        <p>Les trois savants s'étaient donné rendez-vous ici : leurs recherches se rejoignent enfin dans l'antidote.</p>
+        <div class="digit-reveal">1680</div>
+        <p>L'énigme du Centre International de la Chimie est résolue.</p>
+        <button class="btn-submit" style="margin-top:18px;" onclick="exitRoom()">Quitter le centre →</button>
+    </div>
+
+    <div class="end-screen" id="defeat-screen">
+        <h3 style="color:#c0392b; font-size:2rem;">Temps écoulé !</h3>
+        <p>Le coffre reste verrouillé...</p>
+        <button class="btn-recommencer2" style="margin-top:18px;" onclick="location.reload()">↺ Recommencer la salle</button>
+    </div>
+</div>
+
+<script>
+    let solvedState = { equation: false, veq: false, indicateur: false, stoechio: false, ordinateurFound: false };
+    let panelsVisited = { archives: false, synthese: false, flux: false };
+    let theorieResolved = false;
+    let timeLeft = 600;
+    let timerInterval;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('t')) timeLeft = parseInt(params.get('t'), 10) || timeLeft;
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+            document.getElementById('timer').innerText = `${m<10?'0':''}${m}:${s<10?'0':''}${s}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('defeat-screen').style.display = 'flex';
+                notifyParent('room-timeout');
+            }
+        }, 1000);
+    }
+    startTimer();
+
+    function notifyParent(type, extra) {
+        try { window.parent.postMessage(Object.assign({ source: 'escape-game', room: 'centre-international', type }, extra || {}), '*'); }
+        catch (e) {}
+    }
+
+    function tryGoToPaillasse() {
+        if (!theorieResolved) {
+            showLockedMsg("🔒 Reliez d'abord les travaux des trois savants (panneaux d'archives) avant d'accéder à la paillasse.");
+            return;
+        }
+        goToPaillasse();
+    }
+    function goToPaillasse() {
+        document.getElementById('scene-wide').classList.remove('active');
+        document.getElementById('scene-paillasse').classList.add('active');
+        if (!solvedState.ordinateurFound) {
+            document.getElementById('intro-banner-paillasse').style.display = 'block';
+        }
+    }
+    function goToWide() {
+        document.getElementById('scene-paillasse').classList.remove('active');
+        document.getElementById('scene-wide').classList.add('active');
+    }
+
+    function showLockedMsg(text) {
+        const msg = document.getElementById('locked-msg');
+        msg.innerText = text;
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.display = 'none'; }, 2600);
+    }
+
+    function openPanel(name) {
+        panelsVisited[name] = true;
+        document.getElementById('hs-' + name).classList.add('done');
+        openModal('modal-' + name);
+        maybeOfferTheorieQcm();
+    }
+    function maybeOfferTheorieQcm() {
+        if (panelsVisited.archives && panelsVisited.synthese && panelsVisited.flux && !theorieResolved) {
+            setTimeout(() => openModal('modal-qcm-theorie'), 500);
+        }
+    }
+    function checkTheorie(val, btnEl) {
+        const fb = document.getElementById('fb-qcm-theorie');
+        document.querySelectorAll('#qcm-theorie-choices .qcm-opt').forEach(b => b.classList.remove('correct-final', 'wrong-final'));
+        if (val === 'bl') {
+            btnEl.classList.add('correct-final');
+            fb.className = 'feedback correct';
+            fb.innerText = "✓ C'est bien un transfert de proton H⁺ : la théorie de Brønsted-Lowry. La paillasse commune est accessible.";
+            theorieResolved = true;
+            document.getElementById('hs-paillasse').classList.remove('locked');
+            setTimeout(() => closeModal('modal-qcm-theorie'), 1400);
+        } else {
+            btnEl.classList.add('wrong-final');
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Non : cette réaction est un simple échange de H⁺, pas de doublet d'électrons. Réessayez.";
+        }
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function openOrdinateur() {
+        solvedState.ordinateurFound = true;
+        document.getElementById('intro-banner-paillasse').style.display = 'none';
+        openModal('modal-titrage');
+    }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function toggleIndice(id) {
+        const el = document.getElementById(id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function updateProgress() {
+        const count = Object.values(solvedState).filter(Boolean).length;
+        document.getElementById('solved-count').innerText = count;
+        notifyParent('room-progress', { solved: count, total: 4 });
+    }
+
+    /* ===================== DRAG & DROP (équation) ===================== */
+    let dragToken = null, dragOffsetX = 0, dragOffsetY = 0, sourceParent = null, sourceNext = null;
+
+    function makeToken(value, label) {
+        const t = document.createElement('div');
+        t.className = 'token';
+        t.dataset.value = value;
+        t.innerText = label;
+        t.addEventListener('pointerdown', onPointerDown);
+        return t;
+    }
+
+    function onPointerDown(e) {
+        const token = e.currentTarget;
+        dragToken = token;
+        sourceParent = token.parentElement;
+        sourceNext = token.nextSibling;
+        const rect = token.getBoundingClientRect();
+        dragOffsetX = e.clientX - rect.left;
+        dragOffsetY = e.clientY - rect.top;
+        token.style.width = rect.width + 'px';
+        document.body.appendChild(token);
+        token.classList.add('dragging');
+        token.style.left = (e.clientX - dragOffsetX) + 'px';
+        token.style.top = (e.clientY - dragOffsetY) + 'px';
+        document.addEventListener('pointermove', onPointerMove);
+        document.addEventListener('pointerup', onPointerUp);
+        token.setPointerCapture && token.setPointerCapture(e.pointerId);
+    }
+
+    function onPointerMove(e) {
+        if (!dragToken) return;
+        dragToken.style.left = (e.clientX - dragOffsetX) + 'px';
+        dragToken.style.top = (e.clientY - dragOffsetY) + 'px';
+    }
+
+    function onPointerUp(e) {
+        if (!dragToken) return;
+        dragToken.classList.remove('dragging');
+        dragToken.style.left = ''; dragToken.style.top = ''; dragToken.style.width = '';
+        document.removeEventListener('pointermove', onPointerMove);
+        document.removeEventListener('pointerup', onPointerUp);
+
+        dragToken.style.display = 'none';
+        const under = document.elementFromPoint(e.clientX, e.clientY);
+        dragToken.style.display = '';
+        const slot = under ? under.closest('.slot-eq') : null;
+
+        if (slot && slot.closest('.modal-content') === sourceParent.closest('.modal-content')) {
+            if (slot.children.length > 0) {
+                const occupant = slot.children[0];
+                const tray = slot.closest('.phase-block').querySelector('.tray');
+                tray.appendChild(occupant);
+            }
+            slot.innerHTML = '';
+            slot.appendChild(dragToken);
+            slot.classList.add('filled');
+            slot.classList.remove('correct', 'wrong');
+        } else {
+            if (sourceNext) sourceParent.insertBefore(dragToken, sourceNext);
+            else sourceParent.appendChild(dragToken);
+        }
+        dragToken = null;
+    }
+
+    function shuffle(arr) { return arr.map(v => [Math.random(), v]).sort((a,b) => a[0]-b[0]).map(v => v[1]); }
+
+    /* ===================== PHASE 1 : EQUATION ===================== */
+    const equationEspeces = [
+        ['CH3COO-', 'CH₃COO⁻'], ['H2O', 'H₂O'],
+        ['H3O+', 'H₃O⁺'], ['Na+', 'Na⁺'], ['CH3COOH', 'CH₃COOH']
+    ];
+
+    function initEquation() {
+        const tray = document.getElementById('tray-equation');
+        tray.innerHTML = '';
+        shuffle(equationEspeces).forEach(([val, label]) => tray.appendChild(makeToken(val, label)));
+        document.querySelectorAll('#phase-equation .slot-eq').forEach(s => {
+            s.innerHTML = s.dataset.slot === 'eq-p1' ? 'produit 1' : 'produit 2';
+            s.classList.remove('filled', 'correct', 'wrong');
+        });
+        document.getElementById('fb-equation').innerText = '';
+        document.getElementById('fb-equation').className = 'feedback';
+    }
+    function resetEquation() { initEquation(); }
+
+    function checkEquation() {
+        const slots = document.querySelectorAll('#phase-equation .slot-eq');
+        let allFilled = true, allCorrect = true;
+        slots.forEach(s => {
+            const token = s.querySelector('.token');
+            if (!token) { allFilled = false; return; }
+            if (token.dataset.value === s.dataset.correct) { s.classList.add('correct'); s.classList.remove('wrong'); }
+            else { s.classList.add('wrong'); s.classList.remove('correct'); allCorrect = false; }
+        });
+        const fb = document.getElementById('fb-equation');
+        if (!allFilled) { fb.className = 'feedback incorrect'; fb.innerText = 'Complétez les 2 produits avant de vérifier.'; return; }
+        if (allCorrect) {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ CH₃COOH + HO⁻ → CH₃COO⁻ + H₂O. Passons à la lecture du graphique.';
+            if (!solvedState.equation) { solvedState.equation = true; updateProgress(); }
+            setTimeout(() => {
+                document.getElementById('phase-equation').style.display = 'none';
+                document.getElementById('phase-veq').style.display = 'block';
+            }, 1100);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Un des deux produits est incorrect (voir la case en rouge). L'acide cède un proton H⁺ à HO⁻.";
+        }
+    }
+
+    /* ===================== PHASE 2 : Veq ===================== */
+    function resetVeq() {
+        document.getElementById('veq-input').value = '';
+        document.getElementById('fb-veq').innerText = '';
+        document.getElementById('fb-veq').className = 'feedback';
+    }
+
+    function checkVeq() {
+        const val = parseFloat(document.getElementById('veq-input').value);
+        const fb = document.getElementById('fb-veq');
+        if (isNaN(val)) { fb.className = 'feedback incorrect'; fb.innerText = 'Saisissez une valeur en mL.'; return; }
+        if (Math.abs(val - 16.0) <= 0.5) {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Veq ≈ 16 mL. Passons au choix de l\u2019indicateur coloré.';
+            if (!solvedState.veq) { solvedState.veq = true; updateProgress(); }
+            setTimeout(() => {
+                document.getElementById('phase-veq').style.display = 'none';
+                document.getElementById('phase-indicateur').style.display = 'block';
+            }, 1100);
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Ce n'est pas la bonne valeur. Repérez le point d'inflexion, là où le pH varie le plus brutalement.";
+        }
+    }
+
+    /* ===================== PHASE 3 : INDICATEUR ===================== */
+    let indicSelected = null;
+    function chooseIndicateur(val) {
+        indicSelected = val;
+        document.querySelectorAll('.indic-card').forEach(c => c.classList.remove('selected'));
+        document.querySelector(`.indic-card[data-value="${val}"]`).classList.add('selected');
+    }
+
+    function checkIndicateur() {
+        const fb = document.getElementById('fb-indicateur');
+        if (!indicSelected) { fb.className = 'feedback incorrect'; fb.innerText = 'Sélectionnez un indicateur.'; return; }
+        document.querySelectorAll('.indic-card').forEach(c => c.classList.remove('correct-final', 'wrong-final'));
+        if (indicSelected === 'phenol') {
+            document.querySelector('.indic-card[data-value="phenol"]').classList.add('correct-final');
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ La phénolphtaléine vire entre 8,2 et 10,0, une zone qui contient le pH à l\u2019équivalence (≈ 8,7). Passons au calcul.';
+            if (!solvedState.indicateur) { solvedState.indicateur = true; updateProgress(); }
+            setTimeout(() => {
+                document.getElementById('phase-indicateur').style.display = 'none';
+                document.getElementById('phase-stoechio').style.display = 'block';
+            }, 1300);
+        } else {
+            document.querySelector(`.indic-card[data-value="${indicSelected}"]`).classList.add('wrong-final');
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Sa zone de virage ne contient pas le pH à l'équivalence (≈ 8,7). Cherchez un indicateur qui vire en milieu basique.";
+        }
+    }
+
+    /* ===================== PHASE 4 : STOECHIOMETRIE + CODE ===================== */
+    function checkStoechio() {
+        const val = parseFloat(document.getElementById('ca-input').value);
+        const fb = document.getElementById('fb-stoechio');
+        const attendu = 0.080; // (0,10 x 16,0) / 20,0
+        if (isNaN(val)) { fb.className = 'feedback incorrect'; fb.innerText = 'Saisissez une valeur en mol/L.'; return; }
+        if (Math.abs(val - attendu) / attendu <= 0.05) {
+            fb.className = 'feedback correct';
+            fb.innerText = '✓ Ca ≈ 0,080 mol/L. Le coffre de l\u2019antidote est accessible.';
+            if (!solvedState.stoechio) { solvedState.stoechio = true; updateProgress(); }
+            document.getElementById('coffre-zone').style.display = 'block';
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = "Ce n'est pas la bonne valeur. Utilisez Ca = (Cb × Veq) / Va.";
+        }
+    }
+
+    function submitCoffre() {
+        const val = document.getElementById('coffre-code').value.trim();
+        const fb = document.getElementById('fb-coffre');
+        if (val === '1680') {
+            clearInterval(timerInterval);
+            closeModal('modal-titrage');
+            document.getElementById('victory-screen').style.display = 'flex';
+            notifyParent('room-complete', { code: '1680', elapsed: 600 - timeLeft });
+        } else {
+            fb.className = 'feedback incorrect';
+            fb.innerText = 'Code incorrect. Vérifiez Veq et Ca.';
+        }
+    }
+
+    function exitRoom() {
+        notifyParent('room-exit');
+        if (window.parent === window) {
+            const screen = document.getElementById('victory-screen');
+            screen.innerHTML = '<h3 style="color:#1f9d55; font-size:2rem;">Bravo !</h3><p>Cette salle sera bientôt reliée aux trois bureaux dans le hub de l\'escape game.</p>';
+        }
+    }
+
+    /* ===================== INIT ===================== */
+    initEquation();
+</script>
+
+</body>
+</html>
