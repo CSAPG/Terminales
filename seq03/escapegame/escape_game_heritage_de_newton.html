@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Game — L'Héritage de Newton | Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #1E3A8A;
+    --bleu-clair: #EFF6FF;
+    --bleu-moyen: #3B82F6;
+    --orange: #D97706;
+    --orange-clair: #FEF3C7;
+    --vert: #059669;
+    --vert-clair: #ECFDF5;
+    --rouge: #DC2626;
+    --rouge-clair: #FEF2F2;
+    --violet: #7C3AED;
+    --violet-clair: #F5F3FF;
+    --gris-fond: #F8FAFC;
+    --gris-bord: #E2E8F0;
+    --texte: #0F172A;
+    --texte-leger: #475569;
+    --blanc: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #0F172A;
+    color: var(--texte);
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    background: var(--blanc);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+    border: 3px solid var(--bleu-moyen);
+  }
+
+  /* Header */
+  .escape-header {
+    background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+    color: white;
+    padding: 24px 30px;
+    text-align: center;
+    position: relative;
+    border-bottom: 4px solid var(--orange);
+  }
+  .escape-header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .escape-header p {
+    font-size: 0.95rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* Mission Briefing */
+  .briefing-box {
+    background: #FFFBEB;
+    border-left: 6px solid var(--orange);
+    padding: 18px 24px;
+    margin: 20px 24px;
+    border-radius: 0 10px 10px 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #78350F;
+  }
+  .briefing-box h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #B45309;
+  }
+
+  /* Hub des Salles */
+  .rooms-hub {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    padding: 0 24px 20px;
+  }
+  .room-card {
+    background: var(--gris-fond);
+    border: 2px solid var(--gris-bord);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .room-card:hover {
+    border-color: var(--bleu-moyen);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(59,130,246,0.15);
+  }
+  .room-card.unlocked { border-color: var(--vert); }
+  .room-card.completed { border-color: var(--violet); }
+  
+  .card-img-wrap {
+    width: 100%;
+    height: 130px;
+    overflow: hidden;
+    background: #1e293b;
+  }
+  .card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+  }
+
+  .card-body { padding: 12px; }
+  .room-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 4px;
+  }
+  .room-status {
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 6px;
+  }
+  .status-locked { background: #E2E8F0; color: #64748B; }
+  .status-unlocked { background: #DCFCE7; color: #166534; }
+  .status-done { background: #F3E8FF; color: #6B21A8; }
+
+  /* Fenêtre de Salle / Énigme */
+  .room-view {
+    display: none;
+    padding: 24px;
+    background: white;
+    animation: fadeIn 0.3s ease;
+  }
+  .room-view.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .back-btn {
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    color: var(--texte-leger);
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: var(--bleu-clair); color: var(--bleu); border-color: var(--bleu-moyen); }
+
+  .r-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Scène interactive visuelle avec l'image */
+  .interactive-scene {
+    position: relative;
+    width: 100%;
+    max-height: 340px;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid var(--gris-bord);
+    margin-bottom: 16px;
+    background: #1e293b;
+  }
+  .interactive-scene img {
+    width: 100%;
+    height: 100%;
+    max-height: 340px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Zone cachée interactive sur l'image (curseur main sans indice texte) */
+  .hidden-hotspot {
+    position: absolute;
+    top: 35%;
+    left: 40%;
+    width: 120px;
+    height: 100px;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 10px;
+  }
+  .hidden-hotspot:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Message d'entrée dans la salle */
+  .room-alert-banner {
+    background: #EFF6FF;
+    border: 1.5px solid #3B82F6;
+    color: #1E3A8A;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  /* Les énigmes initialement masquées */
+  .puzzles-container {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .puzzles-container.revealed {
+    display: block;
+  }
+
+  /* Questions & Codes */
+  .puzzle-box {
+    background: var(--gris-fond);
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 18px;
+  }
+  .puzzle-question {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .escape-input {
+    padding: 9px 14px;
+    border: 1.5px solid var(--gris-bord);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.92rem;
+    background: white;
+    width: 220px;
+    transition: border-color 0.2s;
+  }
+  .escape-input:focus { outline: none; border-color: var(--bleu-moyen); }
+  .escape-input.correct { border-color: var(--vert); background: var(--vert-clair); }
+  .escape-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
+
+  .btn-submit {
+    background: var(--bleu);
+    color: white;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: #1D4ED8; }
+
+  .feedback-msg {
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-top: 8px;
+    min-height: 20px;
+  }
+  .feedback-msg.ok { color: var(--vert); }
+  .feedback-msg.ko { color: var(--rouge); }
+
+  /* Éditeur Python */
+  .python-box {
+    background: #1E1E1E;
+    color: #D4D4D4;
+    font-family: 'Fira Code', monospace;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    border: 1px solid #333;
+  }
+  .python-box .keyword { color: #569CD6; }
+  .python-box .string { color: #CE9178; }
+
+  /* Victoire Banner */
+  .win-banner {
+    display: none;
+    background: linear-gradient(135deg, #059669, #10B981);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 12px;
+    margin: 20px 24px;
+    animation: fadeIn 0.4s ease;
+  }
+  .win-banner h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+
+  .progress-container {
+    background: var(--gris-fond);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gris-bord);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--texte-leger);
+  }
+  .timer-display {
+    color: var(--orange);
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="escape-header">
+    <h1>🔬 L'Héritage de Newton</h1>
+    <p>Escape Game Pédagogique — Terminale Spécialité Physique-Chimie</p>
+  </div>
+
+  <div class="progress-container">
+    <div>Progression : <span id="solvedCount">0</span> / 4 salles validées</div>
+    <div class="timer-display">⏱️ Mode Enquête Bac Actif</div>
+  </div>
+
+  <!-- HUB PRINCIPAL -->
+  <div id="mainHub" class="room-view active" style="display:block;">
+    <div class="briefing-box">
+      <h3>📜 Mission de Sécurité Scientifique</h3>
+      <p>Bienvenue, Cynthia. Le manuscrit original d'Isaac Newton a été verrouillé. Résolvez les énigmes salle par salle pour progresser : chaque salle validée déverrouille automatiquement la suivante !</p>
+    </div>
+
+    <div class="rooms-hub">
+      <!-- room-1 (Débloquée par défaut) -->
+      <div class="room-card unlocked" id="card-room1" onclick="openRoom(1)">
+        <div class="card-img-wrap"><img src="room-1.jpg" alt="room-1"></div>
+        <div class="card-body">
+          <div class="room-title">room-1</div>
+          <div style="font-size:0.8rem;color:var(--texte-leger);">Cinématique &amp; Vecteurs</div>
+          <div class="room-status status-unlocked" id="status-1">Disponible</div>
+        </div>
+      </div>
+
+      <!-- room-2 (Verrouillée au départ) -->
+      <div class="room-card" id="card-room2" onclick="openRoom(2)">
+        <div class="card-img-wrap"><img src="room-2.jpg" alt="room-2"></div>
+        <div class="card-body">
+          <div class="room-title">room-2</div>
+          <div style="font-size:0.8rem;color:var(--texte-leger);">Dynamique &amp; PFD</div>
+          <div class="room-status status-locked" id="status-2">Verrouillé 🔒</div>
+        </div>
+      </div>
+
+      <!-- room-3 (Verrouillée au départ) -->
+      <div class="room-card" id="card-room3" onclick="openRoom(3)">
+        <div class="card-img-wrap"><img src="room-3.jpg" alt="room-3"></div>
+        <div class="card-body">
+          <div class="room-title">room-3</div>
+          <div style="font-size:0.8rem;color:var(--texte-leger);">Champs Uniformes</div>
+          <div class="room-status status-locked" id="status-3">Verrouillé 🔒</div>
+        </div>
+      </div>
+
+      <!-- room-4 (Verrouillée au départ) -->
+      <div class="room-card" id="card-room4" onclick="openRoom(4)">
+        <div class="card-img-wrap"><img src="room-4.jpg" alt="room-4"></div>
+        <div class="card-body">
+          <div class="room-title">room-4</div>
+          <div style="font-size:0.8rem;color:var(--texte-leger);">Énergie &amp; Python</div>
+          <div class="room-status status-locked" id="status-4">Verrouillé 🔒</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="globalWinBanner" class="win-banner">
+      <h2>🎉 Félicitations, Maître de la Mécanique !</h2>
+      <p>Vous avez déchiffré l'Héritage de Newton avec brio. Vos révisions pour le Baccalauréat sont parfaites !</p>
+    </div>
+  </div>
+
+  <!-- room-1 -->
+  <div id="room-1" class="room-view">
+    <button class="back-btn" onclick="closeRoom()">← Retour au Hub</button>
+    <div class="r-title">📍 room-1 : Cinématique &amp; Vecteurs Position / Vitesse</div>
+    <div class="room-alert-banner">🔍 Bienvenue dans room-1 ! Observez attentivement l'image ci-dessous et survolez-la pour trouver et révéler l'énigme cachée.</div>
+    
+    <div class="interactive-scene">
+      <img src="room-1.jpg" alt="room-1 image">
+      <div class="hidden-hotspot" onclick="revealPuzzles(1)"></div>
+    </div>
+
+    <div class="puzzles-container" id="container-puzzles-1">
+      <div class="r-desc">
+        En inspectant le manuscrit secret, les équations horaires du mobile sont révélées :<br>
+        <strong>x(t) = 3,0·t² + 2,0</strong> &nbsp;|&nbsp; <strong>y(t) = −4,0·t + 5,0</strong> (en mètres et secondes).
+      </div>
+      <div class="puzzle-box">
+        <div class="puzzle-question">Question 1.1 : Quelle est la valeur de la composante horizontale de la vitesse v<sub>x</sub>(t) à l'instant t = 2,0 s ? (en m·s⁻¹)</div>
+        <div class="input-row">
+          <input type="text" class="escape-input" id="ans-1-1" placeholder="Votre réponse...">
+          <button class="btn-submit" onclick="checkPuzzle(1, 1, '12', 'Exact ! v_x(t) = dx/dt = 6,0·t. À t = 2,0 s, v_x = 12 m·s⁻¹.')">Valider</button>
+        </div>
+        <div class="feedback-msg" id="fb-1-1"></div>
+      </div>
+
+      <div class="puzzle-box">
+        <div class="puzzle-question">Question 1.2 : Quelle est la norme du vecteur accélération ‖<span style="font-style:italic;">a</span>(t)‖ de ce mobile à tout instant ? (en m·s⁻²)</div>
+        <div class="input-row">
+          <input type="text" class="escape-input" id="ans-1-2" placeholder="Votre réponse...">
+          <button class="btn-submit" onclick="checkPuzzle(1, 2, '6', 'Parfait ! a_x = dv_x/dt = 6,0 m·s⁻² et a_y = 0. La norme vaut donc 6,0 m·s⁻².')">Valider</button>
+        </div>
+        <div class="feedback-msg" id="fb-1-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- room-2 -->
+  <div id="room-2" class="room-view">
+    <button class="back-btn" onclick="closeRoom()">← Retour au Hub</button>
+    <div class="r-title">⚖️ room-2 : Dynamique newtonienne &amp; PFD</div>
+    <div class="room-alert-banner">🔍 Bienvenue dans room-2 ! Observez attentivement l'image ci-dessous et survolez-la pour trouver et révéler l'énigme cachée.</div>
+
+    <div class="interactive-scene">
+      <img src="room-2.jpg" alt="room-2 image">
+      <div class="hidden-hotspot" onclick="revealPuzzles(2)"></div>
+    </div>
+
+    <div class="puzzles-container" id="container-puzzles-2">
+      <div class="r-desc">
+        Les plaques en laiton du coffre indiquent qu'un solide de masse <strong>m = 2,0 kg</strong> glisse sur un plan horizontal sans frottement, soumis à une force motrice horizontale constante <strong>F = 6,0 N</strong>.
+      </div>
+      <div class="puzzle-box">
+        <div class="puzzle-question">Question 2.1 : D'après la 2e loi de Newton dans le référentiel terrestre galiléen, quelle est la valeur de la norme de l'accélération ‖<span style="font-style:italic;">a</span>‖ du centre de masse ? (en m·s⁻²)</div>
+        <div class="input-row">
+          <input type="text" class="escape-input" id="ans-2-1" placeholder="Votre réponse...">
+          <button class="btn-submit" onclick="checkPuzzle(2, 1, '3', 'Correct ! a = F/m = 6,0 / 2,0 = 3,0 m·s⁻².')">Valider</button>
+        </div>
+        <div class="feedback-msg" id="fb-2-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- room-3 -->
+  <div id="room-3" class="room-view">
+    <button class="back-btn" onclick="closeRoom()">← Retour au Hub</button>
+    <div class="r-title">⚡ room-3 : Champs Uniformes &amp; Condensateur Plan</div>
+    <div class="room-alert-banner">🔍 Bienvenue dans room-3 ! Observez attentivement l'image ci-dessous et survolez-la pour trouver et révéler l'énigme cachée.</div>
+
+    <div class="interactive-scene">
+      <img src="room-3.jpg" alt="room-3 image">
+      <div class="hidden-hotspot" onclick="revealPuzzles(3)"></div>
+    </div>
+
+    <div class="puzzles-container" id="container-puzzles-3">
+      <div class="r-desc">
+        Un électron de masse m<sub>e</sub> et de charge q = −e (avec e = 1,6·10⁻¹⁹ C) pénètre entre les armatures d'un condensateur plan où règne un champ électrique uniforme <strong>E</strong> vertical dirigé vers le haut.
+      </div>
+      <div class="puzzle-box">
+        <div class="puzzle-question">Question 3.1 : Quel est le sens de la force électrique <span style="font-style:italic;">F<sub>el</sub></span> subie par l'électron par rapport au champ électrique <span style="font-style:italic;">E</span> ? (Tapez <strong>meme</strong> ou <strong>oppose</strong>)</div>
+        <div class="input-row">
+          <input type="text" class="escape-input" id="ans-3-1" placeholder="Votre réponse...">
+          <button class="btn-submit" onclick="checkPuzzle(3, 1, 'oppose', 'Exact ! Comme q < 0, F_el = q·E est de sens opposé à E.')">Valider</button>
+        </div>
+        <div class="feedback-msg" id="fb-3-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- room-4 -->
+  <div id="room-4" class="room-view">
+    <button class="back-btn" onclick="closeRoom()">← Retour au Hub</button>
+    <div class="r-title">💻 room-4 : Énergie mécanique &amp; Script Python ECE</div>
+    <div class="room-alert-banner">🔍 Bienvenue dans room-4 ! Observez attentivement l'image ci-dessous et survolez-la pour trouver et révéler l'énigme cachée.</div>
+
+    <div class="interactive-scene">
+      <img src="room-4.jpg" alt="room-4 image">
+      <div class="hidden-hotspot" onclick="revealPuzzles(4)"></div>
+    </div>
+
+    <div class="puzzles-container" id="container-puzzles-4">
+      <div class="r-desc">
+        Dernière étape pour déverrouiller l'Héritage de Newton. Un script Python simule la chute libre sans frottement d'une balle de masse m = 0,15 kg lâchée depuis une hauteur H = 2,0 m (g = 9,8 m·s⁻²).
+      </div>
+      <div class="python-box">
+        <span class="keyword">import</span> numpy <span class="keyword">as</span> np<br>
+        m = <span class="string">0.15</span><br>
+        g = <span class="string">9.8</span><br>
+        h = <span class="string">2.0</span><br>
+        v = np.sqrt(<span class="string">2</span> * g * h)<br>
+        Ec = <span class="string">0.5</span> * m * v**2<br>
+        <span class="keyword">print</span>(f<span class="string">"Énergie cinétique finale : {Ec:.1f} J"</span>)
+      </div>
+      <div class="puzzle-box">
+        <div class="puzzle-question">Question 4.1 : D'après ce script et le théorème de conservation de l'énergie mécanique, quelle est la valeur numérique de l'énergie cinétique Ec (en Joules) à l'impact au sol ?</div>
+        <div class="input-row">
+          <input type="text" class="escape-input" id="ans-4-1" placeholder="Votre réponse...">
+          <button class="btn-submit" onclick="checkPuzzle(4, 1, '2.9', 'Félicitations ! Ec = m·g·h = 0,15 × 9,8 × 2,0 = 2,94 J (soit 2,9 J). Vous avez libéré l’Héritage de Newton !')">Valider</button>
+        </div>
+        <div class="feedback-msg" id="fb-4-1"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const solvedQuestions = {
+    '1-1': false, '1-2': false,
+    '2-1': false,
+    '3-1': false,
+    '4-1': false
+  };
+
+  const roomStatus = { 1: false, 2: false, 3: false, 4: false };
+
+  function openRoom(roomNum) {
+    if (roomNum > 1 && !roomStatus[roomNum - 1]) {
+      alert("🔒 Cette salle est verrouillée ! Vous devez d'abord valider la salle précédente.");
+      return;
+    }
+    document.getElementById('mainHub').style.display = 'none';
+    document.querySelectorAll('.room-view').forEach(el => {
+      if(el.id !== 'mainHub') el.classList.remove('active');
+    });
+    document.getElementById('room-' + roomNum).classList.add('active');
+  }
+
+  function closeRoom() {
+    document.querySelectorAll('.room-view').forEach(el => el.classList.remove('active'));
+    document.getElementById('mainHub').style.display = 'block';
+  }
+
+  function revealPuzzles(roomNum) {
+    const container = document.getElementById(`container-puzzles-${roomNum}`);
+    container.classList.add('revealed');
+    container.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function checkPuzzle(room, qNum, expectedAns, successMessage) {
+    const inputEl = document.getElementById(`ans-${room}-${qNum}`);
+    const fbEl = document.getElementById(`fb-${room}-${qNum}`);
+    const qKey = `${room}-${qNum}`;
+
+    if (solvedQuestions[qKey]) return;
+
+    const userVal = inputEl.value.trim().toLowerCase().replace(',', '.');
+    const cleanExpected = expectedAns.toLowerCase();
+
+    let isCorrect = false;
+    if (room === 1 && qNum === 2) {
+      if (Math.abs(parseFloat(userVal) - 6) < 0.1) isCorrect = true;
+    } else if (room === 4 && qNum === 1) {
+      if (Math.abs(parseFloat(userVal) - 2.9) < 0.1) isCorrect = true;
+    } else {
+      if (userVal === cleanExpected) isCorrect = true;
+    }
+
+    if (isCorrect) {
+      inputEl.classList.remove('wrong');
+      inputEl.classList.add('correct');
+      inputEl.disabled = true;
+      fbEl.className = 'feedback-msg ok';
+      fbEl.textContent = "✅ " + successMessage;
+
+      solvedQuestions[qKey] = true;
+      checkRoomCompletion(room);
+    } else {
+      inputEl.classList.remove('correct');
+      inputEl.classList.add('wrong');
+      fbEl.className = 'feedback-msg ko';
+      fbEl.textContent = "❌ Ce n'est pas la bonne valeur. Effacez et essayez une autre proposition !";
+    }
+  }
+
+  function checkRoomCompletion(room) {
+    let roomComplete = false;
+    if (room === 1) {
+      if (solvedQuestions['1-1'] && solvedQuestions['1-2']) roomComplete = true;
+    } else if (room === 2) {
+      if (solvedQuestions['2-1']) roomComplete = true;
+    } else if (room === 3) {
+      if (solvedQuestions['3-1']) roomComplete = true;
+    } else if (room === 4) {
+      if (solvedQuestions['4-1']) roomComplete = true;
+    }
+
+    if (roomComplete && !roomStatus[room]) {
+      roomStatus[room] = true;
+      updateHubCards(room);
+      checkGlobalWin();
+    }
+  }
+
+  function updateHubCards(completedRoom) {
+    const card = document.getElementById(`card-room${completedRoom}`);
+    const statusBadge = document.getElementById(`status-${completedRoom}`);
+    card.classList.remove('unlocked');
+    card.classList.add('completed');
+    statusBadge.className = 'room-status status-done';
+    statusBadge.textContent = 'Validé ✓';
+
+    const nextRoom = completedRoom + 1;
+    if (nextRoom <= 4) {
+      const nextCard = document.getElementById(`card-room${nextRoom}`);
+      const nextBadge = document.getElementById(`status-${nextRoom}`);
+      nextCard.classList.add('unlocked');
+      nextBadge.className = 'room-status status-unlocked';
+      nextBadge.textContent = 'Disponible';
+    }
+
+    let solved = Object.values(roomStatus).filter(v => v === true).length;
+    document.getElementById('solvedCount').textContent = solved;
+  }
+
+  function checkGlobalWin() {
+    let solved = Object.values(roomStatus).filter(v => v === true).length;
+    if (solved === 4) {
+      document.getElementById('globalWinBanner').style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
