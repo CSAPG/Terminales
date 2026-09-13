@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Game — Les Lois du Ciel | Terminale Spé PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fond: #F6F0E2;
+    --carte: #FFFFFF;
+    --bordure: #D9C6952;
+    --bordure2: #D9C695;
+    --or: #B8860B;
+    --or-clair: #F3E5C2;
+    --or-fonce: #8A6508;
+    --bleu-nuit: #1E3A5F;
+    --bleu-clair: #EAF1F8;
+    --texte: #2A2118;
+    --texte-leger: #6B5D4A;
+    --vert: #1F7A4D;
+    --vert-clair: #E7F5EC;
+    --rouge: #B3261E;
+    --rouge-clair: #FCEAE9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+  html, body { background: var(--fond); color: var(--texte); min-height: 100%; }
+  body {
+    display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px;
+    background: radial-gradient(ellipse at top, #FBF6EA 0%, #F1E6CB 100%);
+  }
+  .hub-wrapper { width: 100%; max-width: 1100px; }
+
+  .hub-title-bar { text-align: center; margin-bottom: 14px; }
+  .hub-title-bar h1 {
+    font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--bleu-nuit);
+    letter-spacing: 0.02em;
+  }
+  .hub-title-bar p { font-size: 0.85rem; color: var(--texte-leger); margin-top: 2px; }
+
+  .hub-progress {
+    display: flex; justify-content: center; align-items: center; gap: 6px;
+    margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .step {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--carte); border: 1.5px solid var(--bordure2);
+    border-radius: 20px; padding: 6px 14px 6px 8px; font-size: 0.8rem; color: var(--texte-leger);
+    transition: all 0.3s ease;
+  }
+  .step .dot {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--or-clair); border: 1.5px solid var(--bordure2);
+    display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: bold; color: var(--or-fonce);
+    flex-shrink: 0;
+  }
+  .step.current { border-color: var(--or); color: var(--or-fonce); box-shadow: 0 0 10px rgba(184,134,11,0.25); }
+  .step.current .dot { background: var(--or); color: #fff; border-color: var(--or); }
+  .step.done { border-color: var(--vert); color: var(--vert); }
+  .step.done .dot { background: var(--vert); color: #fff; border-color: var(--vert); }
+  .step-sep { width: 18px; height: 1px; background: var(--bordure2); flex-shrink: 0; }
+
+  .game-container {
+    position: relative; width: 100%; aspect-ratio: 16 / 10;
+    box-shadow: 0 8px 26px rgba(120,95,30,0.18);
+    border: 4px solid var(--bordure2); border-radius: 10px; overflow: hidden;
+    background-color: var(--carte);
+  }
+
+  .scene-hub { position: absolute; inset: 0; display: none; }
+  .scene-hub.active { display: block; }
+
+  #scene-room iframe { width: 100%; height: 100%; border: none; display: block; background: #fff; }
+
+  .narrative-panel {
+    position: relative; z-index: 2; height: 100%; display: flex;
+    justify-content: center; align-items: center; padding: 24px; overflow-y: auto;
+    background: linear-gradient(180deg, #FCF8EF 0%, #F3E8CE 100%);
+  }
+  .narrative-card {
+    background: var(--carte); border: 2px solid var(--or); border-radius: 10px;
+    padding: 26px 30px; max-width: 640px; width: 100%; max-height: 100%; overflow-y: auto;
+    box-shadow: 0 4px 18px rgba(120,95,30,0.15); text-align: center;
+  }
+  .narrative-tag {
+    display: inline-block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--or-fonce); border: 1px solid var(--bordure2); border-radius: 12px; padding: 3px 12px; margin-bottom: 12px;
+    background: var(--or-clair);
+  }
+  .narrative-card h2 {
+    color: var(--bleu-nuit); font-size: 1.5rem; margin-bottom: 14px; border-bottom: 1px solid var(--bordure2);
+    padding-bottom: 10px; font-family: 'Outfit', sans-serif; font-weight: 800;
+  }
+  .narrative-card p { font-size: 0.94rem; line-height: 1.6; margin-bottom: 14px; text-align: left; color: var(--texte); }
+  .narrative-card p.signature { font-style: italic; color: var(--texte-leger); font-size: 0.85rem; text-align: right; margin-top: -6px; }
+  .narrative-card .stamp {
+    display: inline-block; border: 2px double var(--or); color: var(--or-fonce); font-size: 0.72rem;
+    letter-spacing: 0.06em; padding: 5px 10px; margin-bottom: 14px; transform: rotate(-2deg);
+  }
+
+  .btn-voyage {
+    background: var(--or); color: #fff; border: none; padding: 12px 26px;
+    font-weight: bold; font-size: 0.95rem; border-radius: 6px; cursor: pointer; margin-top: 6px;
+    transition: all 0.2s ease; font-family: 'Nunito', sans-serif;
+  }
+  .btn-voyage:hover { background: var(--or-fonce); box-shadow: 0 0 14px rgba(184,134,11,0.35); }
+
+  .codes-recap { text-align: left; margin: 6px 0 16px; list-style: none; }
+  .codes-recap li {
+    display: flex; justify-content: space-between; padding: 7px 12px; margin-bottom: 6px;
+    background: var(--or-clair); border: 1px solid var(--bordure2); border-radius: 5px; font-size: 0.86rem;
+  }
+  .codes-recap li span.val { color: var(--or-fonce); font-weight: bold; letter-spacing: 1px; font-family: 'Fira Code', monospace; }
+  .total-time-box {
+    display: inline-block; margin-top: 4px; padding: 8px 18px; border: 1px solid var(--bordure2);
+    border-radius: 20px; font-size: 0.85rem; color: var(--texte-leger); background: var(--bleu-clair);
+  }
+  .total-time-box strong { color: var(--bleu-nuit); }
+</style>
+</head>
+<body>
+
+<div class="hub-wrapper">
+
+  <div class="hub-title-bar">
+    <h1>🔭 Les Lois du Ciel</h1>
+    <p>Escape Game — Terminale Spécialité Physique-Chimie · Séquence 04, Lois de Kepler</p>
+  </div>
+
+  <div class="hub-progress" id="hub-progress">
+    <div class="step" id="step-0"><span class="dot">1</span>Uraniborg</div>
+    <div class="step-sep"></div>
+    <div class="step" id="step-1"><span class="dot">2</span>Prague</div>
+    <div class="step-sep"></div>
+    <div class="step" id="step-2"><span class="dot">3</span>Cambridge</div>
+    <div class="step-sep"></div>
+    <div class="step" id="step-3"><span class="dot">4</span>Paris</div>
+  </div>
+
+  <div class="game-container">
+
+    <!-- ================= INTRODUCTION ================= -->
+    <div class="scene-hub active" id="scene-intro">
+      <div class="narrative-panel">
+        <div class="narrative-card">
+          <span class="narrative-tag">Prologue</span>
+          <h2>Les Lois du Ciel</h2>
+          <p>Un observatoire moderne s'apprête à recalibrer son télescope avant une occultation rare de Jupiter par la Lune. Mais le programme de calcul de trajectoire refuse de démarrer : il exige, avant toute chose, de <strong>reconstituer le raisonnement complet</strong> qui a mené des premières observations à l'œil nu jusqu'aux lois qui gouvernent aujourd'hui tous les satellites.</p>
+          <p>L'archiviste retrouve quatre carnets scellés, chacun lié à un lieu et une époque : <strong>Uraniborg</strong>, l'île-observatoire de Tycho Brahe ; <strong>Prague</strong>, où Kepler exploita ces mêmes mesures ; <strong>Cambridge</strong>, où Newton en donna la preuve définitive ; et enfin <strong>Paris</strong>, où l'on tourna pour la première fois un télescope vers un satellite d'une autre planète que la Terre.</p>
+          <p>À vous de rouvrir ces quatre carnets, dans l'ordre, pour reconstituer la chaîne complète — des relevés d'angle de Tycho Brahe jusqu'aux éclipses d'Io, satellite de Jupiter.</p>
+          <button class="btn-voyage" onclick="startVoyage()">Ouvrir le premier carnet — Uraniborg, 1580 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SALLE COURANTE (iframe) ================= -->
+    <div class="scene-hub" id="scene-room">
+      <iframe id="room-iframe" src="about:blank" title="Salle de l'escape game"></iframe>
+    </div>
+
+    <!-- ================= TRANSITION 1 : Uraniborg -> Prague ================= -->
+    <div class="scene-hub" id="scene-t1">
+      <div class="narrative-panel">
+        <div class="narrative-card">
+          <div class="stamp">Malle scellée — Uraniborg</div>
+          <h2>Vingt années de relevés</h2>
+          <p>Le carnet de Tycho Brahe se referme sur une dernière ligne : <strong id="t1-code">v = <span id="t1-val">?</span> km/s</strong>. Deux décennies de mesures au quadrant mural, nuit après nuit, sans le moindre télescope — la précision de l'œil nu poussée à sa limite.</p>
+          <p>Une note glissée entre les pages indique qu'à la mort de Tycho Brahe, ses observations sont revenues à son assistant : un jeune mathématicien du nom de <strong>Johannes Kepler</strong>, installé à Prague.</p>
+          <p class="signature">— Archives de l'observatoire</p>
+          <button class="btn-voyage" onclick="goToRoom(1)">Rejoindre Prague →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TRANSITION 2 : Prague -> Cambridge ================= -->
+    <div class="scene-hub" id="scene-t2">
+      <div class="narrative-panel">
+        <div class="narrative-card">
+          <div class="stamp">Correspondance scientifique — 1618</div>
+          <h2>Une loi, mais pas encore sa cause</h2>
+          <p>À force de reprendre les tables de Tycho Brahe, Kepler établit une relation numérique valable pour toutes les planètes du Système solaire. Le carnet se referme sur un résultat vérifié : <strong id="t2-code">v = <span id="t2-val">?</span> km/s</strong>.</p>
+          <p>Mais Kepler ne sait pas <em>pourquoi</em> cette loi est vraie. Il faudra attendre près de soixante-dix ans, et un autre pays, pour qu'un physicien anglais en démontre l'origine à partir des lois du mouvement.</p>
+          <p class="signature">— J. Kepler</p>
+          <button class="btn-voyage" onclick="goToRoom(2)">Traverser vers Cambridge →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TRANSITION 3 : Cambridge -> Paris ================= -->
+    <div class="scene-hub" id="scene-t3">
+      <div class="narrative-panel">
+        <div class="narrative-card">
+          <div class="stamp">Trinity College — 1687</div>
+          <h2>La preuve, enfin</h2>
+          <p>Sur son bureau, les <em>Principia</em> restent ouverts à la page où il démontre que la loi des périodes de Kepler découle directement de sa propre loi de gravitation. Le carnet livre son résultat : <strong id="t3-code">T²/a³ = <span id="t3-val">?</span></strong>.</p>
+          <p>Reste une question ouverte : cette loi, établie pour les planètes autour du Soleil, vaut-elle aussi pour d'autres systèmes — par exemple les satellites d'une autre planète ? La réponse se trouve à Paris, où l'on observe depuis peu les lunes de Jupiter.</p>
+          <p class="signature">— I. Newton</p>
+          <button class="btn-voyage" onclick="goToRoom(3)">Rejoindre l'Observatoire de Paris →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CONCLUSION ================= -->
+    <div class="scene-hub" id="scene-conclusion">
+      <div class="narrative-panel">
+        <div class="narrative-card">
+          <span class="narrative-tag">Épilogue</span>
+          <h2>La chaîne est reconstituée</h2>
+          <p>Des relevés au quadrant de Tycho Brahe jusqu'aux éclipses d'Io observées depuis Paris, la même loi se vérifie : le rapport T²/a³ reste constant pour tous les satellites d'un même astre central. Le télescope peut être recalibré.</p>
+          <p>Un dernier détail, resté dans les marges du carnet parisien : ce sont ces mêmes éclipses d'Io qui permirent, en 1676, à Ole Rømer de réaliser la toute première mesure de la vitesse de la lumière — bien loin de ce que cherchaient initialement Cassini et son équipe.</p>
+          <ul class="codes-recap" id="codes-recap"></ul>
+          <div class="total-time-box">Temps total de l'enquête : <strong id="total-time">—</strong></div>
+          <br>
+          <button class="btn-voyage" onclick="restartVoyage()">↺ Recommencer l'enquête</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const rooms = [
+    { id: 'tycho-brahe',    file: 'salle1_tycho_brahe.html', label: 'Uraniborg', code: null, elapsed: null },
+    { id: 'kepler-bureau',  file: 'salle2_kepler.html',       label: 'Prague',    code: null, elapsed: null },
+    { id: 'newton-cambridge', file: 'salle3_newton.html',     label: 'Cambridge', code: null, elapsed: null },
+    { id: 'galilee-io',     file: 'salle4_galilee_io.html',   label: 'Paris',     code: null, elapsed: null }
+  ];
+  let currentIndex = -1;
+
+  function showScene(id) {
+    document.querySelectorAll('.scene-hub').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function updateProgressBar() {
+    rooms.forEach((r, idx) => {
+      const el = document.getElementById('step-' + idx);
+      el.classList.remove('current', 'done');
+      if (r.code) el.classList.add('done');
+      else if (idx === currentIndex) el.classList.add('current');
+    });
+  }
+
+  function startVoyage() { goToRoom(0); }
+
+  function goToRoom(i) {
+    currentIndex = i;
+    document.getElementById('room-iframe').src = rooms[i].file;
+    showScene('scene-room');
+    updateProgressBar();
+  }
+
+  window.addEventListener('message', (e) => {
+    const d = e.data;
+    if (!d || d.source !== 'escape-game') return;
+    if (currentIndex < 0 || d.room !== rooms[currentIndex].id) return;
+
+    if (d.type === 'room-complete') {
+      rooms[currentIndex].code = d.code;
+      rooms[currentIndex].elapsed = d.elapsed || 0;
+      updateProgressBar();
+      const valEl = document.getElementById('t' + (currentIndex + 1) + '-val');
+      if (valEl) valEl.textContent = d.code;
+    } else if (d.type === 'room-exit') {
+      advanceAfterRoom(currentIndex);
+    }
+  });
+
+  function advanceAfterRoom(i) {
+    document.getElementById('room-iframe').src = 'about:blank';
+    if (i === 0) showScene('scene-t1');
+    else if (i === 1) showScene('scene-t2');
+    else if (i === 2) showScene('scene-t3');
+    else if (i === 3) showConclusion();
+  }
+
+  function showConclusion() {
+    const totalSec = rooms.reduce((s, r) => s + (r.elapsed || 0), 0);
+    const m = Math.floor(totalSec / 60), s = totalSec % 60;
+    document.getElementById('total-time').innerText = `${m} min ${s < 10 ? '0' : ''}${s} s`;
+    const list = document.getElementById('codes-recap');
+    list.innerHTML = rooms.map(r => `<li><span>${r.label}</span><span class="val">${r.code || '—'}</span></li>`).join('');
+    showScene('scene-conclusion');
+  }
+
+  function restartVoyage() {
+    rooms.forEach(r => { r.code = null; r.elapsed = null; });
+    currentIndex = -1;
+    updateProgressBar();
+    showScene('scene-intro');
+  }
+
+  updateProgressBar();
+</script>
+
+</body>
+</html>
