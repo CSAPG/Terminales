@@ -3495,9 +3495,15 @@ print("Incertitude-type u(M_Terre) =", "%.0e" % u_M_T, "kg")
       🔭 <strong>Les Lois du Ciel</strong> — une enquête en 4 étapes (Tycho Brahe, Kepler, Newton, Galilée/Io)
       pour réviser les capacités de cette séquence à travers leur histoire.
     </p>
+    <div style="display:flex; justify-content:flex-end; margin-bottom:6px;">
+      <button onclick="document.getElementById('escape-game-frame').requestFullscreen()"
+              style="background:#B8860B; color:#fff; border:none; padding:7px 16px; border-radius:8px; font-weight:700; font-size:0.85rem; cursor:pointer; font-family:'Nunito',sans-serif;">
+        ⛶ Plein écran
+      </button>
+    </div>
     <div style="position:relative; width:100%; aspect-ratio:16/10; border-radius:10px; overflow:hidden; border:2px solid #D9C695;">
-      <iframe src="escapegame/escape_lois_kepler.html" title="Escape Game — Les Lois du Ciel"
-              style="width:100%; height:100%; border:none; display:block;" loading="lazy"></iframe>
+      <iframe id="escape-game-frame" src="escapegame/escape_lois_kepler.html" title="Escape Game — Les Lois du Ciel"
+              style="width:100%; height:100%; border:none; display:block;" loading="lazy" allowfullscreen></iframe>
     </div>
     <p style="margin-top:8px; font-size:0.8rem; color:#6B5D4A;">
       Si le jeu ne s'affiche pas, vérifiez que le dossier <code>escapegame/</code> (contenant
