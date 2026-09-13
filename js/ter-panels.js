@@ -478,7 +478,7 @@ const TER_SEQUENCES = [
             href:'seq11/Seq11_Cinetique_cours.pdf' },
       { type:'link', icon:'🎓', label:'Cours interactif',
             sub:'Réalisé par Mme Poirault-Gauvin',
-            href:'seq11/cinetique-chimique.html' },
+            href:'seq11/seq11-cinetique_chimique.html' },
         ]
       },
       
