@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salle 1 — Uraniborg</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fond: #F6F0E2; --carte: #FFFFFF; --bordure: #D9C695;
+    --or: #B8860B; --or-clair: #F3E5C2; --or-fonce: #8A6508;
+    --bleu-nuit: #1E3A5F; --bleu-clair: #EAF1F8;
+    --texte: #2A2118; --texte-leger: #6B5D4A;
+    --vert: #1F7A4D; --vert-clair: #E7F5EC;
+    --rouge: #B3261E; --rouge-clair: #FCEAE9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+  html, body { background: var(--fond); color: var(--texte); }
+  body { padding: 18px; overflow-y: auto; }
+
+  .back-btn {
+    background: var(--carte); border: 1.5px solid var(--bordure); color: var(--texte-leger);
+    padding: 7px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    margin-bottom: 14px; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .back-btn:hover { background: var(--bleu-clair); color: var(--bleu-nuit); }
+
+  .r-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .r-title {
+    font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--bleu-nuit);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .r-cap-badge {
+    font-size: 0.72rem; font-weight: 700; color: var(--or-fonce); background: var(--or-clair);
+    border: 1px solid var(--bordure); border-radius: 20px; padding: 4px 12px;
+  }
+
+  .r-desc { font-size: 0.92rem; line-height: 1.55; color: var(--texte); margin-bottom: 14px; }
+  .r-desc strong { color: var(--bleu-nuit); }
+
+  /* Galerie d'indices visuels */
+  .clue-gallery { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .clue-card { flex: 1; min-width: 150px; background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 10px; overflow: hidden; }
+  .clue-card img { width: 100%; height: 110px; object-fit: cover; display: block; }
+  .clue-caption { font-size: 0.72rem; color: var(--texte-leger); padding: 6px 8px; text-align: center; }
+
+  /* Scène interactive avec hotspot caché */
+  .interactive-scene {
+    position: relative; width: 100%; max-height: 300px; overflow: hidden;
+    border-radius: 10px; border: 2px solid var(--bordure); margin-bottom: 16px; background: #EDE3C8;
+  }
+  .interactive-scene img { width: 100%; height: 100%; max-height: 300px; object-fit: cover; display: block; }
+  .hidden-hotspot {
+    position: absolute; top: 30%; left: 35%; width: 140px; height: 110px;
+    cursor: pointer; background: transparent; border-radius: 10px;
+  }
+  .hidden-hotspot:hover { background: rgba(184,134,11,0.10); }
+
+  .room-alert-banner {
+    background: var(--bleu-clair); border: 1.5px solid #9DBEDD; color: var(--bleu-nuit);
+    padding: 12px 18px; border-radius: 8px; font-size: 0.88rem; margin-bottom: 14px;
+  }
+
+  .puzzles-container { display: none; }
+  .puzzles-container.revealed { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+
+  .puzzle-box { background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
+  .puzzle-step-tag { font-size: 0.72rem; font-weight: 800; color: var(--or-fonce); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .puzzle-question { font-size: 0.92rem; font-weight: 600; color: var(--texte); margin-bottom: 12px; line-height: 1.5; }
+
+  /* Puzzle 1 : canvas + vecteurs cliquables */
+  .canvas-wrap { position: relative; width: 340px; max-width: 100%; margin: 0 auto 10px; }
+  canvas#frenetCanvas { display: block; width: 100%; height: auto; border-radius: 8px; background: #FDFBF4; border: 1px solid var(--bordure); }
+  .vec-btn {
+    position: absolute; width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(255,255,255,0.85); border: 2px solid var(--bleu-nuit); color: var(--bleu-nuit);
+    font-weight: 800; font-size: 0.8rem; cursor: pointer; transform: translate(-50%,-50%);
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .vec-btn:hover { background: var(--or-clair); border-color: var(--or); }
+  .vec-btn.correct { background: var(--vert); border-color: var(--vert); color: #fff; }
+  .vec-btn.wrong { background: var(--rouge); border-color: var(--rouge); color: #fff; }
+  .vec-feedback { text-align: center; font-size: 0.85rem; font-weight: 700; margin-top: 4px; min-height: 1.3em; }
+  .vec-feedback.ok { color: var(--vert); }
+  .vec-feedback.ko { color: var(--rouge); }
+
+  .data-line { background: var(--or-clair); border: 1px solid var(--bordure); border-radius: 8px; padding: 10px 14px; font-size: 0.86rem; margin-bottom: 12px; font-family: 'Fira Code', monospace; color: var(--texte); }
+
+  .input-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .escape-input {
+    flex: 1; min-width: 140px; padding: 9px 12px; border: 1.5px solid var(--bordure); border-radius: 8px;
+    font-size: 0.92rem; font-family: 'Fira Code', monospace;
+  }
+  .escape-input.correct { border-color: var(--vert); background: var(--vert-clair); }
+  .escape-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
+  .btn-submit {
+    background: var(--bleu-nuit); color: #fff; border: none; padding: 9px 18px; border-radius: 8px;
+    font-weight: 700; font-size: 0.88rem; cursor: pointer;
+  }
+  .btn-submit:hover { background: #16304e; }
+  .feedback-msg { font-size: 0.85rem; margin-top: 8px; font-weight: 600; min-height: 1.2em; }
+  .feedback-msg.ok { color: var(--vert); }
+  .feedback-msg.ko { color: var(--rouge); }
+
+  .room-complete-banner {
+    display: none; background: var(--vert-clair); border: 2px solid var(--vert); color: #14532d;
+    padding: 16px 20px; border-radius: 10px; text-align: center; margin-top: 10px;
+  }
+  .room-complete-banner.show { display: block; animation: fadeIn 0.4s ease; }
+  .room-complete-banner h3 { font-family: 'Outfit', sans-serif; margin-bottom: 6px; }
+  .btn-continue {
+    background: var(--or); color: #fff; border: none; padding: 10px 22px; border-radius: 8px;
+    font-weight: 800; font-size: 0.9rem; cursor: pointer; margin-top: 10px;
+  }
+  .btn-continue:hover { background: var(--or-fonce); }
+</style>
+</head>
+<body>
+
+<button class="back-btn" onclick="exitRoom()">← Quitter la salle</button>
+
+<div class="r-header">
+  <div class="r-title">🌌 Salle 1 — Uraniborg, l'observatoire de Tycho Brahe</div>
+  <div class="r-cap-badge">📘 Capacité B.O. : vecteurs vitesse/accélération en repère de Frenet, mouvement circulaire</div>
+</div>
+
+<div class="r-desc">
+  En 1576, le roi du Danemark offre à <strong>Tycho Brahe</strong> l'île de Hven pour y bâtir <strong>Uraniborg</strong>, le plus grand observatoire d'Europe — vingt ans avant l'invention de la lunette astronomique. Nuit après nuit, Brahe et son équipe relèvent à l'œil nu, au <strong>quadrant mural</strong>, la position des astres avec une précision inégalée pour l'époque.
+</div>
+
+<div class="clue-gallery">
+  <div class="clue-card">
+    <img src="salle1-1.jpg" alt="Élévation d'Uraniborg">
+    <div class="clue-caption">Élévation du château-observatoire d'Uraniborg, 1576</div>
+  </div>
+  <div class="clue-card">
+    <img src="salle1-2.jpg" alt="Plan aérien d'Uraniborg">
+    <div class="clue-caption">Plan des jardins et bâtiments, vus du ciel</div>
+  </div>
+  <div class="clue-card">
+    <img src="salle1-3.jpg" alt="Quadrant mural de Tycho Brahe">
+    <div class="clue-caption">Le quadrant mural — instrument de mesure des angles</div>
+  </div>
+</div>
+
+<div class="room-alert-banner">🔍 Observez la salle des instruments ci-dessous et survolez-la pour révéler le carnet de mesures caché.</div>
+
+<div class="interactive-scene">
+  <img src="salle1-4.jpg" alt="Salle des instruments d'Uraniborg">
+  <div class="hidden-hotspot" onclick="revealPuzzles()"></div>
+</div>
+
+<div class="puzzles-container" id="container-puzzles">
+
+  <div class="puzzle-box">
+    <div class="puzzle-step-tag">Étape 1 — Sens du mouvement</div>
+    <div class="puzzle-question">
+      Le point P représente un astre en mouvement circulaire uniforme autour du centre C, dans le sens indiqué par la flèche verte sur la trajectoire. Cliquez, parmi les trois vecteurs A, B, C tracés depuis P, celui qui représente correctement le vecteur unitaire tangentiel <span style="font-style:italic;">u<sub>t</sub></span> du repère de Frenet en ce point.
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="frenetCanvas" width="340" height="280"></canvas>
+      <button class="vec-btn" id="vecA" style="left:265.6px; top:106.1px;" onclick="checkVector('A')">A</button>
+      <button class="vec-btn" id="vecB" style="left:260.0px; top:42.7px;" onclick="checkVector('B')">B</button>
+      <button class="vec-btn" id="vecC" style="left:196.6px; top:48.3px;" onclick="checkVector('C')">C</button>
+    </div>
+    <div class="vec-feedback" id="vec-feedback"></div>
+  </div>
+
+  <div class="puzzle-box" id="box-numeric" style="display:none;">
+    <div class="puzzle-step-tag">Étape 2 — Calcul de la vitesse</div>
+    <div class="data-line">R = 2,279×10⁸ km &nbsp;|&nbsp; T = 687 jours = 5,94×10⁷ s</div>
+    <div class="puzzle-question">Question 1.1 : Ce mobile décrivant un cercle de rayon R en une période T, quelle est la valeur de la norme de sa vitesse ‖v‖ ? (arrondir en km·s⁻¹)</div>
+    <div class="input-row">
+      <input type="text" class="escape-input" id="ans-1-1" placeholder="Votre réponse...">
+      <button class="btn-submit" onclick="checkPuzzle11()">Valider</button>
+    </div>
+    <div class="feedback-msg" id="fb-1-1"></div>
+  </div>
+
+  <div class="puzzle-box" id="box-numeric2" style="display:none;">
+    <div class="puzzle-question">Question 1.2 : Le mouvement étant circulaire uniforme, l'accélération est purement normale (a<sub>t</sub> = 0). Quelle est la valeur de a<sub>n</sub> = ‖a‖, exprimée en 10⁻³ m·s⁻² ?</div>
+    <div class="input-row">
+      <input type="text" class="escape-input" id="ans-1-2" placeholder="Votre réponse...">
+      <button class="btn-submit" onclick="checkPuzzle12()">Valider</button>
+    </div>
+    <div class="feedback-msg" id="fb-1-2"></div>
+  </div>
+
+  <div class="room-complete-banner" id="room-complete-banner">
+    <h3>📝 Carnet de Tycho Brahe déchiffré !</h3>
+    <p>v ≈ 24 km·s⁻¹ — un chiffre que Kepler, à Prague, va bientôt exploiter.</p>
+    <button class="btn-continue" onclick="continueVoyage()">Continuer vers Prague →</button>
+  </div>
+
+</div>
+
+<script>
+  const ROOM_ID = 'tycho-brahe';
+  const startTime = Date.now();
+  let step1Done = false, step2Done = false;
+
+  function revealPuzzles() {
+    document.getElementById('container-puzzles').classList.add('revealed');
+    document.getElementById('container-puzzles').scrollIntoView({ behavior: 'smooth' });
+    drawScene();
+  }
+
+  function exitRoom() {
+    window.parent.postMessage({ source: 'escape-game', room: ROOM_ID, type: 'room-exit' }, '*');
+  }
+  function continueVoyage() { exitRoom(); }
+
+  /* ---------- Canvas : orbite + vecteurs ---------- */
+  function drawScene() {
+    const canvas = document.getElementById('frenetCanvas');
+    const ctx = canvas.getContext('2d');
+    const cx = 170, cy = 150, R = 95;
+    ctx.clearRect(0,0,340,280);
+
+    // orbite
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI);
+    ctx.strokeStyle = '#B8A574'; ctx.lineWidth = 1.4; ctx.setLineDash([4,3]); ctx.stroke(); ctx.setLineDash([]);
+
+    // centre C
+    ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2*Math.PI); ctx.fillStyle = '#8A6508'; ctx.fill();
+    ctx.fillStyle = '#8A6508'; ctx.font = 'bold 13px Outfit, sans-serif'; ctx.fillText('C', cx-4, cy+20);
+
+    // point P
+    const theta = -50 * Math.PI/180;
+    const px = cx + R*Math.cos(theta), py = cy + R*Math.sin(theta);
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(px,py); ctx.strokeStyle = '#B8A574'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, 2*Math.PI); ctx.fillStyle = '#1E3A5F'; ctx.fill();
+    ctx.fillStyle = '#1E3A5F'; ctx.font = 'bold 13px Outfit, sans-serif'; ctx.fillText('P', px+8, py-4);
+
+    // flèche verte : sens du mouvement le long de la trajectoire
+    const thetaArrowStart = theta - 0.35, thetaArrowEnd = theta - 0.12;
+    const ax0 = cx + R*Math.cos(thetaArrowStart), ay0 = cy + R*Math.sin(thetaArrowStart);
+    const ax1 = cx + R*Math.cos(thetaArrowEnd), ay1 = cy + R*Math.sin(thetaArrowEnd);
+    drawArrow(ctx, ax0, ay0, ax1, ay1, '#1F7A4D', 2.2);
+
+    // vecteurs A, B, C (juste les traits ; les boutons ronds servent de "flèche" cliquable)
+    drawArrow(ctx, px, py, 265.6, 106.1, '#5A4A32', 2);
+    drawArrow(ctx, px, py, 260.0, 42.7, '#5A4A32', 2);
+    drawArrow(ctx, px, py, 196.6, 48.3, '#5A4A32', 2);
+  }
+
+  function drawArrow(ctx, x0, y0, x1, y1, color, width) {
+    const dx = x1-x0, dy = y1-y0, len = Math.hypot(dx,dy);
+    if (len < 1) return;
+    const headLen = 8, ang = Math.atan2(dy,dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = width; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x1-headLen*Math.cos(ang-Math.PI/7), y1-headLen*Math.sin(ang-Math.PI/7));
+    ctx.lineTo(x1-headLen*Math.cos(ang+Math.PI/7), y1-headLen*Math.sin(ang+Math.PI/7));
+    ctx.closePath(); ctx.fill();
+  }
+
+  /* ---------- Étape 1 : choix du vecteur ---------- */
+  function checkVector(choice) {
+    if (step1Done) return;
+    const fb = document.getElementById('vec-feedback');
+    if (choice === 'A') {
+      document.getElementById('vecA').classList.add('correct');
+      fb.className = 'vec-feedback ok';
+      fb.textContent = '✅ Exact ! u_t est tangent à la trajectoire, orienté dans le sens du mouvement.';
+      step1Done = true;
+      document.getElementById('box-numeric').style.display = 'block';
+    } else {
+      document.getElementById('vec' + choice).classList.add('wrong');
+      fb.className = 'vec-feedback ko';
+      fb.textContent = "❌ Ce n'est pas le bon vecteur. Repérez le sens indiqué par la flèche verte.";
+      setTimeout(() => document.getElementById('vec' + choice).classList.remove('wrong'), 900);
+    }
+  }
+
+  /* ---------- Étape 2 : calculs numériques ---------- */
+  function checkPuzzle11() {
+    const inputEl = document.getElementById('ans-1-1');
+    const fbEl = document.getElementById('fb-1-1');
+    const val = parseFloat(inputEl.value.trim().replace(',', '.'));
+    if (!isNaN(val) && Math.abs(val - 24) < 1.5) {
+      inputEl.classList.add('correct'); inputEl.disabled = true;
+      fbEl.className = 'feedback-msg ok';
+      fbEl.textContent = '✅ Exact ! v = 2πR/T = 2π × 2,279×10¹¹ / 5,94×10⁷ ≈ 2,4×10⁴ m·s⁻¹ = 24 km·s⁻¹.';
+      step2Done = true;
+      document.getElementById('box-numeric2').style.display = 'block';
+    } else {
+      inputEl.classList.add('wrong');
+      fbEl.className = 'feedback-msg ko';
+      fbEl.textContent = "❌ Ce n'est pas la bonne valeur. Repartez de v = 2πR/T (attention aux unités : R en mètres, T en secondes).";
+    }
+  }
+
+  function checkPuzzle12() {
+    const inputEl = document.getElementById('ans-1-2');
+    const fbEl = document.getElementById('fb-1-2');
+    const val = parseFloat(inputEl.value.trim().replace(',', '.'));
+    if (!isNaN(val) && Math.abs(val - 2.55) < 0.3) {
+      inputEl.classList.add('correct'); inputEl.disabled = true;
+      fbEl.className = 'feedback-msg ok';
+      fbEl.textContent = '✅ Parfait ! a_n = v²/R ≈ (2,41×10⁴)² / 2,279×10¹¹ ≈ 2,5×10⁻³ m·s⁻².';
+      finishRoom();
+    } else {
+      inputEl.classList.add('wrong');
+      fbEl.className = 'feedback-msg ko';
+      fbEl.textContent = "❌ Ce n'est pas la bonne valeur. Repartez de a_n = v²/R avec le résultat de la question précédente.";
+    }
+  }
+
+  function finishRoom() {
+    document.getElementById('room-complete-banner').classList.add('show');
+    document.getElementById('room-complete-banner').scrollIntoView({ behavior: 'smooth' });
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    window.parent.postMessage({ source: 'escape-game', room: ROOM_ID, type: 'room-complete', code: '24', elapsed: elapsed }, '*');
+  }
+</script>
+
+</body>
+</html>

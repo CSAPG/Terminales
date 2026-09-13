@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salle 2 — Prague</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fond: #F6F0E2; --carte: #FFFFFF; --bordure: #D9C695;
+    --or: #B8860B; --or-clair: #F3E5C2; --or-fonce: #8A6508;
+    --bleu-nuit: #1E3A5F; --bleu-clair: #EAF1F8;
+    --texte: #2A2118; --texte-leger: #6B5D4A;
+    --vert: #1F7A4D; --vert-clair: #E7F5EC;
+    --rouge: #B3261E; --rouge-clair: #FCEAE9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+  html, body { background: var(--fond); color: var(--texte); }
+  body { padding: 18px; overflow-y: auto; }
+
+  .back-btn { background: var(--carte); border: 1.5px solid var(--bordure); color: var(--texte-leger);
+    padding: 7px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    margin-bottom: 14px; display: inline-flex; align-items: center; gap: 6px; }
+  .back-btn:hover { background: var(--bleu-clair); color: var(--bleu-nuit); }
+
+  .r-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .r-title { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--bleu-nuit);
+    display: flex; align-items: center; gap: 10px; }
+  .r-cap-badge { font-size: 0.72rem; font-weight: 700; color: var(--or-fonce); background: var(--or-clair);
+    border: 1px solid var(--bordure); border-radius: 20px; padding: 4px 12px; }
+
+  .r-desc { font-size: 0.92rem; line-height: 1.55; color: var(--texte); margin-bottom: 14px; }
+  .r-desc strong { color: var(--bleu-nuit); }
+
+  .clue-gallery { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .clue-card { flex: 1; min-width: 150px; background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 10px; overflow: hidden; }
+  .clue-card img { width: 100%; height: 110px; object-fit: cover; display: block; }
+  .clue-caption { font-size: 0.72rem; color: var(--texte-leger); padding: 6px 8px; text-align: center; }
+
+  .interactive-scene { position: relative; width: 100%; max-height: 300px; overflow: hidden;
+    border-radius: 10px; border: 2px solid var(--bordure); margin-bottom: 16px; background: #e7b3087e; }
+  .interactive-scene img { width: 100%; height: 100%; max-height: 300px; object-fit: cover; display: block; }
+  .hidden-hotspot { position: absolute; top: 65%; left: 70%; width: 120px; height: 50px;
+    cursor: pointer; background: transparent; border-radius: 10px; }
+  .hidden-hotspot:hover { background: transparent(212, 202, 153, 0.781)}
+
+  .room-alert-banner { background: var(--bleu-clair); border: 1.5px solid #9DBEDD; color: var(--bleu-nuit);
+    padding: 12px 18px; border-radius: 8px; font-size: 0.88rem; margin-bottom: 14px; }
+
+  .puzzles-container { display: none; }
+  .puzzles-container.revealed { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+
+  .puzzle-box { background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
+  .puzzle-step-tag { font-size: 0.72rem; font-weight: 800; color: var(--or-fonce); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .puzzle-question { font-size: 0.92rem; font-weight: 600; color: var(--texte); margin-bottom: 12px; line-height: 1.5; }
+
+  /* Drag & drop des étapes de la méthode */
+  #dnd-source, #dnd-target {
+    list-style: none; padding: 10px; border-radius: 8px; min-height: 50px;
+  }
+  #dnd-source { background: var(--or-clair); border: 1.5px dashed var(--bordure); margin-bottom: 10px; }
+  #dnd-target { background: #FDFBF4; border: 1.5px solid var(--bordure); }
+  .dnd-item {
+    background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 8px;
+    padding: 9px 12px; margin-bottom: 8px; font-size: 0.85rem; cursor: grab;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dnd-item:active { cursor: grabbing; }
+  .dnd-item .handle { color: var(--or-fonce); font-weight: 800; }
+  .dnd-item.placed-ok { border-color: var(--vert); background: var(--vert-clair); }
+  .dnd-item.placed-ko { border-color: var(--rouge); background: var(--rouge-clair); }
+  .dnd-slot-num { font-weight: 800; color: var(--bleu-nuit); min-width: 18px; }
+  .dnd-target-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .dnd-drop-line { border: 1.5px dashed var(--bordure); border-radius: 8px; padding: 8px; margin-bottom: 8px; min-height: 20px; font-size: 0.8rem; color: var(--texte-leger); text-align:center; }
+  .dnd-drop-line.over { background: var(--bleu-clair); border-color: var(--bleu-nuit); }
+
+  .btn-check-order { background: var(--bleu-nuit); color: #fff; border: none; padding: 9px 18px; border-radius: 8px;
+    font-weight: 700; font-size: 0.88rem; cursor: pointer; margin-top: 8px; }
+  .btn-check-order:hover { background: #16304e; }
+  .order-feedback { font-size: 0.85rem; margin-top: 8px; font-weight: 600; min-height: 1.2em; }
+  .order-feedback.ok { color: var(--vert); }
+  .order-feedback.ko { color: var(--rouge); }
+
+  .data-line { background: var(--or-clair); border: 1px solid var(--bordure); border-radius: 8px; padding: 10px 14px; font-size: 0.86rem; margin-bottom: 12px; font-family: 'Fira Code', monospace; color: var(--texte); }
+
+  .input-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .escape-input { flex: 1; min-width: 140px; padding: 9px 12px; border: 1.5px solid var(--bordure); border-radius: 8px;
+    font-size: 0.92rem; font-family: 'Fira Code', monospace; }
+  .escape-input.correct { border-color: var(--vert); background: var(--vert-clair); }
+  .escape-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
+  .btn-submit { background: var(--bleu-nuit); color: #fff; border: none; padding: 9px 18px; border-radius: 8px;
+    font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+  .btn-submit:hover { background: #16304e; }
+  .feedback-msg { font-size: 0.85rem; margin-top: 8px; font-weight: 600; min-height: 1.2em; }
+  .feedback-msg.ok { color: var(--vert); }
+  .feedback-msg.ko { color: var(--rouge); }
+
+  .room-complete-banner { display: none; background: var(--vert-clair); border: 2px solid var(--vert); color: #14532d;
+    padding: 16px 20px; border-radius: 10px; text-align: center; margin-top: 10px; }
+  .room-complete-banner.show { display: block; animation: fadeIn 0.4s ease; }
+  .room-complete-banner h3 { font-family: 'Outfit', sans-serif; margin-bottom: 6px; }
+  .btn-continue { background: var(--or); color: #fff; border: none; padding: 10px 22px; border-radius: 8px;
+    font-weight: 800; font-size: 0.9rem; cursor: pointer; margin-top: 10px; }
+  .btn-continue:hover { background: var(--or-fonce); }
+</style>
+</head>
+<body>
+
+<button class="back-btn" onclick="exitRoom()">← Quitter la salle</button>
+
+<div class="r-header">
+  <div class="r-title">📜 Salle 2 — Prague, le cabinet de Kepler</div>
+  <div class="r-cap-badge">📘 Capacité B.O. : PFD et mouvement circulaire dans un champ de gravitation</div>
+</div>
+
+<div class="r-desc">
+  À la mort de Tycho Brahe en 1601, ses observations reviennent à son assistant, <strong>Johannes Kepler</strong>, mathématicien impérial à Prague. En reprenant les mesures de la trajectoire de Mars, Kepler établit une loi purement <strong>géométrique</strong>. Une note plus tardive, insérée dans son carnet par un successeur, y ajoute le raisonnement <strong>dynamique</strong> — celui que popularisera Newton — pour retrouver ce résultat par le calcul.
+</div>
+
+<div class="clue-gallery">
+  <div class="clue-card">
+    <img src="salle2-2.jpg" alt="Portrait de Johannes Kepler">
+    <div class="clue-caption">Johannes Kepler, mathématicien impérial</div>
+  </div>
+</div>
+
+<div class="room-alert-banner">🔍 Observez le bureau de Kepler ci-dessous et survolez-le pour révéler la note ajoutée à son carnet.</div>
+
+<div class="interactive-scene">
+  <img src="salle2-1.jpg" alt="Bureau de travail de Kepler">
+  <div class="hidden-hotspot" onclick="revealPuzzles()"></div>
+</div>
+
+<div class="puzzles-container" id="container-puzzles">
+
+  <div class="puzzle-box">
+    <div class="puzzle-step-tag">Étape 1 — Reconstituer le raisonnement</div>
+    <div class="puzzle-question">
+      Glissez-déposez les cinq étapes ci-dessous dans le bon ordre pour reconstituer la méthode permettant d'établir la vitesse d'un satellite en orbite circulaire à partir de la 2<sup>e</sup> loi de Newton.
+    </div>
+    <ul id="dnd-source">
+      <li class="dnd-item" draggable="true" data-key="frenet"><span class="handle">⠿</span> Utiliser l'expression de l'accélération dans le repère de Frenet pour un mouvement circulaire.</li>
+      <li class="dnd-item" draggable="true" data-key="pfd"><span class="handle">⠿</span> Appliquer la 2<sup>e</sup> loi de Newton (PFD).</li>
+      <li class="dnd-item" draggable="true" data-key="systeme"><span class="handle">⠿</span> Choisir le système {satellite S, masse m} et le référentiel d'étude (galiléen).</li>
+      <li class="dnd-item" draggable="true" data-key="identif"><span class="handle">⠿</span> Identifier terme à terme pour en déduire v, puis T.</li>
+      <li class="dnd-item" draggable="true" data-key="force"><span class="handle">⠿</span> Identifier la seule force extérieure : la force de gravitation exercée par l'astre.</li>
+    </ul>
+    <div id="dnd-target">
+      <div class="dnd-target-row"><span class="dnd-slot-num">1</span><div class="dnd-drop-line" data-slot="0">Déposez ici</div></div>
+      <div class="dnd-target-row"><span class="dnd-slot-num">2</span><div class="dnd-drop-line" data-slot="1">Déposez ici</div></div>
+      <div class="dnd-target-row"><span class="dnd-slot-num">3</span><div class="dnd-drop-line" data-slot="2">Déposez ici</div></div>
+      <div class="dnd-target-row"><span class="dnd-slot-num">4</span><div class="dnd-drop-line" data-slot="3">Déposez ici</div></div>
+      <div class="dnd-target-row"><span class="dnd-slot-num">5</span><div class="dnd-drop-line" data-slot="4">Déposez ici</div></div>
+    </div>
+    <button class="btn-check-order" onclick="checkOrder()">Vérifier l'ordre</button>
+    <div class="order-feedback" id="order-feedback"></div>
+  </div>
+
+  <div class="puzzle-box" id="box-numeric" style="display:none;">
+    <div class="puzzle-step-tag">Étape 2 — Application numérique</div>
+    <div class="data-line">r = 4,22×10⁷ m &nbsp;|&nbsp; M<sub>Terre</sub> = 5,97×10²⁴ kg &nbsp;|&nbsp; G = 6,67×10⁻¹¹ N·m²·kg⁻²</div>
+    <div class="puzzle-question">Question 2.1 : Un satellite terrestre décrit une orbite circulaire de rayon r autour de la Terre. En appliquant la méthode reconstituée, on obtient v = √(GM/r). Calculez la valeur de v (en km·s⁻¹).</div>
+    <div class="input-row">
+      <input type="text" class="escape-input" id="ans-2-1" placeholder="Votre réponse...">
+      <button class="btn-submit" onclick="checkPuzzle21()">Valider</button>
+    </div>
+    <div class="feedback-msg" id="fb-2-1"></div>
+  </div>
+
+  <div class="puzzle-box" id="box-numeric2" style="display:none;">
+    <div class="puzzle-question">Question 2.2 : La période orbitale correspondante vaut T = 2πr/v ≈ 23 h 56 min, soit très exactement un jour sidéral (durée de rotation de la Terre sur elle-même). Comment appelle-t-on ce type de satellite, qui reste fixe au-dessus d'un même point de l'équateur ?</div>
+    <div class="input-row">
+      <input type="text" class="escape-input" id="ans-2-2" placeholder="Votre réponse...">
+      <button class="btn-submit" onclick="checkPuzzle22()">Valider</button>
+    </div>
+    <div class="feedback-msg" id="fb-2-2"></div>
+  </div>
+
+  <div class="room-complete-banner" id="room-complete-banner">
+    <h3>📝 Note du carnet de Kepler déchiffrée !</h3>
+    <p>v ≈ 3,07 km·s⁻¹ — la démonstration dynamique retrouve exactement la loi géométrique de Kepler.</p>
+    <button class="btn-continue" onclick="continueVoyage()">Continuer vers Cambridge →</button>
+  </div>
+
+</div>
+
+<script>
+  const ROOM_ID = 'kepler-bureau';
+  const startTime = Date.now();
+  const correctOrder = ['systeme', 'force', 'pfd', 'frenet', 'identif'];
+  let orderValidated = false;
+
+  function revealPuzzles() {
+    document.getElementById('container-puzzles').classList.add('revealed');
+    document.getElementById('container-puzzles').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function exitRoom() {
+    window.parent.postMessage({ source: 'escape-game', room: ROOM_ID, type: 'room-exit' }, '*');
+  }
+  function continueVoyage() { exitRoom(); }
+
+  /* ---------- Drag & drop ---------- */
+  let dragged = null;
+  document.querySelectorAll('.dnd-item').forEach(item => {
+    item.addEventListener('dragstart', () => { dragged = item; setTimeout(() => item.style.opacity = '0.4', 0); });
+    item.addEventListener('dragend', () => { item.style.opacity = '1'; });
+  });
+
+  document.querySelectorAll('.dnd-drop-line').forEach(line => {
+    line.addEventListener('dragover', e => { e.preventDefault(); line.classList.add('over'); });
+    line.addEventListener('dragleave', () => line.classList.remove('over'));
+    line.addEventListener('drop', e => {
+      e.preventDefault();
+      line.classList.remove('over');
+      if (!dragged) return;
+      if (line.dataset.key) {
+        document.getElementById('dnd-source').appendChild(document.querySelector(`.dnd-drop-line[data-slot="${line.dataset.slot}"] .dnd-item`) || dragged);
+      }
+      // si un item est déjà déposé dans ce slot, le renvoyer à la source
+      const existing = line.querySelector('.dnd-item');
+      if (existing) document.getElementById('dnd-source').appendChild(existing);
+      line.textContent = '';
+      line.appendChild(dragged);
+      line.dataset.key = dragged.dataset.key;
+      dragged.classList.remove('placed-ok', 'placed-ko');
+    });
+  });
+
+  document.getElementById('dnd-source').addEventListener('dragover', e => e.preventDefault());
+  document.getElementById('dnd-source').addEventListener('drop', e => {
+    e.preventDefault();
+    if (dragged) {
+      const parentSlot = dragged.closest('.dnd-drop-line');
+      if (parentSlot) { parentSlot.dataset.key = ''; parentSlot.textContent = 'Déposez ici'; }
+      document.getElementById('dnd-source').appendChild(dragged);
+      dragged.classList.remove('placed-ok', 'placed-ko');
+    }
+  });
+
+  function checkOrder() {
+    if (orderValidated) return;
+    const slots = document.querySelectorAll('.dnd-drop-line');
+    let allFilled = true, allCorrect = true;
+    slots.forEach((slot, idx) => {
+      const item = slot.querySelector('.dnd-item');
+      if (!item) { allFilled = false; return; }
+      const good = item.dataset.key === correctOrder[idx];
+      item.classList.toggle('placed-ok', good);
+      item.classList.toggle('placed-ko', !good);
+      if (!good) allCorrect = false;
+    });
+    const fb = document.getElementById('order-feedback');
+    if (!allFilled) {
+      fb.className = 'order-feedback ko';
+      fb.textContent = "❌ Complétez les cinq emplacements avant de vérifier.";
+      return;
+    }
+    if (allCorrect) {
+      fb.className = 'order-feedback ok';
+      fb.textContent = '✅ Ordre exact ! La méthode est reconstituée.';
+      orderValidated = true;
+      document.getElementById('box-numeric').style.display = 'block';
+    } else {
+      fb.className = 'order-feedback ko';
+      fb.textContent = '❌ L\'ordre contient des erreurs (cases en rouge). Réessayez.';
+    }
+  }
+
+  function checkPuzzle21() {
+    const inputEl = document.getElementById('ans-2-1');
+    const fbEl = document.getElementById('fb-2-1');
+    const val = parseFloat(inputEl.value.trim().replace(',', '.'));
+    if (!isNaN(val) && Math.abs(val - 3.07) < 0.2) {
+      inputEl.classList.add('correct'); inputEl.disabled = true;
+      fbEl.className = 'feedback-msg ok';
+      fbEl.textContent = '✅ Exact ! v = √(GM/r) = √(6,67×10⁻¹¹ × 5,97×10²⁴ / 4,22×10⁷) ≈ 3,07×10³ m·s⁻¹.';
+      document.getElementById('box-numeric2').style.display = 'block';
+    } else {
+      inputEl.classList.add('wrong');
+      fbEl.className = 'feedback-msg ko';
+      fbEl.textContent = "❌ Ce n'est pas la bonne valeur. Vérifiez le calcul sous la racine avant de diviser par r.";
+    }
+  }
+
+  function checkPuzzle22() {
+    const inputEl = document.getElementById('ans-2-2');
+    const fbEl = document.getElementById('fb-2-2');
+    const val = inputEl.value.trim().toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // retire les accents
+    if (val.includes('geostationnaire')) {
+      inputEl.classList.add('correct'); inputEl.disabled = true;
+      fbEl.className = 'feedback-msg ok';
+      fbEl.textContent = '✅ Exact ! Un satellite géostationnaire reste fixe au-dessus d\'un même point de l\'équateur.';
+      finishRoom();
+    } else {
+      inputEl.classList.add('wrong');
+      fbEl.className = 'feedback-msg ko';
+      fbEl.textContent = "❌ Ce n'est pas le bon terme. Pensez aux satellites de télécommunication ou météo.";
+    }
+  }
+
+  function finishRoom() {
+    document.getElementById('room-complete-banner').classList.add('show');
+    document.getElementById('room-complete-banner').scrollIntoView({ behavior: 'smooth' });
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    window.parent.postMessage({ source: 'escape-game', room: ROOM_ID, type: 'room-complete', code: '3.07', elapsed: elapsed }, '*');
+  }
+</script>
+
+</body>
+</html>

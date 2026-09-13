@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salle 4 — Paris</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fond: #F6F0E2; --carte: #FFFFFF; --bordure: #D9C695;
+    --or: #B8860B; --or-clair: #F3E5C2; --or-fonce: #8A6508;
+    --bleu-nuit: #1E3A5F; --bleu-clair: #EAF1F8;
+    --texte: #2A2118; --texte-leger: #6B5D4A;
+    --vert: #1F7A4D; --vert-clair: #E7F5EC;
+    --rouge: #B3261E; --rouge-clair: #FCEAE9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+  html, body { background: var(--fond); color: var(--texte); }
+  body { padding: 18px; overflow-y: auto; }
+
+  .back-btn { background: var(--carte); border: 1.5px solid var(--bordure); color: var(--texte-leger);
+    padding: 7px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    margin-bottom: 14px; display: inline-flex; align-items: center; gap: 6px; }
+  .back-btn:hover { background: var(--bleu-clair); color: var(--bleu-nuit); }
+
+  .r-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .r-title { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--bleu-nuit);
+    display: flex; align-items: center; gap: 10px; }
+  .r-cap-badge { font-size: 0.72rem; font-weight: 700; color: var(--or-fonce); background: var(--or-clair);
+    border: 1px solid var(--bordure); border-radius: 20px; padding: 4px 12px; }
+
+  .r-desc { font-size: 0.92rem; line-height: 1.55; color: var(--texte); margin-bottom: 14px; }
+  .r-desc strong { color: var(--bleu-nuit); }
+
+  .clue-gallery { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .clue-card { flex: 1; min-width: 150px; background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 10px; overflow: hidden; }
+  .clue-card img { width: 100%; height: 110px; object-fit: contain; display: block; background: #fff; }
+  .clue-caption { font-size: 0.72rem; color: var(--texte-leger); padding: 6px 8px; text-align: center; }
+
+  .interactive-scene { position: relative; width: 100%; max-height: 300px; overflow: hidden;
+    border-radius: 10px; border: 2px solid var(--bordure); margin-bottom: 16px; background: #EDE3C8; }
+  .interactive-scene img { width: 100%; height: 100%; max-height: 300px; object-fit: cover; display: block; }
+  .hidden-hotspot { position: absolute; top: 30%; left: 35%; width: 150px; height: 120px;
+    cursor: pointer; background: transparent; border-radius: 10px; }
+  .hidden-hotspot:hover { background: rgba(184,134,11,0.10); }
+
+  .room-alert-banner { background: var(--bleu-clair); border: 1.5px solid #9DBEDD; color: var(--bleu-nuit);
+    padding: 12px 18px; border-radius: 8px; font-size: 0.88rem; margin-bottom: 14px; }
+
+  .puzzles-container { display: none; }
+  .puzzles-container.revealed { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+
+  .puzzle-box { background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
+  .puzzle-step-tag { font-size: 0.72rem; font-weight: 800; color: var(--or-fonce); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .puzzle-question { font-size: 0.92rem; font-weight: 600; color: var(--texte); margin-bottom: 12px; line-height: 1.5; }
+
+  .python-box {
+    background: #FDFBF4; border: 1.5px solid var(--bordure); border-radius: 8px; padding: 14px 16px;
+    font-family: 'Fira Code', monospace; font-size: 0.84rem; line-height: 1.65; color: var(--texte); margin-bottom: 14px;
+    overflow-x: auto;
+  }
+  .python-box .keyword { color: #8A3B8F; font-weight: 700; }
+  .python-box .string { color: #1F7A4D; }
+  .python-box .comment { color: var(--texte-leger); font-style: italic; }
+  .python-box input.py-blank {
+    width: 90px; padding: 2px 6px; border: 1.5px solid var(--or); border-radius: 4px;
+    font-family: 'Fira Code', monospace; font-size: 0.84rem; background: var(--or-clair); color: var(--texte);
+  }
+
+  table.moon-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 12px; }
+  table.moon-table th, table.moon-table td { border: 1px solid var(--bordure); padding: 6px 8px; text-align: center; }
+  table.moon-table th { background: var(--or-clair); color: var(--or-fonce); font-weight: 800; }
+
+  .data-line { background: var(--or-clair); border: 1px solid var(--bordure); border-radius: 8px; padding: 10px 14px; font-size: 0.86rem; margin-bottom: 12px; font-family: 'Fira Code', monospace; color: var(--texte); }
+
+  .input-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .escape-input { flex: 1; min-width: 140px; padding: 9px 12px; border: 1.5px solid var(--bordure); border-radius: 8px;
+    font-size: 0.92rem; font-family: 'Fira Code', monospace; }
+  .escape-input.correct { border-color: var(--vert); background: var(--vert-clair); }
+  .escape-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
+  .btn-submit { background: var(--bleu-nuit); color: #fff; border: none; padding: 9px 18px; border-radius: 8px;
+    font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+  .btn-submit:hover { background: #16304e; }
+  .feedback-msg { font-size: 0.85rem; margin-top: 8px; font-weight: 600; min-height: 1.2em; }
+  .feedback-msg.ok { color: var(--vert); }
+  .feedback-msg.ko { color: var(--rouge); }
+
+  .room-complete-banner { display: none; background: var(--vert-clair); border: 2px solid var(--vert); color: #14532d;
+    padding: 16px 20px; border-radius: 10px; text-align: center; margin-top: 10px; }
+  .room-complete-banner.show { display: block; animation: fadeIn 0.4s ease; }
+  .room-complete-banner h3 { font-family: 'Outfit', sans-serif; margin-bottom: 6px; }
+  .btn-continue { background: var(--or); color: #fff; border: none; padding: 10px 22px; border-radius: 8px;
+    font-weight: 800; font-size: 0.9rem; cursor: pointer; margin-top: 10px; }
+  .btn-continue:hover { background: var(--or-fonce); }
+</style>
+</head>
+<body>
+
+<button class="back-btn" onclick="exitRoom()">← Quitter la salle</button>
+
+<div class="r-header">
+  <div class="r-title">🛰️ Salle 4 — Observatoire de Paris, les satellites de Jupiter</div>
+  <div class="r-cap-badge">📘 Capacité B.O. : exploiter des données astronomiques avec un langage de programmation</div>
+</div>
+
+<div class="r-desc">
+  En janvier 1610, <strong>Galilée</strong> pointe pour la première fois une lunette vers Jupiter et découvre quatre points lumineux qui changent de position nuit après nuit : ce sont ses satellites, aujourd'hui appelés <strong>lunes galiléennes</strong> (Io, Europe, Ganymède, Callisto). Reste à savoir si la 3<sup>e</sup> loi de Kepler, établie pour les planètes autour du Soleil, s'applique aussi à ce système en miniature.
+</div>
+
+<div class="clue-gallery">
+  <div class="clue-card">
+    <img src="salle4-1.jpg" alt="Relevés originaux de Galilée, janvier 1610">
+    <div class="clue-caption">Carnet d'observation de Galilée, 7-10 janvier 1610</div>
+  </div>
+</div>
+
+<div class="room-alert-banner">🔍 Observez la salle de l'Observatoire de Paris ci-dessous et survolez-la pour révéler le programme de vérification.</div>
+
+<div class="interactive-scene">
+  <img src="salle4.jpg" alt="Salle de l'Observatoire de Paris">
+  <div class="hidden-hotspot" onclick="revealPuzzles()"></div>
+</div>
+
+<div class="puzzles-container" id="container-puzzles">
+
+  <div class="puzzle-box">
+    <div class="puzzle-step-tag">Étape 1 — Compléter le programme</div>
+    <div class="puzzle-question">Question 4.1 : Le programme ci-dessous calcule k = T²/a³ pour Europe et Ganymède, deux satellites de Jupiter. Complétez les deux lignes manquantes avec les données d'Io, puis exécutez le calcul à la main pour trouver k<sub>Io</sub> (en 10⁻¹⁶ s²·m⁻³).</div>
+    <table class="moon-table">
+      <tr><th>Satellite</th><th>a (m)</th><th>T (s)</th></tr>
+      <tr><td>Europe</td><td>6,711×10⁸</td><td>3,066×10⁵</td></tr>
+      <tr><td>Ganymède</td><td>1,0704×10⁹</td><td>6,182×10⁵</td></tr>
+      <tr><td><strong>Io</strong></td><td>4,217×10⁸</td><td>1,528×10⁵</td></tr>
+    </table>
+    <div class="python-box">
+      <span class="comment"># données d'Io, satellite de Jupiter</span><br>
+      a_Io = <input type="text" class="py-blank" id="py-a" placeholder="4.217e8"><br>
+      T_Io = <input type="text" class="py-blank" id="py-t" placeholder="1.528e5"><br>
+      k_Io = T_Io<span class="keyword">**</span>2 / a_Io<span class="keyword">**</span>3<br>
+      <span class="keyword">print</span>(f<span class="string">"k = {k_Io:.2e} s²/m³"</span>)
+    </div>
+    <div class="input-row">
+      <input type="text" class="escape-input" id="ans-4-1" placeholder="Valeur de k_Io (×10⁻¹⁶ s²·m⁻³)...">
+      <button class="btn-submit" onclick="checkPuzzle41()">Valider</button>
+    </div>
+    <div class="feedback-msg" id="fb-4-1"></div>
+  </div>
+
+  <div class="puzzle-box" id="box-numeric2" style="display:none;">
+    <div class="puzzle-step-tag">Étape 2 — Interpréter le résultat</div>
+    <div class="data-line">k<sub>Soleil</sub> = 4π²/(G·M<sub>Soleil</sub>) ≈ 3,0×10⁻¹⁹ s²·m⁻³</div>
+    <div class="puzzle-question">Question 4.2 : Le rapport k = T²/a³ est bien constant pour les quatre satellites de Jupiter (test de la 3<sup>e</sup> loi de Kepler réussi), mais sa valeur diffère de celle du Soleil. Sachant que k = 4π²/(GM), la masse de Jupiter est-elle plus petite ou plus grande que celle du Soleil ? (Répondez "plus petite" ou "plus grande")</div>
+    <div class="input-row">
+      <input type="text" class="escape-input" id="ans-4-2" placeholder="Votre réponse...">
+      <button class="btn-submit" onclick="checkPuzzle42()">Valider</button>
+    </div>
+    <div class="feedback-msg" id="fb-4-2"></div>
+  </div>
+
+  <div class="room-complete-banner" id="room-complete-banner">
+    <h3>📝 Le programme de vérification a tourné avec succès !</h3>
+    <p>k<sub>Jupiter</sub> ≈ 3,1×10⁻¹⁶ s²·m⁻³ — la 3<sup>e</sup> loi de Kepler se vérifie pour tout système de satellites, quel que soit l'astre central. Le télescope peut être recalibré.</p>
+    <button class="btn-continue" onclick="continueVoyage()">Refermer l'enquête →</button>
+  </div>
+
+</div>
+
+<script>
+  const ROOM_ID = 'galilee-io';
+  const startTime = Date.now();
+
+  function revealPuzzles() {
+    document.getElementById('container-puzzles').classList.add('revealed');
+    document.getElementById('container-puzzles').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function exitRoom() {
+    window.parent.postMessage({ source: 'escape-game', room: ROOM_ID, type: 'room-exit' }, '*');
+  }
+  function continueVoyage() { exitRoom(); }
+
+  function checkPuzzle41() {
+    const pyA = document.getElementById('py-a').value.trim().replace(',', '.');
+    const pyT = document.getElementById('py-t').value.trim().replace(',', '.');
+    const inputEl = document.getElementById('ans-4-1');
+    const fbEl = document.getElementById('fb-4-1');
+
+    const aOk = Math.abs(parseFloat(pyA) - 4.217e8) / 4.217e8 < 0.02;
+    const tOk = Math.abs(parseFloat(pyT) - 1.528e5) / 1.528e5 < 0.02;
+
+    const val = parseFloat(inputEl.value.trim().replace(',', '.'));
+    const kOk = !isNaN(val) && Math.abs(val - 3.1) < 0.4;
+
+    if (aOk && tOk && kOk) {
+      document.getElementById('py-a').style.borderColor = 'var(--vert)';
+      document.getElementById('py-t').style.borderColor = 'var(--vert)';
+      inputEl.classList.add('correct'); inputEl.disabled = true;
+      fbEl.className = 'feedback-msg ok';
+      fbEl.textContent = '✅ Exact ! k_Io = (1,528×10⁵)² / (4,217×10⁸)³ ≈ 3,1×10⁻¹⁶ s²·m⁻³, comme pour Europe et Ganymède.';
+      document.getElementById('box-numeric2').style.display = 'block';
+    } else {
+      fbEl.className = 'feedback-msg ko';
+      if (!aOk || !tOk) {
+        fbEl.textContent = "❌ Vérifiez d'abord les valeurs a_Io et T_Io recopiées dans le programme.";
+      } else {
+        inputEl.classList.add('wrong');
+        fbEl.textContent = "❌ Ce n'est pas la bonne valeur de k. Recalculez T²/a³ avec les données d'Io.";
+      }
+    }
+  }
+
+  function checkPuzzle42() {
+    const inputEl = document.getElementById('ans-4-2');
+    const fbEl = document.getElementById('fb-4-2');
+    const val = inputEl.value.trim().toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    if (val.includes('petite')) {
+      inputEl.classList.add('correct'); inputEl.disabled = true;
+      fbEl.className = 'feedback-msg ok';
+      fbEl.textContent = '✅ Exact ! k_Jupiter > k_Soleil, or k est inversement proportionnel à M : la masse de Jupiter est donc plus petite que celle du Soleil (environ 1000 fois plus petite).';
+      finishRoom();
+    } else {
+      inputEl.classList.add('wrong');
+      fbEl.className = 'feedback-msg ko';
+      fbEl.textContent = "❌ Repartez de la relation k = 4π²/(GM) : si k augmente, que devient M ?";
+    }
+  }
+
+  function finishRoom() {
+    document.getElementById('room-complete-banner').classList.add('show');
+    document.getElementById('room-complete-banner').scrollIntoView({ behavior: 'smooth' });
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    window.parent.postMessage({ source: 'escape-game', room: ROOM_ID, type: 'room-complete', code: '3.1e-16', elapsed: elapsed }, '*');
+  }
+</script>
+
+</body>
+</html>

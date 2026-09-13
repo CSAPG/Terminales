@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salle 3 — Cambridge</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fond: #F6F0E2; --carte: #FFFFFF; --bordure: #D9C695;
+    --or: #B8860B; --or-clair: #F3E5C2; --or-fonce: #8A6508;
+    --bleu-nuit: #1E3A5F; --bleu-clair: #EAF1F8;
+    --texte: #2A2118; --texte-leger: #6B5D4A;
+    --vert: #1F7A4D; --vert-clair: #E7F5EC;
+    --rouge: #B3261E; --rouge-clair: #FCEAE9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+  html, body { background: var(--fond); color: var(--texte); }
+  body { padding: 18px; overflow-y: auto; }
+
+  .back-btn { background: var(--carte); border: 1.5px solid var(--bordure); color: var(--texte-leger);
+    padding: 7px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    margin-bottom: 14px; display: inline-flex; align-items: center; gap: 6px; }
+  .back-btn:hover { background: var(--bleu-clair); color: var(--bleu-nuit); }
+
+  .r-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .r-title { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--bleu-nuit);
+    display: flex; align-items: center; gap: 10px; }
+  .r-cap-badge { font-size: 0.72rem; font-weight: 700; color: var(--or-fonce); background: var(--or-clair);
+    border: 1px solid var(--bordure); border-radius: 20px; padding: 4px 12px; }
+
+  .r-desc { font-size: 0.92rem; line-height: 1.55; color: var(--texte); margin-bottom: 14px; }
+  .r-desc strong { color: var(--bleu-nuit); }
+
+  .clue-gallery { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .clue-card { flex: 1; min-width: 150px; background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 10px; overflow: hidden; }
+  .clue-card img { width: 100%; height: 130px; object-fit: cover; display: block; }
+  .clue-caption { font-size: 0.72rem; color: var(--texte-leger); padding: 6px 8px; text-align: center; }
+
+  .interactive-scene { position: relative; width: 100%; max-height: 300px; overflow: hidden;
+    border-radius: 10px; border: 2px solid var(--bordure); margin-bottom: 16px; background: #EDE3C8; }
+  .interactive-scene img { width: 100%; height: 100%; max-height: 300px; object-fit: cover; display: block; }
+  .hidden-hotspot { position: absolute; top: 30%; left: 30%; width: 160px; height: 120px;
+    cursor: pointer; background: transparent; border-radius: 10px; }
+  .hidden-hotspot:hover { background: rgba(184,134,11,0.10); }
+
+  .room-alert-banner { background: var(--bleu-clair); border: 1.5px solid #9DBEDD; color: var(--bleu-nuit);
+    padding: 12px 18px; border-radius: 8px; font-size: 0.88rem; margin-bottom: 14px; }
+
+  .puzzles-container { display: none; }
+  .puzzles-container.revealed { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+
+  .puzzle-box { background: var(--carte); border: 1.5px solid var(--bordure); border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
+  .puzzle-step-tag { font-size: 0.72rem; font-weight: 800; color: var(--or-fonce); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .puzzle-question { font-size: 0.92rem; font-weight: 600; color: var(--texte); margin-bottom: 12px; line-height: 1.5; }
+
+  /* Cartes à choix */
+  .choice-cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+  .choice-card { background: #FDFBF4; border: 1.5px solid var(--bordure); border-radius: 8px; padding: 12px 16px;
+    cursor: pointer; font-family: 'Fira Code', monospace; font-size: 0.94rem; text-align: center; transition: all 0.15s; }
+  .choice-card:hover { border-color: var(--or); background: var(--or-clair); }
+  .choice-card.correct { border-color: var(--vert); background: var(--vert-clair); }
+  .choice-card.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
+  .choice-feedback { font-size: 0.85rem; margin-top: 4px; font-weight: 600; min-height: 1.2em; }
+  .choice-feedback.ok { color: var(--vert); }
+  .choice-feedback.ko { color: var(--rouge); }
+
+  /* Tableau des planètes */
+  table.planet-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin-bottom: 12px; }
+  table.planet-table th, table.planet-table td { border: 1px solid var(--bordure); padding: 7px 10px; text-align: center; }
+  table.planet-table th { background: var(--or-clair); color: var(--or-fonce); font-weight: 800; }
+  table.planet-table td.missing { background: #FDFBF4; font-weight: 800; color: var(--bleu-nuit); }
+
+  .data-line { background: var(--or-clair); border: 1px solid var(--bordure); border-radius: 8px; padding: 10px 14px; font-size: 0.86rem; margin-bottom: 12px; font-family: 'Fira Code', monospace; color: var(--texte); }
+
+  .input-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .escape-input { flex: 1; min-width: 140px; padding: 9px 12px; border: 1.5px solid var(--bordure); border-radius: 8px;
+    font-size: 0.92rem; font-family: 'Fira Code', monospace; }
+  .escape-input.correct { border-color: var(--vert); background: var(--vert-clair); }
+  .escape-input.wrong { border-color: var(--rouge); background: var(--rouge-clair); }
+  .btn-submit { background: var(--bleu-nuit); color: #fff; border: none; padding: 9px 18px; border-radius: 8px;
+    font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+  .btn-submit:hover { background: #16304e; }
+  .feedback-msg { font-size: 0.85rem; margin-top: 8px; font-weight: 600; min-height: 1.2em; }
+  .feedback-msg.ok { color: var(--vert); }
+  .feedback-msg.ko { color: var(--rouge); }
+
+  .room-complete-banner { display: none; background: var(--vert-clair); border: 2px solid var(--vert); color: #14532d;
+    padding: 16px 20px; border-radius: 10px; text-align: center; margin-top: 10px; }
+  .room-complete-banner.show { display: block; animation: fadeIn 0.4s ease; }
+  .room-complete-banner h3 { font-family: 'Outfit', sans-serif; margin-bottom: 6px; }
+  .btn-continue { background: var(--or); color: #fff; border: none; padding: 10px 22px; border-radius: 8px;
+    font-weight: 800; font-size: 0.9rem; cursor: pointer; margin-top: 10px; }
+  .btn-continue:hover { background: var(--or-fonce); }
+</style>
+</head>
+<body>
+
+<button class="back-btn" onclick="exitRoom()">← Quitter la salle</button>
+
+<div class="r-header">
+  <div class="r-title">🍎 Salle 3 — Cambridge, le bureau de Newton</div>
+  <div class="r-cap-badge">📘 Capacité B.O. : établir et exploiter la 3e loi de Kepler (cas circulaire)</div>
+</div>
+
+<div class="r-desc">
+  En 1687, <strong>Isaac Newton</strong> publie les <em>Philosophiæ Naturalis Principia Mathematica</em>. Dans la <strong>Proposition XX</strong>, il démontre une relation valable pour <em>toute</em> trajectoire soumise à une force centrale — ellipse, parabole ou hyperbole. Restait à en extraire le cas particulier qui intéresse ce carnet : celui d'une orbite <strong>circulaire</strong>.
+</div>
+
+<div class="clue-gallery">
+  <div class="clue-card">
+    <img src="salle3-1.jpg" alt="Page des Principia, Proposition XX">
+    <div class="clue-caption">Principia, Proposition XX, Théorème XV (1687)</div>
+  </div>
+</div>
+
+<div class="room-alert-banner">🔍 Observez le bureau de Newton ci-dessous et survolez-le pour révéler la suite du raisonnement.</div>
+
+<div class="interactive-scene">
+  <img src="salle3.jpg" alt="Bureau de travail de Newton à Cambridge">
+  <div class="hidden-hotspot" onclick="revealPuzzles()"></div>
+</div>
+
+<div class="puzzles-container" id="container-puzzles">
+
+  <div class="puzzle-box">
+    <div class="puzzle-step-tag">Étape 1 — Réduction au cas circulaire</div>
+    <div class="puzzle-question">
+      En partant de la 2<sup>e</sup> loi de Newton et de l'expression de l'accélération en repère de Frenet pour un mouvement circulaire, laquelle des trois relations suivantes correspond à la 3<sup>e</sup> loi de Kepler établie dans ce cas particulier ?
+    </div>
+    <div class="choice-cards">
+      <div class="choice-card" onclick="checkChoice(this,false)">F = m · a²</div>
+      <div class="choice-card" onclick="checkChoice(this,false)">v = GM / r²</div>
+      <div class="choice-card" onclick="checkChoice(this,true)">T² / a³ = 4π² / (GM)</div>
+    </div>
+    <div class="choice-feedback" id="choice-feedback"></div>
+  </div>
+
+  <div class="puzzle-box" id="box-numeric" style="display:none;">
+    <div class="puzzle-step-tag">Étape 2 — Exploiter la loi sur le Système solaire</div>
+    <div class="puzzle-question">Question 3.1 : Le tableau ci-dessous donne le demi-grand axe a (en UA) et la période T (en années) de plusieurs planètes. Vérifiez que le rapport T²/a³ est bien constant, puis calculez la période manquante de Jupiter.</div>
+    <table class="planet-table">
+      <tr><th>Planète</th><th>a (UA)</th><th>T (années)</th><th>T²/a³</th></tr>
+      <tr><td>Mercure</td><td>0,39</td><td>0,241</td><td>1,00</td></tr>
+      <tr><td>Vénus</td><td>0,72</td><td>0,615</td><td>1,01</td></tr>
+      <tr><td>Terre</td><td>1,00</td><td>1,000</td><td>1,00</td></tr>
+      <tr><td>Mars</td><td>1,52</td><td>1,881</td><td>1,01</td></tr>
+      <tr><td>Jupiter</td><td>5,20</td><td class="missing">?</td><td>1,00</td></tr>
+    </table>
+    <div class="input-row">
+      <input type="text" class="escape-input" id="ans-3-1" placeholder="Période de Jupiter (années)...">
+      <button class="btn-submit" onclick="checkPuzzle31()">Valider</button>
+    </div>
+    <div class="feedback-msg" id="fb-3-1"></div>
+  </div>
+
+  <div class="room-complete-banner" id="room-complete-banner">
+    <h3>📝 Preuve de Newton reconstituée !</h3>
+    <p>T<sub>Jupiter</sub> ≈ 11,9 années — la 3<sup>e</sup> loi de Kepler est vérifiée sur tout le Système solaire.</p>
+    <button class="btn-continue" onclick="continueVoyage()">Continuer vers l'Observatoire de Paris →</button>
+  </div>
+
+</div>
+
+<script>
+  const ROOM_ID = 'newton-cambridge';
+  const startTime = Date.now();
+
+  function revealPuzzles() {
+    document.getElementById('container-puzzles').classList.add('revealed');
+    document.getElementById('container-puzzles').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function exitRoom() {
+    window.parent.postMessage({ source: 'escape-game', room: ROOM_ID, type: 'room-exit' }, '*');
+  }
+  function continueVoyage() { exitRoom(); }
+
+  let choiceDone = false;
+  function checkChoice(el, isCorrect) {
+    if (choiceDone) return;
+    const fb = document.getElementById('choice-feedback');
+    if (isCorrect) {
+      el.classList.add('correct');
+      fb.className = 'choice-feedback ok';
+      fb.textContent = '✅ Exact ! C\'est bien cette relation qui découle du PFD appliqué au cas circulaire.';
+      choiceDone = true;
+      document.getElementById('box-numeric').style.display = 'block';
+    } else {
+      el.classList.add('wrong');
+      fb.className = 'choice-feedback ko';
+      fb.textContent = '❌ Cette relation ne correspond pas au résultat établi en salle 1 et 2.';
+      setTimeout(() => el.classList.remove('wrong'), 900);
+    }
+  }
+
+  function checkPuzzle31() {
+    const inputEl = document.getElementById('ans-3-1');
+    const fbEl = document.getElementById('fb-3-1');
+    const val = parseFloat(inputEl.value.trim().replace(',', '.'));
+    if (!isNaN(val) && Math.abs(val - 11.86) < 0.3) {
+      inputEl.classList.add('correct'); inputEl.disabled = true;
+      fbEl.className = 'feedback-msg ok';
+      fbEl.textContent = '✅ Exact ! T = √(a³) = √(5,20³) ≈ 11,9 années (en prenant T en années et a en UA).';
+      finishRoom();
+    } else {
+      inputEl.classList.add('wrong');
+      fbEl.className = 'feedback-msg ko';
+      fbEl.textContent = "❌ Ce n'est pas la bonne valeur. Utilisez T²/a³ = 1 (unités UA/années) pour isoler T.";
+    }
+  }
+
+  function finishRoom() {
+    document.getElementById('room-complete-banner').classList.add('show');
+    document.getElementById('room-complete-banner').scrollIntoView({ behavior: 'smooth' });
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    window.parent.postMessage({ source: 'escape-game', room: ROOM_ID, type: 'room-complete', code: '11.9', elapsed: elapsed }, '*');
+  }
+</script>
+
+</body>
+</html>
