@@ -35,6 +35,14 @@
   .clue-gallery { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
   .clue-card { flex: 0 0 auto; width: 220px; max-width: 100%; background: #EDE3C8; border: 1.5px solid var(--bordure); border-radius: 10px; overflow: hidden; }
   .clue-card img { width: 100%; height: 170px; object-fit: contain; background: #EDE3C8; display: block; }
+
+  .intro-split { display: flex; gap: 18px; margin-bottom: 16px; align-items: stretch; flex-wrap: wrap; }
+  .intro-split .intro-text { flex: 1 1 320px; }
+  .intro-split .intro-text .r-desc { margin-bottom: 0; }
+  .intro-split .intro-image { flex: 1 1 220px; max-width: 280px; background: #EDE3C8; border: 1.5px solid var(--bordure);
+    border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+  .intro-split .intro-image img { width: 100%; height: 220px; object-fit: contain; display: block; background: #EDE3C8; }
+  .intro-split .intro-image .clue-caption { font-weight: 700; color: var(--or-fonce); font-size: 0.78rem; }
   .clue-caption { font-size: 0.72rem; color: var(--texte-leger); padding: 6px 8px; text-align: center; }
 
   .interactive-scene { position: relative; width: 100%; max-height: 300px; overflow: hidden;
@@ -114,12 +122,13 @@
   <div class="r-cap-badge">📘 Capacité B.O. : PFD et mouvement circulaire dans un champ de gravitation</div>
 </div>
 
-<div class="r-desc">
-  À la mort de Tycho Brahe en 1601, ses observations reviennent à son assistant, <strong>Johannes Kepler</strong>, mathématicien impérial à Prague. En reprenant les mesures de la trajectoire de Mars, Kepler établit une loi purement <strong>géométrique</strong>. Une note plus tardive, insérée dans son carnet par un successeur, y ajoute le raisonnement <strong>dynamique</strong> — celui que popularisera Newton — pour retrouver ce résultat par le calcul.
-</div>
-
-<div class="clue-gallery">
-  <div class="clue-card">
+<div class="intro-split">
+  <div class="intro-text">
+    <div class="r-desc">
+      À la mort de Tycho Brahe en 1601, ses observations reviennent à son assistant, <strong>Johannes Kepler</strong>, mathématicien impérial à Prague. En reprenant les mesures de la trajectoire de Mars, Kepler établit une loi purement <strong>géométrique</strong>. Une note plus tardive, insérée dans son carnet par un successeur, y ajoute le raisonnement <strong>dynamique</strong> — celui que popularisera Newton — pour retrouver ce résultat par le calcul.
+    </div>
+  </div>
+  <div class="intro-image">
     <img src="salle2-2.jpg" alt="Portrait de Johannes Kepler">
     <div class="clue-caption">Johannes Kepler, mathématicien impérial</div>
   </div>
