@@ -3844,7 +3844,74 @@
       <button class="anim-btn active" id="elec-auto-btn" onclick="elecToggleAuto()">▶ Auto</button>
       <button class="btn-reset" onclick="elecReset()">↺ Recommencer</button>
     </div>
-  </div>
+
+    <!-- ══ ENCART PÉDAGOGIQUE — affiché uniquement à l'étape 3 ══ -->
+    <div id="elec-encart-step3" style="display:none;margin-top:16px;">
+
+      <div class="attention-box" style="margin-bottom:10px;">
+        <strong>⚠️ Point clé — Pourquoi anode et cathode « changent de signe » entre la pile et l'électrolyseur ?</strong>
+      </div>
+
+      <!-- Règle invariable -->
+      <div class="remarque-box" style="margin-bottom:10px;">
+        <strong>La définition ne change jamais :</strong><br>
+        <span style="display:inline-block;margin-top:6px;">
+          <strong style="color:var(--rouge);">Anode</strong> = électrode où se produit l'<strong>oxydAtion</strong> &nbsp;|&nbsp;
+          <strong style="color:var(--bleu);">Cathode</strong> = électrode où se produit la <strong>réduCtion</strong>
+        </span><br>
+        <span style="font-size:0.82rem;color:var(--texte-leger);margin-top:4px;display:inline-block;">
+          Moyen mnémotechnique : <strong>OxydAtion → Anode</strong> · <strong>RéduCtion → Cathode</strong> (les lettres en majuscules correspondent)
+        </span>
+      </div>
+
+      <!-- Tableau comparatif -->
+      <table class="tableau-avancement" style="font-size:0.83rem;">
+        <thead>
+          <tr>
+            <th style="text-align:left;width:28%;">Dispositif</th>
+            <th>Qui décide ?</th>
+            <th>Anode</th>
+            <th>Cathode</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>🔋 Pile</strong><br><span style="font-weight:400;color:var(--texte-leger);">(spontané)</span></td>
+            <td style="text-align:center;">La réaction chimique<br>spontanée</td>
+            <td style="text-align:center;">
+              Borne <strong style="color:var(--rouge);">–</strong><br>
+              <span style="font-size:0.78rem;color:var(--texte-leger);">Le réducteur s'oxyde<br>et libère des e⁻</span>
+            </td>
+            <td style="text-align:center;">
+              Borne <strong style="color:var(--bleu);">+</strong><br>
+              <span style="font-size:0.78rem;color:var(--texte-leger);">L'oxydant capte<br>les e⁻</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>⚡ Électrolyseur</strong><br><span style="font-weight:400;color:var(--texte-leger);">(forcé)</span></td>
+            <td style="text-align:center;">Le générateur<br>externe</td>
+            <td style="text-align:center;">
+              Reliée au pôle <strong style="color:var(--bleu);">+</strong> du générateur<br>
+              <span style="font-size:0.78rem;color:var(--texte-leger);">Le générateur arrache<br>les e⁻ → force l'oxydation</span>
+            </td>
+            <td style="text-align:center;">
+              Reliée au pôle <strong style="color:var(--rouge);">–</strong> du générateur<br>
+              <span style="font-size:0.78rem;color:var(--texte-leger);">Le générateur injecte<br>les e⁻ → force la réduction</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Explication intuitive -->
+      <div style="background:var(--jaune-clair);border-left:4px solid var(--jaune);border-radius:0 8px 8px 0;
+                  padding:10px 14px;margin-top:10px;font-size:0.85rem;line-height:1.6;">
+        <strong style="color:var(--jaune);">💡 L'intuition :</strong><br>
+        Dans la <strong>pile</strong>, c'est la <em>chimie qui commande</em> : le réducteur le plus fort s'oxyde spontanément et pousse les électrons dans le circuit depuis l'anode (borne –).<br>
+        Dans l'<strong>électrolyseur</strong>, c'est l'<em>électricien qui commande</em> : le pôle + du générateur arrache les électrons à l'électrode et force une oxydation — cette électrode est donc toujours l'anode, mais elle est maintenant reliée au +.
+      </div>
+
+    </div><!-- /elec-encart-step3 -->
+  </div><!-- /activite-card animation -->
 
   <div class="def-card">
     <h3>B.1 – Électrolyseur</h3>
@@ -6563,6 +6630,10 @@ function elecShowHide(step) {
   document.getElementById('elec-bar').style.width = ((data.step / ELEC_STEPS.length) * 100) + '%';
   document.getElementById('elec-prev').disabled = (step === 0);
   document.getElementById('elec-next').disabled = (step === ELEC_STEPS.length - 1);
+
+  // Encart pédagogique : visible uniquement à l'étape 3 (index 2)
+  const encart = document.getElementById('elec-encart-step3');
+  if (encart) encart.style.display = (step === 2) ? 'block' : 'none';
 
   if (data.show.includes('elec-ions'))      elecAnimateIons();
   if (data.show.includes('elec-electrons')) elecAnimateElectrons();
