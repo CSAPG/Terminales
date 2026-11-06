@@ -3553,7 +3553,38 @@
       </p>
       <div class="indice-box" id="ind-tp1-4">Reprends tes conclusions des parties 2.1 et 2.2 : que peux-tu dire de vx(t) (constante ou non) ? Et de vy(t) (constante ou non) ? Le terme attendu pour un mouvement dont la vitesse varie de façon régulière (accélération constante) est « uniformément varié ».</div>
 
+      <!-- Correction du TP protégée par code -->
+      <div id="tp1-corr-lock" style="margin-top:24px;padding:16px 18px;background:#F7FAFC;border:1px solid var(--gris-bord);border-radius:10px;">
+        <p style="font-weight:700;color:var(--bleu);margin:0 0 10px;">🔒 Correction du TP</p>
+        <div id="tp1-corr-form" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <label for="tp1-corr-code" style="font-size:0.86rem;">Code d'accès :</label>
+          <input type="password" id="tp1-corr-code" inputmode="numeric" autocomplete="off" placeholder="Saisir le code" style="padding:7px 10px;border:1px solid var(--gris-bord);border-radius:8px;font-family:'Nunito',sans-serif;font-size:0.86rem;background:#fff;" onkeydown="if(event.key==='Enter')unlockTp1Corr()">
+          <button type="button" class="btn-sujet" onclick="unlockTp1Corr()">Déverrouiller</button>
+        </div>
+        <p id="tp1-corr-err" style="display:none;color:var(--rouge);font-size:0.84rem;margin:8px 0 0;">Code incorrect, réessaie.</p>
+        <div id="tp1-corr-links" class="bilan-links" style="display:none;">
+          <a class="btn-sujet" style="margin:0;padding:8px 16px;font-size:0.84rem;" href="Entrainements/Seq3_TP1_EQUATIONS%20HORAIRES_corr.pdf" target="_blank" rel="noopener">📄 Correction du TP (PDF)</a>
+          <a class="btn-correction" style="margin:0;padding:8px 16px;font-size:0.84rem;" href="Entrainements/sq%203-correction%20vid%C3%A9o%20TP1.mp4" target="_blank" rel="noopener">🎬 Vidéo correction</a>
+        </div>
+      </div>
+
     </div><!-- /activite-2-tp1 -->
+    <script>
+    function unlockTp1Corr() {
+      var input = document.getElementById('tp1-corr-code');
+      var err = document.getElementById('tp1-corr-err');
+      if (btoa(input.value.trim()) === 'MDIxMTIwMjY=') {
+        document.getElementById('tp1-corr-form').style.display = 'none';
+        err.style.display = 'none';
+        document.getElementById('tp1-corr-links').style.display = 'flex';
+        document.querySelector('#tp1-corr-lock p').textContent = '🔓 Correction du TP';
+      } else {
+        err.style.display = 'block';
+        input.value = '';
+        input.focus();
+      }
+    }
+    </script>
     </div><!-- /sub-EA-1 (Activité 2) -->
     <!-- Activité 3 : Vol d'un drone (documentaire, QCM) -->
     <div class="sub-tab-content" id="sub-EA-2">
