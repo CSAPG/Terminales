@@ -3564,7 +3564,7 @@
         <p id="tp1-corr-err" style="display:none;color:var(--rouge);font-size:0.84rem;margin:8px 0 0;">Code incorrect, réessaie.</p>
         <div id="tp1-corr-links" class="bilan-links" style="display:none;">
           <a class="btn-sujet" style="margin:0;padding:8px 16px;font-size:0.84rem;" href="Entrainements/Seq3_TP1_EQUATIONS%20HORAIRES_corr.pdf" target="_blank" rel="noopener">📄 Correction du TP (PDF)</a>
-<a class="btn-correction" style="margin:0;padding:8px 16px;font-size:0.84rem;" href="https://www.pearltrees.com/private/id105286804/item837487065?paccess=47ff225ec56.31eb09d9.42cbe957ec161bff654f64ddfbd6745f" target="_blank" rel="noopener">🎬 Vidéo correction</a>       
+          <a class="btn-correction" style="margin:0;padding:8px 16px;font-size:0.84rem;" href="https://www.pearltrees.com/private/id105286804/item837487065?paccess=47ff225ec56.31eb09d9.42cbe957ec161bff654f64ddfbd6745f" target="_blank" rel="noopener">🎬 Vidéo correction</a>
         </div>
       </div>
 
@@ -3872,7 +3872,7 @@
       </div>
     </div><!-- /activite-5-jetencre -->
     </div><!-- /sub-EA-4 (Activité 5) -->
-    <!-- Activité 6 : Accélérateur linéaire (documentaire, indices sans correction) -->
+    <!-- Activité 6 : Accélérateur linéaire (documentaire, indices + correction PDF protégée par code) -->
     <div class="sub-tab-content" id="sub-EA-5">
     <div class="activite-card" id="activite-6-accelerateur">
       <h3>Activité 6 — Accélérateur linéaire</h3>
@@ -3931,7 +3931,37 @@
       </p>
       <div class="indice-box" id="ind-a6-5">Structure ta présentation en trois temps : le principe physique (accélération d'une particule chargée par un champ électrique, à l'aide du théorème de l'énergie cinétique), le dispositif technique (succession de cavités accélératrices, chacune apportant un petit gain d'énergie), et l'intérêt de ce dispositif (atteindre des vitesses très élevées grâce à la répétition d'un grand nombre de petites accélérations).</div>
 
+      <!-- Correction de l'activité 6 protégée par code -->
+      <div id="a6-corr-lock" style="margin-top:24px;padding:16px 18px;background:#F7FAFC;border:1px solid var(--gris-bord);border-radius:10px;">
+        <p style="font-weight:700;color:var(--bleu);margin:0 0 10px;">🔒 Correction de l'activité</p>
+        <div id="a6-corr-form" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <label for="a6-corr-code" style="font-size:0.86rem;">Code d'accès :</label>
+          <input type="password" id="a6-corr-code" inputmode="numeric" autocomplete="off" placeholder="Saisir le code" style="padding:7px 10px;border:1px solid var(--gris-bord);border-radius:8px;font-family:'Nunito',sans-serif;font-size:0.86rem;background:#fff;" onkeydown="if(event.key==='Enter')unlockA6Corr()">
+          <button type="button" class="btn-sujet" onclick="unlockA6Corr()">Déverrouiller</button>
+        </div>
+        <p id="a6-corr-err" style="display:none;color:var(--rouge);font-size:0.84rem;margin:8px 0 0;">Code incorrect, réessaie.</p>
+        <div id="a6-corr-links" class="bilan-links" style="display:none;">
+          <a class="btn-correction" style="margin:0;padding:8px 16px;font-size:0.84rem;" href="Entrainements/correction_p277.pdf" target="_blank" rel="noopener">📄 Correction de l'activité (PDF)</a>
+        </div>
+      </div>
+
     </div><!-- /activite-6-accelerateur -->
+    <script>
+    function unlockA6Corr() {
+      var input = document.getElementById('a6-corr-code');
+      var err = document.getElementById('a6-corr-err');
+      if (btoa(input.value.trim()) === 'MDkxMTIwMjY=') {
+        document.getElementById('a6-corr-form').style.display = 'none';
+        err.style.display = 'none';
+        document.getElementById('a6-corr-links').style.display = 'flex';
+        document.querySelector('#a6-corr-lock p').textContent = "🔓 Correction de l'activité";
+      } else {
+        err.style.display = 'block';
+        input.value = '';
+        input.focus();
+      }
+    }
+    </script>
     </div><!-- /sub-EA-5 (Activité 6) -->
 
 
