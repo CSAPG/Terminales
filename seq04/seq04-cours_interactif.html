@@ -1711,9 +1711,9 @@
       <p style="margin-top:10px;">Conséquence directe : la <strong>vitesse d'une planète n'est pas constante</strong> sur son orbite elliptique. Elle est maximale au périhélie (proche du Soleil) et minimale à l'aphélie (loin du Soleil). <strong>Seule une trajectoire circulaire</strong> permet d'obtenir une vitesse constante (mouvement uniforme).</p>
     </div>
 
-    <div class="activite-card">
-      <h3>🪐 Animation — Balayage des aires égales</h3>
-      <p>La planète P parcourt son orbite elliptique autour du Soleil S. Deux arcs sont mis en évidence, balayés pendant la <strong>même durée Δt</strong> : l'un proche du périhélie (rouge), l'autre proche de l'aphélie (vert). Lance l'animation : observe que la planète parcourt l'arc rouge <strong>rapidement</strong> et l'arc vert <strong>lentement</strong>, alors que les deux aires balayées 𝒜₁ et 𝒜₂ sont rigoureusement égales.</p>
+    <div class="def-card">
+      <h3>🪐 Animation — Le segment Soleil-planète balaie des aires égales</h3>
+      <p>La planète P parcourt son orbite elliptique autour du Soleil S. Pendant une même durée Δt (Δt est une fraction de la période T, précisée sous la figure), le segment SP balaie une aire : d'abord près du périhélie (𝒜₁, en rouge), puis près de l'aphélie (𝒜₂, en vert). Le secteur se colore <strong>au fur et à mesure du déplacement de la planète</strong>. Près du Soleil, le segment est court : pour balayer la même aire, l'arc parcouru est long et la planète va <strong>vite</strong>. Loin du Soleil, le segment est long, l'arc est court et la planète va <strong>lentement</strong>. Les deux aires finales sont pourtant égales.</p>
       <div class="anim-canvas-wrap">
         <div class="anim-canvas-title">Loi des aires — 𝒜₁ = 𝒜₂ pour une même durée Δt</div>
         <div class="slider-row" style="justify-content:center;">
@@ -1727,7 +1727,8 @@
             <option value="saturne">Saturne (e ≈ 0,057)</option>
             <option value="uranus">Uranus (e ≈ 0,046)</option>
             <option value="neptune">Neptune (e ≈ 0,010)</option>
-            <option value="halley" selected>Comète de Halley (e ≈ 0,967)</option>
+            <option value="fictif" selected>Astre fictif très aplati (e = 0,60)</option>
+            <option value="halley">Comète de Halley (e ≈ 0,967)</option>
           </select>
         </div>
         <canvas id="areaCanvas" width="380" height="260"></canvas>
@@ -1736,10 +1737,10 @@
           <button class="anim-btn" onclick="resetAreaAnim()">↺ Recommencer</button>
         </div>
         <div class="legende-vect">
-          <span><span class="swatch" style="background:#C0392B;"></span> 𝒜₁ : de P(t₁) à P(t₁+Δt), près du périhélie</span>
-          <span><span class="swatch" style="background:#3A8A6E;"></span> 𝒜₂ : de P(t₂) à P(t₂+Δt), près de l'aphélie</span>
+          <span><span class="swatch" style="background:#C0392B;"></span> 𝒜₁ : balayée de t₁ à t₁+Δt, près du périhélie</span>
+          <span><span class="swatch" style="background:#3A8A6E;"></span> 𝒜₂ : balayée de t₂ à t₂+Δt, près de l'aphélie</span>
         </div>
-        <div class="etape-msg-box" id="areaMsgBox" style="justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;color:var(--orange);background:var(--orange-clair);">𝒜₁ = 𝒜₂</div>
+        <div class="etape-msg-box" id="areaMsgBox" style="justify-content:center;"></div>
         <div class="etape-msg-box" id="areaDataBox" style="justify-content:center;text-align:center;flex-direction:column;gap:4px;"></div>
         <div class="remarque-box" style="margin-top:10px;font-size:0.80rem;"><strong>Remarque :</strong> le calcul de la vitesse instantanée v en un point quelconque d'une ellipse (équation dite « vis-viva ») n'est pas une capacité exigible en Terminale — seul le cas circulaire uniforme (v = √(GM/r), vu en A1) est au programme. La valeur affichée ici est donnée à titre de <strong>culture scientifique</strong>, pour illustrer concrètement la loi des aires.</div>
         <p style="margin-top:12px;font-size:0.85rem;text-align:center;">👉 Pour manipuler toi-même une autre simulation de la loi des aires : <a href="https://physique.ostralo.net/kepler/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-weight:700;">physique.ostralo.net/kepler</a></p>
@@ -1808,9 +1809,9 @@
         <svg viewBox="0 0 320 220" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:380px;">
           <defs>
             <marker id="arr3a-l" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="8,0 1,3 8,6" fill="#5B8FB9"/></marker>
-            <marker id="arr3a-r" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#5B8FB9"/></marker>
+            <marker id="arr3a-r" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0,0 7,3 0,6" fill="#5B8FB9"/></marker>
             <marker id="arr3b-l" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="8,0 1,3 8,6" fill="#3A8A6E"/></marker>
-            <marker id="arr3b-r" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#3A8A6E"/></marker>
+            <marker id="arr3b-r" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0,0 7,3 0,6" fill="#3A8A6E"/></marker>
           </defs>
           <circle cx="160" cy="110" r="90" fill="none" stroke="#3A8A6E" stroke-width="1.6" stroke-dasharray="4,3"/>
           <circle cx="160" cy="110" r="55" fill="none" stroke="#5B8FB9" stroke-width="1.6" stroke-dasharray="4,3"/>
@@ -1822,12 +1823,34 @@
           <circle cx="250" cy="110" r="5" fill="#3A8A6E"/>
           <text x="253" y="95" font-size="11" fill="#3A8A6E" font-weight="700" font-family="Outfit">2</text>
           <text x="257" y="127" font-size="10" fill="#3A8A6E" font-family="Outfit">Période T₂</text>
-          <line x1="105" y1="175" x2="215" y2="175" stroke="#5B8FB9" stroke-width="1.3" marker-start="url(#arr3a-l)" marker-end="url(#arr3a-r)"/>
-          <text x="160" y="190" text-anchor="middle" font-size="10.5" fill="#5B8FB9" font-weight="700">2a₁</text>
-          <line x1="70" y1="200" x2="250" y2="200" stroke="#3A8A6E" stroke-width="1.3" marker-start="url(#arr3b-l)" marker-end="url(#arr3b-r)"/>
-          <text x="160" y="214" text-anchor="middle" font-size="10.5" fill="#3A8A6E" font-weight="700">2a₂</text>
+          <line x1="160" y1="110" x2="121.1" y2="148.9" stroke="#5B8FB9" stroke-width="1.6" marker-end="url(#arr3a-r)"/>
+          <text x="114" y="158" text-anchor="end" font-size="11" fill="#5B8FB9" font-weight="700" font-family="Outfit">a₁</text>
+          <line x1="160" y1="110" x2="223.6" y2="173.6" stroke="#3A8A6E" stroke-width="1.6" marker-end="url(#arr3b-r)"/>
+          <text x="229" y="182" font-size="11" fill="#3A8A6E" font-weight="700" font-family="Outfit">a₂</text>
         </svg>
-        <div class="fig-caption">Deux planètes (ou satellites) 1 et 2 en orbite circulaire autour du même astre S, de rayons a₁ &lt; a₂ : la plus proche (1) a la période T₁ la plus courte. La 3<sup>e</sup> loi de Kepler relie ces deux orbites par T₁²/a₁³ = T₂²/a₂³.</div>
+        <div class="fig-caption">Deux planètes (ou satellites) 1 et 2 en orbite circulaire autour du même astre S, de rayons a₁ &lt; a₂ (flèches depuis S) : la plus proche (1) a la période T₁ la plus courte. La 3<sup>e</sup> loi de Kepler relie ces deux orbites par T₁²/a₁³ = T₂²/a₂³.</div>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <h3>🪐 Animation — Périodes et demi-grands axes des planètes</h3>
+      <p>Quatre planètes du Système solaire partent ensemble de la même position (a = rayon de l'orbite, supposée circulaire). Plus une planète est loin du Soleil, plus sa période de révolution T est longue. À chaque tour complet, on place sur le graphique le point (a³ ; T²) correspondant. L'animation est accélérée : 1 an = 7 s.</p>
+      <div class="anim-canvas-wrap">
+        <div class="anim-canvas-title">Loi des périodes — T² en fonction de a³</div>
+        <canvas id="k3Canvas" width="640" height="300"></canvas>
+        <div class="anim-controls">
+          <button class="anim-btn active" id="k3PlayBtn" onclick="toggleK3Anim()">⏸ Pause</button>
+          <button class="anim-btn" onclick="resetK3Anim()">↺ Recommencer</button>
+        </div>
+        <div class="etape-msg-box" id="k3MsgBox" style="justify-content:center;text-align:center;flex-direction:column;font-size:0.88rem;font-weight:400;"></div>
+        <div style="overflow-x:auto;margin-top:10px;">
+          <table style="border-collapse:collapse;width:100%;font-size:0.82rem;text-align:center;">
+            <thead><tr style="background:var(--bleu-clair);"><th style="padding:5px;">Planète</th><th>a (UA)</th><th>T (an)</th><th>a³ (UA³)</th><th>T² (an²)</th><th>T²/a³</th></tr></thead>
+            <tbody id="k3Tbody">
+              <tr id="k3Row0"></tr><tr id="k3Row1"></tr><tr id="k3Row2"></tr><tr id="k3Row3"></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -1945,12 +1968,12 @@
       <div class="activite-card">
         <h3>À l'assaut de l'espace</h3>
         <p>La « conquête spatiale » n'a pas débuté avec le lancement des premiers satellites artificiels : elle a lieu dès lors que l'on observe le ciel.</p>
-        <p><strong>🎯 Objectif :</strong> établir des repères historiques concernant la mécanique céleste et les satellites.</p>
+        <p><strong>📝 Objectif :</strong> établir des repères historiques concernant la mécanique céleste et les satellites.</p>
       </div>
 
       <div class="def-card">
         <h3>Document</h3>
-        <img src="Entrainements/AD1.png" alt="Document : trombinoscope de Ptolémée, Copernic, Tycho Brahé, Kepler et Galilée (doc.1) ; schéma du système héliocentrique de Copernic (doc.2) ; liste de livres précurseurs (doc.3) ; liste de premières fois en astronomie et spatial (doc.4)" style="max-width:100%;display:block;margin:0 auto;border-radius:8px;border:1px solid var(--gris-bord);">
+        <img src="Entrainements/AD1-documents.png" alt="Document : trombinoscope de Ptolémée, Copernic, Tycho Brahé, Kepler et Galilée (doc.1) ; schéma du système héliocentrique de Copernic (doc.2) ; liste de livres précurseurs (doc.3) ; liste de premières fois en astronomie et spatial (doc.4)" style="max-width:100%;display:block;margin:0 auto;border-radius:8px;border:1px solid var(--gris-bord);">
       </div>
 
       <!-- Questions -->
@@ -2046,7 +2069,7 @@
           <p><strong>1.</strong> Ptolémée (100-168, Grec) : compilation de savoirs de plusieurs siècles avant lui. Copernic (1473-1543, Polonais) : proposition d'un modèle héliocentrique. Tycho Brahé (1546-1601, Danois) : observations de grande qualité. Kepler (1571-1630, Allemand) : formulation des lois portant son nom. Galilée (1564-1642, Italien) : reprise de l'héliocentrisme après observation des satellites de Jupiter.</p>
           <p><strong>2. a.</strong> Du centre vers la périphérie : Mercure, Vénus, Terre (avec la Lune), Mars, Jupiter, Saturne, étoiles fixes.<br>
           <strong>b.</strong> Système géocentrique de Ptolémée : la Terre immobile au centre, tous les astres tournent autour d'elle.
-          <img src="images-cours/act1-systeme-ptolemee.png" alt="Schéma du système géocentrique de Ptolémée : sphères concentriques autour de la Terre immobile" style="max-width:200px;display:block;margin:6px 0;border-radius:6px;border:1px solid var(--gris-bord);">
+          <img src="Entrainements/act1-systeme-ptolemee.png" alt="Schéma du système géocentrique de Ptolémée : sphères concentriques autour de la Terre immobile" style="max-width:200px;display:block;margin:6px 0;border-radius:6px;border:1px solid var(--gris-bord);">
           <strong>c.</strong> Erreurs du doc. 2 : planètes manquantes (inconnues à l'époque), orbites toutes circulaires et non à l'échelle.</p>
           <p><strong>3.</strong> Copernic (1543), Kepler (1609), Galilée (1632) : ouvrages scientifiques non fictifs. Jules Verne (1865) : roman, fictif. Hergé (1953-1954) : bande dessinée, fictive.</p>
           <p><strong>4.</strong> Distance Terre-Lune : Aristarque de Samos, III<sup>e</sup> s. av. notre ère. Satellites de Jupiter : Galilée, 1609. Anneaux de Saturne : Huygens, 1659. Satellite artificiel : URSS, 1957. Pied sur la Lune : Armstrong, 1969. Sonde hors système solaire : Nasa, 1977. Robot sur une planète : Nasa, 1996. Arrimage sur une comète : ESA, 2014.</p>
@@ -4219,13 +4242,13 @@ function resetKepler3() {
   requestAnimationFrame(step);
 })();
 
-/* ════════ ANIMATION — LOI DES AIRES (K2), 2 secteurs fixes A1 (périhélie) / A2 (aphélie) + corps réels ════════ */
+/* ════════ ANIMATION — LOI DES AIRES (K2) : secteurs balayés EN DIRECT par la planète pendant Δt = T/10 ════════ */
 (function() {
   var canvas = document.getElementById('areaCanvas');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
   var cx = 190, cy = 130;
-  var aPx = 145;               // demi-grand axe en pixels (fixe à l'écran, seule la FORME e change avec le corps choisi)
+  var aPx = 145;               // demi-grand axe en pixels (seule la FORME e change avec le corps choisi)
 
   var G = 6.674e-11, Msoleil = 1.989e30;
   var UA = 1.496e11; // m
@@ -4238,144 +4261,179 @@ function resetKepler3() {
     saturne: { label: 'Saturne', a: 9.537, e: 0.057 },
     uranus:  { label: 'Uranus',  a: 19.19, e: 0.046 },
     neptune: { label: 'Neptune', a: 30.07, e: 0.010 },
-    halley:  { label: 'la comète de Halley', a: 17.8, e: 0.967 }
+    halley:  { label: 'la comète de Halley', a: 17.8, e: 0.967 },
+    fictif:  { label: 'un astre fictif', a: 2.0, e: 0.6 }
   };
+  var COL = ['#C0392B', '#3A8A6E'];
 
   var bodySelect = document.getElementById('areaBody');
   var dataBox = document.getElementById('areaDataBox');
+  var msgBox = document.getElementById('areaMsgBox');
   var playBtn = document.getElementById('areaPlayBtn');
 
-  var e, b, c, focusX, focusY, aReal, h1, h2, totalArea;
+  var e, b, c, focusX, focusY, aReal, totalArea, secs, DT_TXT, FR = 0.10;
   var playing = true;
-  var theta = 0.35;
+  var theta = 0;
   var period = 16.0; // durée d'un tour complet en secondes d'animation (lent, lisible)
+  var elapsed = [0, 0], inside = [false, false], done = [false, false];
 
   function rOf(th) { return aPx * (1 - e*e) / (1 + e * Math.cos(th)); }
   function orbitPoint(th) {
     var r = rOf(th);
     return { x: focusX - r * Math.cos(th), y: focusY + r * Math.sin(th) };
   }
-  function halfWidthForArea(theta0, targetArea) {
-    var STEPS = 4000, dth = 0.0006;
-    var half = targetArea / 2;
-    var acc = 0, h = 0;
-    for (var i = 0; i < STEPS; i++) {
-      var th = theta0 + i*dth;
-      var r = rOf(th);
-      acc += 0.5 * r * r * dth;
-      if (acc >= half) { h = i*dth; break; }
-      h = i*dth;
-    }
-    return h;
+  function wrap(x) { while (x > Math.PI) x -= 2*Math.PI; while (x <= -Math.PI) x += 2*Math.PI; return x; }
+  /* aire balayée par SP entre th0 et th1 (th1 > th0), en fraction de l'aire de l'ellipse */
+  function areaFrac(th0, th1) {
+    var n = Math.max(2, Math.ceil((th1 - th0) / 0.01)), dth = (th1 - th0) / n, acc = 0;
+    for (var i = 0; i < n; i++) { var r = rOf(th0 + (i + 0.5) * dth); acc += 0.5 * r * r * dth; }
+    return acc / totalArea;
   }
+  function halfWidthForArea(theta0, targetArea) {
+    var dth = 0.0006, half = targetArea / 2, acc = 0, i = 0;
+    while (acc < half && i < 6000) { var r = rOf(theta0 + i * dth + dth / 2); acc += 0.5 * r * r * dth; i++; }
+    return i * dth;
+  }
+  function frFmt(x, d) { return x.toFixed(d).replace('.', ','); }
 
   function rebuild() {
-    var key = bodySelect.value;
-    var body = bodies[key];
-    e = body.e;
-    aReal = body.a; // UA
+    var body = bodies[bodySelect.value];
+    e = body.e; aReal = body.a;
     b = aPx * Math.sqrt(1 - e*e);
     c = aPx * e;
     focusX = cx - c; focusY = cy;
     totalArea = Math.PI * aPx * b;
-    var targetArea = 0.10 * totalArea;
-    h1 = halfWidthForArea(0, targetArea);
-    h2 = halfWidthForArea(Math.PI, targetArea);
-    theta = 0.35;
+    FR = 0.10;                                   // aire de chaque secteur = FR × aire de l'ellipse (Δt = FR × T)
+    var h1 = halfWidthForArea(0, FR * totalArea);
+    while (h1 > 1.3 && FR > 0.001) { FR /= 2; h1 = halfWidthForArea(0, FR * totalArea); }   // orbites très aplaties : Δt plus court
+    secs = [ { c0: 0,       h: h1 },
+             { c0: Math.PI, h: halfWidthForArea(Math.PI, FR * totalArea) } ];
+    var Tyr = Math.pow(aReal, 1.5), dtYr = Tyr * FR;
+    DT_TXT = dtYr < 1 ? frFmt(dtYr * 365.25, 1) + ' jours' : frFmt(dtYr, 1) + ' ans';
+    resetState();
+  }
+  function resetState() {
+    theta = -secs[0].h - 0.5;   // départ juste avant le secteur du périhélie
+    elapsed = [0, 0]; inside = [false, false]; done = [false, false];
     drawFrame();
   }
 
-  function drawSector(theta0, halfWidth, color, label, labelR) {
-    var thA = theta0 - halfWidth, thB = theta0 + halfWidth;
-    ctx.beginPath();
-    ctx.moveTo(focusX, focusY);
-    var steps = 26;
-    for (var i = 0; i <= steps; i++) {
-      var th = thA + (thB - thA) * (i/steps);
-      var p = orbitPoint(th);
-      ctx.lineTo(p.x, p.y);
-    }
+  function sectorPath(th0, th1) {
+    ctx.beginPath(); ctx.moveTo(focusX, focusY);
+    var steps = 40;
+    for (var i = 0; i <= steps; i++) { var p = orbitPoint(th0 + (th1 - th0) * i / steps); ctx.lineTo(p.x, p.y); }
     ctx.closePath();
-    ctx.fillStyle = color; ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1;
-    ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.stroke();
-    var pm = orbitPoint(theta0);
-    var lx = focusX + (pm.x - focusX) * labelR;
-    var ly = focusY + (pm.y - focusY) * labelR;
-    ctx.fillStyle = color;
-    ctx.font = 'bold 13px Outfit, Arial, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(label, lx, ly);
+  }
+  function dot(p, color, label) {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, 2*Math.PI); ctx.fillStyle = color; ctx.fill();
+    ctx.fillStyle = '#1A2A3A'; ctx.font = '10px Outfit, Arial, sans-serif';
+    ctx.textAlign = (p.x > cx) ? 'left' : 'right';
+    ctx.fillText(label, p.x + (p.x > cx ? 6 : -6), p.y + (p.y > cy ? 12 : -6));
     ctx.textAlign = 'left';
   }
 
-  function drawBoundaryPoints(theta0, halfWidth, labelStart, labelEnd, color) {
-    var pA = orbitPoint(theta0 - halfWidth);
-    var pB = orbitPoint(theta0 + halfWidth);
-    [[pA, labelStart], [pB, labelEnd]].forEach(function(item) {
-      var p = item[0];
-      ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, 2*Math.PI); ctx.fillStyle = color; ctx.fill();
-      ctx.fillStyle = '#1A2A3A';
-      ctx.font = '10px Outfit, Arial, sans-serif';
-      ctx.textAlign = (p.x > cx) ? 'left' : 'right';
-      ctx.fillText(item[1], p.x + (p.x > cx ? 6 : -6), p.y + (p.y > cy ? 12 : -6));
-      ctx.textAlign = 'left';
-    });
+  function drawSectors() {
+    for (var k = 0; k < 2; k++) {
+      var s = secs[k], d = wrap(theta - s.c0), t0 = s.c0 - s.h, t1 = s.c0 + s.h;
+      var lab = k === 0 ? ['P(t₁)', 'P(t₁+Δt)', '𝒜₁'] : ['P(t₂+Δt)', 'P(t₂)', '𝒜₂'];
+      if (inside[k]) {
+        sectorPath(t0, s.c0 + d);
+        ctx.fillStyle = COL[k]; ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = COL[k]; ctx.lineWidth = 1.2; ctx.stroke();
+        dot(orbitPoint(t0), COL[k], k === 0 ? 'P(t₁)' : 'P(t₂)');
+      } else if (done[k]) {
+        sectorPath(t0, t1);
+        ctx.fillStyle = COL[k]; ctx.globalAlpha = 0.40; ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = COL[k]; ctx.lineWidth = 1; ctx.stroke();
+        dot(orbitPoint(t0), COL[k], k === 0 ? 'P(t₁)' : 'P(t₂)');
+        dot(orbitPoint(t1), COL[k], k === 0 ? 'P(t₁+Δt)' : 'P(t₂+Δt)');
+        var pm = orbitPoint(s.c0);
+        ctx.fillStyle = COL[k]; ctx.font = 'bold 13px Outfit, Arial, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(lab[2], focusX + (pm.x - focusX) * 0.62, focusY + (pm.y - focusY) * 0.62);
+        ctx.textAlign = 'left';
+      } else {
+        sectorPath(t0, t1);                       // zone qui sera balayée (contour seul)
+        ctx.setLineDash([4, 3]); ctx.strokeStyle = COL[k]; ctx.globalAlpha = 0.6; ctx.lineWidth = 1; ctx.stroke();
+        ctx.setLineDash([]); ctx.globalAlpha = 1;
+      }
+    }
   }
 
-  function drawStatic() {
+  function drawFrame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.ellipse(cx, cy, aPx, b, 0, 0, 2*Math.PI);
+    ctx.beginPath(); ctx.ellipse(cx, cy, aPx, b, 0, 0, 2*Math.PI);
     ctx.strokeStyle = '#2D5F8A'; ctx.lineWidth = 1.6; ctx.stroke();
-    drawSector(0, h1, '#C0392B', 'A1', 0.62);
-    drawSector(Math.PI, h2, '#3A8A6E', 'A2', 0.72);
-    drawBoundaryPoints(0, h1, 'P(t1)', 'P(t1+Δt)', '#C0392B');
-    drawBoundaryPoints(Math.PI, h2, 'P(t2+Δt)', 'P(t2)', '#3A8A6E');
+    drawSectors();
+    var p = orbitPoint(theta);
+    ctx.beginPath(); ctx.moveTo(focusX, focusY); ctx.lineTo(p.x, p.y);
+    ctx.strokeStyle = '#1A2A3A'; ctx.lineWidth = 1; ctx.stroke();            // rayon vecteur SP
     ctx.beginPath(); ctx.arc(focusX, focusY, 9, 0, 2*Math.PI); ctx.fillStyle = '#fbbf24'; ctx.fill();
     ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1; ctx.stroke();
     ctx.fillStyle = '#5A6B7A'; ctx.font = 'bold 11px Outfit, Arial, sans-serif';
     ctx.fillText('S', focusX - 4, focusY + 22);
-  }
-
-  function drawPlanet() {
-    var p = orbitPoint(theta);
     ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, 2*Math.PI); ctx.fillStyle = '#1A2A3A'; ctx.fill();
     ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.3; ctx.stroke();
+    ctx.fillStyle = '#1A2A3A'; ctx.font = 'bold 11px Outfit, Arial, sans-serif';
+    ctx.fillText('P', p.x + 8, p.y - 7);
+    updateBoxes();
   }
 
-  function updateDataBox() {
+  function updateBoxes() {
     var body = bodies[bodySelect.value];
-    var rUA = aReal * (1 - e*e) / (1 + e * Math.cos(theta)); // distance réelle S-P, en UA
-    var rM = rUA * UA; // en m
-    var aM = aReal * UA;
-    var v = Math.sqrt(G * Msoleil * (2/rM - 1/aM)); // vis-viva, en m/s
+    var rUA = aReal * (1 - e*e) / (1 + e * Math.cos(theta));
+    var rM = rUA * UA, aM = aReal * UA;
+    var v = Math.sqrt(G * Msoleil * (2/rM - 1/aM));
     var remark;
     if (e < 0.03) remark = 'Orbite quasi circulaire : la distance et la vitesse varient à peine sur un tour.';
-    else if (e < 0.15) remark = 'Orbite peu excentrique : la vitesse varie mais reste d\'un ordre de grandeur comparable sur tout le tour.';
+    else if (e < 0.15) remark = 'Orbite peu excentrique : la vitesse varie légèrement entre périhélie et aphélie.';
     else remark = 'Orbite très excentrique : la distance et la vitesse varient fortement entre périhélie et aphélie.';
-    dataBox.innerHTML = '<strong>' + body.label + '</strong> (e ≈ ' + e.toFixed(3).replace('.', ',') + ')<br>' +
-      'Distance SP = <strong>' + rUA.toFixed(3).replace('.', ',') + ' UA</strong> (' + (rM/1e9).toFixed(1).replace('.', ',') + ' millions de km) &nbsp;|&nbsp; ' +
-      'v ≈ <strong>' + (v/1000).toFixed(1).replace('.', ',') + ' km/s</strong><br>' +
-      '<span style="font-weight:400;font-size:0.78rem;color:var(--texte-leger);">' + remark + '</span>';
-  }
+    dataBox.innerHTML = '<div>' + '<strong>' + body.label + '</strong> (e ≈ ' + frFmt(e, 3) + ') — Δt = ' + frFmt(FR * 100, 1) + ' % de T ≈ ' + DT_TXT + '<br>' +
+      'Distance SP = <strong>' + frFmt(rUA, 3) + ' UA</strong> (' + frFmt(rM/1e9, 1) + ' millions de km) &nbsp;|&nbsp; ' +
+      'v ≈ <strong>' + frFmt(v/1000, 1) + ' km/s</strong><br>' +
+      '<span style="font-weight:400;font-size:0.78rem;color:var(--texte-leger);">' + remark + '</span></div>';
 
-  function drawFrame() {
-    drawStatic();
-    drawPlanet();
-    updateDataBox();
+    var html;
+    if (inside[0] || inside[1]) {
+      var k = inside[0] ? 0 : 1, s = secs[k], frac = areaFrac(s.c0 - s.h, s.c0 + wrap(theta - s.c0));
+      var nom = k === 0 ? ['t₁', '𝒜₁', 'périhélie', 'proche du Soleil : le segment SP est court, l\'arc parcouru est long, donc la planète va <strong>vite</strong>']
+                        : ['t₂', '𝒜₂', 'aphélie', 'loin du Soleil : le segment SP est long, l\'arc parcouru est court, donc la planète va <strong>lentement</strong>'];
+      html = '<span style="color:' + COL[k] + ';font-weight:800;">Près du ' + nom[2] + '</span> — à partir de ' + nom[0] + ', le segment SP balaie l\'aire ' + nom[1] + '.<br>' +
+             'Durée écoulée : <strong>' + frFmt(elapsed[k] / (period * FR) * 100, 0) + ' % de Δt</strong> &nbsp;|&nbsp; ' + nom[1] + ' = <strong>' + frFmt(frac * 100, 1) + ' %</strong> de l\'aire de l\'ellipse<br>' +
+             '<span style="font-weight:400;font-size:0.82rem;">Planète ' + nom[3] + '.</span>';
+    } else if (done[0] && done[1]) {
+      html = '<span style="font-size:1.05rem;font-weight:800;color:var(--orange);">𝒜₁ = 𝒜₂ = ' + frFmt(FR * 100, 1) + ' % de l\'aire de l\'ellipse</span><br>Les deux aires sont égales, car elles ont été balayées pendant la <strong>même durée Δt</strong>, alors que la planète ne va pas à la même vitesse.';
+    } else if (done[0] || done[1]) {
+      html = 'La première aire est balayée (' + (done[0] ? '𝒜₁' : '𝒜₂') + '). Le segment SP va maintenant balayer la seconde aire pendant la <strong>même durée Δt</strong>.';
+    } else {
+      html = 'La planète P tourne autour du Soleil S. Observe le segment SP : pendant Δt, il va balayer une aire près du périhélie, puis une aire près de l\'aphélie.';
+    }
+    msgBox.style.fontFamily = "'Outfit',sans-serif"; msgBox.style.fontWeight = '400';
+    msgBox.style.fontSize = '0.88rem'; msgBox.style.color = 'var(--texte)'; msgBox.style.background = 'var(--orange-clair)';
+    msgBox.style.flexDirection = 'column'; msgBox.style.textAlign = 'center'; msgBox.style.gap = '4px';
+    msgBox.innerHTML = '<div>' + html + '</div>';
   }
 
   var lastTs = null;
   function tick(ts) {
     if (lastTs === null) lastTs = ts;
-    var dt = (ts - lastTs) / 1000;
+    var dt = Math.min((ts - lastTs) / 1000, 0.1);
     lastTs = ts;
     if (playing) {
-      var r = rOf(theta);
-      var arealConst = totalArea / period;
-      var dtheta = (2 * arealConst / (r*r)) * dt;
-      theta += dtheta;
-      if (theta > 2*Math.PI) theta -= 2*Math.PI;
+      var remaining = dt;
+      while (remaining > 1e-6) {
+        var r = rOf(theta), rate = 2 * (totalArea / period) / (r*r);   // dθ/dt (loi des aires)
+        var step = Math.min(remaining, 0.02 / rate);                    // pas ≤ 0,02 rad : pas de saut près du périhélie
+        theta += rate * step;
+        if (theta > Math.PI) theta -= 2*Math.PI;
+        remaining -= step;
+        for (var k = 0; k < 2; k++) {
+          var s = secs[k], d = wrap(theta - s.c0);
+          if (d >= -s.h && d <= s.h) {
+            if (!inside[k]) { inside[k] = true; elapsed[k] = 0; }
+            elapsed[k] += step;
+          } else if (inside[k]) { inside[k] = false; done[k] = true; }
+        }
+      }
       drawFrame();
     }
     requestAnimationFrame(tick);
@@ -4387,12 +4445,134 @@ function resetKepler3() {
     playBtn.textContent = playing ? '⏸ Pause' : '▶ Lecture';
     playBtn.classList.toggle('active', playing);
   };
-  window.resetAreaAnim = function() {
-    theta = 0.35;
-    drawFrame();
-  };
+  window.resetAreaAnim = function() { resetState(); };
 
   rebuild();
+  requestAnimationFrame(tick);
+})();
+/* ════════ ANIMATION — LOI DES PÉRIODES (K3) : 4 planètes + graphique T² = f(a³) construit en direct ════════ */
+(function() {
+  var canvas = document.getElementById('k3Canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var SX = 150, SY = 150, PXUA = 78;          // Soleil, échelle (px par UA)
+  var GX0 = 360, GY0 = 262, GW = 250, GH = 225, MAXV = 3.8;  // repère du graphique (origine, largeur, hauteur, valeur max)
+  var YEAR = 7.0;                              // 1 an = 7 s d'animation
+  var P = [
+    { n: 'Mercure', a: 0.387, T: 0.241, col: '#7A8794' },
+    { n: 'Vénus',   a: 0.723, T: 0.615, col: '#E8783A' },
+    { n: 'Terre',   a: 1.000, T: 1.000, col: '#2D5F8A' },
+    { n: 'Mars',    a: 1.524, T: 1.881, col: '#C0392B' }
+  ];
+  var playing = true, t = 0, lastTs = null;
+  var msgBox = document.getElementById('k3MsgBox');
+  var playBtn = document.getElementById('k3PlayBtn');
+  var tbody = document.getElementById('k3Tbody');
+  var finished = [false, false, false, false], nDone = 0, lastMsg = null;
+  function fr(x, d) { return x.toFixed(d).replace('.', ','); }
+
+  function gx(a3) { return GX0 + a3 / MAXV * GW; }
+  function gy(T2) { return GY0 - T2 / MAXV * GH; }
+
+  function arrow(x0, y0, x1, y1) {
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    var ang = Math.atan2(y1 - y0, x1 - x0);
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - 8 * Math.cos(ang - 0.4), y1 - 8 * Math.sin(ang - 0.4));
+    ctx.lineTo(x1 - 8 * Math.cos(ang + 0.4), y1 - 8 * Math.sin(ang + 0.4));
+    ctx.closePath(); ctx.fillStyle = '#5A6B7A'; ctx.fill();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    /* — orbites et planètes — */
+    P.forEach(function(p) {
+      ctx.beginPath(); ctx.arc(SX, SY, p.a * PXUA, 0, 2*Math.PI);
+      ctx.setLineDash([3, 3]); ctx.strokeStyle = p.col; ctx.globalAlpha = 0.55; ctx.lineWidth = 1.2; ctx.stroke();
+      ctx.setLineDash([]); ctx.globalAlpha = 1;
+    });
+    ctx.beginPath(); ctx.arc(SX, SY, 8, 0, 2*Math.PI); ctx.fillStyle = '#fbbf24'; ctx.fill();
+    ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = '#5A6B7A'; ctx.font = 'bold 11px Outfit, Arial, sans-serif'; ctx.fillText('S', SX - 3, SY + 21);
+    P.forEach(function(p) {
+      var ang = 2 * Math.PI * t / (p.T * YEAR);
+      var x = SX + p.a * PXUA * Math.cos(ang), y = SY - p.a * PXUA * Math.sin(ang);
+      ctx.beginPath(); ctx.arc(x, y, 5, 0, 2*Math.PI); ctx.fillStyle = p.col; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.2; ctx.stroke();
+    });
+    /* point de départ commun (alignement initial) */
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Outfit, Arial, sans-serif';
+    ctx.fillText('départ', SX + 1.524 * PXUA + 6, SY + 3);
+    /* — graphique — */
+    ctx.strokeStyle = '#5A6B7A'; ctx.lineWidth = 1.3;
+    arrow(GX0, GY0, GX0 + GW + 20, GY0);
+    arrow(GX0, GY0, GX0, GY0 - GH - 20);
+    ctx.fillStyle = '#5A6B7A'; ctx.font = '10px Outfit, Arial, sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText('a³ (UA³)', GX0 + GW + 20, GY0 + 14);
+    ctx.textAlign = 'left'; ctx.fillText('T² (an²)', GX0 - 8, GY0 - GH - 26);
+    ctx.textAlign = 'center';
+    [1, 2, 3].forEach(function(v) {
+      ctx.beginPath(); ctx.moveTo(gx(v), GY0 - 3); ctx.lineTo(gx(v), GY0 + 3); ctx.strokeStyle = '#5A6B7A'; ctx.stroke();
+      ctx.fillText(String(v), gx(v), GY0 + 14);
+    });
+    ctx.textAlign = 'right';
+    [1, 2, 3].forEach(function(v) {
+      ctx.beginPath(); ctx.moveTo(GX0 - 3, gy(v)); ctx.lineTo(GX0 + 3, gy(v)); ctx.stroke();
+      ctx.fillText(String(v), GX0 - 6, gy(v) + 3);
+    });
+    ctx.textAlign = 'left';
+    ctx.fillText('0', GX0 - 10, GY0 + 12);
+    if (nDone === P.length) {
+      ctx.beginPath(); ctx.moveTo(gx(0), gy(0)); ctx.lineTo(gx(MAXV), gy(MAXV));
+      ctx.setLineDash([5, 3]); ctx.strokeStyle = '#E8783A'; ctx.lineWidth = 1.6; ctx.stroke(); ctx.setLineDash([]);
+    }
+    P.forEach(function(p, i) {
+      if (!finished[i]) return;
+      var X = gx(Math.pow(p.a, 3)), Y = gy(p.T * p.T);
+      ctx.beginPath(); ctx.arc(X, Y, 4.5, 0, 2*Math.PI); ctx.fillStyle = p.col; ctx.fill();
+      ctx.fillStyle = p.col; ctx.font = 'bold 10px Outfit, Arial, sans-serif';
+      ctx.fillText(p.n, X + 8, Y + [-1, -7, -5, 4][i]);
+    });
+  }
+
+  function update() {
+    P.forEach(function(p, i) {
+      if (!finished[i] && t >= p.T * YEAR) {
+        finished[i] = true; nDone++;
+        var row = document.getElementById('k3Row' + i);
+        if (row) {
+          var a3 = Math.pow(p.a, 3), T2 = p.T * p.T;
+          row.innerHTML = '<td style="font-weight:700;color:' + p.col + ';">' + p.n + '</td><td>' + fr(p.a, 3) + '</td><td>' + fr(p.T, 3) + '</td><td>' + fr(a3, 3) + '</td><td>' + fr(T2, 3) + '</td><td><strong>' + fr(T2 / a3, 2) + '</strong></td>';
+        }
+        var txt;
+        if (nDone === P.length) txt = '<strong>Les quatre points sont alignés sur une droite passant par l\'origine</strong> : T² est proportionnel à a³. Le rapport <strong>T²/a³ est le même pour toutes les planètes</strong> (≈ 1 an²/UA³ avec le Soleil comme astre attracteur) : c\'est la 3<sup>e</sup> loi de Kepler.';
+        else txt = '<span style="color:' + p.col + ';font-weight:800;">' + p.n + '</span> a fait un tour complet : T = ' + fr(p.T, 3) + ' an pour a = ' + fr(p.a, 3) + ' UA. On place le point (a³ ; T²) = (' + fr(Math.pow(p.a, 3), 3) + ' ; ' + fr(p.T * p.T, 3) + ') sur le graphique, et T²/a³ ≈ ' + fr(p.T * p.T / Math.pow(p.a, 3), 2) + '.';
+        msgBox.innerHTML = '<div>' + txt + '</div>';
+      }
+    });
+  }
+
+  function reset() {
+    t = 0; finished = [false, false, false, false]; nDone = 0;
+    P.forEach(function(p, i) { var row = document.getElementById('k3Row' + i); if (row) row.innerHTML = '<td style="font-weight:700;color:' + p.col + ';">' + p.n + '</td><td>' + fr(p.a, 3) + '</td><td colspan="4" style="color:var(--texte-leger);font-style:italic;">tour en cours…</td>'; });
+    msgBox.innerHTML = '<div>Les quatre planètes partent ensemble de l\'alignement initial. <strong>Plus une planète est éloignée du Soleil, plus sa période T est longue.</strong> Dès qu\'une planète a fait un tour complet, on relève T et a, et on place le point (a³ ; T²) sur le graphique.</div>';
+    draw();
+  }
+
+  function tick(ts) {
+    if (lastTs === null) lastTs = ts;
+    var dt = Math.min((ts - lastTs) / 1000, 0.1);
+    lastTs = ts;
+    if (playing) { t += dt; update(); draw(); }
+    requestAnimationFrame(tick);
+  }
+  window.toggleK3Anim = function() {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Lecture';
+    playBtn.classList.toggle('active', playing);
+  };
+  window.resetK3Anim = reset;
+  reset();
   requestAnimationFrame(tick);
 })();
 /* ════════ ANIMATION — REPÈRE DE FRENET (P2), curseurs rayon & vitesse ════════ */
